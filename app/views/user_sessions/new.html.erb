@@ -1,0 +1,13 @@
+<%= form_for(:user_session) do |f| %>
+  <%= f.label :user_name %>
+  <%= f.text_field :user_name %>
+
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+
+  <%= f.submit %>
+
+  <% if @msg %>
+    <div class="msg"><%= @msg %></div>
+  <% end %>
+<% end %>

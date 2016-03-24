@@ -1,7 +1,26 @@
 require "rails_helper"
 
 describe UserMigrationsController do
-  describe "#migrate" do
+  describe "#new" do
+    describe "when passed a valid token" do
+      before(:each) do
+        @invitation = create(:user_migration_invitation)  
+        get :new, invitation_token: @invitation.token
+      end
+
+      it "responds with 200 status" do
+        expect(response.status).to eq(200)
+      end
+    end
+
+    describe "when passed an invalid token" do
+      it "throws RecordNotFound" do
+        expect{get :new, invitation_token: "invalidtoken"}.to raise_exception(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
+
+  describe "#create" do
     describe "when there is a valid invitation" do
       before(:each) do
         @invitation = create(:user_migration_invitation_with_api_key) 
@@ -10,8 +29,8 @@ describe UserMigrationsController do
         post :create, invitation_token: @invitation.token, password: @password, password_confirmation: @password
       end
 
-      it "responds with ok status" do
-        expect(response.status).to eq(200)
+      it "responds with 302 status" do # redirect to user_sessions#new. TODO: check redirect value
+        expect(response.status).to eq(302)
       end
 
       it "creates a user from the LegacyUser and the new password" do

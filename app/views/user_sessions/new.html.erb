@@ -6,8 +6,12 @@
   <%= f.password_field :password %>
 
   <%= f.submit %>
+<% end %>
 
-  <% if @msg %>
-    <div class="msg"><%= @msg %></div>
-  <% end %>
+<% if @msg %>
+  <div class="msg"><%= @msg %></div>
+<% end %>
+
+<% if @url %>
+  <%= link_to(@url, @url) %>
 <% end %>

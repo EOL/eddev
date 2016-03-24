@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160323175209) do
+ActiveRecord::Schema.define(version: 20160324174446) do
 
   create_table "legacy_users", force: :cascade do |t|
     t.string   "user_name",  limit: 255
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20160323175209) do
     t.boolean  "migrated"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "api_key",    limit: 255
   end
 
   create_table "user_migration_invitations", force: :cascade do |t|

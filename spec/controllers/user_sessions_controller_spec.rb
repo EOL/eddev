@@ -37,7 +37,6 @@ describe UserSessionsController do
     describe "when there isn't a User with the given user_name but there is a LegacyUser" do
       before do
         @legacy_user = create(:legacy_user)
-
         post :create, user_session: { user_name: @legacy_user.user_name, password: "itdoesntmatter" }
       end
 

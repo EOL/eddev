@@ -4,7 +4,7 @@ TOKEN_LENGTH = 36
 
 describe UserMigrationInvitation do
   before(:each) do
-    @invite = build(:user_migration_invitation)
+    @invite = create(:user_migration_invitation)
   end
 
   describe "valid instance" do
@@ -38,5 +38,26 @@ describe UserMigrationInvitation do
 
   it "doesn't allow token to be overwritten" do
     expect{@invite.token = ("a" * TOKEN_LENGTH)}.to raise_error(NoMethodError)
+  end
+
+  describe "#find_by_token!" do
+    describe "when asked for a valid, unexpired record" do
+      it "returns the record" do
+        expect(UserMigrationInvitation.find_by_token!(@invite.token)).to eq(@invite)
+      end
+    end
+
+    describe "when asked for a token that exists but the record is expired" do
+      it "raises ActiveRecord::RecordNotFound" do
+        @invite.update!(force_expiration: true)
+        expect{UserMigrationInvitation.find_by_token!(@invite.token)}.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
+    describe "when asked for an invalid token" do
+      it "raises ActiveRecord::RecordNotFound" do
+        expect{UserMigrationInvitation.find_by_token!("invalidtoken")}.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
   end
 end

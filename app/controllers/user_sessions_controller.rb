@@ -5,13 +5,22 @@ class UserSessionsController < ApplicationController
   def create
     user_name = params[:user_session][:user_name]
     password =  params[:user_session][:password]
+    @msg = "Invalid username/password"
 
     user = log_in(user_name, password)
 
     if user
       @msg = "Success!"
-    else
-      @msg = "Invalid username/password"
+    elsif !User.find_by(user_name: user_name)
+      # If there isn't a User with that user_name, check if there is a LegacyUser.
+      # If so, generate a UserMigrationInvitation.
+      legacy_user = LegacyUser.find_by(user_name: user_name)
+     
+      if legacy_user
+        # Create invitation    
+        UserMigrationInvitation.create!(legacy_user: legacy_user) 
+        @msg = "Please check your email for a link to change your password"
+      end
     end
 
     render :new

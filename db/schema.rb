@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160323151803) do
+ActiveRecord::Schema.define(version: 20160323175209) do
 
   create_table "legacy_users", force: :cascade do |t|
     t.string   "user_name",  limit: 255
@@ -21,6 +21,16 @@ ActiveRecord::Schema.define(version: 20160323151803) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  create_table "user_migration_invitations", force: :cascade do |t|
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+    t.string   "token",            limit: 255
+    t.integer  "legacy_user_id",   limit: 4
+    t.boolean  "force_expiration",             default: false, null: false
+  end
+
+  add_index "user_migration_invitations", ["legacy_user_id"], name: "index_user_migration_invitations_on_legacy_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",           limit: 255
@@ -33,4 +43,5 @@ ActiveRecord::Schema.define(version: 20160323151803) do
     t.datetime "updated_at",                  null: false
   end
 
+  add_foreign_key "user_migration_invitations", "legacy_users"
 end

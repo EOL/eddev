@@ -13,9 +13,9 @@ Rails.application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
   
-  # Ignore bad email addresses and do not raise email delivery errors.
-  # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
+  # Deliver emails immediately and raise errors for failed deliveries
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_deliveries = true
 
   # smtp config
   config.action_mailer.delivery_method = :smtp
@@ -31,11 +31,6 @@ Rails.application.configure do
   # host for mailer urls
   config.action_mailer.default_url_options = { :host => "localhost:3000" }
   
-  # mail defaults
-  config.action_mailer.default_options = {
-    :from => "eol.learning@gmail.com"
-  }
-
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

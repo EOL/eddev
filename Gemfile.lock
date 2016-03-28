@@ -50,6 +50,7 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     concurrent-ruby (1.0.1)
+    consistency_fail (0.3.4)
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
     erubis (2.7.0)
@@ -173,6 +174,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   byebug
   coffee-rails (~> 4.1.0)
+  consistency_fail
   factory_girl_rails (~> 4.0)
   figaro
   jbuilder (~> 2.0)

@@ -46,6 +46,9 @@ group :development, :test do
 
   # Model factory for testing
   gem 'factory_girl_rails', '~> 4.0'
+
+  # Find uniqueness validations that don't have a corresponding DB constraint
+  gem 'consistency_fail'
 end
 
 group :development do

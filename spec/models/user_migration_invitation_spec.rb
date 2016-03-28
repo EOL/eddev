@@ -3,7 +3,7 @@ require 'rails_helper'
 TOKEN_LENGTH = 36
 
 describe UserMigrationInvitation do
-  let(:invite) { create(:user_migration_invitation) }
+  let!(:invite) { create(:user_migration_invitation) }
 
   describe "valid instance" do
     it "is valid" do
@@ -35,18 +35,22 @@ describe UserMigrationInvitation do
   end
 
   describe "#expired" do
-    let(:time) { class_double("Time").as_stubbed_const }
+    let!(:time) { class_double(Time) }
 
-    it "is true when 24 hours have passed since created_at" do
-      allow(:time).to receive(:now) { invite.created_at + 23.hours + 59.minutes } 
+    before(:each) do
+      invite.time_provider = time
+    end
+
+    it "is true when > 24 hours have passed since created_at" do
+      allow(time).to receive(:now) { invite.created_at + 1.day }
       expect(invite.expired?).to be false
 
-      allow(:time).to receive(:now) { invite.created_at + 1.day } 
+      allow(time).to receive(:now) { invite.created_at + 1.day + 1.second } 
       expect(invite.expired?).to be true
     end
 
     it "is true when force_expiration is true" do
-      allow(:time).to receive(:now) { invite.created_at }
+      allow(time).to receive(:now) { invite.created_at }
       invite.force_expiration = true
       expect(invite.expired?).to be true
     end

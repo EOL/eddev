@@ -17,21 +17,18 @@ describe UserSessionsController do
     end
 
     describe "when credentials are valid" do
+      let(:password) { "password" }
+      let(:user) { create(:user, password: password, password_confirmation: password) }
+
+      before(:each) do
+        post :create, user_session: { user_name: user.user_name, password: password }
+      end
+
       it_should_behave_like "common_create"  
 
-      before do
-        @user = build(:user)
-        @password = "password" # Need to keep track of password since you can't retrieve it from the User
-        @user.password = @user.password_confirmation = "password"
-        @user.save!
-
-        post :create, user_session: { user_name: @user.user_name, password: @password }
-      end
-
       it "sets the user id on the session" do
-        expect(controller.session[:user_id]).to eq(@user.id)
+        expect(controller.session[:user_id]).to eq(user.id)
       end
-
     end 
 
     describe "when there isn't a User with the given user_name but there is a LegacyUser" do

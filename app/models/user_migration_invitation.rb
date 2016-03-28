@@ -6,8 +6,15 @@ class UserMigrationInvitation < ActiveRecord::Base
 
   after_initialize :generate_token
 
+  TTL=1.day
+  private_constant :TTL
+
+  # It proved to be cleaner to use dependency injection than 
+  # class_double...as_stubbed_const for testing expired?
+  attr_writer :time_provider 
+
   def expired?
-    force_expiration  
+    force_expiration || (time_provider.now > created_at + TTL) 
   end
 
   def self.find_by_token!(token)
@@ -27,5 +34,9 @@ class UserMigrationInvitation < ActiveRecord::Base
       if new_record?
         self.token = SecureRandom.uuid
       end
+    end
+
+    def time_provider
+      @time_provider ||= Time 
     end
 end

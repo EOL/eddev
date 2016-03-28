@@ -20,7 +20,7 @@ class UserSessionsController < ApplicationController
         # Create invitation    
         invitation = UserMigrationInvitation.create!(legacy_user: legacy_user) 
         invitation_email = UserMigrationInvitationMailer.invitation_email(invitation) 
-        invitation_email.deliver_no
+        invitation_email.deliver_now
 
         @msg = "Check your email for a link to change your password"
       end

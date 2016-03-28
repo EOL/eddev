@@ -28,6 +28,14 @@ Rails.application.configure do
     enable_starttls_auto: true,
   }
 
+  # host for mailer urls
+  config.action_mailer.default_url_options = { :host => "localhost:3000" }
+  
+  # mail defaults
+  config.action_mailer.default_options = {
+    :from => "eol.learning@gmail.com"
+  }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

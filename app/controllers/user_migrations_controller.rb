@@ -6,6 +6,9 @@ class UserMigrationsController < ApplicationController
 
   def create
     legacy_user = @invitation.legacy_user
+    
+    # None of these saving calls are expected to fail. If they do, we have
+    # a deep issue, and a 500 error is appropriate.
     User.create!(password:              params[:password],
                  password_confirmation: params[:password_confirmation],
                  user_name:             legacy_user.user_name,

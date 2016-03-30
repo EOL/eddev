@@ -22,11 +22,11 @@ describe UserMigrationsController do
 
   describe "#create" do
     describe "when there is a valid invitation" do
-      before(:each) do
-        @invitation = create(:user_migration_invitation_with_api_key) 
-        @password = "password"
+      let!(:invitation) { create(:user_migration_invitation_with_api_key) }
+      let(:password) { "password" }
 
-        post :create, invitation_token: @invitation.token, password: @password, password_confirmation: @password
+      before(:each) do
+        post :create, invitation_token: invitation.token, password: password, password_confirmation: password
       end
 
       it "responds with 302 status" do # redirect to user_sessions#new. TODO: check redirect value
@@ -34,24 +34,24 @@ describe UserMigrationsController do
       end
 
       it "creates a user from the LegacyUser and the new password" do
-        legacy_user = @invitation.legacy_user
-        new_user = User.find_by(user_name: @invitation.legacy_user.user_name)
+        legacy_user = invitation.legacy_user
+        new_user = User.find_by(user_name: invitation.legacy_user.user_name)
 
         expect(new_user).not_to be_nil
         expect(new_user.email).to eq(legacy_user.email)
         expect(new_user.full_name).to eq(legacy_user.full_name)
         expect(new_user.api_key).to eq(legacy_user.api_key)
-        expect(new_user.authenticate(@password)).to eq(new_user)
+        expect(new_user.authenticate(password)).to eq(new_user)
       end
 
       it "expires the UserMigrationInvitation" do
-        @invitation.reload
-        expect(@invitation.force_expiration?).to be true
+        invitation.reload
+        expect(invitation.force_expiration?).to be true
       end
 
       it "sets the user correctly" do
-        @invitation.reload
-        expect(@invitation.legacy_user.user).to eq(User.find_by(user_name: @invitation.legacy_user.user_name))
+        invitation.reload
+        expect(invitation.legacy_user.user).to eq(User.find_by(user_name: invitation.legacy_user.user_name))
       end
     end
 

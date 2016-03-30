@@ -60,11 +60,9 @@ describe User do
   describe "when there is a saved LegacyUser"  do
     let!(:legacy_email) { "legacy@email.com" }
     let!(:legacy_user_name) { "legacy_user" }
-    let!(:legacy_user) { build(:legacy_user, email: legacy_email, user_name: legacy_user_name) }
+    let!(:legacy_user) { create(:legacy_user, email: legacy_email, user_name: legacy_user_name) }
 
-    describe "when there is a User with the same email address" do 
-      let!(:new_user) { build(:user, email: legacy_email, user_name: "otheruser") }
-
+    shared_examples_for "legacy_user_validation" do
       describe "when that User doesn't have legacy_user_id equal to the LegacyUser's id" do
         it "should be invalid" do
           expect(new_user).to be_invalid
@@ -80,6 +78,18 @@ describe User do
           expect(new_user).to be_valid 
         end
       end
+    end
+
+    describe "when a User is created with the same email" do 
+      let!(:new_user) { build(:user, email: legacy_email, user_name: "otheruser") }
+
+      it_should_behave_like "legacy_user_validation"
+    end
+
+    describe "when a User is created with the same user_name" do 
+      let!(:new_user) { build(:user, email: "otheruser@email.com", user_name: legacy_user_name) }
+      
+      it_should_behave_like "legacy_user_validation"
     end
   end
 end

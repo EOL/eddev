@@ -11,17 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160328175533) do
+ActiveRecord::Schema.define(version: 20160328182237) do
 
   create_table "legacy_users", force: :cascade do |t|
     t.string   "user_name",  limit: 255
     t.string   "full_name",  limit: 255
     t.string   "email",      limit: 255
-    t.boolean  "migrated"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.string   "api_key",    limit: 255
+    t.integer  "user_id",    limit: 4
   end
+
+  add_index "legacy_users", ["user_id"], name: "index_legacy_users_on_user_id", unique: true, using: :btree
 
   create_table "user_migration_invitations", force: :cascade do |t|
     t.datetime "created_at",                                   null: false
@@ -42,10 +44,14 @@ ActiveRecord::Schema.define(version: 20160328175533) do
     t.boolean  "active"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.integer  "legacy_user_id",  limit: 4
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["legacy_user_id"], name: "index_users_on_legacy_user_id", using: :btree
   add_index "users", ["user_name"], name: "index_users_on_user_name", unique: true, using: :btree
 
+  add_foreign_key "legacy_users", "users"
   add_foreign_key "user_migration_invitations", "legacy_users"
+  add_foreign_key "users", "legacy_users"
 end

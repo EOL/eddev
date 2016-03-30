@@ -4,4 +4,6 @@ class LegacyUser < ActiveRecord::Base
   validates :user_name, presence: true
 
   has_many :user_migration_invitations
+  
+  belongs_to :user
 end

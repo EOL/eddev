@@ -49,9 +49,9 @@ describe UserMigrationsController do
         expect(@invitation.force_expiration?).to be true
       end
 
-      it "marks the LegacyUser as migrated" do
+      it "sets the user correctly" do
         @invitation.reload
-        expect(@invitation.legacy_user.migrated?).to be true
+        expect(@invitation.legacy_user.user).to eq(User.find_by(user_name: @invitation.legacy_user.user_name))
       end
     end
 

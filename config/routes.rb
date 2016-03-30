@@ -1,18 +1,22 @@
 Rails.application.routes.draw do
-  resources :users
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-
   # You can have the root of your site routed with "root"
   root 'welcome#index'
+  get  '/:locale' => 'welcome#index'
 
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
-  get  'login'                            => 'user_sessions#new'
-  post 'login'                            => 'user_sessions#create'
-  get  'logout'                           => 'user_sessions#destroy'
-  get  'migrate_user/:invitation_token'   => 'user_migrations#new', as: :migrate_user
-  post 'migrate_user/:invitation_token'   => 'user_migrations#create'
+  scope "(:locale)" do
+    resources :users
+    # The priority is based upon order of creation: first created -> highest priority.
+    # See how all your routes lay out with "rake routes".
+
+
+    # Example of regular route:
+    #   get 'products/:id' => 'catalog#view'
+    get  'login'                            => 'user_sessions#new'
+    post 'login'                            => 'user_sessions#create'
+    get  'logout'                           => 'user_sessions#destroy'
+    get  'migrate_user/:invitation_token'   => 'user_migrations#new', as: :migrate_user
+    post 'migrate_user/:invitation_token'   => 'user_migrations#create'
+  end
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

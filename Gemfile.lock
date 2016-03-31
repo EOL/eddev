@@ -64,10 +64,14 @@ GEM
       thor (~> 0.14)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    haml (4.0.7)
+      tilt
     i18n (0.7.0)
     jbuilder (2.4.1)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
+    jquery-cookie-rails (1.3.1.1)
+      railties (>= 3.2.0, < 5.0)
     jquery-rails (4.1.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -84,6 +88,13 @@ GEM
     mysql2 (0.4.3)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
+    phrasing (3.2.10)
+      haml
+      jquery-cookie-rails
+      jquery-rails
+      rails (>= 3.2.0)
+      railties (>= 3.2)
+      sass
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -180,6 +191,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   mysql2
+  phrasing
   rails (= 4.2.6)
   rspec-collection_matchers
   rspec-rails (~> 3.0)

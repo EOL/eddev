@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160331150553) do
+ActiveRecord::Schema.define(version: 20160331193829) do
 
   create_table "legacy_users", force: :cascade do |t|
     t.string   "user_name",  limit: 255
@@ -24,6 +24,23 @@ ActiveRecord::Schema.define(version: 20160331150553) do
   end
 
   add_index "legacy_users", ["user_id"], name: "index_legacy_users_on_user_id", unique: true, using: :btree
+
+  create_table "phrasing_phrase_versions", force: :cascade do |t|
+    t.integer  "phrasing_phrase_id", limit: 4
+    t.text     "value",              limit: 65535
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "phrasing_phrase_versions", ["phrasing_phrase_id"], name: "index_phrasing_phrase_versions_on_phrasing_phrase_id", using: :btree
+
+  create_table "phrasing_phrases", force: :cascade do |t|
+    t.string   "locale",     limit: 255
+    t.string   "key",        limit: 255
+    t.text     "value",      limit: 65535
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "user_migration_invitations", force: :cascade do |t|
     t.datetime "created_at",                                   null: false

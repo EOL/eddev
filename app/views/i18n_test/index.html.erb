@@ -1,11 +1,19 @@
-<div class="fieldset">
-  <%= label_tag "url_lang", "Change via url param: " %>
-  <%= select_tag "url_lang", options_for_select(lang_select_options, selected: lang_select_selected ) %>
-</div>
+<%= form_tag("#", id: "url_lang") do %>
+  <div class="fieldset">
+    <%= label_tag "url_lang", "Change via url param: " %>
+    <%= select_tag "url_lang", options_for_select(url_lang_select_options, selected: url_lang_selected ) %>
+    <%= submit_tag "Change" %>
+  </div>
+<% end %>
 
-<div class="fieldset">
-  <%= label_tag "user_lang", "Change user language: " %>
-  <%= select_tag "user_lang", options_for_select(lang_select_options, selected: lang_select_selected ) %>
-</div>
+<% if logged_in_user %>
+  <%= form_tag("#", id: "user_lang") do %>
+    <div class="fieldset">
+      <%= label_tag "user_lang", "Change user language: " %>
+      <%= select_tag "user_lang", options_for_select(user_lang_select_options, selected: logged_in_user.locale ) %>
+      <%= submit_tag "Change" %>
+    </div>
+  <% end %>
+<% end %>
 
 <h1><%= t ".welcome" %></h1>

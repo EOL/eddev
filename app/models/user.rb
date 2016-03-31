@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  validates :password, presence: true, length: { minimum: 8 }
+  validates :password, presence: true, length: { minimum: 8 }, :if => :password_required?
   validates :user_name, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
   validates :full_name, presence: true
@@ -12,8 +12,16 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
-  private
+  def locale
+    saved_locale = read_attribute(:locale)
+    if saved_locale
+      saved_locale
+    else
+      I18n.default_locale
+    end
+  end
 
+  private
   # Validate that certain attributes are not already taken by
   # a LegacyUser, or that that LegacyUser is this User's legacy_user.
   # This is to ensure that all LegacyUsers can be migrated to valid Users.
@@ -33,5 +41,9 @@ class User < ActiveRecord::Base
         errors.add(attrib_name, "cannot be the same as a LegacyUser that is not associated with this User")
       end
     end
+  end
+
+  def password_required?
+    !persisted? || !password.nil? || !password_confirmation.nil?
   end
 end

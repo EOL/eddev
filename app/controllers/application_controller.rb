@@ -19,11 +19,22 @@ class ApplicationController < ActionController::Base
     end
 
     def logged_in_user
-      @logged_in_user ||= User.find(session[:user_id])
+      nil
+
+      if session[:user_id]
+        @logged_in_user ||= User.find(session[:user_id])
+      end
     end
+    helper_method :logged_in_user
   
   private
-    def set_locale
-      I18n.locale = params[:locale] || I18n.default_locale
+  def set_locale
+    locale = params[:locale]
+
+    if !locale.nil?
+      I18n.locale = locale
+    elsif logged_in_user
+      I18n.locale = logged_in_user.locale
     end
+  end
 end

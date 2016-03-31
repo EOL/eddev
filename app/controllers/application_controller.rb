@@ -31,10 +31,13 @@ class ApplicationController < ActionController::Base
   def set_locale
     locale = params[:locale]
 
+    # Always prefer locale from url
     if !locale.nil?
       I18n.locale = locale
-    elsif logged_in_user
-      I18n.locale = logged_in_user.locale
+    # Otherwise, if the user has a locale that is not the default locale,
+    # redirect to the same page with the locale parameter prepended.
+    elsif logged_in_user && logged_in_user.locale != I18n.default_locale
+      redirect_to url_for request.params.merge({locale: logged_in_user.locale})
     end
   end
 end

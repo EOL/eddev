@@ -1,4 +1,5 @@
 en:
   i18n_test:
     index:
-      welcome: Welcome!
+      welcome_html: "Welcome! The time is <i>%{time}</i>"
+

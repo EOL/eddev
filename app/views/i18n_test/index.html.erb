@@ -1,1 +1,11 @@
+<div class="fieldset">
+  <%= label_tag "url_lang", "Change via url param: " %>
+  <%= select_tag "url_lang", options_for_select(lang_select_options, selected: lang_select_selected ) %>
+</div>
+
+<div class="fieldset">
+  <%= label_tag "user_lang", "Change user language: " %>
+  <%= select_tag "user_lang", options_for_select(lang_select_options, selected: lang_select_selected ) %>
+</div>
+
 <h1><%= t ".welcome" %></h1>

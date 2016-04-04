@@ -11,6 +11,12 @@ describe User do
     end
   end 
 
+  describe "defaults" do
+    it "should have the user role" do
+      expect(user.role).to eq(User.role.user)
+    end
+  end
+
   it "must have a password with at least 8 characters" do
     user.password = user.password_confirmation = nil
     expect(user).to be_invalid

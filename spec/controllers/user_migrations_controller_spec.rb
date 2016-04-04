@@ -5,7 +5,7 @@ describe UserMigrationsController do
     describe "when passed a valid token" do
       before(:each) do
         @invitation = create(:user_migration_invitation)  
-        get :new, invitation_token: @invitation.token
+        get_with_locale :new, invitation_token: @invitation.token
       end
 
       it "responds with 200 status" do
@@ -15,7 +15,7 @@ describe UserMigrationsController do
 
     describe "when passed an invalid token" do
       it "throws RecordNotFound" do
-        expect{get :new, invitation_token: "invalidtoken"}.to raise_exception(ActiveRecord::RecordNotFound)
+        expect{get_with_locale :new, invitation_token: "invalidtoken"}.to raise_exception(ActiveRecord::RecordNotFound)
       end
     end
   end
@@ -26,7 +26,7 @@ describe UserMigrationsController do
       let(:password) { "password" }
 
       before(:each) do
-        post :create, invitation_token: invitation.token, password: password, password_confirmation: password
+        post_with_locale :create, invitation_token: invitation.token, password: password, password_confirmation: password
       end
 
       it "responds with 302 status" do # redirect to user_sessions#new. TODO: check redirect value
@@ -61,7 +61,7 @@ describe UserMigrationsController do
 
       it "raises RecordNotFound" do
         expect {
-          post(:create, invitation_token: "bogus_token", 
+          post_with_locale(:create, invitation_token: "bogus_token", 
                      password: "somepassword", password_confirmation: "somepassword")
         }.to raise_error(ActiveRecord::RecordNotFound)
       end

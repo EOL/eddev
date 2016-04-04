@@ -21,7 +21,7 @@ describe UserSessionsController do
       let(:user) { create(:user, password: password, password_confirmation: password) }
 
       before(:each) do
-        post :create, user_session: { user_name: user.user_name, password: password }
+        post_with_locale :create, user_session: { user_name: user.user_name, password: password }
       end
 
       it_should_behave_like "common_create"  
@@ -40,7 +40,7 @@ describe UserSessionsController do
         allow(mailer).to receive(:invitation_email) { email }
         allow(email).to receive(:deliver_now)
 
-        post :create, user_session: { user_name: legacy_user.user_name, password: "itdoesntmatter" }
+        post_with_locale :create, user_session: { user_name: legacy_user.user_name, password: "itdoesntmatter" }
       end
 
       it_should_behave_like "common_login_failure"

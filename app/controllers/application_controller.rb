@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  def default_url_options(options = {})
+    { locale: I18n.locale }.merge options
+  end
+
   protected
     def log_in(user_name, password)
       @logged_in_user = User.find_by(user_name: user_name).try(:authenticate, password)
@@ -31,13 +35,16 @@ class ApplicationController < ActionController::Base
   def set_locale
     locale = params[:locale]
 
-    # Always prefer locale from url
+    # If we have a locale from the URL, set it for the duration of the request
     if !locale.nil?
       I18n.locale = locale
-    # Otherwise, if the user has a locale that is not the default locale,
-    # redirect to the same page with the locale parameter prepended.
-    elsif logged_in_user && logged_in_user.locale != I18n.default_locale
+    # Always redirect to a url with an explicit locale.
+    # If there is a user, redirect to the url from the request with the locale added
+    elsif logged_in_user
       redirect_to url_for request.params.merge({locale: logged_in_user.locale})
+    else
+    # Redirect to the url from the request with the default locale added
+      redirect_to url_for request.params.merge({locale: I18n.default_locale})
     end
   end
 end

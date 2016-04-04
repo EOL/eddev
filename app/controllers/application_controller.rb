@@ -33,11 +33,6 @@ class ApplicationController < ActionController::Base
 
     # Always prefer locale from url
     if !locale.nil?
-      # ugly special case for /phrasing - don't do anything
-      if locale == "phrasing"
-        return
-      end 
-
       I18n.locale = locale
     # Otherwise, if the user has a locale that is not the default locale,
     # redirect to the same page with the locale parameter prepended.

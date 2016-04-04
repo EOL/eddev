@@ -7,6 +7,6 @@ module PhrasingHelper
   # end
 
   def can_edit_phrases?
-    true # XXX : change change change change!
+    logged_in_user && logged_in_user.admin?
   end
 end

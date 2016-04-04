@@ -9,6 +9,26 @@ class ApplicationController < ActionController::Base
     { locale: I18n.locale }.merge options
   end
 
+  # Raise ApplicationController::ForbiddenError to trigger default 403 response
+  class ForbiddenError < StandardError; end
+  rescue_from ForbiddenError do |e|
+    render(:file => File.join(Rails.root, 'public/403'), :status => 403, :layout => false)
+  end
+
+  def logged_in_user
+    nil
+
+    if session[:user_id]
+      @logged_in_user ||= User.find(session[:user_id])
+    end
+  end
+
+  def ensure_admin
+    if !logged_in_user || !logged_in_user.admin?
+      raise ApplicationController::ForbiddenError
+    end
+  end
+
   protected
     def log_in(user_name, password)
       @logged_in_user = User.find_by(user_name: user_name).try(:authenticate, password)
@@ -22,15 +42,6 @@ class ApplicationController < ActionController::Base
       session[:user_id] = nil
     end
 
-    def logged_in_user
-      nil
-
-      if session[:user_id]
-        @logged_in_user ||= User.find(session[:user_id])
-      end
-    end
-    helper_method :logged_in_user
-  
   private
   def set_locale
     locale = params[:locale]

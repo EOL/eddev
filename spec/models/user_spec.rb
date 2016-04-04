@@ -13,7 +13,7 @@ describe User do
 
   describe "defaults" do
     it "should have the user role" do
-      expect(user.role).to eq(User.role.user)
+      expect(user.role).to eq("basic")
     end
   end
 
@@ -98,4 +98,20 @@ describe User do
       it_should_behave_like "legacy_user_validation"
     end
   end
+
+  describe "#admin?" do
+    context "when the user has the admin role" do
+      it "should be true" do
+        u = create(:user, role: :admin)
+        expect(u.admin?).to be true
+      end
+    end
+
+    context "when the user does not have the admin role" do
+      it "should be false" do
+        expect(user.admin?).to be false
+      end
+    end
+  end
+
 end

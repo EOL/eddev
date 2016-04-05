@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
-  before_action :set_locale
+  before_filter :set_locale
+  before_filter :ensure_user
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -23,8 +24,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def ensure_user
+    if !logged_in_user
+      raise ApplicationController::ForbiddenError
+    end
+  end
+
   def ensure_admin
-    if !logged_in_user || !logged_in_user.admin?
+    ensure_user
+
+    if !logged_in_user.admin?
       raise ApplicationController::ForbiddenError
     end
   end

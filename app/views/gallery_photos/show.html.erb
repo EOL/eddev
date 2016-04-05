@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Image</strong>
+  <%= image_tag @gallery_photo.image.url %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @gallery_photo.author %>
+</p>
+
+<p>
+  <strong>Caption:</strong>
+  <%= @gallery_photo.caption %>
+</p>
+
+<%= link_to 'Edit', edit_gallery_photo_path(@gallery_photo) %> |
+<%= link_to 'Back', gallery_photos_path %>

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :ensure_admin
+  before_filter :ensure_admin
 
   # GET /users
   # GET /users.json

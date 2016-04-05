@@ -15,5 +15,10 @@
   <%= @gallery_photo.caption %>
 </p>
 
+<p>
+  <strong>User:</strong>
+  <%= @gallery_photo.user.user_name %>
+</p>
+
 <%= link_to 'Edit', edit_gallery_photo_path(@gallery_photo) %> |
 <%= link_to 'Back', gallery_photos_path %>

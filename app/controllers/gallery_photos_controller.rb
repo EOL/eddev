@@ -25,6 +25,7 @@ class GalleryPhotosController < ApplicationController
   # POST /gallery_photos.json
   def create
     @gallery_photo = GalleryPhoto.new(gallery_photo_params)
+    @gallery_photo.user = logged_in_user # Should never be nil
 
     respond_to do |format|
       if @gallery_photo.save

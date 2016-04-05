@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160405154537) do
+ActiveRecord::Schema.define(version: 20160405171303) do
+
+  create_table "galleries", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "user_id",    limit: 4
+  end
+
+  add_index "galleries", ["user_id"], name: "index_galleries_on_user_id", using: :btree
 
   create_table "gallery_photos", force: :cascade do |t|
     t.datetime "created_at",                     null: false
@@ -22,10 +31,7 @@ ActiveRecord::Schema.define(version: 20160405154537) do
     t.datetime "image_updated_at"
     t.string   "author",             limit: 255
     t.string   "caption",            limit: 255
-    t.integer  "user_id",            limit: 4
   end
-
-  add_index "gallery_photos", ["user_id"], name: "index_gallery_photos_on_user_id", using: :btree
 
   create_table "legacy_users", force: :cascade do |t|
     t.string   "user_name",  limit: 255
@@ -84,7 +90,7 @@ ActiveRecord::Schema.define(version: 20160405154537) do
   add_index "users", ["legacy_user_id"], name: "index_users_on_legacy_user_id", using: :btree
   add_index "users", ["user_name"], name: "index_users_on_user_name", unique: true, using: :btree
 
-  add_foreign_key "gallery_photos", "users"
+  add_foreign_key "galleries", "users"
   add_foreign_key "legacy_users", "users"
   add_foreign_key "user_migration_invitations", "legacy_users"
   add_foreign_key "users", "legacy_users"

@@ -22,10 +22,5 @@ describe GalleryPhoto do
       photo.caption = nil
       expect(photo).to be_invalid
     end
-
-    it "has a user" do
-      photo.user = nil
-      expect(photo).to be_invalid
-    end
   end
 end

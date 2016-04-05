@@ -3,6 +3,5 @@ FactoryGirl.define do
     image File.new("spec/assets/images/laughing_dove.jpg")     
     author "Photo Contributor"
     caption "Photo Caption"
-    user
   end
 end

@@ -32,6 +32,8 @@ gem "figaro"
 
 gem "phrasing"
 
+gem "paperclip", "~> 4.3.5"
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

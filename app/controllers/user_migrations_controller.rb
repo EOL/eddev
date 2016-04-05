@@ -1,5 +1,6 @@
 class UserMigrationsController < ApplicationController
   before_action :find_invitation
+  skip_before_filter :ensure_user
 
   def new
   end

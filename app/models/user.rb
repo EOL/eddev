@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   validate :uniqueness_against_legacy_users
 
   has_one :legacy_user
+  has_many :gallery_photos
 
   has_secure_password
 

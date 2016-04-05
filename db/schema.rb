@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160404175533) do
+ActiveRecord::Schema.define(version: 20160405150440) do
+
+  create_table "gallery_photos", force: :cascade do |t|
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "image_file_name",    limit: 255
+    t.string   "image_content_type", limit: 255
+    t.integer  "image_file_size",    limit: 4
+    t.datetime "image_updated_at"
+    t.string   "author",             limit: 255
+    t.string   "caption",            limit: 255
+  end
 
   create_table "legacy_users", force: :cascade do |t|
     t.string   "user_name",  limit: 255

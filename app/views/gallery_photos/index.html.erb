@@ -8,7 +8,6 @@
       <th>Image</th>
       <th>Author</th>
       <th>Caption</th>
-      <th>User</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -19,10 +18,9 @@
         <td><%= gallery_photo.image_file_name %></td>
         <td><%= gallery_photo.author %></td>
         <td><%= gallery_photo.caption %></td>
-        <td><%= gallery_photo.user.user_name %></td>
-        <td><%= link_to 'Show', gallery_photo %></td>
-        <td><%= link_to 'Edit', edit_gallery_photo_path(gallery_photo) %></td>
-        <td><%= link_to 'Destroy', gallery_photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', gallery_gallery_photo_path(@gallery, gallery_photo) %></td>
+        <td><%= link_to 'Edit', edit_gallery_gallery_photo_path(@gallery, gallery_photo) %></td>
+        <td><%= link_to 'Destroy', gallery_gallery_photo_path(@gallery, gallery_photo), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +28,5 @@
 
 <br>
 
-<%= link_to 'New Gallery photo', new_gallery_photo_path %>
+<%= link_to 'New Gallery photo', new_gallery_gallery_photo_path(@gallery) %> | 
+<%= link_to 'Back to gallery', @gallery %>

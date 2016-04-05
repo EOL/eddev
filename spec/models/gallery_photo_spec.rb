@@ -22,5 +22,10 @@ describe GalleryPhoto do
       photo.caption = nil
       expect(photo).to be_invalid
     end
+
+    it "has a gallery" do
+      photo.gallery = nil
+      expect(photo).to be_invalid
+    end
   end
 end

@@ -1,0 +1,3 @@
+$(function() {
+  Galleria.run('.galleria');
+});

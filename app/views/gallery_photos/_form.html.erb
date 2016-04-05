@@ -1,4 +1,4 @@
-<%= form_for(@gallery_photo) do |f| %>
+<%= form_for([@gallery, @gallery_photo]) do |f| %>
   <% if @gallery_photo.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@gallery_photo.errors.count, "error") %> prohibited this gallery_photo from being saved:</h2>

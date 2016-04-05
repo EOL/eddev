@@ -1,10 +1,11 @@
 class GalleryPhotosController < ApplicationController
   before_action :set_gallery_photo, only: [:show, :edit, :update, :destroy]
+  before_action :set_gallery
 
   # GET /gallery_photos
   # GET /gallery_photos.json
   def index
-    @gallery_photos = GalleryPhoto.all
+    @gallery_photos = Gallery.find(params[:gallery_id]).photos
   end
 
   # GET /gallery_photos/1
@@ -25,12 +26,12 @@ class GalleryPhotosController < ApplicationController
   # POST /gallery_photos.json
   def create
     @gallery_photo = GalleryPhoto.new(gallery_photo_params)
-    @gallery_photo.user = logged_in_user # Should never be nil
+    @gallery_photo.gallery = Gallery.find(params[:gallery_id])
 
     respond_to do |format|
       if @gallery_photo.save
-        format.html { redirect_to @gallery_photo, notice: 'Gallery photo was successfully created.' }
-        format.json { render :show, status: :created, location: @gallery_photo }
+        format.html { redirect_to [@gallery, @gallery_photo], notice: 'Gallery photo was successfully created.' }
+        format.json { render :show, status: :created, location: [@gallery, @gallery_photo] }
       else
         format.html { render :new }
         format.json { render json: @gallery_photo.errors, status: :unprocessable_entity }
@@ -57,7 +58,7 @@ class GalleryPhotosController < ApplicationController
   def destroy
     @gallery_photo.destroy
     respond_to do |format|
-      format.html { redirect_to gallery_photos_url, notice: 'Gallery photo was successfully destroyed.' }
+      format.html { redirect_to gallery_gallery_photos_url(@gallery), notice: 'Gallery photo was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -66,6 +67,10 @@ class GalleryPhotosController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_gallery_photo
       @gallery_photo = GalleryPhoto.find(params[:id])
+    end
+
+    def set_gallery
+      @gallery = Gallery.find(params[:gallery_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -11,4 +11,11 @@
 </p>
 
 <%= link_to 'Edit', edit_gallery_path(@gallery) %> |
+<%= link_to 'Add/remove photos', gallery_gallery_photos_path(@gallery) %> |
 <%= link_to 'Back', galleries_path %>
+
+<div class="galleria">
+  <% @gallery.photos.each do |photo| %>
+    <%= image_tag photo.image, "data-title": photo.caption, "data-description": photo.author  %>
+  <% end %>
+<div>

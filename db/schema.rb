@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160405175610) do
+ActiveRecord::Schema.define(version: 20160405201405) do
 
   create_table "galleries", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -29,12 +29,15 @@ ActiveRecord::Schema.define(version: 20160405175610) do
     t.string   "image_content_type", limit: 255
     t.integer  "image_file_size",    limit: 4
     t.datetime "image_updated_at"
-    t.string   "author",             limit: 255
     t.string   "caption",            limit: 255
     t.integer  "gallery_id",         limit: 4
+    t.string   "rights_holder",      limit: 255
+    t.string   "source",             limit: 255
+    t.integer  "license_id",         limit: 4
   end
 
   add_index "gallery_photos", ["gallery_id"], name: "index_gallery_photos_on_gallery_id", using: :btree
+  add_index "gallery_photos", ["license_id"], name: "index_gallery_photos_on_license_id", using: :btree
 
   create_table "legacy_users", force: :cascade do |t|
     t.string   "user_name",  limit: 255
@@ -47,6 +50,17 @@ ActiveRecord::Schema.define(version: 20160405175610) do
   end
 
   add_index "legacy_users", ["user_id"], name: "index_legacy_users_on_user_id", unique: true, using: :btree
+
+  create_table "licenses", force: :cascade do |t|
+    t.string   "name",        limit: 255
+    t.string   "code",        limit: 255
+    t.text     "description", limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "licenses", ["code"], name: "index_licenses_on_code", unique: true, using: :btree
+  add_index "licenses", ["name"], name: "index_licenses_on_name", unique: true, using: :btree
 
   create_table "phrasing_phrase_versions", force: :cascade do |t|
     t.integer  "phrasing_phrase_id", limit: 4
@@ -95,6 +109,7 @@ ActiveRecord::Schema.define(version: 20160405175610) do
 
   add_foreign_key "galleries", "users"
   add_foreign_key "gallery_photos", "galleries"
+  add_foreign_key "gallery_photos", "licenses"
   add_foreign_key "legacy_users", "users"
   add_foreign_key "user_migration_invitations", "legacy_users"
   add_foreign_key "users", "legacy_users"

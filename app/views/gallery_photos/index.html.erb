@@ -6,7 +6,7 @@
   <thead>
     <tr>
       <th>Image</th>
-      <th>Author</th>
+      <th>Source</th>
       <th>Caption</th>
       <th colspan="3"></th>
     </tr>
@@ -16,7 +16,7 @@
     <% @gallery_photos.each do |gallery_photo| %>
       <tr>
         <td><%= gallery_photo.image_file_name %></td>
-        <td><%= gallery_photo.author %></td>
+        <td><%= gallery_photo.source %></td>
         <td><%= gallery_photo.caption %></td>
         <td><%= link_to 'Show', gallery_gallery_photo_path(@gallery, gallery_photo) %></td>
         <td><%= link_to 'Edit', edit_gallery_gallery_photo_path(@gallery, gallery_photo) %></td>

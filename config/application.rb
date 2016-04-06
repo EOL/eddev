@@ -23,5 +23,15 @@ module Eddev
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    # S3 config for paperclip
+    config.paperclip_defaults = {
+      storage: :s3,
+      s3_credentials: {
+        access_key_id: ENV['aws_access_key_id'],
+        secret_access_key: ENV['aws_secret_access_key'],
+        bucket: ENV['s3_bucket_name']
+      }
+    }
   end
 end

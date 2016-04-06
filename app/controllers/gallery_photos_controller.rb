@@ -75,6 +75,6 @@ class GalleryPhotosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def gallery_photo_params
-      params.require(:gallery_photo).permit(:image, :author, :caption)
+      params.require(:gallery_photo).permit(:image, :rights_holder, :caption, :license_id, :source)
     end
 end

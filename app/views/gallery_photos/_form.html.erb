@@ -17,13 +17,23 @@
   </div>
 
   <div class="field">
-    <%= f.label :author %><br>
-    <%= f.text_field :author %>
+    <%= f.label :rights_holder %><br>
+    <%= f.text_field :rights_holder %>
+  </div>
+
+  <div class="field">
+    <%= f.label :source %><br>
+    <%= f.text_field :source %>
   </div>
 
   <div class="field">
     <%= f.label :caption %><br>
     <%= f.text_field :caption %>
+  </div>
+  
+  <div class="field">
+    <%= f.label "License", :license_id %><br>
+    <%= f.select :license_id, options_for_select(licenses_for_select) %>
   </div>
 
   <div class="actions">

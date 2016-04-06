@@ -16,6 +16,6 @@
 
 <div class="galleria">
   <% @gallery.photos.each do |photo| %>
-    <%= image_tag photo.image, "data-title": photo.caption, "data-description": photo.author  %>
+    <%= image_tag photo.image, "data-title": photo.caption, "data-description": photo.source %>
   <% end %>
 <div>

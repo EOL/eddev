@@ -36,7 +36,12 @@ gem "figaro"
 
 gem "phrasing"
 
+# file attachment 
 gem "paperclip", "~> 4.3.5"
+
+# s3 integration
+gem "aws-sdk", "< 2.0"
+#gem "fog", "~> 1.38.0"
 
 # Use Unicorn as the app server
 # gem 'unicorn'

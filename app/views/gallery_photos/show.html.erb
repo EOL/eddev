@@ -6,14 +6,20 @@
 </p>
 
 <p>
-  <strong>Author:</strong>
-  <%= @gallery_photo.author %>
-</p>
-
-<p>
   <strong>Caption:</strong>
   <%= @gallery_photo.caption %>
 </p>
+
+<p>
+  <strong>Rights holder:</strong>
+  <%= @gallery_photo.rights_holder %>
+</p>
+
+<p>
+  <strong>License</strong>
+  <%= @gallery_photo.license.name %>
+</p>
+
 
 <%= link_to 'Edit', edit_gallery_gallery_photo_path(@gallery, @gallery_photo) %> |
 <%= link_to 'Back', gallery_gallery_photos_path(@gallery) %>

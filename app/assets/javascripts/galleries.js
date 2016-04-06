@@ -1,3 +1,5 @@
 $(function() {
-  Galleria.run('.galleria');
+  if ( $('.galleria').length ) {
+    Galleria.run('.galleria');
+  }
 });

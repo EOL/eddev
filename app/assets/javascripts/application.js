@@ -15,6 +15,5 @@
 //= require jquery_ujs
 //= require galleria/galleria-1.4.2
 //= require galleria/themes/classic/galleria.classic
-//= require phrasing
 //= require turbolinks
 //= require_tree .

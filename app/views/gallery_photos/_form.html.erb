@@ -32,8 +32,16 @@
   </div>
   
   <div class="field">
-    <%= f.label "License", :license_id %><br>
+    <%= f.label :license_id, "License" %><br>
     <%= f.select :license_id, options_for_select(licenses_for_select) %>
+
+    <div id="LICENSE_DESCS">
+      <% License.all.each do |license| %>
+        <p class="license_desc <%= 'hide' unless license.id == 1 %>" data-license-id="<%= license.id %>">
+        <%= t("models.license.desc.#{license.translation_key}") %>
+        </p>
+      <% end %>
+    </div>
   </div>
 
   <div class="actions">

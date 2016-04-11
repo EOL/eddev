@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160405201405) do
+ActiveRecord::Schema.define(version: 20160406185641) do
 
   create_table "galleries", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -52,15 +52,13 @@ ActiveRecord::Schema.define(version: 20160405201405) do
   add_index "legacy_users", ["user_id"], name: "index_legacy_users_on_user_id", unique: true, using: :btree
 
   create_table "licenses", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.string   "code",        limit: 255
-    t.text     "description", limit: 65535
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "code",            limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "translation_key", limit: 255
   end
 
   add_index "licenses", ["code"], name: "index_licenses_on_code", unique: true, using: :btree
-  add_index "licenses", ["name"], name: "index_licenses_on_name", unique: true, using: :btree
 
   create_table "phrasing_phrase_versions", force: :cascade do |t|
     t.integer  "phrasing_phrase_id", limit: 4

@@ -36,6 +36,7 @@ gem "figaro"
 
 #gem "phrasing"
 #gem "mercury-rails"
+gem "tinymce-rails"
 
 # file attachment 
 gem "paperclip", "~> 4.3.5"

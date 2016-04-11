@@ -5,6 +5,5 @@ $(function() {
     });
 
     $(".license_desc[data-license-id='" + $(this).val() + "'").removeClass('hide');
-    console.log($(this).val());
   });
 });

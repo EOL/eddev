@@ -34,7 +34,8 @@ gem 'bcrypt', '~> 3.1.7'
 # Figaro for ENV-based config
 gem "figaro"
 
-gem "phrasing"
+#gem "phrasing"
+gem "mercury-rails"
 
 # file attachment 
 gem "paperclip", "~> 4.3.5"

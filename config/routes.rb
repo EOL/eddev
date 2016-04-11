@@ -22,8 +22,6 @@ Rails.application.routes.draw do
     post 'migrate_user/:invitation_token'   => 'user_migrations#create'
 
     get 'i18ntest' => 'i18n_test#index', as: :i18n_test
-    get 'phrasing_test' => 'phrasing_test#index'
-
     get  '' => 'welcome#index'
   end
 

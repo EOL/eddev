@@ -7,11 +7,12 @@ FactoryGirl.define do
     password_confirmation "abcd1234"
   end
 
-  factory :user2 do
-    full_name             "Site User2"
-    email                 "email2@emailprovider.com"
-    user_name             "siteuser2"
-    password              "abcd1234"
-    password_confirmation "abcd1234"
+  factory :admin_user, class: User do
+    full_name             "Admin User"
+    email                 "adminuser@email.com"
+    user_name             "admin_user"
+    password              "abcd1234" 
+    password_confirmation "abcd1234" 
+    role                  :admin
   end
 end

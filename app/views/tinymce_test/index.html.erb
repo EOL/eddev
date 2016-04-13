@@ -1,20 +1,28 @@
-<form method="post">
-  <h1 class="editable">TinyMCE Test Page</h1>
-</form>
+<h1 class="editable">TinyMCE Test Page</h1>
+<div class="editable">This is an editable paragraph</div>
+
 <script>
   tinymce.init({
-    selector: '.editable',
+    selector: 'h1.editable',
     inline: true,
+    toolbar: 'undo redo',
+    menubar: false
+  });
+
+  tinymce.init({
+    selector: 'div.editable',
+    inline: true,
+    toolbar: 'undo redo | bold italic | bullist | save',
+    menubar: false,
     setup: function(editor) {
-      editor.on("keyup", function() {
-        console.log("keyup");
-      });
-      editor.on("blur", function() {
-        console.log("blur");
-      });
-      editor.on("change", function() {
-        console.log("change");
-      });
+      editor.addButton('save', {
+        tooltip: 'Save',
+        icon: true,
+        image: '/assets/tinymce/save_icon.png',
+        onclick: function() {
+          alert('save!');
+        }
+      })
     }
   });
 </script>

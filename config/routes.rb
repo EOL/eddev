@@ -18,14 +18,17 @@ Rails.application.routes.draw do
     get  'login'                            => 'user_sessions#new'
     post 'login'                            => 'user_sessions#create'
     get  'logout'                           => 'user_sessions#destroy'
+
     get  'migrate_user/:invitation_token'   => 'user_migrations#new', as: :migrate_user
     post 'migrate_user/:invitation_token'   => 'user_migrations#create'
 
-    get 'tinymce_test' => 'tinymce_test#index'
+    get 'tinymce_test'                      => 'tinymce_test#index'
 
-    get 'i18ntest' => 'i18n_test#index', as: :i18n_test
-    get  '' => 'welcome#index'
+    get 'i18ntest'                          => 'i18n_test#index', as: :i18n_test
+    get  ''                                 => 'welcome#index'
   end
+
+  post 'editor_content'                   => 'editor_content#create'
 
 
   # Example of named route that can be invoked with purchase_url(id: product.id)

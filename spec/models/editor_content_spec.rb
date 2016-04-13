@@ -8,8 +8,18 @@ RSpec.describe EditorContent, type: :model do
       expect(content).to be_valid
     end
 
+    it "has a locale" do
+      content.locale = nil
+      expect(content).to be_invalid
+    end
+
     it "has a key" do
       content.key = nil
+      expect(content).to be_invalid
+    end
+
+    it "has a key with no whitespace" do
+      content.key = "my key"
       expect(content).to be_invalid
     end
 
@@ -18,27 +28,6 @@ RSpec.describe EditorContent, type: :model do
       expect(content).to be_invalid
     end
   end 
-
-  describe "#save" do
-    let(:content) { build(:editor_content) }
-
-    context "when I18n.locale isn't the default" do
-      let(:locale) { "es" }
-
-      before(:each) do
-        I18n.locale = locale
-      end
-
-      after(:each) do
-        I18n.locale = I18n.default_locale
-      end
-
-      it "sets the locale to I18n.locale" do
-        content.save!
-        expect(content.locale).to eq(locale)  
-      end
-    end
-  end
 
   context "when an update is attempted" do
     let(:content) { create(:editor_content) }

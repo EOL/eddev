@@ -23,7 +23,7 @@
 .byebug_history
 
 /vendor/*
-/public/*
+/public/system/*
 
 
 # Ignore application configuration

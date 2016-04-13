@@ -30,40 +30,41 @@
   }
   */
 
+  function saveCallback(editor) {
+    var element = $(editor.bodyElement)
+      , key = element.data('content-key')
+      , locale = element.data('locale')
+    ;
+
+    $.ajax('/editor_content', {
+      method: "POST",
+      data: {
+        key: key
+      , value: editor.getContent()
+      , locale: locale
+      },
+      error: function() {
+        alert("Oops, something went wrong! Please try again later.");
+      }
+    });
+  }
+
   tinymce.init({
     selector: 'h1[data-editable="true"]',
     inline: true,
     plugins: 'save',
     toolbar: 'undo redo | save',
-    save_onsavecallback: function(editor) {
-      var element = $(editor.bodyElement)
-        , key = element.data('content-key')
-        , locale = element.data('locale')
-      ;
-
-      $.ajax('/editor_content', {
-        method: "POST",
-        data: {
-          key: key
-        , value: editor.getContent()
-        , locale: locale
-        },
-        error: function() {
-          alert("Oops, something went wrong! Please try again later.");
-        }
-      });
-    },
+    save_onsavecallback: saveCallback,
     menubar: false
   });
 
   tinymce.init({
     selector: 'div[data-editable="true"]',
     inline: true,
+    plugins: 'save',
     toolbar: 'undo redo | bold italic | bullist | save',
-    menubar: false,
-    setup: function(editor) {
-      saveButtonSetup(editor);
-    }
+    save_onsavecallback: saveCallback,
+    menubar: false
   });
 </script>
 

@@ -22,8 +22,9 @@
 # byebug history file
 .byebug_history
 
-/vendor/*
+#/vendor/*
 /public/system/*
+/public/assets/*
 
 
 # Ignore application configuration

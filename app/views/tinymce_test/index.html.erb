@@ -1,1 +1,21 @@
-<h1>TinyMCE Test Page</h1>
+<form method="post">
+  <h1 class="editable">TinyMCE Test Page</h1>
+</form>
+<script>
+  tinymce.init({
+    selector: '.editable',
+    inline: true,
+    setup: function(editor) {
+      editor.on("keyup", function() {
+        console.log("keyup");
+      });
+      editor.on("blur", function() {
+        console.log("blur");
+      });
+      editor.on("change", function() {
+        console.log("change");
+      });
+    }
+  });
+</script>
+

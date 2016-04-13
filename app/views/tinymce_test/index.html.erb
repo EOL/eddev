@@ -1,28 +1,68 @@
-<h1 class="editable">TinyMCE Test Page</h1>
-<div class="editable">This is an editable paragraph</div>
+<%= editable_tag(:h1, "test-page-header") %>
+<%= editable_tag(:div, "test-page-body") %>
 
 <script>
+  /*
+  function saveButtonSetup(editor) {
+    editor.addButton('save', {
+      tooltip: 'Save',
+      icon: true,
+      image: '/assets/tinymce/save_icon.png',
+      onclick: function() {
+        var element = $(editor.bodyElement)
+          , key = element.data('content-key')
+          , locale = element.data('locale')
+        ;
+
+        $.ajax('/editor_content', {
+          method: "POST",
+          data: {
+            key: key
+            value: editor.getContent(),
+            , locale: locale
+          },
+          error: function() {
+            alert("Oops, something went wrong! Please try again later.");
+          }
+        });
+      }
+    })
+  }
+  */
+
   tinymce.init({
-    selector: 'h1.editable',
+    selector: 'h1[data-editable="true"]',
     inline: true,
-    toolbar: 'undo redo',
+    plugins: 'save',
+    toolbar: 'undo redo | save',
+    save_onsavecallback: function(editor) {
+      var element = $(editor.bodyElement)
+        , key = element.data('content-key')
+        , locale = element.data('locale')
+      ;
+
+      $.ajax('/editor_content', {
+        method: "POST",
+        data: {
+          key: key
+        , value: editor.getContent()
+        , locale: locale
+        },
+        error: function() {
+          alert("Oops, something went wrong! Please try again later.");
+        }
+      });
+    },
     menubar: false
   });
 
   tinymce.init({
-    selector: 'div.editable',
+    selector: 'div[data-editable="true"]',
     inline: true,
     toolbar: 'undo redo | bold italic | bullist | save',
     menubar: false,
     setup: function(editor) {
-      editor.addButton('save', {
-        tooltip: 'Save',
-        icon: true,
-        image: '/assets/tinymce/save_icon.png',
-        onclick: function() {
-          alert('save!');
-        }
-      })
+      saveButtonSetup(editor);
     }
   });
 </script>

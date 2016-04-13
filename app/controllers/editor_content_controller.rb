@@ -2,7 +2,6 @@ class EditorContentController < ApplicationController
   skip_before_filter :set_locale
 
   def create
-    puts params
     params_valid = validate_create_request
 
     respond_to do |format| 

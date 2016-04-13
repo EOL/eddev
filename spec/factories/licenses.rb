@@ -1,7 +1,6 @@
 FactoryGirl.define do
   factory :license do
-    name "License name"
+    translation_key "Translation key"
     code "License code"
-    description "License description"
   end
 end

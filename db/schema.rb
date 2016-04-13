@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160406185641) do
+ActiveRecord::Schema.define(version: 20160413151435) do
+
+  create_table "editor_contents", force: :cascade do |t|
+    t.string   "key",        limit: 255
+    t.text     "value",      limit: 65535
+    t.string   "locale",     limit: 255
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "galleries", force: :cascade do |t|
     t.string   "name",       limit: 255

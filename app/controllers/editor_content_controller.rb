@@ -1,0 +1,2 @@
+class EditorContentController < ApplicationController
+end

@@ -2,34 +2,6 @@
 <%= editable_tag(:div, "test-page-body") %>
 
 <script>
-  /*
-  function saveButtonSetup(editor) {
-    editor.addButton('save', {
-      tooltip: 'Save',
-      icon: true,
-      image: '/assets/tinymce/save_icon.png',
-      onclick: function() {
-        var element = $(editor.bodyElement)
-          , key = element.data('content-key')
-          , locale = element.data('locale')
-        ;
-
-        $.ajax('/editor_content', {
-          method: "POST",
-          data: {
-            key: key
-            value: editor.getContent(),
-            , locale: locale
-          },
-          error: function() {
-            alert("Oops, something went wrong! Please try again later.");
-          }
-        });
-      }
-    })
-  }
-  */
-
   function saveCallback(editor) {
     var element = $(editor.bodyElement)
       , key = element.data('content-key')
@@ -52,19 +24,27 @@
   tinymce.init({
     selector: 'h1[data-editable="true"]',
     inline: true,
-    plugins: 'save',
+    plugins: 'save paste',
     toolbar: 'undo redo | save',
     save_onsavecallback: saveCallback,
-    menubar: false
+    menubar: false,
+    valid_styles: {
+      '*': ''
+    },
+    valid_elements: ''
   });
 
   tinymce.init({
     selector: 'div[data-editable="true"]',
     inline: true,
-    plugins: 'save',
-    toolbar: 'undo redo | bold italic | bullist | save',
+    plugins: 'save paste link',
+    toolbar: 'undo redo | bold italic | bullist | link | save',
     save_onsavecallback: saveCallback,
-    menubar: false
+    menubar: false,
+    valid_styles: {
+      '*': ''
+    },
+    valid_elements: 'a[href],strong/b,p,br,ul,li,em'
   });
 </script>
 

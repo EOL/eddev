@@ -34,8 +34,6 @@ gem 'bcrypt', '~> 3.1.7'
 # Figaro for ENV-based config
 gem "figaro"
 
-#gem "phrasing"
-#gem "mercury-rails"
 gem "tinymce-rails"
 
 # file attachment 
@@ -43,7 +41,6 @@ gem "paperclip", "~> 4.3.5"
 
 # s3 integration
 gem "aws-sdk", "< 2.0"
-#gem "fog", "~> 1.38.0"
 
 # Use Unicorn as the app server
 # gem 'unicorn'

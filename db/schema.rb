@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160413151435) do
+ActiveRecord::Schema.define(version: 20160414185311) do
 
   create_table "editor_contents", force: :cascade do |t|
     t.string   "key",        limit: 255
     t.text     "value",      limit: 65535
-    t.string   "locale",     limit: 255
+    t.string   "locale",     limit: 5
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
   end
@@ -67,23 +67,6 @@ ActiveRecord::Schema.define(version: 20160413151435) do
   end
 
   add_index "licenses", ["code"], name: "index_licenses_on_code", unique: true, using: :btree
-
-  create_table "phrasing_phrase_versions", force: :cascade do |t|
-    t.integer  "phrasing_phrase_id", limit: 4
-    t.text     "value",              limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "phrasing_phrase_versions", ["phrasing_phrase_id"], name: "index_phrasing_phrase_versions_on_phrasing_phrase_id", using: :btree
-
-  create_table "phrasing_phrases", force: :cascade do |t|
-    t.string   "locale",     limit: 255
-    t.string   "key",        limit: 255
-    t.text     "value",      limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "user_migration_invitations", force: :cascade do |t|
     t.datetime "created_at",                                   null: false

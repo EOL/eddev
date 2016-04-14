@@ -1,7 +1,43 @@
+<div id="EDIT_CONTROL" style="position: absolute; top: 10px; right: 10px; z-index: 1000">
+  <div id="EDIT_STATE_TEXT">Edit mode off</div>
+  <i class="fa fa-toggle-off fa-2x" id="EDIT_SWITCH"></i>
+</div>
+
 <%= editable_tag(:h1, "test-page-header") %>
 <%= editable_tag(:div, "test-page-body") %>
 
 <script>
+  function disableEditors() {
+    $.each(tinymce.EditorManager.editors, function(index, editor) {
+      editor.hide(); 
+    });
+  }
+
+  function enableEditors() {
+    $.each(tinymce.EditorManager.editors, function(index, editor) {
+      editor.show(); 
+    });
+  }
+
+  $('#EDIT_SWITCH').click(function() {
+    var switchElem = $(this)
+    , textElem = $('#EDIT_STATE_TEXT');
+
+    if (switchElem.hasClass('fa-toggle-off')) {
+      switchElem.removeClass('fa-toggle-off');
+      switchElem.addClass('fa-toggle-on');
+      textElem.html("Edit mode on")
+
+      enableEditors();
+    } else {
+      switchElem.removeClass('fa-toggle-on');
+      switchElem.addClass('fa-toggle-off');
+      textElem.html("Edit mode off")
+      
+      disableEditors();
+    }
+  });
+
   function saveCallback(editor) {
     editor.setProgressState(true);
 
@@ -32,30 +68,40 @@
     });
   }
 
-  tinymce.init({
-    selector: 'h1[data-editable="true"]',
-    inline: true,
-    plugins: 'save paste',
-    toolbar: 'undo redo | save',
-    save_onsavecallback: saveCallback,
-    menubar: false,
-    valid_styles: {
-      '*': ''
-    },
-    valid_elements: ''
-  });
+  $(function() {  
+      tinymce.init({
+      selector: 'h1[data-editable="true"]',
+      inline: true,
+      plugins: 'paste',
+      toolbar: 'undo redo',
+  //    save_onsavecallback: saveCallback,
+      menubar: false,
+      valid_styles: {
+        '*': ''
+      },
+      valid_elements: '',
+      init_instance_callback: function(editor) {
+        // start disabled
+        editor.hide();
+      }
+    });
 
-  tinymce.init({
-    selector: 'div[data-editable="true"]',
-    inline: true,
-    plugins: 'save paste link',
-    toolbar: 'undo redo | bold italic | bullist | link | save',
-    save_onsavecallback: saveCallback,
-    menubar: false,
-    valid_styles: {
-      '*': ''
-    },
-    valid_elements: 'a[href],strong/b,p,br,ul,li,em'
+    tinymce.init({
+      selector: 'div[data-editable="true"]',
+      inline: true,
+      plugins: 'paste link',
+      toolbar: 'undo redo | bold italic | bullist | link',
+  //   save_onsavecallback: saveCallback,
+      menubar: false,
+      valid_styles: {
+        '*': ''
+      },
+      valid_elements: 'a[href],strong/b,p,br,ul,li,em',
+      init_instance_callback: function(editor) {
+        // start disabled
+        editor.hide();
+      }
+    });
   });
 </script>
 

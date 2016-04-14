@@ -23,6 +23,7 @@
 .byebug_history
 
 #/vendor/*
+/vendor/bundle
 /public/system/*
 /public/assets/*
 

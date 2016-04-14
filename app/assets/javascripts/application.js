@@ -13,8 +13,8 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
-//= require galleria/galleria-1.4.2
-//= require galleria/themes/classic/galleria.classic
+// require galleria/galleria-1.4.2
+// require galleria/themes/classic/galleria.classic
 //= require tinymce-jquery
 //= require turbolinks
 //= require_tree .

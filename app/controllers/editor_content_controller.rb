@@ -2,25 +2,13 @@ class EditorContentController < ApplicationController
   skip_before_filter :set_locale
 
   def create
-    params_valid = validate_create_request
+    content = EditorContent.create(key: params[:key], value: params[:value], locale: params[:locale])
 
-    respond_to do |format| 
-      format.json do
-        if params_valid
-          # TODO: recover from errors
-          EditorContent.create!(key: params[:key], value: params[:value], locale: params[:locale])
-
-          render json: {success: true}
-        else
-          # TODO: error messages? 
-          render json: {success: false}, status: :bad_request
-        end
-      end
+    if content.valid?
+      head :ok
+    else
+      logger.warn("Failed to create EditorContent. Errors: #{content.errors.full_messages.join(",") unless !content.errors}")
+      head :bad_request
     end
-  end
-
-  private
-  def validate_create_request
-    !(params[:key].blank? || params[:value].blank? || params[:locale].blank?)
   end
 end

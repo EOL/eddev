@@ -3,12 +3,12 @@
 
 <script>
   function saveCallback(editor) {
+    editor.setProgressState(true);
+
     var element = $(editor.getElement())
       , key = element.data('content-key')
       , locale = element.data('locale')
     ;
-
-    editor.setProgressState(true);
 
     $.ajax('/editor_content', {
       method: "POST",
@@ -23,7 +23,6 @@
         }
 
         element.off('click', showFn).on('click', showFn);
-
         editor.hide();
         editor.setProgressState(false);
       },

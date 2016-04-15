@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
+//= require jquery-ui
 // require galleria/galleria-1.4.2
 // require galleria/themes/classic/galleria.classic
 //= require tinymce-jquery

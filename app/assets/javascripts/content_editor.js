@@ -34,13 +34,13 @@ if (typeof ContentEditor === 'undefined') {
       if (switchElem.hasClass('fa-toggle-off')) {
         switchElem.removeClass('fa-toggle-off');
         switchElem.addClass('fa-toggle-on');
-        textElem.html("Edit mode on")
+        textElem.html(I18n.content_editor.edit_mode_on);
 
         ContentEditor.enableEditors();
       } else {
         switchElem.removeClass('fa-toggle-on');
         switchElem.addClass('fa-toggle-off');
-        textElem.html("Edit mode off")
+        textElem.html(I18n.content_editor.edit_mode_off)
         
         ContentEditor.disableEditors();
       }
@@ -70,7 +70,7 @@ if (typeof ContentEditor === 'undefined') {
             error: function() {
               editor.setDirty(true);
               ContentEditor.enableSave();
-              alert("Oops, something went wrong! Please try again later.");
+              alert(I18n.content_editor.save_error);
             }
           });
         }
@@ -104,7 +104,7 @@ if (typeof ContentEditor === 'undefined') {
 
         $('body').append(
           '<div id="EDIT_CONTROL">' + 
-            '<div id="EDIT_STATE_TEXT">Edit mode off</div>' +
+            '<div id="EDIT_STATE_TEXT">' + I18n.content_editor.edit_mode_off + '</div>' +
             '<i class="fa fa-toggle-off fa-2x" id="EDIT_SWITCH"></i><br />' +
             '<i class="fa fa-floppy-o fa-2x disabled" id="SAVE_BUTTON"></i>' +
           '</div>'
@@ -114,7 +114,7 @@ if (typeof ContentEditor === 'undefined') {
         $('#EDIT_SWITCH').click(ContentEditor.toggleEditMode);
         $(window).on('beforeunload', function() {
           if (ContentEditor.isSaveEnabled()) {
-            return 'You currently have unsaved changes that will be lost if you leave this page.';
+            return I18n.content_editor.unsaved_beforeunload;
           }
         });
       }

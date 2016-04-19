@@ -21,3 +21,10 @@
 
 en:
   language: English
+
+  content_editor: 
+    edit_mode_on: "Edit mode on"
+    edit_mode_off: "Edit mode off"
+    save_error: "Oops, something went wrong! Please try again later."
+    unsaved_beforeunload: "You currently have unsaved changes that will be lost if you leave this page."
+    

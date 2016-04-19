@@ -1,5 +1,7 @@
-/* ContentEditor - tinymce with custom global saving and editing controls. Any elements of the following types with 
- * data-editable=true will be made into editor instances:
+/* ContentEditor - JS module for editing and saving editable content. Uses tinymce as its frontend. 
+ * Any elements of the following types with data-editable=true will be made into editor instances: h1, div.
+ *
+ * This module gets all of its translations from the I18n.content_editor object.
  */
 if (typeof ContentEditor === 'undefined') {
   ContentEditor = {
@@ -164,7 +166,7 @@ $(function() {
     valid_styles: {
       '*': ''
     },
-    valid_elements: 'a[href],strong/b,p,br,ul,li,em',
+    valid_elements: 'a[href|target=_blank],strong/b,p,br,ul,li,em',
     init_instance_callback: ContentEditor.initInstanceCallback
   });
 });

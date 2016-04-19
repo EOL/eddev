@@ -42,7 +42,14 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
-      if @user.update(user_params)
+      whitelisted_params = user_params
+      
+      if whitelisted_params[:password].blank? && whitelisted_params[:password_confirmation].blank?
+        whitelisted_params.delete(:password)
+        whitelisted_params.delete(:password_confirmation)
+      end
+
+      if @user.update(whitelisted_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -70,6 +77,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :user_name, :full_name, :password, :password_confirmation, :api_key, :active)
+      params.require(:user).permit(:email, :user_name, :full_name, :password, :password_confirmation, :api_key, :active, :role)
     end
 end

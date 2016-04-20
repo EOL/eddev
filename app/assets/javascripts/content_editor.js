@@ -108,6 +108,7 @@ if (typeof ContentEditor === 'undefined') {
           '<div id="EDIT_CONTROL">' + 
             '<div id="EDIT_STATE_TEXT">' + I18n.content_editor.edit_mode_off + '</div>' +
             '<i class="fa fa-toggle-off fa-2x" id="EDIT_SWITCH"></i><br />' +
+            '<div id="SAVE_LABEL">' + I18n.content_editor.save_label + '</div>' +
             '<i class="fa fa-floppy-o fa-2x disabled" id="SAVE_BUTTON"></i>' +
           '</div>'
         );

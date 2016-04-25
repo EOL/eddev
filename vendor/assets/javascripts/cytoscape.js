@@ -12127,7 +12127,8 @@ BRp.getCachedZSortedEles = function( forceRecalc ){
   var edges = this.getCachedEdges();
   var eles = [];
 
-  if( forceRecalc || !lastNodes || !lastEdges || lastNodes !== nodes || lastEdges !== edges ){
+  // XXX: leading true condition added 
+  if( true || forceRecalc || !lastNodes || !lastEdges || lastNodes !== nodes || lastEdges !== edges ){
     //console.time('cachezorder')
 
     for( var i = 0; i < nodes.length; i++ ){

@@ -5,7 +5,15 @@
   <span id="LAYOUT_GRID">Grid</span>
 </div>
 
-<div id="FOODWEB_CONTAINER" style="width: 100%; height: 600px;"></div>
+<div id="WRAP">
+  <div id="FOODWEB_CONTAINER"></div>
+
+  <div id="SIDEBAR">
+    <ul id="SPECIES_LIST">
+      
+    </ul>
+  </div>
+</div>
 
 
 <script type="text/javascript">
@@ -1423,6 +1431,33 @@ var thumbnailUrls = {
     "976910": "http://media.eol.org/content/2014/02/26/10/79094_98_68.jpg"
 }
 
+function buildSidebar() {
+  //"label": "Cooper's Hawk",
+  //"sciname": "Accipiter cooperii (Bonaparte, 1828)"
+
+  var enrichedNodes = []
+    , speciesList = $('#SPECIES_LIST');
+
+  $.each(interactions.nodes, function(index, node) {
+    var item = speciesList.append(
+      '<li class="species" data-id="' + node.id + '">' +
+        '<div class="speciesThumbWrap">' + 
+          '<img class="speciesThumb" alt="" src="' + thumbnailUrls[node.id] + '">' +
+        '</div>' +
+        '<div class="commonName">' + node.label + '</div>' +
+//        '<div class="sciName">' + node.sciname + '</div>' +
+      '</li>' 
+    );
+  }); 
+
+  $('.species').click(function() {
+    var id = $(this).data('id')
+      , node = cy.getElementById(id);
+
+    node.trigger('tap');
+  });
+}
+
 function buildElements() {
   var elements = [];
 
@@ -1580,5 +1615,7 @@ $(function() {
   });
 
   cy.on('tap', 'node', foodChain);
+
+  buildSidebar();
 });
 </script>

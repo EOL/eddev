@@ -9,3 +9,18 @@
 .speciesThumbWrap { height: 40px; width: 40px; overflow: hidden; float: left; }
 .speciesThumb { float: left; }
 .sciName { font-style: italic; }
+
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+  cursor: pointer;
+}
+
+.link {
+  stroke: #AAA;
+  stroke-width: 2px;
+}
+
+#end-arrow {
+  fill: #AAA;
+}

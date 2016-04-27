@@ -17,6 +17,8 @@
 
 
 <script type="text/javascript">
+var cy = null;
+
 var interactions = {
     "links": [
         {
@@ -1447,139 +1449,219 @@ function buildSidebar() {
       '</li>' 
     );
   }); 
-}
 
-/*
-  interactions.nodes = [
-  {
-      "comname_alt": "",
-      "group": "14",
-      "id": "795271",
-      "isHidden": 0,
-      "label": "Eastern Diamondback Rattlesnake",
-      "sciname": "Crotalus adamanteus Palisot de Beauvois, 1799"
-  },
-  ...
-  ]
-*/
-function buildNodes() {
-  var nodes = [];
-  var nodesByEolId = {};
-  
-  $(interactions.nodes).each(function(i, nodeData) {
-    var node = {
-      eolId: nodeData.id,
-      label: nodeData.label,
-      id: i
-    };
-
-    nodes.push(node);
-    nodesByEolId[node.eolId] = node;
-  });
-
-  return {
-    nodes: nodes,
-    nodesByEolId: nodesByEolId
+  var getNodeForListItem = function(listItem) {
+    return cy.getElementById($(listItem).data('id'));
   };
-}
 
-/*
-  interactions.links = [
-    {
-        "from": "596915",
-        "int_id": "9",
-        "strength": "1",
-        "to": "1265750"
-    },
-    ...
-  ]
-*/
-function buildLinks(nodesByEolId) {
-  var links = [];
-
-  $(interactions.links).each(function(i, linkData) {
-    links.push({
-      source: nodesByEolId[linkData.from].id,
-      target: nodesByEolId[linkData.to].id
+  var allExceptNode = function(excludeNode) {
+    return cy.filter(function(i, node) {
+      return !excludeNode.same(node);
     });
+  }
+
+  var speciesElem = $('.species');
+
+  speciesElem.click(function() {
+    getNodeForListItem(this).trigger('tap');
   });
 
-  return links;
+  speciesElem.mouseenter(function() {
+    var node = getNodeForListItem(this);
+    node.addClass('listHover');
+  });
+
+  speciesElem.mouseleave(function() {
+    var node = getNodeForListItem(this);
+    node.removeClass('listHover');
+  });
 }
 
-function initGraph() {
-  var nodes = buildNodes();
-  var links = buildLinks(nodes.nodesByEolId);
-  var width = 600;
-  var height = 600;
-  var color = d3.scale.category20();
-  var nodeRadius = 15;
-  var arrowWidth = 7;
-  var arrowHeight = 7;
-  var charge = -600;
+function buildElements() {
+  var elements = [];
 
-  var force = d3.layout.force()
-    .charge(charge)
-    .linkDistance(150)
-    .size([width, height])
-    .nodes(nodes.nodes)
-    .links(links)
-    .start();
+  // Add nodes
+  $.each(interactions.nodes, function(index, node) {
+    elements.push({ data: { id: node.id, label: node.label } }); 
+  });
 
-  var svg = d3.select('#FOODWEB_CONTAINER').append("svg")
-    .attr("width", width)
-    .attr("height", height);
+  // Add edges
+  $.each(interactions.links, function(index, edge) {
+      elements.push({ data: { 
+        id: edge.from + "-" + edge.to,
+        source: edge.from,
+        target: edge.to
+      }});
+  });
 
-  svg.append('svg:defs').append('svg:marker')
-     .attr('id', 'end-arrow')
-     .attr('viewBox', '0 -5 10 10')
-     .attr('refX', 6)
-     .attr('markerWidth', arrowWidth)
-     .attr('markerHeight', arrowHeight)
-     .attr('markerUnits', 'userSpaceOnUse') // prevent marker resize based on line stroke width
-     .attr('orient', 'auto')
-     .append('svg:path')
-     .attr('d', 'M0,-5L10,0L0,5');
+  return elements;
+}
 
-  // order matters here - draw links first so nodes are on top
-  var link = svg.selectAll(".link")
-      .data(links)
-    .enter().append("path")
-      .attr("class", "link")
-      .style('marker-end', 'url(#end-arrow)');
+function buildStyle() {
+  var style = [{
+    selector: 'node',
+    style: {
+      'label': 'data(label)',
+      'background-fit': 'cover',
+      'height': 100,
+      'width': 100,
+      'border-color': '#000',
+      'border-width': 2,
+    },
+  },
+  {
+    selector: 'node.selected',
+    style: {
+      'border-color': '#6666ff',
+      'border-width': 6,
+    }
+  },
+  {
+    selector: 'edge',
+    style: {
+      "target-arrow-shape": 'triangle'
+    }
+  },
+  {
+    selector: 'edge.feeds, edge.eats',
+    style: {
+      'width': 6
+    }
+  },
+  {
+    selector: 'edge.feeds',
+    style: {
+      'line-color': '#ff8888',
+      'target-arrow-color': '#ff8888',
+    }
+  },
+  {
+    selector: 'edge.eats',
+    style: {
+      'line-color': '#88ff88',
+      'target-arrow-color': '#88ff88' 
+    }
+  },
+  {
+    selector: 'node.selected, node.listHover',
+    style: {
+      'font-size': '4em',
+      'z-index': 9999,
+      'text-outline-color': '#FFF',
+      'text-outline-width': '2px'
+    }
+  },
+  {
+    selector: 'node.otherHovered',
+    style: {
+      'text-opacity': 0
+    }
+  }];
 
-  var node = svg.selectAll(".node")
-      .data(nodes.nodes)
-    .enter().append("circle")
-      .attr("class", "node")
-      .attr("r", nodeRadius)
-      .style("fill", function(d) { return color(d.group); })
-      .call(force.drag);
-
-    force.on("tick", function() {
-        link.attr('d', function(d) {
-          var dx = d.target.x - d.source.x,
-              dy = d.target.y - d.source.y,
-              dist = Math.sqrt(dx * dx + dy * dy);
-              normX = dx / dist,
-              normY = dy / dist,
-              sourcePadding = nodeRadius - 1,
-              targetPadding = nodeRadius + 3,
-              sourceX = d.source.x + (sourcePadding * normX),
-              sourceY = d.source.y + (sourcePadding * normY),
-              targetX = d.target.x - (targetPadding * normX),
-              targetY = d.target.y - (targetPadding * normY);
-
-          return 'M' + sourceX + ', ' + sourceY + 'L' + targetX + ', ' + targetY;
-        });
-
-      node.attr("cx", function(d) { return d.x; })
-          .attr("cy", function(d) { return d.y; });
+  for (var key in thumbnailUrls) {
+    style.push({
+      selector: '#' + key,
+      style: {
+        'background-image': thumbnailUrls[key]
+      }
     });
+  }
+
+  return style;
+}
+
+function foodChain() {
+  var selected = this.hasClass('selected');
+
+  cy.nodes().removeClass('selected');
+  cy.edges().removeClass('feeds');
+  cy.edges().removeClass('eats');
+
+  if (selected) {
+    return;
+  } 
+
+  this.addClass('selected');
+
+  var nodesInChain = cy.collection();
+   
+  // dfs on outgoing edges
+  cy.elements().dfs({
+    root: this,
+    visit: function(i, depth, v, e, u) {
+      console.log(v);
+      nodesInChain = nodesInChain.add(v);
+      console.log(nodesInChain);
+      if (e) {
+        e.addClass('feeds');
+      }
+    },
+    directed: true
+  });
+
+  // bfs on incoming edges (not supported by cy)
+  var nodes = [this];
+  var visited = [];
+  var node = null;
+  var edges = null;
+  while (nodes.length) {
+    node = nodes.pop();
+    nodesInChain = nodesInChain.add(node);
+
+    edges = node.connectedEdges(function() {
+      return this.target().same(node) && !this.target().anySame(visited);
+    });
+
+    visited.push(node);
+    edges.addClass('eats');
+
+    $.each(edges, function(index, edge) {
+      nodes.unshift(edge.source())
+    })
+  }
+
+  console.log('nodes: ' + nodesInChain.length);
+  nodesInChain.layout({
+    name: 'breadthfirst',
+    animate: true,
+    animationDuration: 1000
+  });
 }
 
 $(function() {
+  var layoutBf = {
+    name: 'breadthfirst',
+    spacingFactor: 1.5,
+    animate: true,
+    animationDuration: 500,
+    circle: true,
+    directed: true
+  };
+
+  var layoutGrid = {
+    name: 'grid',
+    animate: true,
+    animationDuration: 500,
+    directed: true
+  };
+
+  window.cy = cytoscape({
+    container: document.getElementById('FOODWEB_CONTAINER'),
+    elements: buildElements(),
+    style: buildStyle(),
+    layout: layoutBf
+  });
+
+  $('#LAYOUT_BF').click(function() {
+    cy.layout(layoutBf);
+  });
+
+  $('#LAYOUT_GRID').click(function() {
+    cy.layout(layoutGrid);
+  });
+
+  cy.on('tap', 'node', foodChain);
+
   buildSidebar();
-  initGraph();
 });
 </script>

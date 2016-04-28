@@ -16,9 +16,13 @@
   cursor: pointer;
 }
 
+.node.selected {
+  stroke: blue;
+}
+
 .link {
   stroke: #AAA;
-  stroke-width: 2px;
+  stroke-width: 3px;
 }
 
 #end-arrow {

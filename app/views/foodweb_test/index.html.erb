@@ -1460,11 +1460,11 @@ function FoodWeb(nodeData, linkData, photoUrls) {
 
   var self = this;
 
-  self.nodes = null;
-  self.origNodes = null;
-  self.nodesById = null;
-  self.links = null;
-  self.origLinks = null;
+  self.nodes = [];
+  self.origNodes = [];
+  self.nodesById = {};
+  self.links = [];
+  self.origLinks = [];
   self.selectedNode = null;
   self.layout = null;
   self.svg = null;
@@ -1484,7 +1484,26 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     var self = this;
     
     self.source = source;
-    self.target = target
+    self.target = target;
+    self.classes = {};
+
+    self.getClassString = function() {
+      var classes = ['link'];
+
+      for (var key in self.classes) {
+        classes.push(key);
+      }
+
+      return classes.join(' ');
+    }
+
+    self.addClass = function(className) {
+      self.classes[className] = true;
+    }
+
+    self.clearClasses = function() {
+      self.classes = {};
+    }
   };
 
   var initNodes = function(nodeData, photoUrls) {
@@ -1533,8 +1552,8 @@ function FoodWeb(nodeData, linkData, photoUrls) {
   }
 
   function getFoodChainNodesLinks(rootNode) {
-    var accumulatedNodes = [];
-    var accumulatedLinks = [];
+    var nodes = [];
+    var links = [];
 
     // directed bfs on outgoing links
     var bfsNodes = [rootNode];
@@ -1546,12 +1565,13 @@ function FoodWeb(nodeData, linkData, photoUrls) {
       curNode = bfsNodes.pop();
 
       if (curNode !== rootNode) {
-        accumulatedNodes.push(curNode);
+        nodes.push(curNode);
       }
 
       $(curNode.links).each(function(i, link) {
         if (link.source === curNode) {
-          accumulatedLinks.push(link);
+          links.push(link);
+          link.addClass('outbound');
 
           if (!addedToFrontier[link.target.id]) {
             bfsNodes.unshift(link.target);
@@ -1566,12 +1586,13 @@ function FoodWeb(nodeData, linkData, photoUrls) {
       curNode = bfsNodes.pop();
 
       if (curNode !== rootNode) {
-        accumulatedNodes.push(curNode);
+        nodes.push(curNode);
       }
 
       $(curNode.links).each(function(i, link) {
         if (link.target === curNode) {
-          accumulatedLinks.push(link);
+          links.push(link);
+          link.addClass('inbound');
 
           if (!addedToFrontier[link.source.id]) {
             bfsNodes.unshift(link.source);
@@ -1581,12 +1602,18 @@ function FoodWeb(nodeData, linkData, photoUrls) {
       });
     }
 
-    accumulatedNodes.push(rootNode);
+    nodes.push(rootNode);
 
     return {
-      nodes: accumulatedNodes,
-      links: accumulatedLinks
+      nodes: nodes,
+      links: links
     }; 
+  }
+
+  function clearLinkClasses() {
+    $(self.links).each(function(i, link) {
+      link.clearClasses();
+    });
   }
 
   function nodeClicked(nodeData, svgNode) {
@@ -1600,6 +1627,8 @@ function FoodWeb(nodeData, linkData, photoUrls) {
         self.links = self.origLinks;
         self.selectedNode = null;
         self.inSubView = false;
+
+        clearLinkClasses();
       } else if (!self.inSubView) {
         var newNodesLinks = getFoodChainNodesLinks(nodeData);
 
@@ -1615,15 +1644,19 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     }
   }
 
+  var linkClassFn = function(d) {
+    return d.getClassString();
+  }
+
   var redraw = function() {
-    // order matters here - draw links first so nodes are on top
     var linkSelection = self.svg.select('#links').selectAll('.link')
       .data(self.links, linkDataToSvgId);
 
-    console.log('links entered: ' + self.links.length);
+    // update existing link classes
+    linkSelection.attr('class', linkClassFn);
 
     linkSelection.enter().append("path")
-        .attr("class", "link")
+        .attr("class", linkClassFn)
         .attr('id', linkDataToSvgId)
         .style('marker-end', 'url(#end-arrow)');
 

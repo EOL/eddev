@@ -26,6 +26,14 @@
   stroke-width: 3px;
 }
 
+.link.inbound {
+  stroke: #88FF88;
+}
+
+.link.outbound {
+  stroke: #FF8888;
+}
+
 #end-arrow {
   fill: #AAA;
 }

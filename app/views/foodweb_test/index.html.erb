@@ -1561,7 +1561,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     self.nodes = nodes;
     self.nodesById = nodesById;
 
-    self.origNodes = $.extend({}, nodes, true);
+    self.origNodes = $.extend([], nodes);
 
     console.log(self.nodes);
   } 
@@ -1607,11 +1607,12 @@ function FoodWeb(nodeData, linkData, photoUrls) {
       self.nodes = newNodesEdges.nodes;
       self.edges = newNodesEdges.edges;
     } else {
+      console.log(self.origNodes);
+      console.log(self.origLinks);
       self.nodes = self.origNodes;
       self.edges = self.origLinks;
       self.selectedNode = null;
     }
-
 
     redraw();
   }

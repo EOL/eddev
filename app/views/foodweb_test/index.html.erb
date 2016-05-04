@@ -1,8 +1,6 @@
 <h1>Foodweb Test Page</h1>
 <div id="GRAPH_CONTROLS">
-  <span id="LAYOUT_BF">Breadth-first</span>
-  <span>|</span>
-  <span id="LAYOUT_GRID">Grid</span>
+  <span id="CLEAR_SELECTIONS">Clear all selections</span>
 </div>
 
 <div id="WRAP">
@@ -1464,8 +1462,9 @@ function FoodWeb(nodeData, linkData, photoUrls) {
   self.origNodes = [];
   self.nodesById = {};
   self.links = [];
+  self.validLinkIds = {};
   self.origLinks = [];
-  self.selectedNode = null;
+  self.selectedNodes = {};
   self.layout = null;
   self.svg = null;
   self.inSubView = false;
@@ -1506,7 +1505,12 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     }
   };
 
-  var initNodes = function(nodeData, photoUrls) {
+  self.clearSelections = function() {
+    self.selectedNodes = {};
+    updateGraph();
+  };
+
+  function initNodes(nodeData, photoUrls) {
     var nodes = [];
     var nodesById = {};
 
@@ -1548,9 +1552,30 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     return 'link-' + link.source.id + '-' + link.target.id;
   }
 
-  function getFoodChainNodesLinks(rootNode) {
+  function updateGraph() {
+    d3.selectAll('.node').classed('selected', false);
+
+    self.links = self.origLinks;
+    self.nodes = self.origNodes;
+    self.validLinkIds = {};
+
+    var first = true;
+    var node = null;
+
+    for (var key in self.selectedNodes) {
+      node = self.selectedNodes[key]
+      d3.select('#' + nodeToSvgId(node)).classed('selected', true);
+      setFoodChainNodesLinks(node, first); 
+      first = false;
+    }
+
+    redraw();
+  }
+
+  function setFoodChainNodesLinks(rootNode, followAllLinks) {
     var nodes = [];
     var links = [];
+    var newValidLinkIds = {};
 
     // directed bfs on outgoing links
     var bfsNodes = [rootNode];
@@ -1566,13 +1591,16 @@ function FoodWeb(nodeData, linkData, photoUrls) {
       }
 
       $(curNode.links).each(function(i, link) {
-        if (link.source === curNode) {
-          links.push(link);
-          link.addClass('outbound');
+        var linkId = linkDataToSvgId(link);
+        if (followAllLinks || self.validLinkIds[linkId]) {
+          if (link.source === curNode) {
+            links.push(link);
+            newValidLinkIds[linkId] = true;
 
-          if (!addedToFrontier[link.target.id]) {
-            bfsNodes.unshift(link.target);
-            addedToFrontier[link.target.id] = true;
+            if (!addedToFrontier[link.target.id]) {
+              bfsNodes.unshift(link.target);
+              addedToFrontier[link.target.id] = true;
+            }
           }
         }
       });
@@ -1587,13 +1615,16 @@ function FoodWeb(nodeData, linkData, photoUrls) {
       }
 
       $(curNode.links).each(function(i, link) {
-        if (link.target === curNode) {
-          links.push(link);
-          link.addClass('inbound');
+        var linkId = linkDataToSvgId(link);
+        if (followAllLinks || self.validLinkIds[linkId]) {
+          if (link.target === curNode) {
+            links.push(link);
+            newValidLinkIds[linkId] = true;
 
-          if (!addedToFrontier[link.source.id]) {
-            bfsNodes.unshift(link.source);
-            addedToFrontier[link.source.id] = true;
+            if (!addedToFrontier[link.source.id]) {
+              bfsNodes.unshift(link.source);
+              addedToFrontier[link.source.id] = true;
+            }
           }
         }
       });
@@ -1601,10 +1632,11 @@ function FoodWeb(nodeData, linkData, photoUrls) {
 
     nodes.push(rootNode);
 
-    return {
-      nodes: nodes,
-      links: links
-    }; 
+    console.log(nodes.length);
+
+    self.nodes = nodes;
+    self.links = links;
+    self.validLinkIds = newValidLinkIds;
   }
 
   function clearLinkClasses() {
@@ -1614,37 +1646,21 @@ function FoodWeb(nodeData, linkData, photoUrls) {
   }
 
   function nodeClicked(nodeData, svgNode) {
-    // This lets us know if we're in the middle of a drag.
+    // This lets us know if we're in the middle of a drag (or some other event that wants to prevent the click behavior).
     // If we are, suppress the click behavior.
     if (d3.event.defaultPrevented) {
       return;
     }
 
-    if (svgNode === self.selectedNode || !self.inSubView) {
-      if (self.selectedNode) {
-        d3.select(self.selectedNode).classed('selected', false);
-      }
+    var selectedNode = self.selectedNodes[nodeData.id];
 
-      if (svgNode === self.selectedNode) {
-        self.nodes = self.origNodes;
-        self.links = self.origLinks;
-        self.selectedNode = null;
-        self.inSubView = false;
-
-        clearLinkClasses();
-      } else if (!self.inSubView) {
-        var newNodesLinks = getFoodChainNodesLinks(nodeData);
-
-        self.nodes = newNodesLinks.nodes;
-        self.links = newNodesLinks.links;
-        self.selectedNode = svgNode;
-        self.inSubView = true;
-
-        d3.select(self.selectedNode).classed('selected', true);
-      }
-
-      redraw();
+    if (selectedNode) {
+      delete self.selectedNodes[nodeData.id];
+    } else {
+      self.selectedNodes[nodeData.id] = nodeData;
     }
+    
+    updateGraph();
   }
 
   var linkClassFn = function(d) {
@@ -1788,5 +1804,10 @@ function FoodWeb(nodeData, linkData, photoUrls) {
 $(function() {
   buildSidebar();
   var foodweb = new FoodWeb(interactions.nodes, interactions.links, thumbnailUrls);
+
+  $('#CLEAR_SELECTIONS').click(function(e) {
+    foodweb.clearSelections();
+  });
+    
 });
 </script>

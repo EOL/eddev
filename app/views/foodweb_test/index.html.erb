@@ -1427,25 +1427,6 @@ var thumbnailUrls = {
     "976910": "http://media.eol.org/content/2014/02/26/10/79094_98_68.jpg"
 }
 
-function buildSidebar() {
-  //"label": "Cooper's Hawk",
-  //"sciname": "Accipiter cooperii (Bonaparte, 1828)"
-
-  var enrichedNodes = []
-    , speciesList = $('#SPECIES_LIST');
-
-  $.each(interactions.nodes, function(index, node) {
-    var item = speciesList.append(
-      '<li class="species" data-id="' + node.id + '">' +
-        '<div class="speciesThumbWrap">' + 
-          '<img class="speciesThumb" alt="" src="' + thumbnailUrls[node.id] + '">' +
-        '</div>' +
-        '<div class="commonName">' + node.label + '</div>' +
-//        '<div class="sciName">' + node.sciname + '</div>' +
-      '</li>' 
-    );
-  }); 
-}
 
 function FoodWeb(nodeData, linkData, photoUrls) {
   var width = 600;
@@ -1467,7 +1448,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
   self.selectedNodes = {};
   self.layout = null;
   self.svg = null;
-  self.inSubView = false;
+  self.speciesList = null;
 
   var Node = function(nodeData, photoUrl, index) {
     var self = this;
@@ -1510,6 +1491,10 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     updateGraph();
   };
 
+  self.selectNode = function(nodeId) {
+    toggleNodeSelect(self.nodesById[nodeId]);  
+  }
+
   function initNodes(nodeData, photoUrls) {
     var nodes = [];
     var nodesById = {};
@@ -1526,7 +1511,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     self.origNodes = $.extend([], nodes);
   } 
 
-  var initLinks = function(linkData) {
+  function initLinks(linkData) {
     var links = [];
 
     $(linkData).each(function(i, linkDatum) {
@@ -1544,8 +1529,35 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     self.origLinks = $.extend([], self.links);
   }
 
+  function buildSidebar(foodWeb) {
+    //"label": "Cooper's Hawk",
+    //"sciname": "Accipiter cooperii (Bonaparte, 1828)"
+    self.speciesList = $('#SPECIES_LIST');
+
+    $.each(self.nodes, function(index, node) {
+      var item = self.speciesList.append(
+        '<li class="species" data-id="' + node.id + '">' +
+          '<div class="speciesThumbWrap">' + 
+            '<img class="speciesThumb" alt="" src="' + thumbnailUrls[node.id] + '">' +
+          '</div>' +
+          '<div class="commonName">' + node.label + '</div>' +
+  //        '<div class="sciName">' + node.sciname + '</div>' +
+        '</li>' 
+      );
+    }); 
+
+    $('.species').click(function(e) {
+      var id = $(this).data('id');
+      self.selectNode(id);
+    });
+  }
+
   function nodeToSvgId(node) {
-    return 'node-' + node.id;
+    return nodeIdToSvgId(node.id);
+  }
+
+  function nodeIdToSvgId(nodeId) {
+    return 'node-' + nodeId;
   }
 
   function linkDataToSvgId(link) {
@@ -1554,6 +1566,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
 
   function updateGraph() {
     d3.selectAll('.node').classed('selected', false);
+    self.speciesList.find('.species').removeClass('selected');
 
     self.links = self.origLinks;
     self.nodes = self.origNodes;
@@ -1565,6 +1578,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     for (var key in self.selectedNodes) {
       node = self.selectedNodes[key]
       d3.select('#' + nodeToSvgId(node)).classed('selected', true);
+      self.speciesList.find('.species[data-id=' + node.id + ']').addClass('selected');
       setFoodChainNodesLinks(node, first); 
       first = false;
     }
@@ -1630,9 +1644,10 @@ function FoodWeb(nodeData, linkData, photoUrls) {
       });
     }
 
-    nodes.push(rootNode);
-
-    console.log(nodes.length);
+    // Only add the root if there are other nodes
+    if (nodes.length) {
+      nodes.push(rootNode);
+    }
 
     self.nodes = nodes;
     self.links = links;
@@ -1645,6 +1660,18 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     });
   }
 
+  function toggleNodeSelect(node) {
+    var selectedNode = self.selectedNodes[node.id];
+
+    if (selectedNode) {
+      delete self.selectedNodes[node.id];
+    } else {
+      self.selectedNodes[node.id] = node;
+    }
+    
+    updateGraph();
+  }
+
   function nodeClicked(nodeData, svgNode) {
     // This lets us know if we're in the middle of a drag (or some other event that wants to prevent the click behavior).
     // If we are, suppress the click behavior.
@@ -1652,15 +1679,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
       return;
     }
 
-    var selectedNode = self.selectedNodes[nodeData.id];
-
-    if (selectedNode) {
-      delete self.selectedNodes[nodeData.id];
-    } else {
-      self.selectedNodes[nodeData.id] = nodeData;
-    }
-    
-    updateGraph();
+    toggleNodeSelect(nodeData);
   }
 
   var linkClassFn = function(d) {
@@ -1797,12 +1816,12 @@ function FoodWeb(nodeData, linkData, photoUrls) {
 
   initNodes(nodeData, photoUrls);
   initLinks(linkData);
+  buildSidebar();
   initD3();
   redraw();
 }
 
 $(function() {
-  buildSidebar();
   var foodweb = new FoodWeb(interactions.nodes, interactions.links, thumbnailUrls);
 
   $('#CLEAR_SELECTIONS').click(function(e) {

@@ -1455,7 +1455,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
   var nodeRadius = 20;
   var arrowWidth = 7;
   var arrowHeight = 7;
-  var charge = -600;
+  var charge = -500;
   var imgSize = nodeRadius * 2;
 
   var self = this;
@@ -1520,8 +1520,6 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     self.nodesById = nodesById;
 
     self.origNodes = $.extend([], nodes);
-
-    console.log(self.nodes);
   } 
 
   var initLinks = function(linkData) {
@@ -1539,7 +1537,6 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     });
 
     self.links = links;
-    console.log(self.links);
     self.origLinks = $.extend([], self.links);
   }
 
@@ -1617,6 +1614,12 @@ function FoodWeb(nodeData, linkData, photoUrls) {
   }
 
   function nodeClicked(nodeData, svgNode) {
+    // This lets us know if we're in the middle of a drag.
+    // If we are, suppress the click behavior.
+    if (d3.event.defaultPrevented) {
+      return;
+    }
+
     if (svgNode === self.selectedNode || !self.inSubView) {
       if (self.selectedNode) {
         d3.select(self.selectedNode).classed('selected', false);
@@ -1663,22 +1666,30 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     linkSelection.exit().remove();
     
     // Draw nodes
-    nodeSelection = self.svg.select('#nodes').selectAll('.node')
+    var nodeSelection = self.svg.select('#nodes').selectAll('.node')
       .data(self.nodes, function(d) { return d.id });
 
-    nodeSelection.enter().append("circle")
-      .attr("class", "node")
-      .attr('id', nodeToSvgId)
-      .attr("r", nodeRadius)
-      .style("fill", function(d) { return "url(#img-" + d.id + ")" })
-      .on('click', function(d) {
-        nodeClicked(d, this);
-      })
-      .call(self.layout.drag);
+    var nodeEnterGroup = nodeSelection.enter()
+      .append('svg:g')
+        .attr('class', 'node')
+        .attr('id', nodeToSvgId)
+        .call(self.layout.drag)
+        .on('click', function(d) {
+          nodeClicked(d, this);
+        });
+
+    var circleSelection = nodeEnterGroup.append('svg:circle')
+      .attr('r', nodeRadius)
+      .style('fill', function(d) { return 'url(#img-' + d.id + ')' });
+
+    var labelSelection = nodeEnterGroup.append('svg:text')
+      .attr('class', 'label')
+      .text(function(d, i) { return d.label } )
 
     nodeSelection.exit().remove();
 
     self.layout.on("tick", function() {
+
       linkSelection.attr('d', function(d) {
         var dx = d.target.x - d.source.x,
         dy = d.target.y - d.source.y,
@@ -1694,9 +1705,29 @@ function FoodWeb(nodeData, linkData, photoUrls) {
         return 'M' + sourceX + ', ' + sourceY + 'L' + targetX + ', ' + targetY;
       });
 
-      nodeSelection
-        .attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; });
+      nodeSelection.attr("transform", 
+        function(d) { return "translate(" + d.x + "," + d.y + ")"; }
+      );
+
+      labelSelection.attr('transform', function(d) {
+        var elem = this;
+        var bbox = elem.getBBox();
+        var newX = -1 * bbox.width / 2
+        var newY = 30; // Circle/text height should be the same for all, so just pick a value that looks good
+        return 'translate(' + newX + ',' + newY + ')';
+      })
+
+      /*
+      labelSelection.attr('transform', function(d) {
+        var parentGroup = $(this).parent()[0];
+        var parentBbox = parentGroup.getBBox();
+
+        console.log(parentBbox);
+        console.log(d.x);
+        console.log(d.y);
+        return 'translate(, 0)';
+      });
+      */
     });
 
     self.layout.nodes(self.nodes);

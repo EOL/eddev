@@ -1449,6 +1449,9 @@ function FoodWeb(nodeData, linkData, photoUrls) {
   self.layout = null;
   self.svg = null;
   self.speciesList = null;
+  self.selectedNode = null;
+  self.nodeOnTop = null;
+  self.nodeSelection = null;
 
   var Node = function(nodeData, photoUrl, index) {
     var self = this;
@@ -1679,8 +1682,39 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     toggleNodeSelect(node);
   }
 
+  function nodeMouseenter(node) {
+    if (d3.event.defaultPrevented) {
+      return;
+    }
+
+    self.svg.selectAll('.label').classed('hide', true);
+    self.svg.select('#' + nodeToSvgId(node)).select('.label').classed('hide', false);
+
+    // bring to front
+    this.parentNode.appendChild(this);
+  }
+
+  function nodeMouseout(node) {
+    if (d3.event.defaultPrevented) {
+      return;
+    }
+
+    self.svg.selectAll('.label').classed('hide', false);
+  }
+
   function linkClassFn(d) {
     return d.getClassString();
+  }
+
+  function bringNodeToFront(node) {
+    var index = self.nodes.indexOf(node);
+
+    if (index > -1) {
+      self.nodes.splice(index, 1);
+      self.nodes.push(node);
+    }
+
+    self.nodeSelection.order();
   }
 
   function redraw() {
@@ -1697,16 +1731,17 @@ function FoodWeb(nodeData, linkData, photoUrls) {
 
     linkSelection.exit().remove();
     
-    // Draw nodes
-    var nodeSelection = self.svg.select('#nodes').selectAll('.node')
+    self.nodeSelection = self.svg.select('#nodes').selectAll('.node')
       .data(self.nodes, function(d) { return d.id });
 
-    var nodeEnterGroup = nodeSelection.enter()
+    var nodeEnterGroup = self.nodeSelection.enter()
       .append('svg:g')
         .attr('class', 'node')
         .attr('id', nodeToSvgId)
         .call(self.layout.drag)
-        .on('click', nodeClicked);
+        .on('click', nodeClicked)
+        .on('mouseenter', nodeMouseenter)
+        .on('mouseout', nodeMouseout);
 
     var circleSelection = nodeEnterGroup.append('svg:circle')
       .attr('r', nodeRadius)
@@ -1723,7 +1758,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
       .attr('class', 'innerText')
       .text(function(d, i) { return d.label });
 
-    nodeSelection.exit().remove();
+    self.nodeSelection.exit().remove();
 
     self.layout.on("tick", function() {
       var linkTargetPadding = 5
@@ -1743,7 +1778,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
         return 'M' + sourceX + ', ' + sourceY + 'L' + targetX + ', ' + targetY;
       });
 
-      nodeSelection.attr("transform", 
+      self.nodeSelection.attr("transform", 
         function(d) { return "translate(" + d.x + "," + d.y + ")"; }
       );
 

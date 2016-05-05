@@ -11,6 +11,8 @@
 .speciesThumb { float: left; }
 .sciName { font-style: italic; }
 
+.hide { display: none; }
+
 .node {
   stroke: #fff;
   stroke-width: 3px;

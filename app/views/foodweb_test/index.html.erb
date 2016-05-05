@@ -8,7 +8,6 @@
 
   <div id="SIDEBAR">
     <ul id="SPECIES_LIST">
-      
     </ul>
   </div>
 </div>
@@ -1691,7 +1690,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     self.svg.select('#' + nodeToSvgId(node)).select('.label').classed('hide', false);
 
     // bring to front
-    this.parentNode.appendChild(this);
+    this.parentNode.parentNode.appendChild(this.parentNode);
   }
 
   function nodeMouseout(node) {
@@ -1704,17 +1703,6 @@ function FoodWeb(nodeData, linkData, photoUrls) {
 
   function linkClassFn(d) {
     return d.getClassString();
-  }
-
-  function bringNodeToFront(node) {
-    var index = self.nodes.indexOf(node);
-
-    if (index > -1) {
-      self.nodes.splice(index, 1);
-      self.nodes.push(node);
-    }
-
-    self.nodeSelection.order();
   }
 
   function redraw() {
@@ -1731,21 +1719,21 @@ function FoodWeb(nodeData, linkData, photoUrls) {
 
     linkSelection.exit().remove();
     
-    self.nodeSelection = self.svg.select('#nodes').selectAll('.node')
+    var nodeSelection = self.svg.select('#nodes').selectAll('.node')
       .data(self.nodes, function(d) { return d.id });
 
-    var nodeEnterGroup = self.nodeSelection.enter()
+    var nodeEnterGroup = nodeSelection.enter()
       .append('svg:g')
         .attr('class', 'node')
         .attr('id', nodeToSvgId)
         .call(self.layout.drag)
-        .on('click', nodeClicked)
-        .on('mouseenter', nodeMouseenter)
-        .on('mouseout', nodeMouseout);
+        .on('click', nodeClicked);
 
     var circleSelection = nodeEnterGroup.append('svg:circle')
       .attr('r', nodeRadius)
-      .style('fill', function(d) { return 'url(#img-' + d.id + ')' });
+      .style('fill', function(d) { return 'url(#img-' + d.id + ')' })
+      .on('mouseenter', nodeMouseenter)
+      .on('mouseout', nodeMouseout);
 
     var labelSelection = nodeEnterGroup.append('svg:g')
       .attr('class', 'label');
@@ -1758,7 +1746,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
       .attr('class', 'innerText')
       .text(function(d, i) { return d.label });
 
-    self.nodeSelection.exit().remove();
+    nodeSelection.exit().remove();
 
     self.layout.on("tick", function() {
       var linkTargetPadding = 5
@@ -1778,7 +1766,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
         return 'M' + sourceX + ', ' + sourceY + 'L' + targetX + ', ' + targetY;
       });
 
-      self.nodeSelection.attr("transform", 
+      nodeSelection.attr("transform", 
         function(d) { return "translate(" + d.x + "," + d.y + ")"; }
       );
 
@@ -1789,18 +1777,6 @@ function FoodWeb(nodeData, linkData, photoUrls) {
         var newY = 30; // Circle/text height should be the same for all, so just pick a value that looks good
         return 'translate(' + newX + ',' + newY + ')';
       })
-
-      /*
-      labelSelection.attr('transform', function(d) {
-        var parentGroup = $(this).parent()[0];
-        var parentBbox = parentGroup.getBBox();
-
-        console.log(parentBbox);
-        console.log(d.x);
-        console.log(d.y);
-        return 'translate(, 0)';
-      });
-      */
     });
 
     self.layout.nodes(self.nodes);

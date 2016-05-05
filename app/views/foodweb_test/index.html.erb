@@ -1555,8 +1555,6 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     self.speciesList.empty();
 
     $.each(self.selectedNodes, function(id, node) {
-      console.log(id);
-      console.log(node);
       appendNode(node, true);
     });
 
@@ -1566,10 +1564,22 @@ function FoodWeb(nodeData, linkData, photoUrls) {
       }
     });
 
-    $('.species').click(function(e) {
-      var id = $(this).data('id');
-      self.selectNode(id);
-    });
+    var mouseEnterLeave = function(elem, callback) {
+      var id = $(elem).data('id');
+      callback(self.nodesById[id]);
+    }
+
+    $('.species')
+      .click(function(e) {
+        var id = $(this).data('id');
+        self.selectNode(id);
+      })
+      .mouseenter(function(e) {
+        mouseEnterLeave(this, nodeMouseenter);
+      })
+      .mouseleave(function(e) {
+        mouseEnterLeave(this, nodeMouseout);
+      });
   }
 
   function nodeToSvgId(node) {
@@ -1681,6 +1691,8 @@ function FoodWeb(nodeData, linkData, photoUrls) {
   function toggleNodeSelect(node) {
     var selectedNode = self.selectedNodes[node.id];
 
+    nodeMouseout(node); // Fixes issue where mouseout/leave doesn't fire because the node jumps away due to the new layout
+
     if (selectedNode) {
       delete self.selectedNodes[node.id];
     } else {
@@ -1701,19 +1713,21 @@ function FoodWeb(nodeData, linkData, photoUrls) {
   }
 
   function nodeMouseenter(node) {
-    if (d3.event.defaultPrevented) {
+    if (d3.event && d3.event.defaultPrevented) {
       return;
     }
 
     self.svg.selectAll('.label').classed('hide', true);
-    self.svg.select('#' + nodeToSvgId(node)).select('.label').classed('hide', false);
+    var svgNode = self.svg.select('#' + nodeToSvgId(node)); 
+    
+    svgNode.select('.label').classed('hide', false);
 
     // bring to front
-    this.parentNode.parentNode.appendChild(this.parentNode);
+    svgNode[0][0].parentNode.appendChild(svgNode[0][0]);
   }
 
   function nodeMouseout(node) {
-    if (d3.event.defaultPrevented) {
+    if (d3.event && d3.event.defaultPrevented) {
       return;
     }
 

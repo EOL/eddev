@@ -1531,22 +1531,40 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     self.origLinks = $.extend([], self.links);
   }
 
-  function buildSidebar(foodWeb) {
-    //"label": "Cooper's Hawk",
-    //"sciname": "Accipiter cooperii (Bonaparte, 1828)"
-    self.speciesList = $('#SPECIES_LIST');
+  function updateSidebar(foodWeb) {
+    var appendNode = function(node, selected) {
+      var htmlClass = "species";
 
-    $.each(self.nodes, function(index, node) {
-      var item = self.speciesList.append(
-        '<li class="species" data-id="' + node.id + '">' +
+      if (selected) {
+        htmlClass += " selected";
+      }
+
+      self.speciesList.append(
+        '<li class="' + htmlClass + '" data-id="' + node.id + '">' +
           '<div class="speciesThumbWrap">' + 
             '<img class="speciesThumb" alt="" src="' + thumbnailUrls[node.id] + '">' +
           '</div>' +
           '<div class="commonName">' + node.label + '</div>' +
-  //        '<div class="sciName">' + node.sciname + '</div>' +
         '</li>' 
       );
-    }); 
+    };
+
+    //"label": "Cooper's Hawk",
+    //"sciname": "Accipiter cooperii (Bonaparte, 1828)"
+    self.speciesList = $('#SPECIES_LIST');
+    self.speciesList.empty();
+
+    $.each(self.selectedNodes, function(id, node) {
+      console.log(id);
+      console.log(node);
+      appendNode(node, true);
+    });
+
+    $.each(self.nodes, function(index, node) {
+      if (!self.selectedNodes[node.id]) {
+        appendNode(node, false);
+      }
+    });
 
     $('.species').click(function(e) {
       var id = $(this).data('id');
@@ -1585,6 +1603,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
       first = false;
     }
 
+    updateSidebar();
     redraw();
   }
 
@@ -1611,7 +1630,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
           var linkId = linkDataToSvgId(link);
 
           if (followAllLinks || self.validLinkIds[linkId]) {
-            var linkNodes = linkVisitFn(link, linkId);
+            var linkNodes = linkVisitFn(link);
 
             if (linkNodes.addIfEqCurNode === curNode) {
               links.push(link);
@@ -1627,7 +1646,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
       }
     };
 
-    bfs(function(link, linkId) {
+    bfs(function(link) {
       return {
         addIfEqCurNode: link.source,
         nodeToAdd: link.target
@@ -1636,7 +1655,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
 
     bfsNodes = [rootNode];
 
-    bfs(function(link, linkId) {
+    bfs(function(link) {
       return {
         addIfEqCurNode: link.target,
         nodeToAdd: link.source
@@ -1830,7 +1849,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
 
   initNodes(nodeData, photoUrls);
   initLinks(linkData);
-  buildSidebar();
+  updateSidebar();
   initD3();
   redraw();
 }

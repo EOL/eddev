@@ -1432,9 +1432,9 @@ function FoodWeb(nodeData, linkData, photoUrls) {
   var width = 600;
   var height = 600;
   var nodeRadius = 20;
-  var arrowWidth = 7;
-  var arrowHeight = 7;
-  var charge = -500;
+  var arrowWidth = 10;
+  var arrowHeight = 10;
+  var charge = -700;
   var imgSize = nodeRadius * 2;
 
   var self = this;
@@ -1579,14 +1579,15 @@ function FoodWeb(nodeData, linkData, photoUrls) {
       node = self.selectedNodes[key]
       d3.select('#' + nodeToSvgId(node)).classed('selected', true);
       self.speciesList.find('.species[data-id=' + node.id + ']').addClass('selected');
-      setFoodChainNodesLinks(node, first); 
+      filterToFoodChainNodesLinks(node, first); 
       first = false;
     }
 
     redraw();
   }
 
-  function setFoodChainNodesLinks(rootNode, followAllLinks) {
+  function filterToFoodChainNodesLinks(rootNode, followAllLinks) {
+
     var nodes = [];
     var links = [];
     var newValidLinkIds = {};
@@ -1597,52 +1598,50 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     var rootNodeId = rootNode.id
     var addedToFrontier = { rootNodeId: true };
 
-    while (bfsNodes.length) {
-      curNode = bfsNodes.pop();
+    var bfs = function (linkVisitFn) { 
+      while (bfsNodes.length) {
+        curNode = bfsNodes.pop();
 
-      if (curNode !== rootNode) {
-        nodes.push(curNode);
-      }
+        if (curNode !== rootNode) {
+          nodes.push(curNode);
+        }
 
-      $(curNode.links).each(function(i, link) {
-        var linkId = linkDataToSvgId(link);
-        if (followAllLinks || self.validLinkIds[linkId]) {
-          if (link.source === curNode) {
-            links.push(link);
-            newValidLinkIds[linkId] = true;
+        $(curNode.links).each(function(i, link) {
+          var linkId = linkDataToSvgId(link);
+          var linkNodes = null;
 
-            if (!addedToFrontier[link.target.id]) {
-              bfsNodes.unshift(link.target);
-              addedToFrontier[link.target.id] = true;
+          if (followAllLinks || self.validLinkIds[linkId]) {
+            linkNodes = linkVisitFn(link, linkId);
+
+            if (linkNodes.addIfEqCurNode === curNode) {
+              links.push(link);
+              newValidLinkIds[linkId] = true;
+
+              if (!addedToFrontier[linkNodes.nodeToAdd]) {
+                bfsNodes.unshift(linkNodes.nodeToAdd);
+                addedToFrontier[linkNodes.nodeToAdd.id] = true;
+              }
             }
           }
-        }
-      });
-    }
+        });
+      }
+    };
+
+    bfs(function(link, linkId) {
+      return {
+        addIfEqCurNode: link.source,
+        nodeToAdd: link.target
+      };
+    });
 
     bfsNodes = [rootNode];
-    while (bfsNodes.length) {
-      curNode = bfsNodes.pop();
 
-      if (curNode !== rootNode) {
-        nodes.push(curNode);
-      }
-
-      $(curNode.links).each(function(i, link) {
-        var linkId = linkDataToSvgId(link);
-        if (followAllLinks || self.validLinkIds[linkId]) {
-          if (link.target === curNode) {
-            links.push(link);
-            newValidLinkIds[linkId] = true;
-
-            if (!addedToFrontier[link.source.id]) {
-              bfsNodes.unshift(link.source);
-              addedToFrontier[link.source.id] = true;
-            }
-          }
-        }
-      });
-    }
+    bfs(function(link, linkId) {
+      return {
+        addIfEqCurNode: link.target,
+        nodeToAdd: link.source
+      };
+    });
 
     // Only add the root if there are other nodes
     if (nodes.length) {
@@ -1672,21 +1671,21 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     updateGraph();
   }
 
-  function nodeClicked(nodeData, svgNode) {
+  function nodeClicked(node) {
     // This lets us know if we're in the middle of a drag (or some other event that wants to prevent the click behavior).
     // If we are, suppress the click behavior.
     if (d3.event.defaultPrevented) {
       return;
     }
 
-    toggleNodeSelect(nodeData);
+    toggleNodeSelect(node);
   }
 
-  var linkClassFn = function(d) {
+  function linkClassFn(d) {
     return d.getClassString();
   }
 
-  var redraw = function() {
+  function redraw() {
     var linkSelection = self.svg.select('#links').selectAll('.link')
       .data(self.links, linkDataToSvgId);
 
@@ -1709,21 +1708,27 @@ function FoodWeb(nodeData, linkData, photoUrls) {
         .attr('class', 'node')
         .attr('id', nodeToSvgId)
         .call(self.layout.drag)
-        .on('click', function(d) {
-          nodeClicked(d, this);
-        });
+        .on('click', nodeClicked);
 
     var circleSelection = nodeEnterGroup.append('svg:circle')
       .attr('r', nodeRadius)
       .style('fill', function(d) { return 'url(#img-' + d.id + ')' });
 
-    var labelSelection = nodeEnterGroup.append('svg:text')
-      .attr('class', 'label')
-      .text(function(d, i) { return d.label } )
+    var labelSelection = nodeEnterGroup.append('svg:g')
+      .attr('class', 'label');
+
+    labelSelection.append('svg:text')
+      .attr('class', 'highlightText')
+      .text(function(d, i) { return d.label });
+
+    labelSelection.append('svg:text')
+      .attr('class', 'innerText')
+      .text(function(d, i) { return d.label });
 
     nodeSelection.exit().remove();
 
     self.layout.on("tick", function() {
+      var linkTargetPadding = 5
 
       linkSelection.attr('d', function(d) {
         var dx = d.target.x - d.source.x,
@@ -1731,8 +1736,8 @@ function FoodWeb(nodeData, linkData, photoUrls) {
         dist = Math.sqrt(dx * dx + dy * dy);
         normX = dx / dist,
         normY = dy / dist,
-        sourcePadding = nodeRadius - 1,
-        targetPadding = nodeRadius + 3,
+        sourcePadding = nodeRadius,
+        targetPadding = nodeRadius + linkTargetPadding,
         sourceX = d.source.x + (sourcePadding * normX),
         sourceY = d.source.y + (sourcePadding * normY),
         targetX = d.target.x - (targetPadding * normX),
@@ -1770,7 +1775,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     self.layout.start();
   }
 
-  var initD3 = function() {
+  function initD3() {
     self.svg = d3.select('#FOODWEB_CONTAINER').append("svg")
       .attr("width", width)
       .attr("height", height);
@@ -1827,6 +1832,5 @@ $(function() {
   $('#CLEAR_SELECTIONS').click(function(e) {
     foodweb.clearSelections();
   });
-    
 });
 </script>

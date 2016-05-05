@@ -13,7 +13,7 @@
 
 .node {
   stroke: #fff;
-  stroke-width: 1.5px;
+  stroke-width: 3px;
   cursor: pointer;
   z-index: 1000;
 }
@@ -23,8 +23,8 @@
 }
 
 .link {
-  stroke: #AAA;
-  stroke-width: 3px;
+  stroke: #888;
+  stroke-width: 1px;
 }
 
 .link.inbound {
@@ -35,13 +35,20 @@
   stroke: #FF8888;
 }
 
-.label {
+.label .innerText {
   stroke: #000;
   stroke-width: 1px;
   font-size: 12px;
-  font-family: "Arial"
+  font-family: "Arial";
+}
+
+.label .highlightText {
+  stroke: #FFF;
+  stroke-width: 2px;
+  font-size: 12px;
+  font-family: "Arial";
 }
 
 #end-arrow {
-  fill: #AAA;
+  fill: #888;
 }

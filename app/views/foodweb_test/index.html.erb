@@ -1441,10 +1441,10 @@ function FoodWeb(nodeData, linkData, photoUrls) {
   self.nodes = [];
   self.origNodes = [];
   self.nodesById = {};
-  self.links = [];
-  self.validLinkIds = {};
-  self.origLinks = [];
   self.selectedNodes = {};
+  self.links = [];
+  self.origLinks = [];
+  self.validLinkIds = {};
   self.layout = null;
   self.svg = null;
   self.speciesList = null;
@@ -1460,6 +1460,8 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     self.photoUrl = photoUrl;
     self.index = index;
     self.links = [];
+
+    self.svgId = 'node-' + self.id;
   };
 
   var Link = function(source, target) {
@@ -1468,6 +1470,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     self.source = source;
     self.target = target;
     self.classes = {};
+    self.svgId = 'link-' + self.source.id + '-' + self.target.id;
 
     self.getClassString = function() {
       var classes = ['link'];
@@ -1583,19 +1586,11 @@ function FoodWeb(nodeData, linkData, photoUrls) {
   }
 
   function nodeToSvgId(node) {
-    return nodeIdToSvgId(node.id);
-  }
-
-  function nodeIdToSvgId(nodeId) {
-    return 'node-' + nodeId;
-  }
-
-  function linkDataToSvgId(link) {
-    return 'link-' + link.source.id + '-' + link.target.id;
+    return node.svgId;
   }
 
   function updateGraph() {
-    d3.selectAll('.node').classed('selected', false);
+    self.svg.selectAll('.node').classed('selected', false);
     self.speciesList.find('.species').removeClass('selected');
 
     self.links = self.origLinks;
@@ -1607,7 +1602,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
 
     for (var key in self.selectedNodes) {
       node = self.selectedNodes[key]
-      d3.select('#' + nodeToSvgId(node)).classed('selected', true);
+      self.svg.select('#' + node.svgId).classed('selected', true);
       self.speciesList.find('.species[data-id=' + node.id + ']').addClass('selected');
       filterToFoodChainNodesLinks(node, first); 
       first = false;
@@ -1637,14 +1632,12 @@ function FoodWeb(nodeData, linkData, photoUrls) {
         }
 
         $(curNode.links).each(function(i, link) {
-          var linkId = linkDataToSvgId(link);
-
-          if (followAllLinks || self.validLinkIds[linkId]) {
+          if (followAllLinks || self.validLinkIds[link.svgId]) {
             var linkNodes = linkVisitFn(link);
 
             if (linkNodes.addIfEqCurNode === curNode) {
               links.push(link);
-              newValidLinkIds[linkId] = true;
+              newValidLinkIds[link.svgId] = true;
 
               if (!addedToFrontier[linkNodes.nodeToAdd.id]) {
                 bfsNodes.unshift(linkNodes.nodeToAdd);
@@ -1718,7 +1711,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     }
 
     self.svg.selectAll('.label').classed('hide', true);
-    var svgNode = self.svg.select('#' + nodeToSvgId(node)); 
+    var svgNode = self.svg.select('#' + node.svgId); 
     
     svgNode.select('.label').classed('hide', false);
 
@@ -1738,16 +1731,20 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     return d.getClassString();
   }
 
+  function linkToSvgId(link) {
+    return link.svgId;
+  }
+
   function redraw() {
     var linkSelection = self.svg.select('#links').selectAll('.link')
-      .data(self.links, linkDataToSvgId);
+      .data(self.links, linkToSvgId);
 
     // update existing link classes
     linkSelection.attr('class', linkClassFn);
 
     linkSelection.enter().append("path")
         .attr("class", linkClassFn)
-        .attr('id', linkDataToSvgId)
+        .attr('id', linkToSvgId)
         .style('marker-end', 'url(#end-arrow)');
 
     linkSelection.exit().remove();

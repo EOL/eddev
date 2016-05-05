@@ -1587,7 +1587,6 @@ function FoodWeb(nodeData, linkData, photoUrls) {
   }
 
   function filterToFoodChainNodesLinks(rootNode, followAllLinks) {
-
     var nodes = [];
     var links = [];
     var newValidLinkIds = {};
@@ -1608,16 +1607,15 @@ function FoodWeb(nodeData, linkData, photoUrls) {
 
         $(curNode.links).each(function(i, link) {
           var linkId = linkDataToSvgId(link);
-          var linkNodes = null;
 
           if (followAllLinks || self.validLinkIds[linkId]) {
-            linkNodes = linkVisitFn(link, linkId);
+            var linkNodes = linkVisitFn(link, linkId);
 
             if (linkNodes.addIfEqCurNode === curNode) {
               links.push(link);
               newValidLinkIds[linkId] = true;
 
-              if (!addedToFrontier[linkNodes.nodeToAdd]) {
+              if (!addedToFrontier[linkNodes.nodeToAdd.id]) {
                 bfsNodes.unshift(linkNodes.nodeToAdd);
                 addedToFrontier[linkNodes.nodeToAdd.id] = true;
               }

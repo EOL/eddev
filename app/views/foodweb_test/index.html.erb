@@ -1493,12 +1493,9 @@ function FoodWeb(nodeData, linkData, photoUrls) {
 
   self.clearSelections = function() {
     self.selectedNodes = {};
-    updateGraph();
+    update();
   };
 
-  self.selectNode = function(nodeId) {
-    toggleNodeSelect(self.nodesById[nodeId]);  
-  }
 
   function initNodes(nodeData, photoUrls) {
     var nodes = [];
@@ -1575,7 +1572,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     $('.species')
       .click(function(e) {
         var id = $(this).data('id');
-        self.selectNode(id);
+        selectNode(id);
       })
       .mouseenter(function(e) {
         mouseEnterLeave(this, nodeMouseenter);
@@ -1589,7 +1586,14 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     return node.svgId;
   }
 
-  function updateGraph() {
+  function selectNode(nodeId) {
+    toggleNodeSelect(self.nodesById[nodeId]);  
+  }
+
+  /*
+   * Update food web given the currently selected nodes
+   */
+  function update() {
     self.svg.selectAll('.node').classed('selected', false);
     self.speciesList.find('.species').removeClass('selected');
 
@@ -1612,12 +1616,19 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     redraw();
   }
 
+  /*
+   * Filter nodes and links to those which are part of a path to the given root node. This method
+   * also sets self.validLinkIds to those in the filtered graph.
+   *
+   * @param rootNode the root node
+   * @param followAllLinks if true, follow all links in the graph. If false, only follow those in
+   *    self.validLinkIds.
+   */
   function filterToFoodChainNodesLinks(rootNode, followAllLinks) {
     var nodes = [];
     var links = [];
     var newValidLinkIds = {};
 
-    // directed bfs on outgoing links
     var bfsNodes = [rootNode];
     var curNode = null;
     var rootNodeId = rootNode.id
@@ -1649,6 +1660,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
       }
     };
 
+    // Directed bfs on outgoing links
     bfs(function(link) {
       return {
         addIfEqCurNode: link.source,
@@ -1656,6 +1668,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
       };
     });
 
+    // Directed bfs on incoming links
     bfsNodes = [rootNode];
 
     bfs(function(link) {
@@ -1665,7 +1678,7 @@ function FoodWeb(nodeData, linkData, photoUrls) {
       };
     });
 
-    // Only add the root if there are other nodes
+    // Only add the root if there is at least one other node (i.e., if it's connected to something)
     if (nodes.length) {
       nodes.push(rootNode);
     }
@@ -1675,12 +1688,9 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     self.validLinkIds = newValidLinkIds;
   }
 
-  function clearLinkClasses() {
-    $(self.links).each(function(i, link) {
-      link.clearClasses();
-    });
-  }
-
+  /*
+   * Toggle the selected state of a node
+   */
   function toggleNodeSelect(node) {
     var selectedNode = self.selectedNodes[node.id];
 
@@ -1692,9 +1702,12 @@ function FoodWeb(nodeData, linkData, photoUrls) {
       self.selectedNodes[node.id] = node;
     }
     
-    updateGraph();
+    update();
   }
 
+  /*
+   * Node onclick callback. Toggles the selected state of the node that was clicked.
+   */
   function nodeClicked(node) {
     // This lets us know if we're in the middle of a drag (or some other event that wants to prevent the click behavior).
     // If we are, suppress the click behavior.
@@ -1705,20 +1718,26 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     toggleNodeSelect(node);
   }
 
+  /*
+   * Node onmouseenter callback. Hides all node labels except the target node's, and brings it to the front.
+   */
   function nodeMouseenter(node) {
     if (d3.event && d3.event.defaultPrevented) {
       return;
     }
 
     self.svg.selectAll('.label').classed('hide', true);
+
     var svgNode = self.svg.select('#' + node.svgId); 
-    
     svgNode.select('.label').classed('hide', false);
 
     // bring to front
     svgNode[0][0].parentNode.appendChild(svgNode[0][0]);
   }
 
+  /*
+   * Node onmouseout callback. Restores all node labels.
+   */
   function nodeMouseout(node) {
     if (d3.event && d3.event.defaultPrevented) {
       return;
@@ -1727,14 +1746,23 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     self.svg.selectAll('.label').classed('hide', false);
   }
 
+  /*
+   * Convenience method to call getClassString on a passed in Link
+   */
   function linkClassFn(d) {
     return d.getClassString();
   }
 
+  /*
+   * Convenience method to return a Link's svgId attribute
+   */
   function linkToSvgId(link) {
     return link.svgId;
   }
 
+  /*
+   * Redraw everything given the current state of this FoodWeb
+   */
   function redraw() {
     var linkSelection = self.svg.select('#links').selectAll('.link')
       .data(self.links, linkToSvgId);
@@ -1814,6 +1842,9 @@ function FoodWeb(nodeData, linkData, photoUrls) {
     self.layout.start();
   }
 
+  /*
+   * D3 initialization. Should only be called once.
+   */
   function initD3() {
     self.svg = d3.select('#FOODWEB_CONTAINER').append("svg")
       .attr("width", width)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414185311) do
+ActiveRecord::Schema.define(version: 20160512170526) do
 
   create_table "editor_contents", force: :cascade do |t|
     t.string   "key",        limit: 255
@@ -67,6 +67,11 @@ ActiveRecord::Schema.define(version: 20160414185311) do
   end
 
   add_index "licenses", ["code"], name: "index_licenses_on_code", unique: true, using: :btree
+
+  create_table "places", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "user_migration_invitations", force: :cascade do |t|
     t.datetime "created_at",                                   null: false

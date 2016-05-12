@@ -21,10 +21,6 @@ RSpec.describe EditorContentController, type: :controller do
           expect(response.status).to eq(200)
         end
 
-        it "sets success: true on the response" do
-          expect(JSON.parse(response.body)["success"]).to be true
-        end
-
         it "creates an EditorContent from the request parameter values" do
           expect(EditorContent.find_by(key: key)).not_to be_nil
         end
@@ -34,10 +30,6 @@ RSpec.describe EditorContentController, type: :controller do
         shared_examples_for :missing_parameter do
           it "sets the HTTP status to 400" do
             expect(response.status).to eq(400)
-          end
-
-          it "sets success: false on the response" do
-            expect(JSON.parse(response.body)["success"]).to be false
           end
         end
 

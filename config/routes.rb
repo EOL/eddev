@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
-  resources :places
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
 
   scope "(:locale)", locale: /#{I18n.available_locales.join("|")}/ do
     resources :users
+    resources :places
 
     resources :galleries do
       resources :gallery_photos

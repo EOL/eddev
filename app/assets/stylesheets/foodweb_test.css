@@ -7,8 +7,8 @@
 .species { list-style: none; text-align: right; border: 1px solid #000; margin-bottom: 2px; height: 40px; }
 .species:hover { background-color: #DDD; cursor: pointer; }
 .species.selected { background-color: #9999FF; }
-.speciesThumbWrap { height: 40px; width: 40px; overflow: hidden; float: left; }
-.speciesThumb { float: left; }
+.speciesThumbWrap { height: 40px; width: 40px; line-height: 40px; overflow: hidden; float: left; }
+.speciesThumb { max-width: 100%; vertical-align: middle; }
 .sciName { font-style: italic; }
 
 .hide { display: none; }

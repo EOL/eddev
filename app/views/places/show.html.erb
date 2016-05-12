@@ -1,4 +1,6 @@
 <p id="notice"><%= notice %></p>
 
+<%= editable_tag(:h1, h1_key(@place)) %>
+
 <%= link_to 'Edit', edit_place_path(@place) %> |
 <%= link_to 'Back', places_path %>

@@ -2,5 +2,12 @@
 
 <%= editable_tag(:h1, h1_key(@place)) %>
 
+<div>Habitats:</div>
+<ul class="habitat_list">
+  <% @place.habitats.each do |habitat| %>
+    <li><%= link_to habitat.name, habitat %></li>
+  <% end %>
+</ul>
+
 <%= link_to 'Edit', edit_place_path(@place) %> |
 <%= link_to 'Back', places_path %>

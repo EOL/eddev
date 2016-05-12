@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   scope "(:locale)", locale: /#{I18n.available_locales.join("|")}/ do
     resources :users
     resources :places
+    resources :habitats
 
     resources :galleries do
       resources :gallery_photos

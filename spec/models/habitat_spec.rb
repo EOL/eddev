@@ -12,5 +12,10 @@ RSpec.describe Habitat, type: :model do
       habitat.name = ''
       expect(habitat).to be_invalid
     end
+
+    it "has a unique name" do
+      other_habitat = Habitat.new(name: habitat.name)
+      expect(other_habitat).to be_invalid
+    end
   end
 end

@@ -21,7 +21,7 @@ module EditorContentHelper
     stored_content = content_for_key(key_from)
 
     if stored_content
-      EditorContent.create!(key_to, stored_content.value)
+      EditorContent.create!(key: key_to, value: stored_content.value, locale: I18n.locale)
     end
   end
 

@@ -1,4 +1,4 @@
-<%= form_for(@habitat) do |f| %>
+<%= form_for([@place, @habitat]) do |f| %>
   <% if @habitat.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@habitat.errors.count, "error") %> prohibited this habitat from being saved:</h2>
@@ -11,6 +11,7 @@
     </div>
   <% end %>
 
+  <%= f.hidden_field :place_id %>
   <div class="field">
     <%= f.label :name %><br>
     <%= f.text_field :name %>

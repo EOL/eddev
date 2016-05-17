@@ -14,9 +14,9 @@
     <% @habitats.each do |habitat| %>
       <tr>
         <td><%= habitat.name %></td>
-        <td><%= link_to 'Show', habitat %></td>
-        <td><%= link_to 'Edit', edit_habitat_path(habitat) %></td>
-        <td><%= link_to 'Destroy', habitat, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', place_habitat_path(@place, habitat) %></td>
+        <td><%= link_to 'Edit', edit_place_habitat_path(@place, habitat) %></td>
+        <td><%= link_to 'Destroy', place_habitat_path(@place, habitat), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -24,4 +24,4 @@
 
 <br>
 
-<%= link_to 'New Habitat', new_habitat_path %>
+<%= link_to 'New Habitat', new_place_habitat_path(@place) %>

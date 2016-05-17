@@ -56,12 +56,47 @@ RSpec.describe Habitat, type: :model do
       end
     end
 
-    describe "when there exists a value for h1_key" do
+    describe "when there exist values for h1_key" do
       let(:h1_value) { "Header value" }
-      before { EditorContent.create!(key: habitat.h1_key, value: h1_value, locale: I18n.default_locale) }
-      let(:habitat_copy) { habitat.copy }
+      before { EditorContent.create!(key: habitat.h1_key, value: h1_value, locale: "en") }
+      before { EditorContent.create!(key: habitat.h1_key, value: h1_value, locale: "es") }
+      before { EditorContent.create!(key: habitat.h1_key, value: h1_value, locale: "fr") }
 
-      it_behaves_like :valid_copy
+
+      describe "when it is called with no locales" do # XXX: not implemented yet, but consider supporting specifying list of locales to copy
+        before { I18n.locale = "es" }
+        let(:habitat_copy) { habitat.copy }
+
+        it_behaves_like :valid_copy
+
+        it "copies the contents for the current locale" do
+          contents = EditorContent.where(key: habitat_copy.h1_key)
+          expect(contents).not_to be nil
+          expect(contents.length).to eq 1
+          expect(contents[0].locale).to eq I18n.locale.to_s
+          expect(contents[0].value).to eq h1_value
+        end
+      end
+
+      describe "when it is called with a list of locales" do
+        let(:locales) { ["en", "fr"]}
+        let(:habitat_copy) { habitat.copy(locales) }
+
+        it_behaves_like :valid_copy
+
+        it "copies the contents for those locales" do
+          contents = EditorContent.order(:locale).where(key: habitat_copy.h1_key)
+          expect(contents).not_to be nil
+          expect(contents.length).to eq 2
+
+          locales.each_with_index do | locale, i |
+            content = contents[i]
+
+            expect(content.locale).to eq locale
+            expect(content.value).to eq h1_value
+          end          
+        end
+      end
     end
   end
 end

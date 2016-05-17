@@ -14,11 +14,13 @@ class Habitat < ActiveRecord::Base
     return "#{H1_KEY_PREFIX}#{id}"
   end
   
-  def copy
-    new_habitat = Habitat.create!(name: "#{name} (copyy)")
+  def copy( locales = [I18n.locale] )
+    new_habitat = Habitat.create!(name: "#{name} (copy)")
     
     # Copy over EditorContents
-    copy_value_if_exists(h1_key, new_habitat.h1_key)
+    locales.each do | locale |
+      copy_value_if_exists(h1_key, new_habitat.h1_key, locale)
+    end
     
     return new_habitat
   end
@@ -27,18 +29,18 @@ class Habitat < ActiveRecord::Base
     contents = EditorContent.where(key: content_keys)
     locale_set = Set.new
     locale_list = []
-    
+
     contents.each do |content|
       if !locale_set.include?(content.locale)
         locale_list.push(content.locale)
         locale_set.add(content.locale)
       end
     end
-    
+
     locale_list.sort!
     return locale_list
   end
-  
+
   private
   def content_keys
     if id

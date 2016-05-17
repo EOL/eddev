@@ -17,11 +17,11 @@ module EditorContentHelper
     content_tag(name, content.html_safe, options.merge(required_options))
   end
 
-  def copy_value_if_exists(key_from, key_to)
+  def copy_value_if_exists(key_from, key_to, locale = I18n.locale)
     stored_content = content_for_key(key_from)
 
     if stored_content
-      EditorContent.create!(key: key_to, value: stored_content.value, locale: I18n.locale)
+      EditorContent.create!(key: key_to, value: stored_content.value, locale: locale)
     end
   end
 

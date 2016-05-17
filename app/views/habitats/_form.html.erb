@@ -1,5 +1,3 @@
-
-<h2>Create a brand-new habitat</h2>
 <%= form_for([@place, @habitat]) do |f| %>
   <% if @habitat.errors.any? %>
     <div id="error_explanation">
@@ -23,21 +21,3 @@
   </div>
 <% end %>
 
-<h2>Copy a preexisting habitat</h2>
-<%= form_tag(place_habitats_copy_path(@place)) do |f| %>
-  <% @all_habitats.each do |habitat| %>
-    <div class="field">
-    <%= radio_button_tag(:habitat_to_copy_id, habitat.id) %>
-    <%= label_tag(:habitat_to_copy_id, place_habitat_name(habitat)) %>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= label_tag(:habitat_copy_name, "New copy name") %>
-    <%= text_field_tag :habitat_copy_name %>
-  </div>
-
-  <div class="actions">
-    <%= submit_tag "Copy habitat"%>
-  </div>
-<% end %>

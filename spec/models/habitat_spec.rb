@@ -57,7 +57,7 @@ RSpec.describe Habitat, type: :model do
       end      
 
       it "sets the name correctly" do
-        expect(habitat_copy.name).to eq other_name + " (copy)"
+        expect(habitat_copy.name).to eq other_name
       end
     end
 

@@ -14,6 +14,7 @@ class HabitatsController < ApplicationController
   # GET /places/1/habitats/new
   def new
     @habitat = Habitat.new(place: @place)
+    @all_habitats = Habitat.all_ordered_alpha_with_place
   end
 
   # GET /places/1/habitats/1/edit
@@ -49,6 +50,18 @@ class HabitatsController < ApplicationController
     @habitat.destroy
     respond_to do |format|
       format.html { redirect_to place_habitats_path(@place), notice: 'Habitat was successfully destroyed.' }
+    end
+  end
+
+  # POST /places/1/habitats/copy
+  def copy
+    to_copy = Habitat.find(params[:habitat_to_copy_id])
+    name = params[:habitat_copy_name]
+    
+    new_copy = to_copy.copy(name, @place)
+
+    respond_to do |format|
+      format.html { redirect_to place_habitat_path(@place, new_copy) }
     end
   end
 

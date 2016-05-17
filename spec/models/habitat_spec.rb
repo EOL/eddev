@@ -49,13 +49,15 @@ RSpec.describe Habitat, type: :model do
   end
 
   describe "#copy" do
+    let(:other_name) { "Copy name" }
+
     shared_examples_for :valid_copy do
       it "returns a valid instance" do
         expect(habitat_copy).to be_valid
       end      
 
       it "sets the name correctly" do
-        expect(habitat_copy.name).to eq habitat.name + " (copy)"
+        expect(habitat_copy.name).to eq other_name + " (copy)"
       end
     end
 
@@ -67,9 +69,9 @@ RSpec.describe Habitat, type: :model do
       before { EditorContent.create!(key: habitat.h1_key, value: h1_value, locale: "fr") }
 
 
-      describe "when it is called with no locales" do # XXX: not implemented yet, but consider supporting specifying list of locales to copy
+      describe "when it is called with no locales" do
         before { I18n.locale = "es" }
-        let(:habitat_copy) { habitat.copy(other_place) }
+        let(:habitat_copy) { habitat.copy(other_name, other_place) }
 
         it_behaves_like :valid_copy
 
@@ -84,7 +86,7 @@ RSpec.describe Habitat, type: :model do
 
       describe "when it is called with a list of locales" do
         let(:locales) { ["en", "fr"]}
-        let(:habitat_copy) { habitat.copy(other_place, locales) }
+        let(:habitat_copy) { habitat.copy(other_name, other_place, locales) }
 
         it_behaves_like :valid_copy
 

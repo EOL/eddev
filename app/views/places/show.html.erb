@@ -5,7 +5,7 @@
 <div>Habitats:</div>
 <ul class="habitat_list">
   <% @place.habitats.each do |habitat| %>
-    <li><%= link_to habitat.name, habitat %></li>
+    <li><%= link_to habitat.name, place_habitat_path(@place, habitat) %></li>
   <% end %>
 </ul>
 

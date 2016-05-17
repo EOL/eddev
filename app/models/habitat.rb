@@ -15,8 +15,8 @@ class Habitat < ActiveRecord::Base
     return "#{H1_KEY_PREFIX}#{id}"
   end
   
-  def copy(place, locales = [I18n.locale])
-    new_habitat = Habitat.create!(name: "#{name} (copy)", place: place)
+  def copy(name, place, locales = [I18n.locale])
+    new_habitat = Habitat.create!(name: name, place: place)
     
     # Copy over EditorContents
     locales.each do | locale |
@@ -43,6 +43,10 @@ class Habitat < ActiveRecord::Base
   end
 
   private
+  def self.all_ordered_alpha_with_place
+    includes(:place).order('places.name').order(:name)
+  end
+
   def content_keys
     if id
       return [h1_key]

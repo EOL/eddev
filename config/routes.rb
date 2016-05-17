@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   
     resources :places do
       resources :habitats
+      post "habitats/copy"                  => 'habitats#copy', as: :habitats_copy
     end
 
     resources :galleries do

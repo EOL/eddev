@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Place, type: :model do
+  it { should have_many :habitats }
+
   describe "valid instance" do
     let(:place) { create(:place) }
 

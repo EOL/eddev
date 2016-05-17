@@ -3,6 +3,9 @@ require 'rails_helper'
 RSpec.describe Habitat, type: :model do
   let(:habitat) { create(:habitat) }
 
+  it { should belong_to :place }
+  it { should validate_presence_of :place_id }
+
   describe "valid instance" do
     it "is valid" do
       expect(habitat).to be_valid
@@ -58,6 +61,7 @@ RSpec.describe Habitat, type: :model do
 
     describe "when there exist values for h1_key" do
       let(:h1_value) { "Header value" }
+      let(:other_place) { create(:place, name: "Other place")}
       before { EditorContent.create!(key: habitat.h1_key, value: h1_value, locale: "en") }
       before { EditorContent.create!(key: habitat.h1_key, value: h1_value, locale: "es") }
       before { EditorContent.create!(key: habitat.h1_key, value: h1_value, locale: "fr") }
@@ -65,7 +69,7 @@ RSpec.describe Habitat, type: :model do
 
       describe "when it is called with no locales" do # XXX: not implemented yet, but consider supporting specifying list of locales to copy
         before { I18n.locale = "es" }
-        let(:habitat_copy) { habitat.copy }
+        let(:habitat_copy) { habitat.copy(other_place) }
 
         it_behaves_like :valid_copy
 
@@ -80,7 +84,7 @@ RSpec.describe Habitat, type: :model do
 
       describe "when it is called with a list of locales" do
         let(:locales) { ["en", "fr"]}
-        let(:habitat_copy) { habitat.copy(locales) }
+        let(:habitat_copy) { habitat.copy(other_place, locales) }
 
         it_behaves_like :valid_copy
 

@@ -53,6 +53,9 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'rspec-collection_matchers'
 
+  # Matchers for concise common rspec tests
+  gem 'shoulda-matchers', '~> 3.1'
+
   # Model factory for testing
   gem 'factory_girl_rails', '~> 4.0'
 

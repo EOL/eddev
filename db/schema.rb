@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160512182904) do
+ActiveRecord::Schema.define(version: 20160517161729) do
 
   create_table "editor_contents", force: :cascade do |t|
     t.string   "key",        limit: 255
@@ -51,15 +51,10 @@ ActiveRecord::Schema.define(version: 20160512182904) do
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "place_id",   limit: 4
   end
 
-  create_table "habitats_places", force: :cascade do |t|
-    t.integer "habitat_id", limit: 4
-    t.integer "place_id",   limit: 4
-  end
-
-  add_index "habitats_places", ["habitat_id"], name: "index_habitats_places_on_habitat_id", using: :btree
-  add_index "habitats_places", ["place_id"], name: "index_habitats_places_on_place_id", using: :btree
+  add_index "habitats", ["place_id"], name: "index_habitats_on_place_id", using: :btree
 
   create_table "legacy_users", force: :cascade do |t|
     t.string   "user_name",  limit: 255
@@ -119,8 +114,7 @@ ActiveRecord::Schema.define(version: 20160512182904) do
   add_foreign_key "galleries", "users"
   add_foreign_key "gallery_photos", "galleries"
   add_foreign_key "gallery_photos", "licenses"
-  add_foreign_key "habitats_places", "habitats"
-  add_foreign_key "habitats_places", "places"
+  add_foreign_key "habitats", "places"
   add_foreign_key "legacy_users", "users"
   add_foreign_key "user_migration_invitations", "legacy_users"
   add_foreign_key "users", "legacy_users"

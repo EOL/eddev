@@ -4,7 +4,8 @@ class Habitat < ActiveRecord::Base
   include EditorContentHelper
   
   validates :name, presence: true, uniqueness: true
-  has_and_belongs_to_many :places
+  validates_presence_of :place_id
+  belongs_to :place
   
   H1_KEY_PREFIX = "habitat_h1_"
   
@@ -14,8 +15,8 @@ class Habitat < ActiveRecord::Base
     return "#{H1_KEY_PREFIX}#{id}"
   end
   
-  def copy( locales = [I18n.locale] )
-    new_habitat = Habitat.create!(name: "#{name} (copy)")
+  def copy(place, locales = [I18n.locale])
+    new_habitat = Habitat.create!(name: "#{name} (copy)", place: place)
     
     # Copy over EditorContents
     locales.each do | locale |

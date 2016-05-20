@@ -4,6 +4,10 @@ class EditorContent < ActiveRecord::Base
 
   validates :key, format: { without: /\s/ }
 
+  def copy(new_key) 
+    EditorContent.new(key: new_key, value: value, locale: locale)
+  end
+
   private
   def prevent_update
     false

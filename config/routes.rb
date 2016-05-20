@@ -1,14 +1,15 @@
 Rails.application.routes.draw do
-  # You can have the root of your site routed with "root"
+  # You can have the root of your site routed with 'root'
   root 'welcome#index'
 
 
-  scope "(:locale)", locale: /#{I18n.available_locales.join("|")}/ do
+  scope '(:locale)', locale: /#{I18n.available_locales.join('|')}/ do
     resources :users
   
     resources :places do
       resources :habitats
-      post "habitats/copy"                  => 'habitats#copy', as: :habitats_copy
+      post 'habitats/copy'                   => 'habitats#copy', as: :habitats_copy
+      get  'habitats/:id/langs_with_content' => 'habitats#langs_with_content', as: :habitat_langs_with_content
     end
 
     resources :galleries do
@@ -16,7 +17,7 @@ Rails.application.routes.draw do
     end
 
     # The priority is based upon order of creation: first created -> highest priority.
-    # See how all your routes lay out with "rake routes".
+    # See how all your routes lay out with 'rake routes'.
 
     # Example of regular route:
     #   get 'products/:id' => 'catalog#view'

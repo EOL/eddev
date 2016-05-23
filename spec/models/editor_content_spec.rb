@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe EditorContent, type: :model do
+  it { should validate_presence_of :locale }
+  it { should validate_presence_of :key }
+  it { should validate_presence_of :value }
+
+  it { should belong_to :editor_content_owner }
+
   describe "valid instance" do
     let(:content) { create(:editor_content) }
 
@@ -8,23 +14,8 @@ RSpec.describe EditorContent, type: :model do
       expect(content).to be_valid
     end
 
-    it "has a locale" do
-      content.locale = nil
-      expect(content).to be_invalid
-    end
-
-    it "has a key" do
-      content.key = nil
-      expect(content).to be_invalid
-    end
-
     it "has a key with no whitespace" do
       content.key = "my key"
-      expect(content).to be_invalid
-    end
-
-    it "has a value" do
-      content.value = nil
       expect(content).to be_invalid
     end
   end 

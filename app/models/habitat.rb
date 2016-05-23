@@ -45,7 +45,7 @@ class Habitat < ActiveRecord::Base
   end
   
   def locales_with_content
-    contents = EditorContent.where(key: all_content_keys).group(:locale).order(:locale)
+    contents = editor_contents.group(:locale).order(:locale)
     contents.collect { |c| c.locale }
   end
 

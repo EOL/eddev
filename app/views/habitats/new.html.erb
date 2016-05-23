@@ -22,7 +22,7 @@
 
   <% @all_habitats.each do |habitat| %>
     <div class="field">
-    <%= radio_button_tag(:habitat_to_copy_id, habitat.id, false, data: { locales: locales_with_content_string(habitat) }) %>
+    <%= radio_button_tag(:habitat_to_copy_id, habitat.id) %>
     <%= label_tag(:habitat_to_copy_id, place_habitat_name(habitat)) %>
     </div>
   <% end %>
@@ -47,6 +47,3 @@
   </div>
 </script>
 
-<script id="langs-with-content-url-template" type="text/x-handlebars-template">
-  <%= place_habitat_langs_with_content_path(@place, "{{}}") %>
-</script>

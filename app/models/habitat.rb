@@ -34,17 +34,14 @@ class Habitat < ActiveRecord::Base
   end
   
   def copy_locale_contents!(habitat, locales)
-    # if locales.empty?
-    #   return
-    # end
-
-    # contents_to_copy = EditorContent.where(key: all_content_keys, locale: locales)
-
-    # if contents_to_copy
-    #   contents_to_copy.each |content| do
-    #     content.copy(habitat).save!
-    #   end
-    # end
+    to_copy = editor_contents.where(locale: locales)
+    copies = to_copy.collect { |content| content.copy_to_owner(habitat) }
+    
+    EditorContent.transaction do
+      copies.each do |copy|
+        copy.save!
+      end
+    end
   end
   
   def locales_with_content

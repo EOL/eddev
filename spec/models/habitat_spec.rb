@@ -55,11 +55,12 @@ RSpec.describe Habitat, type: :model do
     end
   end
 
-  describe "#copy_locale_contents" do
+  describe "#copy_locale_contents!" do
     let (:content_value) { "content value"}
-    before { EditorContent.create!(key: habitat.content_key(:h1), value: content_value, locale: "es") }
-    before { EditorContent.create!(key: habitat.content_key(:p1), value: content_value, locale: "fr") }
-    before { EditorContent.create!(key: habitat.content_key(:h1), value: content_value, locale: "en") } 
+
+    before { EditorContent.create!(key: :h1, value: content_value, locale: "es", editor_content_owner: habitat) }
+    before { EditorContent.create!(key: :p1, value: content_value, locale: "fr", editor_content_owner: habitat) }
+    before { EditorContent.create!(key: :h1, value: content_value, locale: "en", editor_content_owner: habitat) } 
     
     let(:other_place) { create(:place, name: "other place")}
     let(:other_habitat) { create(:habitat, name: "other habitat", place: other_place) }
@@ -77,30 +78,25 @@ RSpec.describe Habitat, type: :model do
         before_count = EditorContent.count
 
         habitat.copy_locale_contents!(other_habitat, ["es"])
-        copied_content = EditorContent.find_by(key: other_habitat.content_key(:h1), locale: "es")
+        other_habitat.reload 
         
-        expect(copied_content).not_to be_nil
-        expect(copied_content.value).to eq(content_value)
-
-        expect(EditorContent.count).to eq(before_count + 1)
+        expect(other_habitat.editor_contents.length).to eq(1)
+        expect(other_habitat.editor_contents[0].value).to eq(content_value)
       end
     end
 
     describe "when it is called with multiple locales" do
       it "copies content for those locales" do
-        before_count = EditorContent.count
-
         habitat.copy_locale_contents!(other_habitat, ["es", "fr"])
+        other_habitat.reload
 
-        es_h1 = EditorContent.find_by(key: other_habitat.content_key(:h1), locale: "es")
-        expect(es_h1).not_to be_nil
-        expect(es_h1.value).to eq(content_value)
+        expect(other_habitat.editor_contents.length).to eq(2)
 
-        fr_p1 = EditorContent.find_by(key: other_habitat.content_key(:p1), locale: "fr")
-        expect(fr_p1).not_to be_nil
-        expect(fr_p1.value).to eq(content_value)
+        es_contents = other_habitat.editor_contents.where(locale: :es, key: :h1, value: content_value)
+        expect(es_contents.length).to eq(1)
 
-        expect(EditorContent.count).to eq(before_count + 2)
+        fr_contents = other_habitat.editor_contents.where(locale: :fr, key: :p1, value: content_value)
+        expect(fr_contents.length).to eq(1)
       end
     end
   end

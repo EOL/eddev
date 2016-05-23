@@ -11,18 +11,38 @@ RSpec.describe EditorContentController, type: :controller do
 
     context "when a request is made" do
       context "when the request is valid" do
-        let(:request_body) { { format: :json, key: key, value: value, locale: locale } }
-
-        before(:each) do
-          post :create, request_body, sess
+        shared_examples_for :valid_request do
+          it "sends a 200 response" do
+            expect(response.status).to eq(200)
+          end
         end
 
-        it "sends a 200 response" do
-          expect(response.status).to eq(200)
+        context "when there are no model parameters" do 
+          let(:request_body) { { format: :json, key: key, value: value, locale: locale } }
+          before(:each) do
+            post :create, request_body, sess
+          end
+
+          it_behaves_like :valid_request
+
+          it "creates an EditorContent from the request parameter values" do
+            expect(EditorContent.find_by(key: key)).not_to be_nil
+          end
         end
 
-        it "creates an EditorContent from the request parameter values" do
-          expect(EditorContent.find_by(key: key)).not_to be_nil
+        context "when there are model parameters" do
+          let(:habitat) { create(:habitat) }
+          let(:request_body) {{ format: :json, key: key, value: value, locale: locale, editor_content_owner_id: habitat.id, editor_content_owner_type: habitat.class.name }}
+
+          before(:each) do 
+            post :create, request_body, sess
+          end
+
+          it_behaves_like :valid_request
+
+          it "creates an EditorContent from the request parameter values" do
+            expect(EditorContent.find_by(key: key, locale: locale, editor_content_owner: habitat)).not_to be_nil
+          end
         end
       end
 

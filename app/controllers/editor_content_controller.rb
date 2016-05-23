@@ -18,7 +18,7 @@ class EditorContentController < ApplicationController
       return
     end
 
-    content = EditorContent.create(key: key, value: params[:value], locale: params[:locale])
+    content = EditorContent.create(editor_content_params)
 
     if content.valid?
       head :ok
@@ -26,5 +26,10 @@ class EditorContentController < ApplicationController
       logger.warn("Failed to create EditorContent. Errors: #{content.errors.full_messages.join(",") unless !content.errors}")
       head :bad_request
     end
+  end
+
+  private
+  def editor_content_params
+    params.permit(:key, :value, :locale, :editor_content_owner_type, :editor_content_owner_id)
   end
 end

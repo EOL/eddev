@@ -60,6 +60,8 @@ if (typeof ContentEditor === 'undefined') {
           var element = $(editor.getElement())
             , key = element.data('content-key')
             , locale = element.data('locale')
+            , owner_type = element.data('owner-type')
+            , owner_id = element.data('owner-id')
           ;
 
           $.ajax('/editor_content', {
@@ -68,6 +70,8 @@ if (typeof ContentEditor === 'undefined') {
               key: key
             , value: editor.getContent()
             , locale: locale
+            , editor_content_owner_type: owner_type
+            , editor_content_owner_id: owner_id
             },
             error: function() {
               editor.setDirty(true);

@@ -4,10 +4,14 @@ class EditorContent < ActiveRecord::Base
 
   validates :key, format: { without: /\s/ }
 
-  belongs_to :editor_content_owner, polymorphic: true
+  belongs_to :editor_content_owner, polymorphic: true 
 
   def copy(new_key) 
     EditorContent.new(key: new_key, value: value, locale: locale)
+  end
+
+  def copy_to_owner(content_owner) 
+    EditorContent.new(key: key, value: value, locale: locale, editor_content_owner: content_owner)
   end
 
   private

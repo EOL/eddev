@@ -5,20 +5,13 @@ RSpec.describe Habitat, type: :model do
 
   it { should belong_to :place }
   it { should validate_presence_of :place_id }
+  it { should validate_presence_of :name }
+  it { should validate_uniqueness_of :name }
+  it { should have_many :editor_contents }
 
   describe "valid instance" do
     it "is valid" do
       expect(habitat).to be_valid
-    end
-
-    it "has a name" do
-      habitat.name = ''
-      expect(habitat).to be_invalid
-    end
-
-    it "has a unique name" do
-      other_habitat = Habitat.new(name: habitat.name)
-      expect(other_habitat).to be_invalid
     end
   end
 

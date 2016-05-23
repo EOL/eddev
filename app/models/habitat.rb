@@ -5,7 +5,9 @@ class Habitat < ActiveRecord::Base
   
   validates :name, presence: true, uniqueness: true
   validates_presence_of :place_id
+
   belongs_to :place
+  has_many :editor_contents, as: :editor_content_owner
 
   after_initialize :init_content_key_cache
   

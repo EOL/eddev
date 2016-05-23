@@ -6,44 +6,47 @@ class Habitat < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   validates_presence_of :place_id
   belongs_to :place
+
+  after_initialize :init_content_key_cache
   
   H1_KEY_PREFIX = "habitat_h1_"
   P1_KEY_PREFIX = "habitat_p1_"
-  
-  # EditorContent key methods
-  # !!!!!!!IMPORTANT!!!!!! update content_keys with any new content key methods, otherwise copy_locale_contents won't 
-  # pick it up.
+
+  CONTENT_KEY_PREFIXES = {
+    h1: "habitat_h1_",
+    p1: "habitat_p1_",
+  }
+  private_constant :CONTENT_KEY_PREFIXES 
+
   def h1_key
-    content_key(H1_KEY_PREFIX, 'h1_key', @h1_key)
+    content_key(:h1)
   end
 
-  def p1_key
-    content_key(P1_KEY_PREFIX, 'p1_key', @p1_key)
+  def content_key(key)
+    raise no_id_error_msg('content_key') unless id
+
+    content_key_prefix = CONTENT_KEY_PREFIXES[key]
+    raise ArgumentError.new("Invalid key") unless content_key_prefix
+
+    content_key_cache[key] ||= "#{content_key_prefix}#{id}"
   end
   
-  def copy_locale_contents!(habitat, locales = [I18n.locale])
-    # Since locales is an array, keep track of what we've already copied in case there are duplicates.
-    # This function doesn't take a Set for locales for iteration's sake. It shouldn't be hard for clients to 
-    # pass in unique values, so this is just a safeguard, but one that is necessary to prevent dupliacte rows in the
-    # EditorContents table.
-    copied_locales = Set.new 
+  def copy_locale_contents!(habitat, locales)
+    # if locales.empty?
+    #   return
+    # end
 
-    # Copy over EditorContents
-    locales.each do | locale |
-      if !copied_locales.include?(locale)
-        content_to_copy = EditorContent.find_by(key: h1_key, locale: locale)
+    # contents_to_copy = EditorContent.where(key: all_content_keys, locale: locales)
 
-        if content_to_copy
-          content_to_copy.copy(habitat.h1_key).save!
-        end
-      end
-
-      copied_locales.add(locale)
-    end
+    # if contents_to_copy
+    #   contents_to_copy.each |content| do
+    #     content.copy(habitat).save!
+    #   end
+    # end
   end
   
   def locales_with_content
-    contents = EditorContent.where(key: content_keys).group(:locale).order(:locale)
+    contents = EditorContent.where(key: all_content_keys).group(:locale).order(:locale)
     contents.collect { |c| c.locale }
   end
 
@@ -52,28 +55,16 @@ class Habitat < ActiveRecord::Base
   end
 
   private
-  def content_keys
-    if id
-      return [h1_key, p1_key]
-    else
-      return []
-    end
+  def all_content_keys
+    @all_content_keys ||= CONTENT_KEY_PREFIXES.keys.collect { |key| content_key key }
   end
 
-  def raise_unless_id(method_name)
-    raise no_id_error_msg(method_name) unless id 
-  end
+  def init_content_key_cache
+    # To lazily cache content keys
+    @content_keys = {}
+  end   
 
-  def no_id_error_msg(method_name)
-    "#{method_name} cannot be called on a Habitat that doesn't have an id"
-  end
-
-  def build_content_key(prefix, cache_var)
-    cache_var ||= "#{prefix}#{id}"
-  end
-
-  def content_key(prefix, method_name, cache_var)
-    raise_unless_id(method_name)
-    build_content_key(prefix, cache_var)
+  def content_key_cache
+    @content_keys
   end
 end

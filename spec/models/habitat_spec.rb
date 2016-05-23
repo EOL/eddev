@@ -25,12 +25,12 @@ RSpec.describe Habitat, type: :model do
   describe "#locales_with_content" do
     describe "when there are no locales with content" do
       it "returns an empty array" do
-        expect(habitat.locales_with_content).to eq([])
+        expect(habitat.locales_with_content.empty?).to be true
       end
     end 
 
     describe "when there is one locale with content" do
-      before { EditorContent.create!(key: habitat.h1_key, value: "some value", locale: "es") }
+      before { EditorContent.create!(key: habitat.content_key(:h1), value: "some value", locale: "es") }
 
       it "returns an array containing that locale" do
         expect(habitat.locales_with_content).to eq(["es"])
@@ -38,9 +38,9 @@ RSpec.describe Habitat, type: :model do
     end
 
     describe "when there are multiple locales with content" do
-      before { EditorContent.create!(key: habitat.h1_key, value: "some value", locale: "es") }
-      before { EditorContent.create!(key: habitat.h1_key, value: "some value", locale: "fr") }
-      before { EditorContent.create!(key: habitat.h1_key, value: "some value", locale: "en") }
+      before { EditorContent.create!(key: habitat.content_key(:h1), value: "some value", locale: "es") }
+      before { EditorContent.create!(key: habitat.content_key(:h1), value: "some value", locale: "fr") }
+      before { EditorContent.create!(key: habitat.content_key(:h1), value: "some value", locale: "en") }
 
       it "returns an array containing those locales in alphabetical order" do
         expect(habitat.locales_with_content).to eq(["en", "es", "fr"])
@@ -48,60 +48,66 @@ RSpec.describe Habitat, type: :model do
     end
   end
 
-  describe "#copy" do
-    let(:other_name) { "Copy name" }
-
-    shared_examples_for :valid_copy do
-      it "returns a valid instance" do
-        expect(habitat_copy).to be_valid
-      end      
-
-      it "sets the name correctly" do
-        expect(habitat_copy.name).to eq other_name
+  describe "#content_key" do
+    describe "when it is called with a valid key" do
+      it "returns the correct content key" do
+        expect(habitat.content_key(:h1)).to eq("habitat_h1_#{habitat.id}")
       end
     end
 
-    describe "when there exist values for h1_key" do
-      let(:h1_value) { "Header value" }
-      let(:other_place) { create(:place, name: "Other place")}
-      before { EditorContent.create!(key: habitat.h1_key, value: h1_value, locale: "en") }
-      before { EditorContent.create!(key: habitat.h1_key, value: h1_value, locale: "es") }
-      before { EditorContent.create!(key: habitat.h1_key, value: h1_value, locale: "fr") }
-
-
-      describe "when it is called with no locales" do
-        before { I18n.locale = "es" }
-        let(:habitat_copy) { habitat.copy(other_name, other_place) }
-
-        it_behaves_like :valid_copy
-
-        it "copies the contents for the current locale" do
-          contents = EditorContent.where(key: habitat_copy.h1_key)
-          expect(contents).not_to be nil
-          expect(contents.length).to eq 1
-          expect(contents[0].locale).to eq I18n.locale.to_s
-          expect(contents[0].value).to eq h1_value
-        end
+    describe "when it is called with an invalid key" do
+      it "raises ArgumentError" do
+        expect{habitat.content_key(:bogus)}.to raise_error(ArgumentError)
       end
+    end
+  end
 
-      describe "when it is called with a list of locales" do
-        let(:locales) { ["en", "fr"]}
-        let(:habitat_copy) { habitat.copy(other_name, other_place, locales) }
+  describe "#copy_locale_contents" do
+    let (:content_value) { "content value"}
+    before { EditorContent.create!(key: habitat.content_key(:h1), value: content_value, locale: "es") }
+    before { EditorContent.create!(key: habitat.content_key(:p1), value: content_value, locale: "fr") }
+    before { EditorContent.create!(key: habitat.content_key(:h1), value: content_value, locale: "en") } 
+    
+    let(:other_place) { create(:place, name: "other place")}
+    let(:other_habitat) { create(:habitat, name: "other habitat", place: other_place) }
 
-        it_behaves_like :valid_copy
+    describe "when it is called with no locales" do
+      it "doesn't copy anything" do
+        before_count = EditorContent.count
+        habitat.copy_locale_contents!(other_habitat, [])
+        expect(EditorContent.count).to eq(before_count)
+      end
+    end
 
-        it "copies the contents for those locales" do
-          contents = EditorContent.order(:locale).where(key: habitat_copy.h1_key)
-          expect(contents).not_to be nil
-          expect(contents.length).to eq 2
+    describe "when it is called with one locale" do
+      it "copies content for that locale" do
+        before_count = EditorContent.count
 
-          locales.each_with_index do | locale, i |
-            content = contents[i]
+        habitat.copy_locale_contents!(other_habitat, ["es"])
+        copied_content = EditorContent.find_by(key: other_habitat.content_key(:h1), locale: "es")
+        
+        expect(copied_content).not_to be_nil
+        expect(copied_content.value).to eq(content_value)
 
-            expect(content.locale).to eq locale
-            expect(content.value).to eq h1_value
-          end          
-        end
+        expect(EditorContent.count).to eq(before_count + 1)
+      end
+    end
+
+    describe "when it is called with multiple locales" do
+      it "copies content for those locales" do
+        before_count = EditorContent.count
+
+        habitat.copy_locale_contents!(other_habitat, ["es", "fr"])
+
+        es_h1 = EditorContent.find_by(key: other_habitat.content_key(:h1), locale: "es")
+        expect(es_h1).not_to be_nil
+        expect(es_h1.value).to eq(content_value)
+
+        fr_p1 = EditorContent.find_by(key: other_habitat.content_key(:p1), locale: "fr")
+        expect(fr_p1).not_to be_nil
+        expect(fr_p1.value).to eq(content_value)
+
+        expect(EditorContent.count).to eq(before_count + 2)
       end
     end
   end

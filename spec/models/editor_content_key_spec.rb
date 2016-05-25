@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe EditorContentKey, type: :model do
+  it { should validate_presence_of :locale }
   it { should validate_presence_of :content_model }
   it { should belong_to :content_model }
   it { should validate_presence_of :name }
@@ -18,9 +19,6 @@ RSpec.describe EditorContentKey, type: :model do
   describe "#latest_value" do
     let(:name) { "its_a_key" }
     let(:editor_content_key) { create(:editor_content_key, name: name) }
-
-#    let(:old_value) { "old value" }
-#    let(:new_value) { "new value" }
 
     context "when no EditorContentValues exist" do
       it "returns the key name" do

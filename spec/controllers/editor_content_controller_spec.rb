@@ -13,7 +13,16 @@ RSpec.describe EditorContentController, type: :controller do
 #      context "when the request is valid" do
 #          let(:habitat) { create(:habitat) }
 #          let(:content_key) { create(:editor_content_key, name: key, content_model: habitat) }
-#          let(:request_body) {{ format: :json, key: key, value: value, locale: locale, content_model_id: habitat.id, content_model_type: habitat.class.name }}
+#          let(:request_body) do
+#            { 
+#              format: :json, 
+#              key: key, 
+#              model_type: habitat.class.name,
+#              model_id: habitat.id,
+#              locale: locale, 
+#              value: value, 
+#            }
+#          end
 #
 #          before(:each) do 
 #            post :create, request_body, sess

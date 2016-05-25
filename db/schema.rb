@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160525174426) do
+ActiveRecord::Schema.define(version: 20160525175340) do
 
   create_table "editor_content_keys", force: :cascade do |t|
     t.string   "name",               limit: 255
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20160525174426) do
 
   create_table "editor_content_values", force: :cascade do |t|
     t.integer  "editor_content_key_id", limit: 4
-    t.text     "value",                 limit: 65535
+    t.text     "content",               limit: 65535
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end

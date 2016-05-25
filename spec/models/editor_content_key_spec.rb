@@ -11,4 +11,6 @@ RSpec.describe EditorContentKey, type: :model do
   end
 
   it { should belong_to :content_model }
+  it { should allow_value("this_is_a_key").for(:name) }
+  it { should_not allow_value("this is not a key").for(:name) }
 end

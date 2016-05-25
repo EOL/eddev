@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160525160430) do
+ActiveRecord::Schema.define(version: 20160525174426) do
 
   create_table "editor_content_keys", force: :cascade do |t|
     t.string   "name",               limit: 255
@@ -22,6 +22,15 @@ ActiveRecord::Schema.define(version: 20160525160430) do
   end
 
   add_index "editor_content_keys", ["content_model_type", "content_model_id"], name: "content_model_index", using: :btree
+
+  create_table "editor_content_values", force: :cascade do |t|
+    t.integer  "editor_content_key_id", limit: 4
+    t.text     "value",                 limit: 65535
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  add_index "editor_content_values", ["editor_content_key_id"], name: "index_editor_content_values_on_editor_content_key_id", using: :btree
 
   create_table "editor_contents", force: :cascade do |t|
     t.string   "key",                       limit: 255
@@ -125,6 +134,7 @@ ActiveRecord::Schema.define(version: 20160525160430) do
   add_index "users", ["legacy_user_id"], name: "index_users_on_legacy_user_id", using: :btree
   add_index "users", ["user_name"], name: "index_users_on_user_name", unique: true, using: :btree
 
+  add_foreign_key "editor_content_values", "editor_content_keys"
   add_foreign_key "galleries", "users"
   add_foreign_key "gallery_photos", "galleries"
   add_foreign_key "gallery_photos", "licenses"

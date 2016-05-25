@@ -6,4 +6,10 @@ class EditorContentKey < ActiveRecord::Base
     uniqueness: { scope: [:content_model_type, :content_model_id], case_sensitive: false },
     format: { without: /\s/ }
   validates_presence_of :content_model
+
+  has_many :editor_content_values
+
+  def latest_value
+    editor_content_values.empty? ? name : editor_content_values.last.content
+  end
 end

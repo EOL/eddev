@@ -7,7 +7,6 @@ class Habitat < ActiveRecord::Base
   validates_presence_of :place_id
 
   belongs_to :place
-  has_many :editor_contents, as: :editor_content_owner
   has_many :editor_content_keys, as: :content_model
 
   after_initialize :init_content_key_cache

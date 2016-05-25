@@ -8,6 +8,7 @@ class Habitat < ActiveRecord::Base
 
   belongs_to :place
   has_many :editor_contents, as: :editor_content_owner
+  has_many :editor_content_keys, as: :content_model
 
   after_initialize :init_content_key_cache
   

@@ -8,6 +8,7 @@ RSpec.describe Habitat, type: :model do
   it { should validate_presence_of :name }
   it { should validate_uniqueness_of :name }
   it { should have_many :editor_contents }
+  it { should have_many :editor_content_keys }
 
   describe "valid instance" do
     it "is valid" do

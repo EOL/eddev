@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160523145235) do
+ActiveRecord::Schema.define(version: 20160525160430) do
+
+  create_table "editor_content_keys", force: :cascade do |t|
+    t.string   "name",               limit: 255
+    t.integer  "content_model_id",   limit: 4
+    t.string   "content_model_type", limit: 255
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "editor_content_keys", ["content_model_type", "content_model_id"], name: "content_model_index", using: :btree
 
   create_table "editor_contents", force: :cascade do |t|
     t.string   "key",                       limit: 255

@@ -10,7 +10,7 @@ RSpec.describe EditorContentKey, type: :model do
 
   it do
     should validate_uniqueness_of(:name)
-      .scoped_to(:content_model_type, :content_model_id)
+      .scoped_to(:content_model_type, :content_model_id, :locale)
       .case_insensitive
   end
 
@@ -52,6 +52,84 @@ RSpec.describe EditorContentKey, type: :model do
       it "returns the ECV with the greatest id's content" do
         expect(editor_content_key.latest_value).to eq(new_content)
       end
+    end
+  end
+
+  describe "self.find_or_create" do
+    let(:name) { "key_name" }
+    let(:other_name) { "key_other_name" }
+    let(:model) { create(:habitat) }
+    let(:locale) { :en }
+
+    context "when all required query parameters are supplied" do
+      context "when no record is found" do
+        it "creates the record" do
+          key = EditorContentKey.find_or_create(name: name, content_model: model, locale: locale)
+          expect(key).not_to be_nil
+          expect(key).to be_valid
+          expect(key.name).to eq(name)
+          expect(key.content_model).to eq(model)
+          expect(key.locale).to eq(locale.to_s)
+
+          # Test both forms of content_model specification
+          key = EditorContentKey.find_or_create(name: other_name, content_model_id: model.id, content_model_type: model.class.name, locale: locale)
+          expect(key).not_to be_nil
+          expect(key).to be_valid
+          expect(key.name).to eq(other_name)
+          expect(key.content_model).to eq(model)
+          expect(key.locale).to eq(locale.to_s)
+        end
+      end
+
+      context "when a record is found" do
+        let!(:stored_key) { create(:editor_content_key, name: name, content_model: model, locale: locale) }
+
+        it "returns the record" do
+          key = EditorContentKey.find_or_create(name: name, content_model: model, locale: locale)
+          expect(key).to eq(stored_key)
+          
+          key = EditorContentKey.find_or_create(name: name, content_model_id: model.id, content_model_type: model.class.name, locale: locale)
+          expect(key).to eq(stored_key)
+        end
+      end
+    end
+
+    context "when the required query parameters are not all supplied" do
+      it "returns a new, invalid record with the supplied parameters filled in" do
+        key = EditorContentKey.find_or_create(name: name, content_model: model)
+        expect(key).not_to be_nil
+        expect(key).to be_invalid
+        expect(key.name).to eq(name)
+        expect(key.content_model).to eq(model)
+        expect(key.locale).to be_nil
+      end 
+    end
+  end
+
+  describe "#build_value" do
+    let(:key) { create(:editor_content_key) }
+
+    shared_examples "#build_value" do |content_string, should_be_valid|
+      it "returns an EditorContentValue with attributes correctly set" do
+        value = key.build_value(content_string)
+
+        expect(value).not_to be_nil
+        expect(value.editor_content_key).to eq(key)
+        expect(value.content).to eq(content_string)
+        expect(value.valid?).to eq(should_be_valid)
+      end  
+    end
+
+    context "when it is passed a nonempty string" do
+      it_behaves_like "#build_value", "content!", true
+    end
+
+    context "when it is passed an empty string" do
+      it_behaves_like "#build_value", "", false
+    end
+
+    context "when it is passed nil" do
+      it_behaves_like "#build_value", nil, false
     end
   end
 end

@@ -4,32 +4,20 @@ class EditorContentController < ApplicationController
   skip_before_filter :set_locale
 
   def create
-    key = params[:key]
+    key = EditorContentKey.find_or_create(key_params)
 
-    if key.blank?
-      logger.warn("Cannot create EditorContent without valid key parameter")
-      head :bad_request
-      return
-    end
+    value = key.build_value(params[:value])
 
-    if !can_edit(key) 
-      logger.warn("Forbidden attempt to edit key #{key}")
-      head :forbidden
-      return
-    end
-
-    content = EditorContent.create(editor_content_params)
-
-    if content.valid?
+    if value.save
       head :ok
     else
-      logger.warn("Failed to create EditorContent. Errors: #{content.errors.full_messages.join(",") unless !content.errors}")
+      logger.warn("Failed to create EditorContent. Errors: #{value.errors.full_messages.join(",") if value.errors}")
       head :bad_request
     end
   end
 
   private
-  def editor_content_params
-    params.permit(:key, :value, :locale, :editor_content_owner_type, :editor_content_owner_id)
+  def key_params
+    params.require(:key).permit(:content_model_id, :content_model_type, :name, :locale)
   end
 end

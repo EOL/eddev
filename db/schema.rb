@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160526193713) do
+ActiveRecord::Schema.define(version: 20160526194000) do
 
   create_table "editor_content_keys", force: :cascade do |t|
     t.string   "name",               limit: 255
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20160526193713) do
     t.integer  "place_id",   limit: 4
   end
 
+  add_index "habitats", ["name"], name: "index_habitats_on_name", unique: true, using: :btree
   add_index "habitats", ["place_id"], name: "index_habitats_on_place_id", using: :btree
 
   create_table "legacy_users", force: :cascade do |t|

@@ -34,19 +34,26 @@ class Habitat < ActiveRecord::Base
   end
   
   def copy_locale_contents!(habitat, locales)
-    to_copy = editor_contents.where(locale: locales)
-    copies = to_copy.collect { |content| content.copy_to_owner(habitat) }
+    keys_to_copy = editor_content_keys.where(locale: locales)
     
-    EditorContent.transaction do
+    EditorContentKey.transaction do
+      copies = keys_to_copy.collect do |key| 
+        new_key = EditorContentKey.find_or_create(name: key.name, locale: key.locale, content_model: habitat)
+        new_key.build_value(key.latest_value)
+      end
+
       copies.each do |copy|
         copy.save!
       end
     end
   end
   
+  # Precisely, this method returns the locales for which there exist at least one
+  # EditorContentKey. In practice, this should be good enough, since EditorContentKeys
+  # are generally created on-demand; that is, we expect there to exist at least one value per key.
   def locales_with_content
-    contents = editor_contents.group(:locale).order(:locale)
-    contents.collect { |c| c.locale }
+    keys = editor_content_keys.group(:locale).order(:locale)
+    keys.collect { |c| c.locale }
   end
 
   def self.all_ordered_alpha_with_place

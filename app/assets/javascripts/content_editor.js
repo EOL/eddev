@@ -58,20 +58,22 @@ if (typeof ContentEditor === 'undefined') {
           editor.save();
 
           var element = $(editor.getElement())
-            , key = element.data('content-key')
+            , keyName = element.data('key-name')
             , locale = element.data('locale')
-            , owner_type = element.data('owner-type')
-            , owner_id = element.data('owner-id')
+            , modelType = element.data('content-model-type')
+            , modelId = element.data('content-model-id')
           ;
 
           $.ajax('/editor_content', {
             method: "POST",
             data: {
-              key: key
+              key: {
+                name: keyName
+              , locale: locale
+              , content_model_type: modelType
+              , content_model_id: modelId
+              }
             , value: editor.getContent()
-            , locale: locale
-            , editor_content_owner_type: owner_type
-            , editor_content_owner_id: owner_id
             },
             error: function() {
               editor.setDirty(true);

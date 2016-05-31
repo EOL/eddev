@@ -3,12 +3,27 @@ module EditorContentHelper
     logged_in_user && logged_in_user.admin?
   end 
 
-  def editable_tag(name, key, options = {})
-    editable_tag_helper(name, key, nil, options)
-  end
+  def editable_tag(tag_name, key_name, content_model, options = {})
+    key = EditorContentKey.find_or_create(
+      name: key_name, 
+      content_model_id: content_model.id, 
+      content_model_type: content_model.class.name,
+      locale: I18n.locale
+    )
 
-  def model_editable_tag(name, key, content_owner, options = {})
-    editable_tag_helper(name, key, content_owner, options)
+    required_options = {}
+
+    if can_edit(key)
+      required_options = { 
+        "data-key-name" => key.name, 
+        "data-locale" => key.locale, 
+        "data-content-model-type" => key.content_model_type,
+        "data-content-model-id" => key.content_model_id,
+        "data-editable" => true,
+      }
+    end
+
+    content_tag(tag_name, key.latest_value.html_safe, options.merge(required_options))
   end 
 
   def copy_value_if_exists!(key_from, key_to, locale = I18n.locale)
@@ -34,25 +49,5 @@ module EditorContentHelper
       owner_id = content_owner.id
     end
 
-    required_options = {}
-    if can_edit(key)
-      required_options = { 
-        "data-content-key": key, 
-        "data-locale": I18n.locale, 
-        "data-editable": true,
-      }
-
-      if content_owner
-        required_options.merge!({
-          "data-owner-type": owner_type,
-          "data-owner-id": owner_id,
-        })
-      end
-    end
-
-    stored_content = content_owner ? content_for_key_model(key, owner_type, owner_id) : content_for_key(key)
-    content = stored_content ? stored_content.value : key.to_s # key.to_s for symbol or string argument
-
-    content_tag(name, content.html_safe, options.merge(required_options))
   end
 end

@@ -11,6 +11,8 @@ License.create_with(code: "CC BY-SA").find_or_create_by!(translation_key: "attri
 License.create_with(code: "CC BY-NC").find_or_create_by!(translation_key: "attrib_noncom")
 License.create_with(code: "CC BY-NC-SA").find_or_create_by!(translation_key: "attrib_noncom_share")
 
+SinglePageContentModel.find_or_create_by!(page_name: "tinymce_test")
+
 # Basic/admin user accounts (development only)
 case Rails.env
 when "development"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160526194132) do
+ActiveRecord::Schema.define(version: 20160526201733) do
 
   create_table "editor_content_keys", force: :cascade do |t|
     t.string   "name",               limit: 255
@@ -98,6 +98,14 @@ ActiveRecord::Schema.define(version: 20160526194132) do
   end
 
   add_index "places", ["name"], name: "index_places_on_name", unique: true, using: :btree
+
+  create_table "single_page_content_models", force: :cascade do |t|
+    t.string   "page_name",  limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "single_page_content_models", ["page_name"], name: "index_single_page_content_models_on_page_name", unique: true, using: :btree
 
   create_table "user_migration_invitations", force: :cascade do |t|
     t.datetime "created_at",                                   null: false

@@ -1,5 +1,14 @@
 require 'rails_helper'
 
+# Helpers
+def check_key(key, name, model, locale)
+  expect(key).not_to be_nil
+  expect(key).to be_valid
+  expect(key.name).to eq(name)
+  expect(key.content_model).to eq(model)
+  expect(key.locale).to eq(locale.to_s)
+end
+
 RSpec.describe EditorContentKey, type: :model do
   it { should validate_presence_of :locale }
   it { should validate_presence_of :content_model }
@@ -63,21 +72,19 @@ RSpec.describe EditorContentKey, type: :model do
 
     context "when all required query parameters are supplied" do
       context "when no record is found" do
-        it "creates the record" do
-          key = EditorContentKey.find_or_create(name: name, content_model: model, locale: locale)
-          expect(key).not_to be_nil
-          expect(key).to be_valid
-          expect(key.name).to eq(name)
-          expect(key.content_model).to eq(model)
-          expect(key.locale).to eq(locale.to_s)
+        context "when the content model is specified using the content_model attribute" do
+          it "creates the key" do 
+            key = EditorContentKey.find_or_create(name: name, content_model: model, locale: locale)
+            check_key(key, name, model, locale)
+          end
+        end
 
-          # Test both forms of content_model specification
-          key = EditorContentKey.find_or_create(name: other_name, content_model_id: model.id, content_model_type: model.class.name, locale: locale)
-          expect(key).not_to be_nil
-          expect(key).to be_valid
-          expect(key.name).to eq(other_name)
-          expect(key.content_model).to eq(model)
-          expect(key.locale).to eq(locale.to_s)
+        context "when the content model is specified using the content_model_id and content_model_type attributes" do
+          it "creates the key" do         
+            key = EditorContentKey.find_or_create(name: other_name, content_model_id: model.id, 
+                                                  content_model_type: model.class.name, locale: locale)
+            check_key(key, other_name, model, locale)
+          end
         end
       end
 

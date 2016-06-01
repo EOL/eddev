@@ -6,5 +6,5 @@ RSpec.describe ContentModelPermission, type: :model do
 
   it { should validate_presence_of :user }
   it { should validate_presence_of :content_model }
-  it { should validate_presence_of :type }
+  it { should validate_presence_of :role }
 end

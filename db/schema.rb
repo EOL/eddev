@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531161221) do
+ActiveRecord::Schema.define(version: 20160601174517) do
 
   create_table "content_model_permissions", force: :cascade do |t|
     t.integer  "user_id",            limit: 4
     t.integer  "content_model_id",   limit: 4
     t.string   "content_model_type", limit: 255
-    t.integer  "type",               limit: 4
+    t.integer  "role",               limit: 4
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
   end

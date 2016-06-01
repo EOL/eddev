@@ -4,7 +4,7 @@ class ContentModelPermission < ActiveRecord::Base
 
   validates_presence_of :user
   validates_presence_of :content_model
-  validates_presence_of :type
+  validates_presence_of :role
 
-  enum :type => [:owner, :admin, :editor]
+  enum :role => [:owner, :admin, :editor]
 end

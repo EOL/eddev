@@ -3,7 +3,9 @@ class ContentModelState < ActiveRecord::Base
 
   validates_presence_of :content_model
   validates :published, :inclusion => { :in => [true, false] }
-  validates_presence_of :editor_content_version
+  validates :editor_content_version, :presence => true, 
+    :numericality => { :greater_than_or_equal_to => 0 }
+  validates_numericality_of :editor_content_version
 
   after_initialize :set_defaults, :unless => :persisted?
 

@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe ContentModelState, type: :model do
   it { should validate_presence_of :content_model }
   it { should validate_presence_of :editor_content_version }
+  it { should validate_numericality_of(:editor_content_version).is_greater_than_or_equal_to(0) }
 
   describe "default attribute values" do 
     let(:content_model) { build_stubbed(:habitat) }

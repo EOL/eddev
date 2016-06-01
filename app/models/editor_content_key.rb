@@ -16,7 +16,7 @@ class EditorContentKey < ActiveRecord::Base
   end
 
   def build_value(content)
-    EditorContentValue.new(editor_content_key: self, content: content)
+    EditorContentValue.new(:editor_content_key => self, :content => content)
   end
 
   # Class methods

@@ -4,10 +4,11 @@ RSpec.describe ContentModelState, type: :model do
   it { should validate_presence_of :content_model }
   it { should validate_presence_of :editor_content_version }
   it { should validate_numericality_of(:editor_content_version).is_greater_than_or_equal_to(0) }
+  it { should validate_presence_of :locale }
 
   describe "default attribute values" do 
     let(:content_model) { build_stubbed(:habitat) }
-    let(:state) { ContentModelState.new(:content_model => content_model) }
+    let(:state) { ContentModelState.new(:content_model => content_model, :locale => :en) }
 
     it "sets defaults so that it is valid" do
       expect(state).to be_valid

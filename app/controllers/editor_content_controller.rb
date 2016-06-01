@@ -5,7 +5,6 @@ class EditorContentController < ApplicationController
 
   def create
     key = EditorContentKey.find_or_create(key_params)
-
     value = key.build_value(params[:value])
 
     if value.save

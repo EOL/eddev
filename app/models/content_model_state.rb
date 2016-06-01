@@ -6,6 +6,7 @@ class ContentModelState < ActiveRecord::Base
   validates :editor_content_version, :presence => true, 
     :numericality => { :greater_than_or_equal_to => 0 }
   validates_numericality_of :editor_content_version
+  validates_presence_of :locale
 
   after_initialize :set_defaults, :unless => :persisted?
 

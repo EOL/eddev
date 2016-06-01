@@ -8,6 +8,8 @@ class Habitat < ActiveRecord::Base
   validates_presence_of :place_id
 
   belongs_to :place
+  has_many :editor_content_keys, :as => :content_model
+  has_many :content_model_states, :as => :content_model
 
   after_initialize :init_content_key_cache
   

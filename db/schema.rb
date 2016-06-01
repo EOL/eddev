@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160526201733) do
+ActiveRecord::Schema.define(version: 20160531161221) do
+
+  create_table "content_model_permissions", force: :cascade do |t|
+    t.integer  "user_id",            limit: 4
+    t.integer  "content_model_id",   limit: 4
+    t.string   "content_model_type", limit: 255
+    t.integer  "type",               limit: 4
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "content_model_permissions", ["content_model_type", "content_model_id"], name: "index_content_model", using: :btree
+  add_index "content_model_permissions", ["user_id"], name: "index_content_model_permissions_on_user_id", using: :btree
 
   create_table "editor_content_keys", force: :cascade do |t|
     t.string   "name",               limit: 255
@@ -135,6 +147,7 @@ ActiveRecord::Schema.define(version: 20160526201733) do
   add_index "users", ["legacy_user_id"], name: "index_users_on_legacy_user_id", using: :btree
   add_index "users", ["user_name"], name: "index_users_on_user_name", unique: true, using: :btree
 
+  add_foreign_key "content_model_permissions", "users"
   add_foreign_key "editor_content_values", "editor_content_keys"
   add_foreign_key "galleries", "users"
   add_foreign_key "gallery_photos", "galleries"

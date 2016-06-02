@@ -19,6 +19,12 @@ class EditorContentKey < ActiveRecord::Base
     EditorContentValue.new(:editor_content_key => self, :content => content)
   end
 
+  def content_model_state
+    raise "Cannot call content_model_state when locale is nil" unless locale
+
+    content_model.state_for_locale(locale)
+  end
+
   # Class methods
   def self.find_or_create(options)
     base_options = HashWithIndifferentAccess.new(name: nil, locale: nil)

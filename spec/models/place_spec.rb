@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Place, type: :model do
   it { should have_many :habitats }
-  it { should have_many :editor_content_keys }
-  it { should have_many :content_model_states }
+
+  it_behaves_like "content_model"
 
   describe "valid instance" do
     let(:place) { create(:place) }

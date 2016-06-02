@@ -9,6 +9,7 @@ RSpec.describe Habitat, type: :model do
   it { should validate_uniqueness_of :name }
   it { should have_many :editor_content_keys }
   it { should have_many :content_model_states }
+  it_behaves_like "content_model"
 
   describe "valid instance" do
     it "is valid" do

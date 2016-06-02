@@ -2,6 +2,7 @@ class ContentModelState < ActiveRecord::Base
   belongs_to :content_model, polymorphic: true
 
   validates_presence_of :content_model
+  validates_uniqueness_of :content_model_id, :scope => [:content_model_type, :locale]
   validates :published, :inclusion => { :in => [true, false] }
   validates :editor_content_version, :presence => true, 
     :numericality => { :greater_than_or_equal_to => 0 }

@@ -25,6 +25,28 @@ RSpec.describe EditorContentKey, type: :model do
 
   it { should have_many :editor_content_values }
 
+  describe "#content_model_state" do
+    context "when there is a locale" do
+      let!(:content_model) { create(:habitat) }
+      let(:locale) { :en }
+      let!(:key) { create(:editor_content_key, :content_model => content_model, :locale => locale) }
+
+      it "should return content_model.state_for_locale" do
+        expected_state = content_model.state_for_locale(locale) 
+        expect(key.content_model_state).to eq(expected_state)
+      end
+    end
+
+
+    context "when it has no locale" do
+      let(:key) { build(:editor_content_key, :locale => nil) }
+
+      it "should raise RuntimeError" do
+        expect { key.content_model_state }.to raise_error(RuntimeError)
+      end 
+    end
+  end
+
   describe "#latest_value" do
     let(:name) { "its_a_key" }
     let(:editor_content_key) { create(:editor_content_key, name: name) }

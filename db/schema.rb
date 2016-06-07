@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160601194051) do
+ActiveRecord::Schema.define(version: 20160607144123) do
 
   create_table "content_model_permissions", force: :cascade do |t|
     t.integer  "user_id",            limit: 4
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20160601194051) do
     t.string   "locale",                 limit: 5
   end
 
+  add_index "content_model_states", ["content_model_id", "content_model_type", "locale"], name: "unique_index_content_model_and_locale", unique: true, using: :btree
   add_index "content_model_states", ["content_model_type", "content_model_id"], name: "index_content_model", using: :btree
 
   create_table "editor_content_keys", force: :cascade do |t|

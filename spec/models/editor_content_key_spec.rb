@@ -49,44 +49,94 @@ RSpec.describe EditorContentKey, type: :model do
 
   describe "#latest_value" do
     let(:name) { "its_a_key" }
-    let(:editor_content_key) { create(:editor_content_key, name: name) }
+    let(:locale) { "en" }
+    let(:content_version) { 1 }
+    let!(:content_model) { create(:habitat) }
+    let!(:content_model_state) do 
+      create(:content_model_state, 
+             :content_model => content_model, 
+             :locale => locale,
+             :editor_content_version => content_version) 
+    end
+    let!(:key) do 
+      create(:editor_content_key, 
+             :name => name, 
+             :content_model => content_model,
+             :locale => locale)
+    end
+    let(:content) { "some text" }
+
+    shared_examples_for "no valid values" do
+      it "returns the key name" do
+        expect(key.latest_value).to eq(name)
+      end
+    end
+
+    shared_examples_for "return correct value" do
+      it "returns the correct value" do
+        expect(key.latest_value).to eq(content)
+      end
+    end
 
     context "when no EditorContentValues exist" do
-      it "returns the key name" do
-        expect(editor_content_key.latest_value).to eq(name)
-      end
+      it_behaves_like "no valid values"
     end
 
-    context "when one EditorContentValue exists" do
-      let(:content) { "some text" }
-
+    context "when ECVs exist with only versions > the greatest valid version" do
       before do
-        EditorContentValue.create!(editor_content_key: editor_content_key, content: content)
-        editor_content_key.reload
+        EditorContentValue.create!(editor_content_key: key, content: content, version: 2)
       end
 
-      it "returns that ECV's content value" do
-        expect(editor_content_key.latest_value).to eq(content)
-      end
+      it_behaves_like "no valid values"
     end
 
-    context "when multiple EditorContentValues exist" do
-      let(:old_content) { "old content" }
-      let(:new_content) { "new content" }
-
+    context "when one EditorContentValue exists with valid versions" do
       before do
-        EditorContentValue.create!(editor_content_key: editor_content_key, content: old_content)
-        EditorContentValue.create!(editor_content_key: editor_content_key, content: new_content)
-        editor_content_key.reload
+        EditorContentValue.create!(editor_content_key: key, content: content, version: 0)
+        key.reload
       end
 
-      it "returns the ECV with the greatest id's content" do
-        expect(editor_content_key.latest_value).to eq(new_content)
+      it_behaves_like "return correct value"
+    end
+
+    context "when multiple EditorContentValues exist with valid versions" do
+      before do
+        EditorContentValue.create!(editor_content_key: key, content: "old revision 1", version: 0)
+        EditorContentValue.create!(editor_content_key: key, content: "old revision 2", version: 1)
+        EditorContentValue.create!(editor_content_key: key, content: content, version: 1)
+        key.reload
       end
+      
+      it_behaves_like "return correct value"
+    end
+
+    context "when values exist with valid and invalid versions" do
+      before do
+        EditorContentValue.create!(editor_content_key: key, content: content, version: 0)
+        EditorContentValue.create!(editor_content_key: key, content: "newer content", version: 2)
+        key.reload
+      end
+
+      it_behaves_like "return correct value"
     end
   end
 
-  describe "self.find_or_create" do
+  describe "#latest_draft_value" do
+    let!(:key) { create(:editor_content_key) }
+    let(:expected_content) { "expected content" }
+
+    before do
+      EditorContentValue.create!(editor_content_key: key, content: "old revision 1", version: 0)
+      EditorContentValue.create!(editor_content_key: key, content: expected_content, version: 1)
+      key.reload
+    end
+
+    it "returns the latest value ignoring version" do
+      expect(key.latest_draft_value).to eq(expected_content)
+    end
+  end
+
+  describe "#find_or_create!" do
     let(:name) { "key_name" }
     let(:other_name) { "key_other_name" }
     let(:model) { create(:habitat) }
@@ -96,14 +146,14 @@ RSpec.describe EditorContentKey, type: :model do
       context "when no record is found" do
         context "when the content model is specified using the content_model attribute" do
           it "creates the key" do 
-            key = EditorContentKey.find_or_create(name: name, content_model: model, locale: locale)
+            key = EditorContentKey.find_or_create!(name: name, content_model: model, locale: locale)
             check_key(key, name, model, locale)
           end
         end
 
         context "when the content model is specified using the content_model_id and content_model_type attributes" do
           it "creates the key" do         
-            key = EditorContentKey.find_or_create(name: other_name, content_model_id: model.id, 
+            key = EditorContentKey.find_or_create!(name: other_name, content_model_id: model.id, 
                                                   content_model_type: model.class.name, locale: locale)
             check_key(key, other_name, model, locale)
           end
@@ -114,51 +164,61 @@ RSpec.describe EditorContentKey, type: :model do
         let!(:stored_key) { create(:editor_content_key, name: name, content_model: model, locale: locale) }
 
         it "returns the record" do
-          key = EditorContentKey.find_or_create(name: name, content_model: model, locale: locale)
+          key = EditorContentKey.find_or_create!(name: name, content_model: model, locale: locale)
           expect(key).to eq(stored_key)
           
-          key = EditorContentKey.find_or_create(name: name, content_model_id: model.id, content_model_type: model.class.name, locale: locale)
+          key = EditorContentKey.find_or_create!(name: name, content_model_id: model.id, content_model_type: model.class.name, locale: locale)
           expect(key).to eq(stored_key)
         end
       end
     end
 
     context "when the required query parameters are not all supplied" do
-      it "returns a new, invalid record with the supplied parameters filled in" do
-        key = EditorContentKey.find_or_create(name: name, content_model: model)
-        expect(key).not_to be_nil
-        expect(key).to be_invalid
-        expect(key.name).to eq(name)
-        expect(key.content_model).to eq(model)
-        expect(key.locale).to be_nil
+      it "raises ActiveRecord::RecordInvalid" do
+        expect { EditorContentKey.find_or_create!(name: name, content_model: model) }.to raise_error(ActiveRecord::RecordInvalid)
       end 
     end
   end
 
-  describe "#build_value" do
-    let(:key) { create(:editor_content_key) }
+  describe "#create_value!" do
+    let(:content_version) { 5 }
+    let!(:content_model) { create(:habitat) }
+    let(:locale) { "en" }
+    let!(:content_model_state) do
+      create(:content_model_state, 
+             :content_model => content_model,
+             :editor_content_version => content_version, 
+             :locale => locale)
+    end
+    let!(:key) { create(:editor_content_key, :content_model => content_model) }
 
-    shared_examples "#build_value" do |content_string, should_be_valid|
-      it "returns an EditorContentValue with attributes correctly set" do
-        value = key.build_value(content_string)
-
-        expect(value).not_to be_nil
-        expect(value.editor_content_key).to eq(key)
-        expect(value.content).to eq(content_string)
-        expect(value.valid?).to eq(should_be_valid)
-      end  
+    shared_examples_for "invalid content" do |invalid_content|
+      it "raises ActiveRecord::RecordInvalid" do
+        expect { key.create_value!(invalid_content) }.to raise_error(ActiveRecord::RecordInvalid)
+      end
     end
 
     context "when it is passed a nonempty string" do
-      it_behaves_like "#build_value", "content!", true
+      let(:content_string) { "content" }
+
+      it "creates a valid value with the attributes correctly set" do
+        value = key.create_value!(content_string)
+
+        expect(value).not_to be_nil
+        expect(value).to be_valid
+        expect(value.editor_content_key).to eq(key)
+        expect(value.content).to eq(content_string)
+        expect(value.version).to eq(content_version + 1)
+      end
     end
 
     context "when it is passed an empty string" do
-      it_behaves_like "#build_value", "", false
+      it_behaves_like "invalid content", ""
     end
 
     context "when it is passed nil" do
-      it_behaves_like "#build_value", nil, false
+      it_behaves_like "invalid content", nil
     end
   end
+
 end

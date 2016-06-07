@@ -53,9 +53,12 @@ RSpec.describe Habitat, type: :model do
     let(:other_habitat) { create(:habitat, name: "other habitat", place: other_place) }
 
     before do
-      create(:editor_content_key, content_model: habitat, locale: :es).build_value(content_value).save!
-      create(:editor_content_key, content_model: habitat, locale: :fr).build_value(content_value).save!
-      create(:editor_content_key, content_model: habitat, locale: :en).build_value(content_value).save!    
+      create(:editor_content_key, content_model: habitat, locale: :es).create_value!(content_value)
+      create(:editor_content_key, content_model: habitat, locale: :fr).create_value!(content_value)
+      create(:editor_content_key, content_model: habitat, locale: :en).create_value!(content_value)
+      habitat.publish_draft(:es)
+      habitat.publish_draft(:fr)
+      habitat.publish_draft(:en)
     end
 
     describe "when it is called with no locales" do
@@ -74,7 +77,7 @@ RSpec.describe Habitat, type: :model do
         other_habitat.reload 
         
         expect(other_habitat.editor_content_keys.length).to eq(1)
-        expect(other_habitat.editor_content_keys[0].latest_value).to eq(content_value)
+        expect(other_habitat.editor_content_keys[0].latest_draft_value).to eq(content_value)
       end
     end
 
@@ -87,11 +90,11 @@ RSpec.describe Habitat, type: :model do
 
         es_keys = other_habitat.editor_content_keys.where(locale: :es)
         expect(es_keys.length).to eq(1)
-        expect(es_keys[0].latest_value).to eq(content_value)
+        expect(es_keys[0].latest_draft_value).to eq(content_value)
 
         fr_keys = other_habitat.editor_content_keys.where(locale: :fr)
         expect(fr_keys.length).to eq(1)
-        expect(fr_keys[0].latest_value).to eq(content_value)
+        expect(fr_keys[0].latest_draft_value).to eq(content_value)
       end
     end
   end

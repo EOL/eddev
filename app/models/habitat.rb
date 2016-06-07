@@ -39,13 +39,9 @@ class Habitat < ActiveRecord::Base
     keys_to_copy = editor_content_keys.where(locale: locales)
     
     EditorContentKey.transaction do
-      copies = keys_to_copy.collect do |key| 
-        new_key = EditorContentKey.find_or_create(name: key.name, locale: key.locale, content_model: habitat)
-        new_key.build_value(key.latest_value)
-      end
-
-      copies.each do |copy|
-        copy.save!
+      keys_to_copy.each do |key| 
+        new_key = EditorContentKey.find_or_create!(name: key.name, locale: key.locale, content_model: habitat)
+        new_key.create_value!(key.latest_value)
       end
     end
   end

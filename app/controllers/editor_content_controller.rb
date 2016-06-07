@@ -4,13 +4,12 @@ class EditorContentController < ApplicationController
   skip_before_filter :set_locale
 
   def create
-    key = EditorContentKey.find_or_create(key_params)
-    value = key.build_value(params[:value])
+    begin
+      key = EditorContentKey.find_or_create!(key_params)
+      value = key.create_value!(params[:value])
 
-    if value.save
       head :ok
-    else
-      logger.warn("Failed to create EditorContent. Errors: #{value.errors.full_messages.join(",") if value.errors}")
+    rescue ActiveRecord::RecordInvalid
       head :bad_request
     end
   end

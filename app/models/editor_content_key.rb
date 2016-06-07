@@ -12,11 +12,21 @@ class EditorContentKey < ActiveRecord::Base
 
   # Instance methods
   def latest_value
-    editor_content_values.empty? ? name : editor_content_values.last.content
+    return @latest_value if @latest_value
+
+    latest_valid_value = editor_content_values
+      .where(:version => 0..content_model_state.editor_content_version)
+      .last
+
+    @latest_value = latest_valid_value.nil? ? name : latest_valid_value.content
   end
 
-  def build_value(content)
-    EditorContentValue.new(:editor_content_key => self, :content => content)
+  def latest_draft_value
+    return editor_content_values.empty? ? name : editor_content_values.last.content
+  end
+
+  def create_value!(content)
+    editor_content_values.create!(:content => content, :version => version_for_new_values)
   end
 
   def content_model_state
@@ -26,7 +36,7 @@ class EditorContentKey < ActiveRecord::Base
   end
 
   # Class methods
-  def self.find_or_create(options)
+  def self.find_or_create!(options)
     base_options = HashWithIndifferentAccess.new(name: nil, locale: nil)
 
     # If content_model is set, don't set defaults for these attributes since they will
@@ -36,6 +46,11 @@ class EditorContentKey < ActiveRecord::Base
     end
 
     base_options.merge!(options) 
-    self.where(base_options).first_or_create
+    self.where(base_options).first_or_create!
+  end
+
+  private
+  def version_for_new_values
+    content_model_state.editor_content_version + 1
   end
 end

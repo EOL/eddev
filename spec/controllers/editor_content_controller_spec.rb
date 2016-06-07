@@ -9,6 +9,7 @@ RSpec.describe EditorContentController, type: :controller do
     let(:value) { "Some text" }
     let(:locale) { "es" }
     let(:habitat) { create(:habitat) }
+    let(:model_state) { create(:content_model_state, :content_model => habitat, :editor_content_version => 0) }
     let!(:content_key) { create(:editor_content_key, name: key_name, content_model: habitat, locale: locale) }
     let(:request_body) do
       { 
@@ -35,8 +36,13 @@ RSpec.describe EditorContentController, type: :controller do
           expect(response.status).to eq(200)
         end
 
-        it "creates an EditorContent from the request parameter values" do
-          expect(content_key.latest_value).to eq(value)
+        it "creates a EditorContentValue from the request parameter values" do
+          saved_values = EditorContentValue.where(
+            :editor_content_key => content_key,
+            :version => 1
+          )
+
+          expect(saved_values.length).to eq(1)
         end
       end
 

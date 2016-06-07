@@ -15,4 +15,10 @@ module ContentModel
       content_model_states.create!(:locale => locale)
     end
   end
+
+  def publish_draft(locale)
+    state = state_for_locale(locale)
+    state.editor_content_version += 1
+    state.save!
+  end
 end

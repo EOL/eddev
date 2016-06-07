@@ -1,14 +1,13 @@
 require 'rails_helper'
 
 shared_examples_for "content_model" do 
-  let(:model) { described_class }
-
   it { should have_many :editor_content_keys }
   it { should have_many :content_model_states }
   
+  let!(:content_model) { create(described_class.to_s.underscore.to_sym) }
+  let(:locale) { :fr }
+
   describe "#state_for_locale" do
-    let!(:content_model) { create(described_class.to_s.underscore.to_sym) }
-    let(:locale) { :fr }
 
     context "when there is a ContentModelState for the locale" do
       let!(:state) { create(:content_model_state, :content_model => content_model, :locale => locale) }
@@ -32,6 +31,16 @@ shared_examples_for "content_model" do
         same_state = content_model.state_for_locale(locale)
         expect(same_state).to eq(new_state)
       end
+    end
+  end
+
+  describe "#publish_draft" do
+    it "increments the locale's ContentModelState's editor_content_version" do
+      state = content_model.state_for_locale(locale)
+      cur_version = state.editor_content_version  
+      content_model.publish_draft(locale)
+      state.reload
+      expect(state.editor_content_version).to eq(cur_version + 1)
     end
   end
 end

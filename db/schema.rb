@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160607144123) do
+ActiveRecord::Schema.define(version: 20160607154627) do
 
   create_table "content_model_permissions", force: :cascade do |t|
     t.integer  "user_id",            limit: 4
@@ -51,14 +51,14 @@ ActiveRecord::Schema.define(version: 20160607144123) do
   add_index "editor_content_keys", ["name", "locale", "content_model_id", "content_model_type"], name: "index_all_cols_unique", unique: true, using: :btree
 
   create_table "editor_content_values", force: :cascade do |t|
-    t.integer  "editor_content_key_id", limit: 4
-    t.text     "content",               limit: 65535
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.integer  "version",               limit: 4
+    t.text     "content",                limit: 65535
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.integer  "version",                limit: 4
+    t.integer  "content_model_state_id", limit: 4
   end
 
-  add_index "editor_content_values", ["editor_content_key_id"], name: "index_editor_content_values_on_editor_content_key_id", using: :btree
+  add_index "editor_content_values", ["content_model_state_id"], name: "index_editor_content_values_on_content_model_state_id", using: :btree
 
   create_table "galleries", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -162,7 +162,7 @@ ActiveRecord::Schema.define(version: 20160607144123) do
   add_index "users", ["user_name"], name: "index_users_on_user_name", unique: true, using: :btree
 
   add_foreign_key "content_model_permissions", "users"
-  add_foreign_key "editor_content_values", "editor_content_keys"
+  add_foreign_key "editor_content_values", "content_model_states"
   add_foreign_key "galleries", "users"
   add_foreign_key "gallery_photos", "galleries"
   add_foreign_key "gallery_photos", "licenses"

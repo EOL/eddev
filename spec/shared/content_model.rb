@@ -8,7 +8,6 @@ shared_examples_for "content_model" do
   let(:locale) { :fr }
 
   describe "#state_for_locale" do
-
     context "when there is a ContentModelState for the locale" do
       let!(:state) { create(:content_model_state, :content_model => content_model, :locale => locale) }
 
@@ -41,6 +40,41 @@ shared_examples_for "content_model" do
       content_model.publish_draft(locale)
       state.reload
       expect(state.editor_content_version).to eq(cur_version + 1)
+    end
+  end
+
+  describe "#locales_with_content" do
+    shared_examples_for "no locales with content" do
+      it "returns an empty array" do
+        expect(content_model.locales_with_content.empty?).to be true
+      end
+    end
+
+    context "when there are no locales with content" do
+      it_behaves_like "no locales with content"
+    end 
+
+    context "when there is one locale with content" do
+      let(:locale) { "es" }
+      let!(:content_key) { create(:editor_content_key, content_model: content_model, locale: locale) }
+
+      before do
+        content_key.create_value!("some content")
+      end
+
+      context "when it is all unpublished" do
+        it_behaves_like "no locales with content"
+      end
+
+      context "when it is published" do
+        before do
+          content_model.publish_draft(locale)
+        end
+
+        it "returns an array containing that locale" do
+          expect(content_model.locales_with_content).to eq([locale])
+        end
+      end
     end
   end
 end

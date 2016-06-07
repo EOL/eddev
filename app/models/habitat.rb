@@ -46,14 +46,6 @@ class Habitat < ActiveRecord::Base
     end
   end
   
-  # Precisely, this method returns the locales for which there exist at least one
-  # EditorContentKey. In practice, this should be good enough, since EditorContentKeys
-  # are generally created on-demand; that is, we expect there to exist at least one value per key.
-  def locales_with_content
-    keys = editor_content_keys.group(:locale).order(:locale)
-    keys.collect { |c| c.locale }
-  end
-
   def self.all_ordered_alpha_with_place
     includes(:place).order('places.name').order(:name)
   end

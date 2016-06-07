@@ -17,36 +17,6 @@ RSpec.describe Habitat, type: :model do
     end
   end
 
-  describe "#locales_with_content" do
-    describe "when there are no locales with content" do
-      it "returns an empty array" do
-        expect(habitat.locales_with_content.empty?).to be true
-      end
-    end 
-
-    describe "when there is one locale with content" do
-      before do
-        create(:editor_content_key, content_model: habitat, locale: :es)
-      end
-
-      it "returns an array containing that locale" do
-        expect(habitat.locales_with_content).to eq(["es"])
-      end
-    end
-
-    describe "when there are multiple locales with content" do
-      before do
-        create(:editor_content_key, content_model: habitat, locale: :es)
-        create(:editor_content_key, content_model: habitat, locale: :fr)
-        create(:editor_content_key, content_model: habitat, locale: :en)
-      end
-
-      it "returns an array containing those locales in alphabetical order" do
-        expect(habitat.locales_with_content).to eq(["en", "es", "fr"])
-      end
-    end
-  end
-
   describe "#copy_locale_contents!" do
     let (:content_value) { "content value"}
     let(:other_place) { create(:place, name: "other place") }

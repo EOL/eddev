@@ -21,4 +21,10 @@ module ContentModel
     state.editor_content_version += 1
     state.save!
   end
+
+  # Array of locales for which there exists published content, in alphabetical order
+  def locales_with_content
+    keys = editor_content_keys.group(:locale).order(:locale)
+    keys.collect { |c| c.locale }
+  end
 end

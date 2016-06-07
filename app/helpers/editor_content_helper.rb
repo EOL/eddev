@@ -48,6 +48,5 @@ module EditorContentHelper
       owner_type = content_owner.class.name
       owner_id = content_owner.id
     end
-
   end
 end

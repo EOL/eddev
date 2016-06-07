@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160607155146) do
+ActiveRecord::Schema.define(version: 20160607155238) do
 
   create_table "content_model_permissions", force: :cascade do |t|
     t.integer  "user_id",            limit: 4
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20160607155146) do
     t.datetime "updated_at",                           null: false
     t.integer  "version",                limit: 4
     t.integer  "content_model_state_id", limit: 4
+    t.string   "key",                    limit: 255
   end
 
   add_index "editor_content_values", ["content_model_state_id"], name: "index_editor_content_values_on_content_model_state_id", using: :btree

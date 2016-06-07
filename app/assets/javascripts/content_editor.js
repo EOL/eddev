@@ -67,12 +67,12 @@ if (typeof ContentEditor === 'undefined') {
           $.ajax('/editor_content', {
             method: "POST",
             data: {
-              key: {
-                name: keyName
+              state: {
               , locale: locale
               , content_model_type: modelType
               , content_model_id: modelId
-              }
+              },
+            , key: keyName
             , value: editor.getContent()
             },
             error: function() {

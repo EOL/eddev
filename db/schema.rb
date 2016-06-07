@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160607155238) do
+ActiveRecord::Schema.define(version: 20160607155832) do
 
   create_table "content_model_permissions", force: :cascade do |t|
     t.integer  "user_id",            limit: 4
@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 20160607155238) do
   add_index "content_model_states", ["content_model_id", "content_model_type", "locale"], name: "unique_index_content_model_and_locale", unique: true, using: :btree
   add_index "content_model_states", ["content_model_type", "content_model_id"], name: "index_content_model", using: :btree
 
-  create_table "editor_content_values", force: :cascade do |t|
-    t.text     "content",                limit: 65535
+  create_table "editor_contents", force: :cascade do |t|
+    t.text     "value",                  limit: 65535
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.integer  "version",                limit: 4
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20160607155238) do
     t.string   "key",                    limit: 255
   end
 
-  add_index "editor_content_values", ["content_model_state_id"], name: "index_editor_content_values_on_content_model_state_id", using: :btree
+  add_index "editor_contents", ["content_model_state_id"], name: "index_editor_contents_on_content_model_state_id", using: :btree
 
   create_table "galleries", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -151,7 +151,7 @@ ActiveRecord::Schema.define(version: 20160607155238) do
   add_index "users", ["user_name"], name: "index_users_on_user_name", unique: true, using: :btree
 
   add_foreign_key "content_model_permissions", "users"
-  add_foreign_key "editor_content_values", "content_model_states"
+  add_foreign_key "editor_contents", "content_model_states"
   add_foreign_key "galleries", "users"
   add_foreign_key "gallery_photos", "galleries"
   add_foreign_key "gallery_photos", "licenses"

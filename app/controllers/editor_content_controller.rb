@@ -5,8 +5,8 @@ class EditorContentController < ApplicationController
 
   def create
     begin
-      key = EditorContentKey.find_or_create!(key_params)
-      value = key.create_value!(params[:value])
+      state = ContentModelState.find_or_create!(state_params)
+      value = state.create_content!(params[:key], params[:value])
 
       head :ok
     rescue ActiveRecord::RecordInvalid
@@ -15,7 +15,7 @@ class EditorContentController < ApplicationController
   end
 
   private
-  def key_params
-    params.require(:key).permit(:content_model_id, :content_model_type, :name, :locale)
+  def state_params
+    params.require(:state).permit(:content_model_type, :content_model_id, :locale) 
   end
 end

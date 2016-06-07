@@ -25,9 +25,6 @@ class EditorContentKey < ActiveRecord::Base
     return editor_content_values.empty? ? name : editor_content_values.last.content
   end
 
-  def create_value!(content)
-    editor_content_values.create!(:content => content, :version => version_for_new_values)
-  end
 
   def content_model_state
     raise "Cannot call content_model_state when locale is nil" unless locale
@@ -50,7 +47,4 @@ class EditorContentKey < ActiveRecord::Base
   end
 
   private
-  def version_for_new_values
-    content_model_state.editor_content_version + 1
-  end
 end

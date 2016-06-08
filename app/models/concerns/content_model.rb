@@ -1,8 +1,9 @@
-module ContentModel
+module ContentModel 
   extend ActiveSupport::Concern
   
   included do 
     has_many :content_model_states, :as => :content_model
+    validates :name, :presence => true, :uniqueness => true
   end
 
   COPY_LOCALE_CONTENTS_QUERY = <<-SQL

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160607155832) do
+ActiveRecord::Schema.define(version: 20160608203553) do
 
   create_table "content_model_permissions", force: :cascade do |t|
     t.integer  "user_id",            limit: 4
@@ -115,12 +115,12 @@ ActiveRecord::Schema.define(version: 20160607155832) do
   add_index "places", ["name"], name: "index_places_on_name", unique: true, using: :btree
 
   create_table "single_page_content_models", force: :cascade do |t|
-    t.string   "page_name",  limit: 255
+    t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
 
-  add_index "single_page_content_models", ["page_name"], name: "index_single_page_content_models_on_page_name", unique: true, using: :btree
+  add_index "single_page_content_models", ["name"], name: "index_single_page_content_models_on_name", unique: true, using: :btree
 
   create_table "user_migration_invitations", force: :cascade do |t|
     t.datetime "created_at",                                   null: false

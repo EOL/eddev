@@ -19,8 +19,16 @@ class ContentModelState < ActiveRecord::Base
     )
   end
 
+  def content_value(key)
+    latest_content = editor_contents.where(:key => key)
+                                    .where("version <= #{editor_content_version}")
+                                    .order(:version => :desc)
+                                    .limit(1)
+    latest_value = latest_content.empty? ? key : latest_content[0].value
+  end
+
   def publish_draft
-    editor_content_version += 1
+    self.editor_content_version += 1
     self.save!
   end
 

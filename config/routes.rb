@@ -7,10 +7,14 @@ Rails.application.routes.draw do
     resources :users
   
     resources :places do
-      resources :habitats
-      post 'habitats/copy'                   => 'habitats#copy', as: :habitats_copy
-      get  'habitats/:id/langs_with_content' => 'habitats#langs_with_content', as: :habitat_langs_with_content
+
+      resources :habitats do
+        get  'langs_with_content' => 'habitats#langs_with_content', as: :habitat_langs_with_content
+        post 'copy'               => 'habitats#copy', as: :habitats_copy
+      end
+      get  'habitats/:id/draft'   => 'habitats#draft'
     end
+    get 'places/:id/draft'        => 'places#draft'
 
     resources :galleries do
       resources :gallery_photos
@@ -35,7 +39,9 @@ Rails.application.routes.draw do
     get  ''                                 => 'welcome#index'
   end
 
-  post 'editor_content'                   => 'editor_content#create'
+  post 'editor_content/create'              => 'editor_content#create'
+
+  post 'editor_content/publish_draft'       => 'editor_content#publish_draft'
 
 
   # Example of named route that can be invoked with purchase_url(id: product.id)

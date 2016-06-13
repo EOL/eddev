@@ -28,4 +28,5 @@ en:
     save_error: "Oops, something went wrong! Please try again later."
     unsaved_beforeunload: "You currently have unsaved changes that will be lost if you leave this page."
     save_label: "Save"
+    publish_label: "Publish draft"
     

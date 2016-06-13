@@ -20,16 +20,28 @@ class ContentModelState < ActiveRecord::Base
   end
 
   def content_value(key)
-    latest_content = editor_contents.where(:key => key)
+    content_value_helper(editor_contents.where(:key => key)
                                     .where("version <= #{editor_content_version}")
-                                    .order(:version => :desc)
-                                    .limit(1)
-    latest_value = latest_content.empty? ? key : latest_content[0].value
+                                    .order(:created_at => :desc)
+                                    .limit(1), key)
+  end
+
+  def draft_content_value(key)
+    content_value_helper(editor_contents.where(:key => key)
+                                  .order(:created_at => :desc)
+                                  .limit(1), key)
   end
 
   def publish_draft
-    self.editor_content_version += 1
-    self.save!
+    if has_unpublished_content?
+      self.editor_content_version += 1
+      self.save!
+    end
+  end
+  
+  def has_unpublished_content?
+    max_version = editor_contents.maximum(:version)
+    max_version > editor_content_version
   end
 
   def self.find_or_create!(options)
@@ -53,5 +65,9 @@ class ContentModelState < ActiveRecord::Base
   def set_defaults
     self.published = false if published.nil?
     self.editor_content_version = 0 if editor_content_version.nil?
+  end
+
+  def content_value_helper(query_result, key)
+    value = query_result.empty? ? key : query_result[0].value
   end
 end

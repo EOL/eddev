@@ -1,13 +1,11 @@
 class PlacesController < ApplicationController
-  before_action :set_place, only: [:show, :edit, :update, :destroy]
+  include ContentModelController
+
+  before_action :set_place,          :only => [:edit, :update, :destroy, :draft]
 
   # GET /places
   def index
     @places = Place.all
-  end
-
-  # GET /places/1
-  def show
   end
 
   # GET /places/new

@@ -1,4 +1,7 @@
 <script type="text/javascript">
+  <%# translations for JS %>
   window.I18n = {};
   I18n.content_editor = <%= t("content_editor").to_json.html_safe %>;
+
+  ContentEditorState = <%= content_editor_state.to_json.html_safe %>;
 </script>

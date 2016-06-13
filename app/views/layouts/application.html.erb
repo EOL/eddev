@@ -10,6 +10,8 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <%= render partial: "shared/draft_header" %>
+
   <%= yield %>
 
   <%= render partial: "shared/footer" %>

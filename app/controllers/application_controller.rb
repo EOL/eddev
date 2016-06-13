@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   before_filter :set_locale
   before_filter :ensure_user
+  before_filter :init_content_editor_state
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -51,6 +52,45 @@ class ApplicationController < ActionController::Base
       session[:user_id] = nil
     end
 
+    def set_content_model_state(state)
+      @content_editor_state[:locale]     = state.locale
+      @content_editor_state[:model_type] = state.content_model.class.name
+      @content_editor_state[:model_id]   = state.content_model.id 
+      @content_editor_state[:enable_publish] = state.has_unpublished_content?
+    end
+
+    def set_content_editor_state(key, value)
+      @content_editor_state[key] = value
+    end
+
+    def content_editor_state
+      @content_editor_state
+    end
+    helper_method :content_editor_state
+
+    def get_content_editor_state(key)
+      @content_editor_state[key]
+    end
+    helper_method :get_content_editor_state
+
+    def set_draft_page
+      @draft_page = true
+    end
+
+    def set_draftable_page
+      @draftable_page = true
+    end
+
+    def draft_page?
+      @draft_page == true
+    end
+    helper_method :draft_page?
+
+    def draftable_page?
+      @draftable_page == true
+    end
+    helper_method :draftable_page?
+
   private
   def set_locale
     locale = params[:locale]
@@ -66,5 +106,9 @@ class ApplicationController < ActionController::Base
     # Redirect to the url from the request with the default locale added
       redirect_to url_for request.params.merge({locale: I18n.default_locale})
     end
+  end
+
+  def init_content_editor_state
+    @content_editor_state = {}
   end
 end

@@ -1,0 +1,5 @@
+<% if draft_page? %>
+  <div id="DRAFT_HEADER">This is a draft view of this page. Click <%= link_to "here", published_path %> to navigate to the live version.</div>
+<% elsif draftable_page? %>
+  <div id="DRAFT_HEADER">This is the live version of this page. Click <%= link_to "here", draft_path %> to edit.</div>
+<% end %>

@@ -64,21 +64,24 @@ if (typeof ContentEditor === 'undefined') {
             , modelId = element.data('content-model-id')
           ;
 
-          $.ajax('/editor_content', {
+          $.ajax('/editor_content/create', {
             method: "POST",
             data: {
               state: {
-              , locale: locale
+                locale: locale
               , content_model_type: modelType
               , content_model_id: modelId
               },
-            , key: keyName
-            , value: editor.getContent()
+              key: keyName,
+              value: editor.getContent()
             },
             error: function() {
               editor.setDirty(true);
               ContentEditor.enableSave();
               alert(I18n.content_editor.save_error);
+            },
+            success: function() {
+              ContentEditor.enablePublish(); 
             }
           });
         }
@@ -103,6 +106,35 @@ if (typeof ContentEditor === 'undefined') {
     , isSaveEnabled: function() {
       return !$('#SAVE_BUTTON').hasClass('disabled');
     }
+    /* Publish content
+     */
+    , disablePublish: function() {
+      var button = $('#PUBLISH_BUTTON');
+      button.prop('disabled', true);
+      button.off('click');
+    } 
+    , enablePublish: function() {
+      var button = $('#PUBLISH_BUTTON');
+      button.prop('disabled', false);
+      button.click(ContentEditor.publishDraft);
+    }
+    , publishDraft: function() {
+        ContentEditor.disablePublish();
+
+        $.ajax('/editor_content/publish_draft', {
+          method: "POST",
+          data: {
+            state: {
+              locale: ContentEditorState.locale
+            , content_model_type: ContentEditorState.model_type
+            , content_model_id: ContentEditorState.model_id
+            }
+          }
+        , error: function() {
+            alert(I18n.content_editor.save_error);
+          }
+        });
+    }
     /* Add the content editor controls to the dom. This function only has an effect the first time it is called 
      * on a given page.
      */
@@ -116,11 +148,18 @@ if (typeof ContentEditor === 'undefined') {
             '<i class="fa fa-toggle-off fa-2x" id="EDIT_SWITCH"></i><br />' +
             '<div id="SAVE_LABEL">' + I18n.content_editor.save_label + '</div>' +
             '<i class="fa fa-floppy-o fa-2x disabled" id="SAVE_BUTTON"></i>' +
+            '<input type="submit" id="PUBLISH_BUTTON" disabled="disabled"' +
+                'value="' + I18n.content_editor.publish_label + '" />' +
           '</div>'
         );
 
+        if (ContentEditorState && ContentEditorState.enable_publish) {
+          ContentEditor.enablePublish();
+        }
+        
         $('#EDIT_CONTROL').draggable({ cursor: 'move' });
         $('#EDIT_SWITCH').click(ContentEditor.toggleEditMode);
+
         $(window).on('beforeunload', function() {
           if (ContentEditor.isSaveEnabled()) {
             return I18n.content_editor.unsaved_beforeunload;

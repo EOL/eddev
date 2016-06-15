@@ -17,4 +17,5 @@
 
 body { margin: 0; padding: 0; }
 .hide { display: none !important; }
+#MainContent { margin: 8px; }
 #DRAFT_HEADER { background-color: #FAF55A; height: 20px; text-align: center; vertical-align: middle; }

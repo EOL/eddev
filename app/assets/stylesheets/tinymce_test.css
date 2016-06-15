@@ -10,8 +10,8 @@
   background: #FFF;
 }
 
-#EDIT_SWITCH, #SAVE_BUTTON { cursor: pointer; }
-#SAVE_BUTTON.disabled { cursor: default; }
+#EDIT_SWITCH, #SAVE_BUTTON, #PUBLISH_BUTTON { cursor: pointer; }
+#SAVE_BUTTON.disabled, #PUBLISH_BUTTON.disabled { cursor: default; }
+#SAVE_BUTTON { margin-top: 10px; } 
+#PUBLISH_BUTTON { margin-top: 5px; }
 
-
-.disabled.fa-floppy-o { color: #CCC; }

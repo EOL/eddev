@@ -27,6 +27,7 @@ en:
     edit_mode_off: "Edit mode off"
     save_error: "Oops, something went wrong! Please try again later."
     unsaved_beforeunload: "You currently have unsaved changes that will be lost if you leave this page."
-    save_label: "Save"
+    save_label: "Save draft"
     publish_label: "Publish draft"
+    publish_confirm: "Are you sure you want to publish this draft? It will immediately replace the current public version of this page."
     

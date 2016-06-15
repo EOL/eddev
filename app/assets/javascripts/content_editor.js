@@ -87,38 +87,50 @@ if (typeof ContentEditor === 'undefined') {
         }
       });
     }
+    /**
+     * Add the disabled property to an element and remove
+     * its click handler.
+     */
+    , disableButton: function(button) {
+      button.prop('disabled', true);
+      button.off('click'); 
+    }
+    /**
+     * Remove the disabled property from an element and
+     * add the specified click handler.
+     */
+    , enableButton: function(button, clickHandler) {
+      button.prop('disabled', false);
+      button.click(clickHandler);
+    }
     /* Disable the save button
      */
     , disableSave: function() {
-      var button = $('#SAVE_BUTTON');
-      button.addClass('disabled');
-      button.off('click');
+      ContentEditor.disableButton($('#SAVE_BUTTON'));
     }
     /* Enable the save button
      */
     , enableSave: function() {
-      var button = $('#SAVE_BUTTON');
-      button.removeClass('disabled');
-      button.click(ContentEditor.saveEditors)
+      ContentEditor.enableButton($('#SAVE_BUTTON'), ContentEditor.saveEditors);
     }
     /* True if the save button is enabled, false o/w
      */
     , isSaveEnabled: function() {
-      return !$('#SAVE_BUTTON').hasClass('disabled');
+      return !$('#SAVE_BUTTON').prop('disabled');
     }
     /* Publish content
      */
     , disablePublish: function() {
-      var button = $('#PUBLISH_BUTTON');
-      button.prop('disabled', true);
-      button.off('click');
+      ContentEditor.disableButton($('#PUBLISH_BUTTON'));
     } 
     , enablePublish: function() {
-      var button = $('#PUBLISH_BUTTON');
-      button.prop('disabled', false);
-      button.click(ContentEditor.publishDraft);
+      ContentEditor.enableButton($('#PUBLISH_BUTTON'), ContentEditor.publishDraft);
     }
     , publishDraft: function() {
+        if (!confirm(I18n.content_editor.publish_confirm)) {
+          return;
+        }
+
         ContentEditor.disablePublish();
 
         $.ajax('/editor_content/publish_draft', {
@@ -146,8 +158,8 @@ if (typeof ContentEditor === 'undefined') {
           '<div id="EDIT_CONTROL">' + 
             '<div id="EDIT_STATE_TEXT">' + I18n.content_editor.edit_mode_off + '</div>' +
             '<i class="fa fa-toggle-off fa-2x" id="EDIT_SWITCH"></i><br />' +
-            '<div id="SAVE_LABEL">' + I18n.content_editor.save_label + '</div>' +
-            '<i class="fa fa-floppy-o fa-2x disabled" id="SAVE_BUTTON"></i>' +
+            '<input type="submit" id="SAVE_BUTTON"     disabled="disabled"' +
+                'value="' + I18n.content_editor.save_label    + '" />' +
             '<input type="submit" id="PUBLISH_BUTTON" disabled="disabled"' +
                 'value="' + I18n.content_editor.publish_label + '" />' +
           '</div>'

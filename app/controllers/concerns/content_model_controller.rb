@@ -2,7 +2,7 @@ module ContentModelController
   extend ActiveSupport::Concern
 
   included do
-    before_action :set_content_model
+    before_action :set_content_model,  :except => [:index, :new, :create]
     before_action :set_draft_page,     :only => :draft
     before_action :set_draftable_page, :only => :show
   end

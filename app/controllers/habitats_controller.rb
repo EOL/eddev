@@ -1,15 +1,13 @@
 class HabitatsController < ApplicationController
-  before_action :set_habitat, only: [:show, :edit, :update, :destroy, :langs_with_content]
+  include ContentModelController
+
+  before_action :set_habitat, only: [:edit, :update, :destroy, :langs_with_content]
   before_action :set_place
   before_action :set_all_habitats, only: [:new, :create]
 
   # GET /places/1/habitats
   def index
     @habitats = Habitat.where(place: @place)
-  end
-
-  # GET /places/1/habitats/1
-  def show
   end
 
   # GET /places/1/habitats/new

@@ -2,7 +2,7 @@ module ContentModel
   extend ActiveSupport::Concern
   
   included do 
-    has_many :content_model_states, :as => :content_model
+    has_many :content_model_states, :as => :content_model, :dependent => :destroy
     validates :name, :presence => true, :uniqueness => true
   end
 

@@ -1,6 +1,6 @@
 class ContentModelState < ActiveRecord::Base
   belongs_to :content_model, polymorphic: true
-  has_many :editor_contents
+  has_many :editor_contents, :dependent => :destroy
 
   validates_presence_of :content_model
   validates_uniqueness_of :content_model_id, :scope => [:content_model_type, :locale]
@@ -40,7 +40,7 @@ class ContentModelState < ActiveRecord::Base
   end
   
   def has_unpublished_content?
-    max_version = editor_contents.maximum(:version)
+    max_version = editor_contents.maximum(:version) || 0
     max_version > editor_content_version
   end
 
@@ -68,6 +68,6 @@ class ContentModelState < ActiveRecord::Base
   end
 
   def content_value_helper(query_result, key)
-    value = query_result.empty? ? key : query_result[0].value
+    value = query_result.empty? ? key.to_s : query_result[0].value
   end
 end

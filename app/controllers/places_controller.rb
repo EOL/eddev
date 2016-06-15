@@ -1,8 +1,6 @@
 class PlacesController < ApplicationController
   include ContentModelController
 
-  before_action :set_place,          :only => [:edit, :update, :destroy, :draft]
-
   # GET /places
   def index
     @places = Place.all

@@ -1,15 +1,13 @@
 class EditorContentController < ApplicationController
   before_action      :set_state
+  before_action      :ensure_edit_privileges
   skip_before_filter :set_locale
 
-  def create
-    begin
-      value = @state.create_content!(params[:key], params[:value])
+  rescue_from ActiveRecord::RecordInvalid, :with => :record_invalid
 
-      head :ok
-    rescue ActiveRecord::RecordInvalid
-      head :bad_request
-    end
+  def create
+    value = @state.create_content!(params[:key], params[:value])
+    head :ok
   end
 
   def publish_draft
@@ -24,5 +22,13 @@ class EditorContentController < ApplicationController
 
   def set_state
     @state = ContentModelState.find_or_create!(state_params)
+  end
+
+  def ensure_edit_privileges
+    forbidden_unless(@state.content_model.can_be_edited_by?(logged_in_user))
+  end
+
+  def record_invalid
+    head :bad_request
   end
 end

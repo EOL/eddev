@@ -3,7 +3,20 @@ module ContentModel
   
   included do 
     has_many :content_model_states, :as => :content_model, :dependent => :destroy
+    has_many :content_model_permissions, :as => :content_model, :dependent => :destroy
     validates :name, :presence => true, :uniqueness => true
+
+    supplies_edit_permissions_with :default_edit_permissions
+  end
+
+  class_methods do
+    def supplies_edit_permissions_with(method)
+      @permission_method = method
+    end
+
+    def permission_method
+      @permission_method
+    end
   end
 
   COPY_LOCALE_CONTENTS_QUERY = <<-SQL
@@ -46,7 +59,7 @@ module ContentModel
     end
   end
 
-  # Array of locales for which there exists published content, in alphabetical order
+  # Array of locales for which there exist published content, in alphabetical order
   def locales_with_content
     content_model_states.joins(:editor_contents)
       .where("editor_contents.version <= content_model_states.editor_content_version")
@@ -67,4 +80,22 @@ module ContentModel
       end
     end
   end
+
+  def can_be_edited_by?(user)
+    if !user
+      return false
+    end
+
+    if user.admin?
+      return true
+    end
+
+    send(self.class.permission_method, user)
+  end
+
+  private
+    # Override with supplies_edit_permissions_with :override_method
+    def default_edit_permissions(user)
+      false
+    end
 end

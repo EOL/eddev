@@ -7,15 +7,7 @@ module EditorContentHelper
     request.fullpath.sub(/draft(?:\/)?$/, "")
   end
 
-  def can_edit(key)
-    logged_in_user && logged_in_user.admin?
-  end 
-
   def editable_tag(tag_name, key, content_model, options = {})
-    if !(draft_page? || draftable_page?) 
-      raise "editable_tag called on a page that is not draft_page? or draftable_page?"
-    end
-
     locale_state = content_model.state_for_locale(I18n.locale)
 
     if draft_page?

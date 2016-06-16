@@ -9,9 +9,10 @@ Rails.application.routes.draw do
     resources :places do
 
       resources :habitats do
-        get  'langs_with_content' => 'habitats#langs_with_content', as: :habitat_langs_with_content
         post 'copy'               => 'habitats#copy', as: :habitats_copy
       end
+
+      get  'habitats/:id/langs_with_content'   => 'habitats#langs_with_content', as: :habitat_langs_with_content
       get  'habitats/:id/draft'   => 'habitats#draft'
     end
     get 'places/:id/draft'        => 'places#draft'

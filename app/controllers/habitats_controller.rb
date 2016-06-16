@@ -1,7 +1,6 @@
 class HabitatsController < ApplicationController
   include ContentModelController
 
-  before_action :set_habitat, only: [:edit, :update, :destroy, :langs_with_content]
   before_action :set_place
   before_action :set_all_habitats, only: [:new, :create]
 
@@ -75,7 +74,6 @@ class HabitatsController < ApplicationController
 
   # POST /places/1/habitats/copy
   def copy
-    debugger
     to_copy = Habitat.find(params[:habitat_to_copy_id])
     name = params[:habitat_copy_name]
     

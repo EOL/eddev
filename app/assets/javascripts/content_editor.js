@@ -143,6 +143,7 @@ if (typeof ContentEditor === 'undefined') {
             }
           }
         , error: function() {
+            ContentEditor.enablePublish();
             alert(I18n.content_editor.save_error);
           }
         });

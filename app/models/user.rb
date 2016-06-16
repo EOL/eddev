@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
-  enum role: { basic: 0, admin: 1 }
+  enum :role => { 
+    :basic => 0, 
+    :admin => 1,
+  }
 
   validates :password, presence: true, length: { minimum: 8 }, :if => :password_required?
   validates :user_name, presence: true, uniqueness: true

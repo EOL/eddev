@@ -8,9 +8,9 @@ describe ApplicationController do
       end
     end
 
-    it "responds with 403" do
+    it "responds with 404" do
       get_with_locale :index
-      expect(response.status).to eq(403) 
+      expect(response.status).to eq(404) 
     end
   end 
 end

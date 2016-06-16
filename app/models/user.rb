@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
 
   has_one :legacy_user
   has_many :galleries
+  has_many :place_permissions
 
   has_secure_password
 

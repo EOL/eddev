@@ -2,7 +2,8 @@ class HabitatsController < ApplicationController
   include ContentModelController
 
   before_action :set_place
-  before_action :set_all_habitats, only: [:new, :create]
+  before_action :ensure_place_owner, :only => [:new, :create, :update, :edit, :destroy, :copy]
+  before_action :set_all_habitats, :only => [:new, :create]
 
   # GET /places/1/habitats
   def index
@@ -112,5 +113,9 @@ class HabitatsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def habitat_params
       params.require(:habitat).permit(:name, :place_id).merge(place_id: @place.id)
+    end
+
+    def ensure_place_owner
+      forbidden_unless(@place.is_owned_by?(logged_in_user)) 
     end
 end

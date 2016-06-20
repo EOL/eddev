@@ -6,6 +6,13 @@ class Place < ActiveRecord::Base
   has_many :habitats, :dependent => :destroy
   has_many :place_permissions, :dependent => :destroy
 
+  def is_owned_by?(user)
+    !place_permissions
+      .where(:user => user, :role => PlacePermission.roles[:owner])
+      .limit(1)
+      .empty?
+  end
+
   private
     def can_user_edit_content?(user)
       !place_permissions.where(:user => user).limit(1).empty?

@@ -15,14 +15,18 @@
       <tr>
         <td><%= habitat.name %></td>
         <td><%= link_to 'Show', place_habitat_path(@place, habitat) %></td>
-        <td><%= link_to 'Edit', edit_place_habitat_path(@place, habitat) %></td>
-        <td><%= link_to 'Destroy', place_habitat_path(@place, habitat), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if cur_user_may_edit?(habitat) %>
+          <td><%= link_to 'Edit', edit_place_habitat_path(@place, habitat) %></td>
+          <td><%= link_to 'Destroy', place_habitat_path(@place, habitat), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= link_to 'Add a habitat', new_place_habitat_path(@place) %><br/><br/>
+<% if cur_user_may_edit?(@place) %>
+  <%= link_to 'Add a habitat', new_place_habitat_path(@place) %><br/><br/>
+<% end %>
 
 <%= link_to 'Edit', edit_place_path(@place) %> |
 <%= link_to 'Back', places_path %>

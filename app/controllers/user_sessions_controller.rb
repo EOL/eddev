@@ -1,5 +1,5 @@
 class UserSessionsController < ApplicationController
-  skip_before_filter :ensure_user, only: [:new, :create]
+  skip_before_filter :ensure_user, only: [:new, :create, :destroy]
 
   def new
   end

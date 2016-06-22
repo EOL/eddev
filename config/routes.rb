@@ -2,18 +2,15 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with 'root'
   root 'welcome#index'
 
-
   scope '(:locale)', locale: /#{I18n.available_locales.join('|')}/ do
     resources :users
   
     resources :places do
-
-      resources :habitats do
-        post 'copy'               => 'habitats#copy', as: :habitats_copy
-      end
-
+      resources :habitats
       get  'habitats/:id/langs_with_content'   => 'habitats#langs_with_content', as: :habitat_langs_with_content
       get  'habitats/:id/draft'   => 'habitats#draft'
+
+      resources :place_permissions
     end
     get 'places/:id/draft'        => 'places#draft'
 

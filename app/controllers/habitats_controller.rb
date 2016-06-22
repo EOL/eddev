@@ -41,7 +41,7 @@ class HabitatsController < ApplicationController
       to_copy = Habitat.find(params[:habitat_to_copy_id])
     
       if saved
-        to_copy.copy_locale_contents!(@habitat, params[:habitat_copy_langs])
+        to_copy.copy_locale_contents(@habitat, params[:habitat_copy_langs])
       end
     end
 
@@ -70,29 +70,6 @@ class HabitatsController < ApplicationController
     @habitat.destroy
     respond_to do |format|
       format.html { redirect_to place_path(@place), notice: 'Habitat was successfully destroyed.' }
-    end
-  end
-
-  # POST /places/1/habitats/copy
-  def copy
-    to_copy = Habitat.find(params[:habitat_to_copy_id])
-    name = params[:habitat_copy_name]
-    
-    @habitat = Habitat.new(name: name, place: @place)
-    saved = @habitat.save
-
-    habitat_copy_langs = params[:habitat_copy_langs]
-
-    if habitat_copy_langs && saved
-      to_copy.copy_locale_contents!(@habitat, habitat_copy_langs)
-    end
-
-    respond_to do |format|
-      if saved
-        format.html { redirect_to place_habitat_path(@place, @habitat) }
-      else
-        format.html { render :new }
-      end
     end
   end
 

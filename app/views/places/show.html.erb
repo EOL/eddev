@@ -15,7 +15,7 @@
       <tr>
         <td><%= habitat.name %></td>
         <td><%= link_to 'Show', place_habitat_path(@place, habitat) %></td>
-        <% if cur_user_may_edit?(habitat) %>
+        <% if cur_user_owns?(@place) %>
           <td><%= link_to 'Edit', edit_place_habitat_path(@place, habitat) %></td>
           <td><%= link_to 'Destroy', place_habitat_path(@place, habitat), method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
@@ -24,9 +24,13 @@
   </tbody>
 </table>
 
-<% if cur_user_may_edit?(@place) %>
+<% if cur_user_owns?(@place) %>
   <%= link_to 'Add a habitat', new_place_habitat_path(@place) %><br/><br/>
+  <%= link_to 'Edit', edit_place_path(@place) %> |
 <% end %>
 
-<%= link_to 'Edit', edit_place_path(@place) %> |
-<%= link_to 'Back', places_path %>
+<%= link_to 'Back', places_path %></br></br>
+
+<% if cur_user_owns?(@place) %>
+  <%= link_to 'User permissions', place_place_permissions_path(@place) %>
+<% end %>

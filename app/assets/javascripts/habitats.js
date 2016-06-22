@@ -12,6 +12,9 @@ function makeLangsSelections() {
   var compiledTemplate = compiledTemplates[checkboxTemplateKey];
 
   langsDynamicElem.remove();
+
+  if (!habitatId) return;
+
   spinner.removeClass('hide');
   submit.prop('disabled', true);
 

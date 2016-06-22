@@ -7,6 +7,14 @@ class Place < ActiveRecord::Base
   has_many :place_permissions, :dependent => :destroy
 
   def is_owned_by?(user)
+    if !user
+      return false
+    end
+
+    if user.admin?
+      return true
+    end
+
     !place_permissions
       .where(:user => user, :role => PlacePermission.roles[:owner])
       .limit(1)

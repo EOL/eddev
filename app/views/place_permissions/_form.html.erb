@@ -1,0 +1,33 @@
+<%= form_for([@place, @place_permission]) do |f| %>
+  <% if @place_permission.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@place_permission.errors.count, "error") %> prohibited this place_permission from being saved:</h2>
+
+      <ul>
+      <% @place_permission.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <% if @place_permission.user_id %>
+      <span>User: <%= @place_permission.user.user_name %></span>
+    <% else %>
+      <%= f.label :user_id, "User" %>
+      <%= f.select :user_id, user_select_options %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Editor" %>
+    <%= f.radio_button :role, :editor %>
+    <%= f.label "Owner" %>
+    <%= f.radio_button :role, :owner %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

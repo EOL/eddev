@@ -20,6 +20,11 @@
 
   <p>Copy content from another habitat (optional)</p>
 
+  <div class="field">
+    <%= radio_button_tag(:habitat_to_copy_id, "", true) %>
+    <%= label_tag(:habitat_to_copy_id, "None") %>
+  </div>
+
   <% @all_habitats.each do |habitat| %>
     <div class="field">
     <%= radio_button_tag(:habitat_to_copy_id, habitat.id) %>

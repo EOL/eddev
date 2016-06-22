@@ -3,7 +3,6 @@ module ContentModel
   
   included do 
     has_many :content_model_states, :as => :content_model, :dependent => :destroy
-    has_many :content_model_permissions, :as => :content_model, :dependent => :destroy
     validates :name, :presence => true, :uniqueness => true
 
     supplies_edit_permissions_with :default_edit_permissions

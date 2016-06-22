@@ -17,5 +17,10 @@
 
 body { margin: 0; padding: 0; }
 .hide { display: none !important; }
+
+#Header { margin: 8px; height: 20px; border-bottom: 1px solid #000; }
+#Header .site-logo { float: left; }
+#Header .user-info { float: right; }
+
 #MainContent { margin: 8px; }
 #DRAFT_HEADER { background-color: #FAF55A; height: 20px; text-align: center; vertical-align: middle; }

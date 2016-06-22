@@ -1,0 +1,9 @@
+<div id="Header">
+  <div class="site-logo">EOL L&amp;E</div>
+  <% if logged_in_user %>
+    <div class="user-info">
+      <span>Hi, <%= logged_in_user.user_name %>!</span>
+      <%= link_to "Sign out", logout_url %>
+    </div>
+  <% end %>
+</div>

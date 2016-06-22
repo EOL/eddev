@@ -2,6 +2,7 @@ class UserSessionsController < ApplicationController
   skip_before_filter :ensure_user, only: [:new, :create, :destroy]
 
   def new
+    redirect_to root_url if logged_in_user
   end
 
   def create

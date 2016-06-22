@@ -6,21 +6,30 @@
   <thead>
     <tr>
       <th>Name</th>
+      <% if cur_user_is_place_editor? %>
+        <th>Published</th>
+      <% end %>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @places.each do |place| %>
-      <tr>
-        <td><%= place.name %></td>
-        <td><%= link_to 'Show', place %></td>
+      <% if place.published_in_cur_locale? || cur_user_may_edit?(place) %>
+        <tr>
+          <td><%= place.name %></td>
+          
+          <% if cur_user_is_place_editor? %>
+            <td><%= place.published_in_cur_locale? %></td>
+          <% end %> 
 
-        <% if current_user_admin? %>
-          <td><%= link_to 'Edit', edit_place_path(place) %></td>
-          <td><%= link_to 'Destroy', place, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-      </tr>
+          <td><%= link_to 'Show', place %></td>
+          <% if current_user_admin? %>
+            <td><%= link_to 'Edit', edit_place_path(place) %></td>
+            <td><%= link_to 'Destroy', place, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

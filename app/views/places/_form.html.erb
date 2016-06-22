@@ -16,6 +16,16 @@
     <%= f.text_field :name %>
   </div>
 
+  <% if show_publish %>
+    <div class="field">
+      <div>Published locales</div>
+      <% I18n.available_locales.each do |locale| %>
+        <%= check_box_tag("published_locales[]", locale, @place.published_in_locale?(locale)) %>
+        <%= label_tag("published_locales[]", locale) %>
+      <% end %>
+    </div>
+  <% end %>
+  
   <div class="actions">
     <%= f.submit %>
   </div>

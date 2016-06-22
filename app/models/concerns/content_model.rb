@@ -58,6 +58,39 @@ module ContentModel
     end
   end
 
+  def state_for_cur_locale
+    state_for_locale(I18n.locale)
+  end
+
+  def states_by_locale
+    # Build hash locale => state for states that already exist
+    available_locale_states = content_model_states.where(:locale => I18n.available_locales)
+
+    states_by_locale = HashWithIndifferentAccess.new
+    available_locale_states.each do |state|
+      states_by_locale[state.locale] = state
+    end
+
+    # Create states for the missing locales
+    missing_locales = []
+
+    I18n.available_locales.each do |locale|
+      if !states_by_locale[locale]
+        missing_locales.push(locale)
+      end
+    end
+
+    if !missing_locales.empty?
+      ContentModelState.transaction do
+        missing_locales.each do |locale|
+          states_by_locale[locale] = state_for_locale(locale)
+        end
+      end
+    end
+
+    states_by_locale
+  end
+
   # Array of locales for which there exist published content, in alphabetical order
   def locales_with_content
     content_model_states.joins(:editor_contents)
@@ -90,6 +123,15 @@ module ContentModel
     end
 
     send(self.class.permission_method, user)
+  end
+  
+  def published_in_cur_locale?
+    published_in_locale?(I18n.locale)
+  end
+
+  def published_in_locale?(locale)
+    return false if !self.persisted?
+    state_for_locale(locale).published? 
   end
 
   private

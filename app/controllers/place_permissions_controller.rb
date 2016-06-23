@@ -49,7 +49,7 @@ class PlacePermissionsController < ApplicationController
   def destroy
     @place_permission.destroy
     respond_to do |format|
-      format.html { redirect_to place_permissions_url, notice: 'Place permission was successfully destroyed.' }
+      format.html { redirect_to place_place_permissions_path(@place), notice: 'Place permission was successfully destroyed.' }
     end
   end
 

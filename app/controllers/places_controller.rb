@@ -39,15 +39,7 @@ class PlacesController < ApplicationController
         place_update_success = @place.update(place_params)
 
         if place_update_success
-          published_locales = params[:published_locales]
-
-          states_by_locale = @place.states_by_locale
-
-          I18n.available_locales.each do |locale|
-            locale_state = states_by_locale[locale]
-            locale_state.published = published_locales.nil? ? false : published_locales.include?(locale.to_s)
-            locale_state.save!
-          end
+          update_published_locales(@place, params[:published_locales])
         end
       end
 

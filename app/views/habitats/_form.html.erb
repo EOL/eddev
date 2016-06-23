@@ -12,10 +12,14 @@
   <% end %>
 
   <%= f.hidden_field :place_id %>
+
   <div class="field">
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
+
+  <%= render "shared/published_locale_fields", :model => @habitat %>
+
   <div class="actions">
     <%= f.submit %>
   </div>

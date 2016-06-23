@@ -6,9 +6,8 @@
   <thead>
     <tr>
       <th>Name</th>
-      <% if cur_user_is_place_editor? %>
-        <th>Published</th>
-      <% end %>
+      <th>Published</th>
+      <th>Edit permission</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,10 +17,8 @@
       <% if place.published_in_cur_locale? || cur_user_may_edit?(place) %>
         <tr>
           <td><%= place.name %></td>
-          
-          <% if cur_user_is_place_editor? %>
-            <td><%= place.published_in_cur_locale? %></td>
-          <% end %> 
+          <td><%= published_locales(place) %></td>
+          <td><%= cur_user_may_edit?(place) %></td>
 
           <td><%= link_to 'Show', place %></td>
           <% if current_user_admin? %>

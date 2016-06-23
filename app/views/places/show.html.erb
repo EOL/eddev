@@ -6,26 +6,34 @@
   <thead>
     <tr>
       <th>Habitats</th>
+      <th>Published</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @place.habitats.each do |habitat| %>
-      <tr>
-        <td><%= habitat.name %></td>
-        <td><%= link_to 'Show', place_habitat_path(@place, habitat) %></td>
-        <% if cur_user_owns?(@place) %>
-          <td><%= link_to 'Edit', edit_place_habitat_path(@place, habitat) %></td>
-          <td><%= link_to 'Destroy', place_habitat_path(@place, habitat), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-      </tr>
+      <% if habitat.published_in_cur_locale? || cur_user_can_edit?(habitat) %>
+        <tr>
+          <td><%= habitat.name %></td>
+          <td><%= published_locales(habitat) %></td>
+          <td><%= link_to 'Show', place_habitat_path(@place, habitat) %></td>
+
+          <% if cur_user_owns?(@place) %>
+            <td><%= link_to 'Edit', edit_place_habitat_path(@place, habitat) %></td>
+            <td><%= link_to 'Destroy', place_habitat_path(@place, habitat), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
 
 <% if cur_user_owns?(@place) %>
   <%= link_to 'Add a habitat', new_place_habitat_path(@place) %><br/><br/>
+<% end %>
+
+<% if logged_in_user.admin? %>
   <%= link_to 'Edit', edit_place_path(@place) %> |
 <% end %>
 

@@ -134,6 +134,10 @@ module ContentModel
     state_for_locale(locale).published? 
   end
 
+  def published_locales
+    content_model_states.where(:published => true).pluck(:locale)
+  end
+
   private
     # Override with supplies_edit_permissions_with :override_method
     def default_edit_permissions(user)

@@ -57,7 +57,17 @@ class HabitatsController < ApplicationController
   # PATCH/PUT /places/1/habitats/1
   def update
     respond_to do |format|
-      if @habitat.update(habitat_params)
+      habitat_update_success = false
+
+      Habitat.transaction do
+        habitat_update_success = @habitat.update(habitat_params)
+
+        if habitat_update_success
+          update_published_locales(@habitat, params[:published_locales])
+        end
+      end
+
+      if habitat_update_success
         format.html { redirect_to place_habitat_path(@place, @habitat), notice: 'Habitat was successfully updated.' }
       else
         format.html { render :edit }

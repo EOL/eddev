@@ -29,7 +29,7 @@ class UserSessionsController < ApplicationController
       end
     end
 
-    render :new
+    redirect_to { "welcome#index" }
   end
 
   def destroy

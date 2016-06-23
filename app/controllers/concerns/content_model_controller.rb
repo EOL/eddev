@@ -17,6 +17,17 @@ module ContentModelController
     render :show
   end
 
+  protected
+    def update_published_locales(model, locales)
+      states_by_locale = model.states_by_locale
+
+      I18n.available_locales.each do |locale|
+        locale_state = states_by_locale[locale]
+        locale_state.published = locales.nil? ? false : locales.include?(locale.to_s)
+        locale_state.save!
+      end
+    end
+
   private
     def setup_draft_page
       set_draft_page(@content_model)

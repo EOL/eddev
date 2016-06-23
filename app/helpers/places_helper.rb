@@ -11,10 +11,6 @@ module PlacesHelper
     place.is_owned_by?(logged_in_user)
   end
 
-  def cur_user_may_edit(place)
-    place.user_may_edit?(logged_in_user)
-  end
-
   def cur_user_is_place_editor?
     return false if !logged_in_user
     return true if logged_in_user.admin?
@@ -22,3 +18,4 @@ module PlacesHelper
     !PlacePermission.where(:user => logged_in_user).limit(1).empty?
   end
 end
+

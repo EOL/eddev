@@ -13,7 +13,6 @@ module ContentModelController
   def draft
     forbidden_unless(draft_page?)
 
-    set_content_model_state(@content_model.state_for_locale(I18n.locale))
     render :show
   end
 

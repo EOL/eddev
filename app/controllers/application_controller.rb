@@ -54,13 +54,6 @@ class ApplicationController < ActionController::Base
       session[:user_id] = nil
     end
 
-    def set_content_model_state(state)
-      @content_editor_state[:locale]     = state.locale
-      @content_editor_state[:model_type] = state.content_model.class.name
-      @content_editor_state[:model_id]   = state.content_model.id 
-      @content_editor_state[:enable_publish] = state.has_unpublished_content?
-    end
-
     def content_editor_state
       @content_editor_state
     end
@@ -69,6 +62,7 @@ class ApplicationController < ActionController::Base
     def set_draft_page(draft_model)
       @draft_page = true
       @draft_model = draft_model
+      set_content_editor_state(draft_model.state_for_cur_locale)
     end
 
     def set_draftable_page(draft_model)
@@ -114,5 +108,12 @@ class ApplicationController < ActionController::Base
 
   def init_content_editor_state
     @content_editor_state = {}
+  end
+
+  def set_content_editor_state(state)
+    @content_editor_state[:locale]     = state.locale
+    @content_editor_state[:model_type] = state.content_model.class.name
+    @content_editor_state[:model_id]   = state.content_model.id 
+    @content_editor_state[:enable_publish] = state.has_unpublished_content?
   end
 end

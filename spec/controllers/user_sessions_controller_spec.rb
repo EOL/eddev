@@ -3,13 +3,15 @@ require "rails_helper"
 describe UserSessionsController do
   describe "#create" do
     shared_examples_for "common_create" do
-      it "responds with ok" do
-        expect(response.status).to eq(200)
+      it "responds with a redirect" do
+        expect(response.status).to eq(302)
       end
     end
 
     shared_examples_for "common_login_failure" do
-      it_should_behave_like "common_create"
+      it "responds with 200" do
+        expect(response.status).to eq(200)
+      end
 
       it "does not set a user_id on the session" do
         expect(controller.session[:user_id]).to be_nil

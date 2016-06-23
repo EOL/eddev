@@ -13,9 +13,9 @@ class User < ActiveRecord::Base
   # constraint. In practice, it should be good enough.
   validate :uniqueness_against_legacy_users
 
-  has_one :legacy_user
-  has_many :galleries
-  has_many :place_permissions
+  has_one :legacy_user, :dependent => :destroy
+  has_many :galleries, :dependent => :destroy
+  has_many :place_permissions, :dependent => :destroy
 
   has_secure_password
 

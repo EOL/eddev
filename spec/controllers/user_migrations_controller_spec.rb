@@ -26,7 +26,8 @@ describe UserMigrationsController do
       let(:password) { "password" }
 
       before(:each) do
-        post_with_locale :create, invitation_token: invitation.token, password: password, password_confirmation: password
+        post_with_locale :create, :invitation_token => invitation.token, 
+            :user => { :password => password, :password_confirmation => password }
       end
 
       it "responds with 302 status" do # redirect to user_sessions#new. TODO: check redirect value

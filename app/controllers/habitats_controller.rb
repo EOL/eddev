@@ -39,10 +39,7 @@ class HabitatsController < ApplicationController
 
     if saved && !to_copy_id.blank?
       to_copy = Habitat.find(params[:habitat_to_copy_id])
-    
-      if saved
-        to_copy.copy_locale_contents(@habitat, params[:habitat_copy_langs])
-      end
+      to_copy.copy_locale_contents(@habitat, params[:habitat_copy_langs])
     end
 
     respond_to do |format|

@@ -1,3 +1,5 @@
+# Controller for saving and publishing EditorContent drafts. This is intended to be used by
+# content_editor.js for AJAX calls.
 class EditorContentController < ApplicationController
   before_action      :set_state
   before_action      :ensure_edit_privileges

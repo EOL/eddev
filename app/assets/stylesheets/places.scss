@@ -1,4 +1,14 @@
 // Place all the styles related to the places controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-#PlacePermissions { margin-top: 20px; }
+$place-box-border: 1px solid #000;
+$place-box-padding: 15px 20px;
+
+#PlacePermissions { margin: 20px; }
+
+.place-header { padding: $place-box-padding; border: $place-box-border; }
+.place-admin { margin: 20px 0; padding: $place-box-padding; border: $place-box-border; }
+.place-desc { margin: 30px 0; padding: $place-box-padding; border: $place-box-border; }
+.place-pub-status { margin-bottom: 20px; }
+.place-habitats { margin-bottom: 20px; }
+.place-add-habitat { display: block; margin-bottom: 15px; }

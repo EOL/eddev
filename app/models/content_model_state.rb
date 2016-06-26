@@ -1,3 +1,5 @@
+# Represents the published state of a content model in a locale, as well as
+# the latest published EditorContent version for that locale.
 class ContentModelState < ActiveRecord::Base
   belongs_to :content_model, polymorphic: true
   has_many :editor_contents, :dependent => :destroy

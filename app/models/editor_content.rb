@@ -1,3 +1,4 @@
+# Represents a piece of user-edited content for a content model in a locale.
 class EditorContent < ActiveRecord::Base
   belongs_to :content_model_state
 

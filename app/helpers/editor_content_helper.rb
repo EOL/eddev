@@ -8,8 +8,9 @@ module EditorContentHelper
   end
 
   def editable_tag(tag_name, key, content_model, options = {})
+    required_options = {}
     locale_state = content_model.state_for_locale(I18n.locale)
-
+    
     if draft_page?
       value = locale_state.draft_content_value(key)
       required_options = { 
@@ -21,7 +22,13 @@ module EditorContentHelper
       }
     else
       value = locale_state.content_value(key)
-      required_options = {}
+    end
+
+    editor_content_class = "editor-content" 
+    if options[:class]
+      options[:class] += " #{editor_content_class}"
+    else
+      options[:class] = editor_content_class 
     end
 
     content_tag(tag_name, value.html_safe, options.merge(required_options))

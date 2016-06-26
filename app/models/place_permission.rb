@@ -1,3 +1,4 @@
+# Represents a user permission record for a Place.
 class PlacePermission < ActiveRecord::Base
   belongs_to :place
   belongs_to :user

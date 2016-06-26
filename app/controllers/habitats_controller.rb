@@ -81,11 +81,6 @@ class HabitatsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_habitat
-      @habitat = Habitat.find(params[:id])
-    end
-
     def set_all_habitats
       @all_habitats = Habitat.all_ordered_alpha_with_place
     end
@@ -94,12 +89,12 @@ class HabitatsController < ApplicationController
       @place = Place.find(params[:place_id])
     end
 
+    def ensure_place_owner
+      forbidden_unless(@place.is_owned_by?(logged_in_user)) 
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def habitat_params
       params.require(:habitat).permit(:name, :place_id).merge(place_id: @place.id)
-    end
-
-    def ensure_place_owner
-      forbidden_unless(@place.is_owned_by?(logged_in_user)) 
     end
 end

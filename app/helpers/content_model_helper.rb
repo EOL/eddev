@@ -5,7 +5,11 @@ module ContentModelHelper
     published_locales.empty? ? "None" : published_locales.join(", ")
   end
 
-  def cur_user_can_edit?(model)
+  def cur_user_owns?(place)
+    place.is_owned_by?(logged_in_user)
+  end
+
+  def cur_user_may_edit?(model)
     model.can_be_edited_by?(logged_in_user)
   end
 end

@@ -1,12 +1,22 @@
-<%= editable_tag(:h1, :main_header, @habitat) %>
-<%= editable_tag(:div, :habitat_description, @habitat) %>
+<%= editable_tag(:h1, :main_header, @habitat, :class => "place-header") %>
+<%= editable_tag(:div, :habitat_description, @habitat, :class => "place-desc") %>
 
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @habitat.name %>
-</p>
+<div class="place-admin">
+  <h2>Habitat info</h2>
+  <p>
+    <strong>Name:</strong>
+    <%= @habitat.name %>
+  </p>
+  <p>
+    <strong>Published:</strong>
+    <%= published_locales(@habitat) %>
+  </p>
 
-<%= link_to 'Edit', edit_place_habitat_path(@place, @habitat) %> |
+  <% if cur_user_owns?(@place) %>
+    <%= link_to 'Edit', edit_place_habitat_path(@place, @habitat) %>
+  <% end %>
+</div>
+
 <%= link_to 'Back', @place %>

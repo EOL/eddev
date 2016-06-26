@@ -1,14 +1,21 @@
+# Common operations on a model's editable content. Elsewhere in the documentation,
+# the term content model is used to mean a model class that includes this concern.
 module ContentModel 
   extend ActiveSupport::Concern
   
   included do 
     has_many :content_model_states, :as => :content_model, :dependent => :destroy
+
     validates :name, :presence => true, :uniqueness => true
 
+    # Default edit permissions (always returns false)
     supplies_edit_permissions_with :default_edit_permissions
   end
 
   class_methods do
+    # Used to specify the name of a method that returns truthy if 
+    # the model is editable by a user, and falsy if not. See 'included' block
+    # above for usage.
     def supplies_edit_permissions_with(method)
       @permission_method = method
     end
@@ -48,6 +55,8 @@ module ContentModel
   COPY_LOCALE_CONTENTS_PS = 
     ActiveRecord::Base.connection.raw_connection.prepare(COPY_LOCALE_CONTENTS_QUERY)
 
+  # Get the ContentModelState for a given locale, creating it if it 
+  # doesn't already exist
   def state_for_locale(locale)
     states = content_model_states.where(:locale => locale).limit(1)
     
@@ -58,10 +67,14 @@ module ContentModel
     end
   end
 
+  # Convenience method to get the ContentModelState for I18n.locale
   def state_for_cur_locale
     state_for_locale(I18n.locale)
   end
 
+  # Returns a HashWithIndifferentAccess where the keys are all of the 
+  # locales in I18n.available_locales, and the values are 
+  # ContentModelStates whose locales match their keys.
   def states_by_locale
     # Build hash locale => state for states that already exist
     available_locale_states = content_model_states.where(:locale => I18n.available_locales)
@@ -99,6 +112,8 @@ module ContentModel
       .distinct.pluck(:locale)
   end
 
+  # Copy the latest published version of each EditorContent in each passed
+  # locale to another content_model, with the new copies being unpublished.
   def copy_locale_contents(content_model, locales)
     result = COPY_LOCALE_CONTENTS_PS.execute(locales, id, self.class.name)
 
@@ -113,6 +128,10 @@ module ContentModel
     end
   end
 
+  # Can this content model be edited by the given user?
+  # A nil user always results in false, and an admin always 
+  # results in true; otherwise, delegate to the method specified
+  # using supplies_edit_permissions_with
   def can_be_edited_by?(user)
     if !user
       return false
@@ -125,13 +144,13 @@ module ContentModel
     send(self.class.permission_method, user)
   end
   
-  def published_in_cur_locale?
-    published_in_locale?(I18n.locale)
+  def published_in_locale?(locale)
+    return false if !self.persisted? # state_for_locale throws an exception if !self.persisted?
+    state_for_locale(locale).published? 
   end
 
-  def published_in_locale?(locale)
-    return false if !self.persisted?
-    state_for_locale(locale).published? 
+  def published_in_cur_locale?
+    published_in_locale?(I18n.locale)
   end
 
   def published_locales

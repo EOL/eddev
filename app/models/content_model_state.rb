@@ -1,5 +1,4 @@
-# Represents the published state of a content model in a locale, as well as
-# the latest published EditorContent version for that locale.
+# Represents the state of a content model and its EditorContents in a locale
 class ContentModelState < ActiveRecord::Base
   belongs_to :content_model, polymorphic: true
   has_many :editor_contents, :dependent => :destroy
@@ -12,6 +11,8 @@ class ContentModelState < ActiveRecord::Base
   validates_presence_of :locale
 
   after_initialize :set_defaults, :unless => :persisted?
+
+  INITIAL_CONTENT_VERSION = 0
 
   def create_content!(key, value)
     editor_contents.create!(
@@ -42,7 +43,7 @@ class ContentModelState < ActiveRecord::Base
   end
   
   def has_unpublished_content?
-    max_version = editor_contents.maximum(:version) || 0
+    max_version = editor_contents.maximum(:version) || INITIAL_CONTENT_VERSION
     max_version > editor_content_version
   end
 
@@ -66,7 +67,7 @@ class ContentModelState < ActiveRecord::Base
 
   def set_defaults
     self.published = false if published.nil?
-    self.editor_content_version = 0 if editor_content_version.nil?
+    self.editor_content_version = INITIAL_CONTENT_VERSION if editor_content_version.nil?
   end
 
   def content_value_helper(query_result, key)

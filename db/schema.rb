@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160616203546) do
+ActiveRecord::Schema.define(version: 20160627153209) do
 
   create_table "content_model_states", force: :cascade do |t|
     t.integer  "content_model_id",       limit: 4
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 20160616203546) do
     t.integer  "user_id",    limit: 4
   end
 
+  add_index "place_permissions", ["place_id", "user_id"], name: "index_place_user_id_unique", unique: true, using: :btree
   add_index "place_permissions", ["place_id"], name: "index_place_permissions_on_place_id", using: :btree
   add_index "place_permissions", ["user_id"], name: "index_place_permissions_on_user_id", using: :btree
 

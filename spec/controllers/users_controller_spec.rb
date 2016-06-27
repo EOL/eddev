@@ -5,22 +5,30 @@ describe UsersController do
     context "when there isn't a logged-in user" do
       it "sends a 404 response" do
         process_with_locale action, http_method
-        expect(response.status).to eq(404)
+        expect(response).to redirect_to login_url
       end
     end
 
     context "when there is a logged-in user that isn't an admin" do
       let(:user) { create(:user, role: :basic) }
+      before do
+        session[:user_id] = user.id
+      end
+
       it "sends a 404 response" do 
-        process_with_locale action, http_method, session: { user_id: user.id }
+        process_with_locale action, http_method
         expect(response.status).to eq(404)
       end
     end
 
     context "when there is a logged-in admin" do
       let(:user) { create(:user, role: :admin) }
+      before do
+        session[:user_id] = user.id
+      end
+
       it "sends a 200 response" do
-        process_with_locale action, http_method, session: { user_id: user.id }
+        process_with_locale action, http_method
       end
     end
   end

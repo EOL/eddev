@@ -95,6 +95,6 @@ class HabitatsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def habitat_params
-      params.require(:habitat).permit(:name, :place_id).merge(place_id: @place.id)
+      params.fetch(:habitat, {}).permit(:name, :place_id).merge(place_id: @place.id)
     end
 end

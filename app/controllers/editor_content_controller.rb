@@ -1,5 +1,6 @@
-# Controller for saving and publishing EditorContent drafts. This is intended to be used by
-# content_editor.js for AJAX calls.
+# Controller for saving and publishing EditorContent drafts. Used by content_editor.js.
+#
+# TODO: More robust error handling & logging
 class EditorContentController < ApplicationController
   before_action      :set_state
   before_action      :ensure_edit_privileges
@@ -19,7 +20,7 @@ class EditorContentController < ApplicationController
 
   private
   def state_params
-    params.require(:state).permit(:content_model_type, :content_model_id, :locale) 
+    params.fetch(:state, {}).permit(:content_model_type, :content_model_id, :locale) 
   end
 
   def set_state

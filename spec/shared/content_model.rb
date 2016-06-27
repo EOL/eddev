@@ -34,16 +34,6 @@ shared_examples_for "content_model" do
     end
   end
 
-#  describe "#publish_draft" do
-#    it "increments the locale's ContentModelState's editor_content_version" do
-#      state = content_model.state_for_locale(locale)
-#      cur_version = state.editor_content_version  
-#      content_model.publish_draft(locale)
-#      state.reload
-#      expect(state.editor_content_version).to eq(cur_version + 1)
-#    end
-#  end
-
   describe "#locales_with_content" do
     shared_examples_for "no locales with content" do
       it "returns an empty array" do

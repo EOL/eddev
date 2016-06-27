@@ -5,11 +5,11 @@ $(function() {
     var checkboxTemplateKey = 'lang-checkbox-template',
         compiledTemplate = compiledTemplates[checkboxTemplateKey],
         form = $('#new_habitat'),
+        habitatId = $(this).val(),
         langsDynamicElem = $('#langs-dynamic'),
+        placesPart = window.location.pathname.match(/.*\/places\/\d*/)[0],
         spinner = form.find('.fa-spinner'),
         submit = form.find("input[type='submit']"),
-        habitatId = $(this).val(),
-        placesPart = window.location.pathname.match(/.*\/places\/\d*/)[0],
         url = placesPart + '/habitats/' +  habitatId + '/langs_with_content.json';
 
     langsDynamicElem.remove();

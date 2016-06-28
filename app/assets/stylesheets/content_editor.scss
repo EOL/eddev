@@ -1,0 +1,17 @@
+#EditControl { 
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  padding: 4px;
+  width: 100px; 
+  border: 1px solid #000;
+  text-align: center;
+  background: #FFF;
+}
+
+#EditSwitch, #SaveButton, #PublishButton { cursor: pointer; }
+#SaveButton.disabled, #PublishButton.disabled { cursor: default; }
+#SaveButton { margin-top: 10px; } 
+#PublishButton { margin-top: 5px; }
+

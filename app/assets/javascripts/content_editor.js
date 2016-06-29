@@ -207,7 +207,7 @@ if (typeof ContentEditor === 'undefined') {
 $(function() {  
   ContentEditor.resetInitState();
 
-  tinymce.baseURL = '/v2/';
+  tinymce.baseURL = '/v2/assets';
 
   tinymce.init({
     selector: 'h1[data-editable="true"]',

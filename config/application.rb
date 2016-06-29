@@ -26,5 +26,7 @@ module Eddev
     config.active_record.raise_in_transactional_callbacks = true
 
     config.secret_key_base = Figaro.env.secret_key_base
+
+    config.x.app_uri_prefix = Figaro.env.app_uri_prefix ? Figaro.env.app_uri_prefix : ""
   end
 end

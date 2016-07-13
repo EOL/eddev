@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with 'root'
   root 'welcome#index'
 
+  get 'legacy_cookie_test' => 'legacy_cookie_test#index'
+
   scope '(:locale)', locale: /#{I18n.available_locales.join('|')}/ do
     resources :users
   

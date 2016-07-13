@@ -4,7 +4,10 @@ class User < ActiveRecord::Base
     :admin => 1,
   }
 
-  validates :password, presence: true, length: { minimum: 8 }, :if => :password_required?
+  validates :password, :presence => true, 
+                       :length => { minimum: 8 }, 
+                       :confirmation => true,
+                       :if => :password_required?
   validates :user_name, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
   validates :full_name, presence: true
@@ -17,7 +20,7 @@ class User < ActiveRecord::Base
   has_many :galleries, :dependent => :destroy
   has_many :place_permissions, :dependent => :destroy
 
-  has_secure_password
+  has_secure_password :validations => false
 
   def locale
     saved_locale = read_attribute(:locale)
@@ -25,6 +28,21 @@ class User < ActiveRecord::Base
       saved_locale
     else
       I18n.default_locale
+    end
+  end
+
+  def authenticate(password)
+    # A user should either have a password_digest 
+    # (enforced by has_secure_password for new users)
+    # or a legacy_password_digest (migrated from old DBs). 
+    # If neither are present, return nil and log an error.
+    if password_digest
+      super(password)
+    elsif legacy_password_digest
+      raise "not implemented"
+    else
+      Rails.logger.error("User #{self.id} does not have a password_digest or legacy_password_digest")
+      nil
     end
   end
 
@@ -51,6 +69,6 @@ class User < ActiveRecord::Base
   end
 
   def password_required?
-    !persisted? || !password.nil? || !password_confirmation.nil?
+    legacy_password_digest.blank? && (!persisted? || !password.nil? || !password_confirmation.nil?)
   end
 end

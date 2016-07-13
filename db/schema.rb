@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160627153209) do
+ActiveRecord::Schema.define(version: 20160713184044) do
 
   create_table "content_model_states", force: :cascade do |t|
     t.integer  "content_model_id",       limit: 4
@@ -133,17 +133,18 @@ ActiveRecord::Schema.define(version: 20160627153209) do
   add_index "user_migration_invitations", ["legacy_user_id"], name: "index_user_migration_invitations_on_legacy_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",           limit: 255
-    t.string   "user_name",       limit: 255
-    t.string   "full_name",       limit: 255
-    t.string   "api_key",         limit: 255
-    t.string   "password_digest", limit: 255
+    t.string   "email",                  limit: 255
+    t.string   "user_name",              limit: 255
+    t.string   "full_name",              limit: 255
+    t.string   "api_key",                limit: 255
+    t.string   "password_digest",        limit: 255
     t.boolean  "active"
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
-    t.integer  "legacy_user_id",  limit: 4
-    t.string   "locale",          limit: 255
-    t.integer  "role",            limit: 4,   default: 0
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.integer  "legacy_user_id",         limit: 4
+    t.string   "locale",                 limit: 255
+    t.integer  "role",                   limit: 4,   default: 0
+    t.string   "legacy_password_digest", limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

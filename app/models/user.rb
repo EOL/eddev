@@ -1,3 +1,5 @@
+require "unix_crypt"
+
 class User < ActiveRecord::Base
   enum :role => { 
     :basic => 0, 
@@ -7,20 +9,20 @@ class User < ActiveRecord::Base
   validates :password, :presence => true, 
                        :length => { minimum: 8 }, 
                        :confirmation => true,
-                       :if => :password_required?
-  validates :user_name, presence: true, uniqueness: true
-  validates :email, presence: true, uniqueness: true
-  validates :full_name, presence: true
+                       :if => :password_validation_required?
+  validates :password_confirmation, :presence => true,
+                                    :if => :password_confirmation_required?
+  validates :user_name, :presence => true, :uniqueness => true
+  validates :email, :presence => true, :uniqueness => true
+  validates :full_name, :presence => true
 
-  # This is subject to race conditions since it doesn't have a corresponding database
-  # constraint. In practice, it should be good enough.
-  validate :uniqueness_against_legacy_users
-
-  has_one :legacy_user, :dependent => :destroy
   has_many :galleries, :dependent => :destroy
   has_many :place_permissions, :dependent => :destroy
 
   has_secure_password :validations => false
+
+  LEGACY_SALT = Rails.application.config.x.legacy_password_salt
+  DIGEST_START_INDEX = LEGACY_SALT.length + 4 # UnixCrypt::MD5 digests are of the form '$1$<LEGACY_SALT>$<DIGEST>'
 
   def locale
     saved_locale = read_attribute(:locale)
@@ -32,43 +34,36 @@ class User < ActiveRecord::Base
   end
 
   def authenticate(password)
-    # A user should either have a password_digest 
-    # (enforced by has_secure_password for new users)
-    # or a legacy_password_digest (migrated from old DBs). 
-    # If neither are present, return nil and log an error.
+    # A user should either have a password_digest or a legacy_password_digest 
+    # (enforced by validations). If neither are present, return nil and log an error.
     if password_digest
-      super(password)
+      super(password) # defined in bcrypt
     elsif legacy_password_digest
-      raise "not implemented"
+      digest = UnixCrypt::MD5.build(password, LEGACY_SALT)[DIGEST_START_INDEX..-1]
+
+      if digest == legacy_password_digest # auth success
+        if self.update(:password => password, :password_confirmation => password)
+          Rails.logger.info("Successfully migrated password for user #{id}/#{user_name}")
+        else
+          Rails.logger.error("Failed to migrate password for user #{id}/#{user_name}")
+        end
+        
+        return self
+      else # auth failure
+        return nil
+      end
     else
       Rails.logger.error("User #{self.id} does not have a password_digest or legacy_password_digest")
-      nil
+      return nil
     end
   end
 
   private
-  # Validate that certain attributes are not already taken by
-  # a LegacyUser, or that that LegacyUser is this User's legacy_user.
-  # This is to ensure that all LegacyUsers can be migrated to valid Users.
-  def uniqueness_against_legacy_users
-    validate_attrib_against_legacy_users(:email)
-    validate_attrib_against_legacy_users(:user_name)
+  def password_validation_required?
+    (legacy_password_digest.blank? && !persisted?) || !password.blank?
   end
 
-  def validate_attrib_against_legacy_users(attrib_name)
-    attrib = self.attributes[attrib_name.to_s]
-
-    if attrib
-      legacy = LegacyUser.find_by(attrib_name => attrib)
-
-      # The only legacy user that can share attrib is this record's
-      if legacy && legacy != legacy_user
-        errors.add(attrib_name, "cannot be the same as a LegacyUser that is not associated with this User")
-      end
-    end
-  end
-
-  def password_required?
-    legacy_password_digest.blank? && (!persisted? || !password.nil? || !password_confirmation.nil?)
+  def password_confirmation_required?
+    !password.blank?
   end
 end

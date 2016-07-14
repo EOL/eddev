@@ -39,6 +39,9 @@ gem "paperclip", "~> 4.3.5"
 # s3 integration
 gem "aws-sdk", "< 2.0"
 
+# Platform-independent crypt (for authenticating against legacy passwords)
+gem "unix-crypt"
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

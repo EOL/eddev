@@ -28,5 +28,6 @@ module Eddev
     config.secret_key_base = Figaro.env.secret_key_base
 
     config.x.app_uri_prefix = Figaro.env.app_uri_prefix ? Figaro.env.app_uri_prefix : ""
+    config.x.legacy_password_salt = Figaro.env.legacy_password_salt
   end
 end

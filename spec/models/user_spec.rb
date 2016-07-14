@@ -154,4 +154,23 @@ describe User do
       end
     end
   end
+
+  describe "#legacy_id" do
+    context "when the user has a saved legacy id" do
+      let(:legacy_id) { 5 }
+      let(:user) { create(:user, :legacy_id => legacy_id) }
+
+      it "returns that value" do
+        expect(user.legacy_id).to eq legacy_id
+      end
+    end
+
+    context "when the user doesn't have a saved legacy id" do
+      let(:user) { create(:user, :legacy_id => nil) } 
+
+      it "returns user.id + User.LEGACY_ID_OFFSET" do
+        expect(user.legacy_id).to eq (user.id + User::LEGACY_ID_OFFSET)
+      end
+    end
+  end
 end

@@ -1,6 +1,9 @@
 require "unix_crypt"
 
 class User < ActiveRecord::Base
+  ##########################################################
+  # DO NOT ALTER MAPPINGS - ONLY ADD NEW ONES AS NECESSARY #
+  ##########################################################
   enum :role => { 
     :basic => 0, 
     :admin => 1,
@@ -22,8 +25,23 @@ class User < ActiveRecord::Base
   has_many :galleries, :dependent => :destroy
   has_many :place_permissions, :dependent => :destroy
 
+  ###########################################################################
+  # WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING #
+  #                                                                         #
+  # DO NOT CHANGE THIS VALUE. IT IS USED TO CALCULATE A LEGACY USER ID THAT # 
+  # MAY BE REFERENCED IN THE PHP APP DATABASES. CHANGING THIS VALUE WILL    #
+  # RESULT IN RESOURCES REFERRING TO THE WRONG USER!!!                      #
+  #                                                                         #
+  # WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING #
+  ###########################################################################
+  LEGACY_ID_OFFSET = 2000
+
+  def legacy_id
+    read_attribute(:legacy_id) || id + LEGACY_ID_OFFSET
+  end
+
   DEFAULT_LEGACY_SALT = Rails.application.config.x.legacy_password_salt
-  attr_writer :legacy_salt
+  attr_writer :legacy_salt # For tests
 
   def legacy_salt
     @legacy_salt || DEFAULT_LEGACY_SALT

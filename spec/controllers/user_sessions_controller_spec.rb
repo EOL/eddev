@@ -33,34 +33,7 @@ describe UserSessionsController do
       end
     end 
 
-    describe "when there isn't a User with the given user_name but there is a LegacyUser" do
-      let(:legacy_user) { create(:legacy_user) }
-      let(:mailer) { class_double("UserMigrationInvitationMailer").as_stubbed_const }
-      let(:email) { instance_double("ActionMailer::MessageDelivery") }
-
-      before do
-        allow(mailer).to receive(:invitation_email) { email }
-        allow(email).to receive(:deliver_now)
-
-        post_with_locale :create, user_session: { user_name: legacy_user.user_name, password: "itdoesntmatter" }
-      end
-
-      it_should_behave_like "common_login_failure"
-
-      it "creates a UserMigrationInvitation" do
-        invitation = UserMigrationInvitation.find_by(legacy_user: legacy_user)
-        expect(invitation).not_to be_nil
-      end
-
-      it "sends an invitation email" do
-        invitation = UserMigrationInvitation.find_by(legacy_user: legacy_user)
-
-        expect(mailer).to have_received(:invitation_email).with(invitation)
-        expect(email).to have_received(:deliver_now)
-      end
-    end
-
-    describe "when there isn't a User or Legacy user with the provided user_name" do
+    describe "when there isn't a User with the provided user_name" do
       it_should_behave_like "common_login_failure"
     end
   end

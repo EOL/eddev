@@ -6,23 +6,28 @@ class User < ActiveRecord::Base
     :admin => 1,
   }
 
-  validates :password, :presence => true, 
-                       :length => { minimum: 8 }, 
+  has_secure_password :validations => false
+  validates :password, :presence => true,
+                       :length => { minimum: 8 },
                        :confirmation => true,
                        :if => :password_validation_required?
   validates :password_confirmation, :presence => true,
                                     :if => :password_confirmation_required?
-  validates :user_name, :presence => true, :uniqueness => true
-  validates :email, :presence => true, :uniqueness => true
+  validates :user_name, :presence => true, 
+                        :uniqueness => true
+  validates :email, :presence => true, 
+                    :uniqueness => true
   validates :full_name, :presence => true
 
   has_many :galleries, :dependent => :destroy
   has_many :place_permissions, :dependent => :destroy
 
-  has_secure_password :validations => false
+  DEFAULT_LEGACY_SALT = Rails.application.config.x.legacy_password_salt
+  attr_writer :legacy_salt
 
-  LEGACY_SALT = Rails.application.config.x.legacy_password_salt
-  DIGEST_START_INDEX = LEGACY_SALT.length + 4 # UnixCrypt::MD5 digests are of the form '$1$<LEGACY_SALT>$<DIGEST>'
+  def legacy_salt
+    @legacy_salt || DEFAULT_LEGACY_SALT
+  end
 
   def locale
     saved_locale = read_attribute(:locale)
@@ -39,22 +44,24 @@ class User < ActiveRecord::Base
     if password_digest
       super(password) # defined in bcrypt
     elsif legacy_password_digest
-      digest = UnixCrypt::MD5.build(password, LEGACY_SALT)[DIGEST_START_INDEX..-1]
+      digest = UnixCrypt::MD5.build(password, legacy_salt)[digest_start_index..-1]
 
       if digest == legacy_password_digest # auth success
-        if self.update(:password => password, :password_confirmation => password)
+        if self.update(:password => password, 
+                       :password_confirmation => password, 
+                       :legacy_password_digest => nil)
           Rails.logger.info("Successfully migrated password for user #{id}/#{user_name}")
         else
           Rails.logger.error("Failed to migrate password for user #{id}/#{user_name}")
         end
         
-        return self
+        self
       else # auth failure
-        return nil
+        nil
       end
     else
       Rails.logger.error("User #{self.id} does not have a password_digest or legacy_password_digest")
-      return nil
+      nil
     end
   end
 
@@ -65,5 +72,10 @@ class User < ActiveRecord::Base
 
   def password_confirmation_required?
     !password.blank?
+  end
+
+  def digest_start_index
+    # UnixCrypt::MD5 digests are of the form '$1$<legacy_salt>$<digest>'
+    legacy_salt.length + 4
   end
 end

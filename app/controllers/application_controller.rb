@@ -42,18 +42,6 @@ class ApplicationController < ActionController::Base
       raise ApplicationController::ForbiddenError unless condition
     end
 
-    def log_in(user_name, password)
-      @logged_in_user = User.find_by(user_name: user_name).try(:authenticate, password)
-
-      session[:user_id] = @logged_in_user.id if @logged_in_user 
-
-      return @logged_in_user
-    end
-
-    def log_out
-      session[:user_id] = nil
-    end
-
     # This method should be called in every controller action that results in a ContentModel draft page. 
     def set_draft_page(draft_model)
       @draft_page = true
@@ -86,32 +74,32 @@ class ApplicationController < ActionController::Base
     helper_method :content_editor_state
 
   private
-    def set_locale
-      locale = params[:locale]
+  def set_locale
+    locale = params[:locale]
 
-      # If we have a locale from the URL, set it for the duration of the request
-      if !locale.nil?
-        I18n.locale = locale
-      # Always redirect to a url with an explicit locale.
-      # If there is a user, redirect to the url from the request with the locale added
-      elsif logged_in_user
-        redirect_to url_for request.params.merge({locale: logged_in_user.locale})
-      else
-      # Redirect to the url from the request with the default locale added
-        redirect_to url_for request.params.merge({locale: I18n.default_locale})
-      end
+    # If we have a locale from the URL, set it for the duration of the request
+    if !locale.nil?
+      I18n.locale = locale
+    # Always redirect to a url with an explicit locale.
+    # If there is a user, redirect to the url from the request with the locale added
+    elsif logged_in_user
+      redirect_to url_for request.params.merge({locale: logged_in_user.locale})
+    else
+    # Redirect to the url from the request with the default locale added
+      redirect_to url_for request.params.merge({locale: I18n.default_locale})
     end
+  end
 
-    def init_content_editor_state
-      @content_editor_state = {}
-    end
+  def init_content_editor_state
+    @content_editor_state = {}
+  end
 
-    # Populate @content_editor_state (accessible by content_editor_state method) from a ContentModelState.
-    # @content_editor_state is dumped to JSON in the footer for use by content_editor.js.
-    def set_content_editor_state(state)
-      @content_editor_state[:locale]     = state.locale
-      @content_editor_state[:model_type] = state.content_model.class.name
-      @content_editor_state[:model_id]   = state.content_model.id 
-      @content_editor_state[:enable_publish] = state.has_unpublished_content?
-    end
+  # Populate @content_editor_state (accessible by content_editor_state method) from a ContentModelState.
+  # @content_editor_state is dumped to JSON in the footer for use by content_editor.js.
+  def set_content_editor_state(state)
+    @content_editor_state[:locale]     = state.locale
+    @content_editor_state[:model_type] = state.content_model.class.name
+    @content_editor_state[:model_id]   = state.content_model.id 
+    @content_editor_state[:enable_publish] = state.has_unpublished_content?
+  end
 end

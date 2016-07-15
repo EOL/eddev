@@ -21,17 +21,4 @@ class UserSessionsController < ApplicationController
   def destroy
     log_out
   end
-
-  private
-  def log_in(user_name, password)
-    @logged_in_user = User.find_by(user_name: user_name).try(:authenticate, password)
-
-    session[:user_id] = @logged_in_user.id if @logged_in_user 
-
-    return @logged_in_user
-  end
-
-  def log_out
-    session[:user_id] = nil
-  end
 end

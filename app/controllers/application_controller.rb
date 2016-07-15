@@ -37,6 +37,22 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+    def log_in(user_name, password)
+      @logged_in_user = User.find_by(user_name: user_name).try(:authenticate, password)
+
+      if @logged_in_user
+        session[:user_id]         = @logged_in_user.id 
+        cookies["logged_in"]      = @logged_in_user.legacy_id
+        cookies["logged_in_user"] = @logged_in_user.user_name
+      end
+
+      return @logged_in_user
+    end
+
+    def log_out
+      session[:user_id] = cookies["logged_in"] = cookies["logged_in_user"] = nil
+    end
+
     # Convenience method that raises ApplicationController::ForbiddenError if condition does not evaluate to true.
     def forbidden_unless(condition)
       raise ApplicationController::ForbiddenError unless condition

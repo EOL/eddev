@@ -130,6 +130,20 @@ describe User do
   end
 
   describe "#authenticate" do
+    shared_examples_for "base functionality" do
+      context "when it is called with an invalid password" do
+        it "returns nil" do
+          expect(user.authenticate("bogus")).to eq false
+        end
+      end
+
+      context "when it is called with a valid password" do
+        it "returns self" do
+          expect(user.authenticate(valid_pwd)).to eq user
+        end
+      end
+    end
+
     context "when user has a legacy_password_digest but not a password_digest" do
       let(:salt) { "fleurde" }
       let(:legacy_password_digest) { UnixCrypt::MD5.build(valid_pwd, salt)[salt.length + 4..-1] }
@@ -138,20 +152,22 @@ describe User do
       before do
         user.legacy_salt = salt
       end
-      
-      context "when it is called with an invalid password" do
-        it "returns nil" do
-          expect(user.authenticate("bogus")).to be_nil
-        end
-      end
 
+      it_behaves_like "base functionality"
+      
       context "when it is called with the valid password" do
         it "returns itself, creates a password_digest from the password, and deletes the legacy_password_digest" do
-          expect(user.authenticate(valid_pwd)).to eq user
+          user.authenticate(valid_pwd)
           expect(user.legacy_password_digest).to be_nil
           expect(user.authenticate(valid_pwd)).to eq user
         end
       end
+    end
+
+    context "when user has a password_digest but not a legacy_password_digest" do
+      let(:user) { create(:user, :password => valid_pwd, :password_confirmation => valid_pwd) }
+
+      it_behaves_like "base functionality"
     end
   end
 

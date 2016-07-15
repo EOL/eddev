@@ -58,7 +58,7 @@ class User < ActiveRecord::Base
 
   def authenticate(password)
     # A user should either have a password_digest or a legacy_password_digest 
-    # (enforced by validations). If neither are present, return nil and log an error.
+    # (enforced by validations). If neither are present, return false and log an error.
     if password_digest
       super(password) # defined in bcrypt
     elsif legacy_password_digest
@@ -75,11 +75,11 @@ class User < ActiveRecord::Base
         
         self
       else # auth failure
-        nil
+        false
       end
     else
       Rails.logger.error("User #{self.id} does not have a password_digest or legacy_password_digest")
-      nil
+      false
     end
   end
 

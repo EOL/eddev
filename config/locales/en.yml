@@ -30,4 +30,8 @@ en:
     save_label: "Save draft"
     publish_label: "Publish draft"
     publish_confirm: "Are you sure you want to publish this draft? It will immediately replace the current public version of this page."
+
+  user_sessions:
+    sign_in: "Sign In"
+    invalid_creds: "Invalid user name and/or password"
     

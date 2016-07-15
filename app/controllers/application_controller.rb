@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
         cookies["logged_in_user"] = @logged_in_user.user_name
       end
 
-      return @logged_in_user
+      @logged_in_user
     end
 
     def log_out

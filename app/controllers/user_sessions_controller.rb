@@ -14,6 +14,7 @@ class UserSessionsController < ApplicationController
     if user
       redirect_to { "welcome#index" }
     else
+      @error_msg = t("user_sessions.invalid_creds")
       render :new
     end
   end

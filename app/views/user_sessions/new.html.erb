@@ -1,17 +1,20 @@
+<h1><%= t("user_sessions.sign_in") %></h1>
+
+
 <%= form_for(:user_session) do |f| %>
-  <%= f.label :user_name %>
-  <%= f.text_field :user_name %>
+  <div class="field">
+    <%= f.label :user_name %>
+    <%= f.text_field :user_name %>
+  </div>
 
-  <%= f.label :password %>
-  <%= f.password_field :password %>
+  <div class="field">
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
 
-  <%= f.submit %>
-<% end %>
+  <% if @error_msg %>
+    <div class="login-fail"><%= @error_msg %></div>
+  <% end %>
 
-<% if @msg %>
-  <div class="msg"><%= @msg %></div>
-<% end %>
-
-<% if @url %>
-  <%= link_to(@url, @url) %>
+  <%= f.submit t("user_sessions.sign_in") %>
 <% end %>

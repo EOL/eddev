@@ -12,8 +12,8 @@
     <%= f.password_field :password %>
   </div>
 
-  <% if @error_msg %>
-    <div class="login-fail"><%= @error_msg %></div>
+  <% if @msg %>
+    <div class="login-msg"><%= @msg %></div>
   <% end %>
 
   <%= f.submit t("user_sessions.sign_in") %>

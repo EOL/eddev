@@ -2,7 +2,7 @@ class UserSessionsController < ApplicationController
   skip_before_filter :ensure_user, only: [:new, :create, :destroy]
 
   def new
-    redirect_to root_url if logged_in_user
+    # redirect_to root_url if logged_in_user
   end
 
   def create
@@ -12,11 +12,12 @@ class UserSessionsController < ApplicationController
     user = log_in(user_name, password)
 
     if user
-      redirect_to { "welcome#index" }
+      @msg = t("user_sessions.sign_in_success")
     else
-      @error_msg = t("user_sessions.invalid_creds")
-      render :new
+      @msg = t("user_sessions.invalid_creds")
     end
+
+    render :new
   end
 
   def destroy

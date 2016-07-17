@@ -34,4 +34,5 @@ en:
   user_sessions:
     sign_in: "Sign In"
     invalid_creds: "Invalid user name and/or password"
+    sign_in_success: "Successfully signed in"
     

@@ -70,12 +70,12 @@ describe User do
 
       it_behaves_like "validates password"
 
-      context "when there is a User with a given email" do
-        it "should not allow another User to have the same email" do
-          other_user = build(:user, email: email, user_name: "otheruser" )
-          expect(other_user).to be_invalid
-        end
-      end
+#      context "when there is a User with a given email" do
+#        it "should not allow another User to have the same email" do
+#          other_user = build(:user, email: email, user_name: "otheruser" )
+#          expect(other_user).to be_invalid
+#        end
+#      end
 
       context "when there is a User with a given user_name" do
         it "should not allow another User to have the same user_name" do

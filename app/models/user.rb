@@ -18,8 +18,7 @@ class User < ActiveRecord::Base
                                     :if => :password_confirmation_required?
   validates :user_name, :presence => true, 
                         :uniqueness => true
-  validates :email, :presence => true, 
-                    :uniqueness => true
+  validates :email, :presence => true
   validates :full_name, :presence => true
 
   has_many :galleries, :dependent => :destroy

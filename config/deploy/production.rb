@@ -61,7 +61,7 @@
 #   }
 server '104.131.191.115', 
   user: 'deployer', 
-  roles: %w{web app},
+  roles: %w{web app db},
   ssh_options: {
     forward_agent: false,
     auth_methods: %w(publickey),

@@ -12,15 +12,15 @@ class UserSessionsController < ApplicationController
     user = log_in(user_name, password)
 
     if user
-      @msg = t("user_sessions.sign_in_success")
+      redirect_to "/"
     else
       @msg = t("user_sessions.invalid_creds")
+      render :new
     end
-
-    render :new
   end
 
   def destroy
     log_out
+    redirect_to "/"
   end
 end

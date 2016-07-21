@@ -13,7 +13,7 @@ class UserSessionsController < ApplicationController
     if user
       redirect_to "/"
     else
-      @msg = t("user_sessions.invalid_creds")
+      @error_msg = t(".invalid_creds")
       render :new
     end
   end

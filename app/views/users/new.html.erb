@@ -1,4 +1,4 @@
-<h1><%= t("users.sign_up") %></h1>
+<h1><%= t(".sign_up") %></h1>
 
 <%= form_for(@user) do |f| %>
   <% if @user.errors.any? %>
@@ -35,7 +35,7 @@
   </div>
 
   <div class="actions">
-    <%= f.submit t("users.sign_up") %>
+    <%= f.submit t(".sign_up") %>
   </div>
 <% end %>
 

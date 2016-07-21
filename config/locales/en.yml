@@ -35,12 +35,32 @@ en:
     sign_in: "Sign In"
     invalid_creds: "Invalid user name and/or password"
     sign_in_success: "Successfully signed in"
-    
-  users:
-    sign_up: "Sign Up"
-    email_label: "Email"
-    user_name_label: "User name"
-    full_name_label: "Full name"
-    password_label: "Password"
-    password_confirmation_label: "Re-enter password"
 
+  users:
+    sign_up: "Sign up"
+
+  activerecord:
+    errors:
+      template:
+        header:
+          one:   "1 error prevented this %{model} from being saved"
+          other: "%{count} errors prevented this %{model} from being saved"
+      messages:
+        blank: "%{attribute} can't be blank"
+      models:
+        user: 
+          attributes:
+            password_confirmation:
+              confirmation: "Password confirmation doesn't match password"
+            password: 
+              too_short: "Password is too short (minimum %{count} characters)"
+    models:
+      user: "User"
+    attributes:
+      user:
+        email: "Email"
+        user_name: "User name"
+        full_name: "Full name"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+        

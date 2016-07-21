@@ -7,9 +7,9 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  def default_url_options(options = {})
-    { locale: I18n.locale }.merge options
-  end
+#  def default_url_options(options = {})
+#    { locale: I18n.locale }.merge options
+#  end
 
   # Raise ApplicationController::ForbiddenError to trigger default 404 response. We use 404 instead of 403 to avoid exposing the existence of forbidden resources to unauthorized users.
   class ForbiddenError < StandardError; end

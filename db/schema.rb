@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160717174348) do
+ActiveRecord::Schema.define(version: 20160720234850) do
 
   create_table "content_model_states", force: :cascade do |t|
     t.integer  "content_model_id",       limit: 4
@@ -123,6 +123,8 @@ ActiveRecord::Schema.define(version: 20160717174348) do
     t.integer  "role",                   limit: 4,   default: 0
     t.string   "legacy_password_digest", limit: 255
     t.integer  "legacy_id",              limit: 4
+    t.string   "confirm_token",          limit: 255
+    t.datetime "confirmed_at"
   end
 
   add_index "users", ["user_name"], name: "index_users_on_user_name", unique: true, using: :btree

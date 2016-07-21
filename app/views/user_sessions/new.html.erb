@@ -1,5 +1,8 @@
-<h1><%= t("user_sessions.sign_in") %></h1>
+<% if notice %>
+  <div id="Notice"><%= notice %></div>
+<% end %>
 
+<h1><%= t("user_sessions.sign_in") %></h1>
 
 <%= form_for(:user_session) do |f| %>
   <div class="field">

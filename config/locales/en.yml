@@ -36,3 +36,11 @@ en:
     invalid_creds: "Invalid user name and/or password"
     sign_in_success: "Successfully signed in"
     
+  users:
+    sign_up: "Sign Up"
+    email_label: "Email"
+    user_name_label: "User name"
+    full_name_label: "Full name"
+    password_label: "Password"
+    password_confirmation_label: "Re-enter password"
+

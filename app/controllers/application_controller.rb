@@ -13,9 +13,10 @@ class ApplicationController < ActionController::Base
 
   # Raise ApplicationController::ForbiddenError to trigger default 404 response. We use 404 instead of 403 to avoid exposing the existence of forbidden resources to unauthorized users.
   class ForbiddenError < StandardError; end
+  class NotFoundError  < StandardError; end
 
-  rescue_from ForbiddenError do |e|
-    render(:file => File.join(Rails.root, 'public/404'), :status => 404, :layout => false)
+  rescue_from ForbiddenError, NotFoundError do |e|
+    render_404
   end
 
   def logged_in_user
@@ -40,13 +41,15 @@ class ApplicationController < ActionController::Base
     def log_in(user_name, password)
       @logged_in_user = User.find_by(user_name: user_name).try(:authenticate, password)
 
-      if @logged_in_user
+      if @logged_in_user && @logged_in_user.confirmed?
         session[:user_id]         = @logged_in_user.id 
         cookies["logged_in"]      = @logged_in_user.legacy_id
         cookies["logged_in_user"] = @logged_in_user.user_name
-      end
 
-      @logged_in_user
+        @logged_in_user
+      else
+        nil
+      end
     end
 
     def log_out
@@ -117,5 +120,10 @@ class ApplicationController < ActionController::Base
     @content_editor_state[:model_type] = state.content_model.class.name
     @content_editor_state[:model_id]   = state.content_model.id 
     @content_editor_state[:enable_publish] = state.has_unpublished_content?
+  end
+
+  # Render standard 404 page
+  def render_404
+    render(:file => File.join(Rails.root, 'public/404'), :status => 404, :layout => false)
   end
 end

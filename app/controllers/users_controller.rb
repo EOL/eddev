@@ -1,73 +1,82 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_filter :ensure_admin
-
-  # GET /users
-  # GET /users.json
-  def index
-    @users = User.all
-  end
-
-  # GET /users/1
-  # GET /users/1.json
-  def show
-  end
+  #before_action :set_user, only: [:show, :edit, :update, :destroy]
+  #before_filter :ensure_admin
 
   # GET /users/new
   def new
     @user = User.new
-  end
-
-  # GET /users/1/edit
-  def edit
+    render "new"
   end
 
   # POST /users
   # POST /users.json
   def create
     @user = User.new(user_params)
+    notice = nil
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save
+      SignupConfirmationMailer.confirmation_email(@user).deliver_now
+      render :confirmation_pending
+    else
+      render :new
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
-  def update
-    respond_to do |format|
-      whitelisted_params = user_params
-      
-      if whitelisted_params[:password].blank? && whitelisted_params[:password_confirmation].blank?
-        whitelisted_params.delete(:password)
-        whitelisted_params.delete(:password_confirmation)
-      end
+  def confirm
+    @user = User.find_by_confirm_token!(params[:token])
 
-      if @user.update(whitelisted_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if !@user.confirmed?
+      @user.confirm!
+      redirect_to login_path, :notice => "You have successfully completed your registration, #{@user.user_name}! You may now sign in."
+    else
+      raise NotFoundError
     end
   end
-
-  # DELETE /users/1
-  # DELETE /users/1.json
-  def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
+#  # GET /users
+#  # GET /users.json
+#  def index
+#    @users = User.all
+#  end
+#
+#  # GET /users/1
+#  # GET /users/1.json
+#  def show
+#  end
+#
+#  # GET /users/1/edit
+#  def edit
+#  end
+#
+#  # PATCH/PUT /users/1
+#  # PATCH/PUT /users/1.json
+#  def update
+#    respond_to do |format|
+#      whitelisted_params = user_params
+#      
+#      if whitelisted_params[:password].blank? && whitelisted_params[:password_confirmation].blank?
+#        whitelisted_params.delete(:password)
+#        whitelisted_params.delete(:password_confirmation)
+#      end
+#
+#      if @user.update(whitelisted_params)
+#        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+#        format.json { render :show, status: :ok, location: @user }
+#      else
+#        format.html { render :edit }
+#        format.json { render json: @user.errors, status: :unprocessable_entity }
+#      end
+#    end
+#  end
+#
+#  # DELETE /users/1
+#  # DELETE /users/1.json
+#  def destroy
+#    @user.destroy
+#    respond_to do |format|
+#      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+#      format.json { head :no_content }
+#    end
+#  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

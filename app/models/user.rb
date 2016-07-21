@@ -24,6 +24,10 @@ class User < ActiveRecord::Base
   has_many :galleries, :dependent => :destroy
   has_many :place_permissions, :dependent => :destroy
 
+  before_create :set_confirm_token
+
+  NUM_EXTRA_SALT_CHARS = 4 
+
   ###########################################################################
   # WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING #
   #                                                                         #
@@ -82,6 +86,20 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Set confirmed_at to the current time and save
+  def confirm!
+    if confirmed_at
+      raise "User already confirmed"
+    end
+
+    self.confirmed_at = DateTime.now
+    save!
+  end
+
+  def confirmed?
+    confirmed_at.present?
+  end
+
   private
   def password_validation_required?
     (legacy_password_digest.blank? && !persisted?) || !password.blank?
@@ -93,6 +111,10 @@ class User < ActiveRecord::Base
 
   def digest_start_index
     # UnixCrypt::MD5 digests are of the form '$1$<legacy_salt>$<digest>'
-    legacy_salt.length + 4
+    legacy_salt.length + NUM_EXTRA_SALT_CHARS
+  end
+
+  def set_confirm_token
+    self.confirm_token = SecureRandom.base64
   end
 end

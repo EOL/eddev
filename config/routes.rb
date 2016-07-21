@@ -43,9 +43,12 @@ Rails.application.routes.draw do
 #
 #  post 'editor_content/publish_draft'       => 'editor_content#publish_draft'
 #
-  get  'login'                            => 'user_sessions#new'
-  post 'login'                            => 'user_sessions#create'
-  get  'logout'                           => 'user_sessions#destroy'
+  resources :users, :only => [:new, :create]
+
+  get  "users/confirm/:token"             => "users#confirm", :as => :users_confirm
+  get  "login"                            => "user_sessions#new"
+  post "login"                            => "user_sessions#create"
+  get  "logout"                           => "user_sessions#destroy"
 
 
   # Example of named route that can be invoked with purchase_url(id: product.id)

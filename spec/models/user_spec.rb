@@ -1,6 +1,8 @@
 require "rails_helper"
 
 describe User do
+  it { should have_many :password_reset_tokens }
+
   let(:email) { "user@email.com" }
   let(:user_name) { "user" }
   let(:valid_pwd) { "pass1234" }

@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
 
   has_many :galleries, :dependent => :destroy
   has_many :place_permissions, :dependent => :destroy
+  has_many :password_reset_tokens
 
   before_create :set_confirm_token
 

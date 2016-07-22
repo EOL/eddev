@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160720234850) do
+ActiveRecord::Schema.define(version: 20160722194933) do
 
   create_table "content_model_states", force: :cascade do |t|
     t.integer  "content_model_id",       limit: 4
@@ -82,6 +82,16 @@ ActiveRecord::Schema.define(version: 20160720234850) do
 
   add_index "licenses", ["code"], name: "index_licenses_on_code", unique: true, using: :btree
 
+  create_table "password_reset_tokens", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.string   "token",      limit: 255
+    t.datetime "used_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "password_reset_tokens", ["user_id"], name: "index_password_reset_tokens_on_user_id", using: :btree
+
   create_table "place_permissions", force: :cascade do |t|
     t.integer  "place_id",   limit: 4
     t.integer  "role",       limit: 4
@@ -134,6 +144,7 @@ ActiveRecord::Schema.define(version: 20160720234850) do
   add_foreign_key "gallery_photos", "galleries"
   add_foreign_key "gallery_photos", "licenses"
   add_foreign_key "habitats", "places"
+  add_foreign_key "password_reset_tokens", "users"
   add_foreign_key "place_permissions", "places"
   add_foreign_key "place_permissions", "users"
 end

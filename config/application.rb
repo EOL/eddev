@@ -29,5 +29,16 @@ module Eddev
 
     config.x.app_uri_prefix = Figaro.env.app_uri_prefix ? Figaro.env.app_uri_prefix : ""
     config.x.legacy_password_salt = Figaro.env.legacy_password_salt
+    
+    # mail config
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address:              "smtp.gmail.com",
+      port:                 587,
+      user_name:            ENV["email_user_name"],
+      password:             ENV["email_password"],
+      authentication:       "plain",
+      enable_starttls_auto: true,
+    }
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160725183547) do
+ActiveRecord::Schema.define(version: 20160725205755) do
 
   create_table "content_model_states", force: :cascade do |t|
     t.integer  "content_model_id",       limit: 4
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 20160725183547) do
     t.boolean  "force_expiration"
   end
 
+  add_index "password_reset_tokens", ["token"], name: "index_password_reset_tokens_on_token_unique", unique: true, using: :btree
   add_index "password_reset_tokens", ["user_id"], name: "index_password_reset_tokens_on_user_id", using: :btree
 
   create_table "place_permissions", force: :cascade do |t|

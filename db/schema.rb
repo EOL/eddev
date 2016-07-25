@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160725205755) do
+ActiveRecord::Schema.define(version: 20160725210059) do
 
   create_table "content_model_states", force: :cascade do |t|
     t.integer  "content_model_id",       limit: 4
@@ -139,6 +139,7 @@ ActiveRecord::Schema.define(version: 20160725205755) do
     t.datetime "confirmed_at"
   end
 
+  add_index "users", ["confirm_token"], name: "index_users_on_confirm_token", unique: true, using: :btree
   add_index "users", ["user_name"], name: "index_users_on_user_name", unique: true, using: :btree
 
   add_foreign_key "editor_contents", "content_model_states"

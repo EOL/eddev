@@ -1,13 +1,14 @@
 require "rails_helper"
 
 describe User do
-  it { should have_many :password_reset_tokens }
-
   let(:email) { "user@email.com" }
   let(:user_name) { "user" }
   let(:valid_pwd) { "pass1234" }
 
   describe "validations" do
+    it { should have_many :password_reset_tokens }
+    it { should validate_uniqueness_of :confirm_token }
+
     let(:too_short_pwd) { valid_pwd[1..-1] }
 
     shared_examples_for "validates password" do

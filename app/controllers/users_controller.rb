@@ -28,7 +28,7 @@ class UsersController < ApplicationController
 
     if !@user.confirmed?
       @user.confirm!
-      redirect_to login_path, :notice => "You have successfully completed your registration, #{@user.user_name}! You may now sign in."
+      redirect_to login_path, :notice => t(".success", :user_name => @user.user_name)
     else
       raise NotFoundError
     end
@@ -53,9 +53,9 @@ class UsersController < ApplicationController
   end
 
   def reset_password
-    if @user.update(change_password_params)
+    if @user.update(change_password_params.merge(:force_password_validation => true))
       @reset_token.mark_used  
-      redirect_to login_path, :notice => "Password successfully changed. You may now log in"
+      redirect_to login_path, :notice => t(".success")
     else
       render :reset_password_form
     end

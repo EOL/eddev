@@ -44,6 +44,10 @@ en:
   users:
     new:
       sign_up: "Sign up"
+    confirmation_pending:
+      check_your_email: "Thanks for signing up, %{user_name}! Please check your email (%{email}) for instructions on how to complete your registration."
+    confirm:
+      success: "You have successfully completed your registration, %{user_name}! You may now sign in below."
     forgot_password:
       header: "Forgot Password"
       submit: "Send password reset email"
@@ -52,6 +56,8 @@ en:
       email_sent: "Please check the email account associated with your user name for instructions on how to reset your password. If an email does not arrive within 15 minutes, please contact us at <email goes here>."
     reset_password_form:
       header: "Change Password"
+    reset_password:
+      success: "Password successfully changed. You may now sign in below."
 
   forgot_password_mailer:
     forgot_password_email:
@@ -66,6 +72,7 @@ en:
           other: "%{count} errors prevented this %{model} from being saved"
       messages:
         blank: "%{attribute} can't be blank"
+        taken: "%{attribute} is already taken"
       models:
         user: 
           attributes:

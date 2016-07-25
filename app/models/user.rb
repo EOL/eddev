@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   has_secure_password :validations => false
   validates :password, :length => { minimum: 8 },
                        :confirmation => true,
-                       :unless => :skip_password_validation?
+                       :if => :validate_password?
   validates :password_confirmation, :presence => true,
                                     :unless => :password_blank?
   validates :user_name, :presence => true, 
@@ -25,6 +25,8 @@ class User < ActiveRecord::Base
   has_many :password_reset_tokens
 
   before_create :set_confirm_token
+
+  attr_accessor :force_password_validation
 
   NUM_EXTRA_SALT_CHARS = 4 
 
@@ -101,8 +103,8 @@ class User < ActiveRecord::Base
   end
 
   private
-  def skip_password_validation?
-    legacy_password_digest.present? && !persisted? && password.blank?
+  def validate_password?
+    force_password_validation || (legacy_password_digest.blank? && !persisted?) || !password.blank?
   end
 
   def password_blank?

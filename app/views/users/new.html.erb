@@ -1,18 +1,8 @@
 <h1><%= t(".sign_up") %></h1>
 
 <%= form_for(@user) do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <ul>
-        <% @user.errors.values.each do |messages| %>
-          <% messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+  <%= render "errors" %>
+  
   <div class="field">
     <%= f.label :email %><br>
     <%= f.text_field :email %>

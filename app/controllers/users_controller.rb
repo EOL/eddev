@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   #before_action :set_user, only: [:show, :edit, :update, :destroy]
   #before_filter :ensure_admin
+  before_action :set_password_reset_vars, :only => [:reset_password, :change_password]
 
   # GET /users/new
   def new
@@ -30,6 +31,33 @@ class UsersController < ApplicationController
       redirect_to login_path, :notice => "You have successfully completed your registration, #{@user.user_name}! You may now sign in."
     else
       raise NotFoundError
+    end
+  end
+
+  def forgot_password
+  end
+
+  def forgot_password_email
+    @user = User.find_by_user_name(params[:user_name])
+
+    if @user && @user.confirmed?
+      token = PasswordResetToken.create_for_user(@user)
+      ForgotPasswordMailer.forgot_password_email(token).deliver_now
+    else
+      @error_msg = t(".invalid_user_name")
+      render :forgot_password
+    end
+  end
+
+  def reset_password
+  end
+
+  def change_password
+    if @user.update(change_password_params)
+      @reset_token.mark_used  
+      redirect_to login_path, :notice => "Password successfully changed. You may now log in"
+    else
+      render :reset_password
     end
   end
 #  # GET /users
@@ -84,8 +112,20 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
     end
 
+    def set_password_reset_vars
+      @reset_token = PasswordResetToken.find_by_token!(params[:token])
+      
+      raise NotFoundError if @reset_token.expired?
+
+      @user = @reset_token.user
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.fetch(:user, {}).permit(:email, :user_name, :full_name, :password, :password_confirmation, :api_key, :active, :role)
+    end
+
+    def change_password_params
+      params.fetch(:user, {}).permit(:password, :password_confirmation)
     end
 end

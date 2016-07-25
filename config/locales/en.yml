@@ -43,6 +43,19 @@ en:
   users:
     new:
       sign_up: "Sign up"
+    forgot_password:
+      header: "Forgot Password"
+      submit: "Send password reset email"
+    forgot_password_email:
+      invalid_user_name: "Sorry, we could not find a user with that user name"
+      email_sent: "Please check the email account associated with your user name for instructions on how to reset your password. If an email does not arrive within 15 minutes, please contact us at <email goes here>."
+    reset_password:
+      header: "Change Password"
+
+  forgot_password_mailer:
+    forgot_password_email:
+      subject: "Reset your EOL L&E password" 
+      body: "Hi, %{user_name}. Please click the following link to reset your password: %{url}"
 
   activerecord:
     errors:

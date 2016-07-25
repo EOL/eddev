@@ -59,6 +59,11 @@ en:
     reset_password:
       success: "Password successfully changed. You may now sign in below."
 
+  signup_confirmation_mailer:
+    confirmation_email:
+      subject: "Complete your EOL L&E registration"
+      body_html: "Hi, %{user_name}, thank you for signing up for the EOL L&amp;E site. Please click the following link to confirm your registration: <a href=\"%{url}\">%{url}</a>"
+
   forgot_password_mailer:
     forgot_password_email:
       subject: "Reset your EOL L&E password" 

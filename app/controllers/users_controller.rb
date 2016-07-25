@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   #before_action :set_user, only: [:show, :edit, :update, :destroy]
   #before_filter :ensure_admin
-  before_action :set_password_reset_vars, :only => [:reset_password, :change_password]
+  before_action :set_password_reset_vars, :only => [:reset_password_form, :reset_password]
 
   # GET /users/new
   def new
@@ -37,7 +37,7 @@ class UsersController < ApplicationController
   def forgot_password
   end
 
-  def forgot_password_email
+  def mail_password_reset_token
     @user = User.find_by_user_name(params[:user_name])
 
     if @user && @user.confirmed?
@@ -49,15 +49,15 @@ class UsersController < ApplicationController
     end
   end
 
-  def reset_password
+  def reset_password_form
   end
 
-  def change_password
+  def reset_password
     if @user.update(change_password_params)
       @reset_token.mark_used  
       redirect_to login_path, :notice => "Password successfully changed. You may now log in"
     else
-      render :reset_password
+      render :reset_password_form
     end
   end
 #  # GET /users
@@ -107,7 +107,6 @@ class UsersController < ApplicationController
 #  end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
     end
@@ -120,12 +119,11 @@ class UsersController < ApplicationController
       @user = @reset_token.user
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.fetch(:user, {}).permit(:email, :user_name, :full_name, :password, :password_confirmation, :api_key, :active, :role)
     end
 
     def change_password_params
-      params.fetch(:user, {}).permit(:password, :password_confirmation)
+      params.require(:user).permit(:password, :password_confirmation)
     end
 end

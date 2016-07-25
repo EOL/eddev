@@ -47,9 +47,9 @@ Rails.application.routes.draw do
 
   get  "users/confirm/:token"             => "users#confirm", :as => :users_confirm
   get  "users/forgot_password"            => "users#forgot_password", :as => :forgot_password
-  post "users/forgot_password"            => "users#forgot_password_email"
-  get  "users/reset_password/:token"      => "users#reset_password", :as => :reset_password
-  patch "users/reset_password/:token"     => "users#change_password"
+  post "users/forgot_password"            => "users#mail_password_reset_token"
+  get  "users/reset_password/:token"      => "users#reset_password_form", :as => :reset_password_form
+  patch "users/reset_password/:token"     => "users#reset_password"
   get  "login"                            => "user_sessions#new"
   post "login"                            => "user_sessions#create"
   get  "logout"                           => "user_sessions#destroy"

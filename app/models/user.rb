@@ -10,12 +10,11 @@ class User < ActiveRecord::Base
   }
 
   has_secure_password :validations => false
-  validates :password, :presence => true,
-                       :length => { minimum: 8 },
+  validates :password, :length => { minimum: 8 },
                        :confirmation => true,
-                       :if => :password_validation_required?
+                       :unless => :skip_password_validation?
   validates :password_confirmation, :presence => true,
-                                    :if => :password_confirmation_required?
+                                    :unless => :password_blank?
   validates :user_name, :presence => true, 
                         :uniqueness => true
   validates :email, :presence => true
@@ -102,12 +101,12 @@ class User < ActiveRecord::Base
   end
 
   private
-  def password_validation_required?
-    (legacy_password_digest.blank? && !persisted?) || !password.blank?
+  def skip_password_validation?
+    legacy_password_digest.present? && !persisted? && password.blank?
   end
 
-  def password_confirmation_required?
-    !password.blank?
+  def password_blank?
+    password.blank?
   end
 
   def digest_start_index

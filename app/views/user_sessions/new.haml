@@ -1,0 +1,22 @@
+- if notice
+  #Notice= notice
+
+%h1= t(".sign_in")
+
+- if @error_msg
+  #error_explanation= @error_msg
+
+= form_for(:user_session) do |f|
+  .field
+    = f.label :user_name, t(".user_name")
+    = f.text_field :user_name
+  
+
+  .field
+    = f.label :password, t(".password")
+    = f.password_field :password
+
+  .field
+    = link_to t(".forgot_password"), forgot_password_path
+
+  = f.submit t(".sign_in")

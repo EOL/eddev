@@ -1,0 +1,6 @@
+- if @user.errors.any?
+  #error_explanation
+    %ul
+      - @user.errors.values.each do |messages|
+        - messages.each do |message|
+          %li= message

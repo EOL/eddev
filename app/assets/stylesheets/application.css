@@ -26,3 +26,4 @@ body { margin: 0; padding: 0; }
 #MainContent { margin: 8px; }
 #DraftHeader { background-color: #FAF55A; height: 20px; text-align: center; vertical-align: middle; }
 
+.field input, .field label { display: block; }

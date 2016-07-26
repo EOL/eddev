@@ -10,22 +10,27 @@ class User < ActiveRecord::Base
   }
 
   has_secure_password :validations => false
-  validates :password, :length => { minimum: 8 },
+  PASSWORD_MIN_LENGTH = 6
+  validates :password, :length => { minimum: PASSWORD_MIN_LENGTH },
                        :confirmation => true,
                        :if => :validate_password?
   validates :password_confirmation, :presence => true,
                                     :unless => :password_blank?
+  # Constant used in view for HTML5 pattern validation
+  USER_NAME_PATTERN = "[a-zA-Z0-9\.@_]+"
   validates :user_name, :presence => true, 
-                        :uniqueness => true
+                        :uniqueness => true,
+                        :format => { :with =>/\A#{USER_NAME_PATTERN}\z/ }
   validates :email, :presence => true
   validates :full_name, :presence => true
+  validates :confirm_token, :uniqueness => true
 
   has_many :galleries, :dependent => :destroy
   has_many :place_permissions, :dependent => :destroy
   has_many :password_reset_tokens
-  validates :confirm_token, :uniqueness => true
 
   before_create :set_confirm_token
+  before_create :set_default_role
 
   attr_accessor :force_password_validation
 
@@ -119,5 +124,9 @@ class User < ActiveRecord::Base
 
   def set_confirm_token
     self.confirm_token = SecureRandom.base64
+  end
+
+  def set_default_role
+    self.role ||= :basic
   end
 end

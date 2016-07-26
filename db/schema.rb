@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160725210059) do
+ActiveRecord::Schema.define(version: 20160726163245) do
 
   create_table "content_model_states", force: :cascade do |t|
     t.integer  "content_model_id",       limit: 4
@@ -128,7 +128,6 @@ ActiveRecord::Schema.define(version: 20160725210059) do
     t.string   "full_name",              limit: 255
     t.string   "api_key",                limit: 255
     t.string   "password_digest",        limit: 255
-    t.boolean  "active"
     t.datetime "created_at",                                     null: false
     t.datetime "updated_at",                                     null: false
     t.string   "locale",                 limit: 255

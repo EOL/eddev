@@ -1,5 +1,6 @@
 class UserSessionsController < ApplicationController
-#  skip_before_filter :ensure_user, only: [:new, :create, :destroy]
+  # TODO: Change / redirects to root_path redirects once v2 homepage is deployed
+  before_action :redirect_if_logged_in, :only => [:new, :create]
 
   def new
   end
@@ -21,5 +22,10 @@ class UserSessionsController < ApplicationController
   def destroy
     log_out
     redirect_to "/"
+  end
+
+  private
+  def redirect_if_logged_in
+    redirect_to "/" if logged_in_user
   end
 end

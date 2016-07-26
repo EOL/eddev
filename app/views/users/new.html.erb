@@ -5,23 +5,30 @@
   
   <div class="field">
     <%= f.label :email %><br>
-    <%= f.text_field :email %>
+    <%= f.email_field :email, :required => true %>
   </div>
   <div class="field">
     <%= f.label :user_name %><br>
-    <%= f.text_field :user_name %>
+    <%= f.text_field :user_name, 
+      :pattern  => User::USER_NAME_PATTERN, 
+      :required => true, 
+      :title    => t_model_error(:user, :user_name, :invalid) %>
   </div>
   <div class="field">
     <%= f.label :full_name %><br>
-    <%= f.text_field :full_name %>
+    <%= f.text_field :full_name, :required => true %>
   </div>
   <div class="field">
     <%= f.label :password %><br>
-    <%= f.password_field :password %>
+    <%= f.password_field :password, 
+      :pattern  => ".{#{User::PASSWORD_MIN_LENGTH},}", 
+      :required => true, 
+      :title    => t_model_error(:user, :password, :too_short,
+                                 :count => User::PASSWORD_MIN_LENGTH) %>
   </div>
   <div class="field">
     <%= f.label :password_confirmation %><br>
-    <%= f.password_field :password_confirmation %>
+    <%= f.password_field :password_confirmation, :required => true %>
   </div>
 
   <div class="actions">

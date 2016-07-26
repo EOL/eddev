@@ -59,70 +59,22 @@ class UsersController < ApplicationController
       render :reset_password_form
     end
   end
-#  # GET /users
-#  # GET /users.json
-#  def index
-#    @users = User.all
-#  end
-#
-#  # GET /users/1
-#  # GET /users/1.json
-#  def show
-#  end
-#
-#  # GET /users/1/edit
-#  def edit
-#  end
-#
-#  # PATCH/PUT /users/1
-#  # PATCH/PUT /users/1.json
-#  def update
-#    respond_to do |format|
-#      whitelisted_params = user_params
-#      
-#      if whitelisted_params[:password].blank? && whitelisted_params[:password_confirmation].blank?
-#        whitelisted_params.delete(:password)
-#        whitelisted_params.delete(:password_confirmation)
-#      end
-#
-#      if @user.update(whitelisted_params)
-#        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-#        format.json { render :show, status: :ok, location: @user }
-#      else
-#        format.html { render :edit }
-#        format.json { render json: @user.errors, status: :unprocessable_entity }
-#      end
-#    end
-#  end
-#
-#  # DELETE /users/1
-#  # DELETE /users/1.json
-#  def destroy
-#    @user.destroy
-#    respond_to do |format|
-#      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-#      format.json { head :no_content }
-#    end
-#  end
 
   private
-    def set_user
-      @user = User.find(params[:id])
-    end
+  def set_user
+    @user = User.find(params[:id])
+  end
 
-    def set_password_reset_vars
-      @reset_token = PasswordResetToken.find_by_token!(params[:token])
-      
-      raise NotFoundError if @reset_token.expired?
+  def set_password_reset_vars
+    @reset_token = PasswordResetToken.find_by_token!(params[:token])
+    @user = @reset_token.user
+  end
 
-      @user = @reset_token.user
-    end
+  def user_params
+    params.fetch(:user, {}).permit(:email, :user_name, :full_name, :password, :password_confirmation)
+  end
 
-    def user_params
-      params.fetch(:user, {}).permit(:email, :user_name, :full_name, :password, :password_confirmation, :api_key, :active, :role)
-    end
-
-    def change_password_params
-      params.require(:user).permit(:password, :password_confirmation)
-    end
+  def change_password_params
+    params.fetch(:user, {}).permit(:password, :password_confirmation)
+  end
 end

@@ -81,6 +81,8 @@ en:
       models:
         user: 
           attributes:
+            user_name:
+              invalid: "User name may only contain letters, numbers, and the characters '.', '@', and '_'."
             password_confirmation:
               confirmation: "Password confirmation doesn't match password"
             password: 

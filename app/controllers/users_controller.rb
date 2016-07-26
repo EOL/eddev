@@ -12,7 +12,6 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-    notice = nil
 
     if @user.save
       SignupConfirmationMailer.confirmation_email(@user).deliver_now

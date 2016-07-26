@@ -7,7 +7,6 @@ describe User do
 
   describe "validations" do
     it { should have_many :password_reset_tokens }
-    it { should validate_uniqueness_of :confirm_token }
 
     let(:too_short_pwd) { valid_pwd[1..-1] }
 
@@ -69,6 +68,10 @@ describe User do
       it "doesn't require password to be present" do
         user.reload
         expect(user).to be_valid
+      end
+
+      it "sets a confirm_token value" do
+        expect(user.confirm_token).not_to be_blank
       end
 
       it_behaves_like "validates password"

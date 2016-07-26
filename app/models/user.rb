@@ -27,14 +27,15 @@ class User < ActiveRecord::Base
 
   validates :email, :presence => true
   validates :full_name, :presence => true
-  validates :confirm_token, :uniqueness => true
+  validates :confirm_token, :presence => true, :uniqueness => true
+  validates :role, :presence => true
 
   has_many :galleries, :dependent => :destroy
   has_many :place_permissions, :dependent => :destroy
   has_many :password_reset_tokens
 
-  before_create :set_confirm_token
-  before_create :set_default_role
+  before_validation :set_confirm_token
+  before_validation :set_default_role
 
   before_save :cleanup_legacy_pwd_digest
 

@@ -42,11 +42,10 @@ gem "aws-sdk", "< 2.0"
 # Platform-independent crypt (for authenticating against legacy passwords)
 gem "unix-crypt"
 
+gem "haml"
+
 # Use Unicorn as the app server
 # gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

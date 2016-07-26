@@ -3,7 +3,7 @@ require "rails_helper"
 describe User do
   let(:email) { "user@email.com" }
   let(:user_name) { "user" }
-  let(:valid_pwd) { "pass1234" }
+  let(:valid_pwd) { "pass12" }
 
   describe "validations" do
     it { should have_many :password_reset_tokens }

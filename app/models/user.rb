@@ -10,17 +10,21 @@ class User < ActiveRecord::Base
   }
 
   has_secure_password :validations => false
+
+  # Constants used in view for HTML5 pattern validation
   PASSWORD_MIN_LENGTH = 6
   validates :password, :length => { minimum: PASSWORD_MIN_LENGTH },
                        :confirmation => true,
                        :if => :validate_password?
+
   validates :password_confirmation, :presence => true,
                                     :unless => :password_blank?
-  # Constant used in view for HTML5 pattern validation
+
   USER_NAME_PATTERN = "[a-zA-Z0-9\.@_]+"
   validates :user_name, :presence => true, 
                         :uniqueness => true,
                         :format => { :with =>/\A#{USER_NAME_PATTERN}\z/ }
+
   validates :email, :presence => true
   validates :full_name, :presence => true
   validates :confirm_token, :uniqueness => true
@@ -31,6 +35,8 @@ class User < ActiveRecord::Base
 
   before_create :set_confirm_token
   before_create :set_default_role
+
+  before_save :cleanup_legacy_pwd_digest
 
   attr_accessor :force_password_validation
 
@@ -77,8 +83,7 @@ class User < ActiveRecord::Base
 
       if digest == legacy_password_digest # auth success
         if self.update(:password => password, 
-                       :password_confirmation => password, 
-                       :legacy_password_digest => nil)
+                       :password_confirmation => password)
           Rails.logger.info("Successfully migrated password for user #{id}/#{user_name}")
         else
           Rails.logger.error("Failed to migrate password for user #{id}/#{user_name}")
@@ -128,5 +133,9 @@ class User < ActiveRecord::Base
 
   def set_default_role
     self.role ||= :basic
+  end
+
+  def cleanup_legacy_pwd_digest
+    self.legacy_password_digest = nil if password_digest
   end
 end

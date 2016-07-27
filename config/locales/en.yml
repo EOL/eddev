@@ -53,7 +53,7 @@ en:
       submit: "Send password reset email"
     mail_password_reset_token:
       invalid_user_name: "Sorry, we could not find a user with that user name"
-      email_sent: "Please check the email account associated with your user name for instructions on how to reset your password. If an email does not arrive within 15 minutes, please contact us at <email goes here>."
+      email_sent: "Please check the email account associated with your user name for instructions on how to reset your password. If an email does not arrive within 15 minutes, please contact us at eol.learning@gmail.com."
     reset_password_form:
       header: "Change Password"
     reset_password:
@@ -67,7 +67,7 @@ en:
   forgot_password_mailer:
     forgot_password_email:
       subject: "Reset your EOL L&E password" 
-      body: "Hi, %{user_name}. Please click the following link to reset your password: %{url}"
+      body_html: "Hi, %{user_name}. Please click the following link to change your password: <a href=\"%{url}\">%{url}</a>"
 
   activerecord:
     errors:

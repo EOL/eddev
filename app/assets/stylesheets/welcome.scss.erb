@@ -1,0 +1,316 @@
+$background-url: url(<%= asset_path "welcome/sample_background.png" %>);
+$col-width: 890px;
+$topbar-height: 35px;
+$header-height: 150px;
+$logo-padding-top: 40px;
+$link-blue: #126e94;
+$color-bar-height: 8px;
+$navbar-height: 37px;
+$hdr-font: "Montserrat", sans-serif;
+$open-sans: "Open Sans", sans-serif;
+
+body { background-color: #55F; }
+div { 
+  position: relative; 
+}
+
+#HeaderBg {
+  bottom: 0px;
+  height: $topbar-height + $header-height;
+  left: 0px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  z-index: 99;
+
+  -webkit-filter: blur(8px);
+  filter: blur(8px);
+}
+
+#SignInBtn {
+  background: #34ABFE;
+  border-radius: 1px;
+  float: right;
+  font-size: 13px;
+  line-height: 27px;
+  margin-top: 4px;
+  padding: 0 26px;
+}
+
+#Topbar { 
+  background-color: rgba(12, 47, 57, .38); 
+  height: $topbar-height; 
+}
+
+#EolLink { 
+  background-image: url('http://media.eol.org/assets/v2/logo_index-0c13f339694ad74bdd975a1e0a8a5eff.png');
+}
+
+#Header { 
+  background-color: rgba(#5B92A8, .44);
+  height: $header-height;
+}
+
+#Logo {
+  height: $header-height - $logo-padding-top; 
+  margin: 0 auto;
+  padding-top: $logo-padding-top;
+  position: relative;
+  text-align: center;
+  width: $col-width;
+}
+
+#LogoMain {
+  color: #C0D62F;
+  font-family: $hdr-font;
+  font-size: 36px;  
+  line-height: 31px;
+  margin-bottom: 12px; 
+  text-shadow: 0 2px 4px #000;
+}
+
+#LogoSub {
+  font-size: 24px;
+}
+
+#Navbar {
+  background: #002238;
+  height: $navbar-height;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  text-align: center;
+  width: 100%;
+
+  ul {
+    font-size: 0; // hack to remove space between inline-block elements
+    height: 100%;
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+
+    li {
+      $nav-item-width: $col-width / 4;
+      cursor: pointer;
+      display: inline-block;
+      height: 100%;
+
+      .nav-txt { 
+        color: #D0D0D0;
+        display: inline-block;
+        font-family: $hdr-font;
+        font-size: 18px;
+        padding-top: 5px;
+        width: $nav-item-width;
+
+        .nav-txt-inner {
+          margin-right: 6px;
+        }
+
+        .nav-arw {
+          position: absolute;
+          top: 4px;
+        }
+      }
+
+      .color-bar {
+        bottom: 0;
+        height: $color-bar-height;
+        position: absolute;
+        width: $nav-item-width;
+      }
+
+      .color-bar.red    { background: #FF1433; }
+      .color-bar.yellow { background: #FF0;    }
+      .color-bar.orange { background: #FF6F00; }
+      .color-bar.green  { background: #30FF00; }
+
+      &:hover > ul {
+        display: block;
+      }
+    }
+
+    ul {
+      background: rgba(#092229, .9);
+      border-bottom: 1px solid #979797;
+      cursor: default;
+      display: none;
+      height: 280px;
+      left: 0;
+      padding-top: 50px;
+      position:absolute;
+      top: $navbar-height;
+      width: 100%;
+      z-index: 200;
+
+      li {
+        cursor: pointer;
+        display: inline-block;
+        margin-right: 74px;
+        overflow: hidden;
+        width: 165px;
+      }
+
+      li:last-of-type {
+        margin-right: 0;
+      }
+
+      a {
+        color: #FFF;
+        display: block;
+        font-size: 22px;
+        line-height: 26px;
+        text-decoration: none;
+
+        &:hover {
+          background: transparent;
+          text-decoration: none;
+        }
+
+        &:visited {
+          color: #FFF;
+        }
+      }
+
+      img {
+        height: 165px;
+        width: 165px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+
+
+
+#HeaderGrp {
+  position: relative;
+  z-index: 100;
+
+  .txt-wht {
+    color: #FFF;
+    font-family: "Open Sans", sans-serif;
+    text-shadow: 0 1px 4px #000;
+  }
+}
+
+#MainContent {
+  font-family: "Open Sans", sans-serif;
+  height: 1670px;  
+  min-width: 890px;
+  width: 100%;
+  z-index: 50;
+}
+
+#MainContent, #HeaderBg, .dyn-blur { 
+  background: $background-url no-repeat center top;
+  background-size: 1400px;
+  position: absolute;
+  z-index: 99;
+}
+
+.dyn-blur {
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  -webkit-filter: blur(10px); 
+  filter: blur(10px); 
+}
+
+.col-container {
+  height: 100%;
+  margin: 0 auto; 
+  width: 890px;
+}
+
+#MainCol {
+  height: 800px;
+  margin: 72px auto;
+  position: relative;
+  width: $col-width;  
+  z-index: 1;
+}
+
+.content-box {
+  background: radial-gradient(rgba(#FFF, .78), rgba(#FFF, .72));
+  position: relative;
+  z-index: 100;
+}
+
+#WelcomeHdr {
+  color: #0982A5;
+  font-family: $hdr-font;
+  font-size: 24px;
+  font-weight: normal;
+  margin: 0;
+}
+
+#WelcomeBox {
+  margin-bottom: 72px;
+  padding: 31px 72px;
+  text-align: center;
+
+  p {
+    font-family: "Open Sans", sans-serif;
+    font-size: 20px;
+    line-height: 27px;
+    margin: 22px 0 0 0;
+  }
+
+  a {
+    color: $link-blue;
+    font-weight: bold;
+    text-decoration: none;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
+ 
+#FeaturedGallery {
+  $hdr-font-size: 18px;
+
+  h3 {
+    font-size: $hdr-font-size;
+    margin-top: 0; 
+  }
+
+  .gallery-item {
+    .topbar {
+      font-family: "Montserrat", sans-serif;
+      font-size: $hdr-font-size;
+      line-height: 34px;
+      padding-left: 35px;
+    }
+
+    .desc {
+      padding: 25px; 
+    }
+  }
+}
+
+#Footer {
+  background: rgba(#FFF, 0.4);
+  border-top: 1px solid #E4E4E4;
+  bottom: 0;
+  height: 184px;
+  padding-top: 10px;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+
+  h2 {
+    font-family: $open-sans;
+    font-size: 13px;
+    font-weight: 600;
+  }
+}
+
+#MczLogo {
+  margin-bottom: 10px;
+  margin-top: 4px;
+}

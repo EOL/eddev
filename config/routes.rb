@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # You can have the root of your site routed with 'root'
-  # root 'welcome#index'
+  root 'welcome#index'
 
 
 #  scope '(:locale)', locale: /#{I18n.available_locales.join('|')}/ do

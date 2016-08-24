@@ -1,0 +1,55 @@
+#HeaderBg
+#HeaderGrp
+  #Topbar
+    -#%a#EolLink{:href => "www.eol.org"}
+    .col-container
+      #SignInBtn.txt-wht= t ".sign_in"
+  #Header
+    #Logo
+      #LogoMain= t ".main_title"
+      #LogoSub.txt-wht= t ".sub_title"
+  %nav#Navbar
+    %ul
+      - nav_cats.each do |cat|
+        %li
+          %div.nav-txt
+            %span.nav-txt-inner= cat.label.text
+            %i.fa.fa-caret-down.fa-lg.nav-arw
+          %div{:class => "color-bar #{cat.label.color}"}
+          %ul
+            - cat.items.each do |item|
+              %li
+                = link_to (image_tag item.img_url), item.target_url
+                = link_to item.text, item.target_url
+#MainCol
+  .dyn-blur
+  #WelcomeBox.content-box
+    %h2#WelcomeHdr= t ".welcome_h"
+    %p= t ".welcome_p1_html"
+    %p= t ".welcome_p2"
+  .dyn-blur
+  #FeaturedGallery.content-box
+    .gallery-item 
+      .topbar How can you use Learning + Education at the Encyclopedia of Life?
+      = image_tag "welcome/classroom.png"
+      .desc 
+        %h3 Red shrimpy thing
+        .body A podcast about a species and learning and stuff
+
+.dyn-blur
+#Footer
+  %h2 EOL Learning + Education is generously supported by:
+  = image_tag "welcome/mcz_logo.jpg", :id => "MczLogo"
+  .addr_line
+    Encyclopedia of Life Learning + Education Group
+    |
+    Museum of Comparative Zoology
+  .addr_line
+    Harvard University 26 Oxford Street, Cambridge, MA 02138 USA
+    |
+    617-496-6764
+    |
+    education [at] eol.org
+    |
+    Notices &amp; Credits
+

@@ -82,21 +82,44 @@ module WelcomeHelper
         :text_key => "cat_media",
         :color => :yellow
       },
-      :items => []
-    ),
-    NavCat.new(
-      :label => {
-        :text_key => "cat_projects",
-        :color => :orange
-      },
-      :items => []
+      :items => [
+        {
+          :text_key => "podcasts", 
+          :target_url => "http://eol.org/info/podcasts"
+        },
+        {
+          :text_key => "google_earth_tours", 
+          :target_url => "http://eol.org/info/disc_google_earth"
+        },
+        {
+          :text_key => "hi_res_photos",
+          :target_url => "http://eol.org/collections/21048"
+        },
+      ]
     ),
     NavCat.new(
       :label => {
         :text_key => "cat_resources",
         :color => :green
       },
-      :items => []
+      :items => [
+        {
+          :text_key => "biodiv_articles",
+          :target_url => "http://eol.org/info/discover_articles"
+        },
+        {
+          :text_key => "learning_resources",
+          :target_url => "http://eol.org/info/ed_resources"
+        },
+        {
+          :text_key => "featured_collections",
+          :target_url => "http://eol.org/info/featured_collections"
+        },
+        {
+          :text_key => "eol_places",
+          :target_url => "http://education.eol.org/ecosystems/"
+        },
+      ]
     )
   ]
 end

@@ -39,6 +39,13 @@ en:
         coloring_pages: "BHL Coloring Pages"
         species_cards: "Species Cards"
         inaturalist: "iNaturalist"
+        podcasts: "Podcasts"
+        google_earth_tours: "Google Earth Tours"
+        hi_res_photos: "Hi Resolution Photos"
+        biodiv_articles: "Biodiversity Articles"
+        learning_resources: "Learning Resources"
+        featured_collections: "Featured Collections"
+        eol_places: "EOL Places"
 
   content_editor: 
     edit_mode_on: "Edit mode on"

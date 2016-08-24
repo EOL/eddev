@@ -90,6 +90,10 @@ div {
     overflow: hidden;
     padding: 0;
 
+    &:hover .color-bar {
+      display: none;
+    }
+
     li {
       $nav-item-width: $col-width / 4;
       cursor: pointer;
@@ -114,6 +118,10 @@ div {
         }
       }
 
+      &:hover .color-bar {
+        display: block;
+      }
+
       .color-bar {
         bottom: 0;
         height: $color-bar-height;
@@ -125,6 +133,7 @@ div {
       .color-bar.yellow { background: #FF0;    }
       .color-bar.orange { background: #FF6F00; }
       .color-bar.green  { background: #30FF00; }
+
 
       &:hover > ul {
         display: block;
@@ -139,7 +148,7 @@ div {
       height: 280px;
       left: 0;
       padding-top: 50px;
-      position:absolute;
+      position: absolute;
       top: $navbar-height;
       width: 100%;
       z-index: 200;
@@ -159,6 +168,7 @@ div {
       a {
         color: #FFF;
         display: block;
+        font-family: $hdr-font;
         font-size: 22px;
         line-height: 26px;
         text-decoration: none;

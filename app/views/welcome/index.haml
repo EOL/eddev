@@ -19,8 +19,8 @@
           %ul
             - cat.items.each do |item|
               %li
-                = link_to (image_tag item.img_url), item.target_url
-                = link_to item.text, item.target_url
+                = link_to (image_tag item.img_url), item.target_url, :target => "_blank"
+                = link_to item.text, item.target_url, :target => "_blank"
 #MainCol
   .dyn-blur
   #WelcomeBox.content-box

@@ -21,6 +21,21 @@
               %li
                 = link_to (image_tag item.img_url), item.target_url, :target => "_blank"
                 = link_to item.text, item.target_url, :target => "_blank"
+#AccountPanel
+  .inner
+    .left-col
+      %h2= t ".accounts.sign_in_header"
+      = form_for :user_session do |f|
+        .field
+          = f.label :user_name, t(".accounts.username_label"), :class => "txt-wht"
+          = f.text_field :user_name
+        .field
+          = f.label :password, t(".accounts.password_label")
+          = f.password_field :password
+        = f.submit t(".sign_in"), :class => "txt-wht"
+    .right-col
+      %h2= t ".accounts.new_account_header"
+
 #MainCol
   .dyn-blur
   #WelcomeBox.content-box
@@ -28,28 +43,25 @@
     %p= t ".welcome_p1_html"
     %p= t ".welcome_p2"
   .dyn-blur
-  #FeaturedGallery.content-box
-    .gallery-item 
-      .topbar How can you use Learning + Education at the Encyclopedia of Life?
-      = image_tag "welcome/classroom.png"
-      .desc 
-        %h3 Red shrimpy thing
-        .body A podcast about a species and learning and stuff
+  #FeaturedGalleryOuter.content-box
+    #FeaturedGallery
+      .gallery-item 
+        .topbar How can you use Learning + Education at the Encyclopedia of Life?
+        = image_tag "welcome/classroom.png"
+        .desc 
+          %h3 Red shrimpy thing
+          .body A podcast about a species and learning and stuff
+      .gallery-item 
+        .topbar How can you use Learning + Education at the Encyclopedia of Life?
+        = image_tag "welcome/classroom.png"
+        .desc 
+          %h3 Red shrimpy thing
+          .body A podcast about a species and learning and stuff
 
 .dyn-blur
 #Footer
-  %h2 EOL Learning + Education is generously supported by:
+  %h2= t ".footer.mcz_credit_header"
   = image_tag "welcome/mcz_logo.jpg", :id => "MczLogo"
-  .addr_line
-    Encyclopedia of Life Learning + Education Group
-    |
-    Museum of Comparative Zoology
-  .addr_line
-    Harvard University 26 Oxford Street, Cambridge, MA 02138 USA
-    |
-    617-496-6764
-    |
-    education [at] eol.org
-    |
-    Notices &amp; Credits
+  .addr_line= t ".footer.l_and_e_at_mcz_html"
+  .addr_line= t ".footer.address_and_contact_html"
 

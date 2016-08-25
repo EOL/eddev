@@ -100,7 +100,7 @@ module WelcomeHelper
     NavCat.new(
       :label => {
         :text_key => "cat_resources",
-        :color => :green
+        :color => :orange
       },
       :items => [
         {
@@ -119,6 +119,14 @@ module WelcomeHelper
           :text_key => "eol_places",
           :target_url => "http://education.eol.org/ecosystems/"
         },
+      ]
+    ),
+    NavCat.new(
+      :label => {
+        :text_key => "cat_about",
+        :color => :green,
+      },
+      :items => [
       ]
     )
   ]

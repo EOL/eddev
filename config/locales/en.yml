@@ -33,8 +33,8 @@ en:
       nav:
         cat_activities: "ACTIVITIES"
         cat_media:     "MEDIA"
-        cat_projects:  "PROJECTS"
         cat_resources: "RESOURCES"
+        cat_about: "ABOUT" 
         memory_game: "Memory Game"
         coloring_pages: "BHL Coloring Pages"
         species_cards: "Species Cards"
@@ -46,6 +46,15 @@ en:
         learning_resources: "Learning Resources"
         featured_collections: "Featured Collections"
         eol_places: "EOL Places"
+      accounts: 
+        sign_in_header: "SIGN IN"
+        new_account_header: "NEW ACCOUNT"
+        username_label: "Username"
+        password_label: "Password"
+      footer:
+        mcz_credit_header: "EOL Learning + Education is generously supported by:"
+        l_and_e_at_mcz_html: "<a href='/'>Encyclopedia of Life Learning + Education Group</a> | <a href='//www.mcz.harvard.edu/'>Museum of Comparative Zoology</a>"
+        address_and_contact_html: "<a href='//www.harvard.edu'>Harvard University</a> 26 Oxford Street, Cambridge, MA 02138 USA | 617-496-6764 | education [at] eol.org"
 
   content_editor: 
     edit_mode_on: "Edit mode on"

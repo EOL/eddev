@@ -9,9 +9,15 @@ $navbar-height: 37px;
 $hdr-font: "Montserrat", sans-serif;
 $open-sans: "Open Sans", sans-serif;
 
-body { background-color: #55F; }
-div { 
-  position: relative; 
+body { 
+  background-color: #55F;
+  font-family: $open-sans;
+}
+
+.txt-wht {
+  color: #FFF;
+  font-family: "Open Sans", sans-serif;
+  text-shadow: 0 1px 4px #000;
 }
 
 #HeaderBg {
@@ -109,7 +115,7 @@ div {
         width: $nav-item-width;
 
         .nav-txt-inner {
-          margin-right: 6px;
+          margin-right: 7px;
         }
 
         .nav-arw {
@@ -199,10 +205,75 @@ div {
   position: relative;
   z-index: 100;
 
-  .txt-wht {
-    color: #FFF;
-    font-family: "Open Sans", sans-serif;
-    text-shadow: 0 1px 4px #000;
+}
+
+#AccountPanel {
+  background: rgba(#092229, .9);
+  color: #FFF;
+  height: 500px;
+  padding-top: 70px;
+  position: absolute;
+  width: 100%;
+  z-index: 1000;
+
+  .inner {
+    margin: 0 auto;
+    position: relative;
+    width: $col-width
+  }
+
+  .left-col, .right-col {
+    width: 323px; 
+  }
+
+  .left-col {
+    float: left;
+  }
+
+  .right-col {
+    float: right;
+  }
+
+  .field {
+    margin: 0;
+  }
+
+  h2 {
+    font-family: $hdr-font;
+    font-size: 27px;
+  }
+
+  label {
+    font-size: 18px;
+    line-height: 37px;
+  }
+
+  $input-width: 323px;
+
+  input {
+    font-size: 18px;
+  }
+
+  input[type="submit"] {
+    background: #34ABFE;
+    border: none;
+    border-radius: 1px;
+    cursor: pointer;
+    height: 44px;
+    line-height: 44px;
+    margin-top: 40px;
+    padding: 0;
+    width: $input-width;
+  }
+
+  input[type="text"], input[type="password"] {
+    $border-width: 2px;
+    $side-padding: 8px;
+    border-width: $border-width;
+    height: 42px;
+    line-height: 42px;
+    padding: 0 $side-padding;
+    width: $input-width - $side-padding * 2 - $border-width * 2;
   }
 }
 
@@ -298,7 +369,20 @@ div {
     }
 
     .desc {
-      padding: 25px; 
+      padding: 25px 25px 60px 25px; 
+    }
+  }
+
+  .slick-dots {
+    bottom: 20px;
+
+    li button:before {
+      font-size: 14px;
+    }
+
+    li.slick-active button:before {
+      color: #C0D62F;
+      text-shadow: -1px 0 #64920A,0 1px #64920A,1px 0 #64920A,0 -1px #64920A;
     }
   }
 }
@@ -307,16 +391,24 @@ div {
   background: rgba(#FFF, 0.4);
   border-top: 1px solid #E4E4E4;
   bottom: 0;
+  color: #555555;
+  font-size: 14px;
   height: 184px;
   padding-top: 10px;
   position: absolute;
   text-align: center;
   width: 100%;
+  z-index: 101;
 
   h2 {
-    font-family: $open-sans;
     font-size: 13px;
     font-weight: 600;
+  }
+
+  a, a:visited, a:hover {
+    background: transparent;
+    color: #636A9F;
+    text-decoration: none;
   }
 }
 

@@ -8,6 +8,7 @@ $color-bar-height: 8px;
 $navbar-height: 37px;
 $hdr-font: "Montserrat", sans-serif;
 $open-sans: "Open Sans", sans-serif;
+$content-height: 1670px;
 
 body { 
   background-color: #55F;
@@ -18,6 +19,13 @@ body {
   color: #FFF;
   font-family: "Open Sans", sans-serif;
   text-shadow: 0 1px 4px #000;
+}
+
+.close-btn {
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 20px;
 }
 
 #HeaderBg {
@@ -36,6 +44,7 @@ body {
 #SignInBtn {
   background: #34ABFE;
   border-radius: 1px;
+  cursor: pointer;
   float: right;
   font-size: 13px;
   line-height: 27px;
@@ -208,18 +217,28 @@ body {
 }
 
 #AccountPanel {
+  $top-area-height: 70px;
+
   background: rgba(#092229, .9);
   color: #FFF;
-  height: 500px;
-  padding-top: 70px;
+  display:none;
+  height: $content-height - $top-area-height;
   position: absolute;
+  top: 0;
   width: 100%;
   z-index: 1000;
+
+  .notice {
+    font-size: 18px;
+    height: $top-area-height;
+    line-height: $top-area-height;
+    text-align: center;
+  }
 
   .inner {
     margin: 0 auto;
     position: relative;
-    width: $col-width
+    width: $col-width;
   }
 
   .left-col, .right-col {
@@ -238,6 +257,26 @@ body {
     margin: 0;
   }
 
+  .error-msg {
+    $padding: 9px;
+    font-size: 15px;
+    min-height: 40px - 2 * $padding;
+    padding: $padding 0;
+  }
+
+  .error-field {
+    input {
+      border: 2px solid #F00;
+    }
+
+    .field-errors {
+      font-family: $open-sans;
+      font-size: 15px;
+      margin: 0 0 10px 0;
+      padding: 0 0 0 20px;
+    }
+  }
+
   h2 {
     font-family: $hdr-font;
     font-size: 27px;
@@ -254,19 +293,25 @@ body {
     font-size: 18px;
   }
 
-  input[type="submit"] {
+  .btn-blue {
     background: #34ABFE;
+  }
+
+  .btn-green {
+    background: #6BBF26;
+  }
+
+  input[type="submit"] {
     border: none;
     border-radius: 1px;
     cursor: pointer;
     height: 44px;
     line-height: 44px;
-    margin-top: 40px;
     padding: 0;
     width: $input-width;
   }
 
-  input[type="text"], input[type="password"] {
+  input[type="text"], input[type="password"], input[type="email"] {
     $border-width: 2px;
     $side-padding: 8px;
     border-width: $border-width;
@@ -279,7 +324,7 @@ body {
 
 #MainContent {
   font-family: "Open Sans", sans-serif;
-  height: 1670px;  
+  height: $content-height;  
   min-width: 890px;
   width: 100%;
   z-index: 50;

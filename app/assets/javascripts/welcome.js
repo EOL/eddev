@@ -1,4 +1,80 @@
+function userSessionControlInit() {
+  var $btn = $('#SignInBtn'),
+      $loginForm = $('#LoginForm'),
+      $signupForm = $('#SignupForm'),
+      $signupBtn = $signupForm.find('input[type="submit"]'),
+      $accountPanel = $('#AccountPanel'),
+      btnTxt = $btn.html(),
+      btnToggleTxt = $btn.data('toggle-txt'),
+      state = $btn.data('state');
+
+  var signInFn = function() {
+    $accountPanel.slideDown();
+  }
+
+  var signOutFn = function() {
+    window.location = '/logout';
+  }
+
+  if (state === 'signed_in') {
+    $btn.click(signOutFn);
+  } else {
+    // Login AJAX handling
+    $loginForm.on('ajax:success', function(e, data, status, xhr) {
+      if (data['success']) {
+        
+        $btn.html(btnToggleTxt);
+        $btn.data('toggle-txt', btnTxt);
+        $btn.off('click');
+        $btn.click(signOutFn);
+        $('#AccountPanel').slideUp();
+      } else {
+        $('#LoginForm .error-msg').html(data['error_msg']);
+      }
+    });
+
+    // Signup form handling
+    $signupForm.on('ajax:success', function(e, data, status, xhr) {
+
+      $signupForm.find('.error-field').removeClass('error-field');
+      $signupForm.find('.field-errors').remove();
+      $signupForm.find('.error-msg').html(data['msg']);
+
+      if (data['success']) {
+        $signupForm.find('.field input').val('');
+      } else {
+        $.each(data['errors'], function(attr, errors) {
+          var $field = $('#user_' + attr).parent();
+          var $label = $field.children('label');
+          var $errorList = $('<ul class="field-errors"></ul>');
+
+          $field.addClass('error-field');
+          $label.after($errorList);
+          
+          $.each(errors, function(i, error) {
+            $errorList.append('<li>' + error + '</li>');
+          });  
+        });
+      }
+    });
+
+    $btn.click(signInFn);
+  }
+  
+  if ($accountPanel.data('open')) {
+    $accountPanel.slideDown();
+  }
+}
+
 $(function() {
+  userSessionControlInit();
+
+  $('#AccountPanel .close-btn').click(function() {
+    $('#AccountPanel').slideUp();
+  });
+
+
+
   // init slideshow
   $('#FeaturedGallery').slick({
     'arrows': false,

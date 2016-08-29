@@ -11,11 +11,23 @@ class UserSessionsController < ApplicationController
 
     user = log_in(user_name, password)
 
-    if user
-      redirect_to "/"
-    else
-      @error_msg = t(".invalid_creds")
-      render :new
+    respond_to do |format|
+      if user
+        format.html { redirect_to root_url }
+        format.json { render :json => {
+          :success => true
+        }}
+      else
+        @error_msg = t(".invalid_creds")
+
+        format.html { render :new }
+        format.json do
+          render :json => {
+            :success => false,
+            :error_msg => @error_msg,
+          }
+        end
+      end
     end
   end
 

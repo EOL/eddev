@@ -27,6 +27,7 @@ en:
       main_title: "Learning + Education"
       sub_title:  "At the Encyclopedia of Life"
       sign_in: "Sign In"
+      sign_out: "Sign Out"
       welcome_h: "Welcome"
       welcome_p1_html: "At <strong>Learning + Education</strong>, we take content from <a href='http://www.eol.org'>EOL</a> and put it into context."
       welcome_p2: "From Lesson Plans to Citizen Science projects, we have a variety of educational material to keep educators and students continuously engaged in learning about life on earth!"
@@ -51,6 +52,9 @@ en:
         new_account_header: "NEW ACCOUNT"
         username_label: "Username"
         password_label: "Password"
+        create_new_account: "Create New Account"
+        signup_success_msg: "Please check your email for instructions on how to activate your account."
+        signup_failure_msg: "Please correct the above errors and try again."
       footer:
         mcz_credit_header: "EOL Learning + Education is generously supported by:"
         l_and_e_at_mcz_html: "<a href='/'>Encyclopedia of Life Learning + Education Group</a> | <a href='//www.mcz.harvard.edu/'>Museum of Comparative Zoology</a>"
@@ -110,17 +114,17 @@ en:
           one:   "1 error prevented this %{model} from being saved"
           other: "%{count} errors prevented this %{model} from being saved"
       messages:
-        blank: "%{attribute} can't be blank"
-        taken: "%{attribute} is already taken"
+        blank: "can't be blank"
+        taken: "is already taken"
       models:
         user: 
           attributes:
             user_name:
-              invalid: "User name may only contain letters, numbers, and the characters '.', '@', and '_'."
+              invalid: "may only contain letters, numbers, and the characters '.', '@', and '_'."
             password_confirmation:
-              confirmation: "Password confirmation doesn't match password"
+              confirmation: "doesn't match password"
             password: 
-              too_short: "Password is too short (minimum %{count} characters)"
+              too_short: "too short (minimum %{count} characters)"
     models:
       user: "User"
     attributes:

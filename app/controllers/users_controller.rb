@@ -13,11 +13,27 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    if @user.save
-      SignupConfirmationMailer.confirmation_email(@user).deliver_now
-      render :confirmation_pending
-    else
-      render :new
+    respond_to do |format|
+      if @user.save
+        SignupConfirmationMailer.confirmation_email(@user).deliver_now
+        format.html { render :confirmation_pending }
+        format.json do 
+          render :json => {
+            :success => true,
+            :msg => t("welcome.index.accounts.signup_success_msg")
+          }
+        end
+      else
+        format.html { render :new }
+
+        format.json do
+          render :json => {
+            :success => false,
+            :msg => t("welcome.index.accounts.signup_failure_msg"),
+            :errors => @user.errors
+          }
+        end
+      end
     end
   end
 
@@ -26,7 +42,8 @@ class UsersController < ApplicationController
 
     if !@user.confirmed?
       @user.confirm!
-      redirect_to login_path, :notice => t(".success", :user_name => @user.user_name)
+      flash[:account_notice] = t(".success", :user_name => @user.user_name)
+      redirect_to (root_path :account_panel_open => true)
     else
       raise NotFoundError
     end

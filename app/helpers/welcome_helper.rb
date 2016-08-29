@@ -45,8 +45,35 @@ module WelcomeHelper
     end
   end
 
+  def login_btn_txt_key
+    if logged_in_user
+      ".sign_out"
+    else
+      ".sign_in"
+    end
+  end
+
+  def login_btn_toggle_txt_key
+    if logged_in_user
+      ".sign_in"
+    else
+      ".sign_out"
+    end
+  end
+
+  def login_btn_state
+    if logged_in_user
+      :signed_in
+    else
+      :signed_out
+    end 
+  end
+
   def nav_cats
     NAV_CATS
+  end
+
+  def sign_in_btn_txt
   end
 
 

@@ -217,18 +217,18 @@ body {
 }
 
 #AccountPanel {
-  $top-area-height: 70px;
 
   background: rgba(#092229, .9);
   color: #FFF;
   display:none;
-  height: $content-height - $top-area-height;
+  height: $content-height;
   position: absolute;
   top: 0;
   width: 100%;
   z-index: 1000;
 
   .notice {
+    $top-area-height: 70px;
     font-size: 18px;
     height: $top-area-height;
     line-height: $top-area-height;

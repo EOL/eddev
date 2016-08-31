@@ -150,23 +150,30 @@ body {
       .color-bar.green  { background: #30FF00; }
 
 
-      &:hover > ul {
+      &:hover > .dropdown {
         display: block;
       }
     }
 
-    ul {
+    .nav-links {
+      padding-top: 50px;
+    }
+
+    .dropdown {
       background: rgba(#092229, .9);
       border-bottom: 1px solid #979797;
       cursor: default;
       display: none;
       height: 280px;
       left: 0;
-      padding-top: 50px;
       position: absolute;
       top: $navbar-height;
       width: 100%;
       z-index: 200;
+
+      p {
+        text-align: center;
+      }
 
       li {
         cursor: pointer;
@@ -180,8 +187,16 @@ body {
         margin-right: 0;
       }
 
-      a {
+      a, p {
         color: #FFF;
+      }
+
+      p {
+        font-family: $open-sans;
+        font-size: 18px;
+      }
+
+      a {
         display: block;
         font-family: $hdr-font;
         font-size: 22px;

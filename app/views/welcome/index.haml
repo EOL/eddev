@@ -16,14 +16,10 @@
       - nav_cats.each do |cat|
         %li
           %div.nav-txt
-            %span.nav-txt-inner= cat.label.text
+            %span.nav-txt-inner= nav_t cat[:label][:text_key]
             %i.fa.fa-caret-down.fa-lg.nav-arw
-          %div{:class => "color-bar #{cat.label.color}"}
-          %ul
-            - cat.items.each do |item|
-              %li
-                = link_to (image_tag item.img_url), item.target_url, :target => "_blank"
-                = link_to item.text, item.target_url, :target => "_blank"
+          %div{:class => "color-bar #{cat[:label][:color]}"}
+          = render cat[:dropdown_partial].to_s, :items => cat[:items]
 %div{:id => "AccountPanel", :'data-open' => @account_panel_open.to_s}
   .inner
     %i.fa.fa-times-circle.fa-lg.close-btn

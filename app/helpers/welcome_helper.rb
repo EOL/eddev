@@ -2,9 +2,11 @@ module WelcomeHelper
   class NavCat
     attr_accessor :label
     attr_accessor :items
+    attr_accessor :dropdown_partial
 
     def initialize(options)
       self.label = Label.new(options[:label])
+      self.dropdown_partial = options[:dropdown_partial]
 
       self.items = []
       options[:items].each do |item|
@@ -76,15 +78,19 @@ module WelcomeHelper
   def sign_in_btn_txt
   end
 
+  def nav_t(key)
+    I18n.translate("#{NAV_KEY_PREFIX}.#{key}")
+  end
 
   private
   NAV_KEY_PREFIX = "welcome.index.nav"
   NAV_CATS = [
-    NavCat.new(
+    {
       :label => { 
         :text_key  => "cat_activities",
         :color => :red
       },
+      :dropdown_partial => :nav_links,
       :items => [
         {
           :text_key => "memory_game",
@@ -103,12 +109,13 @@ module WelcomeHelper
           :target_url => "http://www.inaturalist.org/"
         }
       ] 
-    ),
-    NavCat.new(
+    },
+    {
       :label => { 
         :text_key => "cat_media",
         :color => :yellow
       },
+      :dropdown_partial => :nav_links,
       :items => [
         {
           :text_key => "podcasts", 
@@ -123,12 +130,13 @@ module WelcomeHelper
           :target_url => "http://eol.org/collections/21048"
         },
       ]
-    ),
-    NavCat.new(
+    },
+    {
       :label => {
         :text_key => "cat_resources",
         :color => :orange
       },
+      :dropdown_partial => :nav_links,
       :items => [
         {
           :text_key => "biodiv_articles",
@@ -147,14 +155,16 @@ module WelcomeHelper
           :target_url => "http://education.eol.org/ecosystems/"
         },
       ]
-    ),
-    NavCat.new(
+    },
+    {
       :label => {
         :text_key => "cat_about",
         :color => :green,
       },
+      :dropdown_partial => :about_dropdown,
       :items => [
+        "About eol blah blah blah blah"
       ]
-    )
+    }
   ]
 end

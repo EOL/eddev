@@ -43,7 +43,7 @@ class UsersController < ApplicationController
     if !@user.confirmed?
       @user.confirm!
       flash[:account_notice] = t(".success", :user_name => @user.user_name)
-      redirect_to (root_path :account_panel_open => true)
+      redirect_to root_path
     else
       raise NotFoundError
     end
@@ -70,7 +70,8 @@ class UsersController < ApplicationController
   def reset_password
     if @user.update(change_password_params.merge(:force_password_validation => true))
       @reset_token.mark_used  
-      redirect_to login_path, :notice => t(".success")
+      flash[:account_notice] = t(".success")
+      redirect_to root_path
     else
       render :reset_password_form
     end
@@ -82,7 +83,7 @@ class UsersController < ApplicationController
   end
 
   def set_password_reset_vars
-    @reset_token = PasswordResetToken.find_by_token!(params[:token])
+    @reset_token = PasswordResetToken.find_valid_by_token(params[:token])
     @user = @reset_token.user
   end
 

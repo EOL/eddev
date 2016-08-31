@@ -11,7 +11,6 @@ $open-sans: "Open Sans", sans-serif;
 $content-height: 1670px;
 
 body { 
-  background-color: #55F;
   font-family: $open-sans;
 }
 
@@ -241,6 +240,18 @@ body {
   top: 0;
   width: 100%;
   z-index: 1000;
+
+  a, a:visited, a:hover {
+    background: transparent;
+    color: #FFF;
+    text-decoration: none;
+  }
+
+  .forgot-password {
+    display: block;
+    margin-top: 3px;
+    text-align: right;
+  }
 
   .notice {
     $top-area-height: 70px;

@@ -1,105 +1,107 @@
-#HeaderBg
-#HeaderGrp
-  #Topbar
-    -#%a#EolLink{:href => "www.eol.org"}
-    .col-container
-      %div{:id => "SignInBtn", 
-      :class => "txt-wht",
-      :data => { :'toggle-txt' => t(login_btn_toggle_txt_key),
-      :state => login_btn_state}}= t(login_btn_txt_key)
-  #Header
-    #Logo
-      #LogoMain= t ".main_title"
-      #LogoSub.txt-wht= t ".sub_title"
-  %nav#Navbar
-    %ul
-      - nav_cats.each do |cat|
-        %li
-          %div.nav-txt
-            %span.nav-txt-inner= nav_t cat[:label][:text_key]
-            %i.fa.fa-caret-down.fa-lg.nav-arw
-          %div{:class => "color-bar #{cat[:label][:color]}"}
-          = render cat[:dropdown_partial].to_s, :items => cat[:items]
-%div{:id => "AccountPanel", :'data-open' => @account_panel_open.to_s}
-  .inner
-    %i.fa.fa-times-circle.fa-lg.close-btn
-    .notice= flash[:account_notice] if flash[:account_notice]
-    .left-col
-      %h2= t ".accounts.sign_in_header"
-      = form_for(:user_session, 
-        :html => { :id => "LoginForm",
-                   :'data-type' => :json },
-        :url => { :controller => :user_sessions, 
-                  :action => :create },
-        :remote => true) do |f|
-        .field
-          = f.label :user_name, t(".accounts.username_label"), :class => "txt-wht"
-          = f.text_field :user_name
-        .field
-          = f.label :password, t(".accounts.password_label")
-          = f.password_field :password
-        .error-msg.txt-wht
-        = f.submit t(".sign_in"), :class => "txt-wht btn-blue"
-    .right-col
-      %h2= t ".accounts.new_account_header"
-      =form_for(@new_user,
-              :html => { :id => "SignupForm",
-                :'data-type' => :json,
-                :novalidate => true},
-              :url => { :controller => :users, 
-                        :action => :create },
-              :remote => true) do |f|
-        .field
-          = f.label :email
-          = f.email_field :email, :required => true
-        .field
-          = f.label :user_name, t(".accounts.username_label")
-          = f.text_field :user_name, 
-              :pattern  => User::USER_NAME_PATTERN, 
-              :required => true, 
-              :title    => t_model_error(:user, :user_name, :invalid)
-        .field
-          = f.label :full_name
-          = f.text_field :full_name, :required => true
-        .field
-          = f.label :password
-          = f.password_field :password, 
-              :pattern  => ".{#{User::PASSWORD_MIN_LENGTH},}", 
-              :required => true, 
-              :title    => t_model_error(:user, :password, :too_short,
-                                         :count => User::PASSWORD_MIN_LENGTH)
-        .field
-          = f.label :password_confirmation
-          = f.password_field :password_confirmation, :required => true
-        .error-msg.txt-wht
-        = f.submit t(".accounts.create_new_account"), :class => "txt-wht btn-green"
+#MainContent
+  #HeaderBg
+  #HeaderGrp
+    #Topbar
+      -#%a#EolLink{:href => "www.eol.org"}
+      .col-container
+        %div{:id => "SignInBtn", 
+        :class => "txt-wht",
+        :data => { :'toggle-txt' => t(login_btn_toggle_txt_key),
+        :state => login_btn_state}}= t(login_btn_txt_key)
+    #Header
+      #Logo
+        #LogoMain= t ".main_title"
+        #LogoSub.txt-wht= t ".sub_title"
+    %nav#Navbar
+      %ul
+        - nav_cats.each do |cat|
+          %li
+            %div.nav-txt
+              %span.nav-txt-inner= nav_t cat[:label][:text_key]
+              %i.fa.fa-caret-down.fa-lg.nav-arw
+            %div{:class => "color-bar #{cat[:label][:color]}"}
+            = render cat[:dropdown_partial].to_s, :items => cat[:items]
+  %div{:id => "AccountPanel", :'data-open' => @account_panel_open.to_s}
+    .inner
+      %i.fa.fa-times-circle.fa-lg.close-btn
+      .notice= flash[:account_notice] if flash[:account_notice]
+      .left-col
+        %h2= t ".accounts.sign_in_header"
+        = form_for(:user_session, 
+          :html => { :id => "LoginForm",
+                     :'data-type' => :json },
+          :url => { :controller => :user_sessions, 
+                    :action => :create },
+          :remote => true) do |f|
+          .field
+            = f.label :user_name, t(".accounts.username_label"), :class => "txt-wht"
+            = f.text_field :user_name
+          .field
+            = f.label :password, t(".accounts.password_label")
+            = f.password_field :password
+          = link_to "forgot password?", forgot_password_path, :class => "forgot-password"
+          .error-msg.txt-wht
+          = f.submit t(".sign_in"), :class => "txt-wht btn-blue"
+      .right-col
+        %h2= t ".accounts.new_account_header"
+        =form_for(@new_user,
+                :html => { :id => "SignupForm",
+                  :'data-type' => :json,
+                  :novalidate => true},
+                :url => { :controller => :users, 
+                          :action => :create },
+                :remote => true) do |f|
+          .field
+            = f.label :email
+            = f.email_field :email, :required => true
+          .field
+            = f.label :user_name, t(".accounts.username_label")
+            = f.text_field :user_name, 
+                :pattern  => User::USER_NAME_PATTERN, 
+                :required => true, 
+                :title    => t_model_error(:user, :user_name, :invalid)
+          .field
+            = f.label :full_name
+            = f.text_field :full_name, :required => true
+          .field
+            = f.label :password
+            = f.password_field :password, 
+                :pattern  => ".{#{User::PASSWORD_MIN_LENGTH},}", 
+                :required => true, 
+                :title    => t_model_error(:user, :password, :too_short,
+                                           :count => User::PASSWORD_MIN_LENGTH)
+          .field
+            = f.label :password_confirmation
+            = f.password_field :password_confirmation, :required => true
+          .error-msg.txt-wht
+          = f.submit t(".accounts.create_new_account"), :class => "txt-wht btn-green"
 
-#MainCol
-  .dyn-blur
-  #WelcomeBox.content-box
-    %h2#WelcomeHdr= t ".welcome_h"
-    %p= t ".welcome_p1_html"
-    %p= t ".welcome_p2"
-  .dyn-blur
-  #FeaturedGalleryOuter.content-box
-    #FeaturedGallery
-      .gallery-item 
-        .topbar How can you use Learning + Education at the Encyclopedia of Life?
-        = image_tag "welcome/classroom.png"
-        .desc 
-          %h3 Red shrimpy thing
-          .body A podcast about a species and learning and stuff
-      .gallery-item 
-        .topbar How can you use Learning + Education at the Encyclopedia of Life?
-        = image_tag "welcome/classroom.png"
-        .desc 
-          %h3 Red shrimpy thing
-          .body A podcast about a species and learning and stuff
+  #MainCol
+    .dyn-blur
+    #WelcomeBox.content-box
+      %h2#WelcomeHdr= t ".welcome_h"
+      %p= t ".welcome_p1_html"
+      %p= t ".welcome_p2"
+    .dyn-blur
+    #FeaturedGalleryOuter.content-box
+      #FeaturedGallery
+        .gallery-item 
+          .topbar How can you use Learning + Education at the Encyclopedia of Life?
+          = image_tag "welcome/classroom.png"
+          .desc 
+            %h3 Red shrimpy thing
+            .body A podcast about a species and learning and stuff
+        .gallery-item 
+          .topbar How can you use Learning + Education at the Encyclopedia of Life?
+          = image_tag "welcome/classroom.png"
+          .desc 
+            %h3 Red shrimpy thing
+            .body A podcast about a species and learning and stuff
 
-.dyn-blur
-#Footer
-  %h2= t ".footer.mcz_credit_header"
-  = image_tag "welcome/mcz_logo.jpg", :id => "MczLogo"
-  .addr_line= t ".footer.l_and_e_at_mcz_html"
-  .addr_line= t ".footer.address_and_contact_html"
+  .dyn-blur
+  #Footer
+    %h2= t ".footer.mcz_credit_header"
+    = image_tag "welcome/mcz_logo.jpg", :id => "MczLogo"
+    .addr_line= t ".footer.l_and_e_at_mcz_html"
+    .addr_line= t ".footer.address_and_contact_html"
 

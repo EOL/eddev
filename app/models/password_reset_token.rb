@@ -18,8 +18,8 @@ class PasswordResetToken < ActiveRecord::Base
       self.create!(:user => user, :token => SecureRandom.base64)
     end
 
-    def find_by_token!(token)
-      reset_token = super(token)
+    def find_valid_by_token(token)
+      reset_token = find_by_token!(token)
       raise ActiveRecord::RecordNotFound if reset_token.expired?
       reset_token
     end

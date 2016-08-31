@@ -1,4 +1,4 @@
-$background-url: url(<%= asset_path "welcome/sample_background.png" %>);
+$background-url: image-url("welcome/sample_background.png");
 $col-width: 890px;
 $topbar-height: 35px;
 $header-height: 150px;

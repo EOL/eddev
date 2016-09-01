@@ -47,6 +47,10 @@ en:
         learning_resources: "Learning Resources"
         featured_collections: "Featured Collections"
         eol_places: "EOL Places"
+        about:
+          eol_is_an_open_science_html: "The Encyclopedia of Life (EOL) is an open science project (<a href='https://en.wikipedia.org/wiki/Open_science'>https://en.wikipedia.org/wiki/Open_science</a>) that pulls together information from over 350 partners (<a href='http://eol.org/info/partners'>http://eol.org/info/partners</a>) about the world’s living nature - or biodiversity - which includes all plants, animals and microorganisms that have scientific names. All of the text, images, videos and data on EOL are free to be reused and repurposed. There are about 2 million known and named organisms in the world. That means there is a lot of information on EOL and it can be hard to make sense of it all."
+          thats_where_l_and_e_comes_in_html: "That's where the <a href='/'>EOL Learning + Education Group (L+E)</a> comes in. Through creative partnerships with educators and institutions that support science literacy, and in collaboration with enthusiasts and amateur naturalists, we develop tools and services to view EOL’s biodiversity information in more manageable ways. For example, <a href='/places'>EOL Places</a> provides a geographic window to explore biodiversity using food webs, observations and games, while <a href='http://education.eol.org/cards/'>EOL Species Cards</a> are printable and easy to use in classroom activities to learn about organisms, their traits, adaptations and where they live."
+          if_you_are_interested_in_collaborating_html: "If you are interested in collaborating or have ideas for how we can improve our programs, please <a href='/contact_us'>contact us</a>."
       accounts: 
         sign_in_header: "SIGN IN"
         new_account_header: "NEW ACCOUNT"

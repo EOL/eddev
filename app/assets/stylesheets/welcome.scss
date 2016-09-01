@@ -170,15 +170,30 @@ a, a:visited, a:hover {
       border-bottom: 1px solid #979797;
       cursor: default;
       display: none;
-      height: 280px;
+      min-height: 280px;
       left: 0;
+      padding-top: 50px;
       position: absolute;
       top: $navbar-height;
       width: 100%;
       z-index: 200;
 
-      p {
-        text-align: center;
+      .about {
+        margin-bottom: 50px;
+        
+        a {
+          text-decoration: underline;
+        }
+
+        p {
+          display: block;
+          font-family: $open-sans;
+          font-size: 18px;
+          line-height: 24px;
+          margin: 0 auto 18px;
+          text-align: left;
+          width: $col-width;
+        }
       }
 
       li {
@@ -187,6 +202,23 @@ a, a:visited, a:hover {
         margin-right: 74px;
         overflow: hidden;
         width: 165px;
+
+        a {
+          display: block;
+          font-family: $hdr-font;
+          font-size: 22px;
+          line-height: 26px;
+          text-decoration: none;
+
+          &:hover {
+            background: transparent;
+            text-decoration: none;
+          }
+
+          &:visited {
+            color: #FFF;
+          }
+        }
       }
 
       li:last-of-type {
@@ -195,28 +227,6 @@ a, a:visited, a:hover {
 
       a, p {
         color: #FFF;
-      }
-
-      p {
-        font-family: $open-sans;
-        font-size: 18px;
-      }
-
-      a {
-        display: block;
-        font-family: $hdr-font;
-        font-size: 22px;
-        line-height: 26px;
-        text-decoration: none;
-
-        &:hover {
-          background: transparent;
-          text-decoration: none;
-        }
-
-        &:visited {
-          color: #FFF;
-        }
       }
 
       img {
@@ -388,7 +398,7 @@ a, a:visited, a:hover {
 .col-container {
   height: 100%;
   margin: 0 auto; 
-  width: 890px;
+  width: $col-width;
 }
 
 #MainCol {

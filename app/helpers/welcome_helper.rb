@@ -1,60 +1,4 @@
 module WelcomeHelper
-  class NavCat
-    attr_accessor :label
-    attr_accessor :items
-    attr_accessor :dropdown_partial
-
-    def initialize(options)
-      self.label = Label.new(options[:label])
-      self.dropdown_partial = options[:dropdown_partial]
-
-      self.items = []
-      options[:items].each do |item|
-        self.items << Item.new(item)
-      end
-    end
-
-
-    class Label
-      attr_accessor :text_key
-      attr_accessor :color
-
-      def initialize(options)
-        self.text_key = options[:text_key]
-        self.color    = options[:color]
-      end
-
-      def text
-        I18n.translate "#{NAV_KEY_PREFIX}.#{text_key}"
-      end
-    end
-
-    class Item
-      attr_accessor :text_key
-      attr_accessor :img_url
-      attr_accessor :target_url
-      
-      def initialize(options)
-        self.text_key   = options[:text_key]
-        #self.img_url    = options[:img_url]
-        self.img_url = "https://placekitten.com/165/165"
-        self.target_url = options[:target_url]
-      end
-
-      def text
-        I18n.translate "#{NAV_KEY_PREFIX}.#{text_key}"
-      end
-    end
-  end
-
-  def login_btn_txt_key
-    if logged_in_user
-      ".sign_out"
-    else
-      ".sign_in"
-    end
-  end
-
   def login_btn_toggle_txt_key
     if logged_in_user
       ".sign_in"
@@ -71,6 +15,14 @@ module WelcomeHelper
     end 
   end
 
+  def login_btn_txt_key
+    if logged_in_user
+      ".sign_out"
+    else
+      ".sign_in"
+    end
+  end
+
   def nav_cats
     NAV_CATS
   end
@@ -79,7 +31,7 @@ module WelcomeHelper
   end
 
   def nav_t(key)
-    I18n.translate("#{NAV_KEY_PREFIX}.#{key}")
+    raw I18n.translate("#{NAV_KEY_PREFIX}.#{key}")
   end
 
   private
@@ -94,7 +46,7 @@ module WelcomeHelper
       :items => [
         {
           :text_key => "memory_game",
-          :target_url => "http://fieldguides.eol.org/memory/"     
+          :target_url => "/memory"     
         },
         {
           :text_key => "coloring_pages",
@@ -163,7 +115,9 @@ module WelcomeHelper
       },
       :dropdown_partial => :about_dropdown,
       :items => [
-        "About eol blah blah blah blah"
+        "about.eol_is_an_open_science_html",
+        "about.thats_where_l_and_e_comes_in_html",
+        "about.if_you_are_interested_in_collaborating_html",
       ]
     }
   ]

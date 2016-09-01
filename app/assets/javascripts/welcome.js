@@ -13,7 +13,7 @@ function userSessionControlInit() {
   }
 
   var signOutFn = function() {
-    window.location = '/logout';
+    window.location = window.app_uri_prefix + '/logout';
   }
 
   if (state === 'signed_in') {
@@ -22,7 +22,7 @@ function userSessionControlInit() {
     // Login AJAX handling
     $loginForm.on('ajax:success', function(e, data, status, xhr) {
       if (data['success']) {
-        window.location = "/"
+        window.location = window.app_uri_prefix + '/'
       } else {
         $('#LoginForm .error-msg').html(data['error_msg']);
       }

@@ -351,15 +351,21 @@ body {
 #MainContent {
   font-family: "Open Sans", sans-serif;
   height: $content-height;  
+  margin: 0 auto;
+  max-width: 1400px;
   min-width: 890px;
-  width: 100%;
+  overflow: hidden;
+  position: relative;
   z-index: 50;
+}
+
+#HeaderBg, .dyn-blur {
+  position: absolute;
 }
 
 #MainContent, #HeaderBg, .dyn-blur { 
   background: $background-url no-repeat center top;
   background-size: 1400px;
-  position: absolute;
   z-index: 99;
 }
 

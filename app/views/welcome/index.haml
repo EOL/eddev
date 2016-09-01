@@ -4,10 +4,11 @@
     #Topbar
       -#%a#EolLink{:href => "www.eol.org"}
       .col-container
-        %div{:id => "SignInBtn", 
-        :class => "txt-wht",
-        :data => { :'toggle-txt' => t(login_btn_toggle_txt_key),
-        :state => login_btn_state}}= t(login_btn_txt_key)
+        -if logged_in_user
+          %div{:id => "SignInBtn", 
+          :class => "txt-wht",
+          :data => { :'toggle-txt' => t(login_btn_toggle_txt_key),
+          :state => login_btn_state}}= t(login_btn_txt_key)
     #Header
       #Logo
         #LogoMain= t ".main_title"

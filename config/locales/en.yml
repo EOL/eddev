@@ -96,6 +96,8 @@ en:
       header: "Change Password"
     reset_password:
       success: "Password successfully changed. You may now sign in below."
+    change_password: 
+      success: "Password successfully changed."
 
   signup_confirmation_mailer:
     confirmation_email:

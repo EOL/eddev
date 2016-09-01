@@ -114,6 +114,13 @@ class User < ActiveRecord::Base
     confirmed_at.present?
   end
 
+  # Hack to allow controllers to add current_password errors, for
+  # example, when requiring the user's current password when changing
+  # it.
+  def current_password
+    nil
+  end
+
   private
   def validate_password?
     force_password_validation || (legacy_password_digest.blank? && !persisted?) || !password.blank?

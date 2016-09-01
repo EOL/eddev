@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   #before_action :set_user, only: [:show, :edit, :update, :destroy]
   #before_filter :ensure_admin
+  before_action :require_user, :only => [:change_password_form, :change_password]
   before_action :set_password_reset_vars, :only => [:reset_password_form, :reset_password]
 
   # GET /users/new
@@ -64,12 +65,30 @@ class UsersController < ApplicationController
     end
   end
 
+  def change_password_form
+  end
+
+  def change_password
+    auth_success = @user.authenticate(params[:user][:current_password])
+    if !auth_success
+      @user.errors.add(:current_password, :invalid, :message => "Current password is invalid")
+    elsif @user.update(change_password_params.merge(:force_password_validation => true))
+      @msg = t(".success")
+    end
+
+    render :change_password_form
+  end
+
   def reset_password_form
   end
 
   def reset_password
+    change_password_shared
+  end
+
+  def reset_password
     if @user.update(change_password_params.merge(:force_password_validation => true))
-      @reset_token.mark_used  
+      @reset_token.mark_used if @reset_token
       flash[:account_notice] = t(".success")
       redirect_to root_path
     else
@@ -80,6 +99,11 @@ class UsersController < ApplicationController
   private
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def require_user
+    @user = logged_in_user
+    raise NotFoundError if @user.nil?
   end
 
   def set_password_reset_vars

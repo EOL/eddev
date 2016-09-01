@@ -22,12 +22,7 @@ function userSessionControlInit() {
     // Login AJAX handling
     $loginForm.on('ajax:success', function(e, data, status, xhr) {
       if (data['success']) {
-        
-        $btn.html(btnToggleTxt);
-        $btn.data('toggle-txt', btnTxt);
-        $btn.off('click');
-        $btn.click(signOutFn);
-        $('#AccountPanel').slideUp();
+        window.location = "/"
       } else {
         $('#LoginForm .error-msg').html(data['error_msg']);
       }
@@ -35,7 +30,6 @@ function userSessionControlInit() {
 
     // Signup form handling
     $signupForm.on('ajax:success', function(e, data, status, xhr) {
-
       $signupForm.find('.error-field').removeClass('error-field');
       $signupForm.find('.field-errors').remove();
       $signupForm.find('.error-msg').html(data['msg']);

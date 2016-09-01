@@ -76,7 +76,6 @@
             = f.password_field :password_confirmation, :required => true
           .error-msg.txt-wht
           = f.submit t(".accounts.create_new_account"), :class => "txt-wht btn-green"
-
   #MainCol
     .dyn-blur
     #WelcomeBox.content-box
@@ -102,7 +101,7 @@
   .dyn-blur
   #Footer
     %h2= t ".footer.mcz_credit_header"
-    = image_tag "welcome/mcz_logo.jpg", :id => "MczLogo"
+    = image_tag "welcome/mcz_logo.png", :id => "MczLogo"
     .addr_line= t ".footer.l_and_e_at_mcz_html"
     .addr_line= t ".footer.address_and_contact_html"
 

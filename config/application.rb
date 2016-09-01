@@ -27,7 +27,7 @@ module Eddev
 
     config.secret_key_base = Figaro.env.secret_key_base
 
-    config.x.app_uri_prefix = Figaro.env.app_uri_prefix ? Figaro.env.app_uri_prefix : ""
+    config.x.app_uri_prefix = Figaro.env.RAILS_RELATIVE_URL_ROOT ? Figaro.RAILS_RELATIVE_URL_ROOT : ""
     config.x.legacy_password_salt = Figaro.env.legacy_password_salt
     
     # mail config

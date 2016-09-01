@@ -14,6 +14,17 @@ body {
   font-family: $open-sans;
 }
 
+a, a:visited, a:hover {
+  background: transparent;
+  text-decoration: none;
+}
+
+#EolLink {
+  display: block;
+  float: left;
+  margin-top: 4px;
+}
+
 .txt-wht {
   color: #FFF;
   font-family: "Open Sans", sans-serif;
@@ -54,10 +65,6 @@ body {
 #Topbar { 
   background-color: rgba(12, 47, 57, .38); 
   height: $topbar-height; 
-}
-
-#EolLink { 
-  background-image: url('http://media.eol.org/assets/v2/logo_index-0c13f339694ad74bdd975a1e0a8a5eff.png');
 }
 
 #Header { 

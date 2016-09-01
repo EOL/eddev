@@ -33,7 +33,7 @@ class UserSessionsController < ApplicationController
 
   def destroy
     log_out
-    redirect_to "/"
+    redirect_to root_url
   end
 
   private

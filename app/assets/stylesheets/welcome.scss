@@ -10,6 +10,14 @@ $hdr-font: "Montserrat", sans-serif;
 $open-sans: "Open Sans", sans-serif;
 $content-height: 1670px;
 
+@mixin bg-layer {
+  z-index: 99;
+}
+
+@mixin content-layer {
+  z-index: 100;
+}
+
 body { 
   font-family: $open-sans;
 }
@@ -19,40 +27,82 @@ a, a:visited, a:hover {
   text-decoration: none;
 }
 
-#EolLink {
-  display: block;
-  float: left;
-  margin-top: 4px;
+/* GENERIC CLASSES */
+
+/* Generic class targeted by JS to dynamically create
+ * a blurred background behind the next element.
+ */
+.dyn-blur {
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  -webkit-filter: blur(10px); 
+  filter: blur(10px); 
 }
 
-.txt-wht {
+.btn-blue {
+  background: #34ABFE;
+}
+
+.btn-green {
+  background: #6BBF26;
+}
+
+.txt-wht, .txt-wht a, .txt-wht a:visited, .txt-wht a:hover, .txt-wht input[type="submit"] {
   color: #FFF;
   font-family: "Open Sans", sans-serif;
   text-shadow: 0 1px 4px #000;
 }
 
-.close-btn {
-  cursor: pointer;
+.col-container {
+  height: 100%;
+  margin: 0 auto; 
+  width: $col-width;
+}
+
+/* MISC GLOBAL RULES */
+#HeaderBg, .dyn-blur {
   position: absolute;
-  right: 0;
-  top: 20px;
+}
+
+#MainContent, #HeaderBg, .dyn-blur { 
+  @include bg-layer;
+  background: $background-url no-repeat center top;
+  background-size: 1400px;
+}
+
+/* HEADER */
+#HeaderGrp {
+  @include content-layer;
+  position: relative;
+}
+
+#HeaderGrp, #HeaderGrp a, #HeaderGrp a:visited, #HeaderGrp a:hover {
+  color: #FFF;
 }
 
 #HeaderBg {
+  @include bg-layer;
+
   bottom: 0px;
   height: $topbar-height + $header-height;
   left: 0px;
   position: absolute;
   right: 0px;
   top: 0px;
-  z-index: 99;
 
   -webkit-filter: blur(8px);
   filter: blur(8px);
 }
 
+#EolLink {
+  display: block;
+  float: left;
+  margin-top: 4px;
+}
+
 #SignInBtn {
-  background: #34ABFE;
   border-radius: 1px;
   cursor: pointer;
   float: right;
@@ -103,6 +153,7 @@ a, a:visited, a:hover {
   text-align: center;
   width: 100%;
 
+  /* Category dropdowns */
   ul {
     font-size: 0; // hack to remove space between inline-block elements
     height: 100%;
@@ -111,6 +162,9 @@ a, a:visited, a:hover {
     overflow: hidden;
     padding: 0;
 
+    /* Hide all color bars on hover (the one that is
+     * actually being hovered is shown using a stronger
+     * rule below) */
     &:hover .color-bar {
       display: none;
     }
@@ -139,6 +193,9 @@ a, a:visited, a:hover {
         }
       }
 
+      /* Show the color bar for the category that
+       * is being hovered (all others are hidden using
+       * a weaker rule above) */
       &:hover .color-bar {
         display: block;
       }
@@ -154,7 +211,6 @@ a, a:visited, a:hover {
       .color-bar.yellow { background: #FF0;    }
       .color-bar.orange { background: #FF6F00; }
       .color-bar.green  { background: #30FF00; }
-
 
       &:hover > .dropdown {
         display: block;
@@ -196,6 +252,7 @@ a, a:visited, a:hover {
         }
       }
 
+      /* Main nav links (picure with text below) */
       li {
         cursor: pointer;
         display: inline-block;
@@ -218,11 +275,7 @@ a, a:visited, a:hover {
       li:last-of-type {
         margin-right: 0;
       }
-
-      a, p {
-        color: #FFF;
-      }
-
+      
       img {
         height: 165px;
         width: 165px;
@@ -232,17 +285,8 @@ a, a:visited, a:hover {
   }
 }
 
-
-
-
-#HeaderGrp {
-  position: relative;
-  z-index: 100;
-
-}
-
+/* LOGIN/REGISTER OVERLAY */
 #AccountPanel {
-
   background: rgba(#092229, .9);
   color: #FFF;
   display:none;
@@ -324,13 +368,6 @@ a, a:visited, a:hover {
     font-size: 18px;
   }
 
-  .btn-blue {
-    background: #34ABFE;
-  }
-
-  .btn-green {
-    background: #6BBF26;
-  }
 
   input[type="submit"] {
     border: none;
@@ -353,6 +390,14 @@ a, a:visited, a:hover {
   }
 }
 
+.close-btn {
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 20px;
+}
+
+/* PAGE BODY */
 #MainContent {
   font-family: "Open Sans", sans-serif;
   height: $content-height;  
@@ -364,31 +409,6 @@ a, a:visited, a:hover {
   z-index: 50;
 }
 
-#HeaderBg, .dyn-blur {
-  position: absolute;
-}
-
-#MainContent, #HeaderBg, .dyn-blur { 
-  background: $background-url no-repeat center top;
-  background-size: 1400px;
-  z-index: 99;
-}
-
-.dyn-blur {
-  top: 0;
-  left: 0;
-  width: 100%;
-
-  -webkit-filter: blur(10px); 
-  filter: blur(10px); 
-}
-
-.col-container {
-  height: 100%;
-  margin: 0 auto; 
-  width: $col-width;
-}
-
 #MainCol {
   height: 800px;
   margin: 72px auto;
@@ -398,9 +418,9 @@ a, a:visited, a:hover {
 }
 
 .content-box {
+  @include content-layer;
   background: radial-gradient(rgba(#FFF, .78), rgba(#FFF, .72));
   position: relative;
-  z-index: 100;
 }
 
 #WelcomeHdr {
@@ -464,6 +484,7 @@ a, a:visited, a:hover {
   }
 }
 
+/* FOOTER */
 #Footer {
   background: rgba(#FFF, 0.4);
   border-top: 1px solid #E4E4E4;

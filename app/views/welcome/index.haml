@@ -6,7 +6,7 @@
         = link_to image_tag("welcome/eol_logo.png"), "//www.eol.org", :id => "EolLink"
         -if logged_in_user
           %div{:id => "SignInBtn", 
-          :class => "txt-wht",
+          :class => "txt-wht btn-blue",
           :data => { :'toggle-txt' => t(login_btn_toggle_txt_key),
           :state => login_btn_state}}= t(login_btn_txt_key)
     #Header
@@ -22,7 +22,7 @@
               %i.fa.fa-caret-down.fa-lg.nav-arw
             %div{:class => "color-bar #{cat[:label][:color]}"}
             = render cat[:dropdown_partial].to_s, :items => cat[:items]
-  %div{:id => "AccountPanel", :'data-open' => @account_panel_open.to_s}
+  %div{:id => "AccountPanel", :class => "txt-wht", :'data-open' => @account_panel_open.to_s}
     .inner
       %i.fa.fa-times-circle.fa-lg.close-btn
       .notice= flash[:account_notice] if flash[:account_notice]
@@ -35,14 +35,14 @@
                     :action => :create },
           :remote => true) do |f|
           .field
-            = f.label :user_name, t(".accounts.username_label"), :class => "txt-wht"
+            = f.label :user_name, t(".accounts.username_label")
             = f.text_field :user_name
           .field
             = f.label :password, t(".accounts.password_label")
             = f.password_field :password
           = link_to "forgot password?", forgot_password_path, :class => "forgot-password"
-          .error-msg.txt-wht
-          = f.submit t(".sign_in"), :class => "txt-wht btn-blue"
+          .error-msg
+          = f.submit t(".sign_in"), :class => "btn-blue"
       .right-col
         %h2= t ".accounts.new_account_header"
         =form_for(@new_user,
@@ -74,8 +74,8 @@
           .field
             = f.label :password_confirmation
             = f.password_field :password_confirmation, :required => true
-          .error-msg.txt-wht
-          = f.submit t(".accounts.create_new_account"), :class => "txt-wht btn-green"
+          .error-msg
+          = f.submit t(".accounts.create_new_account"), :class => "btn-green"
   #MainCol
     .dyn-blur
     #WelcomeBox.content-box

@@ -1,14 +1,15 @@
+$background-width: 1400px;
 $background-url: image-url("welcome/sample_background.png");
 $col-width: 890px;
-$topbar-height: 35px;
+$color-bar-height: 8px;
+$content-height: 1670px;
 $header-height: 150px;
 $logo-padding-top: 40px;
 $link-blue: #126e94;
-$color-bar-height: 8px;
 $navbar-height: 37px;
 $hdr-font: "Montserrat", sans-serif;
 $open-sans: "Open Sans", sans-serif;
-$content-height: 1670px;
+$topbar-height: 35px;
 
 @mixin bg-layer {
   z-index: 99;
@@ -29,18 +30,9 @@ a, a:visited, a:hover {
 
 /* GENERIC CLASSES */
 
-/* Generic class targeted by JS to dynamically create
+/* Targeted by JS to dynamically create
  * a blurred background behind the next element.
  */
-.dyn-blur {
-  top: 0;
-  left: 0;
-  width: 100%;
-
-  -webkit-filter: blur(10px); 
-  filter: blur(10px); 
-}
-
 .btn-blue {
   background: #34ABFE;
 }
@@ -62,59 +54,79 @@ a, a:visited, a:hover {
 }
 
 /* MISC GLOBAL RULES */
-#HeaderBg, .dyn-blur {
-  position: absolute;
-}
-
-#MainContent, #HeaderBg, .dyn-blur { 
+%bg {
   @include bg-layer;
   background: $background-url no-repeat center top;
-  background-size: 1400px;
+  background-size: $background-width;
 }
 
-/* HEADER */
-#HeaderGrp {
+%bg-abs {
+  @extend %bg;
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+.bg {
+  &--main {
+    @extend %bg;
+  }
+
+  &--hdr {
+    @extend %bg-abs;
+    bottom: 0;
+    height: $topbar-height + $header-height;
+    right: 0;
+    
+    -webkit-filter: blur(8px);
+    filter: blur(8px);
+  }
+
+  &--blur {
+    @extend %bg-abs;
+
+    -webkit-filter: blur(10px); 
+    filter: blur(10px); 
+
+    width: 100%;
+  }
+}
+
+.content-grp {
   @include content-layer;
   position: relative;
 }
 
-#HeaderGrp, #HeaderGrp a, #HeaderGrp a:visited, #HeaderGrp a:hover {
-  color: #FFF;
-}
-
-#HeaderBg {
-  @include bg-layer;
-
-  bottom: 0px;
-  height: $topbar-height + $header-height;
-  left: 0px;
-  position: absolute;
-  right: 0px;
-  top: 0px;
-
-  -webkit-filter: blur(8px);
-  filter: blur(8px);
-}
-
-#EolLink {
+/* HEADER */
+.left {
   display: block;
   float: left;
-  margin-top: 4px;
 }
 
-#SignInBtn {
+.right {
+  display: block;
+  float: right;
+}
+
+%btn {
   border-radius: 1px;
   cursor: pointer;
-  float: right;
-  font-size: 13px;
-  line-height: 27px;
-  margin-top: 4px;
-  padding: 0 26px;
 }
 
-#Topbar { 
+.btn {
+  &--small {
+    @extend %btn;
+    font-size: 13px;
+    line-height: 27px;
+    padding: 0 26px;
+  }
+}
+
+.topbar { 
+  $topbar-padding: 4px;
   background-color: rgba(12, 47, 57, .38); 
-  height: $topbar-height; 
+  height: $topbar-height - $topbar-padding; 
+  padding-top: $topbar-padding;
 }
 
 #Header { 
@@ -368,7 +380,6 @@ a, a:visited, a:hover {
     font-size: 18px;
   }
 
-
   input[type="submit"] {
     border: none;
     border-radius: 1px;
@@ -398,12 +409,11 @@ a, a:visited, a:hover {
 }
 
 /* PAGE BODY */
-#MainContent {
-  font-family: "Open Sans", sans-serif;
+.main-content {
   height: $content-height;  
   margin: 0 auto;
-  max-width: 1400px;
-  min-width: 890px;
+  max-width: $background-width;
+  min-width: $col-width;
   overflow: hidden;
   position: relative;
   z-index: 50;

@@ -1,5 +1,5 @@
 $background-width: 1400px;
-$background-url: image-url("welcome/sample_background.png");
+$background-url: image-url('welcome/sample_background.png');
 $col-width: 890px;
 $color-bar-height: 8px;
 $content-height: 1670px;
@@ -7,42 +7,49 @@ $header-height: 150px;
 $logo-padding-top: 40px;
 $link-blue: #126e94;
 $navbar-height: 37px;
-$hdr-font: "Montserrat", sans-serif;
-$open-sans: "Open Sans", sans-serif;
+$hdr-font: 'Montserrat', sans-serif;
+$open-sans: 'Open Sans', sans-serif;
 $topbar-height: 35px;
 
 @mixin bg-layer {
-  z-index: 99;
+  z-index: 1;
 }
 
 @mixin content-layer {
-  z-index: 100;
+  z-index: 2;
 }
 
-body { 
+// RESET RULES
+body, p { 
   font-family: $open-sans;
 }
 
-a, a:visited, a:hover {
+a, 
+a:visited, 
+a:hover {
   background: transparent;
   text-decoration: none;
 }
 
-/* GENERIC CLASSES */
-
-/* Targeted by JS to dynamically create
- * a blurred background behind the next element.
- */
-.btn-blue {
-  background: #34ABFE;
+input[type="submit"] {
+  border: 0;
 }
 
-.btn-green {
-  background: #6BBF26;
+h1, 
+h2, 
+h3 {
+  font-weight: normal;
+  margin: 0;
 }
 
-.txt-wht, .txt-wht a, .txt-wht a:visited, .txt-wht a:hover, .txt-wht input[type="submit"] {
-  color: #FFF;
+// GENERIC CLASSES
+
+.txt-wht, 
+.txt-wht a, 
+.txt-wht a:visited, 
+.txt-wht a:hover, 
+.txt-wht input[type="submit"] {
+  color: #fff;
   font-family: "Open Sans", sans-serif;
   text-shadow: 0 1px 4px #000;
 }
@@ -50,6 +57,7 @@ a, a:visited, a:hover {
 .col-container {
   height: 100%;
   margin: 0 auto; 
+  position: relative;
   width: $col-width;
 }
 
@@ -98,6 +106,10 @@ a, a:visited, a:hover {
 }
 
 /* HEADER */
+.header {
+//  z-index: 2;
+}
+
 .left {
   display: block;
   float: left;
@@ -109,6 +121,7 @@ a, a:visited, a:hover {
 }
 
 %btn {
+  color: #FFF;
   border-radius: 1px;
   cursor: pointer;
 }
@@ -120,6 +133,23 @@ a, a:visited, a:hover {
     line-height: 27px;
     padding: 0 26px;
   }
+
+  &--full {
+    @extend %btn;
+    font-size: 18px;
+    height: 44px;
+    line-height: 44px;
+    padding: 0;
+    width: 100%;
+  }
+}
+
+.blue {
+  background: #34ABFE;
+}
+
+.green {
+  background: #6BBF26;
 }
 
 .topbar { 
@@ -129,34 +159,51 @@ a, a:visited, a:hover {
   padding-top: $topbar-padding;
 }
 
-#Header { 
+.header { 
   background-color: rgba(#5B92A8, .44);
   height: $header-height;
 }
 
-#Logo {
-  height: $header-height - $logo-padding-top; 
-  margin: 0 auto;
+.logo-pad {
   padding-top: $logo-padding-top;
-  position: relative;
-  text-align: center;
-  width: $col-width;
 }
 
-#LogoMain {
-  color: #C0D62F;
+.txt-center {
+  text-align: center;
+}
+
+.logo-main {
   font-family: $hdr-font;
   font-size: 36px;  
   line-height: 31px;
   margin-bottom: 12px; 
+}
+
+.txt-grn {
+  color: #C0D62F;
   text-shadow: 0 2px 4px #000;
 }
 
-#LogoSub {
+.logo-sub {
   font-size: 24px;
 }
 
-#Navbar {
+.ib-list {
+  font-size: 0; // hack to remove space between inline-block elements
+  height: 100%;
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+
+  li {
+    cursor: pointer;
+    display: inline-block;
+    height: 100%;
+  }
+}
+
+.nav-bar {
   background: #002238;
   height: $navbar-height;
   margin: 0;
@@ -164,149 +211,133 @@ a, a:visited, a:hover {
   position: relative;
   text-align: center;
   width: 100%;
+}
 
-  /* Category dropdowns */
-  ul {
-    font-size: 0; // hack to remove space between inline-block elements
-    height: 100%;
-    list-style: none;
-    margin: 0;
-    overflow: hidden;
-    padding: 0;
+/* Category dropdowns */
+.nav-cats {
+  $nav-item-width: $col-width / 4;
 
-    /* Hide all color bars on hover (the one that is
-     * actually being hovered is shown using a stronger
-     * rule below) */
-    &:hover .color-bar {
-      display: none;
+  /* Hide all color bars on hover (the one that is
+   * actually being hovered is shown using a stronger
+   * rule below) */
+  &:hover .color-bar {
+    display: none;
+  }
+
+  .nav-label { 
+    color: #D0D0D0;
+    display: inline-block;
+    font-family: $hdr-font;
+    font-size: 18px;
+    padding-top: 5px;
+    width: $nav-item-width;
+
+    .nav-txt {
+      margin-right: 7px;
     }
 
-    li {
-      $nav-item-width: $col-width / 4;
+    .nav-arw {
+      position: absolute;
+      top: 4px;
+    }
+  }
+
+  .nav-cat {
+    /* Show the color bar for the category that
+     * is being hovered (all others are hidden using
+     * a weaker rule above) */
+    &:hover .color-bar {
+      display: block;
+    }
+
+    .color-bar {
+      bottom: 0;
+      height: $color-bar-height;
+      position: absolute;
+      width: $nav-item-width;
+    }
+
+    .color-bar.red    { background: #FF1433; }
+    .color-bar.yellow { background: #FF0;    }
+    .color-bar.orange { background: #FF6F00; }
+    .color-bar.green  { background: #30FF00; }
+
+    &:hover > .dropdown {
+      display: block;
+    }
+  }
+
+  .nav-links {
+    padding-top: 50px;
+  }
+
+  .dropdown {
+    background: rgba(#092229, .9);
+    border-bottom: 1px solid #979797;
+    cursor: default;
+    display: none;
+    min-height: 280px;
+    left: 0;
+    padding-top: 50px;
+    position: absolute;
+    top: $navbar-height;
+    width: 100%;
+
+    /* Main nav links (picure with text below) */
+    .nav-link {
       cursor: pointer;
       display: inline-block;
-      height: 100%;
+      margin-right: 74px;
+      overflow: hidden;
+      width: 165px;
 
-      .nav-txt { 
-        color: #D0D0D0;
-        display: inline-block;
+      a {
+        display: block;
         font-family: $hdr-font;
-        font-size: 18px;
-        padding-top: 5px;
-        width: $nav-item-width;
-
-        .nav-txt-inner {
-          margin-right: 7px;
-        }
-
-        .nav-arw {
-          position: absolute;
-          top: 4px;
-        }
+        font-size: 22px;
+        line-height: 26px;
       }
 
-      /* Show the color bar for the category that
-       * is being hovered (all others are hidden using
-       * a weaker rule above) */
-      &:hover .color-bar {
-        display: block;
-      }
-
-      .color-bar {
-        bottom: 0;
-        height: $color-bar-height;
-        position: absolute;
-        width: $nav-item-width;
-      }
-
-      .color-bar.red    { background: #FF1433; }
-      .color-bar.yellow { background: #FF0;    }
-      .color-bar.orange { background: #FF6F00; }
-      .color-bar.green  { background: #30FF00; }
-
-      &:hover > .dropdown {
-        display: block;
-      }
-    }
-
-    .nav-links {
-      padding-top: 50px;
-    }
-
-    .dropdown {
-      background: rgba(#092229, .9);
-      border-bottom: 1px solid #979797;
-      cursor: default;
-      display: none;
-      min-height: 280px;
-      left: 0;
-      padding-top: 50px;
-      position: absolute;
-      top: $navbar-height;
-      width: 100%;
-      z-index: 200;
-
-      .about {
-        margin-bottom: 50px;
-        
-        a {
-          text-decoration: underline;
-        }
-
-        p {
-          display: block;
-          font-family: $open-sans;
-          font-size: 18px;
-          line-height: 24px;
-          margin: 0 auto 18px;
-          text-align: left;
-          width: $col-width;
-        }
-      }
-
-      /* Main nav links (picure with text below) */
-      li {
-        cursor: pointer;
-        display: inline-block;
-        margin-right: 74px;
-        overflow: hidden;
-        width: 165px;
-
-        a {
-          display: block;
-          font-family: $hdr-font;
-          font-size: 22px;
-          line-height: 26px;
-
-          &:visited {
-            color: #FFF;
-          }
-        }
-      }
-
-      li:last-of-type {
-        margin-right: 0;
-      }
-      
       img {
         height: 165px;
         width: 165px;
         margin-bottom: 10px;
       }
     }
+
+    .nav-link:last-of-type {
+      margin-right: 0;
+    }
+  }
+
+  .about {
+    margin-bottom: 50px;
+    
+    a {
+      text-decoration: underline;
+    }
+
+    p {
+      display: block;
+      font-size: 18px;
+      line-height: 24px;
+      margin: 0 auto 18px;
+      text-align: left;
+      width: $col-width;
+    }
   }
 }
 
 /* LOGIN/REGISTER OVERLAY */
-#AccountPanel {
+.account-panel {
   background: rgba(#092229, .9);
-  color: #FFF;
+  color: #fff;
   display:none;
   height: $content-height;
   position: absolute;
   top: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 100;
 
   .forgot-password {
     display: block;
@@ -328,20 +359,24 @@ a, a:visited, a:hover {
     width: $col-width;
   }
 
-  .left-col, .right-col {
+  .col {
     width: 323px; 
   }
 
-  .left-col {
-    float: left;
-  }
-
-  .right-col {
-    float: right;
-  }
-
   .field {
+    $input-width: 323px;
     margin: 0;
+
+    input {
+      $border-width: 2px;
+      $side-padding: 8px;
+      border-width: $border-width;
+      font-size: 18px;
+      height: 42px;
+      line-height: 42px;
+      padding: 0 $side-padding;
+      width: $input-width - $side-padding * 2 - $border-width * 2;
+    }
   }
 
   .error-msg {
@@ -364,9 +399,10 @@ a, a:visited, a:hover {
     }
   }
 
-  h2 {
+  .hdr {
     font-family: $hdr-font;
     font-size: 27px;
+    margin-bottom: 40px;
   }
 
   label {
@@ -374,31 +410,8 @@ a, a:visited, a:hover {
     line-height: 37px;
   }
 
-  $input-width: 323px;
 
-  input {
-    font-size: 18px;
-  }
 
-  input[type="submit"] {
-    border: none;
-    border-radius: 1px;
-    cursor: pointer;
-    height: 44px;
-    line-height: 44px;
-    padding: 0;
-    width: $input-width;
-  }
-
-  input[type="text"], input[type="password"], input[type="email"] {
-    $border-width: 2px;
-    $side-padding: 8px;
-    border-width: $border-width;
-    height: 42px;
-    line-height: 42px;
-    padding: 0 $side-padding;
-    width: $input-width - $side-padding * 2 - $border-width * 2;
-  }
 }
 
 .close-btn {
@@ -416,14 +429,10 @@ a, a:visited, a:hover {
   min-width: $col-width;
   overflow: hidden;
   position: relative;
-  z-index: 50;
 }
 
-#MainCol {
-  height: 800px;
-  margin: 72px auto;
-  position: relative;
-  width: $col-width;  
+.main-col {
+  padding-top: 72px;
   z-index: 1;
 }
 
@@ -433,21 +442,18 @@ a, a:visited, a:hover {
   position: relative;
 }
 
-#WelcomeHdr {
+.welcome-hdr {
   color: #0982A5;
   font-family: $hdr-font;
   font-size: 24px;
-  font-weight: normal;
-  margin: 0;
 }
 
-#WelcomeBox {
+.welcome-box {
   margin-bottom: 72px;
   padding: 31px 72px;
   text-align: center;
 
   p {
-    font-family: "Open Sans", sans-serif;
     font-size: 20px;
     line-height: 27px;
     margin: 22px 0 0 0;
@@ -459,7 +465,7 @@ a, a:visited, a:hover {
   }
 }
  
-#FeaturedGallery {
+.featured-gallery {
   $hdr-font-size: 18px;
 
   h3 {
@@ -469,7 +475,7 @@ a, a:visited, a:hover {
 
   .gallery-item {
     .topbar {
-      font-family: "Montserrat", sans-serif;
+      font-family: $hdr-font;
       font-size: $hdr-font-size;
       line-height: 34px;
       padding-left: 35px;
@@ -495,7 +501,8 @@ a, a:visited, a:hover {
 }
 
 /* FOOTER */
-#Footer {
+.footer {
+  @include content-layer;
   background: rgba(#FFF, 0.4);
   border-top: 1px solid #E4E4E4;
   bottom: 0;
@@ -506,7 +513,6 @@ a, a:visited, a:hover {
   position: absolute;
   text-align: center;
   width: 100%;
-  z-index: 101;
 
   h2 {
     font-size: 13px;
@@ -518,7 +524,6 @@ a, a:visited, a:hover {
   }
 }
 
-#MczLogo {
-  margin-bottom: 10px;
-  margin-top: 4px;
+.mcz-logo {
+  margin: 8px 0;
 }

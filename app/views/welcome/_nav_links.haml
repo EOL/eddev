@@ -1,5 +1,5 @@
-%ul.dropdown.nav-links
+%ul.dropdown.nav-links.ib-list
   - items.each do |item|
-    %li
+    %li.nav-link
       = link_to image_tag("https://placekitten.com/165/165"), item[:target_url], :target => "_blank"
       = link_to nav_t(item[:text_key]), item[:target_url], :target => "_blank"

@@ -1,0 +1,133 @@
+app/assets/stylesheets/welcome.scss:34 [W] QualifyingElement: Avoid qualifying attribute selectors with an element.
+app/assets/stylesheets/welcome.scss:47 [W] QualifyingElement: Avoid qualifying attribute selectors with an element.
+app/assets/stylesheets/welcome.scss:52 [W] ColorVariable: Color literals like `#fff` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:54 [W] ColorVariable: Color literals like `#000` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:64 [W] Comment: Use `//` comments everywhere
+app/assets/stylesheets/welcome.scss:86 [W] PropertySortOrder: Properties should be ordered bottom, -webkit-filter, filter, height, right
+app/assets/stylesheets/welcome.scss:89 [W] VendorPrefix: Avoid vendor prefixes.
+app/assets/stylesheets/welcome.scss:96 [W] VendorPrefix: Avoid vendor prefixes.
+app/assets/stylesheets/welcome.scss:108 [W] Comment: Use `//` comments everywhere
+app/assets/stylesheets/welcome.scss:120 [W] PropertySortOrder: Properties should be ordered border-radius, color, cursor
+app/assets/stylesheets/welcome.scss:120 [W] HexNotation: Color `#FFF` should be written as `#fff`
+app/assets/stylesheets/welcome.scss:120 [W] ColorVariable: Color literals like `#FFF` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:143 [W] HexNotation: Color `#34ABFE` should be written as `#34abfe`
+app/assets/stylesheets/welcome.scss:143 [W] ColorVariable: Color literals like `#34ABFE` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:147 [W] ColorVariable: Color literals like `#6BBF26` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:147 [W] HexNotation: Color `#6BBF26` should be written as `#6bbf26`
+app/assets/stylesheets/welcome.scss:158 [W] HexNotation: Color `#5B92A8` should be written as `#5b92a8`
+app/assets/stylesheets/welcome.scss:178 [W] ColorVariable: Color literals like `#C0D62F` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:178 [W] HexNotation: Color `#C0D62F` should be written as `#c0d62f`
+app/assets/stylesheets/welcome.scss:179 [W] ColorVariable: Color literals like `#000` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:186 [W] SelectorFormat: Selector `Navbar` should be written in lowercase with hyphens
+app/assets/stylesheets/welcome.scss:186 [W] IdSelector: Avoid using id selectors
+app/assets/stylesheets/welcome.scss:187 [W] ColorVariable: Color literals like `#002238` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:195 [W] Comment: Use `//` comments everywhere
+app/assets/stylesheets/welcome.scss:204 [W] Comment: Use `//` comments everywhere
+app/assets/stylesheets/welcome.scss:217 [W] SelectorDepth: Selector should have depth of applicability no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:217 [W] NestingDepth: Nesting should be no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:218 [W] HexNotation: Color `#D0D0D0` should be written as `#d0d0d0`
+app/assets/stylesheets/welcome.scss:218 [W] ColorVariable: Color literals like `#D0D0D0` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:225 [W] SelectorDepth: Selector should have depth of applicability no greater than 3, but was 5
+app/assets/stylesheets/welcome.scss:229 [W] SelectorDepth: Selector should have depth of applicability no greater than 3, but was 5
+app/assets/stylesheets/welcome.scss:235 [W] Comment: Use `//` comments everywhere
+app/assets/stylesheets/welcome.scss:238 [W] SelectorDepth: Selector should have depth of applicability no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:238 [W] NestingDepth: Nesting should be no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:242 [W] SelectorDepth: Selector should have depth of applicability no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:242 [W] NestingDepth: Nesting should be no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:249 [W] SelectorDepth: Selector should have depth of applicability no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:249 [W] SpaceBeforeBrace: Opening curly brace `{` should be preceded by one space
+app/assets/stylesheets/welcome.scss:249 [W] MergeableSelector: Merge rule `.color-bar.red` with rule on line 242
+app/assets/stylesheets/welcome.scss:249 [W] NestingDepth: Nesting should be no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:249 [W] ColorVariable: Color literals like `#FF1433` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:249 [W] HexNotation: Color `#FF1433` should be written as `#ff1433`
+app/assets/stylesheets/welcome.scss:250 [W] MergeableSelector: Merge rule `.color-bar.yellow` with rule on line 242
+app/assets/stylesheets/welcome.scss:250 [W] SelectorDepth: Selector should have depth of applicability no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:250 [W] NestingDepth: Nesting should be no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:250 [W] ColorVariable: Color literals like `#FF0` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:250 [W] HexNotation: Color `#FF0` should be written as `#ff0`
+app/assets/stylesheets/welcome.scss:251 [W] SelectorDepth: Selector should have depth of applicability no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:251 [W] MergeableSelector: Merge rule `.color-bar.orange` with rule on line 242
+app/assets/stylesheets/welcome.scss:251 [W] NestingDepth: Nesting should be no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:251 [W] HexNotation: Color `#FF6F00` should be written as `#ff6f00`
+app/assets/stylesheets/welcome.scss:251 [W] ColorVariable: Color literals like `#FF6F00` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:252 [W] SelectorDepth: Selector should have depth of applicability no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:252 [W] MergeableSelector: Merge rule `.color-bar.green` with rule on line 242
+app/assets/stylesheets/welcome.scss:252 [W] SpaceBeforeBrace: Opening curly brace `{` should be preceded by one space
+app/assets/stylesheets/welcome.scss:252 [W] NestingDepth: Nesting should be no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:252 [W] HexNotation: Color `#30FF00` should be written as `#30ff00`
+app/assets/stylesheets/welcome.scss:252 [W] ColorVariable: Color literals like `#30FF00` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:254 [W] SelectorDepth: Selector should have depth of applicability no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:254 [W] NestingDepth: Nesting should be no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:265 [W] ColorVariable: Color literals like `#979797` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:268 [W] PropertySortOrder: Properties should be ordered background, border-bottom, cursor, display, left, min-height, padding-top, position, top, width, z-index
+app/assets/stylesheets/welcome.scss:276 [W] SelectorDepth: Selector should have depth of applicability no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:276 [W] NestingDepth: Nesting should be no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:279 [W] SelectorDepth: Selector should have depth of applicability no greater than 3, but was 5
+app/assets/stylesheets/welcome.scss:283 [W] SelectorDepth: Selector should have depth of applicability no greater than 3, but was 5
+app/assets/stylesheets/welcome.scss:294 [W] Comment: Use `//` comments everywhere
+app/assets/stylesheets/welcome.scss:295 [W] SelectorDepth: Selector should have depth of applicability no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:295 [W] NestingDepth: Nesting should be no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:302 [W] SelectorDepth: Selector should have depth of applicability no greater than 3, but was 5
+app/assets/stylesheets/welcome.scss:308 [W] SelectorDepth: Selector should have depth of applicability no greater than 3, but was 5
+app/assets/stylesheets/welcome.scss:309 [W] HexNotation: Color `#FFF` should be written as `#fff`
+app/assets/stylesheets/welcome.scss:309 [W] ColorVariable: Color literals like `#FFF` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:314 [W] SelectorDepth: Selector should have depth of applicability no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:314 [W] NestingDepth: Nesting should be no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:318 [W] SelectorDepth: Selector should have depth of applicability no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:318 [W] NestingDepth: Nesting should be no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:320 [W] PropertySortOrder: Properties should be ordered height, margin-bottom, width
+app/assets/stylesheets/welcome.scss:327 [W] Comment: Use `//` comments everywhere
+app/assets/stylesheets/welcome.scss:328 [W] SelectorFormat: Selector `AccountPanel` should be written in lowercase with hyphens
+app/assets/stylesheets/welcome.scss:328 [W] IdSelector: Avoid using id selectors
+app/assets/stylesheets/welcome.scss:330 [W] HexNotation: Color `#FFF` should be written as `#fff`
+app/assets/stylesheets/welcome.scss:330 [W] ColorVariable: Color literals like `#FFF` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:331 [W] SpaceAfterPropertyColon: Colon after property should be followed by one space
+app/assets/stylesheets/welcome.scss:358 [W] SingleLinePerSelector: Each selector in a comma sequence should be on its own line
+app/assets/stylesheets/welcome.scss:383 [W] HexNotation: Color `#F00` should be written as `#f00`
+app/assets/stylesheets/welcome.scss:383 [W] ColorVariable: Color literals like `#F00` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:389 [W] Shorthand: Shorthand form for property `margin` should be written more concisely as `0 0 10px` instead of `0 0 10px 0`
+app/assets/stylesheets/welcome.scss:411 [W] QualifyingElement: Avoid qualifying attribute selectors with an element.
+app/assets/stylesheets/welcome.scss:411 [W] QualifyingElement: Avoid qualifying attribute selectors with an element.
+app/assets/stylesheets/welcome.scss:411 [W] QualifyingElement: Avoid qualifying attribute selectors with an element.
+app/assets/stylesheets/welcome.scss:411 [W] SingleLinePerSelector: Each selector in a comma sequence should be on its own line
+app/assets/stylesheets/welcome.scss:412 [W] SingleLinePerSelector: Each selector in a comma sequence should be on its own line
+app/assets/stylesheets/welcome.scss:429 [W] Comment: Use `//` comments everywhere
+app/assets/stylesheets/welcome.scss:440 [W] SelectorFormat: Selector `MainCol` should be written in lowercase with hyphens
+app/assets/stylesheets/welcome.scss:440 [W] IdSelector: Avoid using id selectors
+app/assets/stylesheets/welcome.scss:450 [W] HexNotation: Color `#FFF` should be written as `#fff`
+app/assets/stylesheets/welcome.scss:450 [W] HexNotation: Color `#FFF` should be written as `#fff`
+app/assets/stylesheets/welcome.scss:454 [W] IdSelector: Avoid using id selectors
+app/assets/stylesheets/welcome.scss:454 [W] SelectorFormat: Selector `WelcomeHdr` should be written in lowercase with hyphens
+app/assets/stylesheets/welcome.scss:455 [W] ColorVariable: Color literals like `#0982A5` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:455 [W] HexNotation: Color `#0982A5` should be written as `#0982a5`
+app/assets/stylesheets/welcome.scss:462 [W] IdSelector: Avoid using id selectors
+app/assets/stylesheets/welcome.scss:462 [W] SelectorFormat: Selector `WelcomeBox` should be written in lowercase with hyphens
+app/assets/stylesheets/welcome.scss:471 [W] Shorthand: Shorthand form for property `margin` should be written more concisely as `22px 0 0` instead of `22px 0 0 0`
+app/assets/stylesheets/welcome.scss:480 [W] IdSelector: Avoid using id selectors
+app/assets/stylesheets/welcome.scss:480 [W] SelectorFormat: Selector `FeaturedGallery` should be written in lowercase with hyphens
+app/assets/stylesheets/welcome.scss:497 [W] Shorthand: Shorthand form for property `padding` should be written more concisely as `25px 25px 60px` instead of `25px 25px 60px 25px`
+app/assets/stylesheets/welcome.scss:504 [W] SelectorDepth: Selector should have depth of applicability no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:508 [W] QualifyingElement: Avoid qualifying class selectors with an element.
+app/assets/stylesheets/welcome.scss:508 [W] SelectorDepth: Selector should have depth of applicability no greater than 3, but was 4
+app/assets/stylesheets/welcome.scss:509 [W] HexNotation: Color `#C0D62F` should be written as `#c0d62f`
+app/assets/stylesheets/welcome.scss:509 [W] ColorVariable: Color literals like `#C0D62F` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:510 [W] HexNotation: Color `#64920A` should be written as `#64920a`
+app/assets/stylesheets/welcome.scss:510 [W] HexNotation: Color `#64920A` should be written as `#64920a`
+app/assets/stylesheets/welcome.scss:510 [W] HexNotation: Color `#64920A` should be written as `#64920a`
+app/assets/stylesheets/welcome.scss:510 [W] HexNotation: Color `#64920A` should be written as `#64920a`
+app/assets/stylesheets/welcome.scss:510 [W] ColorVariable: Color literals like `#64920A` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:515 [W] Comment: Use `//` comments everywhere
+app/assets/stylesheets/welcome.scss:516 [W] SelectorFormat: Selector `Footer` should be written in lowercase with hyphens
+app/assets/stylesheets/welcome.scss:516 [W] IdSelector: Avoid using id selectors
+app/assets/stylesheets/welcome.scss:517 [W] HexNotation: Color `#FFF` should be written as `#fff`
+app/assets/stylesheets/welcome.scss:517 [W] LeadingZero: `0.4` should be written without a leading zero as `.4`
+app/assets/stylesheets/welcome.scss:518 [W] HexNotation: Color `#E4E4E4` should be written as `#e4e4e4`
+app/assets/stylesheets/welcome.scss:518 [W] ColorVariable: Color literals like `#E4E4E4` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:520 [W] ColorVariable: Color literals like `#555555` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:520 [W] HexLength: Color `#555555` should be written as `#555`
+app/assets/stylesheets/welcome.scss:534 [W] SingleLinePerSelector: Each selector in a comma sequence should be on its own line
+app/assets/stylesheets/welcome.scss:535 [W] SingleLinePerSelector: Each selector in a comma sequence should be on its own line
+app/assets/stylesheets/welcome.scss:535 [W] HexNotation: Color `#636A9F` should be written as `#636a9f`
+app/assets/stylesheets/welcome.scss:535 [W] ColorVariable: Color literals like `#636A9F` should only be used in variable declarations; they should be referred to via variable everywhere else.
+app/assets/stylesheets/welcome.scss:539 [W] SelectorFormat: Selector `MczLogo` should be written in lowercase with hyphens
+app/assets/stylesheets/welcome.scss:539 [W] IdSelector: Avoid using id selectors

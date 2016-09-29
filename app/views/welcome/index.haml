@@ -1,106 +1,64 @@
-.main-content.bg--main
-  .bg--hdr
-  .content-grp.txt-wht.hdr-grp
-    .topbar
-      .col-container
-        = link_to image_tag("welcome/eol_logo.png"), "//www.eol.org", :class => "left"
-        -#if logged_in_user
-        %div{:class => "txt-wht blue btn--small right",
-        :data => { :'toggle-txt' => t(login_btn_toggle_txt_key),
-        :state => login_btn_state}}= t(login_btn_txt_key)
-    .header
-      .logo-pad.col-container.txt-center
-        %h1.logo-main.txt-grn= t ".main_title"
-        %h2.logo-sub.txt-wht= t ".sub_title"
-    %nav.nav-bar
-      %ul.nav-cats.ib-list
-        - nav_cats.each do |cat|
-          %li.nav-cat
-            %div.nav-label
-              %span.nav-txt= nav_t cat[:label][:text_key]
-              %i.fa.fa-caret-down.fa-lg.nav-arw
-            %div{:class => "color-bar #{cat[:label][:color]}"}
-            = render cat[:dropdown_partial].to_s, :items => cat[:items]
-  %div{:id => "AccountPanel", :class => "account-panel txt-wht", :'data-open' => @account_panel_open.to_s}
-    .inner
-      %i.fa.fa-times-circle.fa-lg.close-btn
-      .notice= flash[:account_notice] if flash[:account_notice]
-      .col.left
-        %h3.hdr= t ".accounts.sign_in_header"
-        = form_for(:user_session, 
-          :html => { :id => "LoginForm",
-                     :'data-type' => :json },
-          :url => { :controller => :user_sessions, 
-                    :action => :create },
-          :remote => true) do |f|
-          .field
-            = f.label :user_name, t(".accounts.username_label")
-            = f.text_field :user_name
-          .field
-            = f.label :password, t(".accounts.password_label")
-            = f.password_field :password
-          = link_to "forgot password?", forgot_password_path, :class => "forgot-password"
-          .error-msg
-          = f.submit t(".sign_in"), :class => "btn--full blue"
-      .col.right
-        %h3.hdr= t ".accounts.new_account_header"
-        =form_for(@new_user,
-                :html => { :id => "SignupForm",
-                  :'data-type' => :json,
-                  :novalidate => true},
-                :url => { :controller => :users, 
-                          :action => :create },
-                :remote => true) do |f|
-          .field
-            = f.label :email
-            = f.email_field :email, :required => true
-          .field
-            = f.label :user_name, t(".accounts.username_label")
-            = f.text_field :user_name, 
-                :pattern  => User::USER_NAME_PATTERN, 
-                :required => true, 
-                :title    => t_model_error(:user, :user_name, :invalid)
-          .field
-            = f.label :full_name
-            = f.text_field :full_name, :required => true
-          .field
-            = f.label :password
-            = f.password_field :password, 
-                :pattern  => ".{#{User::PASSWORD_MIN_LENGTH},}", 
-                :required => true, 
-                :title    => t_model_error(:user, :password, :too_short,
-                                           :count => User::PASSWORD_MIN_LENGTH)
-          .field
-            = f.label :password_confirmation
-            = f.password_field :password_confirmation, :required => true
-          .error-msg
-          = f.submit t(".accounts.create_new_account"), :class => "btn--full green"
-  .col-container.main-col
-    .dyn-blur.bg--blur
-    .welcome-box.content-box
-      %h3.welcome-hdr= t ".welcome_h"
-      %p= t ".welcome_p1_html"
-      %p= t ".welcome_p2"
-    .dyn-blur.bg--blur
-    #FeaturedGalleryOuter.content-box
-      #FeaturedGallery.featured-gallery
-        .gallery-item 
-          .topbar How can you use Learning + Education at the Encyclopedia of Life?
-          = image_tag "welcome/classroom.png"
-          .desc 
-            %h3 Red shrimpy thing
-            .body A podcast about a species and learning and stuff
-        .gallery-item 
-          .topbar How can you use Learning + Education at the Encyclopedia of Life?
-          = image_tag "welcome/classroom.png"
-          .desc 
-            %h3 Red shrimpy thing
-            .body A podcast about a species and learning and stuff
+#Page
+  #Topbar.topbar
+    .topbar-inner
+      %a#EolNav.eol-nav.nav-link
+        =image_tag "welcome/eol_logo.png", :class => "eol-logo"
+      %h1#Title.title 
+        Learning 
+        %span.title-plus + 
+        Education
+      #About.about.nav-link ABOUT US
+  #Slideshow.slideshow
+    %img{:src => "https://placekitten.com/1441/426", :class => "slideshow-img"}
+  .main-col
+    .welcome-box
+      %h2.welcome-hdr Welcome to Learning + Education at the Encyclopedia of Life
+      %p.welcome-p The Encyclopedia of Life Learning + Education group (EOL L+E) is part of the larger EOL collaborative with a mission to make information about all life on Earth - microorganisms, plants and animals - freely available to anyone with access to the internet. EOL L+E works with educators, citizen scientists and partners to put this biodiversity information into context.
+      %p.welcome-p Our website is in transition. At the moment, several of our resources are found on EOL or partner websites. Thank you for your patience and we look forward to hearing from you if you have questions or feedback.
+    .section-head 
+      %h2.section-title EOL Learning + Education Resources
+      %p.section-intro EOL L+E tools and resources are found on this website and EOL. We're working ot make the connection between the sites more seamless. At the moment, here is what you can find on this website.
+    %ul.nav-items
+      %li.double-width.nav-item>
+        %img.image{:src => "https://placekitten.com/782/386"}
+        .bar EOL Places
+      %li.single-width.nav-item.last>
+        %img.image{:src =>"https://placekitten.com/385/386"}
+        .bar Memory Game
+    .section-head
+      %h2.section-title EOL.org Resources
+      %p.section-intro EOL has been the main website for the organization since we launched in 2008 so that's why we have so many of our resources over there. Stay tuned for some changes.
+    %ul.nav-items
+      %li.single-width.nav-item>
+        %img.image{:src =>"https://placekitten.com/385/386"}
+        .bar Biodiversity Articles
+      %li.single-width.nav-item>
+        %img.image{:src =>"https://placekitten.com/385/386"}
+        .bar Podcasts
+      %li.single-width.nav-item.last>
+        %img.image{:src =>"https://placekitten.com/385/386"}
+        .bar Species Cards
+      %li.double-width.nav-item>
+        %img.image{:src => "https://placekitten.com/782/386"}
+        .bar Google Earth Tours
+      %li.single-width.nav-item.last>
+        %img.image{:src =>"https://placekitten.com/385/386"}
+        .bar Lesson Plans
+      %li.single-width.nav-item>
+        %img.image{:src =>"https://placekitten.com/385/386"}
+        .bar Featured Collections
 
-  .dyn-blur.bg--blur
-  .footer
-    %h2= t ".footer.mcz_credit_header"
-    = image_tag "welcome/mcz_logo.png", :class => "mcz-logo"
-    .addr_line= t ".footer.l_and_e_at_mcz_html"
-    .addr_line= t ".footer.address_and_contact_html"
-
+      %li.double-width.nav-item.last>
+        %img.image{:src => "https://placekitten.com/782/386"}
+        .bar High Resolution Images on EOL
+    .section-head
+      %h2.section-title EOL Partner Resources
+      %p.section-intro EOL and EOL L+E work closely with many open science and open education partners to extend the possibilities for learning about biodiversity. Here are two that we find enormously useful and enjoyable.
+     
+    %ul.nav-items
+      %li.double-width.nav-item>
+        %img.image{:src => "https://placekitten.com/782/386"}
+        .bar iNaturalist Observation Platform
+      %li.single-width.nav-item.last>
+        %img.image{:src =>"https://placekitten.com/385/386"}
+        .bar BHL Coloring Books

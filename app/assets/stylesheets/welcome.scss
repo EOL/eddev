@@ -155,6 +155,10 @@ body, p {
   position: relative;
   width: 100%;
 
+  a, a:visited {
+    text-decoration: none;
+  }
+
   .image {
     max-width: 100%;
     vertical-align: bottom;

@@ -20,36 +20,38 @@
       %p.section-intro EOL L+E tools and resources are found on this website and EOL. We're working ot make the connection between the sites more seamless. At the moment, here is what you can find on this website.
     %ul.nav-items
       %li.double-width.nav-item>
-        %img.image{:src => "https://placekitten.com/782/386"}
-        .bar EOL Places
+        %a{ :href => "/ecosystems" }
+          =nav_image "eol_places"
+          .bar EOL Places
       %li.single-width.nav-item.last>
-        %img.image{:src =>"https://placekitten.com/385/386"}
-        .bar Memory Game
+        %a{ :href => "/memory" }
+          =nav_image "memory_game"
+          .bar Memory Game
     .section-head
       %h2.section-title EOL.org Resources
       %p.section-intro EOL has been the main website for the organization since we launched in 2008 so that's why we have so many of our resources over there. Stay tuned for some changes.
     %ul.nav-items
       %li.single-width.nav-item>
-        %img.image{:src =>"https://placekitten.com/385/386"}
+        =nav_image "biodiversity_articles"
         .bar Biodiversity Articles
       %li.single-width.nav-item>
-        %img.image{:src =>"https://placekitten.com/385/386"}
+        =nav_image "podcasts"
         .bar Podcasts
       %li.single-width.nav-item.last>
-        %img.image{:src =>"https://placekitten.com/385/386"}
+        =nav_image "species_cards"
         .bar Species Cards
       %li.double-width.nav-item>
-        %img.image{:src => "https://placekitten.com/782/386"}
+        =nav_image "google_tours"
         .bar Google Earth Tours
       %li.single-width.nav-item.last>
-        %img.image{:src =>"https://placekitten.com/385/386"}
+        =nav_image "lesson_plans"
         .bar Lesson Plans
       %li.single-width.nav-item>
-        %img.image{:src =>"https://placekitten.com/385/386"}
+        =nav_image "collections"
         .bar Featured Collections
 
       %li.double-width.nav-item.last>
-        %img.image{:src => "https://placekitten.com/782/386"}
+        =nav_image "hi_res_images"
         .bar High Resolution Images on EOL
     .section-head
       %h2.section-title EOL Partner Resources
@@ -57,8 +59,8 @@
      
     %ul.nav-items
       %li.double-width.nav-item>
-        %img.image{:src => "https://placekitten.com/782/386"}
+        =nav_image "inaturalist"
         .bar iNaturalist Observation Platform
       %li.single-width.nav-item.last>
-        %img.image{:src =>"https://placekitten.com/385/386"}
+        =nav_image "bhl_coloring"
         .bar BHL Coloring Books

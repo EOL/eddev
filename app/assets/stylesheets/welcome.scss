@@ -189,15 +189,19 @@ body, p {
     width: 32.654792%; // 385 / 1179
 
     .bar {
-      padding-left: 15.584415584%;
+      padding-left: 15.584415584%; // 60 / 385
       width: 84.415584416%;
     }
 
     .bar.two-line {
-      height: auto;
-      line-height: 1.14em; // 22.8px at max width
-      padding-top: 3.818181818%; // ((75 - (22.8 * 2)) / 2) / 385
-      padding-bottom: 3.818181818%; // ((75 - (22.8 * 2)) / 2) / 385
+      height: 2.5em; // 50 / 20
+      line-height: 1.25em; // 25 / 20
+      
+      // height of bars doesn't scale fluidly, so use em,
+      // not %
+      // ((75 - 50) / 2) / 20;
+      padding-top: 0.625em; 
+      padding-bottom: 0.625em; // ((75 - (22.8 * 2)) / 2) / 385
     }
   }
 

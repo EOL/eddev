@@ -23,6 +23,31 @@ en:
   language: English
 
   welcome:
+    nav_item:
+      title:
+        memory_games: "Memory Games"
+        coloring_books: "Biodiversity Heritage Library Coloring Books"
+        species_cards: "Species Cards"
+        inaturalist: "iNaturalist Observation Platform"
+        podcasts: "Podcasts"
+        google_tours: "Google Earth Tours"
+        hi_res_images: "High Resolution Images"
+        biodiv_articles: "Biodiversity Articles"
+        featured_collections: "Featured Collections"
+        eol_places: "EOL Places"
+        lesson_plans: "Lesson Plans" 
+      desc:
+        eol_places: "Visit Places to learn about environments and the species that live there. Explore biodiversity through food webs, species cards, statistics, lessons and more."
+        memory_games: "Use this classic memory game as a warm-up activity or have your students create their own customized game from an EOL collection."
+        biodiv_articles: "These articles introduce specific topics and provide links to EOL resources to dig deeper."
+        podcasts: "These 5-minute podcasts are great for the classroom to support science learning. Lesson plans, transcripts and scientist interviews included."
+        species_cards: "Species Cards provide a quick overview of a species or higher rank (like genus or family). Available to view online, mobile device or to print."
+        google_tours: "Google Earth Tours combine add a significant geographic context to these biodiversity stories."
+        lesson_plans: "Bring EOL into your classroom with our lesson plans. Aligned to NGSS standards, they also pull in content and resources from EOL."
+        featured_collections: "Explore Collections to find out about topics in biodiversity. You can also learn how to make your own Collections."
+        hi_res_images: "EOL has many stunning high resolution images that can be reused and repurposed with attribution. Look, use and enjoy!"
+        inaturalist: "iNaturalist is an open science, biodiversity observation platform. Their research-grade images flow back into EOL."
+        coloring_books: "The BHL provides the foundational literature to EOL, including original descriptions and beautiful images."
     index:
       main_title_html: "Learning <span class='title-plus'>+</span> Education"
       eol_nav:
@@ -38,22 +63,10 @@ en:
         l_and_e_resources_desc: "EOL L+E tools and resources are found on this website and EOL. We're working ot make the connection between the sites more seamless. At the moment, here is what you can find on this website."
         eol_resources_title: "EOL.org Resources"
         eol_resources_desc: "EOL has been the main website for the organization since we launched in 2008 so that's why we have so many of our resources over there. Stay tuned for some changes."
-        partner_resources_title: "EOL Partner Resources"
+        partner_resources_title: "Partner Resources"
         partner_resources_desc: "EOL and EOL L+E work closely with many open science and open education partners to extend the possibilities for learning about biodiversity. Here are two that we find enormously useful and enjoyable."
 
-      nav:
-        title:
-          memory_game: "Memory Game"
-          coloring_books: "Biodiversity Heritage Library Coloring Books"
-          species_cards: "Species Cards"
-          inaturalist: "iNaturalist Observation Platform"
-          podcasts: "Podcasts"
-          google_tours: "Google Earth Tours"
-          hi_res_images: "High Resolution Images"
-          biodiv_articles: "Biodiversity Articles"
-          featured_collections: "Featured Collections"
-          eol_places: "EOL Places"
-          lesson_plans: "Lesson Plans" 
+          
         about:
           eol_is_an_open_science_html: "The Encyclopedia of Life (EOL) is an open science project (<a href='https://en.wikipedia.org/wiki/Open_science'>https://en.wikipedia.org/wiki/Open_science</a>) that pulls together information from over 350 partners (<a href='http://eol.org/info/partners'>http://eol.org/info/partners</a>) about the world’s living nature - or biodiversity - which includes all plants, animals and microorganisms that have scientific names. All of the text, images, videos and data on EOL are free to be reused and repurposed. There are about 2 million known and named organisms in the world. That means there is a lot of information on EOL and it can be hard to make sense of it all."
           thats_where_l_and_e_comes_in_html: "That's where the <a href='/'>EOL Learning + Education Group (L+E)</a> comes in. Through creative partnerships with educators and institutions that support science literacy, and in collaboration with enthusiasts and amateur naturalists, we develop tools and services to view EOL’s biodiversity information in more manageable ways. For example, <a href='/places'>EOL Places</a> provides a geographic window to explore biodiversity using food webs, observations and games, while <a href='http://education.eol.org/cards/'>EOL Species Cards</a> are printable and easy to use in classroom activities to learn about organisms, their traits, adaptations and where they live."

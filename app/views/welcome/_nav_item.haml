@@ -6,6 +6,6 @@
     .img-wrap
       =nav_image image_name
       .nav-overlay 
-        = nav_t overlay_text
+        = t ".desc.#{text_key}"
     %div{:class => "bar" + (two_line_bar ?  " two-line" : "")}
-      = nav_t bar_text
+      = t ".title.#{text_key}"

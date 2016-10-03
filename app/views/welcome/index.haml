@@ -5,97 +5,111 @@
         =image_tag "welcome/eol_logo.png", :class => "eol-logo"
         %ul#EolDropdown.eol-dropdown
           %li.eol-link.selected
-            =link_to "Learning + Education", root_path
+            =link_to t(".eol_nav.l_and_e"), root_path
           %li.eol-link
-            %a{:href => "http://www.eol.org/"} Encyclopedia of Life
+            =link_to t(".eol_nav.eol"), "http://www.eol.org"
 
       %h1#Title.title 
-        Learning 
-        %span.title-plus + 
-        Education
-      #About.about.nav-link ABOUT US
+        = t ".main_title_html"
+      #About.about.nav-link
+        = t ".about_us"
   #Slideshow.slideshow
     %img{:src => "https://placekitten.com/1441/426", :class => "slideshow-img"}
   .main-col
     .welcome-box
-      %h2.welcome-hdr Welcome to Learning + Education at the Encyclopedia of Life
-      %p.welcome-p The Encyclopedia of Life Learning + Education group (EOL L+E) is part of the larger EOL collaborative with a mission to make information about all life on Earth - microorganisms, plants and animals - freely available to anyone with access to the internet. EOL L+E works with educators, citizen scientists and partners to put this biodiversity information into context.
-      %p.welcome-p Our website is in transition. At the moment, several of our resources are found on EOL or partner websites. Thank you for your patience and we look forward to hearing from you if you have questions or feedback.
+      %h2.welcome-hdr       
+        = t ".welcome_box.welcome_to_l_and_e"
+      %p.welcome-p       
+        = t ".welcome_box.l_and_e_is_part"
+      %p.welcome-p 
+        = t ".welcome_box.our_website_transition_html"
     .section-head 
-      %h2.section-title EOL Learning + Education Resources
-      %p.section-intro EOL L+E tools and resources are found on this website and EOL. We're working ot make the connection between the sites more seamless. At the moment, here is what you can find on this website.
+      %h2.section-title
+        = t ".sections.l_and_e_resources_title"
+      %p.section-intro
+        = t ".sections.l_and_e_resources_desc"
     %ul.nav-items<
       = render "nav_item",
         :width => "double",
         :href => "/ecosystems",
         :image_name => "eol_places",
-        :overlay_text => "some texty text",
-        :bar_text => "EOL Places"
+        :overlay_text => "eol_places",
+        :bar_text => "eol_places"
       = render "nav_item",
         :width => "single",
         :last => true,
         :href => "/memory",
         :image_name => "memory_game",
-        :overlay_text => "memory game",
-        :bar_text => "Memory Game"
+        :overlay_text => "memory_game",
+        :bar_text => "memory_game"
     .section-head
-      %h2.section-title EOL.org Resources
-      %p.section-intro EOL has been the main website for the organization since we launched in 2008 so that's why we have so many of our resources over there. Stay tuned for some changes.
+      %h2.section-title 
+        = t ".sections.eol_resources_title"
+      %p.section-intro
+        = t ".sections.eol_resources_desc"
     %ul.nav-items<
       = render "nav_item",
         :width => "single",
         :href => "#",
         :image_name => "biodiversity_articles",
-        :overlay_text => "biodiversity articles",
-        :bar_text => "Biodiversity Articles"
+        :overlay_text => "biodiv_articles",
+        :bar_text => "biodiv_articles"
       = render "nav_item",
         :width => "single",
         :href => "#",
         :image_name => "podcasts",
         :overlay_text => "podcasts",
-        :bar_text => "Podcasts"
+        :bar_text => "podcasts"
       = render "nav_item",
         :width => "single",
         :last => true,
         :href => "#",
         :image_name => "species_cards",
-        :overlay_text => "species cards",
-        :bar_text => "Species Cards"
+        :overlay_text => "species_cards",
+        :bar_text => "species_cards"
       = render "nav_item",
         :width => "double",
         :href => "#",
         :image_name => "google_tours",
-        :overlay_text => "Google earth tours",
-        :bar_text => "Google Earth Tours"
+        :overlay_text => "google_tours",
+        :bar_text => "google_tours"
+      = render "nav_item",
+        :width => "single",
+        :href => "#",
+        :image_name => "lesson_plans",
+        :overlay_text => "lesson_plans",
+        :bar_text => "lesson_plans",
+        :last => true
       = render "nav_item",
         :width => "single",
         :href => "#",
         :image_name => "collections",
-        :overlay_text => "featured collections",
-        :bar_text => "Featured Collections"
+        :overlay_text => "featured_collections",
+        :bar_text => "featured_collections"
       = render "nav_item",
         :width => "double",
         :last => true,
         :href => "#",
         :image_name => "hi_res_images",
-        :overlay_text => "hi res images",
-        :bar_text => "High Resolution Images on EOL"
+        :overlay_text => "hi_res_images",
+        :bar_text => "hi_res_images"
     .section-head
-      %h2.section-title EOL Partner Resources
-      %p.section-intro EOL and EOL L+E work closely with many open science and open education partners to extend the possibilities for learning about biodiversity. Here are two that we find enormously useful and enjoyable.
-     
+      %h2.section-title
+        = t (".sections.partner_resources_title")
+      %p.section-intro 
+        = t (".sections.partner_resources_desc")
     %ul.nav-items<
       = render "nav_item",
         :width => "double",
         :href => "#",
         :image_name => "inaturalist",
-        :overlay_text => "iNaturalist",
-        :bar_text => "iNaturalist Observation Platform"
+        :overlay_text => "inaturalist",
+        :bar_text => "inaturalist"
       = render "nav_item",
         :width => "single",
         :last => true,
         :href => "#",
         :image_name => "bhl_coloring",
-        :overlay_text => "coloring books",
-        :bar_text => "Biodiversity Heritage Library Coloring Books",
+        :overlay_text => "coloring_books",
+        :bar_text => "coloring_books",
         :two_line_bar => true

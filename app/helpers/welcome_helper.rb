@@ -35,7 +35,7 @@ module WelcomeHelper
   end
 
   private
-  NAV_KEY_PREFIX = "welcome.index.nav"
+  NAV_KEY_PREFIX = "welcome.index.nav.title"
   NAV_CATS = [
     {
       :label => { 

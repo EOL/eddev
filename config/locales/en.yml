@@ -24,29 +24,36 @@ en:
 
   welcome:
     index:
-      main_title: "Learning + Education"
-      sub_title:  "At the Encyclopedia of Life"
-      sign_in: "Sign In"
-      sign_out: "Sign Out"
-      welcome_h: "Welcome"
-      welcome_p1_html: "At <strong>Learning + Education</strong>, we take content from <a href='http://www.eol.org'>EOL</a> and put it into context."
-      welcome_p2: "From Lesson Plans to Citizen Science projects, we have a variety of educational material to keep educators and students continuously engaged in learning about life on earth!"
+      main_title_html: "Learning <span class='title-plus'>+</span> Education"
+      eol_nav:
+        l_and_e: "Learning + Education"
+        eol: "Encyclopedia of Life"
+      about_us: "ABOUT US"
+      welcome_box:
+        welcome_to_l_and_e: "Welcome to Learning + Education at the Encyclopedia of Life"
+        l_and_e_is_part: "The Encyclopedia of Life Learning + Education group (EOL L+E) is part of the larger EOL collaborative with a mission to make information about all life on Earth - microorganisms, plants and animals - freely available to anyone with access to the internet. EOL L+E works with educators, citizen scientists and partners to put this biodiversity information into context."
+        our_website_transition_html: "Our website is in transition. At the moment, several of our resources are found on <a href='http://www.eol.org/'>EOL</a> or partner websites. Thank you for your patience and we look forward to <a href='http://eol.org/contact_us?subject=learning'>hearing from you</a> if you have questions or feedback."
+      sections:
+        l_and_e_resources_title: "EOL Learning + Education Resources"
+        l_and_e_resources_desc: "EOL L+E tools and resources are found on this website and EOL. We're working ot make the connection between the sites more seamless. At the moment, here is what you can find on this website."
+        eol_resources_title: "EOL.org Resources"
+        eol_resources_desc: "EOL has been the main website for the organization since we launched in 2008 so that's why we have so many of our resources over there. Stay tuned for some changes."
+        partner_resources_title: "EOL Partner Resources"
+        partner_resources_desc: "EOL and EOL L+E work closely with many open science and open education partners to extend the possibilities for learning about biodiversity. Here are two that we find enormously useful and enjoyable."
+
       nav:
-        cat_activities: "ACTIVITIES"
-        cat_media:     "MEDIA"
-        cat_resources: "RESOURCES"
-        cat_about: "ABOUT" 
-        memory_game: "Memory Game"
-        coloring_pages: "BHL Coloring Pages"
-        species_cards: "Species Cards"
-        inaturalist: "iNaturalist"
-        podcasts: "Podcasts"
-        google_earth_tours: "Google Earth Tours"
-        hi_res_photos: "Hi Resolution Photos"
-        biodiv_articles: "Biodiversity Articles"
-        learning_resources: "Learning Resources"
-        featured_collections: "Featured Collections"
-        eol_places: "EOL Places"
+        title:
+          memory_game: "Memory Game"
+          coloring_books: "Biodiversity Heritage Library Coloring Books"
+          species_cards: "Species Cards"
+          inaturalist: "iNaturalist Observation Platform"
+          podcasts: "Podcasts"
+          google_tours: "Google Earth Tours"
+          hi_res_images: "High Resolution Images"
+          biodiv_articles: "Biodiversity Articles"
+          featured_collections: "Featured Collections"
+          eol_places: "EOL Places"
+          lesson_plans: "Lesson Plans" 
         about:
           eol_is_an_open_science_html: "The Encyclopedia of Life (EOL) is an open science project (<a href='https://en.wikipedia.org/wiki/Open_science'>https://en.wikipedia.org/wiki/Open_science</a>) that pulls together information from over 350 partners (<a href='http://eol.org/info/partners'>http://eol.org/info/partners</a>) about the world’s living nature - or biodiversity - which includes all plants, animals and microorganisms that have scientific names. All of the text, images, videos and data on EOL are free to be reused and repurposed. There are about 2 million known and named organisms in the world. That means there is a lot of information on EOL and it can be hard to make sense of it all."
           thats_where_l_and_e_comes_in_html: "That's where the <a href='/'>EOL Learning + Education Group (L+E)</a> comes in. Through creative partnerships with educators and institutions that support science literacy, and in collaboration with enthusiasts and amateur naturalists, we develop tools and services to view EOL’s biodiversity information in more manageable ways. For example, <a href='/places'>EOL Places</a> provides a geographic window to explore biodiversity using food webs, observations and games, while <a href='http://education.eol.org/cards/'>EOL Species Cards</a> are printable and easy to use in classroom activities to learn about organisms, their traits, adaptations and where they live."

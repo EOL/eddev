@@ -193,9 +193,25 @@ body, p {
     text-decoration: none;
   }
 
-  .image {
+  .img-wrap {
+    position: relative;
+  }
+
+  .nav-img {
     max-width: 100%;
     vertical-align: bottom;
+  }
+
+  .nav-overlay {
+    color: #fff;
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    top: 0;
+    left: 0;
+    background: rgba(#333, .5);
   }
 
   .nav-item {
@@ -204,6 +220,10 @@ body, p {
     margin: 1.0102% 1.0102% 0 0;
     position: relative;
     vertical-align: top;
+
+    &:hover .nav-overlay {
+      display: block;
+    } 
   }
 
   .last {

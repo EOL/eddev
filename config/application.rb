@@ -40,5 +40,8 @@ module Eddev
       authentication:       "plain",
       enable_starttls_auto: true,
     }
+
+    # enable gzip compression
+    config.middleware.use Rack::Deflater
   end
 end

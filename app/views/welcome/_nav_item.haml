@@ -1,0 +1,11 @@
+- last = local_assigns.fetch :last, false
+- two_line_bar = local_assigns.fetch :two_line_bar, false
+
+%li{:class => "nav-item #{width}-width" + (last ? " last" : "")}
+  %a{ :href => href }
+    .img-wrap
+      =nav_image image_name
+      .nav-overlay 
+        = overlay_text
+    %div{:class => "bar" + (two_line_bar ?  " two-line" : "")}
+      = bar_text

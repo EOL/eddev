@@ -1,8 +1,14 @@
 #Page
   #Topbar.topbar
     .topbar-inner
-      %a#EolNav.eol-nav.nav-link
+      #EolNav.eol-nav.nav-link
         =image_tag "welcome/eol_logo.png", :class => "eol-logo"
+        %ul#EolDropdown.eol-dropdown
+          %li.eol-link.selected
+            =link_to "Learning + Education", root_path
+          %li.eol-link
+            %a{:href => "http://www.eol.org/"} Encyclopedia of Life
+
       %h1#Title.title 
         Learning 
         %span.title-plus + 

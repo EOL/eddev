@@ -42,7 +42,6 @@ body, p {
 .topbar-inner {
   height: 100%;
   position: relative;
-  overflow: hidden;
 }
 
 .topbar {
@@ -63,7 +62,7 @@ body, p {
   cursor: pointer;
   position: absolute;
   height: 100%;
-  width: 131px; // Don't let these resize with browser
+  width: 8.1875em; // 131px / 16px
 }
 
 //.nav-link:hover {
@@ -73,6 +72,40 @@ body, p {
 .eol-nav {
   left: 0;
   top: 0;
+
+  &:hover .eol-dropdown {
+    display: block;
+  }
+}
+
+.eol-dropdown {
+  display: none;
+  position: absolute;
+  font-size: 0.875em; // 14 / 16
+  font-weight: 600;
+  width: 13.21428571428571em; // 185px / 14px;
+  top: 4.85714285714286em;
+  left: 0;
+}
+
+.eol-link {
+  background: #f4f4f4;
+  height: 3em; // 42px / 14px
+  line-height: 3em;
+  padding-left: 1.35714285714286em; // 19px / 14px
+
+  a {
+    color: #2e303d;
+    text-decoration: none;
+  }
+}
+
+.eol-link.selected {
+  background: #a9ba30;
+
+  a {
+    color: #fff;
+  }
 }
 
 .eol-logo {
@@ -112,6 +145,7 @@ body, p {
 
 .slideshow-img {
   max-width: 100%;
+  vertical-align: bottom;
 }
 
 .welcome-box {

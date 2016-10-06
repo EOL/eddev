@@ -6,5 +6,14 @@ $(function() {
     });
   }
 
+  function initSlideshow() {
+    $('#Slideshow').slick({
+      arrows: false,
+      dots: true,
+      //dotsClass: 'slideshow-dots'
+    });
+  }
+
   fixImageTextBars();
+  initSlideshow();
 });

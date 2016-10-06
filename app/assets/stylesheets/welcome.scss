@@ -84,6 +84,7 @@ body, p {
 .eol-nav {
   left: 0;
   top: 0;
+  height: 4.25em;
 
   &:hover .eol-dropdown {
     display: block;
@@ -252,8 +253,12 @@ body, p {
       display: block;
     } 
   }
-
-  .last {
+  
+  .memory-games, 
+  .species-cards, 
+  .lesson-plans,
+  .hi-res-images,
+  .coloring-books {
     margin-right: 0;
   }
 
@@ -286,6 +291,28 @@ body, p {
     bottom: 0;
     left: 0;
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .nav-items {
+    .single-width, .double-width {
+      width: 48.677248677249%; // 385 / 1179
+      margin: 2.645502645503% 2.645502645503% 0 0;
+    }
+
+    .memory-games,
+    .podcasts,
+    .google-tours,
+    .collections,
+    .coloring-books {
+      margin-right: 0;
+    }
+
+    .bar {
+      padding: 2.597402597% 0 2.597402597% 15.584415584%; // 60 / 385
+      width: 84.415584416%;
+    }
   }
 }
 

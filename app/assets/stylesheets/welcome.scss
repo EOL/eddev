@@ -22,10 +22,17 @@ $section-title-gray: #3e3e3e;
 $section-intro-gray: #161616;
 $nav-overlay-gray: #333;
 
-$topbar-height: 4.25em; // 65px / 16px
-
 $semibold: 600;
 $light: 300;
+
+$unit-px: 16px;
+$em: 16;
+$main-col-width: 939px;
+$page-padding: 250px;
+$section-v-margin-px: 60px;
+$section-v-margin-pct: percentage($section-v-margin-px / $main-col-width);
+$topbar-height-px: 65;
+$topbar-height: $topbar-height-px / $em * 1em;
 
 h1, h2, h3 {
   padding: 0;
@@ -42,13 +49,15 @@ body, p {
 }
 
 #Page {
-  max-width: 90.0625em; // 1441px / 16px
+  max-width: (($page-padding * 2 + $main-col-width) / $unit-px) + em;
   margin: 0 auto;
 }
 
 .main-col, .topbar-inner {
   margin: 0 auto;
-  width: 81.8182%;
+  max-width: ($main-col-width / $unit-px) + em;
+  min-width: (320px / $unit-px) + em;
+  padding: 0 percentage(12px / $main-col-width);
 }
 
 .topbar-inner {
@@ -84,7 +93,7 @@ body, p {
 .eol-nav {
   left: 0;
   top: 0;
-  height: 4.25em;
+  height: $topbar-height;
 
   &:hover .eol-dropdown {
     display: block;
@@ -92,12 +101,13 @@ body, p {
 }
 
 .eol-dropdown {
+  $font-size-px: 14;
   display: none;
   position: absolute;
-  font-size: 0.875em; // 14 / 16
+  font-size: $font-size-px / $em * 1em;
   font-weight: $semibold;
   width: 13.21428571428571em; // 185px / 14px;
-  top: 4.85714285714286em;
+  top: $topbar-height-px / $font-size-px * 1em;
   left: 0;
   z-index: 2;
 }
@@ -141,10 +151,11 @@ body, p {
 }
 
 .title {
+  $font-size-px: 30;
   margin: 0;   
-  font-size: 1.875em; // 30px / 16px
+  font-size: $font-size-px / $em * 1em;
   font-weight: $semibold;
-  line-height: 2.2667; // 68px / 30px
+  line-height: $topbar-height-px / $font-size-px * 1em;
   text-align: center;
 }
 
@@ -154,7 +165,7 @@ body, p {
 
 .slideshow {
   max-width: 100%;
-  max-height: 26.625em; // 426px / 16px
+  max-height: (385px / $unit-px) + em;
   overflow: hidden;
   z-index: 1;
 }
@@ -171,7 +182,7 @@ body, p {
 .welcome-box {
   background: $background-gray;
   height: 100%;
-  margin: 4.2408% 0 0 0; // 50px / 1179px
+  margin: $section-v-margin-pct 0 0 0;
   padding: 2.544529262087% 8.142493638677%; // 30px 96px (/1179)
   text-align: center;
   width: 83.7150127226%;
@@ -196,13 +207,14 @@ body, p {
 
 .section-head {
   border-bottom: 1px solid $section-border-gray;
-  margin: 5.598% 0 3.223070398643% 0; // 66, (50 - 12 = 38) / 1179
+  margin: $section-v-margin-pct 0 0 0; // 66, (50 - 12 = 38) / 1179
 }
 
 .section-title {
   color: $section-title-gray;
   font-size: 1.5em;
   font-weight: $semibold;  
+  margin-bottom: percentage(5px / $main-col-width);
 }
 
 .section-intro {
@@ -212,6 +224,9 @@ body, p {
 }
 
 .nav-items {
+  $single-width-px: 305px;
+  $double-width-px: 622px;
+
   position: relative;
   width: 100%;
 
@@ -243,9 +258,10 @@ body, p {
   }
 
   .nav-item {
+    $margin: percentage(12px / $main-col-width);
     cursor: pointer;
     display: inline-block;
-    margin: 1.0102% 1.0102% 0 0;
+    margin: $margin $margin 0 0; 
     position: relative;
     vertical-align: top;
 
@@ -263,7 +279,7 @@ body, p {
   }
 
   .double-width {
-    width: 66.3273961%; // 782 / 1179
+    width: percentage($double-width-px / $main-col-width);
 
     .bar {
       
@@ -273,7 +289,7 @@ body, p {
   }
 
   .single-width {
-    width: 32.654792%; // 385 / 1179
+    width: percentage($single-width-px / $main-col-width);
 
     .bar {
       padding: 2.597402597% 0 2.597402597% 15.584415584%; // 60 / 385
@@ -313,6 +329,16 @@ body, p {
       padding: 2.597402597% 0 2.597402597% 15.584415584%; // 60 / 385
       width: 84.415584416%;
     }
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .topbar {
+    height: $topbar-height * 2;
+  }
+
+  .nav-wrap {
+    height: $topbar-height;
   }
 }
 

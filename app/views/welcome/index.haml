@@ -1,18 +1,18 @@
 #Page
   #Topbar.topbar
     .topbar-inner
-      #EolNav.eol-nav.nav-link
-        =image_tag "welcome/eol_logo.png", :class => "eol-logo"
-        %ul#EolDropdown.eol-dropdown
-          %li.eol-link.selected
-            =link_to t(".eol_nav.l_and_e"), root_path
-          %li.eol-link
-            =link_to t(".eol_nav.eol"), "http://www.eol.org"
-
+      .nav-wrap
+        #EolNav.eol-nav.nav-link
+          =image_tag "welcome/eol_logo.png", :class => "eol-logo"
+          %ul#EolDropdown.eol-dropdown
+            %li.eol-link.selected
+              =link_to t(".eol_nav.l_and_e"), root_path
+            %li.eol-link
+              =link_to t(".eol_nav.eol"), "http://www.eol.org"
+        #About.about.nav-link
+          = t ".about_us"
       %h1#Title.title 
         = t ".main_title_html"
-      #About.about.nav-link
-        = t ".about_us"
   #Slideshow.slideshow
     .slide
       %img{:src => "https://placekitten.com/1441/426", :class => "slideshow-img"}
@@ -29,8 +29,6 @@
     .section-head 
       %h2.section-title
         = t ".sections.l_and_e_resources_title"
-      %p.section-intro
-        = t ".sections.l_and_e_resources_desc"
     %ul.nav-items<
       = render "nav_item",
         :width => "double",
@@ -48,8 +46,6 @@
     .section-head
       %h2.section-title 
         = t ".sections.eol_resources_title"
-      %p.section-intro
-        = t ".sections.eol_resources_desc"
     %ul.nav-items<
       = render "nav_item",
         :width => "single",
@@ -99,8 +95,6 @@
     .section-head
       %h2.section-title
         = t (".sections.partner_resources_title")
-      %p.section-intro 
-        = t (".sections.partner_resources_desc")
     %ul.nav-items<
       = render "nav_item",
         :width => "double",

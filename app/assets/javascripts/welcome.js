@@ -14,6 +14,29 @@ $(function() {
     });
   }
 
+  function expandWelcomeBox() {
+    var $box = $('#WelcomeBox'),
+        $hidden = $('#WelcomeContent .hidden'),
+        $moreBar = $('#WelcomeMoreBar'),
+        $moreText = $('#WelcomeMoreText');
+
+    $box.off('mouseenter');
+    
+    $hidden.slideDown(function() {
+      $moreText.hide(); 
+
+      $box.mouseleave(function() { 
+        $box.off('mouseleave');
+
+        $hidden.slideUp(function() {
+          $moreText.show();
+          $box.mouseenter(expandWelcomeBox);
+        });  
+      });
+    });
+  }
+
   fixImageTextBars();
   initSlideshow();
+  $('#WelcomeBox').mouseenter(expandWelcomeBox);
 });

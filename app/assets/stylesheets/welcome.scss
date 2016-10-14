@@ -31,8 +31,9 @@ $main-col-width: 939px;
 $page-padding: 250px;
 $section-v-margin-px: 60px;
 $section-v-margin-pct: percentage($section-v-margin-px / $main-col-width);
-$topbar-height-px: 65;
+$topbar-height-px: 36;
 $topbar-height: $topbar-height-px / $em * 1em;
+$page-width: (($page-padding * 2 + $main-col-width) / $unit-px) * 1em;
 
 h1, h2, h3 {
   padding: 0;
@@ -49,7 +50,7 @@ body, p {
 }
 
 #Page {
-  max-width: (($page-padding * 2 + $main-col-width) / $unit-px) + em;
+  max-width: $page-width;
   margin: 0 auto;
 }
 
@@ -83,7 +84,8 @@ body, p {
   cursor: pointer;
   position: absolute;
   height: 100%;
-  width: 8.1875em; // 131px / 16px
+  text-decoration: none;
+  width: 120 / $em * 1em;
 }
 
 //.nav-link:hover {
@@ -101,28 +103,32 @@ body, p {
 }
 
 .eol-dropdown {
+  $eol-link-padding-px: 13;
   $font-size-px: 14;
+
   display: none;
   position: absolute;
   font-size: $font-size-px / $em * 1em;
   font-weight: $semibold;
-  width: 13.21428571428571em; // 185px / 14px;
+  width: 170 / $font-size-px * 1em;
   top: $topbar-height-px / $font-size-px * 1em;
   left: 0;
   z-index: 2;
-}
 
-.eol-link {
-  background: $background-gray;
-  height: 3em; // 42px / 14px
-  line-height: 3em;
-  padding-left: 1.35714285714286em; // 19px / 14px
+  .eol-link {
+    $height-em: 37 / $em;
+    background: $background-gray;
+    height: $height-em * 1em;
+    line-height: $height-em;
+    padding-left: $eol-link-padding-px / $font-size-px * 1em;
 
-  a {
-    color: $eol-link-color;
-    text-decoration: none;
+    a {
+      color: $eol-link-color;
+      text-decoration: none;
+    }
   }
 }
+
 
 .eol-link.selected {
   background: $eol-link-selected-bg-color;
@@ -133,25 +139,27 @@ body, p {
 }
 
 .eol-logo {
+  $height-em: 19 / $em;
   position: absolute; 
-  left: 25.1908%; // ((131 - 65 [image width]) / 2) / 131
-  top: 30.147%; // ((68 - 27) / 2) / 68
-  height: 39.70588%; // 27 / 68
-  width: 49.61832%; // 65 / 131
+  height: $height-em * 1em;
+  line-height: $height-em;
+  left: 38 / $em * 1em;
+  top: 8 / $em * 1em;
 }
 
 .about {
+  $font-size-px: 14;
   color: $about-link-gray;
-  font-size: 1.125em;
+  font-size: 14 / $em * 1em;
   font-weight: $semibold;
   right: 0;
   top: 0;
-  line-height: 3.7778; // 68px / 18px
+  line-height: $topbar-height-px / $font-size-px;
   text-align: center;
 }
 
 .title {
-  $font-size-px: 30;
+  $font-size-px: 20;
   margin: 0;   
   font-size: $font-size-px / $em * 1em;
   font-weight: $semibold;
@@ -163,46 +171,132 @@ body, p {
   color: $eol-green;
 }
 
-.slideshow {
+.hero-image {
   max-width: 100%;
   max-height: (385px / $unit-px) + em;
   overflow: hidden;
   z-index: 1;
 }
 
-.slideshow-img {
+.slide {
+  position: relative;
+}
+
+.slideshow-img, .image {
   max-width: 100%;
   vertical-align: bottom;
 }
 
-.slick-dots {
-  bottom: 5%;
+.slide-overlay-wrap {
+  background-color: rgba(20, 20, 20, 0.49);
+  bottom: 0;
+  position: absolute;
+  height: 111 / $em * 1em;
+  width: 100%;
 }
 
-.welcome-box {
-  background: $background-gray;
+.slide-overlay {
+  color: $white;
+  font-family: $open-sans;
+  margin: 0 auto;
+  font-weight: $semibold;
   height: 100%;
-  margin: $section-v-margin-pct 0 0 0;
-  padding: 2.544529262087% 8.142493638677%; // 30px 96px (/1179)
-  text-align: center;
-  width: 83.7150127226%;
+  max-width: $main-col-width;
+}
 
-  a {
-    color: $link-blue; 
-    font-weight: $semibold;
-    text-decoration: none;
+.slide-head-grp {
+  $font-size: 20;
+  font-size: $font-size / $em * 1em;
+  margin-top: 12 / $font-size * 1em;
+
+  .slide-title, .slide-subtitle {
+    display: inline-block;
+  }
+
+  .slide-title {
+    margin-right: 13 / $font-size * 1em;
   }
 }
 
+.slide-desc {
+  margin-top: 3 / $em * 1em;
+}
+
+.slide-subtitle {
+  font-style: italic;
+}
+
+.slick-dots {
+  bottom: 0;
+  padding-bottom: 10px;
+
+  li {
+    margin: 0 12px;
+
+    button:before {
+      color: rgba(215, 215, 215, 0.19);
+      font-size: 15px; // Ususally, we'd use em, but this is a hack to work around slick.
+      opacity: 1;
+      -webkit-text-stroke-width: 1px;
+      -webkit-text-stroke-color: #979797;
+    }
+
+    &.slick-active {
+      button:before {
+          opacity: 1;
+          color: $white;
+          -webkit-text-stroke-color: $white;
+      }
+    }
+  }
+}
+
+.welcome-box {
+  border-radius: 11px;
+  text-align: center;
+  width: 100%;
+} 
+
+.welcome-content {
+  $t-b-pad: 11 / $em * 1em;
+  background-image: linear-gradient(to top, #ffffff, #e6e9d7);
+  overflow: hidden;
+  padding: $t-b-pad 0;
+}
+
 .welcome-hdr {
-  font-size: 1.25em;
+  $font-size: 24;
+  background-color: #a9ba30;
+  border-radius: 11px 11px 0 0;
+  color: $white;
+  font-size: $font-size / $em * 1em;
   font-weight: $semibold;
+  line-height: 40 / $font-size;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.49);
 }
 
 .welcome-p {
-  font-size: 1.125em;
-  font-weight: $light;
-  margin: 1.75572519084% 0 0 0; // 20.7 / 1179
+  $font-size: 14;
+  font-size: $font-size / $em * 1em; 
+  line-height: 2.1;
+  padding: 0 percentage(85px / $main-col-width);
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.welcome-more-bar {
+  $height: 23 / $em * 1em;
+  background-image: radial-gradient(circle at 50% 0, #b3c81d, #cfdd6d);
+  border-radius: 0 0 11px 11px;
+  height: $height;
+  line-height: $height;
+
+  font-size: 14 / $em * 1em;
+  font-weight: $semibold;
+  text-align: center;
+  color: #6f6f6f;
 }
 
 .section-head {
@@ -339,6 +433,22 @@ body, p {
 
   .nav-wrap {
     height: $topbar-height;
+  }
+}
+
+// ---------  ABOUT  ------------
+.about-box {
+  background: $background-gray;
+  height: 100%;
+  margin: $section-v-margin-pct 0 0 0;
+  padding: 2.544529262087% 8.142493638677%; // 30px 96px (/1179)
+  text-align: center;
+  width: 83.7150127226%;
+
+  a {
+    color: $link-blue; 
+    font-weight: $semibold;
+    text-decoration: none;
   }
 }
 

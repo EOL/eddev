@@ -22,18 +22,26 @@ $section-title-gray: #3e3e3e;
 $section-intro-gray: #161616;
 $nav-overlay-gray: #333;
 
+$bold: 700;
 $semibold: 600;
 $light: 300;
 
 $unit-px: 16px;
 $em: 16;
-$main-col-width: 939px;
-$page-padding: 250px;
-$section-v-margin-px: 60px;
-$section-v-margin-pct: percentage($section-v-margin-px / $main-col-width);
+$main-col-width: 939;
+$page-padding: 250;
+$section-v-margin: 60;
+$section-v-margin-pct: percentage($section-v-margin / $main-col-width);
 $topbar-height-px: 36;
 $topbar-height: $topbar-height-px / $em * 1em;
-$page-width: (($page-padding * 2 + $main-col-width) / $unit-px) * 1em;
+$page-width: ($page-padding * 2 + $main-col-width) / $em * 1em;
+$single-width-px: 305;
+$double-width-px: 622;
+$nav-img-height: 305;
+
+@function nav-img-url($img-name) {
+  @return url("welcome/nav/" + $img-name + ".jpg")
+}
 
 h1, h2, h3 {
   padding: 0;
@@ -56,9 +64,9 @@ body, p {
 
 .main-col, .topbar-inner {
   margin: 0 auto;
-  max-width: ($main-col-width / $unit-px) + em;
-  min-width: (320px / $unit-px) + em;
-  padding: 0 percentage(12px / $main-col-width);
+  max-width: $main-col-width / $em * 1em;
+  min-width: 320 / $em * 1em;
+  padding: 0 percentage(12 / $main-col-width);
 }
 
 .topbar-inner {
@@ -201,7 +209,7 @@ body, p {
   margin: 0 auto;
   font-weight: $semibold;
   height: 100%;
-  max-width: $main-col-width;
+  max-width: $main-col-width * 1px;
 }
 
 .slide-head-grp {
@@ -279,7 +287,7 @@ body, p {
   $font-size: 14;
   font-size: $font-size / $em * 1em; 
   line-height: 2.1;
-  padding: 0 percentage(85px / $main-col-width);
+  padding: 0 percentage(85 / $main-col-width);
 
   &.hidden {
     display: none;
@@ -308,7 +316,7 @@ body, p {
   color: $section-title-gray;
   font-size: 1.5em;
   font-weight: $semibold;  
-  margin-bottom: percentage(5px / $main-col-width);
+  margin-bottom: percentage(5 / $main-col-width);
 }
 
 .section-intro {
@@ -318,8 +326,7 @@ body, p {
 }
 
 .nav-items {
-  $single-width-px: 305px;
-  $double-width-px: 622px;
+  $bar-padding-left: 30;
 
   position: relative;
   width: 100%;
@@ -346,13 +353,13 @@ body, p {
     text-align: center;
     top: 0;
     left: 0;
-    background: rgba($nav-overlay-gray, .5);
-    font-size: 1.5em; // 24px / 16px
+    background-color: rgba(20, 20, 20, 0.74);
+    font-size: 1em;
     font-weight: $semibold;
   }
 
   .nav-item {
-    $margin: percentage(12px / $main-col-width);
+    $margin: percentage(12 / $main-col-width);
     cursor: pointer;
     display: inline-block;
     margin: $margin $margin 0 0; 
@@ -362,57 +369,144 @@ body, p {
     &:hover .nav-overlay {
       display: block;
     } 
-  }
-  
-  .memory-games, 
-  .species-cards, 
-  .lesson-plans,
-  .hi-res-images,
-  .coloring-books {
-    margin-right: 0;
+
+    .img {
+      background-size: cover;
+      background-position: center;
+    }
   }
 
+
   .double-width {
+    $padding-left: percentage($bar-padding-left / $double-width-px);
+
     width: percentage($double-width-px / $main-col-width);
 
     .bar {
-      
-      padding: 1.278772378% 0 1.278772378% 7.672634271%;  // 60 / 782
-      width: 92.327365729%;
+      padding-left: $padding-left;
+      width: 100% - $padding-left;
+    }
+
+    .img {
+      padding-top: percentage($nav-img-height / $double-width-px);
     }
   }
 
   .single-width {
+    $padding-left: percentage($bar-padding-left / $single-width-px);
     width: percentage($single-width-px / $main-col-width);
 
     .bar {
-      padding: 2.597402597% 0 2.597402597% 15.584415584%; // 60 / 385
-      width: 84.415584416%;
+      padding-left: $padding-left;
+      width: 100% - $padding-left;
+    }
+
+    .img {
+      padding-top: 100%;
     }
   }
 
   .bar {
+    $padding-t-b: 8 / $em * 1em;;
     background: rgba($black, .8);
     color: $white;
-    font-size: 1.25em; // 20 / 16
-    font-weight: $semibold;
+    font-size: 1em;
+    font-weight: $bold;
     line-height: 1.5em;
+    padding-bottom: $padding-t-b;
+    padding-top: $padding-t-b;
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
   }
+
+  .memory-games .img {
+    background-image: nav-img-url("memory_game");
+  }
+
+  .ecosystems .img {
+    background-image: nav-img-url("eol_places");
+  }
+
+  .lesson-plans .img {
+    background-image: nav-img-url("lesson_plans");
+  }
+
+  .species-cards .img {
+    background-image: nav-img-url("species_cards");
+  }
+
+  .biodiv-articles .img {
+    background-image: nav-img-url("biodiversity_articles");
+  }
+
+  .podcasts .img {
+    background-image: nav-img-url("podcasts");
+  }
+
+  .google-tours .img {
+    background-image: nav-img-url("google_tours");
+  }
+
+  .collections .img {
+    background-image: nav-img-url("collections");
+  }
+
+  .hi-res-images .img {
+    background-image: nav-img-url("hi_res_images");
+  }
+
+  .inaturalist .img {
+    background-image: nav-img-url("inaturalist");
+  }
+
+  .coloring-books .img {
+    background-image: nav-img-url("bhl_coloring");
+  }
+
+  .ecosystems,
+  .species-cards,
+  .google-tours,
+  .hi-res-images,
+  .coloring-books {
+    margin-right: 0;
+  }
 }
 
 @media screen and (max-width: 700px) {
   .nav-items {
+    $width-px: ($main-col-width - 12) / 2;
+
     .single-width, .double-width {
-      width: 48.677248677249%; // 385 / 1179
-      margin: 2.645502645503% 2.645502645503% 0 0;
+      $width: percentage($width-px / $main-col-width);
+      $margin: percentage(12 / $main-col-width);
+      width: $width;
+      margin: $margin $margin 0 0;
     }
 
-    .memory-games,
-    .podcasts,
+    .nav-item .img {
+      padding-top: 100%; // All images are now perfect squares
+    }
+
+    .ecosystems .img {
+      background-image: nav-img-url("eol_places_single");
+    }
+
+    .lesson-plans .img {
+      background-image: nav-img-url("lesson_plans_single");
+    }
+
+    .google-tours .img {
+      background-image: nav-img-url("google_tours_single");
+    }
+
+    .inaturalist .img {
+      background-image: nav-img-url("inaturalist_single");
+    }
+
+    .ecosystems,
+    .species-cards,
     .google-tours,
     .collections,
     .coloring-books {

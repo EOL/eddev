@@ -511,7 +511,7 @@ body, p {
   }
 }
 
-@media screen and (max-device-width: 700px) {
+@media screen and (max-width: 700px) {
   .nav-items {
     $width-px: ($main-col-width - 12) / 2;
 

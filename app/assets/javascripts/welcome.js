@@ -11,6 +11,8 @@ $(function() {
       arrows: false,
       dots: true,
       //dotsClass: 'slideshow-dots'
+      autoplay: true,
+      autoplaySpeed: 3000
     });
   }
 

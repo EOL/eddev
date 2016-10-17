@@ -32,7 +32,7 @@ $nav-img-height: 305;
 
 
 @function nav-img-url($img-name) {
-  @return url("welcome/nav/" + $img-name + ".jpg")
+  @return image-url("welcome/nav/" + $img-name + ".jpg")
 }
 
 h1, h2, h3 {

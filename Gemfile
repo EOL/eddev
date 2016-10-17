@@ -44,6 +44,8 @@ gem "unix-crypt"
 
 gem "haml"
 
+gem "sass_paths"
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

@@ -1,3 +1,5 @@
+@import "layout_vars.scss";
+
 $background-width: 1400px;
 $background-url: image-url('welcome/sample_background.png');
 $col-width: 890px;
@@ -22,22 +24,12 @@ $section-title-gray: #3e3e3e;
 $section-intro-gray: #161616;
 $nav-overlay-gray: #333;
 
-$bold: 700;
-$semibold: 600;
-$light: 300;
-
-$unit-px: 16px;
-$em: 16;
-$main-col-width: 939;
-$page-padding: 250;
 $section-v-margin: 60;
 $section-v-margin-pct: percentage($section-v-margin / $main-col-width);
-$topbar-height-px: 36;
-$topbar-height: $topbar-height-px / $em * 1em;
-$page-width: ($page-padding * 2 + $main-col-width) / $em * 1em;
 $single-width-px: 305;
 $double-width-px: 622;
 $nav-img-height: 305;
+
 
 @function nav-img-url($img-name) {
   @return url("welcome/nav/" + $img-name + ".jpg")
@@ -62,11 +54,11 @@ body, p {
   margin: 0 auto;
 }
 
-.main-col, .topbar-inner {
+.main-col, .topbar-inner, .slide-overlay {
   margin: 0 auto;
   max-width: $main-col-width / $em * 1em;
   min-width: 320 / $em * 1em;
-  padding: 0 percentage(12 / $main-col-width);
+  padding: 0 percentage($main-col-padding / $main-col-width);
 }
 
 .topbar-inner {
@@ -190,10 +182,44 @@ body, p {
   position: relative;
 }
 
-.slideshow-img, .image {
+.image {
   max-width: 100%;
   vertical-align: bottom;
 }
+
+.slideshow-img {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-image: url(https://placekitten.com/1439/349);
+  background-size: cover;
+  background-position: center;
+  padding-top: 349 / $em * 1em;
+  width: 100%;
+  margin: 0 auto;
+  overflow: visible;
+  z-index: 1;
+}
+
+.slideshow-shim {
+  $width: $main-col-width + 2 * $main-col-padding;
+
+  position: relative;
+  background-position: center;
+  margin: 0 auto;
+  max-width: $width * 1px;
+  z-index: 2;
+
+  .slideshow-shim-inner {
+    margin: 0 auto;
+    padding-top: percentage(349 / $width);
+    width: 100%;
+    background-image: url(https://placekitten.com/1439/349);
+    background-size: cover;
+    background-position: center;
+  }
+}
+
 
 .slide-overlay-wrap {
   background-color: rgba(20, 20, 20, 0.49);
@@ -201,6 +227,7 @@ body, p {
   position: absolute;
   height: 111 / $em * 1em;
   width: 100%;
+  z-index: 3;
 }
 
 .slide-overlay {
@@ -209,7 +236,6 @@ body, p {
   margin: 0 auto;
   font-weight: $semibold;
   height: 100%;
-  max-width: $main-col-width * 1px;
 }
 
 .slide-head-grp {
@@ -232,6 +258,10 @@ body, p {
 
 .slide-subtitle {
   font-style: italic;
+}
+
+.slick-dotted.slick-slider {
+  margin-bottom: 0;
 }
 
 .slick-dots {
@@ -261,8 +291,15 @@ body, p {
 
 .welcome-box {
   border-radius: 11px;
+  margin-top: $section-v-margin-pct;
   text-align: center;
   width: 100%;
+
+  a {
+    color: $link-blue; 
+    font-weight: $semibold;
+    text-decoration: none;
+  }
 } 
 
 .welcome-content {
@@ -474,7 +511,7 @@ body, p {
   }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-device-width: 700px) {
   .nav-items {
     $width-px: ($main-col-width - 12) / 2;
 
@@ -520,15 +557,6 @@ body, p {
   }
 }
 
-@media screen and (max-width: 570px) {
-  .topbar {
-    height: $topbar-height * 2;
-  }
-
-  .nav-wrap {
-    height: $topbar-height;
-  }
-}
 
 // ---------  ABOUT  ------------
 .about-box {

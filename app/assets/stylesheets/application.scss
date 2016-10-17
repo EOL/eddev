@@ -14,11 +14,45 @@
  *= require_tree .
  *= require_self
  */
+@import "layout_vars.scss";
 
 body { margin: 0; padding: 0; }
-.hide { display: none !important; }
 .editor-content p { margin: 0; padding: 0; }
 
 #DraftHeader { background-color: #FAF55A; height: 20px; text-align: center; vertical-align: middle; }
 
 .field input, .field label { display: block; }
+
+/* FOOTER */
+$footer-v-spacing: 23 / $em * 1em;
+
+.footer { 
+  background-color: #f0f0f0;
+  height: 234 / $em * 1em;
+  margin-top: percentage(192 / $main-col-width); 
+
+  a {
+    color: #50558d;
+  }
+}
+
+.footer-head {
+  display: block;
+  font-weight: $semibold;
+  padding-top: 23 / $em * 1em;
+  text-align: center;
+}
+
+.mcz-logo {
+  display: block;
+  margin: $footer-v-spacing auto 0 auto;
+}
+
+.addr-line {
+  font-size: 14 / $em * 1em;
+  text-align: center;
+}
+
+.addr-line.top {
+  margin-top: $footer-v-spacing;
+}

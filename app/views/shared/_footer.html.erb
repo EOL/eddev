@@ -1,8 +1,0 @@
-<script type="text/javascript">
-  <%# translations for JS %>
-  window.I18n = {};
-  I18n.content_editor = <%= t("content_editor").to_json.html_safe %>;
-
-  window.ContentEditorState = <%= content_editor_state.to_json.html_safe %>;
-  window.app_uri_prefix = <%= Rails.application.config.x.app_uri_prefix.to_json.html_safe %>;
-</script>

@@ -58,7 +58,7 @@ body, p {
   margin: 0 auto;
   max-width: $main-col-width / $em * 1em;
   min-width: 320 / $em * 1em;
-  padding: 0 percentage($main-col-padding / $main-col-width);
+  padding: 0 percentage($main-col-padding / ($main-col-width + 2 * $main-col-padding));
 }
 
 .topbar-inner {
@@ -511,13 +511,20 @@ body, p {
   }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 646px) {
+  $new-main-col-width: 622;
+
+  .main-col, .topbar-inner, .slide-overlay {
+    padding: 0 percentage($main-col-padding / ($new-main-col-width + 2 * $main-col-padding));
+  }
+
   .nav-items {
-    $width-px: ($main-col-width - 12) / 2;
+    $margin-px: 12;
+    $width-px: ($new-main-col-width - $margin-px) / 2;
 
     .single-width, .double-width {
-      $width: percentage($width-px / $main-col-width);
-      $margin: percentage(12 / $main-col-width);
+      $width: percentage($width-px / $new-main-col-width);
+      $margin: percentage($margin-px / $new-main-col-width);
       width: $width;
       margin: $margin $margin 0 0;
     }

@@ -1,11 +1,12 @@
-.slide
-  .slideshow-shim
-    .slideshow-shim-inner{ :style => "background-image: #{slide_image_path(img)};" }
-  .cat.slideshow-img{ :style => "background-image: #{slide_image_path(img)};" }
-  .slide-overlay-wrap 
-    .slide-overlay
-      .slide-overlay-inner
-        .slide-head-grp
-          .slide-title= title
-          .slide-subtitle= subtitle
-        .slide-desc= desc
+=link_to url do
+  .slide
+    .slideshow-shim
+      .slideshow-shim-inner{ :style => "background-image: #{slide_image_path(img)};" }
+    .cat.slideshow-img{ :style => "background-image: #{slide_image_path(img)};" }
+    .slide-overlay-wrap 
+      .slide-overlay
+        .slide-overlay-inner
+          .slide-head-grp
+            .slide-title= title
+            .slide-subtitle= subtitle
+          .slide-desc= desc

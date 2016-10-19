@@ -24,7 +24,7 @@ $section-title-gray: #3e3e3e;
 $section-intro-gray: #161616;
 $nav-overlay-gray: #333;
 
-$section-v-margin: 60;
+$section-v-margin: 54;
 $section-v-margin-pct: percentage($section-v-margin / $main-col-width);
 $single-width-px: 305;
 $double-width-px: 622;
@@ -225,23 +225,26 @@ body, p {
   background-color: rgba(20, 20, 20, 0.49);
   bottom: 0;
   position: absolute;
-  height: 111 / $em * 1em;
+  margin: 0 auto;
   width: 100%;
   z-index: 3;
 }
 
 .slide-overlay {
+  max-width: $main-col-width / $em * 1em;
+}
+
+.slide-overlay-inner {
   color: $white;
   font-family: $open-sans;
-  margin: 0 auto;
   font-weight: $semibold;
   height: 100%;
+  padding: percentage(12 / $main-col-width) 0 percentage(47 / $main-col-width) 0;
 }
 
 .slide-head-grp {
   $font-size: 20;
   font-size: $font-size / $em * 1em;
-  margin-top: 12 / $font-size * 1em;
 
   .slide-title, .slide-subtitle {
     display: inline-block;
@@ -290,10 +293,9 @@ body, p {
 }
 
 .welcome-box {
-  border-radius: 11px;
-  margin-top: $section-v-margin-pct;
   text-align: center;
   width: 100%;
+  margin-top: percentage(37 / $main-col-width);
 
   a {
     color: $link-blue; 
@@ -303,27 +305,21 @@ body, p {
 } 
 
 .welcome-content {
-  $t-b-pad: 11 / $em * 1em;
-  background-image: linear-gradient(to top, #ffffff, #e6e9d7);
-  overflow: hidden;
-  padding: $t-b-pad 0;
+  padding-top: 11 / $em * 1em;
 }
 
 .welcome-hdr {
-  $font-size: 24;
-  background-color: #a9ba30;
-  border-radius: 11px 11px 0 0;
-  color: $white;
+  $font-size: 18;
+  border-bottom: solid 1px #979797;
   font-size: $font-size / $em * 1em;
   font-weight: $semibold;
   line-height: 40 / $font-size;
-  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.49);
 }
 
 .welcome-p {
   $font-size: 14;
   font-size: $font-size / $em * 1em; 
-  line-height: 2.1;
+  line-height: 1.7;
   padding: 0 percentage(85 / $main-col-width);
 
   &.hidden {
@@ -347,6 +343,10 @@ body, p {
 .section-head {
   border-bottom: 1px solid $section-border-gray;
   margin: $section-v-margin-pct 0 0 0; // 66, (50 - 12 = 38) / 1179
+}
+
+.section-head-top {
+  margin-top: percentage(45 / $main-col-width);
 }
 
 .section-title {

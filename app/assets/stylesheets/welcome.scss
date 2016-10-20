@@ -402,8 +402,14 @@ body, p {
     position: relative;
     vertical-align: top;
 
-    &:hover .nav-overlay {
-      display: flex;
+    &:hover {
+      .nav-overlay {
+        display: flex;
+      }
+
+      .bar {
+        display: none;
+      }
     } 
 
     .img {
@@ -640,6 +646,10 @@ body, p {
   .nav-items {
     .nav-overlay {
       font-size: 10 / $em * 1em;
+    }
+
+    .bar {
+      font-size: .75em;
     }
   }
 }

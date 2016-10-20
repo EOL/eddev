@@ -389,8 +389,9 @@ body, p {
     top: 0;
     left: 0;
     background-color: rgba(20, 20, 20, 0.74);
-    font-size: 1em;
-    font-weight: $semibold;
+    font-size: 1.125em;
+    justify-content: center;
+    align-items: center;
   }
 
   .nav-item {
@@ -402,7 +403,7 @@ body, p {
     vertical-align: top;
 
     &:hover .nav-overlay {
-      display: block;
+      display: flex;
     } 
 
     .img {
@@ -425,6 +426,10 @@ body, p {
     .img {
       padding-top: percentage($nav-img-height / $double-width-px);
     }
+
+    .nav-overlay-txt {
+      width: percentage(422 / $double-width-px);
+    }
   }
 
   .single-width {
@@ -439,6 +444,10 @@ body, p {
     .img {
       padding-top: 100%;
     }
+
+    .nav-overlay-txt {
+      width: percentage(203 / $single-width-px);
+    } 
   }
 
   .bar {

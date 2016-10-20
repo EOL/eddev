@@ -311,7 +311,7 @@ body, p {
   border-bottom: solid 1px #979797;
   font-size: $font-size / $em * 1em;
   font-weight: $semibold;
-  line-height: 40 / $font-size;
+  padding: (7 / $em * 1em) 0
 }
 
 .welcome-p {
@@ -447,7 +447,7 @@ body, p {
     color: $white;
     font-size: 1em;
     font-weight: $bold;
-    line-height: 1.5em;
+    line-height: 1.5;
     padding-bottom: $padding-t-b;
     padding-top: $padding-t-b;
     position: absolute;
@@ -559,6 +559,41 @@ body, p {
       padding: 2.597402597% 0 2.597402597% 15.584415584%; // 60 / 385
       width: 84.415584416%;
     }
+  }
+
+  .slide-head-grp {
+    font-size: 1em;
+  }
+
+  .slide-desc {
+    display: none;
+  }
+
+  .slick-dots {
+    padding-bottom: 2px;
+
+    li {
+      margin: 0 6px;
+
+      button:before {
+        font-size: 12px; // Ususally, we'd use em, but this is a hack to work around slick.
+      }
+    }
+  }
+
+  .welcome-hdr {
+    border-bottom: none;
+  }
+
+  .welcome-content {
+    display: none;
+  }
+
+}
+
+@media screen and (max-width: 525px) {
+  .section-title {
+    font-size: 1.25em;
   }
 }
 

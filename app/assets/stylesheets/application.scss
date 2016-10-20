@@ -38,6 +38,7 @@ $footer-v-spacing: 23 / $em * 1em;
 
 .footer-head {
   display: block;
+  font-size: 13 / $em * 1em;
   font-weight: $semibold;
   padding-top: 23 / $em * 1em;
   text-align: center;
@@ -55,4 +56,10 @@ $footer-v-spacing: 23 / $em * 1em;
 
 .addr-line.top {
   margin-top: $footer-v-spacing;
+}
+
+@media screen and (max-width: 646px) {
+  .addr-line {
+    font-size: .75em;
+  }
 }

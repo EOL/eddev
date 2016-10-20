@@ -518,6 +518,22 @@ body, p {
   }
 }
 
+@media screen and (max-width: $main-col-with-padding-width * 1px) {
+  .nav-items {
+    .nav-overlay {
+      font-size: 14 / $em * 1em;
+    }
+  }
+}
+
+@media screen and (max-width: 740px) {
+  .nav-items {
+    .nav-overlay {
+      font-size: 12 / $em * 1em;
+    }
+  }
+}
+
 @media screen and (max-width: 646px) {
   $new-main-col-width: 622;
 
@@ -534,6 +550,14 @@ body, p {
       $margin: percentage($margin-px / $new-main-col-width);
       width: $width;
       margin: $margin $margin 0 0;
+
+      .nav-overlay-txt {
+        width: percentage(203 / $width-px);
+      }
+    }
+
+    .nav-overlay {
+      font-size: 14 / $em * 1em;
     }
 
     .nav-item .img {
@@ -603,6 +627,20 @@ body, p {
 @media screen and (max-width: 525px) {
   .section-title {
     font-size: 1.25em;
+  }
+
+  .nav-items {
+    .nav-overlay {
+      font-size: 12 / $em * 1em;
+    }
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .nav-items {
+    .nav-overlay {
+      font-size: 10 / $em * 1em;
+    }
   }
 }
 

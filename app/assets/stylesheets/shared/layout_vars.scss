@@ -6,6 +6,7 @@ $unit-px: 16px;
 $em: 16;
 $main-col-width: 939;
 $main-col-padding: 12;
+$main-col-with-padding-width: $main-col-width + 2 * $main-col-padding;
 $topbar-height-px: 36;
 $topbar-height: $topbar-height-px / $em * 1em;
 $page-padding: 250;

@@ -16,6 +16,11 @@
  */
 @import "layout_vars.scss";
 
+#Page {
+  max-width: $page-width;
+  margin: 0 auto;
+}
+
 body { margin: 0; padding: 0; }
 .editor-content p { margin: 0; padding: 0; }
 
@@ -58,8 +63,118 @@ $footer-v-spacing: 23 / $em * 1em;
   margin-top: $footer-v-spacing;
 }
 
+.main-col, .topbar-inner {
+  @include main-col-horiz;
+}
+
+.topbar-inner {
+  height: 100%;
+  position: relative;
+}
+
+.topbar {
+  background: $black;
+  color: $white;
+  height: $topbar-height;
+}
+
+.eol-nav {
+  left: 0;
+  top: 0;
+  height: $topbar-height;
+
+  &:hover .eol-dropdown {
+    display: block;
+  }
+}
+
+.eol-dropdown {
+  $eol-link-padding-px: 13;
+  $font-size-px: 14;
+
+  display: none;
+  position: absolute;
+  font-size: $font-size-px / $em * 1em;
+  font-weight: $semibold;
+  width: 170 / $font-size-px * 1em;
+  top: $topbar-height-px / $font-size-px * 1em;
+  left: 0;
+  z-index: 2;
+
+  .eol-link {
+    $height-em: 37 / $em;
+    background: $background-gray;
+    height: $height-em * 1em;
+    line-height: $height-em;
+    padding-left: $eol-link-padding-px / $font-size-px * 1em;
+
+    a {
+      color: $eol-link-color;
+      text-decoration: none;
+    }
+  }
+}
+
+
+.eol-link.selected {
+  background: $eol-link-selected-bg-color;
+
+  a {
+    color: $white;
+  }
+}
+
+.eol-logo {
+  $height-em: 19 / $em;
+  position: absolute; 
+  height: $height-em * 1em;
+  line-height: $height-em;
+  left: 38 / $em * 1em;
+  top: 8 / $em * 1em;
+}
+
+.about {
+  $font-size-px: 14;
+  color: $about-link-gray;
+  font-size: 14 / $em * 1em;
+  font-weight: $semibold;
+  right: 0;
+  top: 0;
+  line-height: $topbar-height-px / $font-size-px;
+  text-align: center;
+}
+
+.title {
+  $font-size-px: 20;
+  margin: 0;   
+  font-size: $font-size-px / $em * 1em;
+  font-weight: $semibold;
+  line-height: $topbar-height-px / $font-size-px * 1em;
+  text-align: center;
+}
+
+.title-plus {
+  color: $eol-green;
+}
+
+.hero-image {
+  max-width: 100%;
+  max-height: (385px / $unit-px) + em;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.nav-link {
+  cursor: pointer;
+  position: absolute;
+  height: 100%;
+  text-decoration: none;
+  width: 120 / $em * 1em;
+}
+
 @media screen and (max-width: 646px) {
   .addr-line {
     font-size: .75em;
   }
 }
+

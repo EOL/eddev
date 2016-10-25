@@ -1,35 +1,11 @@
 @import "layout_vars.scss";
 
-$background-width: 1400px;
-$background-url: image-url('welcome/sample_background.png');
-$col-width: 890px;
-$color-bar-height: 8px;
-$content-height: 1670px;
-$header-height: 150px;
-$logo-padding-top: 40px;
-$link-blue: #126e94;
-$navbar-height: 37px;
-
-$open-sans: 'Open Sans', sans-serif;
-
-$white: #fff;
-$black: #000;
-$background-gray: #f4f4f4;
-$eol-link-color: #2e303d;
-$eol-link-selected-bg-color: #a9ba30;
-$eol-green: #a9ba30; 
-$about-link-gray: #c6c6c6;
-$section-border-gray: #979797;
-$section-title-gray: #3e3e3e;
-$section-intro-gray: #161616;
-$nav-overlay-gray: #333;
 
 $section-v-margin: 54;
 $section-v-margin-pct: percentage($section-v-margin / $main-col-width);
 $single-width-px: 305;
 $double-width-px: 622;
 $nav-img-height: 305;
-
 
 @function nav-img-url($img-name) {
   @return image-url("welcome/nav/" + $img-name + ".jpg")
@@ -49,27 +25,8 @@ body, p {
   font: normal 100% $open-sans;
 }
 
-#Page {
-  max-width: $page-width;
-  margin: 0 auto;
-}
-
-.main-col, .topbar-inner, .slide-overlay {
-  margin: 0 auto;
-  max-width: $main-col-width / $em * 1em;
-  min-width: 320 / $em * 1em;
-  padding: 0 percentage($main-col-padding / ($main-col-width + 2 * $main-col-padding));
-}
-
-.topbar-inner {
-  height: 100%;
-  position: relative;
-}
-
-.topbar {
-  background: $black;
-  color: $white;
-  height: $topbar-height;
+.slide-overlay {
+  @include main-col-horiz;
 }
 
 .left {
@@ -80,103 +37,11 @@ body, p {
   float: right; 
 }
 
-.nav-link {
-  cursor: pointer;
-  position: absolute;
-  height: 100%;
-  text-decoration: none;
-  width: 120 / $em * 1em;
-}
 
 //.nav-link:hover {
 //  background: #c6c6c6;
 //}
 
-.eol-nav {
-  left: 0;
-  top: 0;
-  height: $topbar-height;
-
-  &:hover .eol-dropdown {
-    display: block;
-  }
-}
-
-.eol-dropdown {
-  $eol-link-padding-px: 13;
-  $font-size-px: 14;
-
-  display: none;
-  position: absolute;
-  font-size: $font-size-px / $em * 1em;
-  font-weight: $semibold;
-  width: 170 / $font-size-px * 1em;
-  top: $topbar-height-px / $font-size-px * 1em;
-  left: 0;
-  z-index: 2;
-
-  .eol-link {
-    $height-em: 37 / $em;
-    background: $background-gray;
-    height: $height-em * 1em;
-    line-height: $height-em;
-    padding-left: $eol-link-padding-px / $font-size-px * 1em;
-
-    a {
-      color: $eol-link-color;
-      text-decoration: none;
-    }
-  }
-}
-
-
-.eol-link.selected {
-  background: $eol-link-selected-bg-color;
-
-  a {
-    color: $white;
-  }
-}
-
-.eol-logo {
-  $height-em: 19 / $em;
-  position: absolute; 
-  height: $height-em * 1em;
-  line-height: $height-em;
-  left: 38 / $em * 1em;
-  top: 8 / $em * 1em;
-}
-
-.about {
-  $font-size-px: 14;
-  color: $about-link-gray;
-  font-size: 14 / $em * 1em;
-  font-weight: $semibold;
-  right: 0;
-  top: 0;
-  line-height: $topbar-height-px / $font-size-px;
-  text-align: center;
-}
-
-.title {
-  $font-size-px: 20;
-  margin: 0;   
-  font-size: $font-size-px / $em * 1em;
-  font-weight: $semibold;
-  line-height: $topbar-height-px / $font-size-px * 1em;
-  text-align: center;
-}
-
-.title-plus {
-  color: $eol-green;
-}
-
-.hero-image {
-  max-width: 100%;
-  max-height: (385px / $unit-px) + em;
-  overflow: hidden;
-  z-index: 1;
-}
 
 .slide {
   position: relative;

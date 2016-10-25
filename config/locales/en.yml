@@ -27,6 +27,12 @@ en:
       mcz_credit_header: "EOL Learning + Education is generously supported by:"
       l_and_e_at_mcz_html: "<a href='/'>Encyclopedia of Life Learning + Education Group</a> | <a href='//www.mcz.harvard.edu/'>Museum of Comparative Zoology</a>"
       address_and_contact_html: "<a href='//www.harvard.edu'>Harvard University</a> 26 Oxford Street, Cambridge, MA 02138 USA | 617-496-6764 | education [at] eol.org"
+    header:
+      main_title_html: "Learning <span class='title-plus'>+</span> Education"
+      eol_nav:
+        l_and_e: "Learning + Education"
+        eol: "Encyclopedia of Life"
+      about_us: "ABOUT US"
 
   welcome:
     nav_item:
@@ -54,13 +60,7 @@ en:
         hi_res_images: "EOL has many stunning high resolution images that can be reused and repurposed with attribution. Look, use and enjoy!"
         inaturalist: "iNaturalist is an open science, biodiversity observation platform. Their research-grade images flow back into EOL."
         coloring_books: "The BHL provides the foundational literature to EOL, including original descriptions and beautiful images."
-    common:
-      main_title_html: "Learning <span class='title-plus'>+</span> Education"
-      eol_nav:
-        l_and_e: "Learning + Education"
-        eol: "Encyclopedia of Life"
-      about_us: "ABOUT US"
-    index_main_content:
+    index:
       welcome_box:
         welcome_to_l_and_e: "Welcome to Learning + Education at the Encyclopedia of Life"
         l_and_e_is_part: "The Encyclopedia of Life Learning + Education group (EOL L+E) is part of the larger EOL collaborative with a mission to make information about all life on Earth - microorganisms, plants and animals - freely available to anyone with access to the internet. EOL L+E works with educators, citizen scientists and partners to put this biodiversity information into context."

@@ -1,7 +1,4 @@
-$bold: 700;
-$semibold: 600;
-$light: 300;
-
+// Dimensions/units
 $unit-px: 16px;
 $em: 16;
 $main-col-width: 939;
@@ -12,3 +9,31 @@ $topbar-height: $topbar-height-px / $em * 1em;
 $page-padding: 250;
 $page-width: ($page-padding * 2 + $main-col-width) / $em * 1em;
 $page-width-px: $page-padding * 2 + $main-col-width;
+
+// Colors
+$white: #fff;
+$black: #000;
+$background-gray: #f4f4f4;
+$eol-link-color: #2e303d;
+$eol-link-selected-bg-color: #a9ba30;
+$eol-green: #a9ba30; 
+$about-link-gray: #c6c6c6;
+$section-border-gray: #979797;
+$section-title-gray: #3e3e3e;
+$section-intro-gray: #161616;
+$nav-overlay-gray: #333;
+$link-blue: #126e94;
+
+// Fonts
+$open-sans: 'Open Sans', sans-serif;
+$bold: 700;
+$semibold: 600;
+$light: 300;
+
+// Mixins
+@mixin main-col-horiz {
+  margin: 0 auto;
+  max-width: $main-col-width / $em * 1em;
+  min-width: 320 / $em * 1em;
+  padding: 0 percentage($main-col-padding / ($main-col-width + 2 * $main-col-padding));
+}

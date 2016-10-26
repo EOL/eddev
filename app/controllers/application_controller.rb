@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
 #  before_filter :set_locale
 #  before_filter :ensure_user
   before_filter :init_content_editor_state
+  before_filter :set_default_hero_image_partial
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -125,5 +126,9 @@ class ApplicationController < ActionController::Base
   # Render standard 404 page
   def render_404
     render(:file => File.join(Rails.root, 'public/404'), :status => 404, :layout => false)
+  end
+
+  def set_default_hero_image_partial
+    @hero_image_partial = "shared/hero_placeholder"
   end
 end

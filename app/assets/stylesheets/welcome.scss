@@ -159,13 +159,15 @@ body, p {
   text-align: center;
   width: 100%;
   margin-top: percentage(37 / $main-col-width);
+} 
 
+.welcome-box, .about-box {
   a {
     color: $link-blue; 
     font-weight: $semibold;
     text-decoration: none;
   }
-} 
+}
 
 .welcome-content {
   padding-top: 11 / $em * 1em;
@@ -522,527 +524,78 @@ body, p {
 
 // ---------  ABOUT  ------------
 .about-box {
-  background: $background-gray;
-  height: 100%;
-  margin: $section-v-margin-pct 0 0 0;
-  padding: 2.544529262087% 8.142493638677%; // 30px 96px (/1179)
-  text-align: center;
-  width: 83.7150127226%;
+  margin-top: percentage(37 / $main-col-width);
+}
 
-  a {
-    color: $link-blue; 
-    font-weight: $semibold;
-    text-decoration: none;
+.about-hdr {
+  $pad: percentage(4 / $main-col-width);
+  background-color: #a9ba30;
+  border-radius: 11px 11px 0 0;
+  color: $white;
+  font-size: 24 / $em * 1em;
+  font-weight: $semibold;
+  padding: $pad;
+  text-align: center;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.49);
+}
+
+.about-content {
+  $hpad: percentage(70 / $main-col-width);
+  $bpad: percentage(38 / $main-col-width);
+  background-color: #f4f4f4;
+  height: 100%;
+  font-size: 14 / $em * 1em;
+  font-weight: $semibold;
+  padding: 0 $hpad $bpad $hpad;
+  text-align: center;
+
+  .about-p {
+    padding-top: 20 / $em * 1em;
   }
 }
 
-//@mixin bg-layer {
-//  z-index: 1;
-//}
-//
-//@mixin content-layer {
-//  z-index: 2;
-//}
-//
-//// RESET RULES
-//body, p { 
-//  font-family: $open-sans;
-//}
-//
-//a, 
-//a:visited, 
-//a:hover {
-//  background: transparent;
-//  text-decoration: none;
-//}
-//
-//input[type="submit"] {
-//  border: 0;
-//}
-//
-//h1, 
-//h2, 
-//h3 {
-//  font-weight: normal;
-//  margin: 0;
-//}
-//
-//// GENERIC CLASSES
-//
-//.txt-wht, 
-//.txt-wht a, 
-//.txt-wht a:visited, 
-//.txt-wht a:hover, 
-//.txt-wht input[type="submit"] {
-//  color: #fff;
-//  font-family: "Open Sans", sans-serif;
-//  text-shadow: 0 1px 4px #000;
-//}
-//
-//
-///* MISC GLOBAL RULES */
-//%bg {
-//  @include bg-layer;
-//  background: $background-url no-repeat center top;
-//  background-size: $background-width;
-//}
-//
-//%bg-abs {
-//  @extend %bg;
-//  left: 0;
-//  position: absolute;
-//  top: 0;
-//}
-//
-//.bg {
-//  &--main {
-//    @extend %bg;
-//  }
-//
-//  &--hdr {
-//    @extend %bg-abs;
-//    bottom: 0;
-//    height: $topbar-height + $header-height;
-//    right: 0;
-//    
-//    -webkit-filter: blur(8px);
-//    filter: blur(8px);
-//  }
-//
-//  &--blur {
-//    @extend %bg-abs;
-//
-//    -webkit-filter: blur(10px); 
-//    filter: blur(10px); 
-//
-//    width: 100%;
-//  }
-//}
-//
-//.content-grp {
-//  @include content-layer;
-//  position: relative;
-//}
-//
-///* HEADER */
-//.header {
-////  z-index: 2;
-//}
-//
-//.left {
-//  display: block;
-//  float: left;
-//}
-//
-//.right {
-//  display: block;
-//  float: right;
-//}
-//
-//%btn {
-//  color: #FFF;
-//  border-radius: 1px;
-//  cursor: pointer;
-//}
-//
-//.btn {
-//  &--small {
-//    @extend %btn;
-//    font-size: 13px;
-//    line-height: 27px;
-//    padding: 0 26px;
-//  }
-//
-//  &--full {
-//    @extend %btn;
-//    font-size: 18px;
-//    height: 44px;
-//    line-height: 44px;
-//    padding: 0;
-//    width: 100%;
-//  }
-//}
-//
-//.blue {
-//  background: #34ABFE;
-//}
-//
-//.green {
-//  background: #6BBF26;
-//}
-//
-//.topbar { 
-//  $topbar-padding: 4px;
-//  background-color: rgba(12, 47, 57, .38); 
-//  height: $topbar-height - $topbar-padding; 
-//  padding-top: $topbar-padding;
-//}
-//
-//.header { 
-//  background-color: rgba(#5B92A8, .44);
-//  height: $header-height;
-//}
-//
-//.logo-pad {
-//  padding-top: $logo-padding-top;
-//}
-//
-//.txt-center {
-//  text-align: center;
-//}
-//
-//.logo-main {
-//  font-family: $hdr-font;
-//  font-size: 36px;  
-//  line-height: 31px;
-//  margin-bottom: 12px; 
-//}
-//
-//.txt-grn {
-//  color: #C0D62F;
-//  text-shadow: 0 2px 4px #000;
-//}
-//
-//.logo-sub {
-//  font-size: 24px;
-//}
-//
-//.ib-list {
-//  font-size: 0; // hack to remove space between inline-block elements
-//  height: 100%;
-//  list-style: none;
-//  margin: 0;
-//  overflow: hidden;
-//  padding: 0;
-//
-//  li {
-//    cursor: pointer;
-//    display: inline-block;
-//    height: 100%;
-//  }
-//}
-//
-//.nav-bar {
-//  background: #002238;
-//  height: $navbar-height;
-//  margin: 0;
-//  padding: 0;
-//  position: relative;
-//  text-align: center;
-//  width: 100%;
-//}
-//
-///* Category dropdowns */
-//.nav-cats {
-//  $nav-item-width: $col-width / 4;
-//
-//  /* Hide all color bars on hover (the one that is
-//   * actually being hovered is shown using a stronger
-//   * rule below) */
-//  &:hover .color-bar {
-//    display: none;
-//  }
-//
-//  .nav-label { 
-//    color: #D0D0D0;
-//    display: inline-block;
-//    font-family: $hdr-font;
-//    font-size: 18px;
-//    padding-top: 5px;
-//    width: $nav-item-width;
-//
-//    .nav-txt {
-//      margin-right: 7px;
-//    }
-//
-//    .nav-arw {
-//      position: absolute;
-//      top: 4px;
-//    }
-//  }
-//
-//  .nav-cat {
-//    /* Show the color bar for the category that
-//     * is being hovered (all others are hidden using
-//     * a weaker rule above) */
-//    &:hover .color-bar {
-//      display: block;
-//    }
-//
-//    .color-bar {
-//      bottom: 0;
-//      height: $color-bar-height;
-//      position: absolute;
-//      width: $nav-item-width;
-//    }
-//
-//    .color-bar.red    { background: #FF1433; }
-//    .color-bar.yellow { background: #FF0;    }
-//    .color-bar.orange { background: #FF6F00; }
-//    .color-bar.green  { background: #30FF00; }
-//
-//    &:hover > .dropdown {
-//      display: block;
-//    }
-//  }
-//
-//  .nav-links {
-//    padding-top: 50px;
-//  }
-//
-//  .dropdown {
-//    background: rgba(#092229, .9);
-//    border-bottom: 1px solid #979797;
-//    cursor: default;
-//    display: none;
-//    min-height: 280px;
-//    left: 0;
-//    padding-top: 50px;
-//    position: absolute;
-//    top: $navbar-height;
-//    width: 100%;
-//
-//    /* Main nav links (picure with text below) */
-//    .nav-link {
-//      cursor: pointer;
-//      display: inline-block;
-//      margin-right: 74px;
-//      overflow: hidden;
-//      width: 165px;
-//
-//      a {
-//        display: block;
-//        font-family: $hdr-font;
-//        font-size: 22px;
-//        line-height: 26px;
-//      }
-//
-//      img {
-//        height: 165px;
-//        width: 165px;
-//        margin-bottom: 10px;
-//      }
-//    }
-//
-//    .nav-link:last-of-type {
-//      margin-right: 0;
-//    }
-//  }
-//
-//  .about {
-//    margin-bottom: 50px;
-//    
-//    a {
-//      text-decoration: underline;
-//    }
-//
-//    p {
-//      display: block;
-//      font-size: 18px;
-//      line-height: 24px;
-//      margin: 0 auto 18px;
-//      text-align: left;
-//      width: $col-width;
-//    }
-//  }
-//}
-//
-///* LOGIN/REGISTER OVERLAY */
-//.account-panel {
-//  background: rgba(#092229, .9);
-//  color: #fff;
-//  display:none;
-//  height: $content-height;
-//  position: absolute;
-//  top: 0;
-//  width: 100%;
-//  z-index: 100;
-//
-//  .forgot-password {
-//    display: block;
-//    margin-top: 3px;
-//    text-align: right;
-//  }
-//
-//  .notice {
-//    $top-area-height: 70px;
-//    font-size: 18px;
-//    height: $top-area-height;
-//    line-height: $top-area-height;
-//    text-align: center;
-//  }
-//
-//  .inner {
-//    margin: 0 auto;
-//    position: relative;
-//    width: $col-width;
-//  }
-//
-//  .col {
-//    width: 323px; 
-//  }
-//
-//  .field {
-//    $input-width: 323px;
-//    margin: 0;
-//
-//    input {
-//      $border-width: 2px;
-//      $side-padding: 8px;
-//      border-width: $border-width;
-//      font-size: 18px;
-//      height: 42px;
-//      line-height: 42px;
-//      padding: 0 $side-padding;
-//      width: $input-width - $side-padding * 2 - $border-width * 2;
-//    }
-//  }
-//
-//  .error-msg {
-//    $padding: 9px;
-//    font-size: 15px;
-//    min-height: 40px - 2 * $padding;
-//    padding: $padding 0;
-//  }
-//
-//  .error-field {
-//    input {
-//      border: 2px solid #F00;
-//    }
-//
-//    .field-errors {
-//      font-family: $open-sans;
-//      font-size: 15px;
-//      margin: 0 0 10px 0;
-//      padding: 0 0 0 20px;
-//    }
-//  }
-//
-//  .hdr {
-//    font-family: $hdr-font;
-//    font-size: 27px;
-//    margin-bottom: 40px;
-//  }
-//
-//  label {
-//    font-size: 18px;
-//    line-height: 37px;
-//  }
-//
-//
-//
-//}
-//
-//.close-btn {
-//  cursor: pointer;
-//  position: absolute;
-//  right: 0;
-//  top: 20px;
-//}
-//
-///* PAGE BODY */
-//.main-content {
-//  height: $content-height;  
-//  margin: 0 auto;
-//  max-width: $background-width;
-//  min-width: $col-width;
-//  overflow: hidden;
-//  position: relative;
-//}
-//
-//.main-col {
-//  padding-top: 72px;
-//  z-index: 1;
-//}
-//
-//.content-box {
-//  @include content-layer;
-//  background: radial-gradient(rgba(#FFF, .78), rgba(#FFF, .72));
-//  position: relative;
-//}
-//
-//.welcome-hdr {
-//  color: #0982A5;
-//  font-family: $hdr-font;
-//  font-size: 24px;
-//}
-//
-//.welcome-box {
-//  margin-bottom: 72px;
-//  padding: 31px 72px;
-//  text-align: center;
-//
-//  p {
-//    font-size: 20px;
-//    line-height: 27px;
-//    margin: 22px 0 0 0;
-//  }
-//
-//  a {
-//    color: $link-blue;
-//    font-weight: bold;
-//  }
-//}
-// 
-//.featured-gallery {
-//  $hdr-font-size: 18px;
-//
-//  h3 {
-//    font-size: $hdr-font-size;
-//    margin-top: 0; 
-//  }
-//
-//  .gallery-item {
-//    .topbar {
-//      font-family: $hdr-font;
-//      font-size: $hdr-font-size;
-//      line-height: 34px;
-//      padding-left: 35px;
-//    }
-//
-//    .desc {
-//      padding: 25px 25px 60px 25px; 
-//    }
-//  }
-//
-//  .slick-dots {
-//    bottom: 20px;
-//
-//    li button:before {
-//      font-size: 14px;
-//    }
-//
-//    li.slick-active button:before {
-//      color: #C0D62F;
-//      text-shadow: -1px 0 #64920A,0 1px #64920A,1px 0 #64920A,0 -1px #64920A;
-//    }
-//  }
-//}
-//
-///* FOOTER */
-//.footer {
-//  @include content-layer;
-//  background: rgba(#FFF, 0.4);
-//  border-top: 1px solid #E4E4E4;
-//  bottom: 0;
-//  color: #555555;
-//  font-size: 14px;
-//  height: 184px;
-//  padding-top: 10px;
-//  position: absolute;
-//  text-align: center;
-//  width: 100%;
-//
-//  h2 {
-//    font-size: 13px;
-//    font-weight: 600;
-//  }
-//
-//  a, a:visited, a:hover {
-//    color: #636A9F;
-//  }
-//}
-//
-//.mcz-logo {
-//  margin: 8px 0;
-//}
+.team-head {
+  border-bottom: 1px solid $section-border-gray;
+  margin: percentage(62 / $main-col-width) 0 0 0;
+}
+
+.team-head-title {
+  font-size: 20 / $em * 1em;
+  font-weight: $semibold;
+}
+
+.team-head-content {
+  $tpad: percentage(5 / $main-col-width);
+  $bpad: percentage(12 / $main-col-width);
+  color: #161616;
+  font-size: 14 / $em * 1em;
+  font-weight: $light;
+  padding: $tpad 0 $bpad 0;
+}
+
+.bio {
+  margin-top: percentage(42 / $main-col-width);
+  min-height: 129 / $em * 1em;
+}
+
+.bio-img {
+  float: left;
+  margin-right: percentage(26 / $main-col-width);
+}
+
+.bio-head {
+  font-size: 18 / $em * 1em;
+  font-weight: $semibold;
+}
+
+.bio-title {
+  font-style: italic;
+}
+
+.bio-txt {
+  font-size: 14 / $em * 1em;
+  font-weight: $light;
+  line-height: 1.6;
+  margin-top: 4 / $em * 1em;
+}
+

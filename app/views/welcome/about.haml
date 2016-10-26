@@ -1,1 +1,23 @@
-.hi Hiiiii
+.about-box
+  %h2.about-hdr= t(".about_group_hdr")
+  .about-content
+    %p.about-p= t(".eol_is_an_open_science_html")
+    %p.about-p= t(".thats_where_l_and_e_comes_in_html")
+    %p.about-p= t(".if_you_are_interested_in_collaborating_html")
+
+.team-head
+  %h2.team-head-title
+    = t (".sections.partner_resources_title")
+  .team-head-content
+    This is a sentence describing that below are the profiles of team members that work within the Museum of Comparative Zoology at Harvard University. We also work with contributors at the Smithsonian Institute, Example, and Other Example.
+
+= render "bio", :bio_img_path => "http://www.placekitten.com/129/129",
+  :bio_name => "Tracy Barbaro",
+  :bio_title => "Projects Coordinator",
+  :bio_txt => "foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo"
+= render "bio", :bio_img_path => "http://www.placekitten.com/129/129",
+  :bio_name => "Tracy Barbaro",
+  :bio_title => "Projects Coordinator",
+  :bio_txt => "foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo"
+
+  

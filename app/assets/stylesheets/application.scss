@@ -172,6 +172,12 @@ $footer-v-spacing: 23 / $em * 1em;
   width: 120 / $em * 1em;
 }
 
+.hero-image {
+  img {
+    vertical-align: top;
+  }
+}
+
 @media screen and (max-width: 646px) {
   .addr-line {
     font-size: .75em;

@@ -75,6 +75,8 @@ en:
         partner_resources_desc: "EOL and EOL L+E work closely with many open science and open education partners to extend the possibilities for learning about biodiversity. Here are two that we find enormously useful and enjoyable."
 
           
+    about_hero:
+      butterflies_alt: "Students catching butterflies"
     about:
       about_group_hdr: "About the EOL Learning + Education Group"
       eol_is_an_open_science_html: "The Encyclopedia of Life (EOL) is an <a href='https://en.wikipedia.org/wiki/Open_science'>open science project</a> that pulls together information from <a href='http://eol.org/info/partners'>over 350 partners</a> about the world’s living nature - or <a href='http://eol.org/info/about_biodiversity'>biodiversity</a> - which includes all plants, animals and microorganisms that have <a href='http://eol.org/info/naming_species'>scientific names</a>. All of the text, images, videos and data on EOL are free to be reused and repurposed with <a href='http://eol.org/info/copyright_and_linking#using_content'>attribution</a>. There are about 2 million known and named organisms in the world. That means there is a lot of information on EOL and it can be hard to make sense of it all."

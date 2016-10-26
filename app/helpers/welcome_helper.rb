@@ -5,7 +5,6 @@ module WelcomeHelper
   end
 
   def slide_image_path(image_name)
-    path = image_path "welcome/slides/#{image_name}.jpg"
-    return "url(#{path})"
+    "welcome/slides/#{image_name}.jpg"
   end
 end

@@ -4,5 +4,6 @@ class WelcomeController < ApplicationController
   end
 
   def about
+    @hero_image_partial = "welcome/about_hero"
   end
 end

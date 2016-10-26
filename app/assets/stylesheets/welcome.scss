@@ -1,6 +1,5 @@
 @import "layout_vars.scss";
 
-
 $section-v-margin: 54;
 $section-v-margin-pct: percentage($section-v-margin / $main-col-width);
 $single-width-px: 305;
@@ -9,6 +8,34 @@ $nav-img-height: 305;
 
 @function nav-img-url($img-name) {
   @return image-url("welcome/nav/" + $img-name + ".jpg")
+}
+
+@mixin nav-item-dimensions-helper($inner-width, $inner-height, $over-txt-width, $col-width) {
+  $bar-padding-left: 30; 
+  $padding-left: percentage($bar-padding-left / $inner-width);
+
+  width: percentage($inner-width / $col-width);
+
+  .bar {
+    padding-left: $padding-left;
+    width: 100% - $padding-left;
+  }
+
+  .img {
+    padding-top: percentage($inner-height / $inner-width);
+  }
+
+  .nav-overlay-txt {
+    width: percentage($over-txt-width / $inner-width);
+  } 
+}
+
+@mixin nav-item-dimensions($item-width, $over-txt-width, $col-width) {
+  @include nav-item-dimensions-helper($item-width, $nav-img-height, $over-txt-width, $col-width);
+
+//  &.border {
+//    @include nav-item-dimensions-helper($item-width - 2, $nav-img-height - 2, $over-txt-width, $col-width);
+//  }
 }
 
 h1, h2, h3 {
@@ -269,6 +296,8 @@ body, p {
     position: relative;
     vertical-align: top;
 
+    box-sizing: border-box;
+
     &:hover {
       .nav-overlay {
         display: flex;
@@ -279,6 +308,10 @@ body, p {
       }
     } 
 
+    &.border {
+      border: 1px solid $black;
+    }
+
     .img {
       background-size: cover;
       background-position: center;
@@ -287,40 +320,13 @@ body, p {
 
 
   .double-width {
-    $padding-left: percentage($bar-padding-left / $double-width-px);
-
-    width: percentage($double-width-px / $main-col-width);
-
-    .bar {
-      padding-left: $padding-left;
-      width: 100% - $padding-left;
-    }
-
-    .img {
-      padding-top: percentage($nav-img-height / $double-width-px);
-    }
-
-    .nav-overlay-txt {
-      width: percentage(422 / $double-width-px);
-    }
+    $over-txt-width: 422;
+    @include nav-item-dimensions($double-width-px, $over-txt-width, $main-col-width);
   }
 
   .single-width {
-    $padding-left: percentage($bar-padding-left / $single-width-px);
-    width: percentage($single-width-px / $main-col-width);
-
-    .bar {
-      padding-left: $padding-left;
-      width: 100% - $padding-left;
-    }
-
-    .img {
-      padding-top: 100%;
-    }
-
-    .nav-overlay-txt {
-      width: percentage(203 / $single-width-px);
-    } 
+    $over-txt-width: 203;
+    @include nav-item-dimensions($single-width-px, $over-txt-width, $main-col-width);
   }
 
   .bar {
@@ -419,22 +425,14 @@ body, p {
     $width-px: ($new-main-col-width - $margin-px) / 2;
 
     .single-width, .double-width {
-      $width: percentage($width-px / $new-main-col-width);
-      $margin: percentage($margin-px / $new-main-col-width);
-      width: $width;
-      margin: $margin $margin 0 0;
+      @include nav-item-dimensions($width-px, 203, $new-main-col-width);
 
-      .nav-overlay-txt {
-        width: percentage(203 / $width-px);
-      }
+      $margin: percentage($margin-px / $new-main-col-width);
+      margin: $margin $margin 0 0;
     }
 
     .nav-overlay {
       font-size: 14 / $em * 1em;
-    }
-
-    .nav-item .img {
-      padding-top: 100%; // All images are now perfect squares
     }
 
     .ecosystems .img {
@@ -459,11 +457,6 @@ body, p {
     .collections,
     .coloring-books {
       margin-right: 0;
-    }
-
-    .bar {
-      padding: 2.597402597% 0 2.597402597% 15.584415584%; // 60 / 385
-      width: 84.415584416%;
     }
   }
 

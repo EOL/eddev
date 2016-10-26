@@ -88,6 +88,12 @@ $footer-v-spacing: 23 / $em * 1em;
   }
 }
 
+.eol-nav-a {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
 .eol-dropdown {
   $eol-link-padding-px: 13;
   $font-size-px: 14;

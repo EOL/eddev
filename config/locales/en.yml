@@ -25,6 +25,7 @@ en:
   shared: 
     footer:
       mcz_credit_header: "EOL Learning + Education is generously supported by:"
+      mcz_logo_alt: "Museum of Comparative Zoology, Harvard University"
       l_and_e_at_mcz_html: "<a href='/'>Encyclopedia of Life Learning + Education Group</a> | <a href='//www.mcz.harvard.edu/'>Museum of Comparative Zoology</a>"
       address_and_contact_html: "<a href='//www.harvard.edu'>Harvard University</a> 26 Oxford Street, Cambridge, MA 02138 USA | 617-496-6764 | education [at] eol.org"
     header:

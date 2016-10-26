@@ -39,6 +39,7 @@
       = render "shared/header"
       #HeroImage.hero-image
         = render @hero_image_partial
-      .main-col
-        = yield
+      %main{:role => "main"}
+        .main-col
+          = yield
       = render "shared/footer"

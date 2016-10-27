@@ -344,6 +344,7 @@ $nav-img-height: 305;
     padding: 0 percentage($main-col-padding / ($new-main-col-width + 2 * $main-col-padding));
   }
 
+
   .nav-items {
     $margin-px: 12;
     $width-px: ($new-main-col-width - $margin-px) / 2;
@@ -435,6 +436,14 @@ $nav-img-height: 305;
     .bar {
       font-size: .75em;
     }
+  }
+}
+
+@media screen and (max-width: 440px) {
+  $new-main-col-width: 440;
+
+  .slide-overlay-inner {
+    padding-bottom: percentage(30 / $new-main-col-width);
   }
 }
 

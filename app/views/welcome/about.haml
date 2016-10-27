@@ -6,11 +6,8 @@
     %p.about-p= t(".if_you_are_interested_in_collaborating_html")
 
 .team-head
-  %h2.team-head-title
-    = t (".sections.partner_resources_title")
-  .team-head-content
-    This is a sentence describing that below are the profiles of team members that work within the Museum of Comparative Zoology at Harvard University. We also work with contributors at the Smithsonian Institute, Example, and Other Example.
-
+  %h2.team-head-title= t ".meet_the_team"
+  %p.team-head-content= t ".le_is_located_html"
 = render "bio", :bio_img_path => "http://www.placekitten.com/129/129",
   :bio_name => "Tracy Barbaro",
   :bio_title => "Projects Coordinator",

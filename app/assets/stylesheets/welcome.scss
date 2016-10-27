@@ -10,11 +10,11 @@ $nav-img-height: 305;
   @return image-url("welcome/nav/" + $img-name + ".jpg")
 }
 
-@mixin nav-item-dimensions-helper($inner-width, $inner-height, $over-txt-width, $col-width) {
+@mixin nav-item-dimensions($item-width, $over-txt-width, $col-width) {
   $bar-padding-left: 30; 
-  $padding-left: percentage($bar-padding-left / $inner-width);
+  $padding-left: percentage($bar-padding-left / $item-width);
 
-  width: percentage($inner-width / $col-width);
+  width: percentage($item-width / $col-width);
 
   .bar {
     padding-left: $padding-left;
@@ -22,61 +22,22 @@ $nav-img-height: 305;
   }
 
   .img {
-    padding-top: percentage($inner-height / $inner-width);
+    padding-top: percentage($nav-img-height / $item-width);
   }
 
   .nav-overlay-txt {
-    width: percentage($over-txt-width / $inner-width);
+    width: percentage($over-txt-width / $item-width);
   } 
 }
 
-@mixin nav-item-dimensions($item-width, $over-txt-width, $col-width) {
-  @include nav-item-dimensions-helper($item-width, $nav-img-height, $over-txt-width, $col-width);
-
-//  &.border {
-//    @include nav-item-dimensions-helper($item-width - 2, $nav-img-height - 2, $over-txt-width, $col-width);
-//  }
-}
-
-h1, h2, h3 {
-  padding: 0;
-  margin: 0;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-body, p {
-  font: normal 100% $open-sans;
-}
-
+// ------------ HOME ----------------
+// SLIDESHOW
 .slide-overlay {
   @include main-col-horiz;
 }
 
-.left {
-  float: left;
-}
-
-.right {
-  float: right; 
-}
-
-
-//.nav-link:hover {
-//  background: #c6c6c6;
-//}
-
-
 .slide {
   position: relative;
-}
-
-.image {
-  max-width: 100%;
-  vertical-align: bottom;
 }
 
 .slide-overlay-wrap {
@@ -150,19 +111,12 @@ body, p {
   }
 }
 
+// WELCOME
 .welcome-box {
   text-align: center;
   width: 100%;
   margin-top: percentage(37 / $main-col-width);
 } 
-
-.welcome-box, .about-box {
-  a {
-    color: $link-blue; 
-    font-weight: $semibold;
-    text-decoration: none;
-  }
-}
 
 .welcome-content {
   padding-top: 11 / $em * 1em;
@@ -200,6 +154,7 @@ body, p {
   color: #6f6f6f;
 }
 
+// NAV SECTIONS
 .section-head {
   border-bottom: 1px solid $section-border-gray;
   margin: $section-v-margin-pct 0 0 0; // 66, (50 - 12 = 38) / 1179
@@ -365,6 +320,7 @@ body, p {
   }
 }
 
+// RESPONSIVE TRANSITIONS
 @media screen and (max-width: $main-col-with-padding-width * 1px) {
   .nav-items {
     .nav-overlay {
@@ -504,13 +460,14 @@ body, p {
   $hpad: percentage(70 / $main-col-width);
   $bpad: percentage(38 / $main-col-width);
   background-color: #f4f4f4;
+  border-radius: 0 0 11px 11px;
   height: 100%;
-  font-size: 14 / $em * 1em;
-  font-weight: $semibold;
   padding: 0 $hpad $bpad $hpad;
   text-align: center;
 
   .about-p {
+    font-size: 14 / $em * 1em;
+    font-weight: $light;
     padding-top: 20 / $em * 1em;
   }
 }

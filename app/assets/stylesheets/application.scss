@@ -16,22 +16,27 @@
  */
 @import "layout_vars.scss";
 
+body { margin: 0; padding: 0; }
+
+body, p {
+  font: normal 100% $open-sans;
+}
+
+p a { 
+  color: $link-blue;
+  font-weight: $semibold;
+  text-decoration: none;
+}
+
 #Page {
   max-width: $page-width;
   margin: 0 auto;
 }
 
-body { margin: 0; padding: 0; }
-.editor-content p { margin: 0; padding: 0; }
-
-#DraftHeader { background-color: #FAF55A; height: 20px; text-align: center; vertical-align: middle; }
-
-.field input, .field label { display: block; }
-
 /* FOOTER */
-$footer-v-spacing: 23 / $em * 1em;
-
 .footer { 
+  $footer-v-spacing: 23 / $em * 1em;
+
   background-color: #f0f0f0;
   height: 234 / $em * 1em;
   margin-top: percentage(192 / $main-col-width); 
@@ -39,31 +44,38 @@ $footer-v-spacing: 23 / $em * 1em;
   a {
     color: #50558d;
   }
+
+  .footer-head {
+    display: block;
+    font-size: 13 / $em * 1em;
+    font-weight: $semibold;
+    padding-top: 23 / $em * 1em;
+    text-align: center;
+  }
+
+  .mcz-logo {
+    display: block;
+    margin: $footer-v-spacing auto 0 auto;
+  }
+
+  .addr-line {
+    font-size: 14 / $em * 1em;
+    text-align: center;
+  }
+
+  .addr-line.top {
+    margin-top: $footer-v-spacing;
+  }
+
+  @media screen and (max-width: 646px) {
+    .addr-line {
+      font-size: .75em;
+    }
+  }
 }
 
-.footer-head {
-  display: block;
-  font-size: 13 / $em * 1em;
-  font-weight: $semibold;
-  padding-top: 23 / $em * 1em;
-  text-align: center;
-}
-
-.mcz-logo {
-  display: block;
-  margin: $footer-v-spacing auto 0 auto;
-}
-
-.addr-line {
-  font-size: 14 / $em * 1em;
-  text-align: center;
-}
-
-.addr-line.top {
-  margin-top: $footer-v-spacing;
-}
-
-.main-col, .topbar-inner {
+//HEADER
+.topbar-inner {
   @include main-col-horiz;
 }
 
@@ -120,7 +132,6 @@ $footer-v-spacing: 23 / $em * 1em;
     }
   }
 }
-
 
 .eol-link.selected {
   background: $eol-link-selected-bg-color;
@@ -210,10 +221,13 @@ $footer-v-spacing: 23 / $em * 1em;
   }
 }
 
-
-@media screen and (max-width: 646px) {
-  .addr-line {
-    font-size: .75em;
-  }
+// MAIN COLUMN
+.main-col {
+  @include main-col-horiz;
 }
 
+/*
+.editor-content p { margin: 0; padding: 0; }
+#DraftHeader { background-color: #FAF55A; height: 20px; text-align: center; vertical-align: middle; }
+.field input, .field label { display: block; }
+*/

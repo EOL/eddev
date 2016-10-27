@@ -7,4 +7,8 @@ module WelcomeHelper
   def slide_image_path(image_name)
     "welcome/slides/#{image_name}.jpg"
   end
+
+  def small_slide_image_path(image_name)
+    "welcome/slides/#{image_name}_sm.jpg"
+  end
 end

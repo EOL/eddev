@@ -34,6 +34,5 @@ $light: 300;
 @mixin main-col-horiz {
   margin: 0 auto;
   max-width: $main-col-width / $em * 1em;
-  min-width: 320 / $em * 1em;
   padding: 0 percentage($main-col-padding / ($main-col-width + 2 * $main-col-padding));
 }

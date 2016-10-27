@@ -16,6 +16,14 @@
  */
 @import "layout_vars.scss";
 
+@mixin hero-fluid($width, $height) {
+  margin: 0 auto;
+  padding-top: percentage($height / $width);
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
 body { margin: 0; padding: 0; }
 
 body, p {
@@ -38,7 +46,6 @@ p a {
   $footer-v-spacing: 23 / $em * 1em;
 
   background-color: #f0f0f0;
-  height: 234 / $em * 1em;
   margin-top: percentage(192 / $main-col-width); 
 
   a {
@@ -213,11 +220,23 @@ p a {
   z-index: 2;
 
   .hero-shim-inner {
-    margin: 0 auto;
-    padding-top: percentage(349 / $width);
-    width: 100%;
-    background-size: cover;
-    background-position: center;
+    @include hero-fluid($width, 349);
+  }
+}
+
+.hero-small {
+  display: none;
+}
+
+$hero-transition-width: 525;
+@media screen and (max-width: $hero-transition-width * 1px) {
+  .hero-shim, .hero-full {
+    display: none;
+  }
+
+  .hero-small {
+    display: block;
+    @include hero-fluid($hero-transition-width, 300);
   }
 }
 

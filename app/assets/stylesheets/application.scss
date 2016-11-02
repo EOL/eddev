@@ -16,6 +16,8 @@
  */
 @import "layout_vars.scss";
 
+$slide-menu-bg-color: #2e303d;
+
 @mixin hero-fluid($width, $height) {
   margin: 0 auto;
   padding-top: percentage($height / $width);
@@ -189,6 +191,10 @@ p a {
   width: 120 / $em * 1em;
 }
 
+.slide-menu {
+  display: none;
+}
+
 .hero-image {
   position: relative;
   max-width: 100%;
@@ -237,6 +243,111 @@ $hero-transition-width: 525;
   .hero-small {
     display: block;
     @include hero-fluid($hero-transition-width, 300);
+  }
+
+  .about {
+    display: none;
+  }
+
+  .slide-menu {
+    $color-bar-width-px: 3;
+    $width-px: 205;
+    $section-height: 29px;
+    $gray: #bfbfbf;
+
+    background: $slide-menu-bg-color;
+    display: inline-block;
+    height: $mobile-topbar-height;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 1px 0;
+    width: percentage($width-px / $hero-transition-width);
+
+    .section {
+      height: $section-height;
+    }
+
+    .color-bar {
+      display: inline-block;
+      height: 100%;
+      width: percentage($color-bar-width-px / $width-px);
+
+      &.green {
+        background: #6e9860;
+      }
+
+      &.blue {
+        background: #5ab4d6;
+      }
+    }
+
+    .divider {
+      background: $gray;
+      height: 1px;
+      margin-left: percentage(9 / $width-px);
+    }
+
+    .link {
+      $lmargin-px: 12;
+      $inner-width-px: $width-px - $color-bar-width-px - $lmargin-px;
+      color: $gray;
+      display: inline-block;
+      font-size: px-to-em(12);
+      height: $section-height;
+      line-height: $section-height;
+      margin-left: percentage($lmargin-px / $width-px);
+      text-decoration: none;
+      vertical-align: top;
+      width: percentage($inner-width-px / $width-px);
+    }
+  }
+
+  .bars {
+    $lmargin: percentage(23 / $hero-transition-width);
+    $tmargin: 14px;
+    cursor: pointer;
+    float: right;
+    margin: $tmargin $lmargin 0 0;
+  }
+
+  .eol-nav {
+    display: inline-block;
+    padding-top: 9 / $em * 1em;
+    position: relative;
+    height: auto;
+    width: auto;
+
+    &:hover .eol-dropdown {
+      display: none;
+    }
+  }
+
+  .eol-logo {
+    height: 24 / $em * 1em;
+    left: 0;
+    position: relative;
+    top: 0;
+  }
+
+  .title {
+    font-size: 14 / $em * 1em;
+    line-height: normal;
+    text-align: left;
+  }
+
+  .topbar {
+    height: $mobile-topbar-height;
+    overflow: hidden;
+  }
+
+  .title-container {
+    $lpad-px: 8;
+    $lpad: percentage($lpad-px / $hero-transition-width);
+    display: inline-block;
+    padding: 0 0 0 $lpad;
+    height: 100%;
+    width: percentage((320 - $lpad-px) / $hero-transition-width);
   }
 }
 

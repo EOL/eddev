@@ -17,3 +17,43 @@
 // require galleria/themes/classic/galleria.classic
 //= require tinymce-jquery
 //= require_tree .
+
+(function() {
+  function slideMenuOpen() {
+    var $bars = $('#BarsIcon'),
+        $titleContainer = $('#TitleContainer'),
+        $slideMenu = $('#SlideMenu'),
+        $topbar = $('#Topbar'),
+        topbarWidth = $topbar.outerWidth(),
+        slideMenuWidth = $slideMenu.outerWidth(),
+        targetWidth = 
+          ((topbarWidth - slideMenuWidth) / topbarWidth) * 100 + '%';
+    
+    $bars.off('click');
+
+    $titleContainer.animate({
+      'width': targetWidth
+    },
+    function() {
+      $bars.click(slideMenuClose);
+    });
+  } 
+
+  function slideMenuClose() {
+    var $bars = $('#BarsIcon'),
+        $titleContainer = $('#TitleContainer');
+
+    $bars.off('click');
+
+    $titleContainer.animate({
+      'width': '100%'
+    }, 
+    function() {
+      $bars.click(slideMenuOpen);
+    });
+  }
+
+  $(function() {
+    $('#BarsIcon').click(slideMenuOpen);
+  });
+})();

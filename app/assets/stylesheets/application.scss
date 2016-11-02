@@ -26,6 +26,14 @@ $slide-menu-bg-color: #2e303d;
   background-position: center;
 }
 
+html {
+  box-sizing: border-box; *behavior: asset-url("polyfill/box-sizing.htc");
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 body { margin: 0; padding: 0; }
 
 body, p {
@@ -258,9 +266,6 @@ $hero-transition-width: 525;
     background: $slide-menu-bg-color;
     display: inline-block;
     height: $mobile-topbar-height;
-    position: absolute;
-    right: 0;
-    top: 0;
     padding: 1px 0;
     width: percentage($width-px / $hero-transition-width);
 
@@ -289,14 +294,14 @@ $hero-transition-width: 525;
     }
 
     .link {
-      $lmargin-px: 12;
-      $inner-width-px: $width-px - $color-bar-width-px - $lmargin-px;
+      $lpad-px: 12;
+      $inner-width-px: $width-px - $color-bar-width-px - $lpad-px;
       color: $gray;
       display: inline-block;
       font-size: px-to-em(12);
       height: $section-height;
       line-height: $section-height;
-      margin-left: percentage($lmargin-px / $width-px);
+      padding-left: percentage($lpad-px / $width-px);
       text-decoration: none;
       vertical-align: top;
       width: percentage($inner-width-px / $width-px);
@@ -339,6 +344,7 @@ $hero-transition-width: 525;
   .topbar {
     height: $mobile-topbar-height;
     overflow: hidden;
+    white-space: nowrap;
   }
 
   .title-container {
@@ -347,7 +353,8 @@ $hero-transition-width: 525;
     display: inline-block;
     padding: 0 0 0 $lpad;
     height: 100%;
-    width: percentage((320 - $lpad-px) / $hero-transition-width);
+    vertical-align: top;
+    width: 100%;
   }
 }
 

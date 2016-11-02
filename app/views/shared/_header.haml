@@ -8,9 +8,8 @@
           = link_to t(".eol_nav.l_and_e"), root_path
         %li.eol-link
           = link_to t(".eol_nav.eol"), "http://www.eol.org"
-      -if !current_page?(:controller => "welcome", :action => "about")
-        = link_to about_path, :class => "about nav-link", :id => "About" do
-          = t ".about_us"
+    -if !current_page?(:controller => "welcome", :action => "about")
+      = link_to t(".about_us"), about_path, :class => "about nav-link", :id => "About"
     #BarsIcon.bars.fa.fa-bars.fa-2x
     %h1#Title.title 
       = t ".main_title_html"

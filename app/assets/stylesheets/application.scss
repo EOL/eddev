@@ -107,6 +107,10 @@ p a {
   height: $topbar-height;
 }
 
+.bars {
+  display: none;
+}
+
 .eol-nav {
   left: 0;
   top: 0;
@@ -169,7 +173,7 @@ p a {
 
 .about {
   $font-size-px: 14;
-  color: $about-link-gray;
+  color: $white;
   font-size: 14 / $em * 1em;
   font-weight: $semibold;
   right: 0;
@@ -192,11 +196,12 @@ p a {
 }
 
 .nav-link {
+  $bg-gray: #2e303d;
+  background: $bg-gray;
   cursor: pointer;
   position: absolute;
-  height: 100%;
   text-decoration: none;
-  width: 120 / $em * 1em;
+  width: 120px;
 }
 
 .slide-menu {
@@ -257,6 +262,10 @@ $hero-transition-width: 525;
     display: none;
   }
 
+  .nav-link {
+    background: transparent;
+  }
+
   .slide-menu {
     $color-bar-width-px: 3;
     $width-px: 205;
@@ -295,7 +304,7 @@ $hero-transition-width: 525;
 
     .link {
       $lpad-px: 12;
-      $inner-width-px: $width-px - $color-bar-width-px - $lpad-px;
+      $inner-width-px: $width-px - $color-bar-width-px;
       color: $gray;
       display: inline-block;
       font-size: px-to-em(12);
@@ -312,6 +321,7 @@ $hero-transition-width: 525;
     $lmargin: percentage(23 / $hero-transition-width);
     $tmargin: 14px;
     cursor: pointer;
+    display: block;
     float: right;
     margin: $tmargin $lmargin 0 0;
   }

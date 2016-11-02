@@ -18,7 +18,7 @@ $nav-img-height: 305;
 
   .bar {
     padding-left: $padding-left;
-    width: 100% - $padding-left;
+    width: 100%;
   }
 
   .img {
@@ -218,8 +218,6 @@ $nav-img-height: 305;
     margin: $margin $margin 0 0; 
     position: relative;
     vertical-align: top;
-
-    box-sizing: border-box; *behavior: asset-url("polyfill/box-sizing.htc");
 
     &:hover {
       .nav-overlay {

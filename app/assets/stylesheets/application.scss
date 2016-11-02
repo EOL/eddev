@@ -101,6 +101,12 @@ p a {
   width: 100%;
 }
 
+.topbar-inner {
+  max-width: $main-col-width * 1px;
+  margin: 0 auto;
+  position: relative;
+}
+
 .bars {
   display: none;
 }

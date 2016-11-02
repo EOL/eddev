@@ -1,23 +1,24 @@
 #Topbar.topbar<
-  #TitleContainer.title-container>
-    #EolNav.eol-nav.nav-link
-      = link_to root_path, :class => "eol-nav-a" do
-        = image_tag "welcome/eol_logo.png", :class => "eol-logo"
-      %ul#EolDropdown.eol-dropdown
-        %li.eol-link.selected
-          = link_to t(".eol_nav.l_and_e"), root_path
-        %li.eol-link
-          = link_to t(".eol_nav.eol"), "http://www.eol.org"
-    -if !current_page?(:controller => "welcome", :action => "about")
-      = link_to t(".about_us"), about_path, :class => "about nav-link", :id => "About"
-    #BarsIcon.bars.fa.fa-bars
-    %h1#Title.title 
-      = t ".main_title_html"
-  #SlideMenu.slide-menu>
-    .section<
-      .color-bar.green
-      = link_to "EOL.org", "http://www.eol.org/", :class => :link
-    .divider
-    .section<
-      .color-bar.blue
-      = link_to "About", about_path, :class  => :link
+  .topbar-inner
+    #TitleContainer.title-container>
+      #EolNav.eol-nav.nav-link
+        = link_to root_path, :class => "eol-nav-a" do
+          = image_tag "welcome/eol_logo.png", :class => "eol-logo"
+        %ul#EolDropdown.eol-dropdown
+          %li.eol-link.selected
+            = link_to t(".eol_nav.l_and_e"), root_path
+          %li.eol-link
+            = link_to t(".eol_nav.eol"), "http://www.eol.org"
+      -if !current_page?(:controller => "welcome", :action => "about")
+        = link_to t(".about_us"), about_path, :class => "about nav-link", :id => "About"
+      #BarsIcon.bars.fa.fa-bars
+      %h1#Title.title 
+        = t ".main_title_html"
+    #SlideMenu.slide-menu>
+      .section<
+        .color-bar.green
+        = link_to "EOL.org", "http://www.eol.org/", :class => :link
+      .divider
+      .section<
+        .color-bar.blue
+        = link_to "About", about_path, :class  => :link

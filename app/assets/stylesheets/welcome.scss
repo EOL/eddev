@@ -338,10 +338,9 @@ $nav-img-height: 305;
 @media screen and (max-width: 646px) {
   $new-main-col-width: 622;
 
-  .main-col, .topbar-inner, .slide-overlay {
+  .main-col, .slide-overlay {
     padding: 0 percentage($main-col-padding / ($new-main-col-width + 2 * $main-col-padding));
   }
-
 
   .nav-items {
     $margin-px: 12;

@@ -49,6 +49,7 @@ p a {
 #Page {
   max-width: $page-width;
   margin: 0 auto;
+  overflow: hidden;
 }
 
 /* FOOTER */
@@ -92,19 +93,12 @@ p a {
 }
 
 //HEADER
-.topbar-inner {
-  @include main-col-horiz;
-}
-
-.topbar-inner {
-  height: 100%;
-  position: relative;
-}
-
 .topbar {
   background: $black;
   color: $white;
   height: $topbar-height;
+  position: relative;
+  width: 100%;
 }
 
 .bars {

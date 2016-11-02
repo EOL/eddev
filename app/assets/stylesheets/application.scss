@@ -319,10 +319,11 @@ $hero-transition-width: 525;
 
   .bars {
     $lmargin: percentage(23 / $hero-transition-width);
-    $tmargin: 14px;
+    $tmargin: 18px;
     cursor: pointer;
     display: block;
     float: right;
+    font-size: 1.5em;
     margin: $tmargin $lmargin 0 0;
   }
 

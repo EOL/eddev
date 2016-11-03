@@ -35,6 +35,10 @@ en:
         eol: "Encyclopedia of Life"
       about_us: "ABOUT US"
       about: "About"
+    image_credits: 
+      header: "Image Credits"
+      eol_promotes_html: "EOL promotes content sharing via Creative Commons and other open licenses. Learn more about <a href='http://eol.org/info/eol_licensing_policy'>EOL's Licensing Policy</a>."
+      credit_html: "<span class='%{title_class}'>%{title}</span> by %{author} via <a href='%{url}'>%{source}</a> %{license}"
 
   welcome:
     nav_item:
@@ -93,12 +97,17 @@ en:
         create_new_account: "Create New Account"
         signup_success_msg: "Please check your email for instructions on how to activate your account."
         signup_failure_msg: "Please correct the above errors and try again."
+    bio: 
+      name_and_title_html: "%{name}, <span class=\"%{title_class}\">%{title}</span>"
+      tracy_name: "Tracy Barbaro"
+      project_coordinator: "Project Coordinator"
+      tracy_bio: "As a Project Coordinator Tracy focuses on outreach, the development of educational resources to help educators and learners use EOL and facilitating educational partnerships. Tracy brings to EOL her background in instructional technology, environmental education, and service learning."
+      amy_name: "Amy Lorenz"
+      amy_bio: "Amy is Project Coordinator for the Okaloosa S.C.I.E.N.C.E project, a Department of Defense Education Activity (DoDEA) grant for Okaloosa County School District in Northwest Florida. She coordinates and collaborates with partner organizations to create place-based educational materials and activities using EOL and lead schoolyard BioBlitzes. Amy's background is in field science education, citizen science, and natural resources."
+      marie_name: "Marie Studer PhD"
+      director: "Learning + Education Director"
+      marie_bio: "Marie works with EOL’s leadership, staff and partners to set strategic direction and develop partnerships to creatively leverage EOL content, tools and services across learning platforms and needs. She introduces EOL to educators, learners, citizen scientists and the public as a way to support in-person and online learning about biodiversity. Marie has experience in research, education and conservation and enjoys making science accessible to public audiences."
 
-      footer:
-        mcz_credit_header: "EOL Learning + Education is generously supported by:"
-        l_and_e_at_mcz_html: "<a href='/'>Encyclopedia of Life Learning + Education Group</a> | <a href='//www.mcz.harvard.edu/'>Museum of Comparative Zoology</a>"
-        address_and_contact_html: "<a href='//www.harvard.edu'>Harvard University</a> 26 Oxford Street, Cambridge, MA 02138 USA | 617-496-6764 | education [at] eol.org"
-  content_editor: 
     edit_mode_on: "Edit mode on"
     edit_mode_off: "Edit mode off"
     save_error: "Oops, something went wrong! Please try again later."

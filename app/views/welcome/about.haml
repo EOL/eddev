@@ -4,13 +4,17 @@
 .team-head
   %h2.team-head-title= t ".meet_the_team"
   %p.team-head-content= t ".le_is_located_html"
-= render "bio", :bio_img_path => "http://www.placekitten.com/129/129",
-  :bio_name => "Tracy Barbaro",
-  :bio_title => "Projects Coordinator",
-  :bio_txt => "foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo"
-= render "bio", :bio_img_path => "http://www.placekitten.com/129/129",
-  :bio_name => "Tracy Barbaro",
-  :bio_title => "Projects Coordinator",
-  :bio_txt => "foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo foo"
+= render "bio", :bio_img_path => "welcome/bio/tracy.jpg",
+  :bio_name => "tracy_name",
+  :bio_title => "project_coordinator",
+  :bio_txt => "tracy_bio"
+= render "bio", :bio_img_path => "welcome/bio/amy.jpg",
+  :bio_name => "amy_name",
+  :bio_title => "project_coordinator",
+  :bio_txt => "amy_bio"
+= render "bio", :bio_img_path => "welcome/bio/marie.jpg",
+  :bio_name => "marie_name",
+  :bio_title => "director",
+  :bio_txt => "marie_bio"
 
   

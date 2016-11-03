@@ -1,9 +1,5 @@
 .bio<
   = image_tag bio_img_path, :class => "bio-img"
   .bio-content
-    .bio-head
-      = bio_name
-      &nbsp;
-      %span.bio-title
-        = bio_title
-    .bio-txt= bio_txt
+    .bio-head= t(".name_and_title_html", :name => t("." + bio_name), :title => t("." + bio_title), :title_class => "bio-title")
+    .bio-txt= t("." + bio_txt)

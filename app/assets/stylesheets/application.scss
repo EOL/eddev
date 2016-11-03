@@ -26,6 +26,12 @@ $slide-menu-bg-color: #2e303d;
   background-position: center;
 }
 
+@mixin standard-link {
+  color: $link-blue;
+  font-weight: $semibold;
+  text-decoration: none;
+}
+
 *, *:before, *:after {
   box-sizing: border-box; *behavior: asset-url("polyfill/box-sizing.htc");
 }
@@ -37,9 +43,7 @@ body, p {
 }
 
 p a { 
-  color: $link-blue;
-  font-weight: $semibold;
-  text-decoration: none;
+  @include standard-link;
 }
 
 #Page {
@@ -423,6 +427,39 @@ $hero-transition-width: 525;
   @include main-col-horiz;
 }
 
+// IMAGE CREDITS
+.image-credit-section {
+  color: #212121;
+  font-size: 14px;
+  margin-top: percentage(72 / $main-col-width);
+  text-align: center;
+
+  a {
+    @include standard-link;
+  }
+}
+
+.image-credits-hdr {
+  border-bottom: 1px solid #979797;
+  color: $black;
+  font-size: 18px;
+  font-weight: $semibold;
+  padding-bottom: percentage(7 / $main-col-width);
+}
+
+.image-credits-overview {
+  padding: percentage(8 / $main-col-width) 0;
+  margin-top: percentage(8 / $main-col-width);
+}
+
+.image-credits {
+  margin-top: percentage(12 / $main-col-width);
+}
+
+.image-title {
+  font-style: italic;
+}
+
 @media screen and (max-width: 646px) {
   .intro-box.hideable {
     .intro-hdr {
@@ -442,6 +479,24 @@ $hero-transition-width: 525;
 
   .intro-p {
     font-size: 12px;
+  }
+
+  .image-credits-hdr {
+    font-size: 14px;
+  }
+
+  .image-credit-section {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .image-credits-hdr {
+    font-size: 12px;
+  }
+
+  .image-credit-section {
+    font-size: 10px;
   }
 }
 

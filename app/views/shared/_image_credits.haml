@@ -1,0 +1,12 @@
+#ImageCredits.image-credit-section
+  %h2.image-credits-hdr= t ".header"
+  %p.image-credits-overview= t ".eol_promotes_html"
+  .image-credits
+    -images.each do |image|
+      .image-credit
+        = t ".credit_html", :title => image[:title],
+          :title_class => "image-title",
+          :author => image[:author],
+          :source => image[:source],
+          :url => image[:url],
+          :license => image[:license]

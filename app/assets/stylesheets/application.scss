@@ -26,12 +26,8 @@ $slide-menu-bg-color: #2e303d;
   background-position: center;
 }
 
-html {
-  box-sizing: border-box; *behavior: asset-url("polyfill/box-sizing.htc");
-}
-
 *, *:before, *:after {
-  box-sizing: inherit;
+  box-sizing: border-box; *behavior: asset-url("polyfill/box-sizing.htc");
 }
 
 body { margin: 0; padding: 0; }
@@ -423,6 +419,7 @@ $hero-transition-width: 525;
 
 // MAIN COLUMN
 .main-col {
+  box-sizing: content-box;
   @include main-col-horiz;
 }
 
@@ -435,6 +432,16 @@ $hero-transition-width: 525;
     .intro-content {
       display: none;
     }
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .intro-hdr {
+    font-size: 14px;
+  }
+
+  .intro-p {
+    font-size: 12px;
   }
 }
 

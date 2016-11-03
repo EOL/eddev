@@ -443,18 +443,27 @@ $nav-img-height: 305;
   $bpad: percentage(12 / $main-col-width);
   color: #161616;
   font-size: 14 / $em * 1em;
-  font-weight: $light;
   padding: $tpad 0 $bpad 0;
 }
 
 .bio {
+  display: flex;
   margin-top: percentage(42 / $main-col-width);
-  min-height: 129 / $em * 1em;
 }
 
+$bio-img-width-px: 127;
+$bio-img-rmargin-px: 26;
+$bio-img-outer-width-px: $bio-img-width-px + $bio-img-rmargin-px;
 .bio-img {
-  float: left;
-  margin-right: percentage(26 / $main-col-width);
+  margin-right: percentage($bio-img-rmargin-px / $main-col-width);
+  width: $bio-img-width-px * 1px;
+  height: $bio-img-width-px * 1px;
+  vertical-align: top;
+}
+
+.bio-content {
+  $width-px: $main-col-width - $bio-img-outer-width-px;
+  flex: 1;
 }
 
 .bio-head {
@@ -463,13 +472,33 @@ $nav-img-height: 305;
 }
 
 .bio-title {
+  display: inline-block;
   font-style: italic;
 }
 
 .bio-txt {
   font-size: 14 / $em * 1em;
-  font-weight: $light;
   line-height: 1.6;
   margin-top: 4 / $em * 1em;
 }
 
+@media screen and (max-width: 525px) {
+  .team-head-title {
+    font-size: 16px;
+  }
+
+  .bio-head {
+    font-size: 14px;
+  }
+
+  .team-head-content, .bio-txt {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .bio-img {
+    height: 85px;
+    width: 85px;
+  }
+}

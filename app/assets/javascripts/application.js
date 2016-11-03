@@ -54,11 +54,13 @@
   }
 
   function closeMenuIfNecessary() {
-    var transitionWidth = 525;
+    var transitionWidth = 525,
+        $bars = $('#BarsIcon');
 
     if ($(window).width() > transitionWidth) {
       $('#TitleContainer').css('width', '100%');
-      $('#BarsIcon').click(slideMenuOpen);
+      $bars.off('click');
+      $bars.click(slideMenuOpen);
     }
   }
 

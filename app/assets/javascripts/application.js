@@ -53,7 +53,17 @@
     });
   }
 
+  function closeMenuIfNecessary() {
+    var transitionWidth = 525;
+
+    if ($(window).width() > transitionWidth) {
+      $('#TitleContainer').css('width', '100%');
+      $('#BarsIcon').click(slideMenuOpen);
+    }
+  }
+
   $(function() {
     $('#BarsIcon').click(slideMenuOpen);
+    $(window).resize(closeMenuIfNecessary);
   });
 })();

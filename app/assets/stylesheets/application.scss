@@ -313,7 +313,14 @@ $hero-transition-width: 525;
       padding-left: percentage($lpad-px / $width-px);
       text-decoration: none;
       vertical-align: top;
+      position: relative;
       width: percentage($inner-width-px / $width-px);
+
+      .cur-page-check {
+        position: absolute;
+        right: 14px;
+        top: 9px;
+      }
     }
   }
 

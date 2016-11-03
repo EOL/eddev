@@ -6,4 +6,9 @@ module ApplicationHelper
   def t_model_error(model, attribute, message, inter_vars={})
     t("activerecord.errors.models.#{model.to_s}.attributes.#{attribute.to_s}.#{message.to_s}", inter_vars)
   end
+
+  def about_page?
+    current_page? :controller => "welcome", :action => "about" 
+  end
 end
+

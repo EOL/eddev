@@ -9,7 +9,7 @@
             = link_to t(".eol_nav.l_and_e"), root_path
           %li.eol-link
             = link_to t(".eol_nav.eol"), "http://www.eol.org"
-      -if !current_page?(:controller => "welcome", :action => "about")
+      -if !about_page?
         = link_to t(".about_us"), about_path, :class => "about nav-link", :id => "About"
       #BarsIcon.bars.fa.fa-bars
       %h1#Title.title 
@@ -21,4 +21,9 @@
       .divider
       .section<
         .color-bar.blue
-        = link_to "About", about_path, :class  => :link
+        -if about_page? 
+          .link 
+            About
+            %i.fa.fa-check.cur-page-check
+        -else
+          = link_to "About", about_path, :class  => :link

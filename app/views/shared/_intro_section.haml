@@ -1,0 +1,7 @@
+%div{:class => ["intro-box", ("hideable" if hideable)]}
+  %h2.intro-hdr
+    = t header
+  .intro-content
+    - paragraphs.each do |para|
+      %p.intro-p
+        = t para

@@ -111,49 +111,6 @@ $nav-img-height: 305;
   }
 }
 
-// WELCOME
-.welcome-box {
-  text-align: center;
-  width: 100%;
-  margin-top: percentage(37 / $main-col-width);
-} 
-
-.welcome-content {
-  padding-top: 11 / $em * 1em;
-}
-
-.welcome-hdr {
-  $font-size: 18;
-  border-bottom: solid 1px #979797;
-  font-size: $font-size / $em * 1em;
-  font-weight: $semibold;
-  padding: 0 0 (7 / $em * 1em) 0;
-}
-
-.welcome-p {
-  $font-size: 14;
-  font-size: $font-size / $em * 1em; 
-  line-height: 1.7;
-  padding: 0 percentage(85 / $main-col-width);
-
-  &.hidden {
-    display: none;
-  }
-}
-
-.welcome-more-bar {
-  $height: 23 / $em * 1em;
-  background-image: radial-gradient(circle at 50% 0, #b3c81d, #cfdd6d);
-  border-radius: 0 0 11px 11px;
-  height: $height;
-  line-height: $height;
-
-  font-size: 14 / $em * 1em;
-  font-weight: $semibold;
-  text-align: center;
-  color: #6f6f6f;
-}
-
 // NAV SECTIONS
 .section-head {
   border-bottom: 1px solid $section-border-gray;
@@ -402,13 +359,6 @@ $nav-img-height: 305;
     }
   }
 
-  .welcome-hdr {
-    border-bottom: none;
-  }
-
-  .welcome-content {
-    display: none;
-  }
 
 }
 

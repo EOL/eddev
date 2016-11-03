@@ -57,7 +57,8 @@ p a {
   $footer-v-spacing: 23 / $em * 1em;
 
   background-color: #f0f0f0;
-  margin-top: percentage(192 / $main-col-width); 
+  margin-top: percentage(192 / $page-width-px); 
+  padding: percentage(23 / $page-width-px) 0 percentage(37 / $page-width-px) 0; 
 
   a {
     color: #50558d;
@@ -67,7 +68,6 @@ p a {
     display: block;
     font-size: 13 / $em * 1em;
     font-weight: $semibold;
-    padding-top: 23 / $em * 1em;
     text-align: center;
   }
 
@@ -369,9 +369,66 @@ $hero-transition-width: 525;
   }
 }
 
+// PAGE INTRO
+.intro-box {
+  text-align: center;
+  width: 100%;
+  margin-top: percentage(37 / $main-col-width);
+} 
+
+.intro-content {
+  padding-top: 11 / $em * 1em;
+}
+
+.intro-hdr {
+  $font-size: 18;
+  border-bottom: solid 1px #979797;
+  font-size: $font-size / $em * 1em;
+  font-weight: $semibold;
+  padding: 0 0 (7 / $em * 1em) 0;
+}
+
+.intro-p {
+  $font-size: 14;
+  font-size: $font-size / $em * 1em; 
+  line-height: 1.7;
+  margin-bottom: percentage(22 / $main-col-width);
+  padding: 0 percentage(85 / $main-col-width);
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.welcome-more-bar {
+  $height: 23 / $em * 1em;
+  background-image: radial-gradient(circle at 50% 0, #b3c81d, #cfdd6d);
+  border-radius: 0 0 11px 11px;
+  height: $height;
+  line-height: $height;
+
+  font-size: 14 / $em * 1em;
+  font-weight: $semibold;
+  text-align: center;
+  color: #6f6f6f;
+}
+
+
 // MAIN COLUMN
 .main-col {
   @include main-col-horiz;
+}
+
+@media screen and (max-width: 646px) {
+  .intro-box.hideable {
+    .intro-hdr {
+      border-bottom: none;
+    }
+
+    .intro-content {
+      display: none;
+    }
+  }
 }
 
 /*

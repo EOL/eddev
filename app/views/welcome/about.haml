@@ -1,10 +1,6 @@
-.about-box
-  %h2.about-hdr= t(".about_group_hdr")
-  .about-content
-    %p.about-p= t(".eol_is_an_open_science_html")
-    %p.about-p= t(".thats_where_l_and_e_comes_in_html")
-    %p.about-p= t(".if_you_are_interested_in_collaborating_html")
-
+= render "shared/intro_section", :header => "welcome.about.about_group_hdr",
+  :paragraphs => ["welcome.about.eol_is_an_open_science_html", "welcome.about.thats_where_l_and_e_comes_in_html", "welcome.about.if_you_are_interested_in_collaborating_html"],
+  :hideable => false
 .team-head
   %h2.team-head-title= t ".meet_the_team"
   %p.team-head-content= t ".le_is_located_html"

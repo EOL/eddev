@@ -32,4 +32,4 @@
 /config/application.yml
 
 # OS X .DS_Store
-*.DS_Store
+.DS_Store

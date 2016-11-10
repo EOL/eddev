@@ -1,0 +1,5 @@
+%li{:class => ["deck", ("odd" if count % 2 == 0), ("even" if count % 2 == 1)]}>
+  %img.deck-img{:src => img_src}>
+  .deck-info>
+    %h3.deck-title= t title_key
+    %p.deck-desc= t desc_key

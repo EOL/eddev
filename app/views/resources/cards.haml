@@ -1,1 +1,31 @@
-hi
+= render "shared/intro_section", :header => "resources.cards.cards_hdr",
+  :paragraphs => ["resources.cards.intro_p"],
+  :hideable => false
+= render "shared/section_head", :title_key => "resources.cards.featured_decks"
+%ul.featured-decks
+  %li.featured-deck.first>
+    %img.featured-deck-img{:src => "http://www.placekitten.com/225/308"}
+  %li.featured-deck.second>
+    %img.featured-deck-img{:src => "http://www.placekitten.com/225/308"}
+  %li.featured-deck.third>
+    %img.featured-deck-img{:src => "http://www.placekitten.com/225/308"}
+  %li.featured-deck.fourth>
+    %img.featured-deck-img{:src => "http://www.placekitten.com/225/308"}
+= render "shared/section_head", :title_key => "resources.cards.all_decks"
+%ul.all-decks<
+  = render "deck", :title_key => "resources.cards.decks.bh_title",
+    :desc_key => "resources.cards.decks.bh_desc",
+    :count => 0,
+    :img_src => "http://www.placekitten.com/150/250"
+  = render "deck", :title_key => "resources.cards.decks.bh_title",
+    :desc_key => "resources.cards.decks.bh_desc",
+    :count => 1,
+    :img_src => "http://www.placekitten.com/150/250"
+  = render "deck", :title_key => "resources.cards.decks.bh_title",
+    :desc_key => "resources.cards.decks.bh_desc",
+    :count => 2,
+    :img_src => "http://www.placekitten.com/150/250"
+  = render "deck", :title_key => "resources.cards.decks.bh_title",
+    :desc_key => "resources.cards.decks.bh_desc",
+    :count => 3,
+    :img_src => "http://www.placekitten.com/150/250"

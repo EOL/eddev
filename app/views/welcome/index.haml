@@ -2,9 +2,8 @@
   :paragraphs => ["welcome.index.welcome_box.l_and_e_is_part_html"],
   :hideable => true
 
-.section-head.section-head-top
-  %h2.section-title
-    = t ".sections.l_and_e_resources_title"
+= render "shared/section_head", :title_key => "welcome.index.sections.l_and_e_resources_title",
+  :top => true
 %ul.nav-items<
   = render "nav_item",
     :width => "single",
@@ -26,13 +25,11 @@
     :klazz => "lesson-plans"
   = render "nav_item",
     :width => "single",
-    :href => "#",
+    :href => cards_path,
     :image_name => "species_cards",
     :text_key => "species_cards",
     :klazz => "species-cards"
-.section-head
-  %h2.section-title 
-    = t ".sections.eol_resources_title"
+= render "shared/section_head", :title_key => "welcome.index.sections.eol_resources_title"
 %ul.nav-items<
   = render "nav_item",
     :width => "single",
@@ -64,9 +61,7 @@
     :image_name => "hi_res_images",
     :text_key => "hi_res_images",
     :klazz => "hi-res-images"
-.section-head
-  %h2.section-title
-    = t (".sections.partner_resources_title")
+= render "shared/section_head", :title_key => "welcome.index.sections.partner_resources_title"
 %ul.nav-items<
   = render "nav_item",
     :width => "double",

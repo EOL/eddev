@@ -1,7 +1,5 @@
 @import "layout_vars.scss";
 
-$section-v-margin: 54;
-$section-v-margin-pct: percentage($section-v-margin / $main-col-width);
 $single-width-px: 305;
 $double-width-px: 622;
 $nav-img-height: 305;
@@ -112,28 +110,6 @@ $nav-img-height: 305;
 }
 
 // NAV SECTIONS
-.section-head {
-  border-bottom: 1px solid $section-border-gray;
-  margin: $section-v-margin-pct 0 0 0; // 66, (50 - 12 = 38) / 1179
-}
-
-.section-head-top {
-  margin-top: percentage(45 / $main-col-width);
-}
-
-.section-title {
-  color: $section-title-gray;
-  font-size: 1.5em;
-  font-weight: $semibold;  
-  margin-bottom: percentage(5 / $main-col-width);
-}
-
-.section-intro {
-  color: $section-intro-gray;
-  font-weight: $light;
-  margin: 1.4419% 0;
-}
-
 .nav-items {
   $bar-padding-left: 30;
 
@@ -358,14 +334,9 @@ $nav-img-height: 305;
       }
     }
   }
-
-
 }
 
 @media screen and (max-width: 525px) {
-  .section-title {
-    font-size: 1.25em;
-  }
 
   .nav-items {
     .nav-overlay {

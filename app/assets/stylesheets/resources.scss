@@ -1,0 +1,127 @@
+@import "layout_vars.scss";
+
+$featured-card-width: 225;
+$featured-card-h-margin: 13;
+$featured-card-t-margin: 9;
+//---------CARDS----------
+.featured-decks {
+}
+
+.featured-deck {
+  display: inline-block;
+  margin: percentage($featured-card-t-margin / $main-col-width) percentage($featured-card-h-margin / $main-col-width) 0 0;
+  width: percentage($featured-card-width / $main-col-width);
+
+  &.fourth {
+    margin-right: 0;
+  }
+}
+
+.featured-deck-img {
+  vertical-align: top;
+  width: 100%;
+}
+
+$deck-width: 403;
+$deck-img-width: 150;
+$deck-info-width: 238;
+$deck-img-margin: 15;
+.deck {
+  display: inline-block;
+  margin-top: 9px;
+  width: $deck-width * 1px;
+
+  &.odd {
+//    float: left;
+  }
+
+  &.even {
+    float: right;
+  }
+}
+
+.deck-img, .deck-info {
+  display: inline-block;
+}
+
+.deck-img {
+  margin-right: $deck-img-margin * 1px;
+  vertical-align: top;
+}
+
+.deck-info {
+  vertical-align: top;
+  width: 238 * 1px;
+}
+
+.deck-title {
+  color: #2f2f2f;
+  font-size: 18px;
+  font-weight: $bold;
+}
+
+.deck-desc {
+  color: #161616;
+  font-size: 14px;
+  line-height: #161616;
+  margin-top: 10px;
+}
+
+$one-col-deck-width: 830;
+@media screen and (max-width: $one-col-deck-width * 1px) {
+  .deck.even {
+    float: none;
+  }
+
+  .deck {
+    display: flex;
+    width: 100%;
+  }
+
+  .deck-img {
+    float: left;
+  }
+
+  .deck-info {
+    width: auto;
+  }
+}
+
+//$transition-width: 850;
+//@media screen and (max-width: $transition-width * 1px) {
+//  .deck {
+//    width: percentage($deck-width / $transition-width);
+//  }
+//
+//  .deck-img {
+//    width: percentage($deck-img-width / $deck-width);
+//  }
+//
+//  .deck-info {
+//    width: percentage($deck-info-width / $deck-width);
+//  }
+//  
+//  .even {
+//    float: none;
+//  }
+//
+//  .odd {
+//    margin-right: percentage(44 / $transition-width);
+//  }
+//}
+
+$two-col-width: 463; // Ignore the main col padding since
+                     // we're working percentages and this 
+                     // is cleaner
+@media screen and (max-width: $two-col-width * 1px) {
+  .featured-deck {
+    margin: percentage($featured-card-t-margin / $two-col-width) percentage($featured-card-h-margin / $two-col-width) 0 0;
+    width: percentage($featured-card-width / $two-col-width);
+
+    &.second {
+      margin-right: 0;
+    }
+  }
+}
+
+

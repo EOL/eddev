@@ -115,7 +115,15 @@ en:
     save_label: "Save draft"
     publish_label: "Publish draft"
     publish_confirm: "Are you sure you want to publish this draft? It will immediately replace the current public version of this page."
-
+  resources:
+    cards:
+      cards_hdr: "Welcome to Learning and Education Species Cards"
+      intro_p: "This is the species cards intro paragraph"
+      featured_decks: "Featured Decks"
+      all_decks: "All Species Card Decks"
+      decks:
+        bh_title: "Boston Harbor Intertidal Species"
+        bh_desc: "This deck contains a selection of species that are found in the rocky intertidal areas of Boston Harbor, MA USA"
   user_sessions:
     new:
       sign_in: "Sign In"

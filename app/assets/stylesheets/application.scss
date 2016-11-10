@@ -17,6 +17,8 @@
 @import "layout_vars.scss";
 
 $slide-menu-bg-color: #2e303d;
+$section-v-margin: 54;
+$section-v-margin-pct: percentage($section-v-margin / $main-col-width);
 
 @mixin hero-fluid($width, $height) {
   margin: 0 auto;
@@ -460,6 +462,28 @@ $hero-transition-width: 525;
   font-style: italic;
 }
 
+.section-head {
+  border-bottom: 1px solid $section-border-gray;
+  margin: $section-v-margin-pct 0 0 0; // 66, (50 - 12 = 38) / 1179
+}
+
+.section-head-top {
+  margin-top: percentage(45 / $main-col-width);
+}
+
+.section-title {
+  color: $section-title-gray;
+  font-size: 1.5em;
+  font-weight: $semibold;  
+  margin-bottom: percentage(5 / $main-col-width);
+}
+
+.section-intro {
+  color: $section-intro-gray;
+  font-weight: $light;
+  margin: 1.4419% 0;
+}
+
 @media screen and (max-width: 646px) {
   .intro-box.hideable {
     .intro-hdr {
@@ -487,6 +511,10 @@ $hero-transition-width: 525;
 
   .image-credit-section {
     font-size: 12px;
+  }
+
+  .section-title {
+    font-size: 1.25em;
   }
 }
 

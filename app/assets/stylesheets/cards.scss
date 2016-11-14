@@ -67,7 +67,7 @@ $deck-img-margin: 15;
   margin-top: 10px;
 }
 
-$one-col-deck-width: 830;
+$one-col-deck-width: 840;
 @media screen and (max-width: $one-col-deck-width * 1px) {
   .deck.even {
     float: none;

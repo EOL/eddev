@@ -1,0 +1,71 @@
+= render "shared/intro_section", :header => "lesson_plans.intro_hdr",
+  :paragraphs => ["lesson_plans.intro_p"],
+  :hideable => false
+= render "shared/section_head", :title_key => "lesson_plans.featured_lesson_plans"
+%ul.featured-lesson-plans>
+  %li.featured-lesson-plan.first>
+    .top-bar.grade-level-1
+      %span.text 2nd Grade
+    .image-wrap
+      %img.image{:src => "http://www.placekitten.com/225/225"}
+      .text-overlay Food webs, e.g.
+  %li.featured-lesson-plan.second>
+    .top-bar.grade-level-1
+      %span.text 2nd Grade
+    .image-wrap
+      %img.image{:src => "http://www.placekitten.com/225/225"}
+      .text-overlay Food webs, e.g.
+  %li.featured-lesson-plan.third>
+    .top-bar.grade-level-1
+      %span.text 2nd Grade
+    .image-wrap
+      %img.image{:src => "http://www.placekitten.com/225/225"}
+      .text-overlay Food webs, e.g.
+  %li.featured-lesson-plan.fourth>
+    .top-bar.grade-level-1
+      %span.text 2nd Grade
+    .image-wrap
+      %img.image{:src => "http://www.placekitten.com/225/225"}
+      .text-overlay Food webs, e.g.
+= render "shared/section_head", :title_key => "lesson_plans.all_lesson_plans"
+
+.all-lesson-plans
+  .grade-level
+    .grade-level-bar.grade-level-1 Grades 2-5
+    %ul.lesson-plan-list
+      %li.lesson-plan
+        %img.lesson-plan-icon{:src => "http://www.placekitten.com/146/140"}
+        .lesson-plan-text>
+          %h3.lesson-plan-title Classification Activity 1
+          %p.lesson-plan-desc= t("lesson_plans.lesson_plan_desc_generic")
+      %li.lesson-plan
+        %img.lesson-plan-icon{:src => "http://www.placekitten.com/146/140"}
+        .lesson-plan-text>
+          %h3.lesson-plan-title Classification Activity 1
+          %p.lesson-plan-desc= t("lesson_plans.lesson_plan_desc_generic")
+  .grade-level
+    .grade-level-bar.grade-level-2 Grades 6-8
+    %ul.lesson-plan-list
+      %li.lesson-plan
+        %img.lesson-plan-icon{:src => "http://www.placekitten.com/146/140"}
+        .lesson-plan-text>
+          %h3.lesson-plan-title Classification Activity 1
+          %p.lesson-plan-desc= t("lesson_plans.lesson_plan_desc_generic")
+      %li.lesson-plan
+        %img.lesson-plan-icon{:src => "http://www.placekitten.com/146/140"}
+        .lesson-plan-text>
+          %h3.lesson-plan-title Classification Activity 1
+          %p.lesson-plan-desc= t("lesson_plans.lesson_plan_desc_generic")
+  .grade-level
+    .grade-level-bar.grade-level-3 Grades 9-12
+    %ul.lesson-plan-list
+      %li.lesson-plan
+        %img.lesson-plan-icon{:src => "http://www.placekitten.com/146/140"}
+        .lesson-plan-text>
+          %h3.lesson-plan-title Classification Activity 1
+          %p.lesson-plan-desc= t("lesson_plans.lesson_plan_desc_generic")
+      %li.lesson-plan
+        %img.lesson-plan-icon{:src => "http://www.placekitten.com/146/140"}
+        .lesson-plan-text>
+          %h3.lesson-plan-title Classification Activity 1
+          %p.lesson-plan-desc= t("lesson_plans.lesson_plan_desc_generic")

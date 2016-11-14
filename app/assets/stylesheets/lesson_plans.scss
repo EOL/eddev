@@ -1,0 +1,116 @@
+@import "shared/layout_vars";
+
+$grade-level-gold: #ccb545;
+$grade-level-blue: #3cb4e0;
+$grade-level-purple: #a366be;
+
+.grade-level-1 {
+  background: $grade-level-gold;
+}
+
+.grade-level-2 {
+  background: $grade-level-blue;
+}
+
+.grade-level-3 {
+  background: $grade-level-purple;
+}
+
+.featured-lesson-plans {
+  margin-top: percentage(15 / $main-col-width);
+}
+
+.featured-lesson-plan {
+  $text-padding-left: 15px;
+  display: inline-block;
+  margin-right: percentage(13 / $main-col-width);
+  position: relative;
+  width: percentage(225 / $main-col-width);
+
+  .top-bar {
+    color: $white;
+    font-size: 14px;
+    font-weight: $bold;
+    height: 34px;
+    line-height: 34px;
+    padding-left: $text-padding-left;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .image-wrap {
+    position: relative;
+  }
+
+  .image {
+    vertical-align: top;
+    width: 100%;
+  }
+
+  .text-overlay {
+    background-color: rgba(20, 20, 20, 0.74);
+    bottom: 0;
+    color: $white;
+    font-size: 16px;
+    font-weight: $bold;
+    height: 40px;
+    left: 0;
+    line-height: 40px;
+    padding-left: $text-padding-left;
+    position: absolute;
+    width: 100%;
+  }
+
+  &.fourth {
+    margin-right: 0;
+  }
+}
+
+.all-lesson-plans {
+  .grade-level {
+    margin-top: 10px;
+  }
+
+  .grade-level-bar {
+    color: $white;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: $bold;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.lesson-plan-list {
+  display: none;
+}
+
+.lesson-plan {
+  display: flex;
+  margin-top: 8px;
+}
+
+.lesson-plan-icon, .lesson-plan-text {
+  display: inline-block;
+}
+
+.lesson-plan-icon {
+  margin-right: 12px;
+  height: 140px;
+  vertical-align: top;
+}
+
+.lesson-plan-text {
+  vertical-align: top;
+}
+
+.lesson-plan-title {
+  color: #2f2f2f;
+  font-weight: $bold;
+}
+
+.lesson-plan-desc {
+  color: #1f1f1f;
+  font-size: 13px;
+}

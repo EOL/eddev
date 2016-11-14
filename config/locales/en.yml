@@ -124,6 +124,12 @@ en:
       decks:
         bh_title: "Boston Harbor Intertidal Species"
         bh_desc: "This deck contains a selection of species that are found in the rocky intertidal areas of Boston Harbor, MA USA"
+  lesson_plans:
+    intro_hdr: "L + E Lesson Plans"
+    intro_p: "Lesson plan intro paragraaaaaph"
+    featured_lesson_plans: "Featured Lesson Plans"
+    all_lesson_plans: "All Lesson Plans"
+    lesson_plan_desc_generic: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
   user_sessions:
     new:
       sign_in: "Sign In"

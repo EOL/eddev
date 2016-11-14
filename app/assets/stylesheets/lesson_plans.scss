@@ -4,6 +4,9 @@ $grade-level-gold: #ccb545;
 $grade-level-blue: #3cb4e0;
 $grade-level-purple: #a366be;
 
+$flp-margin: 13;
+$flp-width: 225;
+
 .grade-level-1 {
   background: $grade-level-gold;
 }
@@ -22,10 +25,11 @@ $grade-level-purple: #a366be;
 
 .featured-lesson-plan {
   $text-padding-left: 15px;
+  $margin-pct: percentage($flp-margin / $main-col-width);
   display: inline-block;
-  margin-right: percentage(13 / $main-col-width);
+  margin: $margin-pct $margin-pct 0 0;
   position: relative;
-  width: percentage(225 / $main-col-width);
+  width: percentage($flp-width / $main-col-width);
 
   .top-bar {
     color: $white;
@@ -113,4 +117,17 @@ $grade-level-purple: #a366be;
 .lesson-plan-desc {
   color: #1f1f1f;
   font-size: 13px;
+}
+
+$flp-trans-width: 463;
+@media screen and (max-width: $flp-trans-width * 1px) {
+  .featured-lesson-plan {
+    $margin-pct: percentage($flp-margin / $flp-trans-width);
+    margin: $margin-pct $margin-pct 0 0;
+    width: percentage($flp-width / $flp-trans-width);
+
+    &.second {
+      margin-right: 0;
+    }
+  }
 }

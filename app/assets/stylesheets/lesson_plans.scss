@@ -131,3 +131,14 @@ $flp-trans-width: 463;
     }
   }
 }
+
+@media screen and (max-width: 320px) {
+  .lesson-plan-icon {
+    height: 113px;
+    width: 113px;
+  }
+
+  .lesson-plan-title {
+    font-size: 14px;
+  }
+}

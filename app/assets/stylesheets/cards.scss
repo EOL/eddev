@@ -3,6 +3,7 @@
 $featured-card-width: 225;
 $featured-card-h-margin: 13;
 $featured-card-t-margin: 9;
+
 //---------CARDS----------
 .featured-decks {
 }
@@ -18,12 +19,14 @@ $featured-card-t-margin: 9;
 }
 
 .featured-deck-img {
+  height: 100%;
   vertical-align: top;
   width: 100%;
 }
 
 $deck-width: 403;
 $deck-img-width: 150;
+$deck-img-height: 205;
 $deck-info-width: 238;
 $deck-img-margin: 15;
 .deck {
@@ -45,7 +48,10 @@ $deck-img-margin: 15;
 }
 
 .deck-img {
+  flex-shrink: 0;
+  height: $deck-img-height * 1px;
   margin-right: $deck-img-margin * 1px;
+  width: $deck-img-width * 1px;
   vertical-align: top;
 }
 
@@ -63,7 +69,7 @@ $deck-img-margin: 15;
 .deck-desc {
   color: #161616;
   font-size: 14px;
-  line-height: #161616;
+  line-height: 1.4;
   margin-top: 10px;
 }
 
@@ -87,46 +93,31 @@ $one-col-deck-width: 850;
   }
 }
 
-//$transition-width: 850;
-//@media screen and (max-width: $transition-width * 1px) {
-//  .deck {
-//    width: percentage($deck-width / $transition-width);
-//  }
-//
-//  .deck-img {
-//    width: percentage($deck-img-width / $deck-width);
-//  }
-//
-//  .deck-info {
-//    width: percentage($deck-info-width / $deck-width);
-//  }
-//  
-//  .even {
-//    float: none;
-//  }
-//
-//  .odd {
-//    margin-right: percentage(44 / $transition-width);
-//  }
-//}
-
-@media screen and (max-width: $head-trans-width * 1px) {
+$featured-trans-width: 642;
+@media screen and (max-width: $featured-trans-width * 1px) {
   .featured-decks {
     margin: 0 auto;
-    width: 289px;
+    width: 307px;
   }
 
   .featured-deck {
+    height: $deck-img-height * 1px;
     margin: 7px 7px 0 0;
-    width: 141px;
+    width: $deck-img-width * 1px;
 
     &.second {
       margin-right: 0;
     }
   }
-  
+}
+
+@media screen and (max-width: $head-trans-width * 1px) {
   .deck-title {
     font-size: 14px;
+  }
+
+  .deck-desc {
+    font-size: 12px;
   }
 }
 

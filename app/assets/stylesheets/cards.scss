@@ -67,7 +67,7 @@ $deck-img-margin: 15;
   margin-top: 10px;
 }
 
-$one-col-deck-width: 840;
+$one-col-deck-width: 850;
 @media screen and (max-width: $one-col-deck-width * 1px) {
   .deck.even {
     float: none;
@@ -110,18 +110,23 @@ $one-col-deck-width: 840;
 //  }
 //}
 
-$two-col-width: 463; // Ignore the main col padding since
-                     // we're working percentages and this 
-                     // is cleaner
-@media screen and (max-width: $two-col-width * 1px) {
+@media screen and (max-width: $head-trans-width * 1px) {
+  .featured-decks {
+    margin: 0 auto;
+    width: 289px;
+  }
+
   .featured-deck {
-    margin: percentage($featured-card-t-margin / $two-col-width) percentage($featured-card-h-margin / $two-col-width) 0 0;
-    width: percentage($featured-card-width / $two-col-width);
+    margin: 7px 7px 0 0;
+    width: 141px;
 
     &.second {
       margin-right: 0;
     }
   }
+  
+  .deck-title {
+    font-size: 14px;
+  }
 }
-
 

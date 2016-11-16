@@ -336,7 +336,7 @@ $nav-img-height: 305;
   }
 }
 
-@media screen and (max-width: 525px) {
+@media screen and (max-width: $head-trans-width * 1px) {
 
   .nav-items {
     .nav-overlay {

@@ -129,7 +129,8 @@ en:
     intro_p: "Lesson plan intro paragraaaaaph"
     featured_lesson_plans: "Featured Lesson Plans"
     all_lesson_plans: "All Lesson Plans"
-    lesson_plan_desc_generic: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+    lesson_plan_desc_generic_1: "Students explore the importance and process of classification. Students apply the concept of biological classification to a real hierarchy of birds, analyzing bird photos and organizing them into groups based on physical characteristics."
+    lesson_plan_desc_generic_2_html: "Objectives:<ol class='objective-list'><li>Students will classify organisms into groups based on adaptations and traits</li><li>Students will compare, contrast, and discuss the traits of different organisms</li></ol>"
   user_sessions:
     new:
       sign_in: "Sign In"

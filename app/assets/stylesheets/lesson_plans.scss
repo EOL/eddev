@@ -7,6 +7,9 @@ $grade-level-purple: #a366be;
 $flp-margin: 13;
 $flp-width: 225;
 
+$lesson-plan-icon-size: 140px;
+$lesson-plan-icon-size-sm: 113px;
+
 .grade-level-1 {
   background: $grade-level-gold;
 }
@@ -71,6 +74,7 @@ $flp-width: 225;
 
 .all-lesson-plans {
   .grade-level {
+    clear: both;
     margin-top: 10px;
   }
 
@@ -91,18 +95,15 @@ $flp-width: 225;
 }
 
 .lesson-plan {
-  display: flex;
+  clear: both;
   margin-top: 8px;
-}
-
-.lesson-plan-icon, .lesson-plan-text {
-  display: inline-block;
+  min-height: $lesson-plan-icon-size;
 }
 
 .lesson-plan-icon {
-  flex-shrink: 0;
+  float: left;
   margin-right: 12px;
-  height: 140px;
+  height: $lesson-plan-icon-size;
   vertical-align: top;
 }
 
@@ -118,6 +119,21 @@ $flp-width: 225;
 .lesson-plan-desc {
   color: #1f1f1f;
   font-size: 13px;
+  margin-top: 12px;
+
+  &.first {
+    margin-top: 5px;
+  }
+
+  &.objectives {
+    overflow: hidden;
+  }
+}
+
+.objective-list {
+  list-style-position: inside;
+  list-style-type: decimal;
+  padding-left: 28px;
 }
 
 $flp-trans-width: 463;
@@ -134,9 +150,13 @@ $flp-trans-width: 463;
 }
 
 @media screen and (max-width: 320px) {
+  .lesson-plan {
+    min-height: $lesson-plan-icon-size-sm;
+  }
+
   .lesson-plan-icon {
-    height: 113px;
-    width: 113px;
+    height: $lesson-plan-icon-size-sm;
+    width: $lesson-plan-icon-size-sm;
   }
 
   .lesson-plan-title {

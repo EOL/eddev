@@ -1,5 +1,5 @@
 = render "shared/intro_section", :header => "lesson_plans.intro_hdr",
-  :paragraphs => ["lesson_plans.intro_p"],
+  :paragraphs => ["lesson_plans.intro_p_html"],
   :hideable => false
 = render "shared/section_head", :title_key => "lesson_plans.featured_lesson_plans"
 %ul.featured-lesson-plans>
@@ -71,3 +71,9 @@
         .lesson-plan-text>
           %h3.lesson-plan-title Classification Activity 1
           %p.lesson-plan-desc= t("lesson_plans.lesson_plan_desc_generic")
+= render "shared/section_head", :title_key => "lesson_plans.category_key"
+.category-key#GradeLevelKey
+  .grade-level-bar.grade-level-1 Grades 2-5
+  .grade-level-bar.grade-level-2 Grades 6-8
+  .grade-level-bar.grade-level-3 Grades 9-12
+

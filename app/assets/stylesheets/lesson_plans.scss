@@ -3,6 +3,8 @@
 $grade-level-gold: #ccb545;
 $grade-level-blue: #3cb4e0;
 $grade-level-purple: #a366be;
+$grade-level-green: #7ab62d;
+$grade-level-red: #ce681a;
 
 $flp-margin: 13;
 $flp-width: 225;
@@ -11,11 +13,11 @@ $lesson-plan-icon-size: 140px;
 $lesson-plan-icon-size-sm: 113px;
 
 .grade-level-1 {
-  background: $grade-level-gold;
+  background: $grade-level-green;
 }
 
 .grade-level-2 {
-  background: $grade-level-blue;
+  background: $grade-level-red;
 }
 
 .grade-level-3 {
@@ -72,6 +74,16 @@ $lesson-plan-icon-size-sm: 113px;
   }
 }
 
+.grade-level-bar {
+  color: $white;
+  font-size: 18px;
+  font-weight: $bold;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
 .all-lesson-plans {
   .grade-level {
     clear: both;
@@ -79,14 +91,7 @@ $lesson-plan-icon-size-sm: 113px;
   }
 
   .grade-level-bar {
-    color: $white;
     cursor: pointer;
-    font-size: 18px;
-    font-weight: $bold;
-    height: 34px;
-    line-height: 34px;
-    text-align: center;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -134,6 +139,62 @@ $lesson-plan-icon-size-sm: 113px;
   list-style-position: inside;
   list-style-type: decimal;
   padding-left: 28px;
+}
+
+.category-key {
+  width: percentage(226 / $main-col-width);
+
+  .grade-level-bar {
+    margin-top: 2px;
+  }
+}
+
+.key-tooltip {
+  color: $link-blue;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.ui-tooltip, .arrow:after {
+  background: $white;
+  box-shadow: 0 0 5px #aaa;
+}
+
+.ui-tooltip {
+  font-family: $open-sans;
+
+  .arrow {
+    width: 70px;
+    height: 16px;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    margin-left: -35px;
+    bottom: -16px;
+
+    &:after {
+      content: "";
+      position: absolute;
+      left: 20px;
+      top: -20px;
+      width: 25px;
+      height: 25px;
+      box-shadow: 0 0 5px 2px #aaa;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+
+    &.top {
+      top: -16px;
+      bottom: auto;
+      
+      &:after {
+        bottom: -20px;
+        top: auto;
+      }
+    }
+  }
 }
 
 $flp-trans-width: 463;

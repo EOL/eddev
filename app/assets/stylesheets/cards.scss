@@ -60,10 +60,18 @@ $deck-img-margin: 15;
   width: 238 * 1px;
 }
 
+.deck-title, .deck-sub {
+  color: #262626;
+  font-weight: $semibold;
+  line-height: 20px;
+}
+
 .deck-title {
-  color: #2f2f2f;
   font-size: 18px;
-  font-weight: $bold;
+}
+
+.deck-sub {
+  font-size: 14px;
 }
 
 .deck-desc {
@@ -112,8 +120,16 @@ $featured-trans-width: 642;
 }
 
 @media screen and (max-width: $head-trans-width * 1px) {
+  .deck-title, .deck-sub {
+    line-height: 17px;
+  }
+
   .deck-title {
     font-size: 14px;
+  }
+
+  .deck-sub {
+    font-size: 11px;
   }
 
   .deck-desc {

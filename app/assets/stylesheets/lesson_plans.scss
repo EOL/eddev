@@ -12,6 +12,8 @@ $flp-width: 225;
 $lesson-plan-icon-size: 140px;
 $lesson-plan-icon-size-sm: 113px;
 
+$icon-dark-gray: #58782f;
+
 .grade-level-1 {
   background: $grade-level-green;
 }
@@ -44,6 +46,16 @@ $lesson-plan-icon-size-sm: 113px;
     line-height: 34px;
     padding-left: $text-padding-left;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .icons {
+    color: $icon-dark-gray;
+    float: right;
+    font-size: 20px;
+    height: 100%;
+    margin-right: 6px;
+    padding-top: 4px;
+    text-shadow: none;
   }
 
   .image-wrap {

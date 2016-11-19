@@ -1,0 +1,16 @@
+%li{:class => "featured-lesson-plan #{order}"}>
+  %div{:class => "top-bar grade-level-#{grade_level}"}
+    %span.text
+      - case grade_level
+      - when 1
+        = t "lesson_plans.grades_2_5"
+      - when 2
+        = t "lesson_plans.grades_6_8"
+      -when 3
+        = t "lesson_plans.grades_9_12"
+    %span.icons
+      - icons.each do |icon|
+        %i{:class => "icon-#{icon.to_s}"}
+  .image-wrap
+    %img.image{:src => image_path("lesson_plans/#{category}_icon.jpg")}
+    .text-overlay= t "lesson_plans.titles.#{title_key}"

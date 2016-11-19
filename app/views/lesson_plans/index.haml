@@ -2,35 +2,27 @@
   :paragraphs => ["lesson_plans.intro_p_html"],
   :hideable => false
 = render "shared/section_head", :title_key => "lesson_plans.featured_lesson_plans"
-%ul.featured-lesson-plans>
-  %li.featured-lesson-plan.first>
-    .top-bar.grade-level-1
-      %span.text 2nd Grade
-    .image-wrap
-      %img.image{:src => "http://www.placekitten.com/225/225"}
-      .text-overlay Food webs, e.g.
-  %li.featured-lesson-plan.second>
-    .top-bar.grade-level-1
-      %span.text 2nd Grade
-      %span.icons
-        %i.icon-card
-        %i.icon-stats
-        %i.icon-tree
-    .image-wrap
-      %img.image{:src => "http://www.placekitten.com/225/225"}
-      .text-overlay Food webs, e.g.
-  %li.featured-lesson-plan.third>
-    .top-bar.grade-level-1
-      %span.text 2nd Grade
-    .image-wrap
-      %img.image{:src => "http://www.placekitten.com/225/225"}
-      .text-overlay Food webs, e.g.
-  %li.featured-lesson-plan.fourth>
-    .top-bar.grade-level-1
-      %span.text 2nd Grade
-    .image-wrap
-      %img.image{:src => "http://www.placekitten.com/225/225"}
-      .text-overlay Food webs, e.g.
+%ul.featured-lesson-plans<
+  = render "featured", :order => "first",
+    :grade_level => 1,
+    :icons => ["card"],
+    :category => "energy_flow",
+    :title_key => "what_is_classification"
+  = render "featured", :order => "second",
+    :grade_level => 1,
+    :icons => ["tree", "card", "stats"],
+    :category => "adaptations",
+    :title_key => "animal_classification"
+  = render "featured", :order => "third",
+    :grade_level => 2,
+    :icons => ["tree"],
+    :category => "science_skills",
+    :title_key => "plant_classification"
+  = render "featured", :order => "fourth",
+    :grade_level => 3,
+    :icons => ["tree", "card", "stats"],
+    :category => "classification",
+    :title_key => "thats_classified"
 = render "shared/section_head", :title_key => "lesson_plans.all_lesson_plans"
 
 .all-lesson-plans

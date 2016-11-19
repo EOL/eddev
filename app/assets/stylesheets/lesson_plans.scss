@@ -12,7 +12,7 @@ $flp-width: 225;
 $lesson-plan-icon-size: 140px;
 $lesson-plan-icon-size-sm: 113px;
 
-$icon-dark-gray: #58782f;
+$icon-dark-gray: #515151;
 
 .grade-level-1 {
   background: $grade-level-green;
@@ -209,15 +209,58 @@ $icon-dark-gray: #58782f;
   }
 }
 
-$flp-trans-width: 463;
-@media screen and (max-width: $flp-trans-width * 1px) {
-  .featured-lesson-plan {
-    $margin-pct: percentage($flp-margin / $flp-trans-width);
-    margin: $margin-pct $margin-pct 0 0;
-    width: percentage($flp-width / $flp-trans-width);
+$featured-trans-width: 890;
+@media screen and (max-width: $featured-trans-width * 1px) {
+  .featured-lesson-plans {
+    $container-width: 463;
+    margin: 0 auto;
+    width: 463px;
 
-    &.second {
-      margin-right: 0;
+    .featured-lesson-plan {
+      margin: 13px 13px 0 0;
+      width: 225px;
+
+      &.second, &.fourth {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $head-trans-width * 1px) {
+  .featured-lesson-plans {
+    $container-width: 305px;
+    margin: 0 auto;
+    width: 305px;
+
+    .featured-lesson-plan {
+      margin: 5px 5px 0 0;
+      width: 150px;
+
+      .top-bar {
+        font-weight: normal;
+        height: 22px;
+        line-height: 22px;
+        padding-left: 7px;
+      }
+
+      .icons {
+        font-size: 16px;
+        margin-right: 2px;
+        padding-top: 2px;
+      }
+
+      &.second, &.fourth {
+        margin-right: 0;
+      }
+
+      .text-overlay {
+        font-size: 12px;
+        font-weight: $semibold;
+        height: 27px;
+        line-height: 27px;
+        padding-left: 7px;
+      }
     }
   }
 }

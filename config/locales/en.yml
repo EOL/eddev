@@ -130,17 +130,21 @@ en:
     featured_lesson_plans: "Featured Lesson Plans"
     all_lesson_plans: "All Lesson Plans"
     lesson_plan_desc_generic_1: "Students explore the importance and process of classification. Students apply the concept of biological classification to a real hierarchy of birds, analyzing bird photos and organizing them into groups based on physical characteristics."
-    lesson_plan_desc_generic_2_html: "Objectives:<ol class='objective-list'><li>Students will classify organisms into groups based on adaptations and traits</li><li>Students will compare, contrast, and discuss the traits of different organisms</li></ol>"
     category_key: "Category key"
     generic_title: "Lesson plan"
     grades_2_5: "Grades 2-5"
     grades_6_8: "Grades 6-8"
     grades_9_12: "Grades 9-12"
+    long_titles:
+      classification_1: "Classification Activity 1: What is Classification?" 
     titles:
       what_is_classification: "What is Classification?"
       animal_classification: "Animal Classification"
       plant_classification: "Plant Classification"
       thats_classified: "That's Classified"
+    objectives:
+      objective_1: "Students will classify organisms into groups based on adaptations and traits"
+      objective_2: "Students will compare, contrast, and discuss the traits of different organisms"
   user_sessions:
     new:
       sign_in: "Sign In"

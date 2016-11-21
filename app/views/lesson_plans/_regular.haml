@@ -1,0 +1,18 @@
+%li.lesson-plan
+  .left-wrap
+    %img.lesson-plan-icon{:src => image_path("lesson_plans/#{category}_icon.jpg")}
+    %h3.lesson-plan-title= t("lesson_plans.long_titles.#{title_key}")
+    %ul.icon-list
+      %li
+        %i.icon.icon-stats
+      %li  
+        %i.icon.icon-tree
+      %li
+        %i.icon.icon-card
+    .lesson-plan-desc.first= t "lesson_plans.lesson_plan_desc_generic_1"
+    %ul.lesson-plan-objectives
+      - objective_keys.each do |key|
+        %li.objective= t "lesson_plans.objectives.#{key}"
+  .pdf-button PDF
+
+

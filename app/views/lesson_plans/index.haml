@@ -29,13 +29,9 @@
   .grade-level
     .grade-level-bar.grade-level-1 Grades 2-5
     %ul.lesson-plan-list
-      %li.lesson-plan
-        %img.lesson-plan-icon{:src => "http://www.placekitten.com/146/146"}
-        .lesson-plan-text>
-          %h3.lesson-plan-title Classification Activity 1: What is Classification?
-          %div.lesson-plan-desc.first= t("lesson_plans.lesson_plan_desc_generic_1")
-          %div.lesson-plan-desc.objectives
-            = t("lesson_plans.lesson_plan_desc_generic_2_html")
+      = render "regular", :category => "adaptations",
+        :title_key => "classification_1",
+        :objective_keys => ["objective_1", "objective_2"]
       %li.lesson-plan
         %img.lesson-plan-icon{:src => "http://www.placekitten.com/146/146"}
         .lesson-plan-text>

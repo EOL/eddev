@@ -31,6 +31,9 @@
             .addClass( feedback.horizontal )
             .appendTo( this );
         }
+      },
+      open: function(e){
+        console.log(e.originalEvent.target);
       }
     });
   });

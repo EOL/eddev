@@ -31,7 +31,8 @@
     %ul.lesson-plan-list
       = render "regular", :category => "adaptations",
         :title_key => "classification_1",
-        :objective_keys => ["objective_1", "objective_2"]
+        :objective_keys => ["objective_1", "objective_2"],
+        :icons => [:card, :stats]
       %li.lesson-plan
         %img.lesson-plan-icon{:src => "http://www.placekitten.com/146/146"}
         .lesson-plan-text>
@@ -64,8 +65,31 @@
           %h3.lesson-plan-title Classification Activity 1
           %p.lesson-plan-desc= t("lesson_plans.lesson_plan_desc_generic")
 = render "shared/section_head", :title_key => "lesson_plans.category_key"
-.category-key#GradeLevelKey
+.category-key.grade-level-key#GradeLevelKey>
   .grade-level-bar.grade-level-1 Grades 2-5
   .grade-level-bar.grade-level-2 Grades 6-8
   .grade-level-bar.grade-level-3 Grades 9-12
+.category-key.subject-key#SubjectKey>
+  .subject.first>
+    = image_tag "lesson_plans/classification_icon.jpg", :class => "subject-icon"
+    .subject-name Classification
+  .subject.second>
+    = image_tag "lesson_plans/science_skills_icon.jpg", :class => "subject-icon"
+    .subject-name Science Skills
+  .subject.third>
+    = image_tag "lesson_plans/adaptations_icon.jpg", :class => "subject-icon"
+    .subject-name Adaptations
+  .subject.fourth>
+    = image_tag "lesson_plans/energy_flow_icon.jpg", :class => "subject-icon"
+    .subject-name Energy Flow
+.category-key.icon-key#IconKey
+  .icon-row
+    %i.icon.icon-stats
+    .icon-desc This lesson plan includes biographical statistics
+  .icon-row
+    %i.icon.icon-tree
+    .icon-desc This lesson plan involves field work
+  .icon-row
+    %i.icon.icon-card
+    .icon-desc This lesson plan involves species cards
 

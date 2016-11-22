@@ -173,8 +173,13 @@ $icon-dark-gray: #515151;
   }
 
   .icon {
+    color: #c1c1c1;
     font-size: 20px;
     line-height: 20px;   
+
+    &.active {
+      color: #1e1e1e;
+    }
   } 
 }
 
@@ -185,14 +190,6 @@ $icon-dark-gray: #515151;
 .lesson-plan-desc, .lesson-plan-objectives {
   color: #1f1f1f;
   font-size: 13px;
-}
-
-.lesson-plan-desc {
-  margin-top: 12px;
-
-  &.first {
-    margin-top: 5px;
-  }
 }
 
 .lesson-plan-objectives {
@@ -208,10 +205,78 @@ $icon-dark-gray: #515151;
 }
 
 .category-key {
-  width: percentage(226 / $main-col-width);
+  display: inline-block;
+  height: 106px;
+  margin: 22px 35px 0 0;
+  vertical-align: top;
+}
+
+.subject-key {
+  margin-right: 25px;
+}
+
+.icon-key {
+  margin-right: 0;
+  width: 348px;
+
+  .icon {
+    font-size: 25px;
+    margin-right: 14px;
+  }
+
+  .icon, .icon-desc {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .icon-desc {
+    color: #161616;
+    font-size: 14px;
+    font-weight: $light;
+    width: 300px;
+  }
+}
+
+.grade-level-key {
+  width: 226px;
 
   .grade-level-bar {
     margin-top: 2px;
+  }
+
+  .grade-level-1 {
+    margin-top: 0;
+  }
+}
+
+.subject-key {
+  margin-right: 0;
+  width: 330px;
+  
+  .subject {
+    display: inline-block;
+    width: 50%;
+
+    &.first, &.second {
+      margin-bottom: 6px;
+    }
+  }
+
+  .subject-icon, .subject-name {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .subject-name {
+    color: #161616;
+    font-size: 14px;
+    overflow: visible;
+    width: 76px;
+  }
+
+  .subject-icon {
+    height: 50px;
+    width: 50px;
   }
 }
 
@@ -228,6 +293,7 @@ $icon-dark-gray: #515151;
 
 .ui-tooltip {
   font-family: $open-sans;
+  max-width: 1000px; // override default jquery
 
   .arrow {
     width: 70px;
@@ -261,7 +327,28 @@ $icon-dark-gray: #515151;
       }
     }
   }
+
+  .category-key {
+    margin: 0;
+  }
 }
+
+.pdf-button-small {
+  border: solid 1px #979797;
+  clear: both;
+  color: #262626;
+  cursor: pointer;
+  display: none;
+  float: left;
+  font-size: 14px;
+  font-weight: $semibold;
+  height: 27px;
+  line-height: 27px;
+  margin: 7px 0 11px 0;
+  text-align: center;
+  width: 55px;
+}
+
 
 $featured-trans-width: 890;
 @media screen and (max-width: $featured-trans-width * 1px) {
@@ -337,33 +424,31 @@ $featured-trans-width: 890;
   }
 }
 
-@media screen and (max-width: 500px) {
-  .category-key {
-    .grade-level-bar {
-      font-size: 14px;
-    }
-  }
-}
-
-@media screen and (max-width: 400px) {
-  .category-key {
-    .grade-level-bar {
-      font-size: 12px;
-    }
-  }
-}
-
 @media screen and (max-width: 320px) {
   .lesson-plan {
-    min-height: $lesson-plan-icon-size-sm;
-  }
+    $icon-size: 55px;
+    min-height: $icon-size;
 
-  .lesson-plan-icon {
-    height: $lesson-plan-icon-size-sm;
-    width: $lesson-plan-icon-size-sm;
-  }
+    .pdf-button-small {
+      display: block;
+    }
 
-  .lesson-plan-title {
-    font-size: 14px;
+    .icon-list {
+      clear: both;
+      width: $icon-size;
+    }
+
+    .lesson-plan-icon {
+      height: $icon-size;
+      width: $icon-size;
+    }
+
+    .pdf-button {
+      display: none;
+    }
+
+    .icon-list, .lesson-plan-icon, .pdf-button-small {
+      margin-right: 9px;
+    }
   }
 }

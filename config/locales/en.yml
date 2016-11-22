@@ -126,7 +126,7 @@ en:
         bh_desc: "This deck contains a selection of species that are found in the rocky intertidal areas of Boston Harbor, MA USA"
   lesson_plans:
     intro_hdr: "L + E Lesson Plans"
-    intro_p_html: "These lesson plans are divided into three <span class='key-tooltip' data-source='GradeLevelKey'>age ranges</span>, with four <span class='key-tooltip' data-source='GradeLevelKey'>subjects</span>.  Each lesson plan also has one or a few <span class='key-tooltip' data-source='GradeLevelKey'>learning perks</span>. Some learning perks incorporate biostatistical data, while others involve going outside or the use of our free Species Card decks."
+    intro_p_html: "These lesson plans are divided into three <span class='key-tooltip' data-source='GradeLevelKey'>age ranges</span>, with four <span class='key-tooltip' data-source='SubjectKey'>subjects</span>.  Each lesson plan also has one or a few <span class='key-tooltip' data-source='IconKey'>learning perks</span>. Some learning perks incorporate biostatistical data, while others involve going outside or the use of our free Species Card decks."
     featured_lesson_plans: "Featured Lesson Plans"
     all_lesson_plans: "All Lesson Plans"
     lesson_plan_desc_generic_1: "Students explore the importance and process of classification. Students apply the concept of biological classification to a real hierarchy of birds, analyzing bird photos and organizing them into groups based on physical characteristics."

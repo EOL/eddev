@@ -9,8 +9,12 @@
       -when 3
         = t "lesson_plans.index.grades_9_12"
     %span.icons
-      - icons.each do |icon|
-        %i{:class => "icon-#{icon.to_s}"}
+      -if icons.include? :tree
+        %i{:class => "icon-tree"}
+      -if icons.include? :card
+        %i{:class => "icon-card"}
+      -if icons.include? :stats
+        %i{:class => "icon-stats"}
   .image-wrap
     %img.image{:src => image_path("lesson_plans/#{category}_icon.jpg")}
     .text-overlay= t "lesson_plans.titles.#{title_key}"

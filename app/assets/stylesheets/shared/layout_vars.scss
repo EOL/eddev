@@ -41,6 +41,13 @@ $light: 300;
   padding: 0 percentage($main-col-padding / ($main-col-width + 2 * $main-col-padding));
 }
 
+@mixin standard-link {
+  color: $link-blue;
+  cursor: pointer;
+  font-weight: $semibold;
+  text-decoration: none;
+}
+
 // Functions
 @function px-to-em($px) {
   @return $px / $em * 1em; 

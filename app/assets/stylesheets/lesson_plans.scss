@@ -299,9 +299,7 @@ $lesson-plan-border-color: #aaaaaa;
 }
 
 .key-tooltip {
-  color: $link-blue;
-  cursor: pointer;
-  font-weight: bold;
+  @include standard-link
 }
 
 .ui-tooltip, .arrow:after {

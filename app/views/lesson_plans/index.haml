@@ -10,22 +10,22 @@
 %ul.featured-lesson-plans<
   = render "featured", :order => "first",
     :grade_level => 1,
-    :icons => ["card"],
+    :icons => [:card],
     :category => "energy_flow",
     :title_key => "what_is_classification"
   = render "featured", :order => "second",
     :grade_level => 1,
-    :icons => ["tree", "card", "stats"],
+    :icons => [:tree, :card, :stats],
     :category => "adaptations",
     :title_key => "animal_classification"
   = render "featured", :order => "third",
     :grade_level => 2,
-    :icons => ["tree"],
+    :icons => [:tree],
     :category => "science_skills",
     :title_key => "plant_classification"
   = render "featured", :order => "fourth",
     :grade_level => 3,
-    :icons => ["tree", "card", "stats"],
+    :icons => [:tree, :card, :stats],
     :category => "classification",
     :title_key => "thats_classified"
 = render "shared/section_head", :title_key => "lesson_plans.index.all_lesson_plans"

@@ -29,12 +29,6 @@ $section-v-margin-pct: percentage($section-v-margin / $main-col-width);
   background-position: center;
 }
 
-@mixin standard-link {
-  color: $link-blue;
-  font-weight: $semibold;
-  text-decoration: none;
-}
-
 *, *:before, *:after {
   box-sizing: border-box; *behavior: asset-url("polyfill/box-sizing.htc");
 }

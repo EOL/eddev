@@ -4,6 +4,8 @@ lock '3.4.1'
 set :application, 'eddev'
 set :repo_url, 'git@github.com:EOL/eddev.git'
 
+set :rails_env, 'production'
+
 # Default branch is :master
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 

@@ -4,4 +4,9 @@
   .intro-content
     - paragraphs.each do |para|
       %p.intro-p
-        = t para
+        - if para.is_a? String
+          = t para
+        - else 
+          -# Hash is the only other accepted type
+          = t para[:key], para[:vars]
+

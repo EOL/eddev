@@ -1,35 +1,21 @@
-= render "shared/intro_section", :header => "resources.cards.cards_hdr",
+ render "shared/intro_section", :header => "resources.cards.cards_hdr",
   :paragraphs => ["resources.cards.intro_p"],
   :hideable => false
 = render "shared/section_head", :title_key => "resources.cards.featured_decks"
-%ul.featured-decks
-  %li.featured-deck.first>
-    %img.featured-deck-img{:src => "http://www.placekitten.com/225/308"}
-  %li.featured-deck.second>
-    %img.featured-deck-img{:src => "http://www.placekitten.com/225/308"}
-  %li.featured-deck.third>
-    %img.featured-deck-img{:src => "http://www.placekitten.com/225/308"}
-  %li.featured-deck.fourth>
-    %img.featured-deck-img{:src => "http://www.placekitten.com/225/308"}
+%ul.featured-decks<
+  = render "featured", :class_str => "first",
+    :image_name => "bioblitz",
+    :desc_key => "bioblitz"
+  = render "featured", :class_str => "second",
+    :image_name => "okaloosa",
+    :desc_key => "bioblitz"
+  = render "featured", :class_str => "third",
+    :image_name => "new_england",
+    :desc_key => "bioblitz"
+  = render "featured", :class_str => "fourth",
+    :image_name => "earthwatch",
+    :desc_key => "bioblitz"
 = render "shared/section_head", :title_key => "resources.cards.all_decks"
 %ul.all-decks<
-  = render "deck", :title_key => "resources.cards.decks.bh_title",
-    :sub_key => "resources.cards.decks.bh_sub",
-    :desc_key => "resources.cards.decks.bh_desc",
-    :count => 0,
-    :img_src => "http://www.placekitten.com/150/205"
-  = render "deck", :title_key => "resources.cards.decks.bh_title",
-    :sub_key => "resources.cards.decks.bh_sub",
-    :desc_key => "resources.cards.decks.bh_desc",
-    :count => 1,
-    :img_src => "http://www.placekitten.com/150/205"
-  = render "deck", :title_key => "resources.cards.decks.bh_title",
-    :sub_key => "resources.cards.decks.bh_sub",
-    :desc_key => "resources.cards.decks.bh_desc",
-    :count => 2,
-    :img_src => "http://www.placekitten.com/150/205"
-  = render "deck", :title_key => "resources.cards.decks.bh_title",
-    :sub_key => "resources.cards.decks.bh_sub",
-    :desc_key => "resources.cards.decks.bh_desc",
-    :count => 3,
-    :img_src => "http://www.placekitten.com/150/205"
+  - all_decks.each_with_index do |deck, index|
+    = render "deck", :deck => deck, :index => index

@@ -124,6 +124,13 @@ en:
       decks:
         bh_title: "Boston Harbor Intertidal Species"
         bh_desc: "This deck contains a selection of species that are found in the rocky intertidal areas of Boston Harbor, MA USA"
+  cards:
+    deck_titles: 
+      bioblitz: "Bioblitz"
+    deck_subtitles:
+      bioblitz: "Common Animal Groups"
+    deck_descriptions:
+      bioblitz: "This deck contains a selection of species that are commonly found in a North American Bioblitz"
   lesson_plans:
     index: 
       intro_hdr: "L + E Lesson Plans"

@@ -1,6 +1,7 @@
 @import "layout_vars.scss";
 
 $featured-card-width: 225;
+$featured-card-height: 307;
 $featured-card-h-margin: 13;
 $featured-card-t-margin: 9;
 
@@ -9,6 +10,7 @@ $featured-card-t-margin: 9;
 }
 
 .featured-deck {
+  cursor: pointer;
   display: inline-block;
   margin: percentage($featured-card-t-margin / $main-col-width) percentage($featured-card-h-margin / $main-col-width) 0 0;
   width: percentage($featured-card-width / $main-col-width);
@@ -56,6 +58,7 @@ $deck-img-margin: 15;
 }
 
 .deck-info {
+  margin-top: 3px;
   vertical-align: top;
   width: 238 * 1px;
 }
@@ -81,6 +84,33 @@ $deck-img-margin: 15;
   margin-top: 10px;
 }
 
+.featured-deck-wrap {
+  position: relative;
+
+  .overlay {
+    display: none;
+    font-size: 14px;
+    font-weight: $semibold;
+  }
+
+  &:hover {
+    .overlay {
+      align-items: center;
+      display: flex;
+      background-color: rgba(34, 34, 34, 0.78);
+      color: #fff;
+      height: percentage(204 / $featured-card-height);
+      justify-content: center;
+      left: 0;
+      padding: 0 21px;
+      position: absolute;
+      text-align: center;
+      top: 13.4%;
+      width: 100%;
+    }
+  }
+}
+
 $one-col-deck-width: 850;
 @media screen and (max-width: $one-col-deck-width * 1px) {
   .deck.even {
@@ -98,6 +128,12 @@ $one-col-deck-width: 850;
 
   .deck-info {
     width: auto;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .featured-deck-wrap .overlay {
+    font-size: 12px;
   }
 }
 
@@ -134,6 +170,10 @@ $featured-trans-width: 642;
 
   .deck-desc {
     font-size: 12px;
+  }
+
+  .featured-deck-wrap .overlay {
+//    font-size: 10px;
   }
 }
 

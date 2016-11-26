@@ -342,6 +342,15 @@ $lesson-plan-border-color: #aaaaaa;
         top: auto;
       }
     }
+
+    &.left {
+      left: 20%;
+    }
+
+    &.right {
+      left: auto; 
+      right: 20%;
+    }
   }
 
   .category-key {

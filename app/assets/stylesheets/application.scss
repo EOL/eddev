@@ -323,12 +323,13 @@ $hero-transition-width: 525;
 
   .bars {
     $lmargin: percentage(23 / $hero-transition-width);
-    $tmargin: 18px;
     cursor: pointer;
     display: block;
-    float: right;
     font-size: 1.5em;
-    margin: $tmargin $lmargin 0 0;
+    margin: 0 $lmargin 0 0;
+    position: absolute;
+    right: 0;
+    top: 18px;
   }
 
   .eol-nav {
@@ -368,6 +369,7 @@ $hero-transition-width: 525;
     display: inline-block;
     padding: 0 0 0 $lpad;
     height: 100%;
+    position: relative;
     vertical-align: top;
     width: 100%;
   }

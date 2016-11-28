@@ -9,7 +9,7 @@
   $(function () {
     $('.grade-level-bar').click(gradeLevelToggle);
 
-    $(document).tooltip({
+    $( document ).tooltip({
       items: '.key-tooltip',
       content: function() {
         var $source = $('#' + $(this).data('source')),
@@ -20,20 +20,27 @@
         return $clone; 
       },
       position: {
-        my: "center bottom-20",
+        my: "center bottom-10",
         at: "center top",
         using: function(position, feedback) {
-          $( this ).css( position );
+          $(this).css(position);
 
+          var $this = $(this),
+              $target = $(event.target),
+              tooltipPosn = $this.position(),
+              targetPosn = $target.position(),
+              targetWidth = $target.width(),
+              targetCenter = targetPosn.left + .5 * targetWidth,
+              arrowLeft = targetCenter - tooltipPosn.left;
+              
           $( "<div>" )
             .addClass( "arrow" )
             .addClass( feedback.vertical )
-            .addClass( feedback.horizontal )
+            .css("left", arrowLeft) // Arrow centering is taken care of by negative margin in css
             .appendTo( this );
         }
       },
       open: function(e){
-        console.log(e.originalEvent.target);
       }
     });
   });

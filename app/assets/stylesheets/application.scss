@@ -423,6 +423,7 @@ $hero-transition-width: 525;
 // MAIN COLUMN
 .main-col {
   box-sizing: content-box;
+  overflow: hidden;
   @include main-col-horiz;
 }
 

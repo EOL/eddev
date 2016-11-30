@@ -117,7 +117,7 @@ p a {
   top: 0;
   height: $topbar-height;
 
-  &:hover .eol-dropdown {
+  &:hover .eol-dropdown, &.hover .eol-dropdown {
     display: block;
   }
 }

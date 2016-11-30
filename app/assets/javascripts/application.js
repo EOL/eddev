@@ -69,6 +69,7 @@
     $('#BarsIcon').click(slideMenuOpen);
     $(window).resize(closeMenuIfNecessary);
 
+    // Double-touch experience for hover elements
     $('.hoverable').on('touchstart', function(event) {
       var $that = $(this);
 
@@ -78,11 +79,7 @@
         $that.addClass('hover');
 
         var removeHoverTouchFn = function(event) {
-          console.log('fired for that');
-          console.log($that);
-
           if (!($(event.target).is($that) || $that.has($(event.target)).length)) {
-            console.log('doing something!');
             $that.removeClass('hover');
             $( 'body' ).off('touchstart', removeHoverTouchFn);
           }

@@ -18,6 +18,23 @@ $featured-card-t-margin: 9;
   &.fourth {
     margin-right: 0;
   }
+
+  &:hover, &.hover {
+    .overlay {
+      align-items: center;
+      display: flex;
+      background-color: rgba(34, 34, 34, 0.78);
+      color: #fff;
+      height: percentage(204 / $featured-card-height);
+      justify-content: center;
+      left: 0;
+      padding: 0 21px;
+      position: absolute;
+      text-align: center;
+      top: 13.4%;
+      width: 100%;
+    }
+  }
 }
 
 .featured-deck-img {
@@ -93,22 +110,6 @@ $deck-img-margin: 15;
     font-weight: $semibold;
   }
 
-  &:hover {
-    .overlay {
-      align-items: center;
-      display: flex;
-      background-color: rgba(34, 34, 34, 0.78);
-      color: #fff;
-      height: percentage(204 / $featured-card-height);
-      justify-content: center;
-      left: 0;
-      padding: 0 21px;
-      position: absolute;
-      text-align: center;
-      top: 13.4%;
-      width: 100%;
-    }
-  }
 }
 
 $one-col-deck-width: 850;

@@ -10,4 +10,14 @@ $(function() {
   }
 
   initSlideshow();
+
+  $('.nav-item').on('touchstart', function(event) {
+    event.preventDefault();
+    console.log('touch');
+  });
+
+  $('.nav-item').click(function(event) {
+    event.preventDefault();
+    console.log('click');
+  });
 });

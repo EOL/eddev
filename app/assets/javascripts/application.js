@@ -74,7 +74,12 @@
       var $that = $(this);
 
       if (!$that.hasClass('hover')) {
-        event.preventDefault();
+        // event.preventDefault() to prevent click from going through
+        // breaks scrolling, so catch the click event that follows this
+        // touchstart and preventDefault on THAT event
+        $(this).one('click', function(event) {
+          event.preventDefault();
+        });
 
         $that.addClass('hover');
 

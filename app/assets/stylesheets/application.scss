@@ -33,6 +33,10 @@ $section-v-margin-pct: percentage($section-v-margin / $main-col-width);
   box-sizing: border-box; *behavior: asset-url("polyfill/box-sizing.htc");
 }
 
+html {
+  -webkit-text-size-adjust: 100%; // Prevent Safari on iOS from resizing text
+}
+
 body { margin: 0; padding: 0; }
 
 body, p {

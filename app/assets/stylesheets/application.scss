@@ -97,7 +97,7 @@ p a {
 .topbar {
   background: $black;
   color: $white;
-  height: $topbar-height;
+  height: $topbar-height-px * 1px;
   position: relative;
   width: 100%;
 }
@@ -134,19 +134,19 @@ p a {
 
   display: none;
   position: absolute;
-  font-size: $font-size-px / $em * 1em;
+  font-size: 14px;
   font-weight: $semibold;
-  width: 170 / $font-size-px * 1em;
-  top: $topbar-height-px / $font-size-px * 1em;
+  width: 170px;
+  top: $topbar-height-px * 1px;
   left: 0;
   z-index: 2;
 
   .eol-link {
     $height-em: 37 / $em;
     background: $background-gray;
-    height: $height-em * 1em;
-    line-height: $height-em;
-    padding-left: $eol-link-padding-px / $font-size-px * 1em;
+    height: 37px;
+    line-height: 37px;
+    padding-left: $eol-link-padding-px * 1px;
 
     a {
       color: $eol-link-color;

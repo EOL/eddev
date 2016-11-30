@@ -152,7 +152,7 @@ $nav-img-height: 305;
     position: relative;
     vertical-align: top;
 
-    &:hover {
+    &:hover, &.hover {
       .nav-overlay {
         display: flex;
       }

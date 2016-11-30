@@ -13,11 +13,11 @@ $(function() {
 
   $('.nav-item').on('touchstart', function(event) {
     event.preventDefault();
-    console.log('touch');
+    alert('touch');
   });
 
   $('.nav-item').click(function(event) {
     event.preventDefault();
-    console.log('click');
+    alert('click');
   });
 });

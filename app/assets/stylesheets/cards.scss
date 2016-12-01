@@ -5,6 +5,8 @@ $featured-card-height: 307;
 $featured-card-h-margin: 13;
 $featured-card-t-margin: 9;
 
+$deck-title-color: #262626;
+
 //---------CARDS----------
 .featured-decks {
 }
@@ -78,10 +80,21 @@ $deck-img-margin: 15;
   margin-top: 3px;
   vertical-align: top;
   width: 238 * 1px;
+
+  .pdf-button {
+    border: solid 1px #979797;
+    color: $deck-title-color;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: $semibold;
+    margin-top: 18px;
+    padding: 4px 10px;
+  }
 }
 
 .deck-title, .deck-sub {
-  color: #262626;
+  color: $deck-title-color;
   font-weight: $semibold;
   line-height: 20px;
 }

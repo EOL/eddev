@@ -133,14 +133,15 @@ $lesson-plan-border-color: #aaaaaa;
     border-bottom: none;
   }
 
-  .left-wrap, .pdf-button {
-    display: inline-block;
-  }
-
   .left-wrap {
     padding-right: 5%;
     width: percentage(($main-col-width - $pdf-button-width) / $main-col-width);
   }
+
+  .left-wrap, .pdf-button {
+    display: inline-block;
+  }
+
 
   .pdf-button {
     border-left: solid 1px #e5e5e5;
@@ -148,6 +149,8 @@ $lesson-plan-border-color: #aaaaaa;
     flex-direction: column;
     height: 100%;
     justify-content: center;
+    float: right;
+    width: 90px; 
     position: absolute;
     right: 0;
     text-align: center;
@@ -218,8 +221,6 @@ $lesson-plan-border-color: #aaaaaa;
 }
 
 .pdf-button {
-  float: right;
-  width: 90px; 
 }
 
 .category-key {

@@ -88,7 +88,6 @@ $deck-img-margin: 15;
     display: inline-block;
     font-size: 14px;
     font-weight: $semibold;
-    margin-top: 18px;
     padding: 4px 10px;
   }
 }
@@ -116,8 +115,10 @@ $deck-img-margin: 15;
 .deck-desc {
   color: #161616;
   font-size: 14px;
+  height: 110px;
   line-height: 1.4;
   margin-top: 10px;
+  overflow: hidden;
 }
 
 .featured-deck-wrap {

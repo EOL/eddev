@@ -10,5 +10,14 @@ module ApplicationHelper
   def about_page?
     current_page? :controller => "welcome", :action => "about" 
   end
+
+  # Abstract away different checks for dev and prod
+  def asset_exists?(path)
+    if Rails.configuration.assets.compile
+      Rails.application.precompiled_assets.include? path
+    else
+      Rails.application.assets_manifest.assets[path].present?
+    end
+  end
 end
 

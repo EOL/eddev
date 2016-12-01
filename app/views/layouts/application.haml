@@ -15,11 +15,11 @@
     = stylesheet_link_tag 'lesson_plan_icons'
     = stylesheet_link_tag 'application', :media => 'all'
 
-    -if Rails.application.assets.find_asset("#{params[:controller]}.css")
+    -if asset_exists? "#{params[:controller]}.css"
       = stylesheet_link_tag params[:controller], :media => 'all'
     = javascript_include_tag 'application'
 
-    -if Rails.application.assets.find_asset("#{params[:controller]}.js") 
+    -if asset_exists? "#{params[:controller]}.js"
       = javascript_include_tag params[:controller]
 
 

@@ -155,9 +155,15 @@ $one-col-deck-width: 850;
   }
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 900px) {
   .featured-deck-wrap .overlay {
     font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 775px) {
+  .featured-deck-wrap .overlay {
+    font-size: 10px;
   }
 }
 

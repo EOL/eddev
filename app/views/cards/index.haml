@@ -5,16 +5,16 @@
 %ul.featured-decks<
   = render "featured", :class_str => "first",
     :image_name => "bioblitz",
-    :desc_key => "bioblitz"
+    :desc_key => "bioblitz_common"
   = render "featured", :class_str => "second",
     :image_name => "okaloosa",
-    :desc_key => "bioblitz"
+    :desc_key => "okaloosa_bio"
   = render "featured", :class_str => "third",
     :image_name => "new_england",
-    :desc_key => "bioblitz"
+    :desc_key => "ne_urban"
   = render "featured", :class_str => "fourth",
     :image_name => "earthwatch",
-    :desc_key => "bioblitz"
+    :desc_key => "earthwatch_cali_tree"
 = render "shared/section_head", :title_key => "resources.cards.all_decks"
 %ul.all-decks<
   - all_decks.each_with_index do |deck, index|

@@ -1,7 +1,11 @@
 %li{:class => ["deck", ("odd" if index % 2 == 0), ("even" if index % 2 == 1)]}>
   = image_tag "cards/#{deck[:image_name]}.png", :class => "deck-img"
   .deck-info>
-    %h3.deck-title= t "cards.deck_titles.#{deck[:text_key]}"
-    %h4.deck-sub= t "cards.deck_subtitles.#{deck[:text_key]}"
-    %p.deck-desc= t "cards.deck_descriptions.#{deck[:text_key]}"
+    %h3.deck-title= t "cards.deck_titles.#{deck[:title_key]}"
+    -if deck[:sub_key]
+      %h4.deck-sub= t "cards.deck_subtitles.#{deck[:sub_key]}"
+    -else
+      .deck-sub-placeholder
+
+    %p.deck-desc= t "cards.deck_descriptions.#{deck[:desc_key]}"
     %a.pdf-button PDF

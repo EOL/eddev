@@ -126,11 +126,24 @@ en:
         bh_desc: "This deck contains a selection of species that are found in the rocky intertidal areas of Boston Harbor, MA USA"
   cards:
     deck_titles: 
+      aquatic: "Aquatic Insects"
       bioblitz: "Bioblitz"
+      boston_harbor: "Boston Harbor"
+      earthwatch: "Earthwatch"
+      ecocolumn: "EcoColumn"
+      new_england: "New England"
     deck_subtitles:
-      bioblitz: "Common Animal Groups"
+      california_urban_tree: "California Urban Tree Program"
+      common_animal_groups: "Common Animal Groups"
+      rocky_intertidal: "Rocky Intertidal"
+      urban_habitat_adaptations: "Urban Habitat Adaptations"
     deck_descriptions:
-      bioblitz: "This deck contains a selection of species that are commonly found in a North American Bioblitz"
+      aquatic: "Ten aquatic insects are included with information about what juveniles and adults eat and a vocabulary card."
+      bioblitz_common: "Sixteen higher order animal cards (class and phylum) introduce common groups of organisms and provide fun facts and vocabulary."
+      boston_rocky: "Learn about the Boston Harbor Rocky Intertidal habitat of New England through this 13 species deck."
+      earthwatch_cali_tree: "This deck supports the Earthwatch Urban Resiliency Program, which aims to understand the cooling benefit of 10 tree species in the greater Los Angeles, CA region."
+      ecocolumn: "EcoColumns are a mini-ecosystems that can have terrestrial, aquatic and compost habitats or some combination of the three. These 10 organisms includes adaptations and energy sources."
+      ne_urban: "Twenty-six species found in urban areas of New England, USA that highlight biological and physical adaptations as well as energy sources."
   lesson_plans:
     index: 
       intro_hdr: "L + E Lesson Plans"

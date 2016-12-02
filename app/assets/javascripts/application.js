@@ -76,16 +76,30 @@
         // event.preventDefault() to prevent click from going through
         // breaks scrolling, so catch the click event that follows this
         // touchstart and preventDefault on THAT event
-        $(this).one('click', function(event) {
+        $that.one('click', function(event) {
           event.preventDefault();
         });
 
+        console.log('add hover');
+        console.log($that);
         $that.addClass('hover');
 
         var removeHoverTouchFn = function(event) {
           if (!($(event.target).is($that) || $that.has($(event.target)).length)) {
+            console.log("------not contained-----");
+            console.log(event.target);
+            console.log($that);
+            console.log('remove hover class');
             $that.removeClass('hover');
+            console.log('remove handler');
             $( 'body' ).off('touchstart', removeHoverTouchFn);
+            console.log("------------------------");
+          }
+          else {
+            console.log("--------contained---------");
+            console.log(event.target);
+            console.log($that);
+            console.log("--------------------------");
           }
         }
 

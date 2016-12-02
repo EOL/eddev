@@ -42,7 +42,7 @@ body, p {
   font: normal 100% $open-sans;
 }
 
-p a { 
+p a, .std-link { 
   @include standard-link;
 }
 

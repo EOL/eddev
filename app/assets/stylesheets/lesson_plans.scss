@@ -145,6 +145,7 @@ $lesson-plan-border-color: #aaaaaa;
 
   .pdf-button {
     border-left: solid 1px #e5e5e5;
+    color: #262626;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -154,6 +155,7 @@ $lesson-plan-border-color: #aaaaaa;
     position: absolute;
     right: 0;
     text-align: center;
+    text-decoration: none;
     top: 0;
     width: percentage($pdf-button-width / $main-col-width);
   }

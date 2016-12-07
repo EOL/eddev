@@ -159,6 +159,14 @@ $lesson-plan-border-color: #aaaaaa;
     top: 0;
     width: percentage($pdf-button-width / $main-col-width);
   }
+
+  a {
+    @include standard-link;
+  }
+
+  strong {
+    font-weight: $bold;
+  }
 }
 
 .grade-level.last {

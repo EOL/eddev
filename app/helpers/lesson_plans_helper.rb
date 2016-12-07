@@ -33,13 +33,13 @@ module LessonPlansHelper
       :objective_keys => ["classify_adaptations_traits_html", "compare_contrast_discuss_html"],
       :icons => [:card],
       :desc_key => "students_apply_go_fish_html",
-      :file_name => "2-5_Classification3_PlantClassification",
-      :guide_name => "2-5_Classification4_ThatsClassified"
+      :file_name => "2-5_Classification4_ThatsClassified",
+      :guide_name => "2-5_Classification_LessonOverview"
     },
     {
       :category => :energy_flow,
       :title_key => "predators_and_prey",
-      :objective_keys => ["classify_adaptations_traits_html", "visualize_energy_food_chains_html"],
+      :objective_keys => ["understand_predator_prey_html", "investigate_predator_prey_html", "visualize_energy_food_chains_html"],
       :icons => [:tree],
       :desc_key => "observations_predator_prey_html",
       :file_name => "2-5_EnergyFlow1_PredatorsAndPrey",
@@ -60,7 +60,7 @@ module LessonPlansHelper
       :desc_key => "after_learning_food_chains_html",
       :objective_keys => ["model_interrelationships_html", "manipulate_ecological_html"],
       :icons => [:tree],
-      :file_name => "2-5_EnergyFlow3_BuildingFoodChains.pdf",
+      :file_name => "2-5_EnergyFlow3_BuildingFoodChains",
       :guide_name => "2-5_EnergyFlow_LessonOverview"
     },
     {
@@ -68,7 +68,7 @@ module LessonPlansHelper
       :title_key => "food_chains_rummy",
       :desc_key => "synthesize_energy_flow_html",
       :objective_keys => ["build_food_chains_html", "discuss_interconnectedness_html", "explore_roles_html"],
-      :icons => [],
+      :icons => [:card],
       :file_name => "2-5_EnergyFlow4_FoodChainsRummy",
       :guide_name => "2-5_EnergyFlow_LessonOverview"
     },
@@ -112,7 +112,7 @@ module LessonPlansHelper
       :title_key => "go_adapt",
       :desc_key => "synthesize_adaptations_go_fish_html",
       :objective_keys => ["identify_behavioral_physical_html", "classify_organisms_adaptations_html", "compare_contrast_adaptations_html", "interpret_explain_adaptations_html"],
-      :icons => [],
+      :icons => [:card],
       :file_name => "2-5_Adaptations4_GoAdapt",
       :guide_name => "2-5_Adaptations_LessonOverview"
     },
@@ -121,10 +121,11 @@ module LessonPlansHelper
       :title_key => "create_a_creature",
       :desc_key => "apply_understanding_adaptations_html",
       :objective_keys => ["design_share_adaptations_html", "synthesize_physical_behavioral_html"],
-      :icons => [],
+      :icons => [:card],
       :file_name => "2-5_Adaptations5_CreateACreature",
       :guide_name => "2-5_Adaptations_LessonOverview"
     },
+      # --------- GOT THIS FAR ------------
     {
       :category => :science_skills,
       :title_key => "meet_a_creature",

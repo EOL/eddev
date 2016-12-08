@@ -125,7 +125,6 @@ module LessonPlansHelper
       :file_name => "2-5_Adaptations5_CreateACreature",
       :guide_name => "2-5_Adaptations_LessonOverview"
     },
-      # --------- GOT THIS FAR ------------
     {
       :category => :science_skills,
       :title_key => "meet_a_creature",
@@ -157,8 +156,8 @@ module LessonPlansHelper
       :category => :science_skills,
       :title_key => "modeling_classification",
       :desc_key => "classify_themselves_html",
-      :objective_keys => ["classify_themselves_html", "practice_observation_skills_html"],
-      :icons => [:stats],
+      :objective_keys => ["classify_themselves_html", "practice_observation_skills_html", "apply_understanding_classification_html"],
+      :icons => [],
       :file_name => "2-5_ScienceSkills_BioBlitzSkillbuilder4",
       :guide_name => "2-5_ScienceSkills_BioblitzSkillbuilderOverview"
     },
@@ -176,7 +175,7 @@ module LessonPlansHelper
       :title_key => "analyzing_bioblitz",
       :desc_key => "investigate_analyze_biodiversity",
       :objective_keys => ["analyze_biodiversity_bioblitz_html", "descriptive_statistics_html", "inferences_biodiversity_html"],
-      :icons => [],
+      :icons => [:stats],
       :absolute_url => "http://nationalgeographic.org/activity/analyzing-bioblitz-data/"
     },
   ]
@@ -194,7 +193,7 @@ module LessonPlansHelper
     {
       :category => :science_skills,
       :title_key => "id_that_bird",
-      :desc_key => "practice_observations_describing_html",
+      :desc_key => "observe_cutouts_birds_html",
       :objective_keys => ["understand_binoculars_html", "practice_observation_field_html", "identify_birds_field_html"],
       :icons => [],
       :file_name => "6-8_ScienceSkills_BioBlitzSkillbuilder2",
@@ -214,13 +213,13 @@ module LessonPlansHelper
       :title_key => "modeling_classification",
       :desc_key => "classify_themselves_html",
       :objective_keys => ["classify_themselves_html", "practice_observation_skills_html", "apply_understanding_classification_html"],
-      :icons => [:stats],
+      :icons => [],
       :file_name => "6-8_ScienceSkills_BioBlitzSkillbuilder4",
       :guide_name => "6-8_ScienceSkills_BioblitzSkillbuilderOverview",
     },
     {
       :category => :science_skills,
-      :title_key => "using_dichotomous",
+      :title_key => "using_dichotomous_key",
       :desc_key => "observations_dichotomous_html",
       :objective_keys => ["practice_dichotomous_html"],
       :icons => [],
@@ -266,7 +265,7 @@ module LessonPlansHelper
       :category => :energy_flow,
       :title_key => "food_webs_chains_rummy",
       :desc_key => "synthesize_energy_flow_html",
-      :objective_keys => ["build_food_chains_html", "discuss_interconnectedness_html", "synthesize_understanding_roles"],
+      :objective_keys => ["build_food_chains_html", "discuss_interconnectedness_html", "synthesize_understanding_roles_html"],
       :icons => [:card],
       :file_name => "6-8_FoodWebs4_FoodChainsRummy",
       :guide_name => "6-8_FoodWebs_LessonOverview",
@@ -290,10 +289,10 @@ module LessonPlansHelper
     {
       :category => :adaptations,
       :title_key => "behavior_camouflage",
-      :desc_key => "simulation_hibernation_html",
-      :objective_keys => ["experiment_habitat_hibernating_html"],
+      :desc_key => "invent_imaginary_animal_html",
+      :objective_keys => ["understand_coloring_markings_html"],
       :icons => [],
-      :absolute_url => "http://www.outdoorbiology.com/files/resources/activities/Anti-freeze.pdf"
+      :absolute_url => "http://www.outdoorbiology.com/files/resources/activities/InventAnAnimal.pdf"
     },
     {
       :category => :adaptations,

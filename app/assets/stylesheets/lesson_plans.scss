@@ -173,6 +173,10 @@ $lesson-plan-border-color: #aaaaaa;
   .lesson-plan.last {
     border-bottom: solid 1px $lesson-plan-border-color;
   }
+
+  .lesson-plan-list {
+    margin-bottom: 0;
+  }
 }
 
 .lesson-plan-icon {

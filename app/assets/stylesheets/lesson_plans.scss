@@ -160,6 +160,22 @@ $lesson-plan-border-color: #aaaaaa;
     width: percentage($pdf-button-width / $main-col-width);
   }
 
+  .pdf-button-small {
+    border: solid 1px #979797;
+    clear: both;
+    color: #262626;
+    cursor: pointer;
+    display: none;
+    float: left;
+    font-size: 14px;
+    font-weight: $semibold;
+    height: 27px;
+    line-height: 27px;
+    margin: 7px 0 11px 0;
+    text-align: center;
+    width: 55px;
+  }
+
   a {
     @include standard-link;
   }
@@ -364,21 +380,6 @@ $lesson-plan-border-color: #aaaaaa;
   }
 }
 
-.pdf-button-small {
-  border: solid 1px #979797;
-  clear: both;
-  color: #262626;
-  cursor: pointer;
-  display: none;
-  float: left;
-  font-size: 14px;
-  font-weight: $semibold;
-  height: 27px;
-  line-height: 27px;
-  margin: 7px 0 11px 0;
-  text-align: center;
-  width: 55px;
-}
 
 
 $featured-trans-width: 890;

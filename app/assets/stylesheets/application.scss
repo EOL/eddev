@@ -390,9 +390,8 @@ $hero-transition-width: 525;
 }
 
 .intro-hdr {
-  $font-size: 18;
   border-bottom: solid 1px #979797;
-  font-size: $font-size / $em * 1em;
+  font-size: 20px;
   font-weight: $semibold;
   padding: 0 0 (7 / $em * 1em) 0;
 }
@@ -473,8 +472,7 @@ $hero-transition-width: 525;
 }
 
 .section-title {
-  color: $section-title-gray;
-  font-size: 1.5em;
+  font-size: 20px;
   font-weight: $semibold;  
   margin-bottom: percentage(5 / $main-col-width);
 }

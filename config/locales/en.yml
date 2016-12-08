@@ -181,7 +181,7 @@ en:
       intro_hdr: "Lesson Plans"
       intro_p_html: "Lesson plans are divided into three <span class='%{tooltip_class}' data-source='%{grade_level_src}'>grade and age ranges</span>, with five <span class='%{tooltip_class}' data-source='%{subject_src}'>themes</span>.  Some lesson plans have one or more <span class='%{tooltip_class}' data-source='%{icon_src}'>learning perks</span>. Some perks incorporate biological data, while others involve going outside or the use of our free <a href='%{cards_path}'>Species Cards</a>. Lesson plans are created by EOL and partners."
       featured_lesson_plans: "Featured Lesson Plans"
-      all_lesson_plans: "All Lesson Plans"
+      lesson_plans: "Lesson Plans"
       category_key: "Category key"
       generic_title: "Lesson plan"
       grades_2_5: "Grades 2–5 (Ages 7–10)"

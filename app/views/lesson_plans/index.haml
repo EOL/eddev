@@ -29,23 +29,6 @@
     :category => "classification",
     :title_key => "thats_classified"
 
--#= render "shared/section_head", :title_key => "lesson_plans.index.all_lesson_plans"
-.all-lesson-plans
-  .grade-level
-    .grade-level-bar.grade-level-1= t ".grades_2_5"
-    %ul.lesson-plan-list
-      -grade_1_lessons.each_with_index do |lesson, index|
-        =render "regular", :lesson => lesson, :index => index, :total => grade_1_lessons.length
-  .grade-level
-    .grade-level-bar.grade-level-2= t ".grades_6_8"
-    %ul.lesson-plan-list
-      -grade_2_lessons.each_with_index do |lesson, index|
-        =render "regular", :lesson => lesson, :index => index, :total => grade_2_lessons.length
-  .grade-level.last
-    .grade-level-bar.grade-level-3= t ".grades_9_12"
-    %ul.lesson-plan-list
-      -grade_3_lessons.each_with_index do |lesson, index|
-        =render "regular", :lesson => lesson, :index => index, :total => grade_3_lessons.length
 = render "shared/section_head", :title_key => "lesson_plans.index.category_key"
 .category-key.grade-level-key#GradeLevelKey>
   .grade-level-bar.grade-level-1= t ".grades_2_5"
@@ -75,3 +58,20 @@
     %i.icon.icon-card
     .icon-desc= t ".this_lesson_cards"
 
+= render "shared/section_head", :title_key => "lesson_plans.index.lesson_plans"
+.all-lesson-plans
+  .grade-level
+    .grade-level-bar.grade-level-1= t ".grades_2_5"
+    %ul.lesson-plan-list
+      -grade_1_lessons.each_with_index do |lesson, index|
+        =render "regular", :lesson => lesson, :index => index, :total => grade_1_lessons.length
+  .grade-level
+    .grade-level-bar.grade-level-2= t ".grades_6_8"
+    %ul.lesson-plan-list
+      -grade_2_lessons.each_with_index do |lesson, index|
+        =render "regular", :lesson => lesson, :index => index, :total => grade_2_lessons.length
+  .grade-level.last
+    .grade-level-bar.grade-level-3= t ".grades_9_12"
+    %ul.lesson-plan-list
+      -grade_3_lessons.each_with_index do |lesson, index|
+        =render "regular", :lesson => lesson, :index => index, :total => grade_3_lessons.length

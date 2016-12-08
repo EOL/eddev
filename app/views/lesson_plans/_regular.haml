@@ -28,7 +28,7 @@
       - lesson[:objective_keys].each do |key|
         %li.objective= t "lesson_plans.objectives.#{key}"
   -if is_download
-    = link_to resource_path, :class => "pdf-button", :download => "" do
+    = link_to resource_path, :class => "pdf-button" do
       %i.fa.fa-download.fa-lg
   -else
     = link_to resource_path, :class => "pdf-button" do

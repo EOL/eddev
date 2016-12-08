@@ -6,8 +6,8 @@
   :icon_src => "IconKey",
   :cards_path => cards_path}}], 
   :hideable => false
-= render "shared/section_head", :title_key => "lesson_plans.index.featured_lesson_plans"
-%ul.featured-lesson-plans<
+-#= render "shared/section_head", :title_key => "lesson_plans.index.featured_lesson_plans"
+-#%ul.featured-lesson-plans<
   = render "featured", :order => "first",
     :grade_level => 1,
     :icons => [:card],
@@ -29,7 +29,7 @@
     :category => "classification",
     :title_key => "thats_classified"
 
-= render "shared/section_head", :title_key => "lesson_plans.index.all_lesson_plans"
+-#= render "shared/section_head", :title_key => "lesson_plans.index.all_lesson_plans"
 .all-lesson-plans
   .grade-level
     .grade-level-bar.grade-level-1= t ".grades_2_5"

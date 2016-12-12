@@ -1,5 +1,5 @@
 = render "shared/intro_section", :header => "lesson_plans.index.intro_hdr",
-  :paragraphs => [{:key => "lesson_plans.index.intro_p_html", 
+  :paragraphs => ["lesson_plans.index.intro_p_html"],
   :hideable => false
 -#= render "shared/section_head", :title_key => "lesson_plans.index.featured_lesson_plans"
 -#%ul.featured-lesson-plans<
@@ -24,34 +24,37 @@
     :category => "classification",
     :title_key => "thats_classified"
 
-= render "shared/section_head", :title_key => "lesson_plans.index.category_key"
-.category-key.grade-level-key#GradeLevelKey>
-  .grade-level-bar.grade-level-1= t ".grades_2_5"
-  .grade-level-bar.grade-level-2= t ".grades_6_8"
-  .grade-level-bar.grade-level-3= t ".grades_9_12"
-.category-key.subject-key#SubjectKey>
-  .subject.first>
-    = image_tag "lesson_plans/classification_icon.jpg", :class => "subject-icon"
-    .subject-name= t ".classification"
-  .subject.second>
-    = image_tag "lesson_plans/science_skills_icon.jpg", :class => "subject-icon"
-    .subject-name= t ".science_skills"
-  .subject.third>
-    = image_tag "lesson_plans/adaptations_icon.jpg", :class => "subject-icon"
-    .subject-name= t ".adaptations"
-  .subject.fourth>
-    = image_tag "lesson_plans/energy_flow_icon.jpg", :class => "subject-icon"
-    .subject-name= t ".energy_flow"
-.category-key.icon-key#IconKey
-  .icon-row
-    %i.icon.icon-stats
-    .icon-desc= t ".includes_biological"
-  .icon-row
-    %i.icon.icon-tree
-    .icon-desc= t ".involves_field"
-  .icon-row
-    %i.icon.icon-card
-    .icon-desc= t ".uses_cards"
+.subject-key-block>
+  = render "shared/section_head", :title_key => "lesson_plans.index.subjects"
+  .category-key.subject-key#SubjectKey>
+    .subject.first<>
+      = image_tag "lesson_plans/classification_icon.jpg", :class => "subject-icon"
+      .subject-name= t ".classification"
+    .subject.second<>
+      = image_tag "lesson_plans/science_skills_icon.jpg", :class => "subject-icon"
+      .subject-name= t ".science_skills"
+    .subject.third<>
+      = image_tag "lesson_plans/adaptations_icon.jpg", :class => "subject-icon"
+      .subject-name= t ".human_impact"
+    .subject.fourth<>
+      = image_tag "lesson_plans/adaptations_icon.jpg", :class => "subject-icon"
+      .subject-name= t ".adaptations"
+    .subject.fifth<>
+      = image_tag "lesson_plans/energy_flow_icon.jpg", :class => "subject-icon"
+      .subject-name= t ".energy_flow"
+
+.icon-key-block>
+  = render "shared/section_head", :title_key => "lesson_plans.index.learning_perks"
+  .category-key.icon-key#IconKey
+    .icon-row<>
+      %i.icon.icon-stats
+      .icon-desc= t ".includes_biological"
+    .icon-row<>
+      %i.icon.icon-tree
+      .icon-desc= t ".involves_field"
+    .icon-row<>
+      %i.icon.icon-card
+      .icon-desc= t ".uses_cards"
 
 = render "shared/section_head", :title_key => "lesson_plans.index.lesson_plans"
 .all-lesson-plans

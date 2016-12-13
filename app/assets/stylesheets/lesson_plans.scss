@@ -244,10 +244,15 @@ $lesson-plan-border-color: #aaaaaa;
 }
 
 .lesson-plan-objectives {
-  list-style: inside disc;
+  list-style: outside disc;
   margin-top: 10px;
   overflow: hidden;
-  padding-left: 30px;
+  padding-left: 40px;
+  
+  .objective {
+    text-indent: 0;
+    padding-left: 10px;
+  }
 }
 
 .pdf-button {

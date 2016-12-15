@@ -93,8 +93,15 @@ $lesson-plan-border-color: #aaaaaa;
   font-weight: $bold;
   height: 34px;
   line-height: 34px;
+  position: relative;
   text-align: center;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+
+  .fa-chevron-down {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+  }
 }
 
 .all-lesson-plans {

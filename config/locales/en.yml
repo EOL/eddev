@@ -197,9 +197,9 @@ en:
       adaptations: "Adaptations"
       energy_flow: "Energy Flow"
       human_impact: "Human Impact"
-      includes_biological: "Includes biological statistics"
-      involves_field: "Involves field work"
-      uses_cards: "Uses species cards"
+      bio_stats: "Biological statistics"
+      field_work: "Field work"
+      species_cards: "Species cards"
     lesson_plan_desc_generic_1: "Students explore the importance and process of classification. Students apply the concept of biological classification to a real hierarchy of birds, analyzing bird photos and organizing them into groups based on physical characteristics."
     long_titles:
       classification_1: "Classification Activity 1: What is Classification?" 

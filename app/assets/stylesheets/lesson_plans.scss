@@ -195,6 +195,10 @@ $lesson-plan-border-color: #aaaaaa;
   }
 }
 
+.lesson-plan-icon, .subject-icon {
+  border: solid 1px #212121;
+}
+
 .lesson-plan-icon {
   float: left;
   margin-right: 15px;
@@ -202,9 +206,6 @@ $lesson-plan-border-color: #aaaaaa;
   vertical-align: top;
 }
 
-.lesson-plan-text {
-  vertical-align: top;
-}
 
 .lesson-plan-title {
   color: #2f2f2f;
@@ -213,7 +214,23 @@ $lesson-plan-border-color: #aaaaaa;
   margin-bottom: 15px;
 }
 
-.icon-list {
+.icon-list-vert, .icon-list-horiz {
+  .icon {
+    color: #c1c1c1;
+    font-size: 21px;
+    line-height: 21px;
+
+    &.active {
+      color: #1e1e1e;
+    }
+  }
+}
+
+.icon-list-horiz {
+  display: none;
+}
+
+.icon-list-vert {
   display: inline-block;
   float: left;
   margin-right: 24px;
@@ -221,16 +238,6 @@ $lesson-plan-border-color: #aaaaaa;
   li {
     margin-bottom: 7px;
   }
-
-  .icon {
-    color: #c1c1c1;
-    font-size: 20px;
-    line-height: 20px;   
-
-    &.active {
-      color: #1e1e1e;
-    }
-  } 
 }
 
 .lesson-plan-desc-cont {
@@ -261,6 +268,7 @@ $lesson-plan-border-color: #aaaaaa;
 .subject-key-block, .icon-key-block {
   display: inline-block;
   position: relative;
+  vertical-align: top;
 }
 
 $icon-key-block-width: 293px;
@@ -278,14 +286,16 @@ $subject-key-block-width: 600px;
 .category-key {
   border: solid 1px #979797;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-  display: inline-block;
-  margin: 22px 0 0 0;
+  display: block;
+  margin: 22px auto 0 auto;
   padding: 17px;
   vertical-align: top;
-  width: 100%;
+  width: $subject-key-block-width;
 }
 
 .icon-key {
+  width: $icon-key-block-width; 
+
   .icon-row {
     height: 37px;
     line-height: 37px;
@@ -396,61 +406,52 @@ $subject-key-block-width: 600px;
   }
 }
 
-
-
-$featured-trans-width: 890;
-@media screen and (max-width: $featured-trans-width * 1px) {
-  .featured-lesson-plans {
-    $container-width: 463;
-    margin: 0 auto;
-    width: 463px;
-
-    .featured-lesson-plan {
-      margin: 13px 13px 0 0;
-      width: 225px;
-
-      &.second, &.fourth {
-        margin-right: 0;
-      }
-    }
+@media screen and (max-width: 962px) {
+  .subject-key-block, .icon-key-block {
+    width: 100%;
   }
 }
 
-@media screen and (max-width: $head-trans-width * 1px) {
-  .featured-lesson-plans {
-    $container-width: 305px;
-    margin: 0 auto;
-    width: 305px;
+@media screen and (max-width: 630px) {
+  $lesson-plan-icon-sz: 84px;
 
-    .featured-lesson-plan {
-      margin: 5px 5px 0 0;
-      width: 150px;
+  .subject-key, .icon-key {
+    width: 371px;
+  }
 
-      .top-bar {
-        font-weight: normal;
-        height: 22px;
-        line-height: 22px;
-        padding-left: 7px;
-      }
+  .subject-key {
+    .subject {
+      width: 50%;
 
-      .icons {
-        font-size: 16px;
-        margin-right: 2px;
-        padding-top: 2px;
-      }
-
-      &.second, &.fourth {
-        margin-right: 0;
-      }
-
-      .text-overlay {
-        font-size: 12px;
-        font-weight: $semibold;
-        height: 27px;
-        line-height: 27px;
-        padding-left: 7px;
+      &.third, &.fourth {
+        margin-bottom: 9px;
       }
     }
+  }
+
+  .icon-list-horiz {
+    display: block;
+    clear: both;
+    float: left;
+    margin-top: 4px;
+    width: $lesson-plan-icon-sz + 15px;
+
+    li {
+      display: inline-block;
+    }
+
+
+    .icon-tree {
+      margin: 0 10px;
+    }
+  }
+
+  .icon-list-vert {
+    display: none;
+  }
+
+  .lesson-plan-list {
+    display: block;
   }
 
   .lesson-plan-title {
@@ -463,44 +464,76 @@ $featured-trans-width: 890;
   }
 
   .lesson-plan-icon {
-    height: 84px;
-    width: 84px;
+    height: $lesson-plan-icon-sz;
+    width: $lesson-plan-icon-sz;
+  }
+
+  .lesson-plan-objectives {
+    padding-left: 17px;
+  }
+
+  .lesson-plan {
+    min-height: 0;
   }
 
   .lesson-plan .left-wrap {
     padding-right: 2%;
   }
-}
 
-@media screen and (max-width: 350px) {
-  .icon-key {
-    height: 80px;
-    width: 310px;
-
-    .icon {
-      font-size: 18px;
-      margin-right: 10px
-    }
-
-    .icon-desc {
-      font-size: 12px;
-      width: 270px;
-    }
+  .lesson-plan-text {
+    overflow: hidden;
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 400px) {
+  .subject-key, .icon-key {
+    width: 262px;
+  }
+
+  .category-key {
+    padding: 12px;
+  }
+
+  .subject-key .subject-name, .icon-key .icon-desc {
+    font-size: 11px;
+    font-weight: $light;
+  }
+
+  .subject-key {
+    .subject-icon {
+      margin-right: 3px;
+      height: 36px;
+      width: 36px;
+    }
+
+    .subject.first,
+    .subject.third,
+    .subject.fifth {
+      width: 55%;
+    }
+
+    .subject.second,
+    .subject.fourth {
+      width: 45%;
+    }
+  }
+
+  .icon-key {
+    .icon {
+      font-size: 20px;
+    }
+
+    .icon-row {
+      height: 28px;
+      line-height: 28px;
+    }
+  }
+
   .lesson-plan {
     $icon-size: 55px;
-    min-height: $icon-size;
 
     .pdf-button-small {
       display: block;
-    }
-
-    .icon-list {
-      clear: both;
-      width: $icon-size;
     }
 
     .lesson-plan-icon {
@@ -512,7 +545,16 @@ $featured-trans-width: 890;
       display: none;
     }
 
-    .icon-list, .lesson-plan-icon, .pdf-button-small {
+    .icon-list-horiz {
+      display: none;
+    }
+
+    .icon-list-vert {
+      clear: both;
+      display: block;
+    }
+
+    .icon-list-vert, .lesson-plan-icon, .pdf-button-small {
       margin-right: 9px;
     }
   }

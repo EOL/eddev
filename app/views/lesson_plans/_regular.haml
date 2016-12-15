@@ -5,6 +5,8 @@
   .left-wrap
     %img.lesson-plan-icon{:src => image_path("lesson_plans/#{lesson[:category].to_s}_icon.jpg")}
 
+    = render "icons", :lesson => lesson, :class_ext => "horiz"
+
     -if is_download
       = link_to resource_path, :class => "pdf-button-small", :download => "" do
         %i.fa.fa-download.fa-lg
@@ -14,24 +16,19 @@
 
     %h3.lesson-plan-title= t("lesson_plans.long_titles.#{lesson[:title_key]}")
 
-    %ul.icon-list
-      %li
-        %i{:class => ["icon", "icon-stats", ("active" if lesson[:icons].include? :stats)]}
-      %li  
-        %i{:class => ["icon", "icon-tree", ("active" if lesson[:icons].include? :tree)]}
-      %li
-        %i{:class => ["icon", "icon-card", ("active" if lesson[:icons].include? :card)]}
+    = render "icons", :lesson => lesson, :class_ext => "vert"
 
-    .lesson-plan-desc.first= t("lesson_plans.descriptions.#{lesson[:desc_key]}", (lesson[:guide_name] ? {:guide_path => lesson_plan_path(lesson[:guide_name])} : {}))
+    .lesson-plan-text 
+      .lesson-plan-desc.first= t("lesson_plans.descriptions.#{lesson[:desc_key]}", (lesson[:guide_name] ? {:guide_path => lesson_plan_path(lesson[:guide_name])} : {}))
 
-    %ul.lesson-plan-objectives
-      - lesson[:objective_keys].each do |key|
-        %li.objective= t "lesson_plans.objectives.#{key}"
-  -if is_download
-    = link_to resource_path, :class => "pdf-button", :download => "" do
-      %i.fa.fa-download.fa-lg
-  -else
-    = link_to resource_path, :class => "pdf-button" do
-      %i.fa.fa-external-link.fa-lg
+      %ul.lesson-plan-objectives
+        - lesson[:objective_keys].each do |key|
+          %li.objective= t "lesson_plans.objectives.#{key}"
+    -if is_download
+      = link_to resource_path, :class => "pdf-button", :download => "" do
+        %i.fa.fa-download.fa-lg
+    -else
+      = link_to resource_path, :class => "pdf-button" do
+        %i.fa.fa-external-link.fa-lg
 
 

@@ -17,8 +17,7 @@
 @import "layout_vars.scss";
 
 $slide-menu-bg-color: #2e303d;
-$section-v-margin: 54;
-$section-v-margin-pct: percentage($section-v-margin / $main-col-width);
+$section-v-margin: 54px;
 
 @mixin hero-fluid($width, $height) {
   margin: 0 auto;
@@ -464,7 +463,7 @@ $hero-transition-width: 525;
 
 .section-head {
   border-bottom: 1px solid $section-border-gray;
-  margin: $section-v-margin-pct 0 0 0; // 66, (50 - 12 = 38) / 1179
+  margin: $section-v-margin 0 0 0; 
 }
 
 .section-head-top {
@@ -474,7 +473,7 @@ $hero-transition-width: 525;
 .section-title {
   font-size: 20px;
   font-weight: $semibold;  
-  margin-bottom: percentage(5 / $main-col-width);
+  margin-bottom: 5px;
 }
 
 .section-intro {

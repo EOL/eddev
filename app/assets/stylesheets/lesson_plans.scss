@@ -195,11 +195,12 @@ $lesson-plan-border-color: #aaaaaa;
   }
 }
 
-.lesson-plan-icon, .subject-icon {
+.subject-icon {
   border: solid 1px #212121;
 }
 
 .lesson-plan-icon {
+  border: solid 1px #979797;
   float: left;
   margin-right: 15px;
   height: $lesson-plan-icon-size;
@@ -260,9 +261,6 @@ $lesson-plan-border-color: #aaaaaa;
     text-indent: 0;
     padding-left: 10px;
   }
-}
-
-.pdf-button {
 }
 
 .subject-key-block, .icon-key-block {
@@ -448,10 +446,6 @@ $subject-key-block-width: 600px;
 
   .icon-list-vert {
     display: none;
-  }
-
-  .lesson-plan-list {
-    display: block;
   }
 
   .lesson-plan-title {

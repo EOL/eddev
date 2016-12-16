@@ -295,7 +295,7 @@ module LessonPlansHelper
       :absolute_url => "http://www.outdoorbiology.com/files/resources/activities/InventAnAnimal.pdf"
     },
     {
-      :category => :adaptations,
+      :category => :human_impact,
       :title_key => "coral_bleaching",
       :desc_key => "podcast_climate_coral_html",
       :objective_keys => ["understand_physical_corals_html", "discuss_threats_coral_html"],
@@ -303,7 +303,7 @@ module LessonPlansHelper
       :absolute_url => "https://listenwise.com/teach/lessons/63-corals-and-climate-change"
     },
     {
-      :category => :adaptations,
+      :category => :human_impact,
       :title_key => "crayfish_commerce",
       :desc_key => "podcast_business_crawfish_html",
       :objective_keys => ["examine_business_biodiversity_html"],
@@ -311,7 +311,7 @@ module LessonPlansHelper
       :absolute_url => "http://nationalgeographic.org/media/tiny-travelers/"
     },
     {
-      :category => :adaptations,
+      :category => :human_impact,
       :title_key => "dolphins_bycatch",
       :desc_key => "podcast_dolphins_tuna_html",
       :objective_keys => ["discuss_tuna_dolphins_html", "understand_dolphin_tissue_html"],
@@ -319,7 +319,7 @@ module LessonPlansHelper
       :absolute_url => "https://listenwise.com/teach/lessons/87-spotted-dolphins-and-spinner-dolphins"
     },
     {
-      :category => :adaptations,
+      :category => :human_impact,
       :title_key => "ocean_acidification",
       :desc_key => "podcast_ocean_acidification_html",
       :objective_keys => ["understand_role_sea_butterflies_html", "observe_acidification_pteropods_html"],

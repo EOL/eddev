@@ -3,8 +3,10 @@ Rails.application.routes.draw do
   root 'welcome#index'
   get  'about'        => 'welcome#about',      :as => :about
   get  'species_cards'        => 'cards#index',        :as => :cards
+  get  'cards/new'         => 'cards#new',          :as => :new_card
   get  'lesson_plans' => 'lesson_plans#index', :as => :lesson_plans
   get  'lesson_plans/:pdf_name' => 'lesson_plans#pdf', :as => :lesson_plan_pdf
+
 
 
 #  scope '(:locale)', locale: /#{I18n.available_locales.join('|')}/ do

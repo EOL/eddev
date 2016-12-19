@@ -6,18 +6,6 @@
   :top => true
 %ul.nav-items<
   = render "nav_item",
-    :width => "single",
-    :href => "/memory",
-    :image_name => "memory_game",
-    :text_key => "memory_games",
-    :klazz => "memory-games"
-  = render "nav_item",
-    :width => "double",
-    :href => "/ecosystems",
-    :image_name => "eol_places",
-    :text_key => "eol_places",
-    :klazz => "ecosystems"
-  = render "nav_item",
     :width => "double",
     :href => lesson_plans_path,
     :image_name => "lesson_plans",
@@ -29,6 +17,18 @@
     :image_name => "species_cards",
     :text_key => "species_cards",
     :klazz => "species-cards"
+  = render "nav_item",
+    :width => "single",
+    :href => "/memory",
+    :image_name => "memory_game",
+    :text_key => "memory_games",
+    :klazz => "memory-games"
+  = render "nav_item",
+    :width => "double",
+    :href => "/ecosystems",
+    :image_name => "eol_places",
+    :text_key => "eol_places",
+    :klazz => "ecosystems"
 = render "shared/section_head", :title_key => "welcome.index.sections.eol_resources_title"
 %ul.nav-items<
   = render "nav_item",

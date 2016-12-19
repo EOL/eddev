@@ -18,6 +18,11 @@
 // require galleria/themes/classic/galleria.classic
 //= require tinymce-jquery
 
+window.fontsLoadedCallbacks = [];
+function onFontsLoaded(fn) {
+  window.fontsLoadedCallbacks.push(fn);
+}
+
 (function() {
   function slideMenuOpen() {
     var $bars = $('#BarsIcon'),

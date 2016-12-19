@@ -1,9 +1,13 @@
 (function() {
   function gradeLevelToggle() {
     var $this = $(this),
-        $list = $this.next('.lesson-plan-list');
+        $list = $this.next('.lesson-plan-list'),
+        $chevron = $this.find('.chevron');
 
-    $list.slideToggle(); 
+    $list.slideToggle();
+
+    $chevron.toggleClass('fa-chevron-down');
+    $chevron.toggleClass('fa-chevron-up');
   }
 
   $(function () {

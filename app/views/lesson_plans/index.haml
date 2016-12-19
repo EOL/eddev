@@ -61,21 +61,21 @@
   .grade-level
     .grade-level-bar.grade-level-1
       %span= t ".grades_2_5"
-      %i{:class => "fa fa-chevron-down", "aria-hidden" => true}
+      %i{:class => "fa fa-chevron-down chevron", "aria-hidden" => true}
     %ul.lesson-plan-list
       -grade_1_lessons.each_with_index do |lesson, index|
         =render "regular", :lesson => lesson, :index => index, :total => grade_1_lessons.length
   .grade-level
     .grade-level-bar.grade-level-2
       %span= t ".grades_6_8"
-      %i{:class => "fa fa-chevron-down", "aria-hidden" => true}
+      %i{:class => "fa fa-chevron-down chevron", "aria-hidden" => true}
     %ul.lesson-plan-list
       -grade_2_lessons.each_with_index do |lesson, index|
         =render "regular", :lesson => lesson, :index => index, :total => grade_2_lessons.length
   .grade-level.last
     .grade-level-bar.grade-level-3
       %span= t ".grades_9_12"
-      %i{:class => "fa fa-chevron-down", "aria-hidden" => true}
+      %i{:class => "fa fa-chevron-down chevron", "aria-hidden" => true}
     %ul.lesson-plan-list
       -grade_3_lessons.each_with_index do |lesson, index|
         =render "regular", :lesson => lesson, :index => index, :total => grade_3_lessons.length

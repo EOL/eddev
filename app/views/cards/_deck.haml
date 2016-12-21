@@ -8,5 +8,5 @@
       .deck-sub-placeholder
 
     %p.deck-desc= t "cards.deck_descriptions.#{deck[:desc_key]}"
-    %a.pdf-button
+    =link_to "#{deck[:file_name]}.pdf", :class => "pdf-button", :download => "" do 
       %i.fa.fa-download.fa-lg

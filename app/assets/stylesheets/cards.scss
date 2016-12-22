@@ -15,7 +15,39 @@ $deck-title-color: #262626;
   cursor: pointer;
   display: inline-block;
   margin: percentage($featured-card-t-margin / $main-col-width) percentage($featured-card-h-margin / $main-col-width) 0 0;
+  position: relative;
   width: percentage($featured-card-width / $main-col-width);
+
+  .download-button {
+    &.blue {
+      background: rgb(0, 138, 177);
+    }
+
+    &.orange {
+      background: rgb(207, 104, 26);
+    }
+
+    &.pink {
+      background: rgb(188, 58, 81);
+    }
+
+    &.green {
+      background: rgb(122, 182, 45);
+    }
+
+    bottom: percentage(10 / $featured-card-height);
+    color: #fff;
+    display: none;
+    font-size: 32px;
+    line-height: 32px;
+    height: percentage(51 / $featured-card-height);
+    left: percentage(10 / $featured-card-width);
+    padding-top: percentage(12 / $featured-card-width);
+    position: absolute;
+    text-align: center;
+    width: percentage(205 / $featured-card-width);
+    z-index: 2;
+  }
 
   &.fourth {
     margin-right: 0;
@@ -35,6 +67,10 @@ $deck-title-color: #262626;
       text-align: center;
       top: 13.4%;
       width: 100%;
+    }
+
+    .download-button {
+      display: block;
     }
   }
 }
@@ -166,6 +202,15 @@ $one-col-deck-width: 850;
 @media screen and (max-width: 775px) {
   .featured-deck-wrap .overlay {
     font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 740px) {
+  .featured-deck {
+    .download-button {
+      font-size: 26px;
+      line-height: 26px;
+    }
   }
 }
 

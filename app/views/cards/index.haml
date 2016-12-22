@@ -5,16 +5,20 @@
 %ul.featured-decks<
   = render "featured", :class_str => "first",
     :image_name => "bioblitz_common",
-    :desc_key => "bioblitz_common"
+    :desc_key => "bioblitz_common",
+    :color => "blue"
   = render "featured", :class_str => "second",
     :image_name => "okaloosa_bio",
-    :desc_key => "okaloosa_bio"
+    :desc_key => "okaloosa_bio",
+    :color => "orange"
   = render "featured", :class_str => "third",
     :image_name => "ne_urban",
-    :desc_key => "ne_urban"
+    :desc_key => "ne_urban",
+    :color => "pink"
   = render "featured", :class_str => "fourth",
     :image_name => "earthwatch",
-    :desc_key => "earthwatch_cali_tree"
+    :desc_key => "earthwatch_cali_tree",
+    :color => "green"
 = render "shared/section_head", :title_key => "resources.cards.all_decks"
 %ul.all-decks<
   - all_decks.each_with_index do |deck, index|

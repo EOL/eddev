@@ -31,8 +31,9 @@ $deck-title-color: #262626;
       background: rgb(188, 58, 81);
     }
 
-    &.green {
-      background: rgb(122, 182, 45);
+    &.gray {
+      background: rgb(234, 234, 234);
+      color: #333;
     }
 
     bottom: percentage(10 / $featured-card-height);
@@ -67,6 +68,15 @@ $deck-title-color: #262626;
       text-align: center;
       top: 13.4%;
       width: 100%;
+    }
+
+    &.trait-card {
+      &:hover, &.hover {
+        .overlay {
+          height: percentage(195 / $featured-card-height);
+          top: 16.2%;
+        }
+      }
     }
 
     .download-button {

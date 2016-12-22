@@ -41,20 +41,20 @@ module CardsHelper
     :image_name => "ne_urban",
     :file_name => "not_found"
   },
-  {
-    :title_key => "new_england",
-    :sub_key => "vernal_pools",
-    :desc_key => "ne_vernal",
-    :image_name => "ne_vernal",
-    :file_name => "not_found"
-  },
-  {
-    :title_key => "new_england",
-    :sub_key => "wright_farm",
-    :desc_key => "ne_wright",
-    :image_name => "ne_wright",
-    :file_name => "not_found"
-  },
+#  {
+#    :title_key => "new_england",
+#    :sub_key => "vernal_pools",
+#    :desc_key => "ne_vernal",
+#    :image_name => "ne_vernal",
+#    :file_name => "not_found"
+#  },
+#  {
+#    :title_key => "new_england",
+#    :sub_key => "wright_farm",
+#    :desc_key => "ne_wright",
+#    :image_name => "ne_wright",
+#    :file_name => "not_found"
+#  },
   {
     :title_key => "okaloosa",
     :sub_key => "urban_habitats",
@@ -104,23 +104,23 @@ module CardsHelper
     :image_name => "okaloosa_mammals",
     :file_name => "not_found"
   },
+#  {
+#    :title_key => "okaloosa",
+#    :sub_key => "common_birds",
+#    :desc_key => "okaloosa_common_birds",
+#    :image_name => "okaloosa_birds",
+#    :file_name => "not_found"
+#  },
+#  {
+#    :title_key => "okaloosa",
+#    :sub_key => "emammal_camera",
+#    :desc_key => "okaloosa_emammal",
+#    :image_name => "okaloosa_emammal",
+#    :file_name => "not_found"
+#  },
   {
     :title_key => "okaloosa",
-    :sub_key => "common_birds",
-    :desc_key => "okaloosa_common_birds",
-    :image_name => "okaloosa_birds",
-    :file_name => "not_found"
-  },
-  {
-    :title_key => "okaloosa",
-    :sub_key => "emammal_camera",
-    :desc_key => "okaloosa_emammal",
-    :image_name => "okaloosa_emammal",
-    :file_name => "not_found"
-  },
-  {
-    :title_key => "okaloosa",
-    :sub_key => "adapt",
+    :sub_key => "adaptations",
     :desc_key => "okaloosa_adapt",
     :image_name => "okaloosa_adapt",
     :file_name => "not_found"

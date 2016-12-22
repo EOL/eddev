@@ -19,5 +19,9 @@ module ApplicationHelper
       Rails.application.assets_manifest.assets[path].present?
     end
   end
+
+  def contact_url 
+    "http://eol.org/contact_us?subject=learning"
+  end
 end
 

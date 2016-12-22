@@ -41,9 +41,9 @@ $deck-title-color: #262626;
     display: none;
     font-size: 32px;
     line-height: 32px;
-    height: percentage(51 / $featured-card-height);
+    height: percentage(48 / $featured-card-height);
     left: percentage(10 / $featured-card-width);
-    padding-top: percentage(12 / $featured-card-width);
+    padding-top: percentage(9 / $featured-card-width);
     position: absolute;
     text-align: center;
     width: percentage(205 / $featured-card-width);
@@ -73,7 +73,7 @@ $deck-title-color: #262626;
     &.trait-card {
       &:hover, &.hover {
         .overlay {
-          height: percentage(195 / $featured-card-height);
+          height: percentage(196 / $featured-card-height);
           top: 16.2%;
         }
       }

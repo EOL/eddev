@@ -79,3 +79,9 @@
     %ul.lesson-plan-list
       -grade_3_lessons.each_with_index do |lesson, index|
         =render "regular", :lesson => lesson, :index => index, :total => grade_3_lessons.length
+= render  "shared/image_credits", 
+  :images => [{ :title => "Spring Grasses",
+  :author => "Loren Kerns",
+  :source => "Flickr",
+  :url => "https://www.flickr.com/photos/lorenkerns/14357401912/in/photolist-nSHroh-6V6Ufi-6kd7VA-q4FRzp-jeQJ7G-nMLYpA-og9tnv-NU77Z-o4XY9a-nxhMJc-oSXWD2-5g2PX7-6sxh9w-6Ejt9t-bjyvLA-5vppc9-34KdB5-dVXLqY-57JYpu-7U552U-aaNo4f-5RrHud-uTXxBk-79hAAh-4w14xi-5NRm28-4zZmYL-55VbrQ-oEcNSS-exrpDQ-cGNryw-pBGxy7-49CdG-6miVkq-55T7HE-fMqgjq-92ckFt-77e4Nm-7S9YDi-egjmmq-r4dzgP-peJVN6-egzua6-7JvooW-6qdgUw-5sKVsS-4SXtqz-oitGc3-6YRag4-6rMKZX",
+  :license => "CC-BY"}]

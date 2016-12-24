@@ -7,7 +7,9 @@
   :hideable => false
 .team-head
   %h2.team-head-title= t ".meet_the_team"
-  %p.team-head-content= t ".le_is_located_html"
+  %p.team-head-content= t ".le_is_located_html", 
+    :eol_groups_url => "http://eol.org/info/working_groups",
+    :mcz_url => "http://www.mcz.harvard.edu/"
 = render "bio", :bio_img_path => "welcome/bio/tracy.jpg",
   :bio_name => "tracy_name",
   :bio_title => "project_coordinator",

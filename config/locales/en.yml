@@ -39,6 +39,7 @@ en:
       header: "Image Credits"
       eol_promotes_html: "EOL promotes content sharing via Creative Commons and other open licenses. Learn more about <a href='http://eol.org/info/eol_licensing_policy'>EOL's Licensing Policy</a>."
       credit_html: "<span class='%{title_class}'>%{title}</span> by %{author} via <a href='%{url}'>%{source}</a> %{license}"
+      credit_nolink_html: "<span class='%{title_class}'>%{title}</span> by %{author} via %{source} %{license}"
 
   welcome:
     nav_item:

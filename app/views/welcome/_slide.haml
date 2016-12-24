@@ -6,6 +6,6 @@
       .slide-overlay
         .slide-overlay-inner
           .slide-head-grp
-            .slide-title= title
-            .slide-subtitle= subtitle
-          .slide-desc= desc
+            .slide-title= t "welcome.index.slides.titles.#{title_key}"
+            .slide-subtitle= t "welcome.index.slides.subtitles.#{content_key}"
+          .slide-desc= t "welcome.index.slides.descriptions.#{content_key}"

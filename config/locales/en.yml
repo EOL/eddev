@@ -68,6 +68,25 @@ en:
         inaturalist: "iNaturalist is an open science, biodiversity observation platform. Their research-grade images flow back into EOL."
         coloring_books: "The BHL provides the foundational literature to EOL, including original descriptions and beautiful images."
     index:
+      slides:
+        titles: 
+          podcast: "Podcast"
+          biodiv_article: "Biodiversity Article"
+          species_cards: "Species Cards"
+          memory_game: "Memory Game"
+          lesson_plan: "Lesson Plan"
+        subtitles:
+          right_whale: "The Right Whale"
+          what_is_amph: "What is an Amphibian"
+          bioblitz_deck: "BioBlitz Deck"
+          sea_monsters: "Beautiful Sea Monsters"
+          food_chain_rummy: "Energy Flow and Food Chain Rummy"
+        descriptions:
+          right_whale: "This 6-minute podcast on animal communication has lesson plans, transcripts, and scientist interviews, too"
+          what_is_amph: "Check-out EOL’s introductory article with links to other resources to learn about amphibians"
+          bioblitz_deck: "Developed for the 2016 National Park BioBlitz, this deck contains information for common groups of animals"
+          sea_monsters: "Play this Memory Game and explore the EOL Collection to learn more"
+          food_chain_rummy: "Explore this middle school classroom activity addressing US Next Generation Science Standards (NGSS) benchmarks"
       welcome_box:
         welcome_to_l_and_e: "Welcome to Learning + Education at the Encyclopedia of Life"
         l_and_e_is_part_html: "The Encyclopedia of Life Learning + Education group (EOL L+E) is part of the larger <a href='/about'>EOL collaborative</a>. EOL L+E works with educators, citizen scientists and partners to make this information accessible through tools, services and resources found here."

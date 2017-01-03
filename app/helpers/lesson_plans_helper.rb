@@ -131,7 +131,7 @@ module LessonPlansHelper
       :desc_key => "practice_observations_describing_html",
       :objective_keys => ["interpret_draw_organism_html"],
       :icons => [],
-      :file_name => "2-5_ScienceSkills_BioBlitzSkillbuilder1",
+      :file_name => "2-5_ScienceSkills_BioblitzSkillbuilder1",
       :guide_name => "2-5_ScienceSkills_BioblitzSkillbuilderOverview"
     },
     {
@@ -140,7 +140,7 @@ module LessonPlansHelper
       :desc_key => "observe_cutouts_birds_html",
       :objective_keys => ["understand_binoculars_html", "practice_observation_field_html", "identify_birds_field_html"],
       :icons => [],
-      :file_name => "2-5_ScienceSkills_BioBlitzSkillbuilder2",
+      :file_name => "2-5_ScienceSkills_BioblitzSkillbuilder2",
       :guide_name => "2-5_ScienceSkills_BioblitzSkillbuilderOverview"
     },
     {
@@ -149,7 +149,7 @@ module LessonPlansHelper
       :desc_key => "explore_bio_stats_html",
       :objective_keys => ["hypothesize_number_species_html", "explore_groups_animals_html"],
       :icons => [:stats],
-      :file_name => "2-5_ScienceSkills_BioBlitzSkillbuilder3",
+      :file_name => "2-5_ScienceSkills_BioblitzSkillbuilder3",
       :guide_name => "2-5_ScienceSkills_BioblitzSkillbuilderOverview"
     },
     {
@@ -158,7 +158,7 @@ module LessonPlansHelper
       :desc_key => "classify_themselves_html",
       :objective_keys => ["classify_themselves_html", "practice_observation_skills_html", "apply_understanding_classification_html"],
       :icons => [],
-      :file_name => "2-5_ScienceSkills_BioBlitzSkillbuilder4",
+      :file_name => "2-5_ScienceSkills_BioblitzSkillbuilder4",
       :guide_name => "2-5_ScienceSkills_BioblitzSkillbuilderOverview"
     },
     {
@@ -167,7 +167,7 @@ module LessonPlansHelper
       :desc_key => "observations_dichotomous_html",
       :objective_keys => ["practice_dichotomous_html"],
       :icons => [],
-      :file_name => "2-5_ScienceSkills_BioBlitzSkillbuilder5",
+      :file_name => "2-5_ScienceSkills_BioblitzSkillbuilder5",
       :guide_name => "2-5_ScienceSkills_BioblitzSkillbuilderOverview"
     },
     {
@@ -187,7 +187,7 @@ module LessonPlansHelper
       :desc_key => "practice_observations_describing_html",
       :objective_keys => ["interpret_draw_organism_html"],
       :icons => [],
-      :file_name => "6-8_ScienceSkills_BioBlitzSkillbuilder1",
+      :file_name => "6-8_ScienceSkills_BioblitzSkillbuilder1",
       :guide_name => "6-8_ScienceSkills_BioblitzSkillbuilderOverview",
     },
     {
@@ -196,7 +196,7 @@ module LessonPlansHelper
       :desc_key => "observe_cutouts_birds_html",
       :objective_keys => ["understand_binoculars_html", "practice_observation_field_html", "identify_birds_field_html"],
       :icons => [],
-      :file_name => "6-8_ScienceSkills_BioBlitzSkillbuilder2",
+      :file_name => "6-8_ScienceSkills_BioblitzSkillbuilder2",
       :guide_name => "6-8_ScienceSkills_BioblitzSkillbuilderOverview",
     },
     {
@@ -205,7 +205,7 @@ module LessonPlansHelper
       :desc_key => "explore_bio_stats_html",
       :objective_keys => ["hypothesize_number_species_html", "explore_groups_animals_html"],
       :icons => [:stats],
-      :file_name => "6-8_ScienceSkills_BioBlitzSkillbuilder3",
+      :file_name => "6-8_ScienceSkills_BioblitzSkillbuilder3",
       :guide_name => "6-8_ScienceSkills_BioblitzSkillbuilderOverview",
     },
     {
@@ -214,7 +214,7 @@ module LessonPlansHelper
       :desc_key => "classify_themselves_html",
       :objective_keys => ["classify_themselves_html", "practice_observation_skills_html", "apply_understanding_classification_html"],
       :icons => [],
-      :file_name => "6-8_ScienceSkills_BioBlitzSkillbuilder4",
+      :file_name => "6-8_ScienceSkills_BioblitzSkillbuilder4",
       :guide_name => "6-8_ScienceSkills_BioblitzSkillbuilderOverview",
     },
     {
@@ -223,7 +223,7 @@ module LessonPlansHelper
       :desc_key => "observations_dichotomous_html",
       :objective_keys => ["practice_dichotomous_html"],
       :icons => [],
-      :file_name => "6-8_ScienceSkills_BioBlitzSkillbuilder5",
+      :file_name => "6-8_ScienceSkills_BioblitzSkillbuilder5",
       :guide_name => "6-8_ScienceSkills_BioblitzSkillbuilderOverview",
     },
     {

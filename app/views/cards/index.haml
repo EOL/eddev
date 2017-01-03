@@ -6,19 +6,23 @@
   = render "featured", :class_str => "first",
     :image_name => "bioblitz_common",
     :desc_key => "bioblitz_common",
-    :color => "blue"
+    :color => "blue",
+    :file_name => "bioblitz"
   = render "featured", :class_str => "second",
     :image_name => "okaloosa_bio",
     :desc_key => "okaloosa_bio",
-    :color => "orange"
+    :color => "orange",
+    :file_name => "okaloosa_biodiversity"
   = render "featured", :class_str => "third",
     :image_name => "ne_urban",
     :desc_key => "ne_urban",
-    :color => "pink"
+    :color => "pink",
+    :file_name => "ne_urban"
   = render "featured", :class_str => "fourth trait-card",
     :image_name => "blank",
     :desc_key => "blank_cards",
-    :color => "gray"
+    :color => "gray",
+    :file_name => "foo"
 = render "shared/section_head", :title_key => "resources.cards.all_decks"
 %ul.all-decks<
   - all_decks.each_with_index do |deck, index|

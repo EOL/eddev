@@ -1,51 +1,52 @@
 (function() {
-  function gradeLevelToggle() {
-    var $this = $(this),
-        $list = $this.next('.lesson-plan-list'),
-        $chevron = $this.find('.chevron');
+  function gradeLevelClicked() {
+    toggleGradeLevelMenu($(this));
+  }
 
-    $list.slideToggle();
+  function toggleGradeLevelMenu($menu, callback) {
+    var $list = $menu.next('.lesson-plan-list'),
+        $chevron = $menu.find('.chevron');
+
+    $list.slideToggle({
+      complete: callback  
+    });
+    $menu.toggleClass('open');
 
     $chevron.toggleClass('fa-chevron-down');
     $chevron.toggleClass('fa-chevron-up');
   }
 
+  function idPart($lessonPlan) {
+    return $lessonPlan.attr('id').replace('LessonPlan', '');
+  }
+
+  function updateHash() {
+    var $this = $(this),
+        $lessonPlan = $this.closest('.lesson-plan');
+
+    sessionStorage.setItem('scrollState', idPart($lessonPlan));
+  }
+
+  function restoreFromHash() {
+    var scrollState = sessionStorage.getItem('scrollState');
+    if (scrollState) {
+      var catAndId = scrollState.split('-'),
+          cat = catAndId[0],
+          id = catAndId[1],
+          $menu = $('#GradeLevelMenu' + cat),
+          $lessonPlan = $('#LessonPlan' + cat + '-' + id);
+
+      toggleGradeLevelMenu($menu, function() {
+        $(window).scrollTop($lessonPlan.offset().top); 
+      });
+
+      sessionStorage.removeItem('scrollState');
+    }
+  }
+
   $(function () {
-    $('.grade-level-bar').click(gradeLevelToggle);
-
-    $( document ).tooltip({
-      items: '.key-tooltip',
-      content: function() {
-        var $source = $('#' + $(this).data('source')),
-            width = $source.width(),
-            $clone = $source.clone();
-
-        $clone.css('width', width);
-        return $clone; 
-      },
-      position: {
-        my: "center bottom-10",
-        at: "center top",
-        using: function(position, feedback) {
-          $(this).css(position);
-
-          var $this = $(this),
-              $target = $(event.target),
-              tooltipPosn = $this.position(),
-              targetPosn = $target.position(),
-              targetWidth = $target.width(),
-              targetCenter = targetPosn.left + .5 * targetWidth,
-              arrowLeft = targetCenter - tooltipPosn.left;
-              
-          $( "<div>" )
-            .addClass( "arrow" )
-            .addClass( feedback.vertical )
-            .css("left", arrowLeft) // Arrow centering is taken care of by negative margin in css
-            .appendTo( this );
-        }
-      },
-      open: function(e){
-      }
-    });
+    restoreFromHash();
+    $('.grade-level-bar').click(gradeLevelClicked);
+    $('.lesson-plan.external a').click(updateHash);
   });
 })();

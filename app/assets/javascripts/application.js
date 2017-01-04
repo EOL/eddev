@@ -10,13 +10,6 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//= require jquery_ujs
-//= require jquery-ui/draggable
-//= require jquery-ui/tooltip
-// require galleria/galleria-1.4.2
-// require galleria/themes/classic/galleria.classic
-//= require tinymce-jquery
 
 (function() {
   function slideMenuOpen() {

@@ -10,8 +10,7 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require galleria/themes/classic/galleria.classic
- *= require jquery-ui/tooltip
+ *= require lesson_plan_icons
  *= require_self
  */
 @import "layout_vars.scss";
@@ -527,8 +526,3 @@ $hero-transition-width: 525;
   }
 }
 
-/*
-.editor-content p { margin: 0; padding: 0; }
-#DraftHeader { background-color: #FAF55A; height: 20px; text-align: center; vertical-align: middle; }
-.field input, .field label { display: block; }
-*/

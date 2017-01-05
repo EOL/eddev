@@ -108,7 +108,7 @@ en:
       thats_where_l_and_e_comes_in_html: "There are about 2 million known and named organisms in the world. That means there is a lot of information on EOL and it can be hard to make sense of it all. That's where the EOL Learning + Education Group (L+E) comes in. Through creative partnerships with educators and institutions that support science literacy, and in collaboration with enthusiasts and amateur naturalists, we develop tools and services to view EOL’s biodiversity information in more manageable ways. For example, <a href='%{places_path}'>EOL Places</a> provides a geographic window to explore biodiversity using food webs, observations and games, while <a href='%{cards_path}'>EOL Species Cards</a> are printable and easy to use in classroom activities to learn about organisms, their traits, adaptations and where they live."
       if_you_are_interested_in_collaborating_html: "If you are interested in collaborating or have ideas for how we can improve our materials, please <a href='%{contact_url}'>contact us</a>."
       meet_the_team: "Meet the Team"
-      le_is_located_html: "EOL <a href='%{eol_groups_url}'>groups and partners</a> are found all over the world. The Learning + Education group is located at the <a href='%{mcz_url}'>Harvard Museum of Comparative Zoology</a> in Cambridge, Massachusetts, USA."
+      le_is_located_html: "EOL <a href='%{eol_groups_url}'>working groups and partners</a> are found all over the world. The Learning + Education group is located at the <a href='%{mcz_url}'>Harvard Museum of Comparative Zoology</a> in Cambridge, Massachusetts, USA."
       accounts: 
         sign_in_header: "SIGN IN"
         new_account_header: "NEW ACCOUNT"

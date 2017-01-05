@@ -97,12 +97,12 @@ $deck-img-height: 205;
 $deck-info-width: 238;
 $deck-img-margin: 15;
 .deck {
-  display: inline-block;
+  display: block;
   margin-top: 9px;
   width: $deck-width * 1px;
 
   &.odd {
-//    float: left;
+    float: left;
   }
 
   &.even {
@@ -185,7 +185,7 @@ $deck-img-margin: 15;
 
 $one-col-deck-width: 850;
 @media screen and (max-width: $one-col-deck-width * 1px) {
-  .deck.even {
+  .deck {
     float: none;
   }
 

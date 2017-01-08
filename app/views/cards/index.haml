@@ -27,3 +27,9 @@
 %ul.all-decks<
   - all_decks.each_with_index do |deck, index|
     = render "deck", :deck => deck, :index => index
+= render  "shared/image_credits", 
+  :images => [{ :title => "Delta WSR",
+  :author => "Bob Wick, Bureau of Land Management",
+  :source => "Flickr",
+  :url => "https://www.flickr.com/photos/mypubliclands/16539119029/in/photolist-rcviSD-gAQJ3S-azeGX2-eiXKJR-rcuN6p-fUkiy9-qwX3Kb-fUkc4C-fkFwFq-qwXowW-rcorQL-HXmq9A-rrERX5-gAQPJw-aZGSwn-gAQwZE-fUjaKx-aZKTTi-aZKRT2-aZKSxv-fvDnDK-fJbNBL-fUk2Ri-nygUyK-H8q5HU-aZKT4i-fUjDQa-gARB7K-fvTDXW-fUjXQG-pfHaer-raCYXi-fHUgbD-raDceT-fHUeKD-fUkuvF-8d32Ja-rtXfQK-qwXXWb-rcvCir-rtR6mo-fJbTg9-rtS9ty-raCmsp-qwXWnj-fZw2vX-raDejK-qxag3H-rcoE2G-qxasMV",
+  :license => "CC-BY"}]

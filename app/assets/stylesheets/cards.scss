@@ -91,6 +91,10 @@ $deck-title-color: #262626;
   width: 100%;
 }
 
+.all-decks {
+  @include clearfix;
+}
+
 $deck-width: 403;
 $deck-img-width: 150;
 $deck-img-height: 205;

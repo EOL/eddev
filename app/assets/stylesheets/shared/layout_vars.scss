@@ -48,6 +48,14 @@ $light: 300;
   text-decoration: none;
 }
 
+@mixin clearfix {
+  &:after {
+    clear: both;
+    content: "";
+    display: block;
+  }
+}
+
 // Functions
 @function px-to-em($px) {
   @return $px / $em * 1em; 

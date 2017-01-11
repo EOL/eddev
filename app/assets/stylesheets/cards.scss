@@ -184,8 +184,78 @@ $deck-img-margin: 15;
     font-size: 14px;
     font-weight: $semibold;
   }
-
 }
+
+.how-to-use {
+  .how-to-section {
+    color: $section-intro-gray;
+    display: inline-block;
+    margin-top: 38px;
+    padding-right: 15px;
+    vertical-align: top;
+    width: 25%;
+
+    .how-to-hdr {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .how-to-txt {
+      font-size: 11px;
+    }
+
+    .lp-link {
+      margin-top: 15px;
+    }
+  }
+
+  .example-cards {
+    $card-width: 295px;
+    $inner-spacing: 32px;
+    $card-margin: $inner-spacing / 2;
+
+    display: block;
+    margin: 30px auto 0 auto;
+    width: $card-width * 2 + $inner-spacing;
+
+    .example-card-wrap {
+      display: inline-block;
+      width: $card-width;
+
+      &.first {
+        margin-right: $card-margin;
+      }
+
+      &.second {
+        margin-left: $card-margin;
+      }
+
+      .example-card {
+        width: 100%;
+      }
+
+      .caption {
+        font-size: 10px;
+        text-align: right; 
+      }
+    }
+  }
+
+  .cards-idea-contact {
+    border: solid 0.5px #797979;
+    border-radius: 8px;
+    font-size: 12px;
+    margin: 32px auto 0 auto;
+    padding: 18px 40px;
+    text-align: center;
+    width: 622px;
+
+    a {
+      @include standard-link;
+    }
+  }
+}
+
 
 $one-col-deck-width: 850;
 @media screen and (max-width: $one-col-deck-width * 1px) {

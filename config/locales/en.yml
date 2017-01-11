@@ -135,16 +135,29 @@ en:
     save_label: "Save draft"
     publish_label: "Publish draft"
     publish_confirm: "Are you sure you want to publish this draft? It will immediately replace the current public version of this page."
-  resources:
-    cards:
+  cards:
+    index: 
       cards_hdr: "Species Cards"
       intro_p: "Compare and learn facts and figures about organisms with EOL Species Cards. Decks can be used in games to learn about classification, adaptations or for students to collect. Decks can be made for specific locations, projects or taxonomic groups. View cards online or download to print."
       featured_decks: "Featured Decks"
       all_decks: "All Decks"
-      decks:
-        bh_title: "Boston Harbor Intertidal Species"
-        bh_desc: "This deck contains a selection of species that are found in the rocky intertidal areas of Boston Harbor, MA USA"
-  cards:
+      how_to_use: "How to Use Species Cards"
+      example_species_card: "Example species card"
+      species_card_key: "Species card key"
+      have_a_great_idea_html: "Have a great idea for cards? <a href='%{contact_url}'>Share your experiences and feedback with us</a>!"
+      how_to: 
+        build_food_chains: "Build Food Chains and Food Webs"
+        explore_different_food: "Explore different food web roles: primary producers, consumers (herbivore, omnivore, carnivore, apex predator, scavenger), decomposers/detritivores. Have students read about energy sources on cards and from other sources, and use the information to build food chains, and overlapping food chains to build food webs."
+        food_chains_rummy_html: "See: <a href='%{lp_path}'>Food Chains Rummy (grades 2-5, 6-8, 9-12): Build food chains and webs with a deck of cards</a>"
+        explore_adaptations: "Explore Adaptations"
+        some_card_decks: "Some card decks contain information on physical and behavioral adaptations of animals, as well as information about adaptations for growth and development of plants and fungi."
+        go_adapt_html: "See: <a href='%{lp_path}'>Go Adapt (grades 2-5): collect sets of organisms with similar adaptations (flying, claws, etc.) in a Go Fish style game</a>"
+        classify: "Classify"
+        sort_cards: "Sort cards into different groups based on characteristics. Cards are color-coded for fungi, plants, and major animal groups. Students can start at a high taxonomic level and separate cards by kingdom, phylum, etc. They can observe similarities and differences among species within a group (birds, mammals, flowering plants)."
+        thats_classified_html: "See: <a href='%{lp_path}'>That's Classified (grades 2-5): Collect 3-of-a-kind in this Go-Fish style classification game</a>"
+        create_your_own: "Create Your Own Cards and Decks"
+        print_our_blank: "Print out our blank cards template and have students or participants make their own cards from something they observe in the field or create their own creatures."
+        create_a_creature_html: "See: <a href='%{lp_path}'>Create a Creature (Gr. 2-5): Create a species card for a new species adapted to survive in your community.</a>"
     deck_titles: 
       aquatic: "Aquatic Insects"
       bioblitz: "BioBlitz"

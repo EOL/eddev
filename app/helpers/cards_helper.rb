@@ -144,4 +144,8 @@ module CardsHelper
   def all_decks
     ALL_DECKS
   end
+
+  def how_to_path(key)
+    "cards.index.how_to.#{key}"
+  end
 end

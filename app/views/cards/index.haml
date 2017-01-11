@@ -1,7 +1,7 @@
-= render "shared/intro_section", :header => "resources.cards.cards_hdr",
-  :paragraphs => ["resources.cards.intro_p"],
+= render "shared/intro_section", :header => "cards.index.cards_hdr",
+  :paragraphs => ["cards.index.intro_p"],
   :hideable => false
-= render "shared/section_head", :title_key => "resources.cards.featured_decks"
+= render "shared/section_head", :title_key => "cards.index.featured_decks"
 %ul.featured-decks<
   = render "featured", :class_str => "first",
     :image_name => "bioblitz_common",
@@ -23,10 +23,39 @@
     :desc_key => "blank_cards",
     :color => "gray",
     :file_name => "blank_species_card_packet"
-= render "shared/section_head", :title_key => "resources.cards.all_decks"
+= render "shared/section_head", :title_key => "cards.index.all_decks"
 %ul.all-decks<
   - all_decks.each_with_index do |deck, index|
     = render "deck", :deck => deck, :index => index
+
+= render "shared/section_head", :title_key => "cards.index.how_to_use"
+.how-to-use
+  .how-to-content<
+    = render "how_to_section", :hdr_key => "build_food_chains",
+      :content_key => "explore_different_food",
+      :lp_key => "food_chains_rummy_html",
+      :lp_path => "#"
+    = render "how_to_section", :hdr_key => "explore_adaptations",
+      :content_key => "some_card_decks",
+      :lp_key => "go_adapt_html",
+      :lp_path => "#"
+    = render "how_to_section", :hdr_key => "classify",
+      :content_key => "sort_cards",
+      :lp_key => "thats_classified_html",
+      :lp_path => "#"
+    = render "how_to_section", :hdr_key => "create_your_own",
+      :content_key => "print_our_blank",
+      :lp_key => "create_a_creature_html",
+      :lp_path => "#"
+  .example-cards<
+    .example-card-wrap.first>
+      = image_tag "cards/example_key.png", :class => "example-card"
+      .caption= t ".example_species_card"
+    .example-card-wrap.second>
+      = image_tag "cards/example_key.png", :class => "example-card"
+      .caption= t ".species_card_key"
+  .cards-idea-contact= t ".have_a_great_idea_html", :contact_url => "http://eol.org/contact_us?subject=learning"
+
 = render  "shared/image_credits", 
   :images => [{ :title => "Delta WSR",
   :author => "Bob Wick, Bureau of Land Management",

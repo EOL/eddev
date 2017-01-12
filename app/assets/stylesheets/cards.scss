@@ -191,9 +191,13 @@ $deck-img-margin: 15;
     color: $section-intro-gray;
     display: inline-block;
     margin-top: 38px;
-    padding-right: 15px;
+    margin-right: percentage(15 / $main-col-width);
     vertical-align: top;
-    width: 25%;
+    width: percentage(223.5 / $main-col-width);
+
+    &.fourth {
+      margin-right: 0;
+    }
 
     .how-to-hdr {
       font-size: 18px;
@@ -201,7 +205,7 @@ $deck-img-margin: 15;
     }
 
     .how-to-txt {
-      font-size: 11px;
+      font-size: 14px;
     }
 
     .lp-link {
@@ -283,6 +287,21 @@ $one-col-deck-width: 850;
   }
 }
 
+@media screen and (max-width: 780px) {
+  .how-to-use {
+    .how-to-content {
+      .how-to-section {
+        margin-right: percentage(20 / 780);
+        width: percentage(((780 - 20) / 2) / 780);
+
+        &.second, &.fourth {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 775px) {
   .featured-deck-wrap .overlay {
     font-size: 10px;
@@ -320,12 +339,6 @@ $featured-trans-width: 642;
   }
 
   .how-to-use {
-    .how-to-content {
-      .how-to-section {
-        width: 50%;
-      }
-    }
-
     .example-cards {
       $card-width: 218px;
       $inner-spacing: 16px;

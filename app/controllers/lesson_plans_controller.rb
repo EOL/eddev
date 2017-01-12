@@ -3,6 +3,7 @@ class LessonPlansController < ApplicationController
 
   def index
     @hero_image_partial = 'lesson_plans/hero'
+    @scroll_to = params[:scroll_to]
   end
 
   def pdf

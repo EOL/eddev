@@ -59,26 +59,26 @@
 = render "shared/section_head", :title_key => "lesson_plans.index.lesson_plans"
 .all-lesson-plans
   .grade-level
-    #GradeLevelMenu1.grade-level-bar.grade-level-1
+    #GradeLevelMenu0.grade-level-bar.grade-level-0
       %span= t ".grades_2_5"
       %i{:class => "fa fa-chevron-down chevron", "aria-hidden" => true}
     %ul.lesson-plan-list
       -grade_1_lessons.each_with_index do |lesson, index|
-        =render "regular", :lesson => lesson, :index => index, :total => grade_1_lessons.length, :category => 1
+        =render "regular", :lesson => lesson, :index => index, :total => grade_1_lessons.length, :category => 0
   .grade-level
-    #GradeLevelMenu2.grade-level-bar.grade-level-2
+    #GradeLevelMenu1.grade-level-bar.grade-level-1
       %span= t ".grades_6_8"
       %i{:class => "fa fa-chevron-down chevron", "aria-hidden" => true}
     %ul.lesson-plan-list
       -grade_2_lessons.each_with_index do |lesson, index|
-        =render "regular", :lesson => lesson, :index => index, :total => grade_2_lessons.length, :category => 2
+        =render "regular", :lesson => lesson, :index => index, :total => grade_2_lessons.length, :category => 1
   .grade-level.last
-    #GradeLevelMenu3.grade-level-bar.grade-level-3
+    #GradeLevelMenu2.grade-level-bar.grade-level-2
       %span= t ".grades_9_12"
       %i{:class => "fa fa-chevron-down chevron", "aria-hidden" => true}
     %ul.lesson-plan-list
       -grade_3_lessons.each_with_index do |lesson, index|
-        =render "regular", :lesson => lesson, :index => index, :total => grade_3_lessons.length, :category => 3
+        =render "regular", :lesson => lesson, :index => index, :total => grade_3_lessons.length, :category => 2
 = render  "shared/image_credits", 
   :images => [{ :title => "Grass",
   :author => "Moyan Brenn",

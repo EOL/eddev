@@ -28,24 +28,44 @@
   }
 
   function restoreFromHash() {
-    var scrollState = sessionStorage.getItem('scrollState');
-    if (scrollState) {
-      var catAndId = scrollState.split('-'),
-          cat = catAndId[0],
-          id = catAndId[1],
-          $menu = $('#GradeLevelMenu' + cat),
-          $lessonPlan = $('#LessonPlan' + cat + '-' + id);
+    var id = sessionStorage.getItem('scrollState');
 
-      toggleGradeLevelMenu($menu, function() {
-        $(window).scrollTop($lessonPlan.offset().top); 
-      });
-
+    if (id) {
+      scrollToId(id);
       sessionStorage.removeItem('scrollState');
+    }
+
+    return id != null;
+  }
+
+  function scrollToId(compoundId) {
+    var catAndId = compoundId.split('-'),
+        cat = catAndId[0],
+        id = catAndId[1],
+        $menu = $('#GradeLevelMenu' + cat),
+        $lessonPlan = $('#LessonPlan' + cat + '-' + id);
+
+
+
+    toggleGradeLevelMenu($menu, function() {
+      $(window).scrollTop($lessonPlan.offset().top); 
+    });
+  }
+
+  function scrollWhereNecessary() {
+    var $markedLesson = null;
+
+    if (!restoreFromHash()) {
+      $markedLesson = $('[data-scroll-to=true]');
+
+      if ($markedLesson.length) {
+        scrollToId(idPart($markedLesson));
+      }
     }
   }
 
   $(function () {
-    restoreFromHash();
+    scrollWhereNecessary();
     $('.grade-level-bar').click(gradeLevelClicked);
     $('.lesson-plan.external a').click(updateHash);
   });

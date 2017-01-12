@@ -15,15 +15,15 @@ $lesson-plan-icon-size-sm: 113px;
 $icon-dark-gray: #515151;
 $lesson-plan-border-color: #aaaaaa;
 
-.grade-level-1 {
+.grade-level-0 {
   background: $grade-level-green;
 }
 
-.grade-level-2 {
+.grade-level-1 {
   background: $grade-level-red;
 }
 
-.grade-level-3 {
+.grade-level-2 {
   background: $grade-level-purple;
 }
 
@@ -331,7 +331,7 @@ $subject-key-block-width: 600px;
     margin-top: 2px;
   }
 
-  .grade-level-1 {
+  .grade-level-0 {
     margin-top: 0;
   }
 }

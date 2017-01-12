@@ -1,7 +1,8 @@
 - resource_path = lesson[:file_name] ? lesson_plan_path(lesson[:file_name]) : lesson[:absolute_url]
 - is_download = lesson[:file_name].present?
+- id = lesson_plan_id(category, index)
 
-%li{:class => ["lesson-plan", (index % 2 == 1 ? "even" : "odd"), ("last" if index == total - 1), ("external" if !is_download)], :id => "LessonPlan#{category}-#{index}"}>
+%li{:class => ["lesson-plan", (index % 2 == 1 ? "even" : "odd"), ("last" if index == total - 1), ("external" if !is_download)], :id => "LessonPlan#{id}", :'data-scroll-to' => (@scroll_to == id ? "true" : nil)}
   .left-wrap
     %img.lesson-plan-icon{:src => image_path("lesson_plans/#{lesson[:category].to_s}_icon.jpg")}
 

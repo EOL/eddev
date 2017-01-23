@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170112213423) do
+ActiveRecord::Schema.define(version: 20170112214817) do
 
   create_table "content_model_states", force: :cascade do |t|
     t.integer  "content_model_id",       limit: 4
@@ -86,6 +86,20 @@ ActiveRecord::Schema.define(version: 20170112213423) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  create_table "lesson_plans", force: :cascade do |t|
+    t.integer  "theme_id",       limit: 4
+    t.string   "name_key",       limit: 255
+    t.string   "objective_keys", limit: 255
+    t.string   "desc_key",       limit: 255
+    t.string   "file_name",      limit: 255
+    t.integer  "guide_id",       limit: 4
+    t.string   "external_url",   limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "lesson_plans", ["theme_id"], name: "index_lesson_plans_on_theme_id", using: :btree
 
   create_table "licenses", force: :cascade do |t|
     t.string   "code",            limit: 255

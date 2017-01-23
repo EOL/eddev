@@ -5,6 +5,7 @@ class LessonPlan < ActiveRecord::Base
   validates_presence_of :objective_keys
   validates_presence_of :desc_key
   validate :file_name_or_external_url_present_not_both
+  has_and_belongs_to_many :perks, :class_name => "LessonPlanPerk", :join_table => "lesson_plans_lesson_plan_perks"
 
   serialize :objective_keys, Array
 

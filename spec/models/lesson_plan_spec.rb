@@ -6,6 +6,7 @@ RSpec.describe LessonPlan, type: :model do
   it { should validate_presence_of :objective_keys }
   it { should validate_presence_of :desc_key }
   it { should serialize(:objective_keys).as(Array) }
+  it { should have_and_belong_to_many(:perks).class_name("LessonPlanPerk") }
 
   describe "a lesson plan should have a file_name or an external_url but not both" do
     let(:lesson) { create(:lesson_plan) }

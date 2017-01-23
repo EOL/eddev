@@ -6,6 +6,8 @@ class LessonPlan < ActiveRecord::Base
   validates_presence_of :desc_key
   validate :file_name_or_external_url_present_not_both
 
+  serialize :objective_keys, Array
+
   private
     FILE_NAME_NEITHER_VALIDATION_ERROR_MSG = 
       "Either file_name or external_url must be present" 

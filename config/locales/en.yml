@@ -414,6 +414,13 @@ en:
       subject: "Reset your EOL L&E password" 
       body_html: "Hi, %{user_name}. Please click the following link to change your password: <a href=\"%{url}\">%{url}</a>"
 
+  models:
+    lesson_plan_perk:
+      name_keys: 
+        bio_stats: "Biological statistics"
+        field_work: "Field work"
+        species_cards: "Species cards"
+
   activerecord:
     errors:
       template:

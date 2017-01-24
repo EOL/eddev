@@ -230,11 +230,6 @@ en:
       grades_2_5_noage: "Grades 2–5"
       grades_6_8_noage: "Grades 6–8"
       grades_9_12_noage: "Grades 9–12"
-      classification: "Classification"
-      science_skills: "Science Skills"
-      adaptations: "Adaptations"
-      energy_flow: "Energy Flow"
-      human_impact: "Human Impact"
       bio_stats: "Biological statistics"
       field_work: "Field work"
       species_cards: "Species cards"
@@ -420,6 +415,13 @@ en:
         bio_stats: "Biological statistics"
         field_work: "Field work"
         species_cards: "Species cards"
+    lesson_plan_theme:
+      name_keys:
+        classification: "Classification"
+        science_skills: "Science Skills"
+        adaptations: "Adaptations"
+        energy_flow: "Energy Flow"
+        human_impact: "Human Impact"
 
   activerecord:
     errors:

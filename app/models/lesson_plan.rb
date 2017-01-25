@@ -1,10 +1,12 @@
 class LessonPlan < ActiveRecord::Base
-  belongs_to :theme, :class_name => "LessonPlanTheme"
   validates_presence_of :theme
   validates_presence_of :name_key
   validates_presence_of :objective_keys
   validates_presence_of :desc_key
+  validates_presence_of :grade_level
   validate :file_name_or_external_url_present_not_both
+  belongs_to :theme, :class_name => "LessonPlanTheme"
+  belongs_to :grade_level, :class_name => "LessonPlanGradeLevel"
   has_and_belongs_to_many :perks, :class_name => "LessonPlanPerk", :join_table => "lesson_plans_lesson_plan_perks"
 
   serialize :objective_keys, Array

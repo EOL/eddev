@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170125183338) do
+ActiveRecord::Schema.define(version: 20170125185951) do
 
   create_table "content_model_states", force: :cascade do |t|
     t.integer  "content_model_id",       limit: 4
@@ -103,8 +103,10 @@ ActiveRecord::Schema.define(version: 20170125183338) do
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
     t.string   "overview_file_name", limit: 255
+    t.integer  "grade_level_id",     limit: 4
   end
 
+  add_index "lesson_plans", ["grade_level_id"], name: "index_lesson_plans_on_grade_level_id", using: :btree
   add_index "lesson_plans", ["theme_id"], name: "index_lesson_plans_on_theme_id", using: :btree
 
   create_table "lesson_plans_lesson_plan_perks", force: :cascade do |t|

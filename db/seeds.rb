@@ -33,20 +33,21 @@
 #end
 
 LessonPlanPerk.delete_all
-LessonPlanPerk.create([
-  {
-    :name_key => "species_cards",
-    :icon_name => "card",
-  },
-  {
-    :name_key => "bio_stats",
-    :icon_name => "stats",
-  },
-  {
-    :name_key => "field_work",
-    :icon_name => "tree",
-  }
-])
+
+species_card_perk = LessonPlanPerk.create(
+  :name_key => "species_cards",
+  :icon_name => "card",
+)
+
+bio_stats_perk = LessonPlanPerk.create(
+  :name_key => "bio_stats",
+  :icon_name => "stats",
+)
+
+field_work_perk = LessonPlanPerk.create(
+  :name_key => "field_work",
+  :icon_name => "tree",
+)
 
 #  create_table "lesson_plan_themes", force: :cascade do |t|
 #    t.string   "name_key",   limit: 255
@@ -55,25 +56,40 @@ LessonPlanPerk.create([
 #    t.datetime "updated_at",             null: false
 #  end
 LessonPlanTheme.delete_all
-LessonPlanTheme.create([
-  {
-    :name_key => "classification",
-    :icon_file => "classification_icon.jpg",
-  },    
-  {
-    :name_key => "science_skills",
-    :icon_file => "science_skills_icon.jpg",
-  },   
-  {
-    :name_key => "human_impact",
-    :icon_file => "human_impact_icon.jpg",
-  },
-  {
-    :name_key => "adaptations",
-    :icon_file => "adaptations_icon.jpg",
-  }, 
-  {
-    :name_key => "energy_flow",
-    :icon_file => "energy_flow_icon.jpg",
-  }
-])
+
+classification_theme = LessonPlanTheme.create(
+  :name_key => "classification",
+  :icon_file => "classification_icon.jpg",
+)
+
+science_skills_theme = LessonPlanTheme.create(
+  :name_key => "science_skills",
+  :icon_file => "science_skills_icon.jpg",
+)
+
+human_impact_theme = LessonPlanTheme.create(
+  :name_key => "human_impact",
+  :icon_file => "human_impact_icon.jpg",
+)
+
+adaptations_theme = LessonPlanTheme.create(
+  :name_key => "adaptations",
+  :icon_file => "adaptations_icon.jpg",
+)
+
+energy_flow_theme = LessonPlanTheme.create(
+  :name_key => "energy_flow",
+  :icon_file => "energy_flow_icon.jpg",
+)
+
+LessonPlan.delete_all
+LessonPlan.create(
+  :theme => classification_theme,
+  :name_key => "classification_1",
+  :objective_keys => ["classify_adaptations_traits_html", "compare_contrast_discuss_html"],
+  :desc_key => "what_is_classification_html",
+  :file_name => "2-5_Classification1_WhatIsClassification",
+  :perks => [bio_stats_perk, field_work_perk]
+)
+
+

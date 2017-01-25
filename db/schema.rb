@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170125185951) do
+ActiveRecord::Schema.define(version: 20170125195946) do
 
   create_table "content_model_states", force: :cascade do |t|
     t.integer  "content_model_id",       limit: 4
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 20170125185951) do
     t.string   "icon_name",  limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "human_name", limit: 255
   end
 
   create_table "lesson_plan_themes", force: :cascade do |t|

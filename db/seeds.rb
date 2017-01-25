@@ -34,19 +34,22 @@
 
 LessonPlanPerk.delete_all
 
-species_card_perk = LessonPlanPerk.create(
+species_card_perk = LessonPlanPerk.create!(
   :name_key => "species_cards",
   :icon_name => "card",
+  :human_name => "species_cards"
 )
 
-bio_stats_perk = LessonPlanPerk.create(
+bio_stats_perk = LessonPlanPerk.create!(
   :name_key => "bio_stats",
   :icon_name => "stats",
+  :human_name => "bio_stats"
 )
 
-field_work_perk = LessonPlanPerk.create(
+field_work_perk = LessonPlanPerk.create!(
   :name_key => "field_work",
   :icon_name => "tree",
+  :human_name => "field_work"
 )
 
 #  create_table "lesson_plan_themes", force: :cascade do |t|
@@ -57,56 +60,47 @@ field_work_perk = LessonPlanPerk.create(
 #  end
 LessonPlanTheme.delete_all
 
-classification_theme = LessonPlanTheme.create(
+classification_theme = LessonPlanTheme.create!(
   :name_key => "classification",
   :icon_file => "classification_icon.jpg",
 )
 
-science_skills_theme = LessonPlanTheme.create(
+science_skills_theme = LessonPlanTheme.create!(
   :name_key => "science_skills",
   :icon_file => "science_skills_icon.jpg",
 )
 
-human_impact_theme = LessonPlanTheme.create(
+human_impact_theme = LessonPlanTheme.create!(
   :name_key => "human_impact",
   :icon_file => "human_impact_icon.jpg",
 )
 
-adaptations_theme = LessonPlanTheme.create(
+adaptations_theme = LessonPlanTheme.create!(
   :name_key => "adaptations",
   :icon_file => "adaptations_icon.jpg",
 )
 
-energy_flow_theme = LessonPlanTheme.create(
+energy_flow_theme = LessonPlanTheme.create!(
   :name_key => "energy_flow",
   :icon_file => "energy_flow_icon.jpg",
 )
 
 LessonPlanGradeLevel.delete_all
-grade_level_0 = LessonPlanGradeLevel.create(
+grade_level_0 = LessonPlanGradeLevel.create!(
   :name_key => "grades_2_5"
 )
 
-grade_level_1 = LessonPlanGradeLevel.create(
+grade_level_1 = LessonPlanGradeLevel.create!(
   :name_key => "grades_6_8"
 )
 
-grade_level_2 = LessonPlanGradeLevel.create(
+grade_level_2 = LessonPlanGradeLevel.create!(
   :name_key => "grades_9_12"
 )
 
 LessonPlan.delete_all
-LessonPlan.create(
-  :theme => classification_theme,
-  :name_key => "classification_1",
-  :objective_keys => ["classify_adaptations_traits_html", "compare_contrast_discuss_html"],
-  :desc_key => "what_is_classification_html",
-  :file_name => "2-5_Classification1_WhatIsClassification",
-  :overview_file_name => "2-5_Classification_LessonOverview",
-  :perks => [bio_stats_perk, field_work_perk]
-)
 
-LessonPlan.create([
+LessonPlan.create_with(:grade_level => grade_level_0).create!([
   {
     :theme => classification_theme,
     :name_key => "classification_1",

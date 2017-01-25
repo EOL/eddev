@@ -6,6 +6,14 @@ class LessonPlansController < ApplicationController
     @scroll_to = params[:scroll_to]
     @grade_levels = LessonPlanGradeLevel.all
 
+    @ordered_themes = [
+      LessonPlanTheme.find_by_human_name(:classification),
+      LessonPlanTheme.find_by_human_name(:science_skills),
+      LessonPlanTheme.find_by_human_name(:human_impact),
+      LessonPlanTheme.find_by_human_name(:adaptations),
+      LessonPlanTheme.find_by_human_name(:energy_flow),
+    ]
+
     @ordered_perks = [
       LessonPlanPerk.find_by_human_name(:bio_stats),
       LessonPlanPerk.find_by_human_name(:field_work),

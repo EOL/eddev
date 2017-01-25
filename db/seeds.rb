@@ -63,26 +63,31 @@ LessonPlanTheme.delete_all
 classification_theme = LessonPlanTheme.create!(
   :name_key => "classification",
   :icon_file => "classification_icon.jpg",
+  :human_name => "classification"
 )
 
 science_skills_theme = LessonPlanTheme.create!(
   :name_key => "science_skills",
   :icon_file => "science_skills_icon.jpg",
+  :human_name => "science_skills"
 )
 
 human_impact_theme = LessonPlanTheme.create!(
   :name_key => "human_impact",
   :icon_file => "human_impact_icon.jpg",
+  :human_name => "human_impact"
 )
 
 adaptations_theme = LessonPlanTheme.create!(
   :name_key => "adaptations",
   :icon_file => "adaptations_icon.jpg",
+  :human_name => "adaptations"
 )
 
 energy_flow_theme = LessonPlanTheme.create!(
   :name_key => "energy_flow",
   :icon_file => "energy_flow_icon.jpg",
+  :human_name => "energy_flow"
 )
 
 LessonPlanGradeLevel.delete_all
@@ -281,4 +286,188 @@ LessonPlan.create_with(:grade_level => grade_level_0).create!([
   },
 ])
 
+LessonPlan.create_with(:grade_level => grade_level_1).create!([
+  {
+    :theme => science_skills_theme,
+    :name_key => "meet_a_creature",
+    :desc_key => "practice_observations_describing_html",
+    :objective_keys => ["interpret_draw_organism_html"],
+    :perks => [],
+    :file_name => "6-8_ScienceSkills_BioblitzSkillbuilder1",
+    :overview_file_name => "6-8_ScienceSkills_BioblitzSkillbuilderOverview",
+  },
+  {
+    :theme => science_skills_theme,
+    :name_key => "id_that_bird",
+    :desc_key => "observe_cutouts_birds_html",
+    :objective_keys => ["understand_binoculars_html", "practice_observation_field_html", "identify_birds_field_html"],
+    :perks => [],
+    :file_name => "6-8_ScienceSkills_BioblitzSkillbuilder2",
+    :overview_file_name => "6-8_ScienceSkills_BioblitzSkillbuilderOverview",
+  },
+  {
+    :theme => science_skills_theme,
+    :name_key => "how_diverse",
+    :desc_key => "explore_bio_stats_html",
+    :objective_keys => ["hypothesize_number_species_html", "explore_groups_animals_html"],
+    :perks => [bio_stats_perk],
+    :file_name => "6-8_ScienceSkills_BioblitzSkillbuilder3",
+    :overview_file_name => "6-8_ScienceSkills_BioblitzSkillbuilderOverview",
+  },
+  {
+    :theme => science_skills_theme,
+    :name_key => "modeling_classification",
+    :desc_key => "classify_themselves_html",
+    :objective_keys => ["classify_themselves_html", "practice_observation_skills_html", "apply_understanding_classification_html"],
+    :perks => [],
+    :file_name => "6-8_ScienceSkills_BioblitzSkillbuilder4",
+    :overview_file_name => "6-8_ScienceSkills_BioblitzSkillbuilderOverview",
+  },
+  {
+    :theme => science_skills_theme,
+    :name_key => "using_dichotomous_key",
+    :desc_key => "observations_dichotomous_html",
+    :objective_keys => ["practice_dichotomous_html"],
+    :perks => [],
+    :file_name => "6-8_ScienceSkills_BioblitzSkillbuilder5",
+    :overview_file_name => "6-8_ScienceSkills_BioblitzSkillbuilderOverview",
+  },
+  {
+    :theme => science_skills_theme,
+    :name_key => "analyzing_bioblitz",
+    :desc_key => "investigate_analyze_biodiversity",
+    :objective_keys => ["analyze_biodiversity_bioblitz_html", "descriptive_statistics_html", "inferences_biodiversity_html"],
+    :perks => [bio_stats_perk],
+    :external_url => "http://nationalgeographic.org/activity/analyzing-bioblitz-data/"
+  },
+  {
+    :theme => energy_flow_theme,
+    :name_key => "producers_consumers2",
+    :desc_key => "students_become_experts_html",
+    :objective_keys => ["investigate_organisms_energy_html", "identify_producers_consumers_html"],
+    :perks => [],
+    :file_name => "6-8_FoodWebs1_ProducersConsumersDecomposers",
+    :overview_file_name => "6-8_FoodWebs_LessonOverview",
+  },
+  {
+    :theme => energy_flow_theme,
+    :name_key => "food_web_systems",
+    :desc_key => "model_complex_system_html",
+    :objective_keys => ["model_interrelationships_html"],
+    :perks => [],
+    :file_name => "6-8_FoodWebs2_FoodWebSystems",
+    :overview_file_name => "6-8_FoodWebs_LessonOverview",
+  },
+  {
+    :theme => energy_flow_theme,
+    :name_key => "food_chains_webs",
+    :desc_key => "practice_chains_webs_html",
+    :objective_keys => ["describe_energy_food_chains_html", "model_interrelationships_html", "manipulate_ecological_html"],
+    :perks => [species_card_perk],
+    :file_name => "6-8_FoodWebs3_FoodChainsAndWebs",
+    :overview_file_name => "6-8_FoodWebs_LessonOverview",
+  },
+  {
+    :theme => energy_flow_theme,
+    :name_key => "food_webs_chains_rummy",
+    :desc_key => "synthesize_energy_flow_html",
+    :objective_keys => ["build_food_chains_html", "discuss_interconnectedness_html", "synthesize_understanding_roles_html"],
+    :perks => [species_card_perk],
+    :file_name => "6-8_FoodWebs4_FoodChainsRummy",
+    :overview_file_name => "6-8_FoodWebs_LessonOverview",
+  },
+  {
+    :theme => adaptations_theme,
+    :name_key => "whale_communication",
+    :desc_key => "podcast_whale_communication_html",
+    :objective_keys => ["discuss_studying_whales_html", "how_why_whale_communication_html"],
+    :perks => [],
+    :external_url => "https://listenwise.com/teach/lessons/84-right-whales" 
+  },
+  {
+    :theme => adaptations_theme,
+    :name_key => "behavior_hibernation",
+    :desc_key => "simulation_hibernation_html",
+    :objective_keys => ["experiment_habitat_hibernating_html"],
+    :perks => [],
+    :external_url => "http://www.outdoorbiology.com/files/resources/activities/Anti-freeze.pdf"
+  },
+  {
+    :theme => adaptations_theme,
+    :name_key => "behavior_camouflage",
+    :desc_key => "invent_imaginary_animal_html",
+    :objective_keys => ["understand_coloring_markings_html"],
+    :perks => [],
+    :external_url => "http://www.outdoorbiology.com/files/resources/activities/InventAnAnimal.pdf"
+  },
+  {
+    :theme => human_impact_theme,
+    :name_key => "coral_bleaching",
+    :desc_key => "podcast_climate_coral_html",
+    :objective_keys => ["understand_physical_corals_html", "discuss_threats_coral_html"],
+    :perks => [],
+    :external_url => "https://listenwise.com/teach/lessons/63-corals-and-climate-change"
+  },
+  {
+    :theme => human_impact_theme,
+    :name_key => "crayfish_commerce",
+    :desc_key => "podcast_business_crawfish_html",
+    :objective_keys => ["examine_business_biodiversity_html"],
+    :perks => [],
+    :external_url => "http://nationalgeographic.org/media/tiny-travelers/"
+  },
+  {
+    :theme => human_impact_theme,
+    :name_key => "dolphins_bycatch",
+    :desc_key => "podcast_dolphins_tuna_html",
+    :objective_keys => ["discuss_tuna_dolphins_html", "understand_dolphin_tissue_html"],
+    :perks => [],
+    :external_url => "https://listenwise.com/teach/lessons/87-spotted-dolphins-and-spinner-dolphins"
+  },
+  {
+    :theme => human_impact_theme,
+    :name_key => "ocean_acidification",
+    :desc_key => "podcast_ocean_acidification_html",
+    :objective_keys => ["understand_role_sea_butterflies_html", "observe_acidification_pteropods_html"],
+    :perks => [],
+    :external_url => "http://nationalgeographic.org/media/one-species-time-sea-butterfly/"
+  },
+])
 
+LessonPlan.create_with(:grade_level => grade_level_2).create!([
+  {
+    :theme => science_skills_theme,
+    :name_key => "investigating_bio_inat",
+    :desc_key => "explore_inat_data",
+    :objective_keys => ["explore_local_observations_html", "investigate_analyze_inat_html", "draw_inferences_patterns_html"],
+    :perks => [bio_stats_perk, field_work_perk],
+    :file_name => "9-12_ScienceSkills_iNaturalistDataAnalysis",
+  },
+  {
+    :theme => energy_flow_theme,
+    :name_key => "interdependence_food_chains_webs",
+    :desc_key => "practice_chains_webs_html",
+    :objective_keys => ["describe_energy_food_chains_html", "build_examine_food_chains_html", "manipulate_ecological_html"],
+    :perks => [species_card_perk],
+    :file_name => "9-12_Interdependence1_FoodChainsAndWebs",
+    :overview_file_name => "9-12_Interdependence_LessonOverview",
+  },
+  {
+    :theme => energy_flow_theme,
+    :name_key => "interdependence_food_web_systems",
+    :desc_key => "model_complex_system_html",
+    :objective_keys => ["model_interrelationships_html"],
+    :perks => [],
+    :file_name => "9-12_Interdependence2_FoodWebSystems",
+    :overview_file_name => "9-12_Interdependence_LessonOverview",
+  },
+  {
+    :theme => energy_flow_theme,
+    :name_key => "interdependence_rummy",
+    :desc_key => "synthesize_energy_flow_html",
+    :objective_keys => ["build_food_chains_webs_html", "discuss_interconnectedness_html", "synthesize_understanding_roles_html"],
+    :perks => [species_card_perk],
+    :file_name => "9-12_Interdependence3_FoodChainsRummy",
+    :overview_file_name => "9-12_Interdependence_LessonOverview",
+  },
+])

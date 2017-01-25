@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170125213513) do
+ActiveRecord::Schema.define(version: 20170125214825) do
 
   create_table "content_model_states", force: :cascade do |t|
     t.integer  "content_model_id",       limit: 4
@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 20170125213513) do
     t.datetime "updated_at",                     null: false
     t.string   "overview_file_name", limit: 255
     t.integer  "grade_level_id",     limit: 4
+    t.string   "human_name",         limit: 255
   end
 
   add_index "lesson_plans", ["grade_level_id"], name: "index_lesson_plans_on_grade_level_id", using: :btree

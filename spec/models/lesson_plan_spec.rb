@@ -10,6 +10,7 @@ RSpec.describe LessonPlan, type: :model do
   it { should validate_presence_of :grade_level }
   it { should belong_to(:grade_level).class_name("LessonPlanGradeLevel") }
   it { should have_and_belong_to_many(:perks).class_name("LessonPlanPerk") }
+  it { should validate_uniqueness_of(:human_name).scoped_to(:grade_level_id) }
 
   describe "a lesson plan should have a file_name or an external_url but not both" do
     let(:lesson) { create(:lesson_plan) }

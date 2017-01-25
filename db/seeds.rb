@@ -82,6 +82,19 @@ energy_flow_theme = LessonPlanTheme.create(
   :icon_file => "energy_flow_icon.jpg",
 )
 
+LessonPlanGradeLevel.delete_all
+grade_level_0 = LessonPlanGradeLevel.create(
+  :name_key => "grades_2_5"
+)
+
+grade_level_1 = LessonPlanGradeLevel.create(
+  :name_key => "grades_6_8"
+)
+
+grade_level_2 = LessonPlanGradeLevel.create(
+  :name_key => "grades_9_12"
+)
+
 LessonPlan.delete_all
 LessonPlan.create(
   :theme => classification_theme,

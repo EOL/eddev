@@ -5,6 +5,6 @@ FactoryGirl.define do
     objective_keys ["MyString"]
     desc_key "MyString"
     file_name "MyString"
-    guide_id 1
+    overview_file_name "MyString"
   end
 end

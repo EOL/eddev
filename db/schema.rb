@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170125181213) do
+ActiveRecord::Schema.define(version: 20170125183338) do
 
   create_table "content_model_states", force: :cascade do |t|
     t.integer  "content_model_id",       limit: 4
@@ -72,6 +72,12 @@ ActiveRecord::Schema.define(version: 20170125181213) do
 
   add_index "habitats", ["name"], name: "index_habitats_on_name", unique: true, using: :btree
   add_index "habitats", ["place_id"], name: "index_habitats_on_place_id", using: :btree
+
+  create_table "lesson_plan_grade_levels", force: :cascade do |t|
+    t.string   "name_key",   limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "lesson_plan_perks", force: :cascade do |t|
     t.string   "name_key",   limit: 255

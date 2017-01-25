@@ -422,6 +422,11 @@ en:
         adaptations: "Adaptations"
         energy_flow: "Energy Flow"
         human_impact: "Human Impact"
+    lesson_plan_grade_level:
+      name_keys:
+        grades_2_5: "Grades 2–5 (Ages 7–10)"
+        grades_6_8: "Grades 6–8 (Ages 11–13)"
+        grades_9_12: "Grades 9–12 (Ages 14–17)"
 
   activerecord:
     errors:

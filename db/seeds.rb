@@ -92,19 +92,21 @@ energy_flow_theme = LessonPlanTheme.create!(
 
 LessonPlanGradeLevel.delete_all
 grade_level_0 = LessonPlanGradeLevel.create!(
-  :name_key => "grades_2_5"
+  :name_key => "grades_2_5",
+  :human_name => "2_5",
 )
 
 grade_level_1 = LessonPlanGradeLevel.create!(
-  :name_key => "grades_6_8"
+  :name_key => "grades_6_8",
+  :human_name => "6_8",
 )
 
 grade_level_2 = LessonPlanGradeLevel.create!(
-  :name_key => "grades_9_12"
+  :name_key => "grades_9_12",
+  :human_name => "9_12",
 )
 
 LessonPlan.delete_all
-
 LessonPlan.create_with(:grade_level => grade_level_0).create!([
   {
     :theme => classification_theme,
@@ -140,7 +142,8 @@ LessonPlan.create_with(:grade_level => grade_level_0).create!([
     :perks => [species_card_perk],
     :desc_key => "students_apply_go_fish_html",
     :file_name => "2-5_Classification4_ThatsClassified",
-    :overview_file_name => "2-5_Classification_LessonOverview"
+    :overview_file_name => "2-5_Classification_LessonOverview",
+    :human_name => "thats_classified"
   },
   {
     :theme => energy_flow_theme,
@@ -220,7 +223,8 @@ LessonPlan.create_with(:grade_level => grade_level_0).create!([
     :objective_keys => ["identify_behavioral_physical_html", "classify_organisms_adaptations_html", "compare_contrast_adaptations_html", "interpret_explain_adaptations_html"],
     :perks => [species_card_perk],
     :file_name => "2-5_Adaptations4_GoAdapt",
-    :overview_file_name => "2-5_Adaptations_LessonOverview"
+    :overview_file_name => "2-5_Adaptations_LessonOverview",
+    :human_name => "go_adapt"
   },
   {
     :theme => adaptations_theme,
@@ -229,7 +233,8 @@ LessonPlan.create_with(:grade_level => grade_level_0).create!([
     :objective_keys => ["design_share_adaptations_html", "synthesize_physical_behavioral_html"],
     :perks => [species_card_perk],
     :file_name => "2-5_Adaptations5_CreateACreature",
-    :overview_file_name => "2-5_Adaptations_LessonOverview"
+    :overview_file_name => "2-5_Adaptations_LessonOverview",
+    :human_name => "create_a_creature"
   },
   {
     :theme => science_skills_theme,
@@ -469,5 +474,6 @@ LessonPlan.create_with(:grade_level => grade_level_2).create!([
     :perks => [species_card_perk],
     :file_name => "9-12_Interdependence3_FoodChainsRummy",
     :overview_file_name => "9-12_Interdependence_LessonOverview",
+    :human_name => "food_chains_rummy"
   },
 ])

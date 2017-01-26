@@ -1,7 +1,7 @@
 module LessonPlansHelper
-  def lesson_plan_path(name)
-    "/lesson_plans/#{name}.pdf"
-  end
+#  def lesson_plan_path(name)
+#    "/lesson_plans/#{name}.pdf"
+#  end
 
   def lesson_plan_id(cat_id, lp_id) 
     "#{cat_id}-#{(lp_id)}"

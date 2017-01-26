@@ -20,14 +20,14 @@
     return $lessonPlan.attr('id').replace('LessonPlan', '');
   }
 
-  function updateHash() {
+  function updateStorage() {
     var $this = $(this),
         $lessonPlan = $this.closest('.lesson-plan');
 
     sessionStorage.setItem('scrollState', idPart($lessonPlan));
   }
 
-  function restoreFromHash() {
+  function restoreFromStorage() {
     var id = sessionStorage.getItem('scrollState');
 
     if (id) {
@@ -38,12 +38,9 @@
     return id != null;
   }
 
-  function scrollToId(compoundId) {
-    var catAndId = compoundId.split('-'),
-        cat = catAndId[0],
-        id = catAndId[1],
-        $menu = $('#GradeLevelMenu' + cat),
-        $lessonPlan = $('#LessonPlan' + cat + '-' + id);
+  function scrollToId(id) {
+    var $lessonPlan = $('#LessonPlan' + id),
+        $menu = $lessonPlan.closest('.grade-level').find('.grade-level-bar');
 
 
 
@@ -55,7 +52,7 @@
   function scrollWhereNecessary() {
     var $markedLesson = null;
 
-    if (!restoreFromHash()) {
+    if (!restoreFromStorage()) {
       $markedLesson = $('[data-scroll-to=true]');
 
       if ($markedLesson.length) {
@@ -67,6 +64,6 @@
   $(function () {
     scrollWhereNecessary();
     $('.grade-level-bar').click(gradeLevelClicked);
-    $('.lesson-plan.external a').click(updateHash);
+    $('.lesson-plan.external a').click(updateStorage);
   });
 })();

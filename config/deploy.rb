@@ -39,7 +39,7 @@ set :default_stage, "staging"
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-#namespace :deploy do
+namespace :deploy do
 #
 #  after :restart, :clear_cache do
 #    on roles(:web), in: :groups, limit: 3, wait: 10 do
@@ -50,4 +50,14 @@ set :default_stage, "staging"
 #    end
 #  end
 #
-#end
+  desc 'Runs rake db:seed'
+  task :seed => [:set_rails_env] do
+    on primary fetch(:migration_role) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, "db:seed"
+        end
+      end
+    end
+  end
+end

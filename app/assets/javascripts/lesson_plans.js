@@ -88,9 +88,69 @@
     return params;
   }
 
+  function updateHeadersOnScroll() {
+    var windowScroll = $(window).scrollTop(),
+        $fixedBar = $('.grade-level-bar.fixed'),
+        $bars = $('.grade-level-bar.open').filter(function(i, bar) {
+          return !$(bar).hasClass('fixed'); 
+        }),
+        barFound = false;
+    
+    $bars.sort(function(a, b) {
+      return $(b).offset().top - $(a).offset().top; 
+    });
+
+    $bars.each(function(i, bar) {
+      var $bar = $(bar);
+
+      if ($bar.offset().top <= windowScroll) {
+        if (!$fixedBar || ($fixedBar && $bar.data('grade-id') != $fixedBar.data('grade-id'))) {
+          var $clone = $bar.clone();
+
+          $clone.addClass('fixed');
+          $clone.attr('id', null);
+
+          resizeFixedBarHelper($clone);
+
+          if ($fixedBar) {
+            $fixedBar.remove();
+          }
+
+          $("body").append($clone);
+        }
+
+        barFound = true;
+        return false;
+      }
+    });
+
+    if (!barFound) {
+      $('.grade-level-bar.fixed').remove();
+    }
+  }
+
+  function resizeFixedBarHelper($fixedBar) {
+    var width = $('.main-col').width(),
+        left = ($('body').width() - width) / 2;
+
+        $fixedBar.css('width', width);
+        $fixedBar.css('left', left);
+  }
+
+  function resizeFixedBar() {
+    var $bar = $('.grade-level-bar.fixed');
+
+    if ($bar) {
+      resizeFixedBarHelper($bar);
+    }
+  }
+
   $(function () {
     scrollWhereNecessary();
     $('.grade-level-bar').click(gradeLevelClicked);
     $('.lesson-plan.external a').click(updateStorage);
+
+    $(window).scroll(updateHeadersOnScroll);
+    $(window).resize(resizeFixedBar);
   });
 })();

@@ -102,6 +102,12 @@ $lesson-plan-border-color: #aaaaaa;
     right: 10px;
     top: 8px;
   }
+
+  &.fixed {
+    position: fixed;
+    top: 0; 
+    z-index:100;
+  }
 }
 
 .all-lesson-plans {

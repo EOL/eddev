@@ -31,21 +31,29 @@
     var id = sessionStorage.getItem('scrollState');
 
     if (id) {
-      scrollToId(id);
+      scrollToId(id, false);
       sessionStorage.removeItem('scrollState');
     }
 
     return id != null;
   }
 
-  function scrollToId(id) {
+  function scrollToId(id, highlight) {
     var $lessonPlan = $('#LessonPlan' + id),
-        $menu = $lessonPlan.closest('.grade-level').find('.grade-level-bar');
-
-
+        $menu = $lessonPlan.closest('.grade-level').find('.grade-level-bar'),
+        highlightColor = '#7ab62d';
 
     toggleGradeLevelMenu($menu, function() {
+      var backgroundColor = $lessonPlan.css('background-color');
       $(window).scrollTop($lessonPlan.offset().top); 
+
+      if (highlight) {
+        $lessonPlan.css('background-color', highlightColor);
+
+        $lessonPlan.animate({
+          backgroundColor: backgroundColor
+        }, 1500);
+      }
     });
   }
 
@@ -57,7 +65,7 @@
       hashParams = parseHashParameters();
 
       if (hashParams && hashParams['scroll_to']) {
-        scrollToId(hashParams['scroll_to']);
+        scrollToId(hashParams['scroll_to'], true);
       }
     }
   }

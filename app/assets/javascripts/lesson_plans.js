@@ -50,15 +50,34 @@
   }
 
   function scrollWhereNecessary() {
-    var $markedLesson = null;
+    var $markedLesson = null,
+        hashParams = null;
 
     if (!restoreFromStorage()) {
-      $markedLesson = $('[data-scroll-to=true]');
+      hashParams = parseHashParameters();
 
-      if ($markedLesson.length) {
-        scrollToId(idPart($markedLesson));
+      if (hashParams && hashParams['scroll_to']) {
+        scrollToId(hashParams['scroll_to']);
       }
     }
+  }
+
+  function parseHashParameters() {
+    var hash = window.location.hash,
+        keyValPairs = null,
+        params = {};
+
+    if (hash) {
+      hash = hash.replace('#', '');
+      keyValPairs = hash.split('&');
+
+      $.each(keyValPairs, function(i, pair) {
+        var keyAndVal = pair.split('=');
+        params[keyAndVal[0]] = keyAndVal[1] 
+      }); 
+    }
+
+    return params;
   }
 
   $(function () {

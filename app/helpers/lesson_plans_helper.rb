@@ -1,7 +1,7 @@
 module LessonPlansHelper
-#  def lesson_plan_path(name)
-#    "/lesson_plans/#{name}.pdf"
-#  end
+  def scroll_to_lesson_plan_path(lesson_plan)
+    lesson_plans_path :anchor => "scroll_to=#{lesson_plan.id}"
+  end
 
   def lesson_plan_id(cat_id, lp_id) 
     "#{cat_id}-#{(lp_id)}"

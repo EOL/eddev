@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   get  'about'        => 'welcome#about',      :as => :about
   get  'species_cards'        => 'cards#index',        :as => :cards
   get  'lesson_plans' => 'lesson_plans#index', :as => :lesson_plans
-  get "lesson_plans/:id" => "lesson_plans#index", :as => :lesson_plan
 
 
 #  scope '(:locale)', locale: /#{I18n.available_locales.join('|')}/ do

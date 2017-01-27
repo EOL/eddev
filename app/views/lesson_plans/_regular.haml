@@ -1,6 +1,6 @@
 - id_string = "LessonPlan#{lesson.id}"
 
-%li{:class => ["lesson-plan", (index % 2 == 1 ? "even" : "odd"), ("last" if index == total - 1), ("external" if lesson.external?)], :id => id_string, :'data-scroll-to' => (@scroll_to == lesson.id ? "true" : nil)}
+%li{:class => ["lesson-plan", (index % 2 == 1 ? "even" : "odd"), ("last" if index == total - 1), ("external" if lesson.external?)], :id => id_string}
   .left-wrap
     = image_tag lesson.theme.icon_path, :class => "lesson-plan-icon"
     = render "icons", :lesson => lesson, :class_ext => "horiz"

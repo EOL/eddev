@@ -3,7 +3,6 @@ class LessonPlansController < ApplicationController
 
   def index
     @hero_image_partial = 'lesson_plans/hero'
-    @scroll_to = params.key?(:id) ? params[:id].to_i : nil
     @grade_levels = LessonPlanGradeLevel.all
 
     @ordered_themes = [

@@ -7,8 +7,7 @@
 
     if ($this.hasClass('fixed')) {
       realBar = $('#GradeLevelMenu' + $this.data('grade-id'));
-      lessonPlansHdr = $('#AllLessonPlansHdr');
-      $("body").scrollTop(lessonPlansHdr.offset().top);
+      $("body").scrollTop(realBar.offset().top);
     }
 
     toggleGradeLevelMenu(realBar);

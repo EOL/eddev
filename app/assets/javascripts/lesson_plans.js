@@ -1,8 +1,20 @@
 (function() {
+  // Click handler for grade level bars. Shows all lesson plans for grade level.
   function gradeLevelClicked() {
-    toggleGradeLevelMenu($(this));
+    var $this = $(this)
+        realBar = $this,
+        lessonPlansHdr = null;
+
+    if ($this.hasClass('fixed')) {
+      realBar = $('#GradeLevelMenu' + $this.data('grade-id'));
+      lessonPlansHdr = $('#AllLessonPlansHdr');
+      $("body").scrollTop(lessonPlansHdr.offset().top);
+    }
+
+    toggleGradeLevelMenu(realBar);
   }
 
+  // Show/hide lesson plans for grade level
   function toggleGradeLevelMenu($menu, callback) {
     var $list = $menu.next('.lesson-plan-list'),
         $chevron = $menu.find('.chevron');
@@ -16,10 +28,12 @@
     $chevron.toggleClass('fa-chevron-up');
   }
 
+  // Get the lesson plan id from a lesson plan element
   function idPart($lessonPlan) {
     return $lessonPlan.attr('id').replace('LessonPlan', '');
   }
 
+  // Save scroll state in session storage
   function updateStorage() {
     var $this = $(this),
         $lessonPlan = $this.closest('.lesson-plan');
@@ -27,6 +41,7 @@
     sessionStorage.setItem('scrollState', idPart($lessonPlan));
   }
 
+  // Restore scroll state from session storage
   function restoreFromStorage() {
     var id = sessionStorage.getItem('scrollState');
 
@@ -38,6 +53,7 @@
     return id != null;
   }
 
+  // Scroll to lesson plan with id, opening the required grade level menu
   function scrollToId(id, highlight) {
     var $lessonPlan = $('#LessonPlan' + id),
         $menu = $lessonPlan.closest('.grade-level').find('.grade-level-bar'),
@@ -57,6 +73,8 @@
     });
   }
 
+  // Scroll to lesson plan passed in via url hash or saved in session storage.
+  // Highlights lesson plan if lesson plan scrolled to was indicated via url hash.
   function scrollWhereNecessary() {
     var $markedLesson = null,
         hashParams = null;
@@ -70,6 +88,7 @@
     }
   }
 
+  // Parse parameters from url hash
   function parseHashParameters() {
     var hash = window.location.hash,
         keyValPairs = null,
@@ -88,55 +107,62 @@
     return params;
   }
 
+  function lpListForBar($bar) {
+
+  }
+
+  // Scroll handler, enables persistent grade level headers
   function updateHeadersOnScroll() {
     var windowScroll = $(window).scrollTop(),
-        $fixedBar = $('.grade-level-bar.fixed'),
         $bars = $('.grade-level-bar.open').filter(function(i, bar) {
           return !$(bar).hasClass('fixed'); 
-        }),
-        barFound = false;
+        });
+
+    $('.grade-level-bar.fixed').remove();
     
+    // Add new fixed bar if necessary
     $bars.sort(function(a, b) {
       return $(b).offset().top - $(a).offset().top; 
     });
 
     $bars.each(function(i, bar) {
-      var $bar = $(bar);
+      var $bar = $(bar),
+          $lastLp = $bar.next('.lesson-plan-list').find('.lesson-plan').last(),
+          lastLpTop = $lastLp.offset().top,
+          barHeight = $bar.height(),
+          newBarTop = lastLpTop - windowScroll - barHeight;
 
-      if ($bar.offset().top <= windowScroll) {
-        if (!$fixedBar || ($fixedBar && $bar.data('grade-id') != $fixedBar.data('grade-id'))) {
-          var $clone = $bar.clone();
+      if (newBarTop > 0) {
+        newBarTop = 0
+      }
 
-          $clone.addClass('fixed');
-          $clone.attr('id', null);
+      if ($bar.offset().top <= windowScroll && newBarTop + barHeight >= 0) {
+        var $clone = $bar.clone();
 
-          resizeFixedBarHelper($clone);
+        $clone.addClass('fixed');
+        $clone.attr('id', null);
+        $clone.css('top', newBarTop);
+        $clone.click(gradeLevelClicked);
 
-          if ($fixedBar) {
-            $fixedBar.remove();
-          }
+        resizeFixedBarHelper($clone);
 
-          $("body").append($clone);
-        }
+        $("body").append($clone);
 
-        barFound = true;
         return false;
       }
     });
-
-    if (!barFound) {
-      $('.grade-level-bar.fixed').remove();
-    }
   }
 
+  // Resize persistent grade level header
   function resizeFixedBarHelper($fixedBar) {
     var width = $('.main-col').width(),
         left = ($('body').width() - width) / 2;
 
-        $fixedBar.css('width', width);
-        $fixedBar.css('left', left);
+    $fixedBar.css('width', width);
+    $fixedBar.css('left', left);
   }
 
+  // Resize active persistent grade level header(s) if exists
   function resizeFixedBar() {
     var $bar = $('.grade-level-bar.fixed');
 

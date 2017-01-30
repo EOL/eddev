@@ -89,6 +89,7 @@ $lesson-plan-border-color: #aaaaaa;
 
 .grade-level-bar {
   color: $white;
+  cursor: pointer;
   font-size: 18px;
   font-weight: $bold;
   height: 34px;
@@ -114,10 +115,6 @@ $lesson-plan-border-color: #aaaaaa;
   .grade-level {
     clear: both;
     margin-top: 10px;
-  }
-
-  .grade-level-bar {
-    cursor: pointer;
   }
 }
 

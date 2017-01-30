@@ -18,7 +18,7 @@
         %i{:class => "icon icon-#{perk.icon_name}"}
         .icon-desc= perk.localized_name
 
-= render "shared/section_head", :title_key => "lesson_plans.index.lesson_plans"
+= render "shared/section_head", :title_key => "lesson_plans.index.lesson_plans", :id => "AllLessonPlansHdr"
 .all-lesson-plans
   - grade_0_lessons = @grade_levels.first.lesson_plans
   - grade_1_lessons = @grade_levels.second.lesson_plans

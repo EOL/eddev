@@ -8,6 +8,7 @@
     if ($this.hasClass('fixed')) {
       realBar = $('#GradeLevelMenu' + $this.data('grade-id'));
       $("body").scrollTop(realBar.offset().top);
+      $this.remove();
     }
 
     toggleGradeLevelMenu(realBar);
@@ -117,8 +118,6 @@
           return !$(bar).hasClass('fixed'); 
         });
 
-    $('.grade-level-bar.fixed').remove();
-    
     // Add new fixed bar if necessary
     $bars.sort(function(a, b) {
       return $(b).offset().top - $(a).offset().top; 
@@ -129,25 +128,28 @@
           $lastLp = $bar.next('.lesson-plan-list').find('.lesson-plan').last(),
           lastLpTop = $lastLp.offset().top,
           barHeight = $bar.height(),
-          newBarTop = lastLpTop - windowScroll - barHeight;
+          fixedBarTop = lastLpTop - windowScroll - barHeight,
+          $fixedBar = $('.grade-level-' + $bar.data('grade-id') + '.fixed');
 
-      if (newBarTop > 0) {
-        newBarTop = 0
+      if (fixedBarTop > 0) {
+        fixedBarTop = 0
       }
 
-      if ($bar.offset().top <= windowScroll && newBarTop + barHeight >= 0) {
-        var $clone = $bar.clone();
+      if ($bar.offset().top <= windowScroll && fixedBarTop + barHeight >= 0) {
+        if (!$fixedBar.length) {
+          $fixedBar = $bar.clone();
+          $fixedBar.addClass('fixed');
+          $fixedBar.attr('id', null);
+          $fixedBar.click(gradeLevelClicked);
+          resizeFixedBarHelper($fixedBar);
+          $("body").append($fixedBar);
+        }
 
-        $clone.addClass('fixed');
-        $clone.attr('id', null);
-        $clone.css('top', newBarTop);
-        $clone.click(gradeLevelClicked);
-
-        resizeFixedBarHelper($clone);
-
-        $("body").append($clone);
+        $fixedBar.css('top', fixedBarTop);
 
         return false;
+      } else if ($fixedBar.length) {
+        $fixedBar.remove();
       }
     });
   }

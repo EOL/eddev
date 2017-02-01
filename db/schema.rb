@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170201190709) do
+ActiveRecord::Schema.define(version: 20170201192249) do
 
   create_table "content_model_states", force: :cascade do |t|
     t.integer  "content_model_id",       limit: 4
@@ -30,10 +30,11 @@ ActiveRecord::Schema.define(version: 20170201190709) do
     t.string   "human_name",          limit: 255
     t.string   "file_name",           limit: 255
     t.string   "thumbnail_file_name", limit: 255
-    t.string   "name_key",            limit: 255
+    t.string   "title_key",           limit: 255
     t.string   "desc_key",            limit: 255
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+    t.string   "subtitle_key",        limit: 255
   end
 
   create_table "editor_contents", force: :cascade do |t|

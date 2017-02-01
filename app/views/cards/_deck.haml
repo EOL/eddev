@@ -1,12 +1,12 @@
-%li{:class => ["deck", ("odd" if index % 2 == 0), ("even" if index % 2 == 1)]}>
-  = image_tag "cards/#{deck[:image_name]}.png", :class => "deck-img"
+%li{:class => ["deck", ("odd" if index % 2 == 0), ("even" if index % 2 == 1)], :id => "Deck#{deck.id}"}>
+  = image_tag "cards/#{deck.image_file_name}.png", :class => "deck-img"
   .deck-info>
-    %h3.deck-title= t "cards.deck_titles.#{deck[:title_key]}"
-    -if deck[:sub_key]
-      %h4.deck-sub= t "cards.deck_subtitles.#{deck[:sub_key]}"
+    %h3.deck-title= deck.localized_title
+    -if deck.localized_subtitle
+      %h4.deck-sub= deck.localized_subtitle
     -else
       .deck-sub-placeholder
 
-    %p.deck-desc= t "cards.deck_descriptions.#{deck[:desc_key]}"
+    %p.deck-desc= deck.localized_desc
     =link_to deck_pdf_path(deck[:file_name]), :class => "pdf-button", :download => "" do 
       %i.fa.fa-download.fa-lg

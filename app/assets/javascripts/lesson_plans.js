@@ -80,7 +80,7 @@
         hashParams = null;
 
     if (!restoreFromStorage()) {
-      hashParams = parseHashParameters();
+      hashParams = EolUtil.parseHashParams();
 
       if (hashParams && hashParams['scroll_to']) {
         scrollToId(hashParams['scroll_to'], true);
@@ -88,28 +88,6 @@
     }
   }
 
-  // Parse parameters from url hash
-  function parseHashParameters() {
-    var hash = window.location.hash,
-        keyValPairs = null,
-        params = {};
-
-    if (hash) {
-      hash = hash.replace('#', '');
-      keyValPairs = hash.split('&');
-
-      $.each(keyValPairs, function(i, pair) {
-        var keyAndVal = pair.split('=');
-        params[keyAndVal[0]] = keyAndVal[1] 
-      }); 
-    }
-
-    return params;
-  }
-
-  function lpListForBar($bar) {
-
-  }
 
   // Scroll handler, enables persistent grade level headers
   function updateHeadersOnScroll() {

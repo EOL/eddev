@@ -2,6 +2,8 @@ class CardsController < ApplicationController
   def index
     @hero_image_partial = 'cards/cards_hero'
 
+    @all_decks = Deck.all
+
     grade_level_2_5 = LessonPlanGradeLevel.find_by_human_name :'2_5'
     grade_level_9_12 = LessonPlanGradeLevel.find_by_human_name :'9_12'
     

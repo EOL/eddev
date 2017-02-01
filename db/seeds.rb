@@ -491,7 +491,7 @@ Deck.create!([
     :subtitle_key => "common_animal_groups",
     :desc_key => "bioblitz_common",
     :image_file_name => "bioblitz_common",
-    :file_name => "bioblitz"
+    :file_name => "bioblitz",
   },
   {
     :title_key => "earthwatch",
@@ -519,7 +519,7 @@ Deck.create!([
     :subtitle_key => "urban_habitat_adaptations",
     :desc_key => "ne_urban",
     :image_file_name => "ne_urban",
-    :file_name => "ne_urban"
+    :file_name => "ne_urban",
   },
 #  {
 #    :title_key => "new_england",
@@ -547,7 +547,7 @@ Deck.create!([
     :subtitle_key => "biodiversity",
     :desc_key => "okaloosa_bio",
     :image_file_name => "okaloosa_bio",
-    :file_name => "okaloosa_biodiversity"
+    :file_name => "okaloosa_biodiversity",
   },
   {
     :title_key => "okaloosa",

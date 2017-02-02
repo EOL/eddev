@@ -33,7 +33,7 @@ module Eddev
     config.x.app_uri_prefix = Figaro.env.RAILS_RELATIVE_URL_ROOT ? Figaro.env.RAILS_RELATIVE_URL_ROOT : ""
     config.x.legacy_password_salt = Figaro.env.legacy_password_salt
 
-    config.x.enable_ga = Figaro.env.key?("enable_ga") && Figaro.env.enable_ga == "true"
+    config.x.enable_ga = Figaro.env.enable_ga? && Figaro.env.enable_ga == "true"
     
     # mail config
 #    config.action_mailer.delivery_method = :smtp

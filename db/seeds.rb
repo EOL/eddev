@@ -380,6 +380,7 @@ LessonPlan.create_with(:grade_level => grade_level_1).create!([
     :perks => [species_card_perk],
     :file_name => "6-8_FoodWebs4_FoodChainsRummy",
     :overview_file_name => "6-8_FoodWebs_LessonOverview",
+    :human_name => "food_chains_rummy"
   },
   {
     :theme => adaptations_theme,
@@ -492,6 +493,7 @@ Deck.create!([
     :desc_key => "bioblitz_common",
     :image_file_name => "bioblitz_common",
     :file_name => "bioblitz",
+    :human_name => "bioblitz_common"
   },
   {
     :title_key => "earthwatch",

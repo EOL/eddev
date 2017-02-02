@@ -7,16 +7,18 @@
     :title_key => "biodiv_article",
     :content_key => "what_is_amph",
     :url => "http://eol.org/info/amphibians"
-  = render "slide", :img => "bioblitz_deck",
-    :title_key => "species_cards",
-    :content_key => "bioblitz_deck",
-    :url => deck_pdf_path("bioblitz")
+  - if @slide_deck
+    = render "slide", :img => "bioblitz_deck",
+      :title_key => "species_cards",
+      :content_key => "bioblitz_deck",
+      :url => scroll_to_deck_path(@slide_deck)
   = render "slide", :img => "sea_monsters",
     :title_key => "memory_game",
     :content_key => "sea_monsters",
     :url => "/memory/play.php?xmgp=3230342a42656175746966756c2532305365612532304d6f6e73746572732a687474702533412532462532466d656469612e656f6c2e6f7267253246636f6e74656e742532463230313325324631302532463138253246313025324632363134335f38385f38382e6a70672a31"
-  = render "slide", :img => "food_chain",
-    :title_key => "Lesson Plan",
-    :content_key => "food_chain_rummy",
-    :url => "https://docs.google.com/document/d/1AX8l-hQnaeKbncVyuyAA6CjIhMfDNJPBeRBFAPEC2mY/edit"
+  - if @slide_lesson_plan
+    = render "slide", :img => "food_chain",
+      :title_key => "Lesson Plan",
+      :content_key => "food_chain_rummy",
+      :url => scroll_to_lesson_plan_path(@slide_lesson_plan)
 

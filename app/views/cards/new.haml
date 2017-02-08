@@ -1,5 +1,9 @@
-= javascript_include_tag "generator.js"
+%h1{:class => "new-card-hdr"} Card Generator Test Page
 
-%canvas#Canvas
-= image_tag "leatherback.jpg", :id => "LeatherbackPhoto"
+.card-generator
+  .controls#GeneratorControls
+  %canvas.canvas#Canvas
 
+.img-selector.hidden#ImgSelector
+  = image_tag "leatherback1.jpg", :id => "Leatherback1"
+  = image_tag "leatherback2.jpg", :id => "Leatherback2"

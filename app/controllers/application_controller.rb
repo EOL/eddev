@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
 #  before_filter :set_locale
 #  before_filter :ensure_user
   before_filter :init_content_editor_state
-  before_filter :set_default_hero_image_partial
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -43,7 +42,7 @@ class ApplicationController < ActionController::Base
       @logged_in_user = User.find_by(user_name: user_name).try(:authenticate, password)
 
       if @logged_in_user && @logged_in_user.confirmed?
-        session[:user_id]         = @logged_in_user.id 
+        session[:user_id]         = @logged_in_user.id
         cookies["logged_in"]      = @logged_in_user.legacy_id
         cookies["logged_in_user"] = @logged_in_user.user_name
 
@@ -62,14 +61,14 @@ class ApplicationController < ActionController::Base
       raise ApplicationController::ForbiddenError unless condition
     end
 
-    # This method should be called in every controller action that results in a ContentModel draft page. 
+    # This method should be called in every controller action that results in a ContentModel draft page.
     def set_draft_page(draft_model)
       @draft_page = true
       @draft_model = draft_model
       set_content_editor_state(draft_model.state_for_cur_locale)
     end
 
-    # This method should be called in every controller action that results in a published ContentModel page for which there exists a draft view. 
+    # This method should be called in every controller action that results in a published ContentModel page for which there exists a draft view.
     def set_draftable_page(draft_model)
       @draftable_page = true
       @draft_model = draft_model
@@ -119,16 +118,12 @@ class ApplicationController < ActionController::Base
   def set_content_editor_state(state)
     @content_editor_state[:locale]     = state.locale
     @content_editor_state[:model_type] = state.content_model.class.name
-    @content_editor_state[:model_id]   = state.content_model.id 
+    @content_editor_state[:model_id]   = state.content_model.id
     @content_editor_state[:enable_publish] = state.has_unpublished_content?
   end
 
   # Render standard 404 page
   def render_404
     render(:file => File.join(Rails.root, 'public/404'), :status => 404, :layout => false)
-  end
-
-  def set_default_hero_image_partial
-    @hero_image_partial = "shared/hero_placeholder"
   end
 end

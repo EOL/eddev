@@ -10,7 +10,6 @@
     = stylesheet_link_tag "//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css", :media => "all"
     = stylesheet_link_tag "//cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css", :media => "all"
     = stylesheet_link_tag "https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css", :media => "all"
-    = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700", :media => "all"
     = stylesheet_link_tag "application", :media => "all"
 
     -if asset_exists? "#{params[:controller]}.css"
@@ -23,6 +22,19 @@
 
     -if asset_exists? "#{params[:controller]}.js"
       = javascript_include_tag params[:controller]
+
+    = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"
+    :javascript
+      WebFont.load({
+        google: {
+          families: ['Open Sans:n3,n4,n6,n7,i3,i4,i6,i7']
+        },
+        active: function() {
+          $.each(EolUtil.fontsLoadedCallbacks(), function(i, fn){
+            fn();
+          });
+        }
+      });
 
     = favicon_link_tag
     = csrf_meta_tags
@@ -39,8 +51,11 @@
 
     #Page
       = render "shared/header"
-      #HeroImage.hero-image
-        = render @hero_image_partial
+
+      -if @hero_image_partial
+        #HeroImage.hero-image
+          = render @hero_image_partial
+
       %main{:role => "main"}
         .main-col
           = yield

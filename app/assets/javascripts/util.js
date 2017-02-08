@@ -13,13 +13,22 @@ window.EolUtil = {};
 
       $.each(keyValPairs, function(i, pair) {
         var keyAndVal = pair.split('=');
-        params[keyAndVal[0]] = keyAndVal[1] 
-      }); 
+        params[keyAndVal[0]] = keyAndVal[1]
+      });
     }
 
     return params;
   }
-
   exports.parseHashParams = parseHashParams;
-})(window.EolUtil);
 
+  var fontsLoadedCallbackArr = [];
+  function onFontsLoaded(fn) {
+    fontsLoadedCallbackArr.push(fn);
+  }
+  exports.onFontsLoaded = onFontsLoaded;
+
+  function fontsLoadedCallbacks() {
+    return fontsLoadedCallbackArr;
+  }
+  exports.fontsLoadedCallbacks = fontsLoadedCallbacks;
+})(window.EolUtil);

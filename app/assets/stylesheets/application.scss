@@ -40,8 +40,12 @@ body, p {
   font: normal 100% $open-sans;
 }
 
-p a, .std-link { 
+p a, .std-link {
   @include standard-link;
+}
+
+.hidden {
+  display: none;
 }
 
 #Page {
@@ -51,12 +55,12 @@ p a, .std-link {
 }
 
 /* FOOTER */
-.footer { 
+.footer {
   $footer-v-spacing: 23 / $em * 1em;
 
   background-color: #f0f0f0;
-  margin-top: percentage(50 / $page-width-px); 
-  padding: percentage(23 / $page-width-px) 0 percentage(37 / $page-width-px) 0; 
+  margin-top: percentage(50 / $page-width-px);
+  padding: percentage(23 / $page-width-px) 0 percentage(37 / $page-width-px) 0;
 
   a {
     color: #50558d;
@@ -163,7 +167,7 @@ p a, .std-link {
 
 .eol-logo {
   $height-em: 19 / $em;
-  position: absolute; 
+  position: absolute;
   height: $height-em * 1em;
   line-height: $height-em;
   left: 38 / $em * 1em;
@@ -183,7 +187,7 @@ p a, .std-link {
 
 .title {
   $font-size-px: 20;
-  margin: 0;   
+  margin: 0;
   font-size: $font-size-px / $em * 1em;
   font-weight: $semibold;
   line-height: $topbar-height-px / $font-size-px * 1em;
@@ -382,7 +386,7 @@ $hero-transition-width: 525;
   text-align: center;
   width: 100%;
   margin-top: percentage(37 / $main-col-width);
-} 
+}
 
 .intro-content {
   padding-top: 11 / $em * 1em;
@@ -397,7 +401,7 @@ $hero-transition-width: 525;
 
 .intro-p {
   $font-size: 14;
-  font-size: $font-size / $em * 1em; 
+  font-size: $font-size / $em * 1em;
   line-height: 1.7;
   margin-bottom: percentage(22 / $main-col-width);
   padding: 0 percentage(85 / $main-col-width);
@@ -463,7 +467,7 @@ $hero-transition-width: 525;
 
 .section-head {
   border-bottom: 1px solid $section-border-gray;
-  margin: $section-v-margin 0 0 0; 
+  margin: $section-v-margin 0 0 0;
 }
 
 .section-head-top {
@@ -472,7 +476,7 @@ $hero-transition-width: 525;
 
 .section-title {
   font-size: 20px;
-  font-weight: $semibold;  
+  font-weight: $semibold;
   margin-bottom: 5px;
 }
 
@@ -525,4 +529,3 @@ $hero-transition-width: 525;
     font-size: 10px;
   }
 }
-

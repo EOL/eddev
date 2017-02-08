@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   get  'species_cards'        => 'cards#index',        :as => :cards
   get  'cards/new'         => 'cards#new',          :as => :new_card
   get  'lesson_plans' => 'lesson_plans#index', :as => :lesson_plans
-  get  'lesson_plans/:pdf_name' => 'lesson_plans#pdf', :as => :lesson_plan_pdf
 
 
 

@@ -6,18 +6,6 @@
   :top => true
 %ul.nav-items<
   = render "nav_item",
-    :width => "single",
-    :href => "/memory",
-    :image_name => "memory_game",
-    :text_key => "memory_games",
-    :klazz => "memory-games"
-  = render "nav_item",
-    :width => "double",
-    :href => "/ecosystems",
-    :image_name => "eol_places",
-    :text_key => "eol_places",
-    :klazz => "ecosystems"
-  = render "nav_item",
     :width => "double",
     :href => lesson_plans_path,
     :image_name => "lesson_plans",
@@ -29,6 +17,18 @@
     :image_name => "species_cards",
     :text_key => "species_cards",
     :klazz => "species-cards"
+  = render "nav_item",
+    :width => "single",
+    :href => "/memory",
+    :image_name => "memory_game",
+    :text_key => "memory_games",
+    :klazz => "memory-games"
+  = render "nav_item",
+    :width => "double",
+    :href => "/ecosystems",
+    :image_name => "eol_places",
+    :text_key => "eol_places",
+    :klazz => "ecosystems"
 = render "shared/section_head", :title_key => "welcome.index.sections.eol_resources_title"
 %ul.nav-items<
   = render "nav_item",
@@ -97,7 +97,7 @@
   :license => "CC-BY"},
   {:title => "Dusky Leaf Monkey",
   :author => "Robert Pollai",
-  :source => "Wikipedia",
+  :source => "Wikimedia Commons",
   :url => "http://eol.org/data_objects/5917619",
   :license => "CC-BY"},
   {:title => "Manitoba Museum Butterflies",
@@ -109,4 +109,9 @@
   :author => "Wouter de Bruijn",
   :source => "Flickr",
   :url => "https://www.flickr.com/photos/w00ter/14867569415",
-  :license => "CC-BY-NC-SA"}]
+  :license => "CC-BY-NC-SA"},
+  {:title => "Grass",
+  :author => "Moyan Brenn",
+  :source => "Flickr",
+  :url => "https://www.flickr.com/photos/aigle_dore/5626321957/in/photolist-9zbnuZ-4Aud8F-a25ToA-pa53sN-feYXqG-PSZd2-da63kK-9P6tT8-6gpKDp-2nauBJ-6XgNKL-3aNXdZ-pvHw4C-fzv4f6-dUXwSf-5rGf2P-8noPze-3am2K-bCjHrL-9G1mov-c3g9DU-8xQjWk-2fuU9K-6yGhKj-5oHuSt-7ndNN-qDmPtw-5pzDtw-b12Lw-eT8X7S-7zBL2-4XmZwT-cWwWi7-51eajc-rse9A-4kXut-9PtF4q-23ve4H-2bAPx-pgjFnQ-bwPKam-7zBHZ-5Aoces-aSMdHH-89A5RZ-2gSVa-axj9Ez-a24W4b-NhDLu-qkFFfQ",
+  :license => "CC-BY"}]

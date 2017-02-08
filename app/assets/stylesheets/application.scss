@@ -10,8 +10,7 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require galleria/themes/classic/galleria.classic
- *= require jquery-ui/tooltip
+ *= require lesson_plan_icons
  *= require_self
  */
 @import "layout_vars.scss";
@@ -73,6 +72,7 @@ p a, .std-link {
   .mcz-logo {
     display: block;
     margin: $footer-v-spacing auto 0 auto;
+    width: 199px;
   }
 
   .addr-line {
@@ -389,7 +389,7 @@ $hero-transition-width: 525;
 }
 
 .intro-hdr {
-  border-bottom: solid 1px #979797;
+  border-bottom: solid 1px $section-border-gray;
   font-size: 20px;
   font-weight: $semibold;
   padding: 0 0 (7 / $em * 1em) 0;
@@ -526,8 +526,3 @@ $hero-transition-width: 525;
   }
 }
 
-/*
-.editor-content p { margin: 0; padding: 0; }
-#DraftHeader { background-color: #FAF55A; height: 20px; text-align: center; vertical-align: middle; }
-.field input, .field label { display: block; }
-*/

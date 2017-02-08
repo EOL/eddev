@@ -1,4 +1,7 @@
 %li{:class => "featured-deck hoverable #{class_str}"}
-  .featured-deck-wrap
-    =image_tag "cards/#{image_name}.png", :class => "featured-deck-img"
-    .overlay= t "cards.featured_descriptions.#{desc_key}"
+  = link_to deck_pdf_path(file_name), :download => "" do
+    %div{:class => "download-button #{color}"}
+      %i.fa.fa-download.download-icon
+    .featured-deck-wrap
+      =image_tag "cards/#{image_name}.png", :class => "featured-deck-img"
+      .overlay= t "cards.featured_descriptions.#{desc_key}"

@@ -1,81 +1,53 @@
 = render "shared/intro_section", :header => "lesson_plans.index.intro_hdr",
   :paragraphs => [{:key => "lesson_plans.index.intro_p_html", :vars => {:cards_path => cards_path}}],
   :hideable => false
--#= render "shared/section_head", :title_key => "lesson_plans.index.featured_lesson_plans"
--#%ul.featured-lesson-plans<
-  = render "featured", :order => "first",
-    :grade_level => 1,
-    :icons => [:card],
-    :category => "energy_flow",
-    :title_key => "what_is_classification"
-  = render "featured", :order => "second",
-    :grade_level => 1,
-    :icons => [:tree, :card, :stats],
-    :category => "adaptations",
-    :title_key => "animal_classification"
-  = render "featured", :order => "third",
-    :grade_level => 2,
-    :icons => [:tree],
-    :category => "science_skills",
-    :title_key => "plant_classification"
-  = render "featured", :order => "fourth",
-    :grade_level => 3,
-    :icons => [:tree, :card, :stats],
-    :category => "classification",
-    :title_key => "thats_classified"
 
 .subject-key-block>
-  = render "shared/section_head", :title_key => "lesson_plans.index.subjects"
+  = render "shared/section_head", :title_key => "lesson_plans.index.themes"
   .category-key.subject-key#SubjectKey>
-    .subject.first<>
-      = image_tag "lesson_plans/classification_icon.jpg", :class => "subject-icon"
-      .subject-name= t ".classification"
-    .subject.second<>
-      = image_tag "lesson_plans/science_skills_icon.jpg", :class => "subject-icon"
-      .subject-name= t ".science_skills"
-    .subject.third<>
-      = image_tag "lesson_plans/human_impact_icon.jpg", :class => "subject-icon"
-      .subject-name= t ".human_impact"
-    .subject.fourth<>
-      = image_tag "lesson_plans/adaptations_icon.jpg", :class => "subject-icon"
-      .subject-name= t ".adaptations"
-    .subject.fifth<>
-      = image_tag "lesson_plans/energy_flow_icon.jpg", :class => "subject-icon"
-      .subject-name= t ".energy_flow"
+    - @ordered_themes.each_with_index do |theme, index|
+      %div{:class => "subject #{theme_order_class_for_index(index)}"}<>
+        = image_tag theme.icon_path, :class => "subject-icon"
+        .subject-name= theme.localized_name
 
 .icon-key-block>
   = render "shared/section_head", :title_key => "lesson_plans.index.learning_perks"
   .category-key.icon-key#IconKey
-    .icon-row<>
-      %i.icon.icon-stats
-      .icon-desc= t ".bio_stats"
-    .icon-row<>
-      %i.icon.icon-tree
-      .icon-desc= t ".field_work"
-    .icon-row<>
-      %i.icon.icon-card
-      .icon-desc= t ".species_cards"
+    - @ordered_perks.each do |perk|
+      .icon-row<>
+        %i{:class => "icon icon-#{perk.icon_name}"}
+        .icon-desc= perk.localized_name
 
-= render "shared/section_head", :title_key => "lesson_plans.index.lesson_plans"
+= render "shared/section_head", :title_key => "lesson_plans.index.lesson_plans", :id => "AllLessonPlansHdr"
 .all-lesson-plans
+  - grade_0_lessons = @grade_levels.first.lesson_plans
+  - grade_1_lessons = @grade_levels.second.lesson_plans
+  - grade_2_lessons = @grade_levels.third.lesson_plans
+
   .grade-level
-    .grade-level-bar.grade-level-1
-      %span= t ".grades_2_5"
-      %i{:class => "fa fa-chevron-down", "aria-hidden" => true}
+    #GradeLevelMenu0.grade-level-bar.grade-level-0{:'data-grade-id' => 0}
+      %span= @grade_levels.first.localized_name
+      %i{:class => "fa fa-chevron-down chevron", "aria-hidden" => true}
     %ul.lesson-plan-list
-      -grade_1_lessons.each_with_index do |lesson, index|
-        =render "regular", :lesson => lesson, :index => index, :total => grade_1_lessons.length
+      - grade_0_lessons.each_with_index do |lesson, index|
+        = render "regular", :lesson => lesson, :index => index, :total => grade_0_lessons.length, :category => 0
   .grade-level
-    .grade-level-bar.grade-level-2
-      %span= t ".grades_6_8"
-      %i{:class => "fa fa-chevron-down", "aria-hidden" => true}
+    #GradeLevelMenu1.grade-level-bar.grade-level-1{:'data-grade-id' => 1}
+      %span= @grade_levels.second.localized_name
+      %i{:class => "fa fa-chevron-down chevron", "aria-hidden" => true}
     %ul.lesson-plan-list
-      -grade_2_lessons.each_with_index do |lesson, index|
-        =render "regular", :lesson => lesson, :index => index, :total => grade_2_lessons.length
+      - grade_1_lessons.each_with_index do |lesson, index|
+        = render "regular", :lesson => lesson, :index => index, :total => grade_1_lessons.length, :category => 1
   .grade-level.last
-    .grade-level-bar.grade-level-3
-      %span= t ".grades_9_12"
-      %i{:class => "fa fa-chevron-down", "aria-hidden" => true}
+    #GradeLevelMenu2.grade-level-bar.grade-level-2{:'data-grade-id' => 2}
+      %span= @grade_levels.third.localized_name
+      %i{:class => "fa fa-chevron-down chevron", "aria-hidden" => true}
     %ul.lesson-plan-list
-      -grade_3_lessons.each_with_index do |lesson, index|
-        =render "regular", :lesson => lesson, :index => index, :total => grade_3_lessons.length
+      - grade_2_lessons.each_with_index do |lesson, index|
+        = render "regular", :lesson => lesson, :index => index, :total => grade_2_lessons.length, :category => 2
+= render  "shared/image_credits", 
+  :images => [{ :title => "Grass",
+  :author => "Moyan Brenn",
+  :source => "Flickr",
+  :url => "https://www.flickr.com/photos/aigle_dore/5626321957/in/photolist-9zbnuZ-4Aud8F-a25ToA-pa53sN-feYXqG-PSZd2-da63kK-9P6tT8-6gpKDp-2nauBJ-6XgNKL-3aNXdZ-pvHw4C-fzv4f6-dUXwSf-5rGf2P-8noPze-3am2K-bCjHrL-9G1mov-c3g9DU-8xQjWk-2fuU9K-6yGhKj-5oHuSt-7ndNN-qDmPtw-5pzDtw-b12Lw-eT8X7S-7zBL2-4XmZwT-cWwWi7-51eajc-rse9A-4kXut-9PtF4q-23ve4H-2bAPx-pgjFnQ-bwPKam-7zBHZ-5Aoces-aSMdHH-89A5RZ-2gSVa-axj9Ez-a24W4b-NhDLu-qkFFfQ",
+  :license => "CC-BY"}]

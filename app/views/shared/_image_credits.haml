@@ -4,9 +4,16 @@
   .image-credits
     -images.each do |image|
       .image-credit
-        = t ".credit_html", :title => image[:title],
-          :title_class => "image-title",
-          :author => image[:author],
-          :source => image[:source],
-          :url => image[:url],
-          :license => image[:license]
+        - if image.key?(:url)
+          = t ".credit_html", :title => image[:title],
+            :title_class => "image-title",
+            :author => image[:author],
+            :source => image[:source],
+            :url => image[:url],
+            :license => image[:license]
+        - else
+          = t ".credit_nolink_html", :title => image[:title],
+            :title_class => "image-title",
+            :author => image[:author],
+            :source => image[:source],
+            :license => image[:license]

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160726163245) do
+ActiveRecord::Schema.define(version: 20170201194647) do
 
   create_table "content_model_states", force: :cascade do |t|
     t.integer  "content_model_id",       limit: 4
@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(version: 20160726163245) do
 
   add_index "content_model_states", ["content_model_id", "content_model_type", "locale"], name: "unique_index_content_model_and_locale", unique: true, using: :btree
   add_index "content_model_states", ["content_model_type", "content_model_id"], name: "index_content_model", using: :btree
+
+  create_table "decks", force: :cascade do |t|
+    t.string   "human_name",      limit: 255
+    t.string   "file_name",       limit: 255
+    t.string   "image_file_name", limit: 255
+    t.string   "title_key",       limit: 255
+    t.string   "desc_key",        limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "subtitle_key",    limit: 255
+  end
 
   create_table "editor_contents", force: :cascade do |t|
     t.text     "value",                  limit: 65535
@@ -72,6 +83,51 @@ ActiveRecord::Schema.define(version: 20160726163245) do
 
   add_index "habitats", ["name"], name: "index_habitats_on_name", unique: true, using: :btree
   add_index "habitats", ["place_id"], name: "index_habitats_on_place_id", using: :btree
+
+  create_table "lesson_plan_grade_levels", force: :cascade do |t|
+    t.string   "name_key",   limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "human_name", limit: 255
+  end
+
+  create_table "lesson_plan_perks", force: :cascade do |t|
+    t.string   "name_key",   limit: 255
+    t.string   "icon_name",  limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "human_name", limit: 255
+  end
+
+  create_table "lesson_plan_themes", force: :cascade do |t|
+    t.string   "name_key",   limit: 255
+    t.string   "icon_file",  limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "human_name", limit: 255
+  end
+
+  create_table "lesson_plans", force: :cascade do |t|
+    t.integer  "theme_id",           limit: 4
+    t.string   "name_key",           limit: 255
+    t.string   "objective_keys",     limit: 255
+    t.string   "desc_key",           limit: 255
+    t.string   "file_name",          limit: 255
+    t.string   "external_url",       limit: 255
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "overview_file_name", limit: 255
+    t.integer  "grade_level_id",     limit: 4
+    t.string   "human_name",         limit: 255
+  end
+
+  add_index "lesson_plans", ["grade_level_id"], name: "index_lesson_plans_on_grade_level_id", using: :btree
+  add_index "lesson_plans", ["theme_id"], name: "index_lesson_plans_on_theme_id", using: :btree
+
+  create_table "lesson_plans_lesson_plan_perks", force: :cascade do |t|
+    t.integer "lesson_plan_id",      limit: 4
+    t.integer "lesson_plan_perk_id", limit: 4
+  end
 
   create_table "licenses", force: :cascade do |t|
     t.string   "code",            limit: 255

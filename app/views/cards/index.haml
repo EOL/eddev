@@ -1,21 +1,71 @@
-= render "shared/intro_section", :header => "resources.cards.cards_hdr",
-  :paragraphs => ["resources.cards.intro_p"],
+= render "shared/intro_section", :header => "cards.index.cards_hdr",
+  :paragraphs => [{ :key => "cards.index.compare_and_learn_html",
+  :vars => { :how_to_use_id => "HowToUseIntro",
+  :lesson_plans_path => lesson_plans_path,
+  :contact_url => "http://eol.org/contact_us?subject=learning"}}],
   :hideable => false
-= render "shared/section_head", :title_key => "resources.cards.featured_decks"
+= render "shared/section_head", :title_key => "cards.index.featured_decks"
 %ul.featured-decks<
   = render "featured", :class_str => "first",
     :image_name => "bioblitz_common",
-    :desc_key => "bioblitz_common"
+    :desc_key => "bioblitz_common",
+    :color => "blue",
+    :file_name => "bioblitz"
   = render "featured", :class_str => "second",
     :image_name => "okaloosa_bio",
-    :desc_key => "okaloosa_bio"
+    :desc_key => "okaloosa_bio",
+    :color => "orange",
+    :file_name => "okaloosa_biodiversity"
   = render "featured", :class_str => "third",
-    :image_name => "new_england",
-    :desc_key => "ne_urban"
-  = render "featured", :class_str => "fourth",
-    :image_name => "earthwatch",
-    :desc_key => "earthwatch_cali_tree"
-= render "shared/section_head", :title_key => "resources.cards.all_decks"
+    :image_name => "ne_urban",
+    :desc_key => "ne_urban",
+    :color => "pink",
+    :file_name => "ne_urban"
+  = render "featured", :class_str => "fourth trait-card",
+    :image_name => "blank",
+    :desc_key => "blank_cards",
+    :color => "gray",
+    :file_name => "blank_species_card_packet"
+= render "shared/section_head", :title_key => "cards.index.all_decks"
 %ul.all-decks<
-  - all_decks.each_with_index do |deck, index|
+  - @all_decks.each_with_index do |deck, index|
     = render "deck", :deck => deck, :index => index
+
+= render "shared/section_head", :title_key => "cards.index.how_to_use", :id => "HowToUseIntro"
+.how-to-use
+  .how-to-content<
+    = render "how_to_section", :hdr_key => "build_food_chains",
+      :content_key => "explore_different_food",
+      :lp_key => "food_chains_rummy_html",
+      :lp_path => scroll_to_lesson_plan_path(@food_chains_rummy),
+      :additional_class => "first"
+    = render "how_to_section", :hdr_key => "explore_adaptations",
+      :content_key => "some_card_decks",
+      :lp_key => "go_adapt_html",
+      :lp_path => scroll_to_lesson_plan_path(@go_adapt),
+      :additional_class => "second"
+    = render "how_to_section", :hdr_key => "classify",
+      :content_key => "sort_cards",
+      :lp_key => "thats_classified_html",
+      :lp_path => scroll_to_lesson_plan_path(@thats_classified),
+      :additional_class => "third"
+    = render "how_to_section", :hdr_key => "create_your_own",
+      :content_key => "print_our_blank",
+      :lp_key => "create_a_creature_html",
+      :lp_path => scroll_to_lesson_plan_path(@create_a_creature),
+      :additional_class => "fourth"
+  .example-cards<
+    .example-card-wrap.first>
+      = image_tag "cards/example_newt.png", :class => "example-card"
+      .caption= t ".example_species_card"
+    .example-card-wrap.second>
+      = image_tag "cards/example_key.png", :class => "example-card"
+      .caption= t ".species_card_key"
+  .cards-idea-contact= t ".have_a_great_idea_html", :contact_url => "http://eol.org/contact_us?subject=learning"
+
+= render  "shared/image_credits",
+  :images => [{ :title => "Delta WSR",
+  :author => "Bob Wick, Bureau of Land Management",
+  :source => "Flickr",
+  :url => "https://www.flickr.com/photos/mypubliclands/16539119029/in/photolist-rcviSD-gAQJ3S-azeGX2-eiXKJR-rcuN6p-fUkiy9-qwX3Kb-fUkc4C-fkFwFq-qwXowW-rcorQL-HXmq9A-rrERX5-gAQPJw-aZGSwn-gAQwZE-fUjaKx-aZKTTi-aZKRT2-aZKSxv-fvDnDK-fJbNBL-fUk2Ri-nygUyK-H8q5HU-aZKT4i-fUjDQa-gARB7K-fvTDXW-fUjXQG-pfHaer-raCYXi-fHUgbD-raDceT-fHUeKD-fUkuvF-8d32Ja-rtXfQK-qwXXWb-rcvCir-rtR6mo-fJbTg9-rtS9ty-raCmsp-qwXWnj-fZw2vX-raDejK-qxag3H-rcoE2G-qxasMV",
+  :license => "CC-BY"}]

@@ -1,7 +1,4 @@
 %ul{:class => "icon-list-#{class_ext}"}
-  %li<>
-    %i{:class => ["icon", "icon-stats", ("active" if lesson[:icons].include? :stats)]}
-  %li<>  
-    %i{:class => ["icon", "icon-tree", ("active" if lesson[:icons].include? :tree)]}
-  %li<>
-    %i{:class => ["icon", "icon-card", ("active" if lesson[:icons].include? :card)]}
+  - @ordered_perks.each do |perk|
+    %li<>
+      %i{:class => ["icon", "icon-#{perk.icon_name}", ("active" if lesson.has_perk?(perk))]}

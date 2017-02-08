@@ -1,0 +1,4 @@
+%div{:class => ["how-to-section", (additional_class if local_assigns.has_key? :additional_class)]}>
+  %h2.how-to-hdr= t how_to_path(hdr_key)
+  %p.how-to-txt= t how_to_path(content_key)
+  %p.how-to-txt.lp-link= t how_to_path(lp_key), :lp_path => lp_path

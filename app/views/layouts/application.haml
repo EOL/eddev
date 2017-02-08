@@ -2,59 +2,39 @@
 %html{:lang => I18n.locale}
   %head
     %title EOL Learning + Education
-  
     %meta{:charset => "UTF-8"}
-    
-    = stylesheet_link_tag 'reset', :media => 'all'
+    %meta{:name => "viewport", :content => "width=device-width,initial-scale=1"}
 
-    %link{:rel => "stylesheet", :type => "text/css", :href => "//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"}
-    %link{:rel => "stylesheet", :type => "text/css", :href => "//cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css"}
-    %link{:rel => "stylesheet", :type => "text/css", :href => "https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"}
-
-    = stylesheet_link_tag 'lesson_plan_icons'
-    = stylesheet_link_tag 'application', :media => 'all'
+    = stylesheet_link_tag "reset", :media => "all"
+    = stylesheet_link_tag "//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css", :media => "all"
+    = stylesheet_link_tag "//cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css", :media => "all"
+    = stylesheet_link_tag "https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css", :media => "all"
+    = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700", :media => "all"
+    = stylesheet_link_tag "application", :media => "all"
 
     -if asset_exists? "#{params[:controller]}.css"
       = stylesheet_link_tag params[:controller], :media => 'all'
-    = javascript_include_tag 'application'
+
+    = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"
+    = javascript_include_tag "//cdn.jsdelivr.net/jquery.ui/1.11.4/jquery-ui.min.js"
+    = javascript_include_tag "//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"
+    = javascript_include_tag "application"
 
     -if asset_exists? "#{params[:controller]}.js"
       = javascript_include_tag params[:controller]
-
-    =javascript_include_tag "card_templates/trait.js"
-    %script{:src => "https://d3js.org/d3.v3.js", :charset => "utf-8"}
-    %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"}
-    %script{:type => "text/javascript", :src => "//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"}
-    %script{:type => "text/javascript", :src => "https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"}
-    :javascript
-      WebFont.load({
-        google: {
-          families: ['Open Sans:n3,n4,n6,n7,i3,i4,i6,i7']
-        },
-        active: function() {
-          $.each(window.fontsLoadedCallbacks, function(i, fn) {
-          console.log(fn);
-            fn();
-          });
-        }
-      });
-
+      
     = favicon_link_tag
     = csrf_meta_tags
-    %meta{:name => "viewport", :content => "width=device-width,initial-scale=1"}
   %body
-    - if Rails.env.production?
+    - if Rails.env.production? && Rails.application.config.x.enable_ga
       :javascript
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-        ga('create', 'UA-12027654-2', 'auto');
+        ga('create', 'UA-36394558-1', 'auto');
         ga('send', 'pageview');
-
-    -#= render partial: "shared/draft_header"
-    -#  <%= render partial: "shared/header" %>
 
     #Page
       = render "shared/header"

@@ -15,7 +15,40 @@ $deck-title-color: #262626;
   cursor: pointer;
   display: inline-block;
   margin: percentage($featured-card-t-margin / $main-col-width) percentage($featured-card-h-margin / $main-col-width) 0 0;
+  position: relative;
   width: percentage($featured-card-width / $main-col-width);
+
+  .download-button {
+    &.blue {
+      background: rgb(0, 138, 177);
+    }
+
+    &.orange {
+      background: rgb(207, 104, 26);
+    }
+
+    &.pink {
+      background: rgb(188, 58, 81);
+    }
+
+    &.gray {
+      background: rgb(234, 234, 234);
+      color: #333;
+    }
+
+    bottom: percentage(10 / $featured-card-height);
+    color: #fff;
+    display: none;
+    font-size: 32px;
+    line-height: 32px;
+    height: percentage(48 / $featured-card-height);
+    left: percentage(10 / $featured-card-width);
+    padding-top: percentage(9 / $featured-card-width);
+    position: absolute;
+    text-align: center;
+    width: percentage(205 / $featured-card-width);
+    z-index: 2;
+  }
 
   &.fourth {
     margin-right: 0;
@@ -36,6 +69,19 @@ $deck-title-color: #262626;
       top: 13.4%;
       width: 100%;
     }
+
+    &.trait-card {
+      &:hover, &.hover {
+        .overlay {
+          height: percentage(196 / $featured-card-height);
+          top: 16.2%;
+        }
+      }
+    }
+
+    .download-button {
+      display: block;
+    }
   }
 }
 
@@ -45,18 +91,22 @@ $deck-title-color: #262626;
   width: 100%;
 }
 
+.all-decks {
+  @include clearfix;
+}
+
 $deck-width: 403;
 $deck-img-width: 150;
 $deck-img-height: 205;
 $deck-info-width: 238;
 $deck-img-margin: 15;
 .deck {
-  display: inline-block;
+  display: block;
   margin-top: 9px;
   width: $deck-width * 1px;
 
   &.odd {
-//    float: left;
+    float: left;
   }
 
   &.even {
@@ -134,12 +184,86 @@ $deck-img-margin: 15;
     font-size: 14px;
     font-weight: $semibold;
   }
-
 }
+
+.how-to-use {
+  .how-to-section {
+    color: $section-intro-gray;
+    display: inline-block;
+    margin-top: 38px;
+    margin-right: percentage(15 / $main-col-width);
+    vertical-align: top;
+    width: percentage(223.5 / $main-col-width);
+
+    &.fourth {
+      margin-right: 0;
+    }
+
+    .how-to-hdr {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .how-to-txt {
+      font-size: 14px;
+    }
+
+    .lp-link {
+      margin-top: 15px;
+    }
+  }
+
+  .example-cards {
+    $card-width: 295px;
+    $inner-spacing: 32px;
+    $card-margin: $inner-spacing / 2;
+
+    display: block;
+    margin: 30px auto 0 auto;
+    width: $card-width * 2 + $inner-spacing;
+
+    .example-card-wrap {
+      display: inline-block;
+      width: $card-width;
+
+      &.first {
+        margin-right: $card-margin;
+      }
+
+      &.second {
+        margin-left: $card-margin;
+      }
+
+      .example-card {
+        width: 100%;
+      }
+
+      .caption {
+        font-size: 10px;
+        text-align: right; 
+      }
+    }
+  }
+
+  .cards-idea-contact {
+    border: solid 0.5px #797979;
+    border-radius: 8px;
+    font-size: 12px;
+    margin: 32px auto 0 auto;
+    padding: 18px 40px;
+    text-align: center;
+    width: 622px;
+
+    a {
+      @include standard-link;
+    }
+  }
+}
+
 
 $one-col-deck-width: 850;
 @media screen and (max-width: $one-col-deck-width * 1px) {
-  .deck.even {
+  .deck {
     float: none;
   }
 
@@ -163,9 +287,33 @@ $one-col-deck-width: 850;
   }
 }
 
+@media screen and (max-width: 780px) {
+  .how-to-use {
+    .how-to-content {
+      .how-to-section {
+        margin-right: percentage(20 / 780);
+        width: percentage(((780 - 20) / 2) / 780);
+
+        &.second, &.fourth {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 775px) {
   .featured-deck-wrap .overlay {
     font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 740px) {
+  .featured-deck {
+    .download-button {
+      font-size: 26px;
+      line-height: 26px;
+    }
   }
 }
 
@@ -189,6 +337,32 @@ $featured-trans-width: 642;
       font-size: 9px;
     }
   }
+
+  .how-to-use {
+    .example-cards {
+      $card-width: 218px;
+      $inner-spacing: 16px;
+      $card-margin: $inner-spacing / 2;
+
+      width: $card-width * 2 + $inner-spacing;
+
+      .example-card-wrap {
+        width: $card-width;
+
+        &.first {
+          margin-right: $card-margin;
+        }
+
+        &.second {
+          margin-left: $card-margin;
+        }
+      }
+    }
+
+    .cards-idea-contact {
+      width: 100%;
+    }
+  }
 }
 
 @media screen and (max-width: $head-trans-width * 1px) {
@@ -207,9 +381,31 @@ $featured-trans-width: 642;
   .deck-desc {
     font-size: 12px;
   }
-
-  .featured-deck-wrap .overlay {
-//    font-size: 10px;
-  }
 }
 
+@media screen and (max-width: 465px) {
+  .how-to-use {
+    .how-to-content {
+      .how-to-section {
+        padding: 0;
+        width: 100%;
+      }
+    }
+
+    .example-cards {
+      width: 100%;
+
+      .example-card-wrap {
+        display: block;
+
+        &.first {
+          margin: 0 auto;
+        }
+
+        &.second {
+          margin: 23px auto 0 auto;
+        }
+      }
+    }
+  }
+}

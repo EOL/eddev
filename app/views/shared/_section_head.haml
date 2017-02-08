@@ -1,3 +1,3 @@
-%div{:class => ["section-head", ("section-head-top" if local_assigns[:top])]}
+%div{:class => ["section-head", ("section-head-top" if local_assigns[:top])], :id => (id if local_assigns[:id])}
   %h2.section-title
     = t title_key

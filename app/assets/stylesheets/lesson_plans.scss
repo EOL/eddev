@@ -15,15 +15,15 @@ $lesson-plan-icon-size-sm: 113px;
 $icon-dark-gray: #515151;
 $lesson-plan-border-color: #aaaaaa;
 
-.grade-level-1 {
+.grade-level-0 {
   background: $grade-level-green;
 }
 
-.grade-level-2 {
+.grade-level-1 {
   background: $grade-level-red;
 }
 
-.grade-level-3 {
+.grade-level-2 {
   background: $grade-level-purple;
 }
 
@@ -89,6 +89,7 @@ $lesson-plan-border-color: #aaaaaa;
 
 .grade-level-bar {
   color: $white;
+  cursor: pointer;
   font-size: 18px;
   font-weight: $bold;
   height: 34px;
@@ -97,10 +98,16 @@ $lesson-plan-border-color: #aaaaaa;
   text-align: center;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 
-  .fa-chevron-down {
+  .chevron {
     position: absolute;
     right: 10px;
     top: 8px;
+  }
+
+  &.fixed {
+    position: fixed;
+    top: 0; 
+    z-index:100;
   }
 }
 
@@ -108,10 +115,6 @@ $lesson-plan-border-color: #aaaaaa;
   .grade-level {
     clear: both;
     margin-top: 10px;
-  }
-
-  .grade-level-bar {
-    cursor: pointer;
   }
 }
 
@@ -331,7 +334,7 @@ $subject-key-block-width: 600px;
     margin-top: 2px;
   }
 
-  .grade-level-1 {
+  .grade-level-0 {
     margin-top: 0;
   }
 }
@@ -411,7 +414,7 @@ $subject-key-block-width: 600px;
   }
 }
 
-@media screen and (max-width: 962px) {
+@media screen and (max-width: 978px) {
   .subject-key-block, .icon-key-block {
     width: 100%;
   }

@@ -3,13 +3,20 @@ class LessonPlansController < ApplicationController
 
   def index
     @hero_image_partial = 'lesson_plans/hero'
-  end
+    @grade_levels = LessonPlanGradeLevel.all
 
-  def pdf
-    @pdf_name = params[:pdf_name]
+    @ordered_themes = [
+      LessonPlanTheme.find_by_human_name(:classification),
+      LessonPlanTheme.find_by_human_name(:science_skills),
+      LessonPlanTheme.find_by_human_name(:human_impact),
+      LessonPlanTheme.find_by_human_name(:adaptations),
+      LessonPlanTheme.find_by_human_name(:energy_flow),
+    ]
 
-    send_file(File.join(PDFS_PATH, "#{@pdf_name}.pdf"),
-      :type => "application/pdf",
-      :disposition => "inline")
+    @ordered_perks = [
+      LessonPlanPerk.find_by_human_name(:bio_stats),
+      LessonPlanPerk.find_by_human_name(:field_work),
+      LessonPlanPerk.find_by_human_name(:species_cards),
+    ]
   end
 end

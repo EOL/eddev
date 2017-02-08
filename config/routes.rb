@@ -3,9 +3,11 @@ Rails.application.routes.draw do
   root 'welcome#index'
   get  'about'        => 'welcome#about',      :as => :about
   get  'species_cards'        => 'cards#index',        :as => :cards
-  get  'cards/new'         => 'cards#new',          :as => :new_card
   get  'lesson_plans' => 'lesson_plans#index', :as => :lesson_plans
 
+  if Rails.env.development?
+    get  'cards/new'         => 'cards#new',          :as => :new_card
+  end
 
 
 #  scope '(:locale)', locale: /#{I18n.available_locales.join('|')}/ do
@@ -49,16 +51,6 @@ Rails.application.routes.draw do
 #
 #  resources :users, :only => [:new, :create]
 
-#  get  "users/confirm/:token"             => "users#confirm", :as => :users_confirm
-#  get  "users/forgot_password"            => "users#forgot_password", :as => :forgot_password
-#  post "users/forgot_password"            => "users#mail_password_reset_token"
-#  get  "users/reset_password/:token"      => "users#reset_password_form", :as => :reset_password_form
-#  patch "users/reset_password/:token"     => "users#reset_password"
-#  get "users/change_password"             => "users#change_password_form"
-#  patch "users/change_password"           => "users#change_password"
-#  get  "login"                            => "user_sessions#new"
-#  post "login"                            => "user_sessions#create"
-#  get  "logout"                           => "user_sessions#destroy"
 
 
   # Example of named route that can be invoked with purchase_url(id: product.id)

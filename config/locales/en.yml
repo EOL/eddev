@@ -22,7 +22,7 @@
 en:
   language: English
 
-  shared:
+  shared: 
     footer:
       mcz_credit_header: "EOL Learning + Education is generously supported by:"
       mcz_logo_alt: "Museum of Comparative Zoology, Harvard University"
@@ -35,7 +35,7 @@ en:
         eol: "Encyclopedia of Life"
       about_us: "ABOUT US"
       about: "About"
-    image_credits:
+    image_credits: 
       header: "Image Credits"
       eol_promotes_html: "EOL promotes content sharing via Creative Commons and other open licenses. Learn more about <a href='http://eol.org/info/eol_licensing_policy'>EOL's Licensing Policy</a>."
       credit_html: "<span class='%{title_class}'>%{title}</span> by %{author} via <a href='%{url}'>%{source}</a> %{license}"
@@ -54,7 +54,7 @@ en:
         biodiv_articles: "Biodiversity Articles"
         featured_collections: "Featured Collections"
         eol_places: "EOL Places"
-        lesson_plans: "Lesson Plans"
+        lesson_plans: "Lesson Plans" 
       desc:
         eol_places: "Visit Places to learn about environments and the species that live there. Explore biodiversity through food webs, species cards, statistics, lessons and more."
         memory_games: "Use this classic memory game as a warm-up activity for your students, or just play it yourself!"
@@ -69,7 +69,7 @@ en:
         coloring_books: "The Biodiversity Heritage Library (BHL) provides the foundational literature to EOL, including original descriptions and beautiful illustrations."
     index:
       slides:
-        titles:
+        titles: 
           podcast: "Podcast"
           biodiv_article: "Biodiversity Article"
           species_cards: "Species Cards"
@@ -99,7 +99,7 @@ en:
         partner_resources_title: "Partner Resources"
         partner_resources_desc: "EOL and EOL L+E work closely with many open science and open education partners to extend the possibilities for learning about biodiversity. Here are two that we find enormously useful and enjoyable."
 
-
+          
     about_hero:
       butterflies_alt: "Students catching butterflies"
     about:
@@ -109,7 +109,7 @@ en:
       if_you_are_interested_in_collaborating_html: "If you are interested in collaborating or have ideas for how we can improve our materials, please <a href='%{contact_url}'>contact us</a>."
       meet_the_team: "Meet the Team"
       le_is_located_html: "EOL <a href='%{eol_groups_url}'>working groups and partners</a> are found all over the world. The Learning + Education group is located at the <a href='%{mcz_url}'>Harvard Museum of Comparative Zoology</a> in Cambridge, Massachusetts, USA."
-      accounts:
+      accounts: 
         sign_in_header: "SIGN IN"
         new_account_header: "NEW ACCOUNT"
         username_label: "Username"
@@ -117,7 +117,7 @@ en:
         create_new_account: "Create New Account"
         signup_success_msg: "Please check your email for instructions on how to activate your account."
         signup_failure_msg: "Please correct the above errors and try again."
-    bio:
+    bio: 
       name_and_title_html: "%{name}, <span class=\"%{title_class}\">%{title}</span>"
       tracy_name: "Tracy Barbaro"
       project_coordinator: "Project Coordinator"
@@ -136,7 +136,7 @@ en:
     publish_label: "Publish draft"
     publish_confirm: "Are you sure you want to publish this draft? It will immediately replace the current public version of this page."
   cards:
-    index:
+    index: 
       cards_hdr: "Species Cards"
       compare_and_learn_html: "Compare and learn facts and figures about organisms with EOL Species Cards. Students can collect cards or play games to learn about classification and adaptations. Decks have been made for specific locations, projects or taxonomic groups. View cards online or download to print. <a href='#%{how_to_use_id}'>See below</a> to find ideas for games and <a href='%{lesson_plans_path}'>lesson plan</a> activities using Species Cards. <a href='%{contact_url}'>Let us know</a> what kinds of species cards you'd like to see on EOL!"
       featured_decks: "Featured Decks"
@@ -145,7 +145,7 @@ en:
       example_species_card: "Example species card"
       species_card_key: "Species card key"
       have_a_great_idea_html: "Have a great idea for cards? <a href='%{contact_url}'>Share your experiences and feedback with us</a>!"
-      how_to:
+      how_to: 
         build_food_chains: "Build Food Chains"
         explore_different_food: "Explore different food web roles: primary producers, consumers (herbivore, omnivore, carnivore, apex predator, scavenger), decomposers/detritivores. Have students read about energy sources on cards and from other sources, and use the information to build food chains, and overlapping food chains to build food webs."
         food_chains_rummy_html: "See: <a href='%{lp_path}'>Food Chains Rummy (grades 2-5, 6-8, 9-12): Build food chains and webs with a deck of cards</a>"
@@ -166,7 +166,7 @@ en:
       blank_cards: "Make your own cards! Print these blank cards and create your own based on observations, EOL species pages, or even a species from your imagination."
     deck_descriptions:
   lesson_plans:
-    index:
+    index: 
       intro_hdr: "Lesson Plans"
       intro_p_html: "Lesson plans are divided into three grade and age ranges, with five themes. Some lesson plans have one or more learning perks including the use of our free <a href=\"%{cards_path}\">Species Cards</a>. Lesson plans are created by EOL and partners."
       featured_lesson_plans: "Featured Lesson Plans"
@@ -192,7 +192,7 @@ en:
       animal_classification: "Animal Classification"
       plant_classification: "Plant Classification"
       thats_classified: "That's Classified"
-    descriptions:
+    descriptions: 
   user_sessions:
     new:
       sign_in: "Sign In"
@@ -220,7 +220,7 @@ en:
       header: "Change Password"
     reset_password:
       success: "Password successfully changed. You may now sign in below."
-    change_password:
+    change_password: 
       success: "Password successfully changed."
 
   signup_confirmation_mailer:
@@ -230,12 +230,12 @@ en:
 
   forgot_password_mailer:
     forgot_password_email:
-      subject: "Reset your EOL L&E password"
+      subject: "Reset your EOL L&E password" 
       body_html: "Hi, %{user_name}. Please click the following link to change your password: <a href=\"%{url}\">%{url}</a>"
 
   models:
-    deck:
-      titles:
+    deck: 
+      titles: 
         aquatic: "Aquatic Insects"
         bioblitz: "BioBlitz"
         boston_harbor: "Boston Harbor"
@@ -285,7 +285,7 @@ en:
         okaloosa_sea_turtles: "This deck contains the ranges, nesting habitats, and conservation information for the 7 sea turtle species of the world. All  are vulnerable or endangered."
         okaloosa_urban: "This deck covers 36 species that thrive in urban habitats of the Florida panhandle. It includes geographic ranges of native and introduced species."
     lesson_plan_perk:
-      names:
+      names: 
         bio_stats: "Biological statistics"
         field_work: "Field work"
         species_cards: "Species cards"
@@ -302,8 +302,8 @@ en:
         grades_6_8: "Grades 6–8 (Ages 11–13)"
         grades_9_12: "Grades 9–12 (Ages 14–17)"
     lesson_plan:
-      names:
-        classification_1: "Classification Activity 1: What is Classification?"
+      names: 
+        classification_1: "Classification Activity 1: What is Classification?" 
         classification_2: "Classification Activity 2: Animal Classification"
         plant_classification: "Classification Activity 3: Plant Classification"
         thats_classified: "Classification Activity 4: That's Classified!"
@@ -338,7 +338,7 @@ en:
         crayfish_commerce: "Human Impacts: Crayfish and Commerce"
         dolphins_bycatch: "Human Impacts: Dolphins and Bycatch"
         ocean_acidification: "Human Impacts: Ocean Acidification"
-      descriptions:
+      descriptions: 
         what_is_classification_html: "Students explore the importance and process of classification. Students apply the concept of biological classification to a real hierarchy of birds, analyzing bird photos and organizing them into groups based on physical characteristics. <a href=\"%{guide_path}\" download>Download Educator Guide</a> for this unit."
         students_use_eol_species_html: "Students use EOL Species Cards to sort and make observations of animals, then use the RAFT writing strategy to create short presentations about the characteristics of each major group of animals.  <a href=\"%{guide_path}\" download>Download Educator Guide</a> for this unit."
         after_learning_flowering_html: "After learning about and observing the differences between flowering and nonflowering plants, students go outside and search for plants in schoolyard, keeping notes and drawings of their observations. <a href=\"%{guide_path}\" download>Download Educator Guide</a> for this unit."
@@ -359,13 +359,13 @@ en:
         classify_themselves_html: "Students classify themselves into different groups based on observable characteristics of clothing and accessories, then apply to biological classification systems. <a href=\"%{guide_path}\" download>Download Educator Guide</a> for this unit."
         observations_dichotomous_html: "Students make observations of animals and use a dichotomous key, a common field identification tool, to classify and identify animals based on physical characteristics. Students then design their own dichotomous keys for various objects. <a href=\"%{guide_path}\" download>Download Educator Guide</a> for this unit."
         investigate_analyze_biodiversity: "Students investigate and analyze local biodiversity using iNaturalist observations. They collaborate in small groups to explore observations and identification of various taxon groups. Then students create a class graph of data and draw inferences about biodiversity, invasive species, and endangered species in their local park. This National Geographic Education activity was developed for the 2016 National Parks Service Centennial bioblitzes, but can be adapted for any iNaturalist project or region."
-        model_complex_system_html: "Students model how a complex system operates and how some parts of a complex system have more leverage or influence on the rest of the system. Students relate this to the interconnectedness of food webs. <a href=\"%{guide_path}\" download>Download Educator Guide</a> for this unit."
+        model_complex_system_html: "Students model how a complex system operates and how some parts of a complex system have more leverage or influence on the rest of the system. Students relate this to the interconnectedness of food webs. <a href=\"%{guide_path}\" download>Download Educator Guide</a> for this unit." 
         practice_chains_webs_html: "Students practice building food chains and webs, explore interrelationships in the EOL Food Webs Tool, then model the flow of energy in food webs. <a href=\"%{guide_path}\" download>Download Educator Guide</a> for this unit."
         explore_inat_data: "Students explore iNaturalist data and use data to design and carry out investigations in small groups about biodiversity at local, regional, and global scales. After synthesizing information, students present findings to the class."
         podcast_whale_communication_html: "Students will listen to a podcast that discusses an experiment designed to learn how male and female right whales find each other during mating season. The podcast is accompanied by discussion questions and a graphic organizer.  This activity was designed by <a href=\"https://listenwise.com\">Listenwise</a>."
         simulation_hibernation_html: "In this simulation activity, students search for hibernation sites that will protect gelatin \"animals\" from freezing. This activity was designed by <a href=\"http://www.outdoorbiology.com/\">Outdoor Biology Instructional Strategies at the Lawrence Hall of Science</a> and accompanied by an <a href=\"http://eol.org/collections/113497\">EOL Collection</a> and <a href=\"http://tinyurl.com/k7c6kmv\">memory game</a>."
-        invent_imaginary_animal_html: "Students invent an imaginary animal that blends into its habitat. This activity was designed by <a href=\"http://www.outdoorbiology.com/\">Outdoor Biology Instructional Strategies at the Lawrence Hall of Science</a> and accompanied by an <a href=\"http://eol.org/collections/113842\">EOL Collection</a> and <a href=\"http://tinyurl.com/zr8ebts\">memory game</a>."
-        podcast_climate_coral_html: "Students listen to a podcast that examines the effect of climate change on coral reef ecosystems.   This activity was designed by <a href=\"https://listenwise.com\">Listenwise</a>."
+        invent_imaginary_animal_html: "Students invent an imaginary animal that blends into its habitat. This activity was designed by <a href=\"http://www.outdoorbiology.com/\">Outdoor Biology Instructional Strategies at the Lawrence Hall of Science</a> and accompanied by an <a href=\"http://eol.org/collections/113842\">EOL Collection</a> and <a href=\"http://tinyurl.com/zr8ebts\">memory game</a>." 
+        podcast_climate_coral_html: "Students listen to a podcast that examines the effect of climate change on coral reef ecosystems.   This activity was designed by <a href=\"https://listenwise.com\">Listenwise</a>." 
         podcast_business_crawfish_html: "Students listen to a podcast that examines how both biology and business helped crawfish circumnavigate the globe.  This activity was designed by <a href=\"http://nationalgeographic.org/education\">National Geographic</a>."
         podcast_ocean_acidification_html: "Students listen to a podcast that discusses how marine food webs are affected by ocean acidification. This activity was designed by <a href=\"http://nationalgeographic.org/education\">National Geographic</a>."
         podcast_dolphins_tuna_html: "Students listen to a podcast that examines how dolphin populations are impacted by tuna fishing. This activity was designed by <a href=\"https://listenwise.com\">Listenwise</a>."
@@ -395,7 +395,7 @@ en:
         observe_beaks_infer_html: "Students will <strong>observe</strong> bird beaks and <strong>infer</strong> their functions"
         understand_actions_behaviors_html: "Students will <strong>understand</strong> that behavioral adaptations are actions/behaviors that allow animals thrive in their environments"
         visualize_purpose_migration_html: "Students will <strong>visualize</strong> the purpose and challenges of migration"
-        identify_behavioral_physical_html: "Students will <strong>identify</strong> behavioral and physical adaptations for plants, animals, fungi, and other organisms"
+        identify_behavioral_physical_html: "Students will <strong>identify</strong> behavioral and physical adaptations for plants, animals, fungi, and other organisms" 
         classify_organisms_adaptations_html: "Students will <strong>classify</strong> organisms into groups based on adaptations and traits"
         compare_contrast_adaptations_html: "Students will <strong>compare</strong>, <strong>contrast</strong>, and <strong>discuss</strong> the adaptation traits of different organisms"
         interpret_explain_adaptations_html: "Students will <strong>interpret</strong> and <strong>explain</strong> their sets of adaptations, classification, and energy flow"
@@ -442,13 +442,13 @@ en:
         blank: "can't be blank"
         taken: "is already taken"
       models:
-        user:
+        user: 
           attributes:
             user_name:
               invalid: "may only contain letters, numbers, and the characters '.', '@', and '_'."
             password_confirmation:
               confirmation: "doesn't match password"
-            password:
+            password: 
               too_short: "too short (minimum %{count} characters)"
     models:
       user: "User"
@@ -459,3 +459,4 @@ en:
         full_name: "Full name"
         password: "Password"
         password_confirmation: "Password confirmation"
+        

@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
 #  scope '(:locale)', locale: /#{I18n.available_locales.join('|')}/ do
 #    resources :users
-#  
+#
 #    resources :places do
 #      resources :habitats
 #      get  'habitats/:id/langs_with_content'   => 'habitats#langs_with_content', as: :habitat_langs_with_content
@@ -47,18 +47,18 @@ Rails.application.routes.draw do
 #
 #  post 'editor_content/publish_draft'       => 'editor_content#publish_draft'
 #
-  resources :users, :only => [:new, :create]
+#  resources :users, :only => [:new, :create]
 
-  get  "users/confirm/:token"             => "users#confirm", :as => :users_confirm
-  get  "users/forgot_password"            => "users#forgot_password", :as => :forgot_password
-  post "users/forgot_password"            => "users#mail_password_reset_token"
-  get  "users/reset_password/:token"      => "users#reset_password_form", :as => :reset_password_form
-  patch "users/reset_password/:token"     => "users#reset_password"
-  get "users/change_password"             => "users#change_password_form"
-  patch "users/change_password"           => "users#change_password"
-  get  "login"                            => "user_sessions#new"
-  post "login"                            => "user_sessions#create"
-  get  "logout"                           => "user_sessions#destroy"
+#  get  "users/confirm/:token"             => "users#confirm", :as => :users_confirm
+#  get  "users/forgot_password"            => "users#forgot_password", :as => :forgot_password
+#  post "users/forgot_password"            => "users#mail_password_reset_token"
+#  get  "users/reset_password/:token"      => "users#reset_password_form", :as => :reset_password_form
+#  patch "users/reset_password/:token"     => "users#reset_password"
+#  get "users/change_password"             => "users#change_password_form"
+#  patch "users/change_password"           => "users#change_password"
+#  get  "login"                            => "user_sessions#new"
+#  post "login"                            => "user_sessions#create"
+#  get  "logout"                           => "user_sessions#destroy"
 
 
   # Example of named route that can be invoked with purchase_url(id: product.id)

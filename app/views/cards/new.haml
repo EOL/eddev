@@ -1,9 +1,25 @@
-%h1{:class => "new-card-hdr"} Card Generator Test Page
+%script#TextInputTemplate{:type => "text/x-handlebars-template"}
+  .fields
+    %label{:for => "{{id}}"} {{label}}:
+    %input.text-input{:id => "{{id}}"}
+
+%script#ImageInputTemplate{:type => "text/x-handlebars-template"}
+  .fields.image-input{:id => "{{id}}"}
+    %label{:for => "{{id}}"} {{label}}:
+    .img-selector
+      = image_tag "leatherback1.jpg", :class => "thumb", :id => "Leatherback1"
+      = image_tag "leatherback2.jpg", :class => "thumb", :id => "Leatherback2"
+    .image-upload
+      .upload-preview
+      %input.image-upload-input{:type => "file"}
+
+%h1.new-card-hdr Card Generator Test Page
 
 .card-generator
-  .controls#GeneratorControls
-  %canvas.canvas#Canvas
+  .left-col
+    .controls#GeneratorControls
+    %i.fa.fa-floppy-o.fa-3x.save-btn#SaveBtn{:'aria-hidden' => "true"}
 
-.img-selector.hidden#ImgSelector
-  = image_tag "leatherback1.jpg", :id => "Leatherback1"
-  = image_tag "leatherback2.jpg", :id => "Leatherback2"
+  .right-col
+    %h2.preview-hdr Browser preview:
+    %canvas.canvas#Canvas

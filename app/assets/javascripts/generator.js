@@ -1,61 +1,67 @@
-var template = window.Trait;
-
-window.CardGenerator = {};
-
 $(function() {
-  var exports = window.CardGenerator;
-  var data = {};
+  var data = {}; // Hold card data used to render template
+  var cardId = null; // Card service id for card - populated after first save
+  var template = window.Trait;
+  var serviceUrl = "http://localhost:8080";
+
+  // Handlebars templates for building UI inputs
+  var textInputTemplate = Handlebars.compile($('#TextInputTemplate').html());
+  var imageInputTemplate = Handlebars.compile($('#ImageInputTemplate').html());
 
   var $canvas = $('#Canvas'),
       canvas = $canvas[0],
       ctx = canvas.getContext('2d'),
       $inputs = $('#GeneratorControls');
 
-
-  function dumpData() {
-    console.log(JSON.stringify(data));
-  }
-  exports.dumpData = dumpData;
-
   // Construct UI inputs
   function buildInputs() {
     var fields  = template.getFields();
 
     $.each(fields, function(i, field) {
-      var $label = $('<label for="' + field.id + '">' + field.label + ': </label>')
-        , $wrapper = $('<div class="fields"></div>');
-
       if (field.type === "text") {
-        var $field = $('<input type="text" class="text-input" id="' + field.id + '"/>');
+        var $partial = $(textInputTemplate({
+          id: field.id,
+          label: field.label
+        }))
+          , $field = $partial.find('input');
 
         $field.keyup(redraw);
-
-        $wrapper.append($label);
-        $wrapper.append($field);
-        $inputs.append($wrapper);
+        $inputs.append($partial);
       } else if (field.type === "image") {
-        var $field = $('<input type="hidden" class="image-input" id="' + field.id + '"/>')
-          , $selector = $('#ImgSelector').clone();
+        var $partial = $(imageInputTemplate({
+          id: field.id,
+          label: field.label
+        }))
+          , $selector = $partial.find('.img-selector')
+          , $field = $partial.find('.image-input')
+          , $fileInput = $partial.find('.image-upload-input')
+          , $previewContainer = $partial.find('.upload-preview');
 
-        $selector.attr('id', null);
-        $selector.removeClass('hidden');
+        var thumbClicked = function() {
+          $partial.find('.thumb').removeClass('selected');
+          $(this).addClass('selected');
+          $field.val($(this).attr('id'));
+          redraw();
+        }
 
-        $selector.find('img').each(function(i, img) {
-          var $img = $(img);
 
-          $img.click(function() {
-            $selector.find('img').removeClass('selected');
-            $(this).addClass('selected');
-            $field.val($(this).attr('id'));
-            redraw();
-          });
+        $fileInput.change(function() {
+          $previewContainer.empty();
+
+          if (this.files.length) {
+            var fileReader = new FileReader();
+            fileReader.readAsDataURL(this.files[0]);
+
+            fileReader.onload = function(e) {
+              var $thumb = $('<img class="thumb" src="' + e.target.result + '">');
+              $thumb.click(thumbClicked);
+              $previewContainer.append($thumb);
+            }
+          }
         });
 
-        $wrapper.append($label);
-        $wrapper.append($selector);
-        $wrapper.append($field);
-
-        $inputs.append($wrapper);
+        $selector.find('.thumb').click(thumbClicked);
+        $inputs.append($partial);
       } else {
         console.log('unable to construct field: ' + JSON.stringify(field));
       }
@@ -69,67 +75,105 @@ $(function() {
     });
 
     $inputs.find('.image-input').each(function(i, input) {
-      var $input = $(input);
-      data[$input.attr('id')] = {
-        image: $('#' + $input.val())[0],
-        sx: 0,
-        sy: 0,
-        sWidth: 500
-      };
+      var $input = $(input)
+        , id = $input.attr('id')
+        , imgData = data[id]
+        , $imgElem = $input.find('.thumb.selected');
+
+      if ($imgElem) {
+        if (imgData) {
+          imgData['image'] = $imgElem[0];
+        } else {
+          data[$input.attr('id')] = {
+            image: $imgElem[0],
+            sx: 0,
+            sy: 0,
+            sWidth: 500
+          };
+        }
+      }
     });
 
     template.draw(canvas, data);
   }
 
-  buildInputs();
+  function save() {
+    var requestData = $.extend(true, {}, data),
+        dataToSend = {};
 
-  ctx.canvas.width = template.width();
-  ctx.canvas.height = template.height();
-/*
-  var $canvas = $('#Canvas'),
-      canvas = $canvas[0],
-      ctx = canvas.getContext('2d'),
-      leatherbackImg = $('#LeatherbackPhoto')[0];
+    var imageFields = $.grep(template.getFields(), function(elem, i) {
+      return elem['type'] === 'image';
+    });
 
-  data = {
-    'commonName': 'Leatherback Sea Turtle',
-    'sciName': 'Dermocheyls coriacea',
-    'mainPhoto': {
-      'image': leatherbackImg,
-      'sx': 0,
-      'sy': 0,
-      'sWidth': 500
-    }
-  };
-  */
+    dereferenceImages(imageFields, requestData, function() {
+      dataToSend = JSON.stringify({
+        'template': 'trait',
+        'content': requestData
+      })
 
-  var dragState = false;
-
-  ctx.canvas.width = template.width();
-  ctx.canvas.height = template.height();
-
-  template.draw(canvas, data);
-
-  $canvas.mousedown(function(e) {
-    var mouseX = e.pageX - this.offsetLeft;
-    var mouseY = e.pageY - this.offsetTop;
-
-
-    $.each(template.moveable(), function(i, item) {
-      if (mouseX >= item['topLeft']['x'] &&
-          mouseX <= item['bottomRight']['x'] &&
-          mouseY >= item['topLeft']['y'] &&
-          mouseY <= item['bottomRight']['y']) {
-        dragState = {
-          'x': mouseX,
-          'y': mouseY,
-          'item': item['name']
-        };
-
-        return false;
+      if (!cardId) {
+        console.log('no card id');
+        $.ajax({
+          url: 'http://localhost:8080/cards',
+          method: 'POST',
+          data: dataToSend,
+          contentType: 'application/json',
+          success: function(data) {
+            cardId = data['id'];
+            window.open(serviceUrl + '/generate/' + cardId);
+          }
+        });
+      } else {
+        console.log('patching card id ' + cardId);
+        $.ajax({
+          url: serviceUrl + 'cards/' + cardId,
+          method: 'PATCH',
+          data: dataToSend,
+          contentType: 'application/json',
+          success: function(data) {
+            window.open(serviceUrl + '/generate/' + cardId);
+          }
+        })
       }
     });
-  });
+  }
+
+  function dereferenceImages(imageFields, requestData, callback) {
+    if (imageFields.length === 0) {
+      return callback();
+    }
+
+    var field = imageFields.pop()
+      , fieldData = requestData[field['id']]
+      , imgSrc = null;
+
+    if (fieldData) {
+      imgSrc = fieldData['image']['src'];
+
+      if (imgSrc.startsWith('data')) {
+        var origFile = $('#' + field['id'] + ' .image-upload-input')[0].files[0];
+        var formData = new FormData();
+        formData.append('image', origFile);
+
+        $.ajax({
+          url: serviceUrl + '/images',
+          method: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(data) {
+            console.log(data);
+            fieldData['imageId'] = data['id'];
+            return dereferenceImages(imageFields, requestData, callback);
+          }
+        });
+      } else {
+        fieldData['url'] = fieldData['image']['src'];
+        delete fieldData['image'];
+        return dereferenceImages(imageFields, requestData, callback);
+      }
+    }
+  }
 
   function updateDrag(e) {
     if (!dragState) {
@@ -151,8 +195,43 @@ $(function() {
     template.draw(canvas, data);
   }
 
+
+
+  buildInputs();
+  $('#SaveBtn').click(save);
+
+  var dragState = false;
+
+  ctx.canvas.width = template.width();
+  ctx.canvas.height = template.height();
+
+  // Image panning
+  $canvas.mousedown(function(e) {
+    var mouseX = e.pageX - this.offsetLeft;
+    var mouseY = e.pageY - this.offsetTop;
+
+
+    $.each(template.moveable(), function(i, item) {
+      if (mouseX >= item['topLeft']['x'] &&
+          mouseX <= item['bottomRight']['x'] &&
+          mouseY >= item['topLeft']['y'] &&
+          mouseY <= item['bottomRight']['y']) {
+        dragState = {
+          'x': mouseX,
+          'y': mouseY,
+          'item': item['name']
+        };
+
+        return false;
+      }
+    });
+  });
+
   $canvas.on('mousemove', updateDrag);
+
   $canvas.mouseup(function(e) {
     dragState = false;
   });
+
+  redraw();
 });

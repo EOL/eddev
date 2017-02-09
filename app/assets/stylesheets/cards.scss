@@ -418,18 +418,28 @@ $featured-trans-width: 642;
   text-align: center;
 }
 
-.controls {
+.left-col {
   float: left;
 }
 
-.canvas {
+.right-col {
   float: right;
 }
 
-.img-selector img {
+.thumb {
   height: 100px;
 
   &.selected {
     border: 2px solid #000;
   }
+}
+
+.save-btn {
+  cursor: pointer;
+  display: block;
+  margin-top:10px;
+}
+
+.server-img {
+  margin-top: 20px;
 }

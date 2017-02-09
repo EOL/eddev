@@ -24,6 +24,8 @@
   exports.height = getHeight;
 
   function draw(canvas, content) {
+    console.log(content);
+
     var ctx = canvas.getContext('2d');
         //mainPhoto = content['mainPhoto'];
 

@@ -8,7 +8,7 @@ module ApplicationHelper
   end
 
   def about_page?
-    current_page? :controller => "welcome", :action => "about" 
+    current_page? :controller => "welcome", :action => "about"
   end
 
   # Abstract away different checks for dev and prod
@@ -20,12 +20,11 @@ module ApplicationHelper
     end
   end
 
-  def contact_url 
+  def contact_url
     "http://eol.org/contact_us?subject=learning"
   end
 
-  def deck_pdf_path(deck_name) 
-    "species_cards/#{deck_name}.pdf"
+  def deck_pdf_path(deck_name)
+    "/species_cards/#{deck_name}.pdf"
   end
 end
-

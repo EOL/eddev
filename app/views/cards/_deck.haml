@@ -8,5 +8,5 @@
       .deck-sub-placeholder
 
     %p.deck-desc= deck.localized_desc
-    =link_to deck_pdf_path(deck[:file_name]), :class => "pdf-button", :download => "" do 
+    =link_to deck_pdf_path(deck.file_name), :class => "pdf-button", :download => "" do 
       %i.fa.fa-download.fa-lg

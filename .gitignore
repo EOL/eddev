@@ -33,3 +33,6 @@
 
 # OS X .DS_Store
 .DS_Store
+
+# Symlink to card-templates repo checkout
+app/assets/javascripts/card_templates

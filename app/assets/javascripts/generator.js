@@ -80,7 +80,7 @@ $(function() {
         , imgData = data[id]
         , $imgElem = $input.find('.thumb.selected');
 
-      if ($imgElem) {
+      if ($imgElem.length) {
         if (imgData) {
           imgData['image'] = $imgElem[0];
         } else {

@@ -114,7 +114,7 @@ $(function() {
       if (!cardId) {
         console.log('no card id');
         $.ajax({
-          url: 'http://localhost:8080/cards',
+          url: serviceUrl + '/cards',
           method: 'POST',
           data: dataToSend,
           contentType: 'application/json',
@@ -126,7 +126,7 @@ $(function() {
       } else {
         console.log('patching card id ' + cardId);
         $.ajax({
-          url: serviceUrl + 'cards/' + cardId,
+          url: serviceUrl + '/cards/' + cardId,
           method: 'PATCH',
           data: dataToSend,
           contentType: 'application/json',

@@ -7,6 +7,7 @@ $(function() {
   // Handlebars templates for building UI inputs
   var textInputTemplate = Handlebars.compile($('#TextInputTemplate').html());
   var imageInputTemplate = Handlebars.compile($('#ImageInputTemplate').html());
+  var colorInputTemplate = Handlebars.compile($('#ColorInputTemplate').html());
 
   var $canvas = $('#Canvas'),
       canvas = $canvas[0],
@@ -44,7 +45,6 @@ $(function() {
           redraw();
         }
 
-
         $fileInput.change(function() {
           $previewContainer.empty();
 
@@ -61,6 +61,38 @@ $(function() {
         });
 
         $selector.find('.thumb').click(thumbClicked);
+
+        var $zoomControls = $partial.find('.zoom-controls')
+          , $zoomPlus     = $zoomControls.find('.fa-plus-circle')
+          , $zoomMinus    = $zoomControls.find('.fa-minus-circle');
+
+        $zoomPlus.click(function(){
+          data[field.id]['sWidth'] -= 20;
+          redraw();
+        });
+
+        $zoomMinus.click(function() {
+          data[field.id]['sWidth'] += 20;
+          redraw();
+        })
+
+        $inputs.append($partial);
+      } else if (field.type === "color") {
+        var $partial = $(colorInputTemplate({
+          id: field.id,
+          label: field.label
+        }));
+
+        var $colors = $partial.find('.color');
+
+        $colors.click(function() {
+          $colors.removeClass('selected');
+          $(this).addClass('selected');
+          data[field.id] = $(this).css('background-color');
+          redraw();
+          console.log(data);
+        })
+
         $inputs.append($partial);
       } else {
         console.log('unable to construct field: ' + JSON.stringify(field));
@@ -124,10 +156,9 @@ $(function() {
           }
         });
       } else {
-        console.log('patching card id ' + cardId);
         $.ajax({
           url: serviceUrl + '/cards/' + cardId,
-          method: 'PATCH',
+          method: 'PUT',
           data: dataToSend,
           contentType: 'application/json',
           success: function(data) {
@@ -155,6 +186,12 @@ $(function() {
         var formData = new FormData();
         formData.append('image', origFile);
 
+        // Only one of these fields should be present, and it is populated
+        // below
+        delete fieldData['image'];
+        delete fieldData['imageId'];
+        delete fieldData['url'];
+
         $.ajax({
           url: serviceUrl + '/images',
           method: 'POST',
@@ -162,14 +199,12 @@ $(function() {
           processData: false,
           contentType: false,
           success: function(data) {
-            console.log(data);
             fieldData['imageId'] = data['id'];
             return dereferenceImages(imageFields, requestData, callback);
           }
         });
       } else {
-        fieldData['url'] = fieldData['image']['src'];
-        delete fieldData['image'];
+        fieldData['url'] = imgSrc;
         return dereferenceImages(imageFields, requestData, callback);
       }
     }
@@ -195,7 +230,22 @@ $(function() {
     template.draw(canvas, data);
   }
 
+  function moveableContains(item, e) {
+    var mouseX = e.pageX - $canvas[0].offsetLeft;
+    var mouseY = e.pageY - $canvas[0].offsetTop;
+    var contains = false;
 
+    contains =  mouseX >= item['topLeft']['x'] &&
+                mouseX <= item['bottomRight']['x'] &&
+                mouseY >= item['topLeft']['y'] &&
+                mouseY <= item['bottomRight']['y'];
+
+    return {
+      x: mouseX,
+      y: mouseY,
+      contains: contains
+    };
+  }
 
   buildInputs();
   $('#SaveBtn').click(save);
@@ -207,18 +257,13 @@ $(function() {
 
   // Image panning
   $canvas.mousedown(function(e) {
-    var mouseX = e.pageX - this.offsetLeft;
-    var mouseY = e.pageY - this.offsetTop;
-
-
     $.each(template.moveable(), function(i, item) {
-      if (mouseX >= item['topLeft']['x'] &&
-          mouseX <= item['bottomRight']['x'] &&
-          mouseY >= item['topLeft']['y'] &&
-          mouseY <= item['bottomRight']['y']) {
+      var containsResult = moveableContains(item, e);
+
+      if (containsResult.contains) {
         dragState = {
-          'x': mouseX,
-          'y': mouseY,
+          'x': containsResult.x,
+          'y': containsResult.y,
           'item': item['name']
         };
 

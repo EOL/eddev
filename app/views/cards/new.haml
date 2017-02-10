@@ -6,12 +6,23 @@
 %script#ImageInputTemplate{:type => "text/x-handlebars-template"}
   .fields.image-input{:id => "{{id}}"}
     %label{:for => "{{id}}"} {{label}}:
+    .zoom-controls
+      %i.fa.fa-minus-circle.fa-2x
+      %i.fa.fa-plus-circle.fa-2x
     .img-selector
       = image_tag "leatherback1.jpg", :class => "thumb", :id => "Leatherback1"
       = image_tag "leatherback2.jpg", :class => "thumb", :id => "Leatherback2"
     .image-upload
       .upload-preview
       %input.image-upload-input{:type => "file"}
+
+%script#ColorInputTemplate{:type => "text/x-handlebars-template"}
+  .fields.color-input
+    %label{:for => "{{id}}"} {{label}}:
+    .color-row
+      .color.red
+      .color.blue
+      .color.green
 
 %h1.new-card-hdr Card Generator Test Page
 

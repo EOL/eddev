@@ -443,3 +443,33 @@ $featured-trans-width: 642;
 .server-img {
   margin-top: 20px;
 }
+
+.zoom-controls i {
+  cursor: pointer;
+}
+
+.color-row {
+  .color {
+    cursor: pointer;
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+
+    &.red {
+      background-color: rgb(150, 56, 37);
+    }
+
+    &.green {
+      background-color: #0e7718;
+    }
+
+    &.blue {
+      background-color: #1d2999;
+    }
+
+    &.selected {
+      border: 2px solid #000;
+    }
+  }
+}

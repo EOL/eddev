@@ -1,4 +1,4 @@
-//= require card_templates/trait
+//= require template_manager/template-manager
 //= require generator
 
 (function() {

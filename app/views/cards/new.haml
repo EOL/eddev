@@ -22,9 +22,10 @@
   .fields.color-input
     %label{:for => "{{id}}"} {{label}}:
     .color-row
-      .color.red
-      .color.blue
-      .color.green
+      :plain
+        {{#each colors}}
+          <div class="color" data-color="{{this}}"></div>
+        {{/each}}
 
 %h1.new-card-hdr Card Generator Test Page
 

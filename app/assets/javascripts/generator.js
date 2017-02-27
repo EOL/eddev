@@ -153,19 +153,39 @@ $(function() {
 
           imgCount += choices.length;
         } else if (field.type === "color") {
+          var choices = card.choices[field.id] || [];
+
           var $partial = $(colorInputTemplate({
             id: field.id,
-            label: field.label
+            label: field.label,
+            colors: choices
           }));
 
-          var $colors = $partial.find('.color');
+          var $colors = $partial.find('.color')
+            , defaultElmt = null;
+
+          $colors.each(function(i, color) {
+            if (defaultVal === i) {
+              defaultElmt = color;
+            }
+
+            var $color = $(color);
+            $color.css('background-color', $color.data('color'));
+          });
+
+          var clickHelper = function(elmt) {
+            $colors.removeClass('selected');
+            $(elmt).addClass('selected');
+            data[field.id] = $(elmt).css('background-color');
+          }
+
+          if (defaultElmt) {
+            clickHelper(defaultElmt);
+          }
 
           $colors.click(function() {
-            $colors.removeClass('selected');
-            $(this).addClass('selected');
-            data[field.id] = $(this).css('background-color');
+            clickHelper(this);
             redraw();
-            console.log(data);
           })
 
           $inputs.append($partial);

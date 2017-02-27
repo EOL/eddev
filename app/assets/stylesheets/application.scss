@@ -45,7 +45,7 @@ p a, .std-link {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 #Page {

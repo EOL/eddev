@@ -1,5 +1,3 @@
-%script#TraitTemplate{:type => "text/json", :src => asset_path("card_templates/trait.json")}
-
 %script#TextInputTemplate{:type => "text/x-handlebars-template"}
   .fields
     %label{:for => "{{id}}"} {{label}}:
@@ -12,8 +10,10 @@
       %i.fa.fa-minus-circle.fa-2x
       %i.fa.fa-plus-circle.fa-2x
     .img-selector
-      = image_tag "leatherback1.jpg", :class => "thumb", :id => "Leatherback1"
-      = image_tag "leatherback2.jpg", :class => "thumb", :id => "Leatherback2"
+      :plain
+        {{#each images}}
+          <img class="thumb" src="{{this.src}}" id="{{this.id}}"/>
+        {{/each}}
     .image-upload
       .upload-preview
       %input.image-upload-input{:type => "file"}
@@ -30,8 +30,14 @@
 
 .card-generator
   .left-col
+    %form#TemplateParams.template-params
+      %label{:for => "TaxonId"}Taxon Id:
+      %input#TaxonId.taxon-id{:type => "text", :value => "620570"}
+
+      %input{:type => "submit", :value => "Create card"}
+
     .controls#GeneratorControls
-    %i.fa.fa-floppy-o.fa-3x.save-btn#SaveBtn{:'aria-hidden' => "true"}
+    %i.fa.fa-floppy-o.fa-3x.save-btn.hidden#SaveBtn{:'aria-hidden' => "true"}
 
   .right-col
     %h2.preview-hdr Browser preview:

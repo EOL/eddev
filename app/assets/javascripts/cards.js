@@ -1,4 +1,4 @@
-//= require template_manager/template-manager
+//= require template_manager/template-renderer
 //= require generator
 
 (function() {

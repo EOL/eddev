@@ -1,7 +1,11 @@
 $(function() {
-  var data = {}; // Hold card data used to render template
+  var card = {}; // Hold card data used to render template
+  var data = {};
   var cardId = null; // Card service id for card - populated after first save
   var serviceUrl = "http://localhost:8080";
+  var dragState = false;
+
+  var imgCount = 0; // Used for generating image ids
 
   // Handlebars templates for building UI inputs
   var textInputTemplate = Handlebars.compile($('#TextInputTemplate').html());
@@ -31,48 +35,82 @@ $(function() {
     }
   }
 
-  TemplateManager.setTemplateSupplier(templateSupplier);
-  TemplateManager.setCanvasSupplier(canvasSupplier);
+  TemplateRenderer.setTemplateSupplier(templateSupplier);
+  TemplateRenderer.setCanvasSupplier(canvasSupplier);
 
-  TemplateManager.loadTemplate('trait', function(err) {
+  TemplateRenderer.loadTemplate('trait', function(err) {
     if (err) {
       console.log(err);
       return;
     }
 
-    var canvas = TemplateManager.getCanvas(),
+    var canvas = TemplateRenderer.getCanvas(),
         $canvas = $(canvas),
         ctx = canvas.getContext('2d'),
         $inputs = $('#GeneratorControls');
 
+    function imageId(i) {
+      return "Image" + (i + imgCount);
+    }
+
     // Construct UI inputs
     function buildInputs() {
-      var fields  = TemplateManager.fields();
+      var fields  = TemplateRenderer.fields();
+
+      $inputs.empty();
 
       $.each(fields, function(i, field) {
+        var defaultVal = card.defaultData[field.id];
+
         if (field.type === "text") {
           var $partial = $(textInputTemplate({
             id: field.id,
             label: field.label
           }))
-            , $field = $partial.find('input');
+            , $field = $partial.find('input')
+
+          if (defaultVal) {
+            $field.val(defaultVal);
+          }
 
           $field.keyup(redraw);
           $inputs.append($partial);
         } else if (field.type === "image") {
-          var $partial = $(imageInputTemplate({
-            id: field.id,
-            label: field.label
-          }))
-            , $selector = $partial.find('.img-selector')
-            , $field = $partial.find('.image-input')
-            , $fileInput = $partial.find('.image-upload-input')
-            , $previewContainer = $partial.find('.upload-preview');
+          var choices = card.choices[field.id] || []
+            , images = new Array(choices.length)
+            , defaultImg = card.defaultData[field.id]
+            , defaultUrl = null
+            , $partial = null
+            , $selector = null
+            , $field = null
+            , $fileInput = null
+            , $previewContainer = null;
+
+            $.each(choices, function(i, choice) {
+              images[i] = {
+                src: choice,
+                id: imageId(i)
+              }
+            });
+
+            $partial = $(imageInputTemplate({
+              id: field.id,
+              label: field.label,
+              images: images
+            }));
+            $selector = $partial.find('.img-selector')
+            $field = $partial.find('.image-input')
+            $fileInput = $partial.find('.image-upload-input')
+            $previewContainer = $partial.find('.upload-preview')
+
+          var thumbClickedHelper = function(elmt) {
+            $partial.find('.thumb').removeClass('selected');
+            $(elmt).addClass('selected');
+            $field.val($(elmt).attr('id'));
+          }
 
           var thumbClicked = function() {
-            $partial.find('.thumb').removeClass('selected');
-            $(this).addClass('selected');
-            $field.val($(this).attr('id'));
+            thumbClickedHelper(this);
             redraw();
           }
 
@@ -108,6 +146,12 @@ $(function() {
           })
 
           $inputs.append($partial);
+
+          if (defaultImg) {
+            thumbClickedHelper($("#" + imageId(defaultImg.index)));
+          }
+
+          imgCount += choices.length;
         } else if (field.type === "color") {
           var $partial = $(colorInputTemplate({
             id: field.id,
@@ -157,14 +201,16 @@ $(function() {
         }
       });
 
-      TemplateManager.draw(data);
+      console.log(JSON.stringify(data, null, 2));
+
+      TemplateRenderer.draw(data);
     }
 
     function save() {
       var requestData = $.extend(true, {}, data),
           dataToSend = {};
 
-      var imageFields = TemplateManager.imageFields();
+      var imageFields = TemplateRenderer.imageFields();
 
       dereferenceImages(imageFields, requestData, function() {
         dataToSend = JSON.stringify({
@@ -210,6 +256,7 @@ $(function() {
       if (fieldData) {
         imgSrc = fieldData['image']['src'];
 
+        // TODO: HACK
         if (imgSrc.startsWith('data')) {
           var origFile = $('#' + field['id'] + ' .image-upload-input')[0].files[0];
           var formData = new FormData();
@@ -256,7 +303,7 @@ $(function() {
       dragState['x'] = mouseX;
       dragState['y'] = mouseY;
 
-      TemplateManager.draw(data);
+      TemplateRenderer.draw(data);
     }
 
     function imageContains(imageField, e) {
@@ -281,34 +328,62 @@ $(function() {
       };
     }
 
-    buildInputs();
-    $('#SaveBtn').click(save);
+    function setupCardInterface() {
+      buildInputs();
+      $('#SaveBtn').removeClass('hidden');
+      $('#SaveBtn').click(save);
 
-    var dragState = false;
+      // Image panning
+      $canvas.mousedown(function(e) {
+        $.each(TemplateRenderer.imageFields(), function(i, imageField) {
+          var containsResult = imageContains(imageField, e);
 
-    // Image panning
-    $canvas.mousedown(function(e) {
-      $.each(TemplateManager.imageFields(), function(i, imageField) {
-        var containsResult = imageContains(imageField, e);
+          if (containsResult.contains) {
+            dragState = {
+              'x': containsResult.x,
+              'y': containsResult.y,
+              'item': imageField['id']
+            };
 
-        if (containsResult.contains) {
-          dragState = {
-            'x': containsResult.x,
-            'y': containsResult.y,
-            'item': imageField['id']
-          };
+            return false;
+          }
+        });
 
-          return false;
-        }
+        redraw();
       });
-    });
 
-    $canvas.on('mousemove', updateDrag);
+      $canvas.on('mousemove', updateDrag);
 
-    $canvas.mouseup(function(e) {
-      dragState = false;
-    });
+      $canvas.mouseup(function(e) {
+        dragState = false;
+      });
 
-    redraw();
+      // Why does this work? Image loading time?
+      setTimeout(redraw, 1000);
+    }
+
+    $('#TemplateParams').submit(function() {
+      var taxonId = $(this).find('.taxon-id').val();
+
+      // TODO: basic format validation ([0-9]+, etc)
+
+      $.ajax({
+        url: serviceUrl + '/cards',
+        data: JSON.stringify({
+          templateName: 'trait',
+          templateParams: {
+            speciesId: taxonId
+          }
+        }),
+        contentType: 'application/json',
+        method: 'POST',
+        success: function(data) {
+          card = data;
+          setupCardInterface();
+        }
+      })
+
+      return false;
+    })
   });
 });

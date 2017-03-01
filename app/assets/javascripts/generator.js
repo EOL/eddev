@@ -361,8 +361,12 @@ $(function() {
         dragState = false;
       });
 
-      // Why does this work? Image loading time?
-      setTimeout(redraw, 1000);
+      // Wait until images load
+      $('#GeneratorControls img')
+        .one('load', redraw)
+        .each(function() {
+          if (this.complete) $(this).load();
+        });
     }
 
     $('#TemplateParams').submit(function() {

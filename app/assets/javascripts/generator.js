@@ -238,7 +238,7 @@ $(function() {
 
       dereferenceImages(imageFields, requestData, function() {
         $.ajax({
-          url: serviceUrl + '/cards/' + cardId,
+          url: serviceUrl + '/cards/' + cardId + '/data',
           method: 'PUT',
           data: JSON.stringify(requestData),
           contentType: 'application/json',
@@ -278,7 +278,7 @@ $(function() {
             processData: false,
             contentType: false,
             success: function(data) {
-              fieldData['imageId'] = data['id'];
+              fieldData['url'] = data['url'];
               return dereferenceImages(imageFields, requestData, callback);
             }
           });

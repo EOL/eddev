@@ -149,6 +149,11 @@ $(function() {
 
           if (defaultImg) {
             thumbClickedHelper($("#" + imageId(defaultImg.index)));
+            data[field.id] = {
+              sx: defaultImg.sx,
+              sy: defaultImg.sy,
+              sWidth: defaultImg.sWidth
+            }
           }
 
           imgCount += choices.length;
@@ -227,40 +232,20 @@ $(function() {
     }
 
     function save() {
-      var requestData = $.extend(true, {}, data),
-          dataToSend = {};
+      var requestData = $.extend(true, {}, data);
 
       var imageFields = TemplateRenderer.imageFields();
 
       dereferenceImages(imageFields, requestData, function() {
-        dataToSend = JSON.stringify({
-          'template': 'trait',
-          'content': requestData
-        })
-
-        if (!cardId) {
-          console.log('no card id');
-          $.ajax({
-            url: serviceUrl + '/cards',
-            method: 'POST',
-            data: dataToSend,
-            contentType: 'application/json',
-            success: function(data) {
-              cardId = data['id'];
-              window.open(serviceUrl + '/generate/' + cardId);
-            }
-          });
-        } else {
-          $.ajax({
-            url: serviceUrl + '/cards/' + cardId,
-            method: 'PUT',
-            data: dataToSend,
-            contentType: 'application/json',
-            success: function(data) {
-              window.open(serviceUrl + '/generate/' + cardId);
-            }
-          })
-        }
+        $.ajax({
+          url: serviceUrl + '/cards/' + cardId,
+          method: 'PUT',
+          data: JSON.stringify(requestData),
+          contentType: 'application/json',
+          success: function(data) {
+            window.open(serviceUrl + '/cards/' + cardId + '/render');
+          }
+        });
       });
     }
 
@@ -276,17 +261,15 @@ $(function() {
       if (fieldData) {
         imgSrc = fieldData['image']['src'];
 
+        delete fieldData['image'];
+        delete fieldData['imageId'];
+        delete fieldData['url'];
+
         // TODO: HACK
         if (imgSrc.startsWith('data')) {
           var origFile = $('#' + field['id'] + ' .image-upload-input')[0].files[0];
           var formData = new FormData();
           formData.append('image', origFile);
-
-          // Only one of these fields should be present, and it is populated
-          // below
-          delete fieldData['image'];
-          delete fieldData['imageId'];
-          delete fieldData['url'];
 
           $.ajax({
             url: serviceUrl + '/images',
@@ -399,6 +382,7 @@ $(function() {
         method: 'POST',
         success: function(data) {
           card = data;
+          cardId = data.id;
           setupCardInterface();
         }
       })

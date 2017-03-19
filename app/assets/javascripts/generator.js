@@ -86,7 +86,6 @@ $(function() {
     $inputs.empty();
 
     $.each(fields, function(i, field) {
-      console.log(field);
       // TODO: remove field.value hack
       var fieldDefault = field.value != null ? field : card.defaultData[field.id]
         , choices = card.choices[field.id] || []
@@ -224,16 +223,25 @@ $(function() {
     $previewContainer = $partial.find('.upload-preview');
 
     var thumbClickedHelper = function(elmt) {
-      $partial.find('.thumb').removeClass('selected');
-      $(elmt).addClass('selected');
+      var $elmt = $(elmt)
+        , choiceIndex = $elmt.data('index');
+
       data[field.id] = {
-        choiceIndex: $(elmt).data('index'),
         value: {
           panX: 0,
           panY: 0,
           zoomLevel: 0
         }
-      };
+      }
+
+      $partial.find('.thumb').removeClass('selected');
+      $(elmt).addClass('selected');
+
+      if (choiceIndex != null) {
+        data[field.id].choiceIndex = choiceIndex;
+      } else {
+        data[field.id].value.image = elmt;
+      }
     };
 
     var thumbClicked = function() {
@@ -248,6 +256,7 @@ $(function() {
       $previewContainer.empty();
 
       if (this.files.length) {
+        console.log('file exists');
         fileReader = new FileReader();
         fileReader.readAsDataURL(this.files[0]);
 
@@ -255,7 +264,14 @@ $(function() {
           $thumb = $('<img class="thumb" src="' + e.target.result + '">');
           $thumb.click(thumbClicked);
           $previewContainer.append($thumb);
-          thumbClickedHelper($thumb);
+
+          $thumb.one('load', function() {
+              $thumb.click();
+            })
+
+          if ($thumb.complete) {
+            $thumb.load();
+          }
         }
       }
     });
@@ -285,14 +301,9 @@ $(function() {
 
   function redraw() {
     var data = card.data;
-    console.log(data);
-    console.log('redraw');
     TemplateRenderer.draw(function(err, canvas) {
-      console.log('drew')
       if (err) {
         console.log(err);
-      } else {
-        console.log('draw success');
       }
     });
   }

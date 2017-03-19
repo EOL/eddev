@@ -227,7 +227,12 @@ $(function() {
       $partial.find('.thumb').removeClass('selected');
       $(elmt).addClass('selected');
       data[field.id] = {
-        choiceIndex: $(elmt).data('index')
+        choiceIndex: $(elmt).data('index'),
+        value: {
+          panX: 0,
+          panY: 0,
+          zoomLevel: 0
+        }
       };
     };
 
@@ -361,13 +366,13 @@ $(function() {
     var dx = mouseX - dragState['x'];
     var dy = mouseY - dragState['y'];
 
-    data[dragState['item']]['sx'] -= dx;
-    data[dragState['item']]['sy'] -= dy;
+    data[dragState['item']].value.panX -= dx;
+    data[dragState['item']].value.panY -= dy;
 
     dragState['x'] = mouseX;
     dragState['y'] = mouseY;
 
-    TemplateRenderer.draw(data);
+    redraw();
   }
 
   function imageContains(imageField, e) {
@@ -413,8 +418,6 @@ $(function() {
           return false;
         }
       });
-
-      redraw();
     });
 
     $canvas.on('mousemove', updateDrag);

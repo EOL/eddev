@@ -36,3 +36,6 @@
 
 # Symlink to card-templates repo checkout
 app/assets/javascripts/card_templates
+
+# ctags
+tags

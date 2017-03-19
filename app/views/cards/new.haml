@@ -12,7 +12,7 @@
     .img-selector
       :plain
         {{#each images}}
-          <img class="thumb" src="{{this.src}}" id="{{this.id}}"/>
+          <img class="thumb" src="{{this.src}}" data-index="{{this.index}}"/>
         {{/each}}
     .image-upload
       .upload-preview
@@ -24,7 +24,7 @@
     .color-row
       :plain
         {{#each colors}}
-          <div class="color" data-color="{{this}}"></div>
+          <div class="color" data-color="{{this}}" data-index="{{@index}}"></div>
         {{/each}}
 
 %h1.new-card-hdr Card Generator Test Page
@@ -33,7 +33,7 @@
   .left-col
     %form#TemplateParams.template-params
       %label{:for => "TaxonId"}Taxon Id:
-      %input#TaxonId.taxon-id{:type => "text", :value => "620570"}
+      %input#TaxonId.taxon-id{:type => "text", :value => "327940"}
 
       %input{:type => "submit", :value => "Create card"}
 

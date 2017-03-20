@@ -24,7 +24,8 @@ $(function() {
   var textInputTemplate = Handlebars.compile($('#TextInputTemplate').html());
   var imageInputTemplate = Handlebars.compile($('#ImageInputTemplate').html());
   var colorInputTemplate = Handlebars.compile($('#ColorInputTemplate').html());
-
+  var labeledImageInputTemplate =
+    Handlebars.compile($('#LabeledImageInputTemplate').html());
 
   var templateSupplier = {
     supply: function(templateName, cb) {
@@ -103,6 +104,8 @@ $(function() {
         buildTextInput(field, defaultVal);
       } else if (field.type === 'image') {
         buildImageInput(field, choices, choiceIndex);
+      } else if (field.type === 'labeled-choice-image') {
+        buildLabeledImageInput(field, choices);
       } else if (field.type === 'color') {
         buildColorInput(field, choices, choiceIndex);
       } else {
@@ -210,7 +213,7 @@ $(function() {
         src: choice.url,
         credit: choice.credit,
         index: i
-      }
+      };
     });
 
     $partial = $(imageInputTemplate({
@@ -307,6 +310,43 @@ $(function() {
     if (choiceIndex != null) {
       thumbClickedHelper($partial.find('.thumb')[choiceIndex]);
     }
+  }
+
+  function buildLabeledImageInput(field, choices) {
+    var $partial = null
+      , $select = null
+      , images = new Array(choices.length)
+      ;
+
+    $.each(choices, function(i, choice) {
+      images[i] = {
+        src: choice.url,
+        label: choice.label,
+        index: i
+      };
+    });
+
+    $partial = $(labeledImageInputTemplate({
+      id: field.id,
+      label: field.label,
+      images: images
+    }));
+
+    $inputs.append($partial);
+
+    var changeHelper = function($elmt) {
+      data[field.id] = {
+        choiceIndex: parseInt($elmt.val())
+      };
+    }
+
+    $select = $partial.find('select');
+    $select.change(function() {
+      changeHelper($(this));
+      redraw();
+    });
+
+    changeHelper($select);
   }
 
   function redraw() {
@@ -419,11 +459,14 @@ $(function() {
   }
 
   function setupCardInterface() {
+    var $canvasWrap = $('#CanvasWrap');
+
     buildInputs();
     $('#SaveBtn').removeClass('hidden');
     $('#SaveBtn').off('click', save);
     $('#SaveBtn').click(save);
 
+    // TODO: Fix!!! Problem arises when fixed position applied.
     // Image panning
     $canvas.mousedown(function(e) {
       $.each(TemplateRenderer.imageFields(), function(i, imageField) {
@@ -447,11 +490,39 @@ $(function() {
       dragState = false;
     });
 
+
+    var canvasRelDocTop = 0;
+
+    $(document).scroll(function(e) {
+      var scrollTop = $(document).scrollTop()
+        , viewPosn = $canvasWrap.offset().top - scrollTop
+        ;
+
+      if (!$canvasWrap.hasClass('fixed')) {
+        if (viewPosn <= 35) {
+          canvasRelDocTop = scrollTop;
+          $canvasWrap.addClass('fixed');
+        }
+      } else {
+        if (scrollTop <= canvasRelDocTop) {
+          $canvasWrap.removeClass('fixed');
+        }
+      }
+    });
+
+    var $allImages = $('#GeneratorControls img')
+      , imageCount = $allImages.length
+      , loadedCount = 0;
     // Wait until images load
-    $('#GeneratorControls img')
-      .one('load', redraw)
+    $allImages
+      .one('load', function() {
+        loadedCount++;
+        if (loadedCount === imageCount) {
+          redraw();
+        }
+      })
       .each(function() {
-        if (this.complete) $(this).load();
+        if (this.complete) $(this).trigger('load');
       });
   }
 

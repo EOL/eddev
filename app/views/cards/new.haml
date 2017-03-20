@@ -21,6 +21,16 @@
       %label{:for => "{{id}}Credit"} Image credit:
       %input.text-input{:id => "{{id}}Credit", :class => "image-credit"}
 
+%script#LabeledImageInputTemplate{:type => "text/x-handlebars-template"}
+  .fields.labeled-image-input
+    %label{:for => "{{id}}"} {{label}}:
+    %select
+      :plain
+        {{#each images}}
+          <option value="{{this.index}}">{{this.label}}</option>
+        {{/each}}
+
+
 %script#ColorInputTemplate{:type => "text/x-handlebars-template"}
   .fields.color-input
     %label{:for => "{{id}}"} {{label}}:
@@ -44,5 +54,6 @@
     %i.fa.fa-floppy-o.fa-3x.save-btn.hidden#SaveBtn{:'aria-hidden' => "true"}
 
   .right-col
-    %h2.preview-hdr Browser preview:
-    %canvas.canvas#Canvas
+    #CanvasWrap
+      %h2.preview-hdr Browser preview:
+      %canvas.canvas#Canvas

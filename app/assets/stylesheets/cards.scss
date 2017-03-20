@@ -418,13 +418,19 @@ $featured-trans-width: 642;
   text-align: center;
 }
 
-.left-col {
-  float: left;
-  max-width: 425px;
+.left-col, .right-col {
+  display: inline-block;
+  vertical-align: top;
 }
 
-.right-col {
-  float: right;
+.left-col {
+  margin-right: 80px;
+  width: 425px;
+}
+
+#CanvasWrap.fixed {
+  position: fixed;
+  top: 35px;
 }
 
 #GeneratorControls {
@@ -433,6 +439,10 @@ $featured-trans-width: 642;
   .img-selector {
     max-height: 230px;
     overflow: auto;
+  }
+
+  .fields {
+    margin-top: 12px;
   }
 }
 

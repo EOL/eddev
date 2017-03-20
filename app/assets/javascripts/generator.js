@@ -194,6 +194,7 @@ $(function() {
   function buildImageInput(field, choices, choiceIndex) {
     var images = new Array(choices.length)
       , $partial = null
+      , $creditInput = null
       , $partial = null
       , $selector = null
       , $field = null
@@ -207,6 +208,7 @@ $(function() {
     $.each(choices, function(i, choice) {
       images[i] = {
         src: choice.url,
+        credit: choice.credit,
         index: i
       }
     });
@@ -221,6 +223,12 @@ $(function() {
     $field = $partial.find('.image-input');
     $fileInput = $partial.find('.image-upload-input');
     $previewContainer = $partial.find('.upload-preview');
+    $creditInput = $partial.find('.image-credit');
+
+    $creditInput.keyup(function() {
+      data[field.id].value.credit = $(this).val();
+      redraw();
+    });
 
     var thumbClickedHelper = function(elmt) {
       var $elmt = $(elmt)
@@ -236,6 +244,8 @@ $(function() {
 
       $partial.find('.thumb').removeClass('selected');
       $(elmt).addClass('selected');
+
+      $creditInput.val($elmt.data('credit'));
 
       if (choiceIndex != null) {
         data[field.id].choiceIndex = choiceIndex;

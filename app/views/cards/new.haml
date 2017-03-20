@@ -12,11 +12,14 @@
     .img-selector
       :plain
         {{#each images}}
-          <img class="thumb" src="{{this.src}}" data-index="{{this.index}}"/>
+          <img class="thumb" src="{{this.src}}" data-index="{{this.index}}" data-credit="{{this.credit}}"/>
         {{/each}}
     .image-upload
       .upload-preview
       %input.image-upload-input{:type => "file"}
+    .fields
+      %label{:for => "{{id}}Credit"} Image credit:
+      %input.text-input{:id => "{{id}}Credit", :class => "image-credit"}
 
 %script#ColorInputTemplate{:type => "text/x-handlebars-template"}
   .fields.color-input

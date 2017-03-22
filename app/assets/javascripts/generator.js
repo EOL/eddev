@@ -421,11 +421,11 @@ $(function() {
       return;
     }
 
-    var mouseX = e.pageX - this.offsetLeft;
-    var mouseY = e.pageY - this.offsetTop;
-
-    var dx = mouseX - dragState['x'];
-    var dy = mouseY - dragState['y'];
+    var offset =$(this).offset()
+      , mouseX = e.pageX - offset.left
+      , mouseY = e.pageY - offset.top
+      , dx = mouseX - dragState['x']
+      , dy = mouseY - dragState['y'];
 
     data[dragState['item']].value.panX -= dx;
     data[dragState['item']].value.panY -= dy;
@@ -440,10 +440,12 @@ $(function() {
     var minX = imageField.x
       , minY = imageField.y
       , maxX = minX + imageField.width
-      , maxY = minY + imageField.height;
+      , maxY = minY + imageField.height
+      , canvasOffset = $canvas.offset()
+      ;
 
-    var mouseX = e.pageX - $canvas[0].offsetLeft;
-    var mouseY = e.pageY - $canvas[0].offsetTop;
+    var mouseX = e.pageX - canvasOffset.left;
+    var mouseY = e.pageY - canvasOffset.top;
     var contains = false;
 
     contains =  mouseX >= minX &&

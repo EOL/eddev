@@ -1,11 +1,12 @@
+%script#LabelTemplate{:type => "text/x-handlebars-template"}
+  .label {{label}}
+
 %script#TextInputTemplate{:type => "text/x-handlebars-template"}
   .fields
-    %label{:for => "{{id}}"} {{label}}:
     %input.text-input{:id => "{{id}}"}
 
 %script#ImageInputTemplate{:type => "text/x-handlebars-template"}
   .fields.image-input{:id => "{{id}}"}
-    %label{:for => "{{id}}"} {{label}}:
     .zoom-controls
       %i.fa.fa-minus-circle.fa-2x
       %i.fa.fa-plus-circle.fa-2x
@@ -23,7 +24,6 @@
 
 %script#LabeledImageInputTemplate{:type => "text/x-handlebars-template"}
   .fields.labeled-image-input
-    %label{:for => "{{id}}"} {{label}}:
     %select
       :plain
         {{#each images}}
@@ -33,12 +33,22 @@
 
 %script#ColorInputTemplate{:type => "text/x-handlebars-template"}
   .fields.color-input
-    %label{:for => "{{id}}"} {{label}}:
     .color-row
       :plain
         {{#each colors}}
           <div class="color" data-color="{{this}}" data-index="{{@index}}"></div>
         {{/each}}
+
+%script#KeyValListInputTemplate{:type => "text/x-handlebars-template"}
+  .fields.key-val-list
+    :plain
+      {{#each data}}
+        <div class="key-val-wrap" data-index="{{this.index}}">
+          <input class="key-input" type="text" value="{{this.key}}">
+          <input class="val-input" type="text" value="{{this.val}}">
+        </div>
+      {{/each}}
+
 
 %h1.new-card-hdr Card Generator Test Page
 

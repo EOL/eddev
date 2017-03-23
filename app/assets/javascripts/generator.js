@@ -21,11 +21,14 @@ $(function() {
   })();
 
   // Handlebars templates for building UI inputs
+  var labelTemplate = Handlebars.compile($('#LabelTemplate').html());
   var textInputTemplate = Handlebars.compile($('#TextInputTemplate').html());
   var imageInputTemplate = Handlebars.compile($('#ImageInputTemplate').html());
   var colorInputTemplate = Handlebars.compile($('#ColorInputTemplate').html());
   var labeledImageInputTemplate =
     Handlebars.compile($('#LabeledImageInputTemplate').html());
+  var keyValListInputTemplate =
+    Handlebars.compile($('#KeyValListInputTemplate').html());
 
   var templateSupplier = {
     supply: function(templateName, cb) {
@@ -82,36 +85,102 @@ $(function() {
 
   // Construct UI inputs
   function buildInputs() {
-    var fields  = TemplateRenderer.editableFields();
+    var fields = TemplateRenderer.editableFields();
 
     $inputs.empty();
 
     $.each(fields, function(i, field) {
-      // TODO: remove field.value hack
-      var fieldDefault = field.value != null ? field : card.defaultData[field.id]
-        , choices = card.choices[field.id] || []
-        , choiceIndex = fieldDefault.choiceIndex
-        , defaultVal = null
-        ;
+      $inputs.append(labelTemplate({
+        label: field.label
+      }));
 
-      if (fieldDefault) {
-        defaultVal = fieldDefault.value != null ?
-                     fieldDefault.value :
-                     choices[choiceIndex];
-      }
-
-      if (field.type === 'text') {
-        buildTextInput(field, defaultVal);
-      } else if (field.type === 'image') {
-        buildImageInput(field, choices, choiceIndex);
-      } else if (field.type === 'labeled-choice-image') {
-        buildLabeledImageInput(field, choices);
-      } else if (field.type === 'color') {
-        buildColorInput(field, choices, choiceIndex);
-      } else {
-        console.log('unable to construct field: ' + JSON.stringify(field));
-      }
+      buildFieldInput(field);
     });
+  }
+
+  function buildFieldInput(field) {
+    // TODO: remove field.value hack
+    var fieldDefault = field.value != null ? field : card.defaultData[field.id]
+      , choices = card.choices[field.id] || []
+      , choiceIndex = fieldDefault != null ? fieldDefault.choiceIndex : null
+      , defaultVal = null
+      ;
+
+    if (fieldDefault) {
+      defaultVal = fieldDefault.value != null ?
+                   fieldDefault.value :
+                   choices[choiceIndex];
+    }
+
+    if (field.type === 'text') {
+      buildTextInput(field, defaultVal);
+    } else if (field.type === 'image') {
+      buildImageInput(field, choices, choiceIndex);
+    } else if (field.type === 'labeled-choice-image') {
+      buildLabeledImageInput(field, choices);
+    } else if (field.type === 'color') {
+      buildColorInput(field, choices, choiceIndex);
+    } else if (field.type === 'key-val-list') {
+      buildKeyValListInput(field, defaultVal);
+    } else {
+      console.log('unable to construct field: ' + JSON.stringify(field));
+    }
+  }
+
+  function buildKeyValListInput(field, defaults) {
+    var templateData = new Array(field.max)
+      , $partial = null
+      , $keyValInputs = null
+      , curData = null
+      ;
+
+    for (var i = 0; i < field.max; i++) {
+      curData = {
+        index: i,
+        key: '',
+        val: ''
+      };
+
+      if (i < defaults.length) {
+        Object.assign(curData, defaults[i]);
+      }
+
+      templateData[i] = curData;
+    }
+
+    $partial = $(keyValListInputTemplate({
+      data: templateData
+    }));
+
+    $partial.find('input').keyup(function() {
+      var keyValData = [];
+
+      $partial.find('.key-val-wrap').each(function(i, elmt) {
+        var $elmt = $(elmt)
+          , $keyInput = $elmt.find('.key-input')
+          , $valInput = $elmt.find('.val-input')
+          , keyVal = $keyInput.val()
+          , valVal = $valInput.val()
+          ;
+
+        if ((keyVal != null && keyVal.length > 0) ||
+            (valVal != null && valVal.length > 0)) {
+          keyValData.push({
+            key: keyVal,
+            val: valVal
+          });
+        }
+
+        data[field.id] = {
+          value: keyValData
+        };
+
+        console.log(data[field.id]);
+        redraw();
+      });
+    });
+
+    $inputs.append($partial);
   }
 
   function buildColorInput(field, choices, choiceIndex) {

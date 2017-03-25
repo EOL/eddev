@@ -448,6 +448,27 @@ $featured-trans-width: 642;
     font-weight: bold;
     margin-top: 12px;
   }
+
+  .textarea {
+    width: 200px;
+    height: 100px;
+  }
+
+  .multi-image {
+    .img-wrap {
+      display: inline-block;
+      margin-right: 5px;
+      height: 45px;
+
+      &.selected {
+        background: #757575;
+      }
+    }
+
+    .img {
+      height: 100%;
+    }
+  }
 }
 
 .thumb {

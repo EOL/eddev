@@ -3,7 +3,11 @@
 
 %script#TextInputTemplate{:type => "text/x-handlebars-template"}
   .fields
-    %input.text-input{:id => "{{id}}"}
+    %input.text-input.text-field{:id => "{{id}}", :value => "{{defaultVal}}"}
+
+%script#TextareaTemplate{:type => "text/x-handlebars-template"}
+  .fields
+    %textarea.textarea.text-field{:id => "{{id}}"} {{defaultVal}}
 
 %script#ImageInputTemplate{:type => "text/x-handlebars-template"}
   .fields.image-input{:id => "{{id}}"}
@@ -46,6 +50,15 @@
         <div class="key-val-wrap" data-index="{{this.index}}">
           <input class="key-input" type="text" value="{{this.key}}">
           <input class="val-input" type="text" value="{{this.val}}">
+        </div>
+      {{/each}}
+
+%script#MultiImageTemplate{:type => "text/x-handlebars-template"}
+  .fields.multi-image
+    :plain
+      {{#each images}}
+        <div class="img-wrap" data-index="{{@index}}">
+          <img src="{{this.url}}" class="img">
         </div>
       {{/each}}
 

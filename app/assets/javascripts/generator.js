@@ -23,12 +23,14 @@ $(function() {
   // Handlebars templates for building UI inputs
   var labelTemplate = Handlebars.compile($('#LabelTemplate').html());
   var textInputTemplate = Handlebars.compile($('#TextInputTemplate').html());
+  var textareaTemplate = Handlebars.compile($('#TextareaTemplate').html());
   var imageInputTemplate = Handlebars.compile($('#ImageInputTemplate').html());
   var colorInputTemplate = Handlebars.compile($('#ColorInputTemplate').html());
   var labeledImageInputTemplate =
     Handlebars.compile($('#LabeledImageInputTemplate').html());
   var keyValListInputTemplate =
     Handlebars.compile($('#KeyValListInputTemplate').html());
+  var multiImageTemplate = Handlebars.compile($('#MultiImageTemplate').html());
 
   var templateSupplier = {
     supply: function(templateName, cb) {
@@ -120,8 +122,12 @@ $(function() {
       buildLabeledImageInput(field, choices);
     } else if (field.type === 'color') {
       buildColorInput(field, choices, choiceIndex);
+    } else if (field.type === 'color-scheme') {
+      buildColorSchemeInput(field, choices, choiceIndex);
     } else if (field.type === 'key-val-list') {
       buildKeyValListInput(field, defaultVal);
+    } else if (field.type === 'multi-image') {
+      buildMultiImageInput(field, choices, choiceIndex);
     } else {
       console.log('unable to construct field: ' + JSON.stringify(field));
     }
@@ -217,31 +223,44 @@ $(function() {
     $inputs.append($partial);
   }
 
+  function buildColorSchemeInput(field, choices, choiceIndex) {
+    var templateChoices = new Array(choices.length);
+
+
+    for (var i = 0; i < choices.length; i++) {
+      templateChoices[i] = choices[i][field.uiColor];
+    }
+
+    buildColorInput(field, templateChoices, choiceIndex);
+  }
+
   function buildTextInput(field, defaultVal) {
-    var $partial = $(textInputTemplate({
+    var $partial = null
+      , $input = null
+      , template = field.wrapAt != null ? textareaTemplate : textInputTemplate
+      , templateData = {
           id: field.id,
-          label: field.label
-        }))
-      , $input = $partial.find('input')
+          defaultVal: defaultVal == null ? '' : defaultVal.text
+        }
       ;
 
-      var setDataValue = function() {
-        data[field.id] = {
-          value: $input.val()
+    $partial = $(template(templateData));
+    $input = $partial.find('.text-field');
+
+    var setDataValue = function() {
+      data[field.id] = {
+        value: {
+          text: $input.val()
         }
-      }
+      };
+    };
 
-      if (defaultVal) {
-        $input.val(defaultVal);
-        setDataValue();
-      }
+    $input.keyup(function() {
+      setDataValue();
+      redraw();
+    });
 
-      $input.keyup(function() {
-        setDataValue();
-        redraw();
-      });
-
-      $inputs.append($partial);
+    $inputs.append($partial);
   }
 
   function updateImageSDimension(fieldId, propName, incr) {
@@ -379,6 +398,43 @@ $(function() {
     if (choiceIndex != null) {
       thumbClickedHelper($partial.find('.thumb')[choiceIndex]);
     }
+  }
+
+  function buildMultiImageInput(field, choices, choiceIndices) {
+    var templateData = Object.assign({}, choices)
+      , $partial = null
+      , $imgWraps = null
+      ;
+
+    $partial = $(multiImageTemplate({
+      images: templateData
+    }));
+
+    $imgWraps = $partial.find('.img-wrap');
+
+    choiceIndices.forEach(function(choiceIndex) {
+      $($imgWraps[choiceIndex]).addClass('selected');
+    });
+
+    $imgWraps.click(function()  {
+      var choiceIndices = [];
+
+      $(this).toggleClass('selected');
+
+      $imgWraps.filter('.selected').each(function(i, imgWrap) {
+        choiceIndices.push(parseInt($(imgWrap).data('index')));
+      });
+
+      console.log(choiceIndices);
+
+      data[field.id] = {
+        choiceIndex: choiceIndices
+      };
+
+      redraw();
+    });
+
+    $inputs.append($partial);
   }
 
   function buildLabeledImageInput(field, choices) {

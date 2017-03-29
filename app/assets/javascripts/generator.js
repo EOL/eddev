@@ -148,7 +148,8 @@ $(function() {
       };
 
       if (i < defaults.length) {
-        Object.assign(curData, defaults[i]);
+        curData.key = defaults[i].key.text;
+        curData.val = defaults[i].val.text;
       }
 
       templateData[i] = curData;
@@ -172,18 +173,18 @@ $(function() {
         if ((keyVal != null && keyVal.length > 0) ||
             (valVal != null && valVal.length > 0)) {
           keyValData.push({
-            key: keyVal,
-            val: valVal
+            key: { text: keyVal },
+            val: { text: valVal }
           });
         }
-
-        data[field.id] = {
-          value: keyValData
-        };
-
-        console.log(data[field.id]);
-        redraw();
       });
+
+      data[field.id] = {
+        value: keyValData
+      };
+
+      console.log(data[field.id]);
+      redraw();
     });
 
     $inputs.append($partial);
@@ -299,7 +300,7 @@ $(function() {
     $.each(choices, function(i, choice) {
       images[i] = {
         src: choice.url,
-        credit: choice.credit,
+        credit: choice.credit.text,
         index: i
       };
     });
@@ -317,7 +318,7 @@ $(function() {
     $creditInput = $partial.find('.image-credit');
 
     $creditInput.keyup(function() {
-      data[field.id].value.credit = $(this).val();
+      data[field.id].value.credit = { text: $(this).val() }
       redraw();
     });
 

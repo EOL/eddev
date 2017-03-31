@@ -509,36 +509,31 @@ $(function() {
 
     var field = imageFields.pop()
       , fieldData = requestData[field['id']]
-      , imgSrc = null;
+      , fieldValue = fieldData ? fieldData.value : null
+      , image = fieldValue ? fieldValue.image : null
+      , imgSrc = image ? image.src : null
+      ;
 
-    if (fieldData) {
-      imgSrc = fieldData['image']['src'];
+    if (imgSrc && imgSrc.startsWith('data')) {
+      var origFile = $('#' + field['id'] + ' .image-upload-input')[0].files[0];
+      var formData = new FormData();
+      formData.append('image', origFile);
 
-      delete fieldData['image'];
-      delete fieldData['imageId'];
-      delete fieldData['url'];
-
-      // TODO: HACK
-      if (imgSrc.startsWith('data')) {
-        var origFile = $('#' + field['id'] + ' .image-upload-input')[0].files[0];
-        var formData = new FormData();
-        formData.append('image', origFile);
-
-        $.ajax({
-          url: serviceUrl + '/images',
-          method: 'POST',
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function(data) {
-            fieldData['url'] = data['url'];
-            return dereferenceImages(imageFields, requestData, callback);
-          }
-        });
-      } else {
-        fieldData['url'] = imgSrc;
-        return dereferenceImages(imageFields, requestData, callback);
-      }
+      $.ajax({
+        url: serviceUrl + '/images',
+        method: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+          delete fieldValue.image;
+          fieldValue.url = data.url;
+          console.log(fieldData);
+          return dereferenceImages(imageFields, requestData, callback);
+        }
+      });
+    } else {
+      return dereferenceImages(imageFields, requestData, callback);
     }
   }
 
@@ -678,7 +673,7 @@ $(function() {
 
         data = card.data;
 
-        cardId = data.id;
+        cardId = card.id;
         TemplateRenderer.setCard(card, function(err) {
           if (err) throw err;
           $canvas = $(TemplateRenderer.getCanvas());

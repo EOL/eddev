@@ -33,7 +33,7 @@ gem "figaro"
 
 gem "tinymce-rails"
 
-# file attachment 
+# file attachment
 gem "paperclip", "~> 4.3.5"
 
 # s3 integration
@@ -45,6 +45,8 @@ gem "unix-crypt"
 gem "haml"
 
 gem "sass_paths"
+
+gem "httparty"
 
 # Use Unicorn as the app server
 # gem 'unicorn'
@@ -81,4 +83,3 @@ group :development do
 
   gem 'better_errors'
 end
-

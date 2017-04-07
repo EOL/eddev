@@ -15,7 +15,7 @@ module Eddev
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
-    
+
     # Custom asset paths
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
 
@@ -34,7 +34,7 @@ module Eddev
     config.x.legacy_password_salt = Figaro.env.legacy_password_salt
 
     config.x.enable_ga = Figaro.env.enable_ga? && Figaro.env.enable_ga == "true"
-    
+
     # mail config
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
@@ -48,5 +48,9 @@ module Eddev
 
     # enable gzip compression
     config.middleware.use Rack::Deflater
+
+    # card service
+    config.x.card_service_host = "localhost"
+    config.x.card_service_port = 8080
   end
 end

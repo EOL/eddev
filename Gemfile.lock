@@ -92,6 +92,8 @@ GEM
       activesupport (>= 4.1.0)
     haml (4.0.7)
       tilt
+    httparty (0.14.0)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0)
     jbuilder (2.4.1)
       activesupport (>= 3.0.0, < 5.1)
@@ -112,6 +114,7 @@ GEM
     mini_portile2 (2.0.0)
     minitest (5.8.4)
     multi_json (1.11.2)
+    multi_xml (0.6.0)
     mysql2 (0.4.3)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -231,6 +234,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.0)
   figaro
   haml
+  httparty
   jbuilder (~> 2.0)
   jquery-rails
   jquery-ui-rails

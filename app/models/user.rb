@@ -52,27 +52,27 @@ class User < ActiveRecord::Base
   #                                                                         #
   # WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING #
   ###########################################################################
-  #LEGACY_ID_OFFSET = 2000
+  LEGACY_ID_OFFSET = 2000
 
-  #def legacy_id
-  ##  read_attribute(:legacy_id) || id + LEGACY_ID_OFFSET
-  ##end
-##
-  ##DEFAULT_LEGACY_SALT = Rails.application.config.x.legacy_password_salt
-  ##attr_writer :legacy_salt # For tests
+  def legacy_id
+    read_attribute(:legacy_id) || id + LEGACY_ID_OFFSET
+  end
 
-  ##def legacy_salt
-  ##  @legacy_salt || DEFAULT_LEGACY_SALT
-  ##end
+  DEFAULT_LEGACY_SALT = Rails.application.config.x.legacy_password_salt
+  attr_writer :legacy_salt # For tests
 
-  #def locale
-  #  saved_locale = read_attribute(:locale)
-  #  if saved_locale
-  #    saved_locale
-  #  else
-  #    I18n.default_locale
-  #  end
-  #end
+  def legacy_salt
+    @legacy_salt || DEFAULT_LEGACY_SALT
+  end
+
+  def locale
+    saved_locale = read_attribute(:locale)
+    if saved_locale
+      saved_locale
+    else
+      I18n.default_locale
+    end
+  end
 
   def authenticate(password)
     # A user should either have a password_digest or a legacy_password_digest

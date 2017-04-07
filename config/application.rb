@@ -36,15 +36,15 @@ module Eddev
     config.x.enable_ga = Figaro.env.enable_ga? && Figaro.env.enable_ga == "true"
     
     # mail config
-#    config.action_mailer.delivery_method = :smtp
-#    config.action_mailer.smtp_settings = {
-#      address:              "smtp.gmail.com",
-#      port:                 587,
-#      user_name:            ENV["email_user_name"],
-#      password:             ENV["email_password"],
-#      authentication:       "plain",
-#      enable_starttls_auto: true,
-#    }
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address:              "smtp.gmail.com",
+      port:                 587,
+      user_name:            ENV["email_user_name"],
+      password:             ENV["email_password"],
+      authentication:       "plain",
+      enable_starttls_auto: true,
+    }
 
     # enable gzip compression
     config.middleware.use Rack::Deflater

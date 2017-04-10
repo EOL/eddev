@@ -56,7 +56,11 @@ Rails.application.routes.draw do
   post "login"                        => "user_sessions#create"
   get  "logout"                       => "user_sessions#destroy"
 
-  post "cardgen" => "cardgen#create"
+  post "cardgen/cards"               => "cardgen#create"
+  put  "cardgen/cards/:card_id/data" => "cardgen#update_card"
+  get  "cardgen/cards/:card_id/svg"  => "cardgen#render_svg"
+  get  "cardgen/cards/:card_id/png"  => "cardgen#render_png"
+  post "cardgen/images"              => "cardgen#upload_image"
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

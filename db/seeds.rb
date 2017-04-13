@@ -388,7 +388,7 @@ LessonPlan.create_with(:grade_level => grade_level_1).create!([
     :desc_key => "podcast_whale_communication_html",
     :objective_keys => ["discuss_studying_whales_html", "how_why_whale_communication_html"],
     :perks => [],
-    :external_url => "https://listenwise.com/teach/lessons/84-right-whales" 
+    :external_url => "https://listenwise.com/teach/lessons/84-right-whales"
   },
   {
     :theme => adaptations_theme,
@@ -523,20 +523,20 @@ Deck.create!([
     :image_file_name => "ne_urban",
     :file_name => "ne_urban",
   },
-#  {
-#    :title_key => "new_england",
-#    :subtitle_key => "vernal_pools",
-#    :desc_key => "ne_vernal",
-#    :image_file_name => "ne_vernal",
-#    :file_name => "not_found"
-#  },
-#  {
-#    :title_key => "new_england",
-#    :subtitle_key => "wright_farm",
-#    :desc_key => "ne_wright",
-#    :image_file_name => "ne_wright",
-#    :file_name => "not_found"
-#  },
+  {
+    :title_key => "new_england",
+    :subtitle_key => "vernal_pools",
+    :desc_key => "ne_vernal",
+    :image_file_name => "ne_vernal",
+    :file_name => "ne_vernal"
+  },
+  {
+    :title_key => "new_england",
+    :subtitle_key => "wright_farm",
+    :desc_key => "ne_wright",
+    :image_file_name => "ne_wright_farm",
+    :file_name => "ne_wright_farm"
+  },
   {
     :title_key => "okaloosa",
     :subtitle_key => "adaptations",
@@ -570,7 +570,7 @@ Deck.create!([
     :subtitle_key => "common_plants",
     :desc_key => "okaloosa_common_plants",
     :image_file_name => "okaloosa_plants",
-    :file_name => "okaloosa_plants" 
+    :file_name => "okaloosa_plants"
   },
   {
     :title_key => "okaloosa",

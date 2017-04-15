@@ -1,4 +1,6 @@
 class CardsController < ApplicationController
+  before_action :ensure_user, :only => :new
+
   def index
     @hero_image_partial = 'cards/cards_hero'
 

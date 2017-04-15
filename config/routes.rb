@@ -56,11 +56,17 @@ Rails.application.routes.draw do
   post "login"                        => "user_sessions#create"
   get  "logout"                       => "user_sessions#destroy"
 
-  post "cardgen/cards"               => "cardgen#create"
-  put  "cardgen/cards/:card_id/data" => "cardgen#update_card"
-  get  "cardgen/cards/:card_id/svg"  => "cardgen#render_svg"
-  get  "cardgen/cards/:card_id/png"  => "cardgen#render_png"
-  post "cardgen/images"              => "cardgen#upload_image"
+  post "cardgen/cards"                    => "cardgen#create"
+  put  "cardgen/cards/:card_id/data"      => "cardgen#update_card"
+  get  "cardgen/cards/:card_id/svg"       => "cardgen#render_svg"
+  get  "cardgen/cards/:card_id/png"       => "cardgen#render_png"
+  get  "cardgen/cards/:card_id/json"      => "cardgen#card_json"
+  post "cardgen/images"                   => "cardgen#upload_image"
+  get  "cardgen/templates/:template_name" => "cardgen#template"
+  get  "cardgen/card_ids_for_user"        => "cardgen#card_ids_for_user"
+  delete "cardgen/cards/:card_id"         => "cardgen#delete"
+
+  get  'species_cards/new'           => 'cards#new',          :as => :new_card
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
@@ -107,8 +113,4 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-
-  if Rails.env.development?
-    get  'species_cards/new'         => 'cards#new',          :as => :new_card
-  end
 end

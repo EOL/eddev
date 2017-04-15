@@ -62,21 +62,34 @@
         </div>
       {{/each}}
 
+%script#CardPlaceholderTemplate{:type => "text/x-handlebars-template"}
+  .card-wrap.user-card-wrap{:'data-card-id' => "{{cardId}}", :id => "Card-{{cardId}}"}
+    %i.fa.fa-spinner.fa-spin.fa-2x.img-placeholder
+
+%script#UserCardTemplate{:type => "text/x-handlebars-template"}
+  %img.user-card{:src => "{{src}}"}
+
+%script#CardOverlayTemplate{:type => "text/x-handlebars-template"}
+  .card-overlay
+    %i.fa.fa-edit.fa-3x.edit-btn.btn
+    %i.fa.fa-trash-o.fa-3x.trash-btn.btn
+
 
 %h1.new-card-hdr Card Generator Test Page
 
-.card-generator
+%h2.user-cards-hdr.card-hdr User Cards
+.user-cards#UserCards
+  #NewCard.card-wrap.new-card
+    %i.fa.fa-plus.fa-3x.new-card-icon
+
+%h2.create-card-hdr.card-hdr Card Editor
+#CardGenerator.card-generator.hidden
   .left-col
-    %form#TemplateParams.template-params
-      %label{:for => "TaxonId"}Taxon Id:
-      %input#TaxonId.taxon-id{:type => "text", :value => "327940"}
-
-      %input{:type => "submit", :value => "Create card"}
-
     .controls#GeneratorControls
-    %i.fa.fa-floppy-o.fa-3x.save-btn.hidden#SaveBtn{:'aria-hidden' => "true"}
 
   .right-col
     #CanvasWrap
       %h2.preview-hdr Browser preview:
       %canvas.canvas#Canvas
+      .btns-wrap
+        %i#SaveBtn.fa.fa-floppy-o.fa-3x.save-btn.btn.last

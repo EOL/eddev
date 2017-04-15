@@ -2,7 +2,7 @@ $(function() {
   var card = null;
   var data = null;
   var cardId = null; // Card service id for card - populated after first save
-  var serviceUrl = "http://localhost:8080";
+  var apiPath = "/cardgen";
   var dragState = false;
   var $inputs = $('#GeneratorControls');
   var $canvas = null;
@@ -32,9 +32,14 @@ $(function() {
     Handlebars.compile($('#KeyValListInputTemplate').html());
   var multiImageTemplate = Handlebars.compile($('#MultiImageTemplate').html());
 
+  var cardPlaceholderTemplate =
+    Handlebars.compile($('#CardPlaceholderTemplate').html());
+  var userCardTemplate = Handlebars.compile($('#UserCardTemplate').html());
+  var cardOverlayTemplate = Handlebars.compile($('#CardOverlayTemplate').html());
+
   var templateSupplier = {
     supply: function(templateName, cb) {
-      $.getJSON(serviceUrl + '/templates/trait', function(data) {
+      $.getJSON(apiPath + '/templates/trait', function(data) {
         cb(null, data);
       })
         .fail(function() {
@@ -101,21 +106,22 @@ $(function() {
   }
 
   function buildFieldInput(field) {
-    // TODO: remove field.value hack
-    var fieldDefault = field.value != null ? field : card.defaultData[field.id]
+    var fieldData = card.data[field.id] != null ?
+                       card.data[field.id] :
+                       card.defaultData[field.id]
       , choices = card.choices[field.id] || []
-      , choiceIndex = fieldDefault != null ? fieldDefault.choiceIndex : null
-      , defaultVal = null
+      , choiceIndex = fieldData != null ? fieldData.choiceIndex : null
+      , fieldValue = null
       ;
 
-    if (fieldDefault) {
-      defaultVal = fieldDefault.value != null ?
-                   fieldDefault.value :
-                   choices[choiceIndex];
+    if (fieldData) {
+      fieldValue = fieldData.value != null ?
+                   fieldData.value :
+                   choices[fieldData.choiceIndex]
     }
 
     if (field.type === 'text') {
-      buildTextInput(field, defaultVal);
+      buildTextInput(field, fieldValue);
     } else if (field.type === 'image') {
       buildImageInput(field, choices, choiceIndex);
     } else if (field.type === 'labeled-choice-image') {
@@ -125,7 +131,7 @@ $(function() {
     } else if (field.type === 'color-scheme') {
       buildColorSchemeInput(field, choices, choiceIndex);
     } else if (field.type === 'key-val-list') {
-      buildKeyValListInput(field, defaultVal);
+      buildKeyValListInput(field, fieldValue);
     } else if (field.type === 'multi-image') {
       buildMultiImageInput(field, choices, choiceIndex);
     } else {
@@ -485,20 +491,36 @@ $(function() {
   }
 
   function save() {
-    var requestData = $.extend(true, {}, data);
-
-    var imageFields = TemplateRenderer.imageFields();
+    var requestData = $.extend(true, {}, data)
+      , imageFields = TemplateRenderer.imageFields()
+      ;
 
     dereferenceImages(imageFields, requestData, function() {
       $.ajax({
-        url: serviceUrl + '/cards/' + cardId + '/data',
+        url: apiPath + '/cards/' + cardId + '/data',
         method: 'PUT',
         data: JSON.stringify(requestData),
         contentType: 'application/json',
-        success: function(data) {
-          window.open(serviceUrl + '/cards/' + cardId + '/render');
+        success: function() {
+          $('#CardGenerator').addClass('hidden');
+          reloadCard(cardId);
         }
       });
+    });
+  }
+
+  function destroy($card, id) {
+    var shouldDestroy = confirm('Are you sure you want to delete this card?');
+
+    if (!shouldDestroy) return;
+
+    $.ajax({
+      url: apiPath + '/cards/' + id,
+      method: 'DELETE',
+      success: function() {
+        $card.remove();
+        $('#CardGenerator').addClass('hidden');
+      }
     });
   }
 
@@ -520,7 +542,7 @@ $(function() {
       formData.append('image', origFile);
 
       $.ajax({
-        url: serviceUrl + '/images',
+        url: apiPath + '/images',
         method: 'POST',
         data: formData,
         processData: false,
@@ -585,9 +607,11 @@ $(function() {
     var $canvasWrap = $('#CanvasWrap');
 
     buildInputs();
-    $('#SaveBtn').removeClass('hidden');
     $('#SaveBtn').off('click', save);
     $('#SaveBtn').click(save);
+
+    $('#DeleteBtn').off('click', destroy);
+    $('#DeleteBtn').click(destroy);
 
     // TODO: Fix!!! Problem arises when fixed position applied.
     // Image panning
@@ -649,13 +673,62 @@ $(function() {
       });
   }
 
-  $('#TemplateParams').submit(function() {
-    var taxonId = $(this).find('.taxon-id').val();
+  function cardSelected($card, id) {
+    var $selectedCard = $('.card-wrap.selected')
+      , $overlay = $(cardOverlayTemplate())
+      ;
 
-    // TODO: basic format validation ([0-9]+, etc)
+    if ($card.hasClass('selected')) {
+      return;
+    }
+
+    $overlay.find('.trash-btn').click(function() {
+      destroy($card, id);
+    });
+
+    $overlay.find('.edit-btn').click(function() {
+      $(this).addClass('active');
+      loadCardForEditing(id);
+    });
+
+    $selectedCard.find('.card-overlay').remove();
+    $selectedCard.removeClass('selected');
+
+    $card.append($overlay);
+    $card.addClass('selected');
+  }
+
+  function setCard(theCard) {
+    card = theCard;
+
+    if (card.data == null) {
+      card.data = {}
+    }
+
+    data = card.data;
+    cardId = card.id;
+
+    TemplateRenderer.setCard(card, function(err) {
+      if (err) throw err;
+      $canvas = $(TemplateRenderer.getCanvas());
+      setupCardInterface();
+      $('#CardGenerator').removeClass('hidden');
+    });
+  }
+
+  function newCard() {
+    var taxonId = window.prompt('Enter EOL taxon ID', '327940')
+      , $cardPlaceholder = $(cardPlaceholderTemplate())
+      ;
+
+    $('#NewCard').after($cardPlaceholder);
+
+    if (!taxonId) {
+      return;
+    }
 
     $.ajax({
-      url: serviceUrl + '/cards',
+      url: apiPath + '/cards',
       data: JSON.stringify({
         templateName: 'trait',
         templateParams: {
@@ -664,23 +737,85 @@ $(function() {
       }),
       contentType: 'application/json',
       method: 'POST',
-      success: function(resp) {
-        card = resp;
+      success: function(card) {
+        $cardPlaceholder.click(function() {
+          cardSelected($cardPlaceholder, card.id);
+        });
+        $cardPlaceholder.click();
+        $cardPlaceholder.find('.card-overlay .edit-btn').click();
+        loadCardImg($cardPlaceholder, card.id);
+      }
+    });
+  }
 
-        if (card.data == null) {
-          card.data = {}
-        }
+  $('#TemplateParams').submit(function() {
+    var taxonId = $(this).find('.taxon-id').val();
+  });
 
-        data = card.data;
+  function loadCardForEditing(id) {
+    $.ajax({
+      url: apiPath + '/cards/' + id + '/json',
+      method: 'GET',
+      contentType: 'application/json',
+      success: function(card) {
+        setCard(card);
+      }
+    });
+  }
 
-        cardId = card.id;
-        TemplateRenderer.setCard(card, function(err) {
-          if (err) throw err;
-          $canvas = $(TemplateRenderer.getCanvas());
-          setupCardInterface();
+  function reloadUserCards() {
+    $.ajax({
+      url: apiPath + '/card_ids_for_user',
+      method: 'GET',
+      success: function(ids) {
+        var $userCards = $('#UserCards');
+
+        $userCards.find('.user-card-wrap').remove();
+
+        $('#NewCard').click(function() {
+          newCard();
+        });
+
+        $.each(ids, function(i, id) {
+          var $placeholder = $(cardPlaceholderTemplate({ cardId: id }));
+          $userCards.append($placeholder);
+
+          loadCardImgAndBindEvents($placeholder, id);
         });
       }
-    })
-    return false;
-  });
+    });
+  }
+  reloadUserCards();
+
+  function loadCardImgAndBindEvents($card, id) {
+    $card.click(function() {
+      cardSelected($card, id);
+    });
+
+    loadCardImg($card, id);
+  }
+
+  function reloadCard(id) {
+    var $card = $('#Card-' + id)
+      , $newCard = $(cardPlaceholderTemplate({ cardId: id }))
+      ;
+
+    $card.replaceWith($newCard);
+    loadCardImgAndBindEvents($newCard, id);
+  }
+
+  function loadCardImg($placeholder, cardId) {
+    var $img = $(userCardTemplate({
+      src: apiPath + '/cards/' + cardId + '/svg'
+    }));
+
+    $img.one('load', function() {
+      $placeholder.find('.img-placeholder').remove();
+      $placeholder.prepend($img);
+    });
+
+    if ($img.complete) {
+      $img.load();
+    }
+  }
 });

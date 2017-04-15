@@ -428,9 +428,86 @@ $featured-trans-width: 642;
   width: 425px;
 }
 
+.card-hdr {
+  border: 1px solid #000;
+  display: block;
+  padding: 10px 0;
+  text-align: center;
+  width: 100%;
+}
+
+.create-card-hdr {
+  margin-top: 20px;
+}
+
+#UserCards {
+  background-color: #ddd;
+  height: 400px;
+  overflow: auto;
+  padding: 0 0 10px 20px;
+
+  .card-wrap {
+    $height: 268.8px;
+    $width: 192.8px;
+
+    background-color: #fff;
+    border: 2px solid #000;
+    box-sizing: content-box;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 5px;
+    margin-top: 10px;
+    height: $height;
+    position: relative;
+    vertical-align: top;
+    width: $width;
+
+    .card-overlay {
+      background: rgba(50, 50, 50, .5);
+      display: flex;
+      flex-direction: column;
+      height: $height;
+      justify-content: space-around;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: $width;
+
+      .btn {
+        color: #fff;
+        text-align: center;
+      }
+
+      .edit-btn.active {
+        color: #f00;
+      }
+    }
+  }
+
+  .img-placeholder {
+    display: block;
+    margin: 124px auto 0 auto;
+    width: 32px;
+  }
+
+  .new-card-icon {
+    display: block;
+    margin: 116px auto 0 auto;
+    width: 38px
+  }
+
+  .user-card {
+    width: 100%;
+  }
+}
+
 #CanvasWrap.fixed {
   position: fixed;
   top: 35px;
+}
+
+.canvas {
+  display: block;
 }
 
 #GeneratorControls {
@@ -479,10 +556,21 @@ $featured-trans-width: 642;
   }
 }
 
-.save-btn {
-  cursor: pointer;
-  display: block;
-  margin-top:10px;
+.btns-wrap {
+  background-color: #ddd;
+  border: 1px solid #000;
+  display: flex;
+
+  .btn {
+    border-right: 1px solid #000;
+    cursor: pointer;
+    flex-grow: 1;
+    text-align: center;
+
+    &.last {
+      border-right: none;
+    }
+  }
 }
 
 .server-img {

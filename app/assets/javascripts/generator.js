@@ -721,11 +721,11 @@ $(function() {
       , $cardPlaceholder = $(cardPlaceholderTemplate())
       ;
 
-    $('#NewCard').after($cardPlaceholder);
-
     if (!taxonId) {
       return;
     }
+
+    $('#NewCard').after($cardPlaceholder);
 
     $.ajax({
       url: apiPath + '/cards',

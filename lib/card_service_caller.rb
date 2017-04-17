@@ -9,41 +9,41 @@ module CardServiceCaller
 
   JSON_HEADERS = { "Content-Type" => "application/json" }
 
-  def self.create_card(json)
+  def self.create_card(user_id, json)
     HTTParty.post(
-      "#{SERVICE_URL}/cards",
+      "#{self.user_prefix(user_id)}/cards",
       :body => json,
       :headers => JSON_HEADERS
     )
   end
 
-  def self.update_card_data(card_id, data)
+  def self.update_card_data(user_id, card_id, data)
     HTTParty.put(
-      "#{SERVICE_URL}/cards/#{card_id}/data",
+      "#{self.user_prefix(user_id)}/cards/#{card_id}/data",
       :body => data,
       :headers => JSON_HEADERS
     )
   end
 
-  def self.svg(card_id)
-    HTTParty.get("#{SERVICE_URL}/cards/#{card_id}/svg")
+  def self.svg(user_id, card_id)
+    HTTParty.get("#{self.user_prefix(user_id)}/cards/#{card_id}/svg")
   end
 
-  def self.png(card_id)
-    HTTParty.get("#{SERVICE_URL}/cards/#{card_id}/png")
+  def self.png(user_id, card_id)
+    HTTParty.get("#{self.user_prefix(user_id)}/cards/#{card_id}/png")
   end
 
-  def self.json(card_id)
-    HTTParty.get("#{SERVICE_URL}/cards/#{card_id}/json")
+  def self.json(user_id, card_id)
+    HTTParty.get("#{self.user_prefix(user_id)}/cards/#{card_id}/json")
   end
 
-  def self.delete(card_id)
-    HTTParty.delete("#{SERVICE_URL}/cards/#{card_id}")
+  def self.delete(user_id, card_id)
+    HTTParty.delete("#{self.user_prefix(user_id)}/cards/#{card_id}")
   end
 
-  def self.upload_image(data)
+  def self.upload_image(user_id, data)
     HTTParty.post(
-      "#{SERVICE_URL}/images",
+      "#{self.user_prefix(user_id)}/images",
       :body => data,
       :headers => { "Content-Type" => "application/octet-stream" } # Let the service determine the file type
     )
@@ -54,6 +54,11 @@ module CardServiceCaller
   end
 
   def self.card_ids_for_user(user_id)
-    HTTParty.get("#{SERVICE_URL}/users/#{user_id}/cardIds")
+    HTTParty.get("#{self.user_prefix(user_id)}/cardIds")
   end
+
+  private
+    def self.user_prefix(user_id)
+      "#{SERVICE_URL}/users/#{user_id}"
+    end
 end

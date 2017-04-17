@@ -10,32 +10,42 @@ class CardgenController < ApplicationController
 
   # POST /cardgen/cards
   def create
-    request_params = { :userId => logged_in_user.id }.merge(params[:post_json])
-    json_response(CardServiceCaller.create_card(request_params.to_json))
+    json_response(
+      CardServiceCaller.create_card(logged_in_user.id, request.raw_post)
+    )
   end
 
   # PUT /cardgen/cards/:card_id/data
   def update_card
     json_response(
-      CardServiceCaller.update_card_data(params[:card_id], request.raw_post)
+      CardServiceCaller.update_card_data(
+        logged_in_user.id,
+        params[:card_id],
+        request.raw_post
+      )
     )
   end
 
   # GET /cardgen/cards/:card_id/svg
   def render_svg
-    data = CardServiceCaller.svg(params[:card_id])
+    data = CardServiceCaller.svg(logged_in_user.id, params[:card_id])
     send_data data, :type => "image/svg+xml", :disposition => "inline"
   end
 
   # GET /cardgen/cards/:card_id/png
   def render_png
-    data = CardServiceCaller.png(params[:card_id])
+    data = CardServiceCaller.png(logged_in_user.id, params[:card_id])
     send_data data, :type => "image/png", :disposition => "inline"
   end
 
   # POST /cardgen/images
   def upload_image
-    json_response(CardServiceCaller.upload_image(request.body.read))
+    json_response(
+      CardServiceCaller.upload_image(
+        logged_in_user.id,
+        request.body.read
+      )
+    )
   end
 
   # GET /cardgen/templates/:template_name
@@ -50,12 +60,12 @@ class CardgenController < ApplicationController
 
   # GET /cardgen/cards/:card_id/json
   def card_json
-    json_response(CardServiceCaller.json(params[:card_id]))
+    json_response(CardServiceCaller.json(logged_in_user.id, params[:card_id]))
   end
 
   # DELETE /cardgen/cards/:card_id
   def delete
-    json_response(CardServiceCaller.delete(params[:card_id]))
+    json_response(CardServiceCaller.delete(logged_in_user.id, params[:card_id]))
   end
 
   private

@@ -63,24 +63,35 @@
       {{/each}}
 
 %script#CardPlaceholderTemplate{:type => "text/x-handlebars-template"}
-  .card-wrap.user-card-wrap{:'data-card-id' => "{{cardId}}", :id => "Card-{{cardId}}"}
+  .resource-wrap.user-resource-wrap{:'data-card-id' => "{{cardId}}", :id => "Card-{{cardId}}"}
     %i.fa.fa-spinner.fa-spin.fa-2x.img-placeholder
 
 %script#UserCardTemplate{:type => "text/x-handlebars-template"}
-  %img.user-card{:src => "{{src}}"}
+  %img.user-resource{:src => "{{src}}"}
+
+%script#DeckTemplate{:type => "text/x-handlebars-template"}
+  .resource-wrap.user-resource-wrap
+    .deck-name {{name}}
 
 %script#CardOverlayTemplate{:type => "text/x-handlebars-template"}
   .card-overlay
     %i.fa.fa-edit.fa-3x.edit-btn.btn
     %i.fa.fa-trash-o.fa-3x.trash-btn.btn
 
+%script#UserDecksTemplate{ :type => "text/x-handlebars-template"}
+  .deck-wrap.user-deck-wrap
 
 %h1.new-card-hdr Card Generator Test Page
 
-%h2.user-cards-hdr.card-hdr User Cards
-.user-cards#UserCards
-  #NewCard.card-wrap.new-card
-    %i.fa.fa-plus.fa-3x.new-card-icon
+%h2.user-resources-hdr.card-hdr Card Manager
+.card-manager-controls
+  %ul#ViewSelector.view-selector
+    %li.card-view.view.selected.first> Cards
+    %li.deck-view.view> Decks
+    %li.deck-cards-view.view.hidden>
+.user-resources.user-decks#UserResources
+  #NewResource.resource-wrap.new-resource
+    %i.fa.fa-plus.fa-3x.new-resource-icon
 
 %h2.create-card-hdr.card-hdr Card Editor
 #CardGenerator.card-generator.hidden

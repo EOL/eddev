@@ -440,13 +440,13 @@ $featured-trans-width: 642;
   margin-top: 20px;
 }
 
-#UserCards {
+.user-resources {
   background-color: #ddd;
   height: 400px;
   overflow: auto;
   padding: 0 0 10px 20px;
 
-  .card-wrap {
+  .resource-wrap {
     $height: 268.8px;
     $width: 192.8px;
 
@@ -490,13 +490,13 @@ $featured-trans-width: 642;
     width: 32px;
   }
 
-  .new-card-icon {
+  .new-resource-icon {
     display: block;
     margin: 116px auto 0 auto;
     width: 38px
   }
 
-  .user-card {
+  .user-resource {
     width: 100%;
   }
 }
@@ -508,6 +508,31 @@ $featured-trans-width: 642;
 
 .canvas {
   display: block;
+}
+
+.card-manager-controls {
+  .view-selector {
+    border: 1px solid #000;
+    display: inline-block;
+    margin-top: -1px;
+
+    .view {
+      cursor: pointer;
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 20px;
+      border-left: 1px solid #000;
+
+      &.first {
+        border-left: none;
+      }
+
+      &.selected {
+        background-color: #555;
+        color: #fff;
+      }
+    }
+  }
 }
 
 #GeneratorControls {

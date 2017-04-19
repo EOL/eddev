@@ -9,9 +9,23 @@ class CardgenController < ApplicationController
   wrap_parameters :post_json, :format => :json
 
   # POST /cardgen/cards
-  def create
+  def create_card
     json_response(
       CardServiceCaller.create_card(logged_in_user.id, request.raw_post)
+    )
+  end
+
+  # POST /cardgen/decks/:deck_id/cards
+  def create_deck_card
+    json_response(
+      CardServiceCaller.create_card_in_deck(logged_in_user.id,
+        params[:deck_id], request.raw_post)
+    )
+  end
+
+  def create_deck
+    json_response(
+      CardServiceCaller.create_deck(logged_in_user.id, request.raw_post)
     )
   end
 
@@ -53,9 +67,21 @@ class CardgenController < ApplicationController
     json_response(CardServiceCaller.get_template(params[:template_name]))
   end
 
-  # GET /cardgen/card_ids_for_user
-  def card_ids_for_user
-    json_response(CardServiceCaller.card_ids_for_user(logged_in_user.id))
+  # GET /cardgen/card_ids
+  def card_ids
+    json_response(CardServiceCaller.card_ids(logged_in_user.id))
+  end
+
+  # GET /cardgen/decks/:deck_id/card_ids
+  def deck_card_ids
+    json_response(CardServiceCaller.card_ids_for_deck(
+      logged_in_user.id,
+      params[:deck_id])
+    )
+  end
+
+  def decks
+    json_response(CardServiceCaller.get_decks(logged_in_user.id))
   end
 
   # GET /cardgen/cards/:card_id/json

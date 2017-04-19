@@ -56,14 +56,18 @@ Rails.application.routes.draw do
   post "login"                        => "user_sessions#create"
   get  "logout"                       => "user_sessions#destroy"
 
-  post "cardgen/cards"                    => "cardgen#create"
+  post "cardgen/cards"                    => "cardgen#create_card"
+  post "cardgen/decks/:deck_id/cards"     => "cardgen#create_deck_card"
   put  "cardgen/cards/:card_id/data"      => "cardgen#update_card"
   get  "cardgen/cards/:card_id/svg"       => "cardgen#render_svg"
   get  "cardgen/cards/:card_id/png"       => "cardgen#render_png"
   get  "cardgen/cards/:card_id/json"      => "cardgen#card_json"
+  get  "cardgen/card_ids"                 => "cardgen#card_ids"
+  get  "cardgen/decks/:deck_id/cardIds"   => "cardgen#deck_card_ids"
+  post "cardgen/decks"                    => "cardgen#create_deck"
+  get  "cardgen/decks"                    => "cardgen#decks"
   post "cardgen/images"                   => "cardgen#upload_image"
   get  "cardgen/templates/:template_name" => "cardgen#template"
-  get  "cardgen/card_ids_for_user"        => "cardgen#card_ids_for_user"
   delete "cardgen/cards/:card_id"         => "cardgen#delete"
 
   get  'species_cards/new'           => 'cards#new',          :as => :new_card

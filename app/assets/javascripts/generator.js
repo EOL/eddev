@@ -36,6 +36,7 @@ $(function() {
     Handlebars.compile($('#CardPlaceholderTemplate').html());
   var userCardTemplate = Handlebars.compile($('#UserCardTemplate').html());
   var cardOverlayTemplate = Handlebars.compile($('#CardOverlayTemplate').html());
+  var deckTemplate = Handlebars.compile($('#DeckTemplate').html());
 
   var templateSupplier = {
     supply: function(templateName, cb) {
@@ -674,7 +675,7 @@ $(function() {
   }
 
   function cardSelected($card, id) {
-    var $selectedCard = $('.card-wrap.selected')
+    var $selectedCard = $('.resource-wrap.selected')
       , $overlay = $(cardOverlayTemplate())
       ;
 
@@ -717,18 +718,24 @@ $(function() {
   }
 
   function newCard() {
+    newCardForDeck(null);
+  }
+
+  function newCardForDeck(deckId) {
     var taxonId = window.prompt('Enter EOL taxon ID', '327940')
       , $cardPlaceholder = $(cardPlaceholderTemplate())
+      , path = deckId === null ? '/cards' : '/decks/' + deckId + '/cards'
       ;
 
     if (!taxonId) {
       return;
     }
 
-    $('#NewCard').after($cardPlaceholder);
+    $('#NewResource').after($cardPlaceholder);
+
 
     $.ajax({
-      url: apiPath + '/cards',
+      url: apiPath + path,
       data: JSON.stringify({
         templateName: 'trait',
         templateParams: {
@@ -763,29 +770,114 @@ $(function() {
     });
   }
 
+  function cleanUserResources() {
+    var $userResources = $('#UserResources');
+
+    $userResources.find('.user-resource-wrap').remove();
+    $userResources.find('.new-resource').off('click');
+
+    return $userResources;
+  }
+
+  function loadCardsFromIds(ids, clickFn) {
+    var $userCards = cleanUserResources();
+
+    $('#NewResource').click(function() {
+      newCard();
+    });
+
+    $.each(ids, function(i, id) {
+      var $placeholder = $(cardPlaceholderTemplate({ cardId: id }));
+      $userCards.append($placeholder);
+
+      loadCardImgAndBindEvents($placeholder, id);
+    });
+  }
+
   function reloadUserCards() {
     $.ajax({
-      url: apiPath + '/card_ids_for_user',
+      url: apiPath + '/card_ids',
       method: 'GET',
       success: function(ids) {
-        var $userCards = $('#UserCards');
-
-        $userCards.find('.user-card-wrap').remove();
-
-        $('#NewCard').click(function() {
-          newCard();
-        });
-
-        $.each(ids, function(i, id) {
-          var $placeholder = $(cardPlaceholderTemplate({ cardId: id }));
-          $userCards.append($placeholder);
-
-          loadCardImgAndBindEvents($placeholder, id);
-        });
+        loadCardsFromIds(ids, newCard);
       }
     });
   }
   reloadUserCards();
+
+  function loadDeckCards(deck) {
+    $('#ViewSelector .view.selected').removeClass('selected');
+
+    $('#ViewSelector .deck-cards-view')
+      .removeClass('hidden')
+      .addClass('selected')
+      .html(deck.name)
+
+
+    $.ajax({
+      url: apiPath + '/decks/' + deck.id + '/cardIds',
+      method: 'GET',
+      success: function(ids) {
+        loadCardsFromIds(ids, function() {
+          newCardForDeck(deckId);
+        });
+      }
+    });
+  }
+
+  function reloadDecks() {
+    var deckContainer = cleanUserResources();
+    $('#NewResource').click(newDeck);
+
+    $.ajax({
+      url: apiPath + '/decks',
+      method: 'GET',
+      success: function(decks) {
+        $.each(decks, function(i, deck) {
+          var $deckElmt = $(deckTemplate({ name: deck.name }));
+          $deckElmt.click(function() {
+            loadDeckCards(deck);
+          });
+          deckContainer.append($deckElmt);
+        });
+      }
+    })
+  }
+
+  function newDeck() {
+    var deckName = prompt('Deck name:');
+
+    if (!deckName) return;
+
+    $.ajax({
+      url: apiPath + '/decks',
+      method: 'POST',
+      data: JSON.stringify({ name: deckName }),
+      success: function(deck) {
+        $('#NewDeck').after(
+          $(deckTemplate({ name: deck.name }))
+        );
+      }
+    });
+  }
+
+  function viewSelectorClickHelper(elmt, fn) {
+    var $viewSelector = $('#ViewSelector');
+
+    $viewSelector.find('.view.selected').removeClass('selected');
+    $viewSelector.find('.deck-cards-view').addClass('hidden');
+    $(elmt).addClass('selected');
+
+    fn();
+  }
+
+  $('#ViewSelector .deck-view').click(function() {
+    viewSelectorClickHelper(this, reloadDecks);
+  });
+
+  $('#ViewSelector .card-view').click(function() {
+    viewSelectorClickHelper(this, reloadUserCards);
+  });
 
   function loadCardImgAndBindEvents($card, id) {
     $card.click(function() {

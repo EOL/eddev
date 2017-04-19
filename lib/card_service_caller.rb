@@ -17,6 +17,26 @@ module CardServiceCaller
     )
   end
 
+  def self.create_card_in_deck(user_id, deck_id, json)
+    HTTParty.post(
+      "#{self.user_prefix(user_id)}/decks/#{deck_id}/cards",
+      :body => json,
+      :headers => JSON_HEADERS
+    )
+  end
+
+  def self.create_deck(user_id, json)
+    HTTParty.post(
+      "#{self.user_prefix(user_id)}/decks",
+      :body => json,
+      :headers => JSON_HEADERS
+    )
+  end
+
+  def self.get_decks(user_id)
+    HTTParty.get("#{self.user_prefix(user_id)}/decks")
+  end
+
   def self.update_card_data(user_id, card_id, data)
     HTTParty.put(
       "#{self.user_prefix(user_id)}/cards/#{card_id}/data",
@@ -53,8 +73,12 @@ module CardServiceCaller
     HTTParty.get("#{SERVICE_URL}/templates/#{name}")
   end
 
-  def self.card_ids_for_user(user_id)
+  def self.card_ids(user_id)
     HTTParty.get("#{self.user_prefix(user_id)}/cardIds")
+  end
+
+  def self.card_ids_for_deck(user_id, deck_id)
+    HTTParty.get("#{self.user_prefix(user_id)}/decks/#{deck_id}/cardIds")
   end
 
   private

@@ -38,6 +38,9 @@ $(function() {
   var cardOverlayTemplate = Handlebars.compile($('#CardOverlayTemplate').html());
   var deckTemplate = Handlebars.compile($('#DeckTemplate').html());
 
+  /*
+   * Template supplier for TemplateRenderer
+   */
   var templateSupplier = {
     supply: function(templateName, cb) {
       $.getJSON(apiPath + '/templates/trait', function(data) {
@@ -49,6 +52,9 @@ $(function() {
     }
   };
 
+  /*
+   * Canvas supplier for TemplateRenderer
+   */
   var canvasSupplier = {
     supply: function(width, height) {
       var $canvas = $('#Canvas'),
@@ -66,6 +72,9 @@ $(function() {
     }
   }
 
+  /*
+   * Image fetcher for TemplateRenderer
+   */
   var imageFetcher = {
     fetch: function(url, cb) {
       var img = new Image()
@@ -83,6 +92,9 @@ $(function() {
     }
   }
 
+  /*
+   * Inject TemplateRenderer dependencies
+   */
   TemplateRenderer.setTemplateSupplier(templateSupplier);
   TemplateRenderer.setCanvasSupplier(canvasSupplier);
   TemplateRenderer.setImageFetcher(imageFetcher);
@@ -91,7 +103,10 @@ $(function() {
     return fieldId + '-' + i;
   }
 
-  // Construct UI inputs
+  /*
+   * Build card editor inputs. Only call after a card has been set on the
+   * TemplateRenderer.
+   */
   function buildInputs() {
     var fields = TemplateRenderer.editableFields();
 
@@ -106,6 +121,9 @@ $(function() {
     });
   }
 
+  /*
+   * Build an editor input for a card field.
+   */
   function buildFieldInput(field) {
     var fieldData = card.data[field.id] != null ?
                        card.data[field.id] :
@@ -482,84 +500,6 @@ $(function() {
     changeHelper($select);
   }
 
-  function redraw() {
-    var data = card.data;
-    TemplateRenderer.draw(function(err, canvas) {
-      if (err) {
-        console.log(err);
-      }
-    });
-  }
-
-  function save() {
-    var requestData = $.extend(true, {}, data)
-      , imageFields = TemplateRenderer.imageFields()
-      ;
-
-    dereferenceImages(imageFields, requestData, function() {
-      $.ajax({
-        url: apiPath + '/cards/' + cardId + '/data',
-        method: 'PUT',
-        data: JSON.stringify(requestData),
-        contentType: 'application/json',
-        success: function() {
-          $('#CardGenerator').addClass('hidden');
-          reloadCard(cardId);
-        }
-      });
-    });
-  }
-
-  function destroy($card, id) {
-    var shouldDestroy = confirm('Are you sure you want to delete this card?');
-
-    if (!shouldDestroy) return;
-
-    $.ajax({
-      url: apiPath + '/cards/' + id,
-      method: 'DELETE',
-      success: function() {
-        $card.remove();
-        $('#CardGenerator').addClass('hidden');
-      }
-    });
-  }
-
-  function dereferenceImages(imageFields, requestData, callback) {
-    if (imageFields.length === 0) {
-      return callback();
-    }
-
-    var field = imageFields.pop()
-      , fieldData = requestData[field['id']]
-      , fieldValue = fieldData ? fieldData.value : null
-      , image = fieldValue ? fieldValue.image : null
-      , imgSrc = image ? image.src : null
-      ;
-
-    if (imgSrc && imgSrc.startsWith('data')) {
-      var origFile = $('#' + field['id'] + ' .image-upload-input')[0].files[0];
-      var formData = new FormData();
-      formData.append('image', origFile);
-
-      $.ajax({
-        url: apiPath + '/images',
-        method: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(data) {
-          delete fieldValue.image;
-          fieldValue.url = data.url;
-          console.log(fieldData);
-          return dereferenceImages(imageFields, requestData, callback);
-        }
-      });
-    } else {
-      return dereferenceImages(imageFields, requestData, callback);
-    }
-  }
-
   function updateDrag(e) {
     if (!dragState) {
       return;
@@ -639,15 +579,19 @@ $(function() {
     });
 
 
+    /*
+     * Canvas stays fixed as user scrolls down in editor
+     */
     var canvasRelDocTop = 0;
 
     $(document).scroll(function(e) {
       var scrollTop = $(document).scrollTop()
         , viewPosn = $canvasWrap.offset().top - scrollTop
+        , marginTop = parseInt($canvasWrap.css('margin-top'))
         ;
 
       if (!$canvasWrap.hasClass('fixed')) {
-        if (viewPosn <= 35) {
+        if (viewPosn <= marginTop) {
           canvasRelDocTop = scrollTop;
           $canvasWrap.addClass('fixed');
         }
@@ -674,6 +618,98 @@ $(function() {
       });
   }
 
+  /*
+   * TODO: eliminate this step by uploading image immediately.
+   */
+  function dereferenceImages(imageFields, requestData, callback) {
+    if (imageFields.length === 0) {
+      return callback();
+    }
+
+    var field = imageFields.pop()
+      , fieldData = requestData[field['id']]
+      , fieldValue = fieldData ? fieldData.value : null
+      , image = fieldValue ? fieldValue.image : null
+      , imgSrc = image ? image.src : null
+      ;
+
+    if (imgSrc && imgSrc.startsWith('data')) {
+      var origFile = $('#' + field['id'] + ' .image-upload-input')[0].files[0];
+      var formData = new FormData();
+      formData.append('image', origFile);
+
+      $.ajax({
+        url: apiPath + '/images',
+        method: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+          delete fieldValue.image;
+          fieldValue.url = data.url;
+          console.log(fieldData);
+          return dereferenceImages(imageFields, requestData, callback);
+        }
+      });
+    } else {
+      return dereferenceImages(imageFields, requestData, callback);
+    }
+  }
+
+  /*
+   * Re-render the current card
+   */
+  function redraw() {
+    TemplateRenderer.draw(function(err, canvas) {
+      if (err) {
+        console.log(err);
+      }
+    });
+  }
+
+  /*
+   * Save the current card
+   */
+  function save() {
+    var requestData = $.extend(true, {}, data)
+      , imageFields = TemplateRenderer.imageFields()
+      ;
+
+    dereferenceImages(imageFields, requestData, function() {
+      $.ajax({
+        url: apiPath + '/cards/' + cardId + '/data',
+        method: 'PUT',
+        data: JSON.stringify(requestData),
+        contentType: 'application/json',
+        success: function() {
+          $('#CardGenerator').addClass('hidden');
+          reloadCard(cardId);
+        }
+      });
+    });
+  }
+
+  /*
+   * Delete a card and remove its image from the card manager.
+   */
+  function destroy($card, id) {
+    var shouldDestroy = confirm('Are you sure you want to delete this card?');
+
+    if (!shouldDestroy) return;
+
+    $.ajax({
+      url: apiPath + '/cards/' + id,
+      method: 'DELETE',
+      success: function() {
+        $card.remove();
+        $('#CardGenerator').addClass('hidden');
+      }
+    });
+  }
+
+  /*
+   * CARD MANAGER
+   */
   function cardSelected($card, id) {
     var $selectedCard = $('.resource-wrap.selected')
       , $overlay = $(cardOverlayTemplate())
@@ -695,7 +731,7 @@ $(function() {
     $selectedCard.find('.card-overlay').remove();
     $selectedCard.removeClass('selected');
 
-    $card.append($overlay);
+    $card.find('.resource-frame').append($overlay);
     $card.addClass('selected');
   }
 
@@ -714,6 +750,7 @@ $(function() {
       $canvas = $(TemplateRenderer.getCanvas());
       setupCardInterface();
       $('#CardGenerator').removeClass('hidden');
+      $('#CanvasWrap').removeClass('fixed');
     });
   }
 
@@ -733,7 +770,6 @@ $(function() {
 
     $('#NewResource').after($cardPlaceholder);
 
-
     $.ajax({
       url: apiPath + path,
       data: JSON.stringify({
@@ -745,12 +781,14 @@ $(function() {
       contentType: 'application/json',
       method: 'POST',
       success: function(card) {
-        $cardPlaceholder.click(function() {
-          cardSelected($cardPlaceholder, card.id);
+        var $newPlaceholder = $(cardPlaceholderTemplate({ cardId: card.id }));
+        $cardPlaceholder.replaceWith($newPlaceholder);
+        $newPlaceholder.click(function() {
+          cardSelected($newPlaceholder, card.id);
         });
-        $cardPlaceholder.click();
-        $cardPlaceholder.find('.card-overlay .edit-btn').click();
-        loadCardImg($cardPlaceholder, card.id);
+        $newPlaceholder.click();
+        $newPlaceholder.find('.card-overlay .edit-btn').click();
+        loadCardImg($newPlaceholder, card.id);
       }
     });
   }
@@ -782,14 +820,11 @@ $(function() {
   function loadCardsFromIds(ids, clickFn) {
     var $userCards = cleanUserResources();
 
-    $('#NewResource').click(function() {
-      newCard();
-    });
+    $('#NewResource').click(clickFn);
 
     $.each(ids, function(i, id) {
       var $placeholder = $(cardPlaceholderTemplate({ cardId: id }));
       $userCards.append($placeholder);
-
       loadCardImgAndBindEvents($placeholder, id);
     });
   }
@@ -813,13 +848,12 @@ $(function() {
       .addClass('selected')
       .html(deck.name)
 
-
     $.ajax({
       url: apiPath + '/decks/' + deck.id + '/cardIds',
       method: 'GET',
       success: function(ids) {
         loadCardsFromIds(ids, function() {
-          newCardForDeck(deckId);
+          newCardForDeck(deck.id);
         });
       }
     });
@@ -854,9 +888,11 @@ $(function() {
       method: 'POST',
       data: JSON.stringify({ name: deckName }),
       success: function(deck) {
-        $('#NewDeck').after(
-          $(deckTemplate({ name: deck.name }))
-        );
+        var $deckElmt = $(deckTemplate({ name: deck.name }));
+        $('#NewResource').after($deckElmt);
+        $deckElmt.click(function() {
+          loadDeckCards(deck);
+        });
       }
     });
   }
@@ -902,8 +938,7 @@ $(function() {
     }));
 
     $img.one('load', function() {
-      $placeholder.find('.img-placeholder').remove();
-      $placeholder.prepend($img);
+      $placeholder.find('.img-placeholder').replaceWith($img);
     });
 
     if ($img.complete) {

@@ -447,19 +447,23 @@ $featured-trans-width: 642;
   padding: 0 0 10px 20px;
 
   .resource-wrap {
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 5px;
+    margin-top: 10px;
+    position: relative;
+    vertical-align: top;
+  }
+
+  .resource-frame {
     $height: 268.8px;
     $width: 192.8px;
 
     background-color: #fff;
     border: 2px solid #000;
     box-sizing: content-box;
-    cursor: pointer;
-    display: inline-block;
-    margin-right: 5px;
-    margin-top: 10px;
     height: $height;
     position: relative;
-    vertical-align: top;
     width: $width;
 
     .card-overlay {
@@ -501,9 +505,13 @@ $featured-trans-width: 642;
   }
 }
 
+#CanvasWrap {
+  margin-top: 35px;
+}
+
 #CanvasWrap.fixed {
   position: fixed;
-  top: 35px;
+  top: 0;
 }
 
 .canvas {

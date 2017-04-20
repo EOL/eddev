@@ -64,14 +64,17 @@
 
 %script#CardPlaceholderTemplate{:type => "text/x-handlebars-template"}
   .resource-wrap.user-resource-wrap{:'data-card-id' => "{{cardId}}", :id => "Card-{{cardId}}"}
-    %i.fa.fa-spinner.fa-spin.fa-2x.img-placeholder
+    .resource-frame.user-resource-frame
+      %i.fa.fa-spinner.fa-spin.fa-2x.img-placeholder
+    .deck-selector {{deckName}}
 
 %script#UserCardTemplate{:type => "text/x-handlebars-template"}
   %img.user-resource{:src => "{{src}}"}
 
 %script#DeckTemplate{:type => "text/x-handlebars-template"}
   .resource-wrap.user-resource-wrap
-    .deck-name {{name}}
+    .resource-frame.user-resource-frame
+      .deck-name {{name}}
 
 %script#CardOverlayTemplate{:type => "text/x-handlebars-template"}
   .card-overlay
@@ -91,7 +94,8 @@
     %li.deck-cards-view.view.hidden>
 .user-resources.user-decks#UserResources
   #NewResource.resource-wrap.new-resource
-    %i.fa.fa-plus.fa-3x.new-resource-icon
+    .resource-frame
+      %i.fa.fa-plus.fa-3x.new-resource-icon
 
 %h2.create-card-hdr.card-hdr Card Editor
 #CardGenerator.card-generator.hidden
@@ -100,7 +104,6 @@
 
   .right-col
     #CanvasWrap
-      %h2.preview-hdr Browser preview:
       %canvas.canvas#Canvas
       .btns-wrap
         %i#SaveBtn.fa.fa-floppy-o.fa-3x.save-btn.btn.last

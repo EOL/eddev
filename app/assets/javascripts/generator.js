@@ -935,9 +935,15 @@ $(function() {
       success: function(decks) {
         $.each(decks, function(i, deck) {
           var $deckElmt = $(deckTemplate({ name: deck.name }));
+
+          if (deck.titleCardId) {
+            loadCardImg($deckElmt, deck.titleCardId);
+          }
+
           $deckElmt.click(function() {
             loadDeckCards(deck);
           });
+
           deckContainer.append($deckElmt);
         });
       }
@@ -1002,7 +1008,7 @@ $(function() {
     }));
 
     $img.one('load', function() {
-      $placeholder.find('.img-placeholder').replaceWith($img);
+      $placeholder.find('.resource-frame').empty().append($img);
     });
 
     if ($img.complete) {

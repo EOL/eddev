@@ -455,9 +455,20 @@ $featured-trans-width: 642;
     vertical-align: top;
   }
 
-  .deck-selector {
+  .deck-selector, .deck-name {
     height: 28px;
     width: 100%;
+  }
+
+  .deck-name {
+    line-height: 28px;
+    text-align: center;
+  }
+
+  .title-card-placeholder {
+    display: block;
+    margin: 98px auto 0 auto;
+    text-align: center;
   }
 
   .resource-frame {

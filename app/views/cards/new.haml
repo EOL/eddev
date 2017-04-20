@@ -71,7 +71,7 @@
       %i.fa.fa-spinner.fa-spin.fa-2x.img-placeholder
     :plain
       {{#if decks}}
-        <select class="deck-selector">r
+        <select class="deck-selector">
           <option value="none">(Not in deck)</option>
           {{#each decks}}
             <option value="{{this.id}}">{{this.name}}</option>
@@ -85,7 +85,8 @@
 %script#DeckTemplate{:type => "text/x-handlebars-template"}
   .resource-wrap.user-resource-wrap
     .resource-frame.user-resource-frame
-      .deck-name {{name}}
+      %i.fa.fa-image.fa-4x.title-card-placeholder
+    .deck-name {{name}}
 
 %script#CardOverlayTemplate{:type => "text/x-handlebars-template"}
   .card-overlay

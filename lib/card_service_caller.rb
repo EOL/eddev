@@ -77,12 +77,32 @@ module CardServiceCaller
     HTTParty.get("#{self.user_prefix(user_id)}/cardIds")
   end
 
+  def self.card_summaries(user_id)
+    HTTParty.get("#{self.user_prefix(user_id)}/cardSummaries")
+  end
+
   def self.card_ids_for_deck(user_id, deck_id)
     HTTParty.get("#{self.user_prefix(user_id)}/decks/#{deck_id}/cardIds")
+  end
+
+  def self.set_card_deck(user_id, card_id, deck_id)
+    HTTParty.put(
+      self.card_deck_path(user_id, card_id),
+      :body => deck_id,
+      :headers => { "Content-Type" => "text/plain" }
+    )
+  end
+
+  def self.remove_card_deck(user_id, card_id)
+    HTTParty.delete(self.card_deck_path(user_id, card_id))
   end
 
   private
     def self.user_prefix(user_id)
       "#{SERVICE_URL}/users/#{user_id}"
+    end
+
+    def self.card_deck_path(user_id, card_id)
+      "#{self.user_prefix(user_id)}/cards/#{card_id}/deckId"
     end
 end

@@ -72,6 +72,11 @@ class CardgenController < ApplicationController
     json_response(CardServiceCaller.card_ids(logged_in_user.id))
   end
 
+  # GET /cardgen/card_summaries
+  def card_summaries
+    json_response(CardServiceCaller.card_summaries(logged_in_user.id))
+  end
+
   # GET /cardgen/decks/:deck_id/card_ids
   def deck_card_ids
     json_response(CardServiceCaller.card_ids_for_deck(
@@ -92,6 +97,23 @@ class CardgenController < ApplicationController
   # DELETE /cardgen/cards/:card_id
   def delete
     json_response(CardServiceCaller.delete(logged_in_user.id, params[:card_id]))
+  end
+
+  # PUT /cardgen/cards/:card_id/deck_id
+  def set_card_deck
+    json_response(CardServiceCaller.set_card_deck(
+      logged_in_user.id,
+      params[:card_id],
+      request.raw_post
+    ))
+  end
+
+  # DELETE /cardgen/cards/:card_id/deck_id
+  def remove_card_deck
+    json_response(CardServiceCaller.remove_card_deck(
+      logged_in_user.id,
+      params[:card_id]
+    ))
   end
 
   private

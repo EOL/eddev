@@ -62,11 +62,22 @@
         </div>
       {{/each}}
 
+%script#SpinnerTemplate{:type => "text/x-handlebars-template"}
+  %i.fa.fa-spinner.fa-spin.fa-2x.img-placeholder
+
 %script#CardPlaceholderTemplate{:type => "text/x-handlebars-template"}
   .resource-wrap.user-resource-wrap{:'data-card-id' => "{{cardId}}", :id => "Card-{{cardId}}"}
     .resource-frame.user-resource-frame
       %i.fa.fa-spinner.fa-spin.fa-2x.img-placeholder
-    .deck-selector {{deckName}}
+    :plain
+      {{#if decks}}
+        <select class="deck-selector">r
+          <option value="none">(Not in deck)</option>
+          {{#each decks}}
+            <option value="{{this.id}}">{{this.name}}</option>
+          {{/each}}
+        </select>
+      {{/if}}
 
 %script#UserCardTemplate{:type => "text/x-handlebars-template"}
   %img.user-resource{:src => "{{src}}"}

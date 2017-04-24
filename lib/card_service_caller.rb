@@ -57,8 +57,12 @@ module CardServiceCaller
     HTTParty.get("#{self.user_prefix(user_id)}/cards/#{card_id}/json")
   end
 
-  def self.delete(user_id, card_id)
+  def self.delete_card(user_id, card_id)
     HTTParty.delete("#{self.user_prefix(user_id)}/cards/#{card_id}")
+  end
+
+  def self.delete_deck(user_id, deck_id)
+    HTTParty.delete("#{self.user_prefix(user_id)}/decks/#{deck_id}")
   end
 
   def self.upload_image(user_id, data)

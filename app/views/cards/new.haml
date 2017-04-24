@@ -89,8 +89,13 @@
     .deck-name {{name}}
 
 %script#CardOverlayTemplate{:type => "text/x-handlebars-template"}
-  .card-overlay
+  .card-overlay.resource-overlay
     %i.fa.fa-edit.fa-3x.edit-btn.btn
+    %i.fa.fa-trash-o.fa-3x.trash-btn.btn
+
+%script#DeckOverlayTemplate{:type => "text/x-handlebars-template"}
+  .deck-overlay.resource-overlay
+    %i.fa.fa-folder-open-o.fa-3x.edit-btn.btn
     %i.fa.fa-trash-o.fa-3x.trash-btn.btn
 
 %script#UserDecksTemplate{ :type => "text/x-handlebars-template"}

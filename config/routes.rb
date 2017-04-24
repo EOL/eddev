@@ -71,7 +71,8 @@ Rails.application.routes.draw do
   get    "cardgen/decks"                    => "cardgen#decks"
   post   "cardgen/images"                   => "cardgen#upload_image"
   get    "cardgen/templates/:template_name" => "cardgen#template"
-  delete "cardgen/cards/:card_id"           => "cardgen#delete"
+  delete "cardgen/cards/:card_id"           => "cardgen#delete_card"
+  delete "cardgen/decks/:deck_id"           => "cardgen#delete_deck"
 
   get  'species_cards/new'           => 'cards#new',          :as => :new_card
 

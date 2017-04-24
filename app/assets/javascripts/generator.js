@@ -37,6 +37,7 @@ $(function() {
   var userCardTemplate = Handlebars.compile($('#UserCardTemplate').html());
   var cardOverlayTemplate = Handlebars.compile($('#CardOverlayTemplate').html());
   var deckTemplate = Handlebars.compile($('#DeckTemplate').html());
+  var deckOverlayTemplate = Handlebars.compile($('#DeckOverlayTemplate').html());
   var spinnerTemplate = Handlebars.compile($('#SpinnerTemplate').html());
 
   /*
@@ -209,7 +210,6 @@ $(function() {
         value: keyValData
       };
 
-      console.log(data[field.id]);
       redraw();
     });
 
@@ -384,7 +384,6 @@ $(function() {
       $previewContainer.empty();
 
       if (this.files.length) {
-        console.log('file exists');
         fileReader = new FileReader();
         fileReader.readAsDataURL(this.files[0]);
 
@@ -451,8 +450,6 @@ $(function() {
       $imgWraps.filter('.selected').each(function(i, imgWrap) {
         choiceIndices.push(parseInt($(imgWrap).data('index')));
       });
-
-      console.log(choiceIndices);
 
       data[field.id] = {
         choiceIndex: choiceIndices
@@ -648,7 +645,6 @@ $(function() {
         success: function(data) {
           delete fieldValue.image;
           fieldValue.url = data.url;
-          console.log(fieldData);
           return dereferenceImages(imageFields, requestData, callback);
         }
       });
@@ -708,32 +704,90 @@ $(function() {
     });
   }
 
+  function cardEditClicked($btn, id) {
+    $btn.addClass('active');
+    loadCardForEditing(id);
+  }
+
   /*
    * CARD MANAGER
    */
-  function cardSelected($card, id) {
-    var $selectedCard = $('.resource-wrap.selected')
-      , $overlay = $(cardOverlayTemplate())
+  function cardSelected($card, id, event) {
+    return resourceSelected(
+      cardOverlayTemplate,
+      destroy,
+      cardEditClicked,
+      $card,
+      id,
+      event
+    );
+  }
+
+  function deleteDeck($deckElmt, deckId) {
+    var confirmation = confirm('Are you sure you want to delete this deck?');
+
+    if (!confirmation) return;
+
+    $.ajax({
+      url: apiPath + '/decks/' + deckId,
+      method: 'DELETE',
+      success: function() {
+        $deckElmt.remove();
+      }
+    });
+  }
+
+  function deckSelected($deckElmt, deck, event) {
+    return resourceSelected(
+      deckOverlayTemplate,
+      deleteDeck,
+      loadDeckCards.bind(null, deck),
+      $deckElmt,
+      deck.id,
+      event
+    );
+  }
+
+  function resourceSelected(
+    overlayTemplate,
+    destroyFn,
+    editFn,
+    $elmt,
+    id,
+    event
+  ) {
+    var $overlay = $(overlayTemplate())
       ;
 
-    if ($card.hasClass('selected')) {
-      return;
+    event.stopPropagation();
+
+    if ($elmt.hasClass('selected')) {
+      return false;
     }
 
+    unselectResource();
+
     $overlay.find('.trash-btn').click(function() {
-      destroy($card, id);
+      destroyFn($elmt, id);
+      return false;
     });
 
     $overlay.find('.edit-btn').click(function() {
-      $(this).addClass('active');
-      loadCardForEditing(id);
+      editFn($(this), id);
+      return false;
     });
 
-    $selectedCard.find('.card-overlay').remove();
-    $selectedCard.removeClass('selected');
+    $elmt.find('.resource-frame').append($overlay);
+    $elmt.addClass('selected');
 
-    $card.find('.resource-frame').append($overlay);
-    $card.addClass('selected');
+    return false;
+  }
+
+  function unselectResource() {
+    var $selectedCard = $('#UserResources .resource-wrap.selected');
+
+    $selectedCard.find('.resource-overlay').remove();
+    $selectedCard.removeClass('selected');
   }
 
   function setCard(theCard) {
@@ -784,9 +838,7 @@ $(function() {
       success: function(card) {
         var $newPlaceholder = $(cardPlaceholderTemplate({ cardId: card.id }));
         $cardPlaceholder.replaceWith($newPlaceholder);
-        $newPlaceholder.click(function() {
-          cardSelected($newPlaceholder, card.id);
-        });
+        $newPlaceholder.click(cardSelected.bind(null, $newPlaceholder, card.id));
         $newPlaceholder.click();
         $newPlaceholder.find('.card-overlay .edit-btn').click();
         loadCardImg($newPlaceholder, card.id);
@@ -815,13 +867,16 @@ $(function() {
     $userResources.find('.user-resource-wrap').remove();
     $userResources.find('.new-resource').off('click');
 
+    $userResources.off('click');
+    $userResources.click(unselectResource);
+
     return $userResources;
   }
 
-  function loadCardsFromIds(ids, clickFn) {
+  function loadCardsFromIds(ids, newResourceClickFn) {
     var $userCards = cleanUserResources();
 
-    $('#NewResource').click(clickFn);
+    $('#NewResource').click(newResourceClickFn);
 
     $.each(ids, function(i, id) {
       var $placeholder = $(cardPlaceholderTemplate({ cardId: id }));
@@ -940,9 +995,7 @@ $(function() {
             loadCardImg($deckElmt, deck.titleCardId);
           }
 
-          $deckElmt.click(function() {
-            loadDeckCards(deck);
-          });
+          $deckElmt.click(deckSelected.bind(null, $deckElmt, deck));
 
           deckContainer.append($deckElmt);
         });
@@ -988,9 +1041,7 @@ $(function() {
   });
 
   function loadCardImgAndBindEvents($card, id) {
-    $card.click(function() {
-      cardSelected($card, id);
-    });
+    $card.click(cardSelected.bind(null, $card, id));
 
     loadCardImg($card, id);
   }
@@ -1008,7 +1059,11 @@ $(function() {
     }));
 
     $img.one('load', function() {
-      $placeholder.find('.resource-frame').empty().append($img);
+      var $resourceFrame = $placeholder.find('.resource-frame');
+
+      $resourceFrame.children().not('.resource-overlay').remove();
+
+      $resourceFrame.prepend($img);
     });
 
     if ($img.complete) {

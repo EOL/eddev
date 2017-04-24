@@ -95,10 +95,21 @@ class CardgenController < ApplicationController
   end
 
   # DELETE /cardgen/cards/:card_id
-  def delete
-    json_response(CardServiceCaller.delete(logged_in_user.id, params[:card_id]))
+  def delete_card
+    json_response(CardServiceCaller.delete_card(
+      logged_in_user.id,
+      params[:card_id]
+    ))
   end
 
+  # DELETE /cardgen/decks/:deck_id
+  def delete_deck
+    json_response(CardServiceCaller.delete_deck(
+      logged_in_user.id,
+      params[:deck_id]
+    ))
+  end
+  
   # PUT /cardgen/cards/:card_id/deck_id
   def set_card_deck
     json_response(CardServiceCaller.set_card_deck(

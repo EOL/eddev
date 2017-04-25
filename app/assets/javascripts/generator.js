@@ -633,13 +633,11 @@ $(function() {
 
     if (imgSrc && imgSrc.startsWith('data')) {
       var origFile = $('#' + field['id'] + ' .image-upload-input')[0].files[0];
-      var formData = new FormData();
-      formData.append('image', origFile);
 
       $.ajax({
         url: apiPath + '/images',
         method: 'POST',
-        data: formData,
+        data: origFile,
         processData: false,
         contentType: false,
         success: function(data) {

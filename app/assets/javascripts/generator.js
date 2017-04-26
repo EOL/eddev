@@ -783,11 +783,13 @@ $(function() {
     return false;
   }
 
-  function unselectResource() {
-    var $selectedCard = $('#UserResources .resource-wrap.selected');
+  function unselectResource($resource) {
+    if (!$resource) {
+      $resource = $('#UserResources .resource-wrap.selected');
+    }
 
-    $selectedCard.find('.resource-overlay').remove();
-    $selectedCard.removeClass('selected');
+    $resource.find('.resource-overlay').remove();
+    $resource.removeClass('selected');
   }
 
   function setCard(theCard) {
@@ -1049,6 +1051,7 @@ $(function() {
   function reloadCard(id) {
     var $card = $('#Card-' + id);
 
+    unselectResource($card);
     $card.find('.user-resource').replaceWith($(spinnerTemplate()));
     loadCardImgAndBindEvents($card, id);
   }

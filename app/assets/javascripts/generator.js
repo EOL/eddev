@@ -348,15 +348,17 @@ $(function() {
       redraw();
     });
 
-    var thumbClickedHelper = function(elmt) {
+    var thumbClickedHelper = function(elmt, resetData) {
       var $elmt = $(elmt)
         , choiceIndex = $elmt.data('index');
 
-      data[field.id] = {
-        value: {
-          panX: 0,
-          panY: 0,
-          zoomLevel: 0
+      if (!data[field.id] || resetData) {
+        data[field.id] = {
+          value: {
+            panX: 0,
+            panY: 0,
+            zoomLevel: 0
+          }
         }
       }
 
@@ -373,7 +375,7 @@ $(function() {
     };
 
     var thumbClicked = function() {
-      thumbClickedHelper(this);
+      thumbClickedHelper(this, true);
       redraw();
     };
 
@@ -422,7 +424,7 @@ $(function() {
     $inputs.append($partial);
 
     if (choiceIndex != null) {
-      thumbClickedHelper($partial.find('.thumb')[choiceIndex]);
+      thumbClickedHelper($partial.find('.thumb')[choiceIndex], false);
     }
   }
 

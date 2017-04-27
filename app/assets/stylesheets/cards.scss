@@ -445,6 +445,17 @@ $featured-trans-width: 642;
   height: 400px;
   overflow: auto;
   padding: 0 0 10px 20px;
+  position: relative;
+
+  .user-resources-overlay {
+    background-color: #fff;
+    height: 400px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+  }
 
   .resource-wrap {
     cursor: pointer;

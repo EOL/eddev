@@ -94,12 +94,8 @@ $(function() {
     }
   }
 
-  /*
-   * Inject TemplateRenderer dependencies
-   */
-  TemplateRenderer.setTemplateSupplier(templateSupplier);
-  TemplateRenderer.setCanvasSupplier(canvasSupplier);
-  TemplateRenderer.setImageFetcher(imageFetcher);
+  var renderer =
+    new TemplateRenderer(templateSupplier, canvasSupplier, imageFetcher);
 
   function imageId(fieldId, i) {
     return fieldId + '-' + i;
@@ -107,10 +103,10 @@ $(function() {
 
   /*
    * Build card editor inputs. Only call after a card has been set on the
-   * TemplateRenderer.
+   * renderer.
    */
   function buildInputs() {
-    var fields = TemplateRenderer.editableFields();
+    var fields = renderer.editableFields();
 
     $inputs.empty();
 
@@ -557,7 +553,7 @@ $(function() {
     // TODO: Fix!!! Problem arises when fixed position applied.
     // Image panning
     $canvas.mousedown(function(e) {
-      $.each(TemplateRenderer.imageFields(), function(i, imageField) {
+      $.each(renderer.imageFields(), function(i, imageField) {
         var containsResult = imageContains(imageField, e);
 
         if (containsResult.contains) {
@@ -657,7 +653,7 @@ $(function() {
    * Re-render the current card
    */
   function redraw() {
-    TemplateRenderer.draw(function(err, canvas) {
+    renderer.draw(function(err, canvas) {
       if (err) {
         console.log(err);
       }
@@ -669,7 +665,7 @@ $(function() {
    */
   function save() {
     var requestData = $.extend(true, {}, data)
-      , imageFields = TemplateRenderer.imageFields()
+      , imageFields = renderer.imageFields()
       ;
 
     dereferenceImages(imageFields, requestData, function() {
@@ -804,9 +800,9 @@ $(function() {
     data = card.data;
     cardId = card.id;
 
-    TemplateRenderer.setCard(card, function(err) {
+    renderer.setCard(card, function(err) {
       if (err) throw err;
-      $canvas = $(TemplateRenderer.getCanvas());
+      $canvas = $(renderer.getCanvas());
       setupCardInterface();
       $('#CardGenerator').removeClass('hidden');
       $('#CanvasWrap').removeClass('fixed');

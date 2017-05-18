@@ -49,9 +49,9 @@ module CardServiceCaller
     HTTParty.get("#{self.user_prefix(user_id)}/cards/#{card_id}/svg")
   end
 
-  def self.png(user_id, card_id)
-    HTTParty.get("#{self.user_prefix(user_id)}/cards/#{card_id}/png")
-  end
+  #def self.png(user_id, card_id)
+  #  HTTParty.get("#{self.user_prefix(user_id)}/cards/#{card_id}/png")
+  #end
 
   def self.json(user_id, card_id)
     HTTParty.get("#{self.user_prefix(user_id)}/cards/#{card_id}/json")

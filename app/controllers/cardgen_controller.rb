@@ -42,15 +42,23 @@ class CardgenController < ApplicationController
 
   # GET /cardgen/cards/:card_id/svg
   def render_svg
-    data = CardServiceCaller.svg(logged_in_user.id, params[:card_id])
-    send_data data, :type => "image/svg+xml", :disposition => "inline"
+    svc_res = CardServiceCaller.svg(logged_in_user.id, params[:card_id])
+    content_type = svc_res.headers["content-type"]
+    opts = {
+      :status => svc_res.code,
+      :type => svc_res.headers["content-type"]
+    }
+
+    opts[:disposition] = :inline unless svc_res.code != 200
+
+    send_data svc_res.body, opts
   end
 
   # GET /cardgen/cards/:card_id/png
-  def render_png
-    data = CardServiceCaller.png(logged_in_user.id, params[:card_id])
-    send_data data, :type => "image/png", :disposition => "inline"
-  end
+  #def render_png
+  #  data = CardServiceCaller.png(logged_in_user.id, params[:card_id])
+  #  send_data data, :type => "image/png", :disposition => "inline"
+  #end
 
   # POST /cardgen/images
   def upload_image
@@ -109,7 +117,7 @@ class CardgenController < ApplicationController
       params[:deck_id]
     ))
   end
-  
+
   # PUT /cardgen/cards/:card_id/deck_id
   def set_card_deck
     json_response(CardServiceCaller.set_card_deck(
@@ -129,6 +137,8 @@ class CardgenController < ApplicationController
 
   private
     def json_response(httpartyResponse)
+      puts httpartyResponse
+
       respond_to do |format|
         format.json do
           render(

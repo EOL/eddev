@@ -1,6 +1,4 @@
 class CardsController < ApplicationController
-  before_action :ensure_user, :only => :new
-
   def index
     @hero_image_partial = 'cards/cards_hero'
 
@@ -17,8 +15,5 @@ class CardsController < ApplicationController
       :human_name => :thats_classified)
     @create_a_creature = LessonPlan.find_by(:grade_level => grade_level_2_5,
       :human_name => :create_a_creature)
-  end
-
-  def new
   end
 end

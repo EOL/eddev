@@ -74,7 +74,7 @@ Rails.application.routes.draw do
   delete "cardgen/cards/:card_id"           => "cardgen#delete_card"
   delete "cardgen/decks/:deck_id"           => "cardgen#delete_deck"
 
-  get  'species_cards/new'           => 'cards#new',          :as => :new_card
+  get    "card_maker"                       => "card_maker#index", :as => :new_card
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

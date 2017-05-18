@@ -137,8 +137,6 @@ class CardgenController < ApplicationController
 
   private
     def json_response(httpartyResponse)
-      puts httpartyResponse
-
       respond_to do |format|
         format.json do
           render(

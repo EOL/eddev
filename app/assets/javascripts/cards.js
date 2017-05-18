@@ -1,6 +1,3 @@
-//= require template_renderer/template-renderer
-//= require generator
-
 (function() {
   function scrollIfNecessary() {
     var hashParams = EolUtil.parseHashParams(),

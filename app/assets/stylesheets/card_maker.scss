@@ -1,0 +1,257 @@
+@import "layout_vars.scss";
+
+.new-card-hdr {
+  font-size: 24px;
+  font-weight: $bold;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.left-col, .right-col {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.left-col {
+  margin-right: 80px;
+  width: 425px;
+}
+
+.card-hdr {
+  border: 1px solid #000;
+  display: block;
+  padding: 10px 0;
+  text-align: center;
+  width: 100%;
+}
+
+.create-card-hdr {
+  margin-top: 20px;
+}
+
+.user-resources {
+  background-color: #ddd;
+  height: 400px;
+  overflow: auto;
+  padding: 0 0 10px 20px;
+  position: relative;
+
+  .user-resources-overlay {
+    background-color: #fff;
+    height: 400px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+  }
+
+  .resource-wrap {
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 5px;
+    margin-top: 10px;
+    position: relative;
+    vertical-align: top;
+  }
+
+  .deck-selector, .deck-name {
+    height: 28px;
+    width: 100%;
+  }
+
+  .deck-name {
+    line-height: 28px;
+    text-align: center;
+  }
+
+  .title-card-placeholder {
+    display: block;
+    margin: 98px auto 0 auto;
+    text-align: center;
+  }
+
+  .resource-frame {
+    $height: 268.8px;
+    $width: 192.8px;
+
+    background-color: #fff;
+    border: 2px solid #000;
+    box-sizing: content-box;
+    height: $height;
+    position: relative;
+    width: $width;
+
+    .resource-overlay {
+      background: rgba(50, 50, 50, .5);
+      display: flex;
+      flex-direction: column;
+      height: $height;
+      justify-content: space-around;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: $width;
+
+      .btn {
+        color: #fff;
+        text-align: center;
+      }
+
+      .edit-btn.active {
+        color: #f00;
+      }
+    }
+  }
+
+  .img-placeholder {
+    display: block;
+    margin: 124px auto 0 auto;
+    width: 32px;
+  }
+
+  .new-resource-icon {
+    display: block;
+    margin: 116px auto 0 auto;
+    width: 38px
+  }
+
+  .user-resource {
+    width: 100%;
+  }
+}
+
+#CanvasWrap {
+  margin-top: 35px;
+}
+
+#CanvasWrap.fixed {
+  position: fixed;
+  top: 0;
+}
+
+.canvas {
+  display: block;
+}
+
+.card-manager-controls {
+  .view-selector {
+    border: 1px solid #000;
+    display: inline-block;
+    margin-top: -1px;
+
+    .view {
+      cursor: pointer;
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 20px;
+      border-left: 1px solid #000;
+
+      &.first {
+        border-left: none;
+      }
+
+      &.selected {
+        background-color: #555;
+        color: #fff;
+      }
+    }
+  }
+}
+
+#GeneratorControls {
+  max-width: 425px;
+
+  .img-selector {
+    max-height: 230px;
+    overflow: auto;
+  }
+
+  .fields {
+  }
+
+  .label {
+    font-weight: bold;
+    margin-top: 12px;
+  }
+
+  .textarea {
+    width: 200px;
+    height: 100px;
+  }
+
+  .multi-image {
+    .img-wrap {
+      display: inline-block;
+      margin-right: 5px;
+      height: 45px;
+
+      &.selected {
+        background: #757575;
+      }
+    }
+
+    .img {
+      height: 100%;
+    }
+  }
+}
+
+.thumb {
+  height: 100px;
+
+  &.selected {
+    border: 2px solid #000;
+  }
+}
+
+.btns-wrap {
+  background-color: #ddd;
+  border: 1px solid #000;
+  display: flex;
+
+  .btn {
+    border-right: 1px solid #000;
+    cursor: pointer;
+    flex-grow: 1;
+    text-align: center;
+
+    &.last {
+      border-right: none;
+    }
+  }
+}
+
+.server-img {
+  margin-top: 20px;
+}
+
+.zoom-controls i {
+  cursor: pointer;
+}
+
+.color-row {
+  .color {
+    cursor: pointer;
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+
+    &.red {
+      background-color: rgb(150, 56, 37);
+    }
+
+    &.green {
+      background-color: #0e7718;
+    }
+
+    &.blue {
+      background-color: #1d2999;
+    }
+
+    &.selected {
+      border: 2px solid #000;
+    }
+  }
+}

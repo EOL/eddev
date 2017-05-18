@@ -1,11 +1,12 @@
 $(function() {
-  var card = null;
-  var data = null;
-  var cardId = null; // Card service id for card - populated after first save
-  var apiPath = "/cardgen";
-  var dragState = false;
-  var $inputs = $('#GeneratorControls');
-  var $canvas = null;
+  var card = null
+    , data = null
+    , cardId = null // Card service id for card - populated after first save
+    , apiPath = '/card_maker_ajax'
+    , dragState = false
+    , $inputs = $('#GeneratorControls')
+    , $canvas = null
+    ;
 
   // http://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas/15666143#15666143
   var pixelRatio = (function () {

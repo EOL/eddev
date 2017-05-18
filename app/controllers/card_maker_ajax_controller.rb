@@ -1,7 +1,7 @@
 # Card service pass-through endpoints
 require 'card_service_caller'
 
-class CardgenController < ApplicationController
+class CardMakerAjaxController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :ensure_user
   before_action :set_cache_headers

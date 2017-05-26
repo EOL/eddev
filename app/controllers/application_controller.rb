@@ -92,6 +92,10 @@ class ApplicationController < ActionController::Base
     end
     helper_method :content_editor_state
 
+    def disable_main_col
+      @disable_main_col = true
+    end
+
   private
   def set_locale
     locale = params[:locale]

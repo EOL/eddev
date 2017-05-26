@@ -100,7 +100,7 @@
 
 %script#UserDecksTemplate{ :type => "text/x-handlebars-template"}
   .deck-wrap.user-deck-wrap
-  
+
 %h1.new-card-hdr Card Generator Test Page
 
 %h2.user-resources-hdr.card-hdr Card Manager
@@ -114,13 +114,45 @@
     .resource-frame
       %i.fa.fa-plus.fa-3x.new-resource-icon
 
-%h2.create-card-hdr.card-hdr Card Editor
-#CardGenerator.card-generator.hidden
-  .left-col
-    .controls#GeneratorControls
+.card-hdr-box
+  .card-hdr-inner
+    .left-blur-bg
+    %h2.create-card-hdr.hdr
+      = image_tag "welcome/eol_logo.png", :class => :'hdr-logo'
+      Card Editor
+    .right-blur-bg
+.hdr-spacer
+#CardGenerator.card-generator
+  .card-generator-inner
+    .welcome-block
+      .rail.lft-rail>
+      %h3.welcome-txt>
+        %span.big-letter> W
+        elcome to the EOL Card Editor.
+      .tips-box>
+        .tips-txt tips
+      .rail.rt-rail>
+    .cols
+      .col.left-col>
+        .col-head-box
+          .col-head-txt Preview
+        .preview
+          .img-select
+            .images-txt Images
+            .img-wrap
+              .img-title thethreebears.jpg
+              .thumb
 
-  .right-col
-    #CanvasWrap
-      %canvas.canvas#Canvas
-      .btns-wrap
-        %i#SaveBtn.fa.fa-floppy-o.fa-3x.save-btn.btn.last
+      .col.right-col>
+        .col-head-box
+          .col-head-txt Form
+
+  -#
+    .left-col
+      .controls#GeneratorControls
+
+    .right-col
+      #CanvasWrap
+        %canvas.canvas#Canvas
+        .btns-wrap
+          %i#SaveBtn.fa.fa-floppy-o.fa-3x.save-btn.btn.last

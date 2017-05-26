@@ -28,7 +28,10 @@
     :javascript
       WebFont.load({
         google: {
-          families: ['Open Sans:n3,n4,n6,n7,i3,i4,i6,i7']
+          families: [
+            'Open Sans:300,400,600,700,300i,400i,600i,700i',
+            'Merriweather:300,400'
+          ]
         },
         active: function() {
           $.each(EolUtil.fontsLoadedCallbacks(), function(i, fn){
@@ -58,6 +61,10 @@
           = render @hero_image_partial
 
       %main{:role => "main"}
-        .main-col
+        - if @disable_main_col
           = yield
+        - else
+          .main-col
+            = yield
+
       = render "shared/footer"

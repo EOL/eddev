@@ -33,3 +33,6 @@
 
 # OS X .DS_Store
 .DS_Store
+
+# CTags
+tags

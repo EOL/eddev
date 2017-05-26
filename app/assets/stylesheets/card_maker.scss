@@ -153,8 +153,8 @@ $col-border-width: 5px;
 .col {
   border-radius: 4px;
   min-height: $head-box-height;
-  height: 500px;
   margin-top: 50px;
+  padding-bottom: 50px;
   position: relative;
   width: $col-width;
   vertical-align: top;
@@ -192,6 +192,8 @@ $col-border-width: 5px;
 }
 
 .left-col {
+  $preview-left-width: 107px;
+
   background-color: #3aa160;
   box-shadow: inset 0 7px 6px 0 #12710b;
 
@@ -212,17 +214,17 @@ $col-border-width: 5px;
     color: $color;
   }
 
-  .preview-outer {
+  .preview {
     border-radius: 5px;
     background-color: #2cb871;
     box-shadow: 0 5px 9px 0 rgba(17, 61, 4, 0.5), inset 0 0 3px 0 rgba(21, 128, 9, 0.5);
-    height: 200px;
-    position: absolute;
-    top: $head-box-height + 20px;
+    padding: 5px;
+    position: relative;
+    margin-top: $head-box-height + 20px;
     width: $col-width;
   }
 
-  .preview {
+  .preview-inner {
     border-radius: 2px;
   	background-image: linear-gradient(to bottom, #3c9e60, #52ac83);
   	box-shadow: inset 0 0 7px 1px #285e3f;
@@ -238,7 +240,7 @@ $col-border-width: 5px;
   	background-image: linear-gradient(to bottom, #636765, #555555);
   	box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
     height: 114px;
-    margin: 8px 0 0 107px;
+    margin: 8px 0 0 $preview-left-width;
     overflow: hidden;
     position: relative;
     width: 330px;
@@ -273,6 +275,59 @@ $col-border-width: 5px;
       height: $thumb-size;
       margin: 5px auto 0 auto;
       width: $thumb-size;
+    }
+  }
+
+  .img-controls {
+    display: inline-block;
+    height: 470px;
+    position: relative;
+    width: $preview-left-width;
+
+    .sep {
+      box-shadow: 0 1px 1px 0 #85d68a;
+      border: solid 1px #2e4924;
+      height: 2px;
+      margin: 0 auto;
+      width: 86px;
+    }
+  }
+
+  .txt {
+    color: $white;
+    font-size: 11px;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+  }
+
+  .img-controls-txt {
+    margin-bottom: 10px;
+  }
+
+  .tip {
+    margin-top: 9px
+  }
+
+  .btns {
+    border-radius: 4px;
+    background-color: #358a51;
+    box-shadow: inset 0 3px 3px 0 rgba(1, 85, 87, 0.5);
+    height: 158px;
+    margin: 16px auto 19px auto;
+    padding: 9px 0;
+    width: 62px;
+  }
+
+  .btn {
+    cursor: pointer;
+    display: block;
+    height: 45px;
+    width: 45px;
+    margin: 0 auto;
+
+    &.mid {
+      margin-bottom: 3px;
+      margin-top: 3px;
     }
   }
 }

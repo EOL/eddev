@@ -137,13 +137,22 @@
         .col-inner
         .col-head-box
           .col-head-txt Preview
-        .preview-outer
-          .preview
-            .img-select
-              .images-txt Images
-              .img-wrap
-                .img-title thethreebears.jpg
-                .thumb
+        .preview
+          .preview-inner
+          .img-select>
+            .images-txt Images
+            .img-wrap
+              .img-title thethreebears.jpg
+              .thumb
+          .img-controls>
+            .txt.img-controls-txt Image Controls
+            .sep
+            .txt.tip Flip horizontal
+            .btns
+              = image_tag "card_maker/icons/rotate.png", :class => "btn top"
+              = image_tag "card_maker/icons/flip_horiz.png", :class => "btn mid"
+              = image_tag "card_maker/icons/flip_vert.png", :class => "btn bot"
+
 
       .col.right-col>
         .col-inner

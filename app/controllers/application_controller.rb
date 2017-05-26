@@ -29,7 +29,8 @@ class ApplicationController < ActionController::Base
   helper_method :logged_in_user
 
   def ensure_user
-    redirect_to login_url unless logged_in_user
+    session[:login_referrer] = request.fullpath
+    redirect_to login_path(:return_to => request.fullpath) unless logged_in_user
   end
 
   def ensure_admin

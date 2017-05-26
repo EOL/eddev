@@ -1,11 +1,14 @@
 class UserSessionsController < ApplicationController
-  # TODO: Change / redirects to root_path redirects once v2 homepage is deployed
   before_action :redirect_if_logged_in, :only => [:new, :create]
 
   def new
+    # This is added to the form as a hidden field
+    @return_to = params[:return_to]
   end
 
   def create
+    @return_to = params[:return_to]
+
     user_name = params[:user_session][:user_name]
     password =  params[:user_session][:password]
 
@@ -13,7 +16,13 @@ class UserSessionsController < ApplicationController
 
     respond_to do |format|
       if user
-        format.html { redirect_to root_url }
+        if @return_to
+          redirect_target = @return_to
+        else
+          redirect_target = root_url
+        end
+
+        format.html { redirect_to redirect_target }
         format.json { render :json => {
           :success => true
         }}
@@ -38,6 +47,6 @@ class UserSessionsController < ApplicationController
 
   private
   def redirect_if_logged_in
-    redirect_to "/" if logged_in_user
+    redirect_to root_url if logged_in_user
   end
 end

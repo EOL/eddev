@@ -503,6 +503,13 @@ Deck.create!([
     :file_name => "earthwatch_trees"
   },
   {
+    :title_key  => "mt_auburn",
+    :subtitle_key    => "amphibians_reptiles",
+    :desc_key   => "mt_auburn",
+    :image_file_name => "mt_auburn_amphibians_reptiles",
+    :file_name => "mt_auburn_amphibians_reptiles"
+  },
+  {
     :title_key => "new_england",
     :subtitle_key => "bh_rocky_inter",
     :desc_key => "ne_bh_rocky",
@@ -560,6 +567,27 @@ Deck.create!([
   },
   {
     :title_key => "okaloosa",
+    :subtitle_key => "common_amphibians",
+    :desc_key => "okaloosa_common_amphibians",
+    :image_file_name => "okaloosa_common_amphibians",
+    :file_name => "okaloosa_common_amphibians"
+  },
+  {
+    :title_key => "okaloosa",
+    :subtitle_key => "common_birds",
+    :desc_key => "okaloosa_common_birds",
+    :image_file_name => "okaloosa_birds",
+    :file_name => "okaloosa_birds"
+  },
+  {
+    :title_key => "okaloosa",
+    :subtitle_key => "common_invertebrates",
+    :desc_key => "okaloosa_common_invertebrates",
+    :image_file_name => "okaloosa_common_invertebrates",
+    :file_name => "okaloosa_common_invertebrates"
+  },
+  {
+    :title_key => "okaloosa",
     :subtitle_key => "common_mammals",
     :desc_key => "okaloosa_common_mammals",
     :image_file_name => "okaloosa_mammals",
@@ -571,6 +599,27 @@ Deck.create!([
     :desc_key => "okaloosa_common_plants",
     :image_file_name => "okaloosa_plants",
     :file_name => "okaloosa_plants"
+  },
+  {
+    :title_key => "okaloosa",
+    :subtitle_key => "common_reptiles",
+    :desc_key => "okaloosa_common_reptiles",
+    :image_file_name => "okaloosa_common_reptiles",
+    :file_name => "okaloosa_common_reptiles"
+  },
+  {
+    :title_key => "okaloosa",
+    :subtitle_key => "common_schoolyard",
+    :desc_key => "okaloosa_common_schoolyard",
+    :image_file_name => "okaloosa_common_schoolyard",
+    :file_name => "okaloosa_common_schoolyard"
+  },
+  {
+    :title_key => "okaloosa",
+    :subtitle_key => "emammal",
+    :desc_key => "okaloosa_emammal",
+    :image_file_name => "okaloosa_emammal",
+    :file_name => "okaloosa_emammal"
   },
   {
     :title_key => "okaloosa",
@@ -607,18 +656,11 @@ Deck.create!([
     :image_file_name => "okaloosa_urban",
     :file_name => "okaloosa_urban"
   },
-#  {
-#    :title_key => "okaloosa",
-#    :subtitle_key => "common_birds",
-#    :desc_key => "okaloosa_common_birds",
-#    :image_file_name => "okaloosa_birds",
-#    :file_name => "not_found"
-#  },
-#  {
-#    :title_key => "okaloosa",
-#    :subtitle_key => "emammal_camera",
-#    :desc_key => "okaloosa_emammal",
-#    :image_file_name => "okaloosa_emammal",
-#    :file_name => "not_found"
-#  },
+  {
+    :title_key => "sea_turtles",
+    :subtitle_key => "species_conservation",
+    :desc_key => "sea_turtles",
+    :image_file_name => "sea_turtles",
+    :file_name => "sea_turtles"
+  }
 ])

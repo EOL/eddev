@@ -322,12 +322,13 @@ $col-border-width: 5px;
     display: inline-block;
     height: 470px;
     position: relative;
+    vertical-align: top;
     width: $preview-left-width;
 
     .sep {
+      background-color: #2e4924;
       box-shadow: 0 1px 1px 0 #85d68a;
-      border: solid 1px #2e4924;
-      height: 2px;
+      height: 1px;
       margin: 0 auto;
       width: 86px;
     }

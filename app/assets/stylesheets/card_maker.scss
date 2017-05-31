@@ -153,7 +153,6 @@ $col-border-width: 5px;
 .col {
   border-radius: 4px;
   min-height: $head-box-height;
-  margin-top: 50px;
   padding-bottom: 50px;
   position: relative;
   width: $col-width;
@@ -182,8 +181,7 @@ $col-border-width: 5px;
   left: 0;
   overflow: hidden;
   padding: 19px 0 0 23px;
-  position: absolute;
-  top: -50px;
+  position: relative;
   width: $col-width;
 }
 
@@ -219,21 +217,63 @@ $col-border-width: 5px;
     background-color: #2cb871;
     box-shadow: 0 5px 9px 0 rgba(17, 61, 4, 0.5), inset 0 0 3px 0 rgba(21, 128, 9, 0.5);
     padding: 5px;
-    position: relative;
-    margin-top: $head-box-height + 20px;
+    position: absolute;
+    top: $head-box-height;
     width: $col-width;
+
+    &.fixed {
+      position: fixed;
+      top: 0;
+    }
   }
 
   .preview-inner {
-    border-radius: 2px;
+    border-radius: 2px 2px 0 0;
   	background-image: linear-gradient(to bottom, #3c9e60, #52ac83);
   	box-shadow: inset 0 0 7px 1px #285e3f;
-    margin: 5px;
-    left: 0;
-    bottom: 0;
-    top: 0;
-    right: 0;
-    position: absolute;
+    overflow: hidden;
+  }
+
+  .preview-btns {
+    background-color: #239b52;
+    border-radius: 0 0 2px 2px;
+    display: flex;
+    height: 70px;
+    justify-content: space-between;
+    margin-top: 5px;
+    padding: 5px;
+    position: relative;
+
+    .btn {
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      height: 60px;
+      width: 146px;
+
+      &.close {
+        background-image: radial-gradient(circle at 50% 50%, #d56f4f, #dc5a31);
+        text-shadow: 0 1px 1px #d11616;
+      }
+
+      &.save-exit {
+        background-image: radial-gradient(circle at 50% 50%, #3a8ff9, #289ff6);
+        text-shadow: 0 1px 1px #0d5196;
+      }
+
+      &.save {
+        background-color: #86c34d;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5), inset 0 0 21px 10px rgba(17, 174, 1, 0.5);
+        text-shadow: 0 1px 1px rgba(28, 78, 0, 0.68);
+      }
+    }
+
+    .btn-txt {
+      color: $white;
+      font-family: Merriweather;
+    	font-size: 13px;
+      margin-top: 40px;
+    	text-align: center;
+    }
   }
 
   .img-select {
@@ -291,6 +331,19 @@ $col-border-width: 5px;
       margin: 0 auto;
       width: 86px;
     }
+
+    .btn {
+      cursor: pointer;
+      display: block;
+      height: 45px;
+      width: 45px;
+      margin: 0 auto;
+
+      &.mid {
+        margin-bottom: 3px;
+        margin-top: 3px;
+      }
+    }
   }
 
   .txt {
@@ -323,18 +376,7 @@ $col-border-width: 5px;
     width: 62px;
   }
 
-  .btn {
-    cursor: pointer;
-    display: block;
-    height: 45px;
-    width: 45px;
-    margin: 0 auto;
 
-    &.mid {
-      margin-bottom: 3px;
-      margin-top: 3px;
-    }
-  }
 
   .zoom {
     $dir-border-radius: 3px;
@@ -367,6 +409,7 @@ $col-border-width: 5px;
       background-color: rgba(180, 222, 255, 0.25);
       height: 96px;
       margin: 0 auto;
+      position: relative;
       width: $width;
 
       .lft, .rt {
@@ -383,12 +426,36 @@ $col-border-width: 5px;
         border-left: 1px solid $line-color;
       }
     }
+
+    .knob {
+      cursor: pointer;
+      width: 15px;
+      height: 3px;
+      border-radius: 1px;
+      background-color: $white;
+      box-shadow: 0 2px 2px 0 #236375;
+      left: ($width / 2) - 7px;
+      position: absolute;
+      top: 10px;
+    }
+  }
+
+  .card-box {
+    background-color: #378651;
+    box-shadow: inset 0 0 10px 3px rgba(10, 71, 51, 0.45);
+    display: inline-block;
+    height: 445px;
+    margin-top: 3px;
+    position: relative;
+    width: 330px;
   }
 }
 
 .right-col {
   background-color: #4f8ce3;
 	box-shadow: inset 0 6px 5px 0 #1462dc;
+
+  height: 1200px;
 
   .col-inner {
     background-image: linear-gradient(to bottom, #003279, #445e83);

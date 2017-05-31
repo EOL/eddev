@@ -133,35 +133,42 @@
         .tips-txt tips
       .rail.rt-rail>
     .cols
-      .col.left-col>
+      #LeftCol.col.left-col>
         .col-inner
-        .col-head-box
+        #LeftColHeadBox.col-head-box
           .col-head-txt Preview
-        .preview
-          .preview-inner
-          .img-select>
-            .images-txt Images
-            .img-wrap
-              .img-title thethreebears.jpg
-              .thumb
-          .img-controls>
-            .txt.img-controls-txt Image Controls
-            .sep
-            .txt.tip Flip horizontal
-            .btns.ctrl
-              = image_tag "card_maker/icons/rotate.png", :class => "btn top"
-              = image_tag "card_maker/icons/flip_horiz.png", :class => "btn mid"
-              = image_tag "card_maker/icons/flip_vert.png", :class => "btn bot"
-            .sep
-            .zoom-txt.txt 86%
-            .zoom.ctrl
-              .dir.plus +
-              .stem
-                .lft>
-                .rt>
-
-              .dir.minus &ndash;
-
+        #Preview.preview
+          .preview-inner>
+            .img-select>
+              .images-txt Images
+              .img-wrap
+                .img-title thethreebears.jpg
+                .thumb
+            .img-controls>
+              .txt.img-controls-txt Image Controls
+              .sep
+              .txt.tip Flip horizontal
+              .btns.ctrl
+                = image_tag "card_maker/icons/rotate.png", :class => "btn top"
+                = image_tag "card_maker/icons/flip_horiz.png", :class => "btn mid"
+                = image_tag "card_maker/icons/flip_vert.png", :class => "btn bot"
+              .sep
+              .zoom-txt.txt 86%
+              .zoom.ctrl
+                .dir.plus +
+                .stem
+                  .lft>
+                  .rt>
+                  .knob
+                .dir.minus &ndash;
+            .card-box
+          .preview-btns
+            .btn.close
+              .btn-txt Close
+            .btn.save-exit
+              .btn-txt Save + Exit
+            .btn.save
+              .btn-txt Quick Save
 
       .col.right-col>
         .col-inner

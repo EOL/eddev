@@ -683,42 +683,14 @@ $(function() {
     });
   }
 
-  /*
-   * Delete a card and remove its image from the card manager.
-   */
-  function destroy($card, id) {
-    var shouldDestroy = confirm('Are you sure you want to delete this card?');
 
-    if (!shouldDestroy) return;
 
-    $.ajax({
-      url: apiPath + '/cards/' + id,
-      method: 'DELETE',
-      success: function() {
-        $card.remove();
-        $('#CardGenerator').addClass('hidden');
-      }
-    });
-  }
 
-  function cardEditClicked($btn, id) {
-    $btn.addClass('active');
-    loadCardForEditing(id);
-  }
 
   /*
    * CARD MANAGER
    */
-  function cardSelected($card, id, event) {
-    return resourceSelected(
-      cardOverlayTemplate,
-      destroy,
-      cardEditClicked,
-      $card,
-      id,
-      event
-    );
-  }
+
 
   function deleteDeck($deckElmt, deckId) {
     var confirmation = confirm('Are you sure you want to delete this deck?');
@@ -745,122 +717,15 @@ $(function() {
     );
   }
 
-  function resourceSelected(
-    overlayTemplate,
-    destroyFn,
-    editFn,
-    $elmt,
-    id,
-    event
-  ) {
-    var $overlay = $(overlayTemplate())
-      ;
 
-    event.stopPropagation();
 
-    if ($elmt.hasClass('selected')) {
-      return false;
-    }
 
-    unselectResource();
-
-    $overlay.find('.trash-btn').click(function() {
-      destroyFn($elmt, id);
-      return false;
-    });
-
-    $overlay.find('.edit-btn').click(function() {
-      editFn($(this), id);
-      return false;
-    });
-
-    $elmt.find('.resource-frame').append($overlay);
-    $elmt.addClass('selected');
-
-    return false;
-  }
-
-  function unselectResource($resource) {
-    unselectResourceHelper($('#UserResources .resource-wrap.selected'));
-  }
-
-  function unselectResourceHelper($resource) {
-    if ($resource) {
-      $resource.find('.resource-overlay').remove();
-      $resource.removeClass('selected');
-    }
-  }
-
-  function setCard(theCard) {
-    card = theCard;
-
-    if (card.data == null) {
-      card.data = {}
-    }
-
-    data = card.data;
-    cardId = card.id;
-
-    renderer.setCard(card, function(err) {
-      if (err) throw err;
-      $canvas = $(renderer.getCanvas());
-      setupCardInterface();
-      $('#CardGenerator').removeClass('hidden');
-      $('#CanvasWrap').removeClass('fixed');
-    });
-  }
-
-  function newCard() {
-    newCardForDeck(null);
-  }
-
-  function newCardForDeck(deckId) {
-    var taxonId = window.prompt('Enter EOL taxon ID', '327940')
-      , $cardPlaceholder = $(cardPlaceholderTemplate())
-      , path = deckId === null ? '/cards' : '/decks/' + deckId + '/cards'
-      ;
-
-    if (!taxonId) {
-      return;
-    }
-
-    $('#NewResource').after($cardPlaceholder);
-
-    $.ajax({
-      url: apiPath + path,
-      data: JSON.stringify({
-        templateName: 'trait',
-        templateParams: {
-          speciesId: taxonId
-        }
-      }),
-      contentType: 'application/json',
-      method: 'POST',
-      success: function(card) {
-        var $newPlaceholder = $(cardPlaceholderTemplate({ cardId: card.id }));
-        $cardPlaceholder.replaceWith($newPlaceholder);
-        $newPlaceholder.click(cardSelected.bind(null, $newPlaceholder, card.id));
-        $newPlaceholder.click();
-        $newPlaceholder.find('.card-overlay .edit-btn').click();
-        loadCardImg($newPlaceholder, card.id);
-      }
-    });
-  }
 
   $('#TemplateParams').submit(function() {
     var taxonId = $(this).find('.taxon-id').val();
   });
 
-  function loadCardForEditing(id) {
-    $.ajax({
-      url: apiPath + '/cards/' + id + '/json',
-      method: 'GET',
-      contentType: 'application/json',
-      success: function(card) {
-        setCard(card);
-      }
-    });
-  }
+
 
   function cleanUserResources() {
     var $userResources = $('#UserResources');
@@ -941,26 +806,7 @@ $(function() {
     });
   }
 
-  function getDecks(cb) {
-    $.ajax({
-      url: apiPath + '/decks',
-      method: 'GET',
-      success: cb
-    });
-  }
 
-  function reloadUserCards() {
-    $.ajax({
-      url: apiPath + '/card_summaries',
-      method: 'GET',
-      success: function(summaries) {
-        getDecks(function(decks) {
-          buildCards(summaries, decks, newCard);
-        });
-      }
-    });
-  }
-  reloadUserCards();
 
   function loadDeckCards(deck) {
     $('#ViewSelector .view.selected').removeClass('selected');
@@ -1041,11 +887,7 @@ $(function() {
     viewSelectorClickHelper(this, reloadUserCards);
   });
 
-  function loadCardImgAndBindEvents($card, id) {
-    $card.click(cardSelected.bind(null, $card, id));
 
-    loadCardImg($card, id);
-  }
 
   function reloadCard(id) {
     var $card = $('#Card-' + id);
@@ -1055,21 +897,5 @@ $(function() {
     loadCardImgAndBindEvents($card, id);
   }
 
-  function loadCardImg($placeholder, cardId) {
-    var $img = $(userCardTemplate({
-      src: apiPath + '/cards/' + cardId + '/svg'
-    }));
 
-    $img.one('load', function() {
-      var $resourceFrame = $placeholder.find('.resource-frame');
-
-      $resourceFrame.children().not('.resource-overlay').remove();
-
-      $resourceFrame.prepend($img);
-    });
-
-    if ($img.complete) {
-      $img.load();
-    }
-  }
 });

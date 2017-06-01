@@ -1,3 +1,5 @@
+= render 'card_maker/js_templates/manager'
+
 %script#LabelTemplate{:type => "text/x-handlebars-template"}
   .label {{label}}
 
@@ -65,22 +67,7 @@
 %script#SpinnerTemplate{:type => "text/x-handlebars-template"}
   %i.fa.fa-spinner.fa-spin.fa-2x.img-placeholder
 
-%script#CardPlaceholderTemplate{:type => "text/x-handlebars-template"}
-  .resource-wrap.user-resource-wrap{:'data-card-id' => "{{cardId}}", :id => "Card-{{cardId}}"}
-    .resource-frame.user-resource-frame
-      %i.fa.fa-spinner.fa-spin.fa-2x.img-placeholder
-    :plain
-      {{#if decks}}
-        <select class="deck-selector">
-          <option value="none">(Not in deck)</option>
-          {{#each decks}}
-            <option value="{{this.id}}">{{this.name}}</option>
-          {{/each}}
-        </select>
-      {{/if}}
 
-%script#UserCardTemplate{:type => "text/x-handlebars-template"}
-  %img.user-resource{:src => "{{src}}"}
 
 %script#DeckTemplate{:type => "text/x-handlebars-template"}
   .resource-wrap.user-resource-wrap
@@ -88,10 +75,7 @@
       %i.fa.fa-image.fa-4x.title-card-placeholder
     .deck-name {{name}}
 
-%script#CardOverlayTemplate{:type => "text/x-handlebars-template"}
-  .card-overlay.resource-overlay
-    %i.fa.fa-edit.fa-3x.edit-btn.btn
-    %i.fa.fa-trash-o.fa-3x.trash-btn.btn
+
 
 %script#DeckOverlayTemplate{:type => "text/x-handlebars-template"}
   .deck-overlay.resource-overlay
@@ -153,15 +137,16 @@
                 = image_tag "card_maker/icons/flip_horiz.png", :class => "btn mid"
                 = image_tag "card_maker/icons/flip_vert.png", :class => "btn bot"
               .sep
-              .zoom-txt.txt 86%
+              #ZoomPct.zoom-txt.txt
               .zoom.ctrl
-                .dir.plus +
-                .stem
+                #ZoomPlus.dir.plus +
+                #ZoomStem.stem
                   .lft>
                   .rt>
-                  .knob
-                .dir.minus &ndash;
+                  #ZoomKnob.knob
+                #ZoomMinus.dir.minus &ndash;
             .card-box
+              %canvas#CardCanvas.card-canvas.hidden
           .preview-btns
             .btn.close
               .btn-txt Close

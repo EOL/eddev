@@ -1,0 +1,21 @@
+%script#CardPlaceholderTemplate{:type => "text/x-handlebars-template"}
+  .resource-wrap.user-resource-wrap{:'data-card-id' => "{{cardId}}", :id => "Card-{{cardId}}"}
+    .resource-frame.user-resource-frame
+      %i.fa.fa-spinner.fa-spin.fa-2x.img-placeholder
+    :plain
+      {{#if decks}}
+        <select class="deck-selector">
+          <option value="none">(Not in deck)</option>
+          {{#each decks}}
+            <option value="{{this.id}}">{{this.name}}</option>
+          {{/each}}
+        </select>
+      {{/if}}
+
+%script#CardImgTemplate{:type => "text/x-handlebars-template"}
+  %img.user-resource{:src => "{{src}}"}
+
+%script#CardOverlayTemplate{:type => "text/x-handlebars-template"}
+  .card-overlay.resource-overlay
+    %i.fa.fa-edit.fa-3x.edit-btn.btn
+    %i.fa.fa-trash-o.fa-3x.trash-btn.btn

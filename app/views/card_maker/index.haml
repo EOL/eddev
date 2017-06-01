@@ -1,4 +1,5 @@
-= render 'card_maker/js_templates/manager'
+= render "card_maker/js_templates/manager"
+= render "card_maker/js_templates/editor"
 
 %script#LabelTemplate{:type => "text/x-handlebars-template"}
   .label {{label}}
@@ -123,11 +124,8 @@
           .col-head-txt Preview
         #Preview.preview
           .preview-inner>
-            .img-select>
+            #PreviewImgSelect.img-select>
               .images-txt Images
-              .img-wrap
-                .img-title thethreebears.jpg
-                .thumb
             .img-controls>
               .txt.img-controls-txt Image Controls
               .sep

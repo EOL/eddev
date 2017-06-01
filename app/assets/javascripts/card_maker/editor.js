@@ -5,6 +5,9 @@ window.CardEditor = (function() {
     , card
     ;
 
+  // Handlebars (set onload)
+  var previewThumbTemplate;
+
   // http://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas/15666143#15666143
   var pixelRatio = (function () {
     var ctx = document.createElement('canvas').getContext('2d'),
@@ -82,12 +85,11 @@ window.CardEditor = (function() {
       card.data = {}
     }
 
-    data = card.data;
-    cardId = card.id;
-
     renderer.setCard(card, function(err) {
       if (err) throw err;
       $canvas = $(renderer.getCanvas());
+
+      setupThumbs();
 
       renderer.draw(function(err, canvas) {
         if (err) {
@@ -100,21 +102,65 @@ window.CardEditor = (function() {
   }
   exports.setCard = setCard;
 
+  function selectedImgFieldId() {
+    var $elmt = $('#PreviewImgSelect .thumb.selected')
+      , id = null
+      ;
+
+    if ($elmt) {
+      id = $elmt.data('field-id');
+    }
+
+    return id;
+  }
+
+  function setupThumbs() {
+    var imgFields = renderer.imageFields()
+      , $thumbs = $('#PreviewImgSelect')
+      ;
+
+    for (var i = 0; i < imgFields.length; i++) {
+      var field = imgFields[i]
+        , val = renderer.getFieldValue(field.id)
+        , $thumb = $(previewThumbTemplate({
+            name: field.label,
+            url: val.url,
+            fieldId: field.id
+          }));
+
+      $thumb.find('.thumb').click(function() {
+        $thumbs.find('.thumb').removeClass('selected');
+        $(this).addClass('selected');
+      });
+
+      $thumbs.append($thumb);
+
+      if (i === 0) {
+        $thumb.find('.thumb').addClass('selected');
+      }
+    }
+  }
+
   function setupZoomWidget() {
-    var $zoomKnob = $('#ZoomKnob')
-      , $zoomStem = $('#ZoomStem')
-      , $zoomPct = $('#ZoomPct')
-      , $zoomPlus = $('#ZoomPlus')
+    var $zoomKnob  = $('#ZoomKnob')
+      , $zoomStem  = $('#ZoomStem')
+      , $zoomPct   = $('#ZoomPct')
+      , $zoomPlus  = $('#ZoomPlus')
       , $zoomMinus = $('#ZoomMinus')
       , maxPct = 100
       , minPct = 1
+      , zoomLevelOffset = 50
+      , maxTop = $zoomStem.innerHeight() - $zoomKnob.outerHeight(true) + minPct
       , pct
       ;
 
-    var maxTop = $zoomStem.innerHeight() - $zoomKnob.outerHeight(true) + minPct;
+    function updatePct() {
+      var selectedImgId = selectedImgFieldId();
 
-    function setPctTxt() {
+      renderer.setFieldAttr(selectedImgId, 'zoomLevel', pct - zoomLevelOffset);
       $('#ZoomPct').html(pct + '%');
+
+      redraw();
     }
 
     function setKnobTop() {
@@ -123,11 +169,11 @@ window.CardEditor = (function() {
 
     function setPctFromTop(top) {
       pct = Math.round((maxTop - top) * 100.0 / maxTop);
-      setPctTxt();
+      updatePct();
     }
 
     function topFromPct() {
-      return -1 * ((pct * maxTop / 100) - maxTop);
+      return -1 * ((pct * maxTop / 100.0) - maxTop);
     }
 
     $zoomKnob.draggable({
@@ -142,7 +188,7 @@ window.CardEditor = (function() {
       if (pct < maxPct) {
         pct += 1;
         setKnobTop();
-        setPctTxt();
+        updatePct();
       }
     });
 
@@ -150,11 +196,9 @@ window.CardEditor = (function() {
       if (pct > minPct) {
         pct -= 1;
         setKnobTop();
-        setPctTxt();
+        updatePct();
       }
     });
-
-    setPctFromTop(parseInt($zoomKnob.css('top')));
   }
 
   function setPreviewTopMargin() {
@@ -182,9 +226,19 @@ window.CardEditor = (function() {
     }, 50);
   }
 
+  function redraw() {
+    renderer.draw(function(err) {
+      if (err) {
+        console.log(err);
+      }
+    });
+  }
+
   $(function() {
     $(document).scroll(setPreviewTopMargin);
     setupZoomWidget();
+
+    previewThumbTemplate = Handlebars.compile($('#PreviewThumbTemplate').html());
   });
 
   return exports;

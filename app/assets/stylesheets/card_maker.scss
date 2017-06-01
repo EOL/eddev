@@ -312,9 +312,17 @@ $col-border-width: 5px;
 
     .thumb {
       background-color: $white;
+      cursor: pointer;
+      display: block;
       height: $thumb-size;
       margin: 5px auto 0 auto;
+      box-sizing: content-box;
+      object-fit: cover;
       width: $thumb-size;
+
+      &.selected {
+        border: 3px solid #3c9e60;
+      }
     }
   }
 

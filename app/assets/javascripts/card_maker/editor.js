@@ -2,7 +2,8 @@ window.CardEditor = (function() {
   var exports = {};
 
   var apiPath = '/card_maker_ajax'
-    , card
+    , cardWrapper
+    , zoomWidget
     ;
 
   // Handlebars (set onload)
@@ -75,28 +76,33 @@ window.CardEditor = (function() {
     }
   }
 
+  CardWrapper.setTemplateSupplier(templateSupplier);
+
   var renderer =
     new TemplateRenderer(templateSupplier, canvasSupplier, imageFetcher);
 
   function setCard(theCard) {
-    card = theCard;
+    CardWrapper.newInstance(theCard, function(err, instance) {
+      if (err) {
+        throw err; // TODO: ???
+      }
 
-    if (card.data == null) {
-      card.data = {}
-    }
+      cardWrapper = instance;
 
-    renderer.setCard(card, function(err) {
-      if (err) throw err;
-      $canvas = $(renderer.getCanvas());
+      renderer.setCard(theCard, function(err) {
+        if (err) throw err;
+        $canvas = $(renderer.getCanvas());
 
-      setupThumbs();
+        setupThumbs();
+        zoomWidget.setFromSelected();
 
-      renderer.draw(function(err, canvas) {
-        if (err) {
-          console.log(err); // TODO: better handling
-        } else {
-          $canvas.removeClass('hidden');
-        }
+        renderer.draw(function(err, canvas) {
+          if (err) {
+            console.log(err); // TODO: better handling
+          } else {
+            $canvas.removeClass('hidden');
+          }
+        });
       });
     });
   }
@@ -129,8 +135,7 @@ window.CardEditor = (function() {
           }));
 
       $thumb.find('.thumb').click(function() {
-        $thumbs.find('.thumb').removeClass('selected');
-        $(this).addClass('selected');
+        thumbClicked(this);
       });
 
       $thumbs.append($thumb);
@@ -141,8 +146,19 @@ window.CardEditor = (function() {
     }
   }
 
-  function setupZoomWidget() {
-    var $zoomKnob  = $('#ZoomKnob')
+  function thumbClicked(elmt) {
+    var $thumbsArea = $('#PreviewImgSelect')
+      ;
+
+    $thumbsArea.find('.thumb').removeClass('selected');
+    $(elmt).addClass('selected');
+
+    zoomWidget.setFromSelected();
+  }
+
+  function ZoomWidget() {
+    var $zoomControls = $('#ZoomControls')
+      , $zoomKnob  = $('#ZoomKnob')
       , $zoomStem  = $('#ZoomStem')
       , $zoomPct   = $('#ZoomPct')
       , $zoomPlus  = $('#ZoomPlus')
@@ -154,11 +170,15 @@ window.CardEditor = (function() {
       , pct
       ;
 
+    function updatePctTxt() {
+      $zoomPct.html(pct + '%');
+    }
+
     function updatePct() {
       var selectedImgId = selectedImgFieldId();
 
-      renderer.setFieldAttr(selectedImgId, 'zoomLevel', pct - zoomLevelOffset);
-      $('#ZoomPct').html(pct + '%');
+      cardWrapper.setZoomLevel(selectedImgId, pct - zoomLevelOffset);
+      updatePctTxt();
 
       redraw();
     }
@@ -175,6 +195,8 @@ window.CardEditor = (function() {
     function topFromPct() {
       return -1 * ((pct * maxTop / 100.0) - maxTop);
     }
+
+    $zoomControls.find('*').off();
 
     $zoomKnob.draggable({
       containment: $('#ZoomStem'),
@@ -199,6 +221,15 @@ window.CardEditor = (function() {
         updatePct();
       }
     });
+
+    this.setFromSelected = function() {
+      var selectedImgId = selectedImgFieldId();
+
+      pct = cardWrapper.getZoomLevel(selectedImgId) + zoomLevelOffset;
+
+      updatePctTxt();
+      setKnobTop();
+    }
   }
 
   function setPreviewTopMargin() {
@@ -236,9 +267,9 @@ window.CardEditor = (function() {
 
   $(function() {
     $(document).scroll(setPreviewTopMargin);
-    setupZoomWidget();
 
     previewThumbTemplate = Handlebars.compile($('#PreviewThumbTemplate').html());
+    zoomWidget = new ZoomWidget();
   });
 
   return exports;

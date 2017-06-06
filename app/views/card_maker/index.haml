@@ -135,14 +135,15 @@
                 = image_tag "card_maker/icons/flip_horiz.png", :class => "btn mid"
                 = image_tag "card_maker/icons/flip_vert.png", :class => "btn bot"
               .sep
-              #ZoomPct.zoom-txt.txt
-              .zoom.ctrl
-                #ZoomPlus.dir.plus +
-                #ZoomStem.stem
-                  .lft>
-                  .rt>
-                  #ZoomKnob.knob
-                #ZoomMinus.dir.minus &ndash;
+              #ZoomControls
+                #ZoomPct.zoom-txt.txt
+                .zoom.ctrl
+                  #ZoomPlus.dir.plus +
+                  #ZoomStem.stem
+                    .lft>
+                    .rt>
+                    #ZoomKnob.knob
+                  #ZoomMinus.dir.minus &ndash;
             .card-box
               %canvas#CardCanvas.card-canvas.hidden
           .preview-btns

@@ -3,7 +3,7 @@ window.CardEditor = (function() {
 
   var apiPath = '/card_maker_ajax'
     , cardWrapper
-    , zoomWidget
+    , imageControls
     ;
 
   // Handlebars (set onload)
@@ -94,7 +94,7 @@ window.CardEditor = (function() {
         $canvas = $(renderer.getCanvas());
 
         setupThumbs();
-        zoomWidget.setFromSelected();
+        imageControls.setupForSelected();
 
         renderer.draw(function(err, canvas) {
           if (err) {
@@ -153,20 +153,22 @@ window.CardEditor = (function() {
     $thumbsArea.find('.thumb').removeClass('selected');
     $(elmt).addClass('selected');
 
-    zoomWidget.setFromSelected();
+    imageControls.setupForSelected();
   }
 
-  function ZoomWidget() {
+  function ImageControls() {
     var $zoomControls = $('#ZoomControls')
       , $zoomKnob  = $('#ZoomKnob')
       , $zoomStem  = $('#ZoomStem')
       , $zoomPct   = $('#ZoomPct')
       , $zoomPlus  = $('#ZoomPlus')
       , $zoomMinus = $('#ZoomMinus')
+      , $cardCanvas = $('#CardCanvas')
       , maxPct = 100
       , minPct = 1
       , zoomLevelOffset = 50
       , maxTop = $zoomStem.innerHeight() - $zoomKnob.outerHeight(true) + minPct
+      , dragArea
       , pct
       ;
 
@@ -222,10 +224,78 @@ window.CardEditor = (function() {
       }
     });
 
-    this.setFromSelected = function() {
+    function selectedImageContains(e) {
+      var minX = dragArea.x
+        , minY = dragArea.y
+        , maxX = minX + dragArea.width
+        , maxY = minY + dragArea.height
+        , canvasOffset = $cardCanvas.offset()
+        , mouseX
+        , mouseY
+        , cont
+        ;
+
+      mouseX = e.pageX - canvasOffset.left;
+      mouseY = e.pageY - canvasOffset.top;
+
+      contains =  mouseX >= minX &&
+                  mouseX <= maxX &&
+                  mouseY >= minY &&
+                  mouseY <= maxY;
+
+      return contains;
+    }
+
+    function cardCanvasClicked(clickEvent) {
+      var $that = $(this)
+        , selectedImgId = selectedImgFieldId()
+        , panX = cardWrapper.getDataAttr(selectedImgId, 'panX', 0)
+        , panY = cardWrapper.getDataAttr(selectedImgId, 'panY', 0)
+        ;
+
+      if (!selectedImageContains(clickEvent)) {
+        return;
+      }
+
+      function moveHandler(e) {
+        console.log(clickEvent.pageX, clickEvent.pageY, e.pageX, e.pageY);
+
+        console.log(clickEvent.pageX - e.pageX);
+
+        cardWrapper.setDataAttr(selectedImgId, 'panX', panX + clickEvent.pageX - e.pageX);
+        cardWrapper.setDataAttr(selectedImgId, 'panY', panY + clickEvent.pageY - e.pageY);
+
+        redraw();
+      }
+
+      function mouseupHandler() {
+        $(document).off('mousemove', moveHandler);
+        $(document).off('mouseup', mouseupHandler);
+      }
+
+      $(document).mousemove(moveHandler);
+
+      $(document).mouseup(mouseupHandler);
+    }
+
+    this.setupForSelected = function() {
       var selectedImgId = selectedImgFieldId();
 
       pct = cardWrapper.getZoomLevel(selectedImgId) + zoomLevelOffset;
+
+      dragArea = cardWrapper.getImageLocation(selectedImgId);
+
+      $cardCanvas.off('click');
+      $cardCanvas.mousedown(cardCanvasClicked);
+
+      $(document).off('mousemove');
+      $(document).mousemove(function(e) {
+        if (selectedImageContains(e)) {
+          $('html,body').css('cursor', 'move');
+        } else {
+          $('html,body').css('cursor', 'auto');
+        }
+      });
 
       updatePctTxt();
       setKnobTop();
@@ -269,7 +339,7 @@ window.CardEditor = (function() {
     $(document).scroll(setPreviewTopMargin);
 
     previewThumbTemplate = Handlebars.compile($('#PreviewThumbTemplate').html());
-    zoomWidget = new ZoomWidget();
+    imageControls = new ImageControls();
   });
 
   return exports;

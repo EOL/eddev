@@ -1,0 +1,198 @@
+window.ImageControls = (function() {
+  var exports = {};
+
+  var instance = null;
+
+  function ImageControls() {
+    var $zoomControls = $('#ZoomControls')
+      , $zoomKnob  = $('#ZoomKnob')
+      , $zoomStem  = $('#ZoomStem')
+      , $zoomPct   = $('#ZoomPct')
+      , $zoomPlus  = $('#ZoomPlus')
+      , $zoomMinus = $('#ZoomMinus')
+      , $cardCanvas = $('#CardCanvas')
+      , maxPct = 100
+      , minPct = 1
+      , zoomLevelOffset = 50
+      , maxTop = $zoomStem.innerHeight() - $zoomKnob.outerHeight(true) + minPct
+      , selectedImgId
+      , dragArea
+      , pct
+      , previewThumbTemplate
+      , cardWrapper
+      ;
+
+    function updatePctTxt() {
+      $zoomPct.html(pct + '%');
+    }
+
+    function updatePct() {
+      cardWrapper.setZoomLevel(selectedImgId, pct - zoomLevelOffset);
+      updatePctTxt();
+
+      cardWrapper.draw();
+    }
+
+    function setKnobTop() {
+      $zoomKnob.css('top', topFromPct(pct));
+    }
+
+    function setPctFromTop(top) {
+      pct = Math.round((maxTop - top) * 100.0 / maxTop);
+      updatePct();
+    }
+
+    function topFromPct() {
+      return -1 * ((pct * maxTop / 100.0) - maxTop);
+    }
+
+    function selectedImageContains(e) {
+      var minX = dragArea.x
+        , minY = dragArea.y
+        , maxX = minX + dragArea.width
+        , maxY = minY + dragArea.height
+        , canvasOffset = $cardCanvas.offset()
+        , mouseX
+        , mouseY
+        , cont
+        ;
+
+      mouseX = e.pageX - canvasOffset.left;
+      mouseY = e.pageY - canvasOffset.top;
+
+      contains =  mouseX >= minX &&
+                  mouseX <= maxX &&
+                  mouseY >= minY &&
+                  mouseY <= maxY;
+
+      return contains;
+    }
+
+    function cardCanvasClicked(clickEvent) {
+      var $that = $(this)
+        , panX = cardWrapper.getDataAttr(selectedImgId, 'panX', 0)
+        , panY = cardWrapper.getDataAttr(selectedImgId, 'panY', 0)
+        ;
+
+      if (!selectedImageContains(clickEvent)) {
+        return;
+      }
+
+      function moveHandler(e) {
+        cardWrapper.setDataAttr(selectedImgId, 'panX', panX + clickEvent.pageX - e.pageX);
+        cardWrapper.setDataAttr(selectedImgId, 'panY', panY + clickEvent.pageY - e.pageY);
+
+        cardWrapper.draw();
+      }
+
+      function mouseupHandler() {
+        $(document).off('mousemove', moveHandler);
+        $(document).off('mouseup', mouseupHandler);
+      }
+
+      $(document).mousemove(moveHandler);
+      $(document).mouseup(mouseupHandler);
+    }
+
+    function setupThumbs() {
+      var imgFields = cardWrapper.imageFields()
+        , $thumbs = $('#PreviewImgSelect')
+        ;
+
+      for (var i = 0; i < imgFields.length; i++) {
+        var field = imgFields[i]
+          , val = cardWrapper.getFieldValue(field.id)
+          , $thumb = $(previewThumbTemplate({
+              name: field.label,
+              url: val.url
+            }));
+
+        $thumb.find('.thumb').click(function() {
+          thumbClicked(this, field.id);
+        });
+
+        $thumbs.append($thumb);
+
+        if (i === 0) {
+          thumbClicked($thumb.find('.thumb'), field.id);
+        }
+      }
+    }
+
+    function thumbClicked(elmt, id) {
+      var $thumbsArea = $('#PreviewImgSelect')
+        ;
+
+      $thumbsArea.find('.thumb').removeClass('selected');
+      $(elmt).addClass('selected');
+
+      selectedImgId = id;
+
+      setupForSelected();
+    }
+
+    function setupForSelected() {
+      pct = cardWrapper.getZoomLevel(selectedImgId) + zoomLevelOffset;
+
+      dragArea = cardWrapper.getImageLocation(selectedImgId);
+
+      $cardCanvas.off('click');
+      $cardCanvas.mousedown(cardCanvasClicked);
+
+      $cardCanvas.off('mousemove');
+      $cardCanvas.mousemove(function(e) {
+        if (selectedImageContains(e)) {
+          $(this).css('cursor', 'move');
+        } else {
+          $(this).css('cursor', 'auto');
+        }
+      });
+
+      updatePctTxt();
+      setKnobTop();
+    }
+
+    this.setCard = function(theCardWrapper) {
+      cardWrapper = theCardWrapper;
+      setupThumbs();
+    }
+
+    // One-time event binding
+    $zoomKnob.draggable({
+      containment: $('#ZoomStem'),
+      axis: 'y',
+      drag: function(event, ui) {
+        setPctFromTop(ui.position.top);
+      }
+    });
+
+    $zoomPlus.click(function() {
+      if (pct < maxPct) {
+        pct += 1;
+        setKnobTop();
+        updatePct();
+      }
+    });
+
+    $zoomMinus.click(function() {
+      if (pct > minPct) {
+        pct -= 1;
+        setKnobTop();
+        updatePct();
+      }
+    });
+
+    // Handlebars templates
+    previewThumbTemplate = Handlebars.compile($('#PreviewThumbTemplate').html());
+  }
+
+  exports.getInstance = function() {
+    if (instance === null) {
+      instance = new ImageControls();
+    }
+
+    return instance;
+  }
+
+  return exports;
+})();

@@ -81,6 +81,8 @@ window.CardEditor = (function() {
   var renderer =
     new TemplateRenderer(templateSupplier, canvasSupplier, imageFetcher);
 
+  CardWrapper.setRenderer(renderer);
+
   function setCard(theCard) {
     CardWrapper.newInstance(theCard, function(err, instance) {
       if (err) {
@@ -88,219 +90,11 @@ window.CardEditor = (function() {
       }
 
       cardWrapper = instance;
-
-      renderer.setCard(theCard, function(err) {
-        if (err) throw err;
-        $canvas = $(renderer.getCanvas());
-
-        setupThumbs();
-        imageControls.setupForSelected();
-
-        renderer.draw(function(err, canvas) {
-          if (err) {
-            console.log(err); // TODO: better handling
-          } else {
-            $canvas.removeClass('hidden');
-          }
-        });
-      });
+      imageControls.setCard(cardWrapper);
+      cardWrapper.draw();
     });
   }
   exports.setCard = setCard;
-
-  function selectedImgFieldId() {
-    var $elmt = $('#PreviewImgSelect .thumb.selected')
-      , id = null
-      ;
-
-    if ($elmt) {
-      id = $elmt.data('field-id');
-    }
-
-    return id;
-  }
-
-  function setupThumbs() {
-    var imgFields = renderer.imageFields()
-      , $thumbs = $('#PreviewImgSelect')
-      ;
-
-    for (var i = 0; i < imgFields.length; i++) {
-      var field = imgFields[i]
-        , val = renderer.getFieldValue(field.id)
-        , $thumb = $(previewThumbTemplate({
-            name: field.label,
-            url: val.url,
-            fieldId: field.id
-          }));
-
-      $thumb.find('.thumb').click(function() {
-        thumbClicked(this);
-      });
-
-      $thumbs.append($thumb);
-
-      if (i === 0) {
-        $thumb.find('.thumb').addClass('selected');
-      }
-    }
-  }
-
-  function thumbClicked(elmt) {
-    var $thumbsArea = $('#PreviewImgSelect')
-      ;
-
-    $thumbsArea.find('.thumb').removeClass('selected');
-    $(elmt).addClass('selected');
-
-    imageControls.setupForSelected();
-  }
-
-  function ImageControls() {
-    var $zoomControls = $('#ZoomControls')
-      , $zoomKnob  = $('#ZoomKnob')
-      , $zoomStem  = $('#ZoomStem')
-      , $zoomPct   = $('#ZoomPct')
-      , $zoomPlus  = $('#ZoomPlus')
-      , $zoomMinus = $('#ZoomMinus')
-      , $cardCanvas = $('#CardCanvas')
-      , maxPct = 100
-      , minPct = 1
-      , zoomLevelOffset = 50
-      , maxTop = $zoomStem.innerHeight() - $zoomKnob.outerHeight(true) + minPct
-      , dragArea
-      , pct
-      ;
-
-    function updatePctTxt() {
-      $zoomPct.html(pct + '%');
-    }
-
-    function updatePct() {
-      var selectedImgId = selectedImgFieldId();
-
-      cardWrapper.setZoomLevel(selectedImgId, pct - zoomLevelOffset);
-      updatePctTxt();
-
-      redraw();
-    }
-
-    function setKnobTop() {
-      $zoomKnob.css('top', topFromPct(pct));
-    }
-
-    function setPctFromTop(top) {
-      pct = Math.round((maxTop - top) * 100.0 / maxTop);
-      updatePct();
-    }
-
-    function topFromPct() {
-      return -1 * ((pct * maxTop / 100.0) - maxTop);
-    }
-
-    $zoomControls.find('*').off();
-
-    $zoomKnob.draggable({
-      containment: $('#ZoomStem'),
-      axis: 'y',
-      drag: function(event, ui) {
-        setPctFromTop(ui.position.top);
-      }
-    });
-
-    $zoomPlus.click(function() {
-      if (pct < maxPct) {
-        pct += 1;
-        setKnobTop();
-        updatePct();
-      }
-    });
-
-    $zoomMinus.click(function() {
-      if (pct > minPct) {
-        pct -= 1;
-        setKnobTop();
-        updatePct();
-      }
-    });
-
-    function selectedImageContains(e) {
-      var minX = dragArea.x
-        , minY = dragArea.y
-        , maxX = minX + dragArea.width
-        , maxY = minY + dragArea.height
-        , canvasOffset = $cardCanvas.offset()
-        , mouseX
-        , mouseY
-        , cont
-        ;
-
-      mouseX = e.pageX - canvasOffset.left;
-      mouseY = e.pageY - canvasOffset.top;
-
-      contains =  mouseX >= minX &&
-                  mouseX <= maxX &&
-                  mouseY >= minY &&
-                  mouseY <= maxY;
-
-      return contains;
-    }
-
-    function cardCanvasClicked(clickEvent) {
-      var $that = $(this)
-        , selectedImgId = selectedImgFieldId()
-        , panX = cardWrapper.getDataAttr(selectedImgId, 'panX', 0)
-        , panY = cardWrapper.getDataAttr(selectedImgId, 'panY', 0)
-        ;
-
-      if (!selectedImageContains(clickEvent)) {
-        return;
-      }
-
-      function moveHandler(e) {
-        console.log(clickEvent.pageX, clickEvent.pageY, e.pageX, e.pageY);
-
-        console.log(clickEvent.pageX - e.pageX);
-
-        cardWrapper.setDataAttr(selectedImgId, 'panX', panX + clickEvent.pageX - e.pageX);
-        cardWrapper.setDataAttr(selectedImgId, 'panY', panY + clickEvent.pageY - e.pageY);
-
-        redraw();
-      }
-
-      function mouseupHandler() {
-        $(document).off('mousemove', moveHandler);
-        $(document).off('mouseup', mouseupHandler);
-      }
-
-      $(document).mousemove(moveHandler);
-
-      $(document).mouseup(mouseupHandler);
-    }
-
-    this.setupForSelected = function() {
-      var selectedImgId = selectedImgFieldId();
-
-      pct = cardWrapper.getZoomLevel(selectedImgId) + zoomLevelOffset;
-
-      dragArea = cardWrapper.getImageLocation(selectedImgId);
-
-      $cardCanvas.off('click');
-      $cardCanvas.mousedown(cardCanvasClicked);
-
-      $(document).off('mousemove');
-      $(document).mousemove(function(e) {
-        if (selectedImageContains(e)) {
-          $('html,body').css('cursor', 'move');
-        } else {
-          $('html,body').css('cursor', 'auto');
-        }
-      });
-
-      updatePctTxt();
-      setKnobTop();
-    }
-  }
 
   function setPreviewTopMargin() {
     var scrollTop = $(this).scrollTop()
@@ -327,19 +121,10 @@ window.CardEditor = (function() {
     }, 50);
   }
 
-  function redraw() {
-    renderer.draw(function(err) {
-      if (err) {
-        console.log(err);
-      }
-    });
-  }
-
   $(function() {
     $(document).scroll(setPreviewTopMargin);
 
-    previewThumbTemplate = Handlebars.compile($('#PreviewThumbTemplate').html());
-    imageControls = new ImageControls();
+    imageControls = ImageControls.getInstance();
   });
 
   return exports;

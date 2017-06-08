@@ -110,27 +110,22 @@
 #CardGenerator.card-generator
   .card-generator-inner
     .welcome-block
-      .rail.lft-rail>
       %h3.welcome-txt>
         %span.big-letter> W
         elcome to the EOL Card Editor.
       .tips-box>
         .tips-txt tips
-      .rail.rt-rail>
     .cols
       #LeftCol.col.left-col>
-        .col-inner
         #LeftColHeadBox.col-head-box
-          .col-head-txt Preview
+          .col-head-txt Card Preview
+          .col-head-sub-txt (Live Preview, Image Controls, Save + Exit Options)
         #Preview.preview
-          .preview-inner>
-            #PreviewImgSelect.img-select>
-              .images-txt Images
+          #PreviewImgSelect.img-select>
+          .controls-card-wrap
             .img-controls>
-              .txt.img-controls-txt Image Controls
-              .sep
               #ImgBtnLabel.txt.tip Flip horizontal
-              #ImgBtns.btns.ctrl
+              #ImgBtns.btns.ctrl.img-btns
                 = image_tag "card_maker/icons/rotate.png", :class => "btn top", :id => "RotateBtn", :data => { :label => "Rotate 90&deg;"}
                 = image_tag "card_maker/icons/flip_horiz.png", :class => "btn mid", :id => "FlipHorizBtn", :data => { :label => "Flip horizontal" }
                 = image_tag "card_maker/icons/flip_vert.png", :class => "btn bot", :id => "FlipVertBtn", :data => { :label => "Flip vertical" }
@@ -146,18 +141,20 @@
                   #ZoomMinus.dir.minus &ndash;
             .card-box
               %canvas#CardCanvas.card-canvas
-          .preview-btns
-            .btn.close
-              .btn-txt Close
-            .btn.save-exit
-              .btn-txt Save + Exit
-            .btn.save
-              .btn-txt Quick Save
+            .preview-btns
+              .btn.close
+                .btn-txt Close
+              .btn.save-exit
+                .btn-txt Save + Exit
+              .btn.save
+                .btn-txt Quick Save
 
       .col.right-col>
         .col-inner
         .col-head-box
-          .col-head-txt Form
+          .col-head-txt Card Form
+          .col-head-sub-txt (enter information that will appear on the card)
+
 
   -#
     .left-col

@@ -264,6 +264,7 @@ $col-border-width: 5px;
 
     .thumb {
       background-color: $white;
+      box-sizing: content-box;
       cursor: pointer;
       display: block;
       height: $thumb-size;
@@ -273,7 +274,8 @@ $col-border-width: 5px;
       width: $thumb-size;
 
       &.selected {
-        border: 3px solid #3c9e60;
+        border: 2px solid $white;
+        border-radius: 1px;
       }
     }
   }

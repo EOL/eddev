@@ -129,11 +129,11 @@
             .img-controls>
               .txt.img-controls-txt Image Controls
               .sep
-              .txt.tip Flip horizontal
-              .btns.ctrl
-                = image_tag "card_maker/icons/rotate.png", :class => "btn top"
-                = image_tag "card_maker/icons/flip_horiz.png", :class => "btn mid"
-                = image_tag "card_maker/icons/flip_vert.png", :class => "btn bot"
+              #ImgBtnLabel.txt.tip Flip horizontal
+              #ImgBtns.btns.ctrl
+                = image_tag "card_maker/icons/rotate.png", :class => "btn top", :id => "RotateBtn", :data => { :label => "Rotate 90&deg;"}
+                = image_tag "card_maker/icons/flip_horiz.png", :class => "btn mid", :id => "FlipHorizBtn", :data => { :label => "Flip horizontal" }
+                = image_tag "card_maker/icons/flip_vert.png", :class => "btn bot", :id => "FlipVertBtn", :data => { :label => "Flip vertical" }
               .sep
               #ZoomControls
                 #ZoomPct.zoom-txt.txt

@@ -152,6 +152,29 @@ window.ImageControls = (function() {
       setKnobTop();
     }
 
+    function rotateClicked() {
+      var rotation =
+        (cardWrapper.getDataAttr(selectedImgId, 'rotate', 0) + 90) % 360;
+
+
+      cardWrapper.setDataAttr(selectedImgId, 'rotate', rotation);
+      cardWrapper.draw();
+    }
+
+    function setInverseImgBool(prop) {
+      var curVal = cardWrapper.getDataAttr(selectedImgId, prop, false);
+      cardWrapper.setDataAttr(selectedImgId, prop, !curVal);
+      cardWrapper.draw();
+    }
+
+    function flipHorizClicked() {
+      setInverseImgBool('flipHoriz');
+    }
+
+    function flipVertClicked() {
+      setInverseImgBool('flipVert');
+    }
+
     this.setCard = function(theCardWrapper) {
       cardWrapper = theCardWrapper;
       setupThumbs();
@@ -181,6 +204,18 @@ window.ImageControls = (function() {
         updatePct();
       }
     });
+
+    $('#ImgBtns .btn').mouseenter(function() {
+      $('#ImgBtnLabel').html($(this).data('label'));
+    });
+
+    $('#ImgBtns .btn').mouseout(function() {
+      $('#ImgBtnLabel').html('');
+    })
+
+    $('#RotateBtn').click(rotateClicked);
+    $('#FlipHorizBtn').click(flipHorizClicked);
+    $('#FlipVertBtn').click(flipVertClicked);
 
     // Handlebars templates
     previewThumbTemplate = Handlebars.compile($('#PreviewThumbTemplate').html());

@@ -115,17 +115,24 @@ window.CardEditor = (function() {
       , innerColViewOffset = colViewOffset + colHeadHeight
       , previewHeight = $preview.outerHeight()
       , top
+      , position
       ;
 
     if (innerColViewOffset < 0) {
-      top = Math.min(colViewOffset * -1, colHeight - previewHeight);
+      if (colHeight - previewHeight < -colViewOffset) {
+        position = 'absolute';
+        top = colHeight - previewHeight;
+      } else {
+        position = 'fixed';
+        top = 0;
+      }
     } else {
+      position = 'absolute';
       top = colHeadHeight;
     }
 
-    $preview.animate({
-      top: top
-    }, 50);
+    $preview.css('position', position);
+    $preview.css('top', top);
   }
 
   $(function() {

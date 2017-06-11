@@ -154,13 +154,11 @@ window.ImageControls = (function() {
 
 
       cardWrapper.setDataAttr(selectedImgId, 'rotate', rotation);
-      cardWrapper.draw();
     }
 
     function setInverseImgBool(prop) {
       var curVal = cardWrapper.getDataAttr(selectedImgId, prop, false);
       cardWrapper.setDataAttr(selectedImgId, prop, !curVal);
-      cardWrapper.draw();
     }
 
     function flipHorizClicked() {

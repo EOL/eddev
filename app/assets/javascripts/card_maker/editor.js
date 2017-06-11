@@ -79,7 +79,7 @@ window.CardEditor = (function() {
   CardWrapper.setTemplateSupplier(templateSupplier);
 
   var renderer =
-    new TemplateRenderer(templateSupplier, canvasSupplier, imageFetcher);
+    new TemplateRenderer(canvasSupplier, imageFetcher);
 
   CardWrapper.setRenderer(renderer);
 

@@ -81,7 +81,11 @@ window.CardEditor = (function() {
   var renderer =
     new TemplateRenderer(canvasSupplier, imageFetcher);
 
-  CardWrapper.setRenderer(renderer);
+  function draw() {
+    renderer.draw(cardWrapper, function(err) {
+      if (err) console.log(err);
+    });
+  }
 
   function setCard(theCard) {
     CardWrapper.newInstance(theCard, function(err, instance) {
@@ -91,7 +95,10 @@ window.CardEditor = (function() {
 
       cardWrapper = instance;
       imageControls.setCard(cardWrapper);
-      cardWrapper.draw();
+
+      cardWrapper.change(draw);
+
+      draw();
     });
   }
   exports.setCard = setCard;

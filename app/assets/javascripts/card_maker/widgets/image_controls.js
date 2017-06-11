@@ -29,8 +29,6 @@ window.ImageControls = (function() {
     function updatePct() {
       cardWrapper.setZoomLevel(selectedImgId, pct - zoomLevelOffset);
       updatePctTxt();
-
-      cardWrapper.draw();
     }
 
     function setKnobTop() {
@@ -81,8 +79,6 @@ window.ImageControls = (function() {
       function moveHandler(e) {
         cardWrapper.setDataAttr(selectedImgId, 'panX', panX + clickEvent.pageX - e.pageX);
         cardWrapper.setDataAttr(selectedImgId, 'panY', panY + clickEvent.pageY - e.pageY);
-
-        cardWrapper.draw();
       }
 
       function mouseupHandler() {

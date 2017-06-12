@@ -27,7 +27,7 @@ window.ImageControls = (function() {
     }
 
     function updatePct() {
-      cardWrapper.setZoomLevel(selectedImgId, pct - zoomLevelOffset);
+      cardWrapper.setDataAttr(selectedImgId, 'zoomLevel', pct - zoomLevelOffset);
       updatePctTxt();
     }
 
@@ -97,7 +97,7 @@ window.ImageControls = (function() {
 
       for (var i = 0; i < imgFields.length; i++) {
         var field = imgFields[i]
-          , val = cardWrapper.getFieldValue(field.id)
+          , val = cardWrapper.getFieldValue(field)
           , $thumb = $(previewThumbTemplate({
               name: field.label,
               url: val.url
@@ -128,7 +128,8 @@ window.ImageControls = (function() {
     }
 
     function setupForSelected() {
-      pct = cardWrapper.getZoomLevel(selectedImgId) + zoomLevelOffset;
+      pct = cardWrapper.getDataAttr(selectedImgId, 'zoomLevel', 0) +
+        zoomLevelOffset;
 
       dragArea = cardWrapper.getImageLocation(selectedImgId);
 

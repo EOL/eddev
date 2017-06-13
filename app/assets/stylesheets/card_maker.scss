@@ -147,18 +147,6 @@ $col-border-width: 5px;
   z-index: 1;
 }
 
-.col-inner {
-  $margin: 5px;
-
-  margin: $margin;
-  border-radius: 4px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-
 .col-head-box {
   $height: $head-box-height;
 
@@ -194,7 +182,7 @@ $col-border-width: 5px;
 .left-col {
   $preview-left-width: 110px;
 
-  padding: 0 19px 0 35px;
+  padding: 0 17px 0 35px;
   width: 490px;
 
   .preview {
@@ -435,7 +423,137 @@ $col-border-width: 5px;
 
 .right-col {
   height: 1200px;
+  padding: 0 35px 0 17px;
   width: 450px;
+
+  .label {
+    $height: 34px;
+  	background-color: $white;
+    border-radius: 2px 2px 0 0;
+  	box-shadow: 0 1px 0 0 rgba(7, 83, 198, 0.33);
+    font-family: Merriweather;
+    font-size: 14px;
+    height: $height;
+    line-height: $height;
+    padding-left: 21px;
+    position: relative;
+  }
+
+  .label-txt {
+    color: #3f3f3f;
+  }
+
+  .field-wrap {
+    position: relative;
+
+    .disable-overlay {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(67, 82, 95, 0.79);
+      position: absolute;
+      z-index: 2;
+    }
+  }
+
+  .field {
+    $border-color: #428ff3;
+    $border: 3px solid $border-color;
+    border-bottom: $border;
+    border-left: $border;
+    border-right: $border;
+    border-top: 1px solid $border-color;
+    background-color: #71baff;
+    position: relative;
+
+    .text-input {
+      height: 34px;
+      display: inline-block;
+      font-size: 13px;
+      margin: 22px 11px 0 15px;
+      padding: 0 0 0 13px;
+      width: 294px;
+    }
+
+    .font-size-box {
+      background-color: #5fa1e7;
+      display: inline-block;
+      height: 77px;
+      position: relative;
+      vertical-align: top;
+      width: 72px;
+    }
+
+    .font-size-label {
+      color: $white;
+      font-size: 10px;
+      font-weight: $semibold;
+      margin-top: 14px;
+      text-align: center;
+    }
+
+    .font-size {
+      $height: 24px;
+
+      background-color: $white;
+      cursor: pointer;
+      font-size: 10px;
+      height: $height;
+      line-height: $height;
+      margin: 3px auto 0 auto;
+      position: relative;
+      text-align: center;
+      width: 48px;
+
+      &.active {
+        color: #a09d9d;
+      }
+    }
+
+    $font-size-option-border: solid 1px #2582e0;
+
+    .font-size-select {
+      border-top: $font-size-option-border;
+      border-left: $font-size-option-border;
+      border-bottom: $font-size-option-border;
+      display: flex;
+      max-width: 420px;
+      overflow: hidden;
+      position: absolute;
+      right: -10px;
+      top: -11px;
+      white-space: nowrap;
+      z-index: 3;
+    }
+
+    .font-size-option {
+      $height: 28px;
+      background-color: #c8ecff;
+    	border-right: $font-size-option-border;
+      color: #0353bc;
+      cursor: pointer;
+      flex: 0 0 auto;
+      font-size: 10px;
+      font-weight: $semibold;
+      height: $height;
+      line-height: $height;
+      text-align: center;
+      width: 42px;
+
+      &.selected {
+        background-color: $white;
+        color: #353535;
+      }
+    }
+  }
+
+  .field-sep {
+    border: solid 1px #34353b;
+    box-shadow: 0 1px 1px 0 #667683;
+    height: 0;
+    margin: 12px 0;
+  }
 }
 
 /*

@@ -4,6 +4,7 @@ window.CardEditor = (function() {
   var apiPath = '/card_maker_ajax'
     , cardWrapper
     , imageControls
+    , cardForm
     ;
 
   // Handlebars (set onload)
@@ -95,6 +96,7 @@ window.CardEditor = (function() {
 
       cardWrapper = instance;
       imageControls.setCard(cardWrapper);
+      cardForm.setCard(cardWrapper);
 
       cardWrapper.change(draw);
 
@@ -139,6 +141,7 @@ window.CardEditor = (function() {
     $(document).scroll(setPreviewTopMargin);
 
     imageControls = ImageControls.getInstance();
+    cardForm = CardForm.getInstance();
   });
 
   return exports;

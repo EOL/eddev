@@ -1,69 +1,70 @@
 = render "card_maker/js_templates/manager"
 = render "card_maker/js_templates/editor"
 
-%script#LabelTemplate{:type => "text/x-handlebars-template"}
-  .label {{label}}
+-#
+  %script#LabelTemplate{:type => "text/x-handlebars-template"}
+    .label {{label}}
 
-%script#TextInputTemplate{:type => "text/x-handlebars-template"}
-  .fields
-    %input.text-input.text-field{:id => "{{id}}", :value => "{{defaultVal}}"}
-
-%script#TextareaTemplate{:type => "text/x-handlebars-template"}
-  .fields
-    %textarea.textarea.text-field{:id => "{{id}}"} {{defaultVal}}
-
-%script#ImageInputTemplate{:type => "text/x-handlebars-template"}
-  .fields.image-input{:id => "{{id}}"}
-    .zoom-controls
-      %i.fa.fa-minus-circle.fa-2x
-      %i.fa.fa-plus-circle.fa-2x
-    .img-selector
-      :plain
-        {{#each images}}
-          <img class="thumb" src="{{this.src}}" data-index="{{this.index}}" data-credit="{{this.credit}}"/>
-        {{/each}}
-    .image-upload
-      .upload-preview
-      %input.image-upload-input{:type => "file"}
+  %script#TextInputTemplate{:type => "text/x-handlebars-template"}
     .fields
-      %label{:for => "{{id}}Credit"} Image credit:
-      %input.text-input{:id => "{{id}}Credit", :class => "image-credit"}
+      %input.text-input.text-field{:id => "{{id}}", :value => "{{defaultVal}}"}
 
-%script#LabeledImageInputTemplate{:type => "text/x-handlebars-template"}
-  .fields.labeled-image-input
-    %select
+  %script#TextareaTemplate{:type => "text/x-handlebars-template"}
+    .fields
+      %textarea.textarea.text-field{:id => "{{id}}"} {{defaultVal}}
+
+  %script#ImageInputTemplate{:type => "text/x-handlebars-template"}
+    .fields.image-input{:id => "{{id}}"}
+      .zoom-controls
+        %i.fa.fa-minus-circle.fa-2x
+        %i.fa.fa-plus-circle.fa-2x
+      .img-selector
+        :plain
+          {{#each images}}
+            <img class="thumb" src="{{this.src}}" data-index="{{this.index}}" data-credit="{{this.credit}}"/>
+          {{/each}}
+      .image-upload
+        .upload-preview
+        %input.image-upload-input{:type => "file"}
+      .fields
+        %label{:for => "{{id}}Credit"} Image credit:
+        %input.text-input{:id => "{{id}}Credit", :class => "image-credit"}
+
+  %script#LabeledImageInputTemplate{:type => "text/x-handlebars-template"}
+    .fields.labeled-image-input
+      %select
+        :plain
+          {{#each images}}
+            <option value="{{this.index}}">{{this.label}}</option>
+          {{/each}}
+
+
+  %script#ColorInputTemplate{:type => "text/x-handlebars-template"}
+    .fields.color-input
+      .color-row
+        :plain
+          {{#each colors}}
+            <div class="color" data-color="{{this}}" data-index="{{@index}}"></div>
+          {{/each}}
+
+  %script#KeyValListInputTemplate{:type => "text/x-handlebars-template"}
+    .fields.key-val-list
+      :plain
+        {{#each data}}
+          <div class="key-val-wrap" data-index="{{this.index}}">
+            <input class="key-input" type="text" value="{{this.key}}">
+            <input class="val-input" type="text" value="{{this.val}}">
+          </div>
+        {{/each}}
+
+  %script#MultiImageTemplate{:type => "text/x-handlebars-template"}
+    .fields.multi-image
       :plain
         {{#each images}}
-          <option value="{{this.index}}">{{this.label}}</option>
+          <div class="img-wrap" data-index="{{@index}}">
+            <img src="{{this.url}}" class="img">
+          </div>
         {{/each}}
-
-
-%script#ColorInputTemplate{:type => "text/x-handlebars-template"}
-  .fields.color-input
-    .color-row
-      :plain
-        {{#each colors}}
-          <div class="color" data-color="{{this}}" data-index="{{@index}}"></div>
-        {{/each}}
-
-%script#KeyValListInputTemplate{:type => "text/x-handlebars-template"}
-  .fields.key-val-list
-    :plain
-      {{#each data}}
-        <div class="key-val-wrap" data-index="{{this.index}}">
-          <input class="key-input" type="text" value="{{this.key}}">
-          <input class="val-input" type="text" value="{{this.val}}">
-        </div>
-      {{/each}}
-
-%script#MultiImageTemplate{:type => "text/x-handlebars-template"}
-  .fields.multi-image
-    :plain
-      {{#each images}}
-        <div class="img-wrap" data-index="{{@index}}">
-          <img src="{{this.url}}" class="img">
-        </div>
-      {{/each}}
 
 %script#SpinnerTemplate{:type => "text/x-handlebars-template"}
   %i.fa.fa-spinner.fa-spin.fa-2x.img-placeholder
@@ -150,10 +151,10 @@
                 .btn-txt Quick Save
 
       .col.right-col>
-        .col-inner
         .col-head-box
           .col-head-txt Card Form
           .col-head-sub-txt (enter information that will appear on the card)
+        #CardFields.card-fields
 
 
   -#

@@ -1,4 +1,35 @@
+-# ImageControls
 %script#PreviewThumbTemplate{:type => "text/x-handlebars-template"}
   .img-wrap
     .img-title {{name}}
     %img.thumb{ :src => "{{url}}"}
+
+-# CardForm
+%script#FieldLabelTempl{:type => "text/x-handlebars-template"}
+  .label
+    .label-txt {{field.label}}
+
+%script#FieldTempl{:type => "text/x-handlebars-template"}
+  .field-wrap
+    .disable-overlay.hidden
+    {{> labelTempl }}
+    .field
+      {{> (fieldPart) }}
+
+%script#TextFieldTempl{:type => "text/x-handlebars-template"}
+  %input.text-input{:type => "text"}>
+  .font-size-box>
+    .font-size-label Font size:
+    .font-size
+    .font-size-select.hidden
+      :plain
+        {{#each pc.fontSizes}}
+          {{#if this.selected}}
+            <div class="font-size-option selected">{{this.value}}</div>
+          {{else}}
+            <div class="font-size-option">{{this.value}}</div>
+          {{/if}}
+        {{/each}}
+
+%script#FieldSepTempl{:type => "text/x-handlebars-template"}
+  .field-sep

@@ -6,8 +6,8 @@
 
 -# CardForm
 %script#FieldLabelTempl{:type => "text/x-handlebars-template"}
-  .label
-    .label-txt {{field.label}}
+  .field-label
+    .txt {{field.label}}
 
 %script#FieldTempl{:type => "text/x-handlebars-template"}
   .field-wrap
@@ -17,7 +17,7 @@
       {{> (fieldPart) }}
 
 %script#TextFieldTempl{:type => "text/x-handlebars-template"}
-  %input.text-input{:type => "text"}>
+  %input.text-input.text-field-input{:type => "text"}>
   .font-size-box>
     .font-size-label Font size:
     .font-size
@@ -31,5 +31,35 @@
           {{/if}}
         {{/each}}
 
+%script#ImageFieldTempl{:type => "text/x-handlebars-template"}
+  .img-lib.img-field-sec
+    .img-lib-hdr Image Library
+    .img-lib-thumbs
+      :plain
+        {{#each pc.thumbUrls}}
+          <img src="{{this}}" class="img-lib-thumb">
+        {{/each}}
+  .img-field-sep
+  .img-url.img-field-sec
+    .img-or or
+    %input.img-url-input.text-input{:type => :text}
+  .img-field-sep
+  .img-upload.img-field-sec
+    .img-or or
+    .img-upload-btn
+      %i.fa.fa-upload.fa-lg.img-upload-btn-icon{:'aria-hidden' => true}
+      .img-upload-btn-txt Upload an image
+
 %script#FieldSepTempl{:type => "text/x-handlebars-template"}
   .field-sep
+
+%script#ImageLibTempl{:type => "text/x-handlebars-template"}
+  .fixed-center-wrap
+    .img-gallery-wrap
+      .field-label.img-gallery-label Image Library
+      .img-gallery.field
+        .img-gallery-thumbs
+          :plain
+            {{#each choices}}
+              <img src="{{this.thumbUrl}}" data-index="{{@index}}" class="img-lib-thumb">
+            {{/each}}

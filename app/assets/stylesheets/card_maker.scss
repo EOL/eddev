@@ -135,6 +135,17 @@ $col-border-width: 5px;
   align-items: stretch;
   background-color: #43525f;
   display: flex;
+  position: relative;
+}
+
+.disable-overlay {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(67, 82, 95, 0.79);
+  position: absolute;
+  z-index: 2;
 }
 
 .col {
@@ -421,131 +432,244 @@ $col-border-width: 5px;
   }
 }
 
-.right-col {
-  height: 1200px;
-  padding: 0 35px 0 17px;
-  width: 450px;
+.fixed-center-wrap {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 3;
+}
 
-  .label {
-    $height: 34px;
-  	background-color: $white;
-    border-radius: 2px 2px 0 0;
-  	box-shadow: 0 1px 0 0 rgba(7, 83, 198, 0.33);
-    font-family: Merriweather;
-    font-size: 14px;
-    height: $height;
-    line-height: $height;
-    padding-left: 21px;
-    position: relative;
-  }
+.img-gallery-wrap {
+  position: relative;
+  margin: 40px auto;
+  width: 870px;
+}
 
-  .label-txt {
+.img-gallery-label {
+  padding: 0;
+  text-align: center;
+}
+
+.img-gallery {
+  padding: 28px;
+}
+
+.img-gallery-thumbs {
+  background-color: $black;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding: 1px 6px 6px 6px;
+}
+
+.img-lib-thumb {
+  cursor: pointer;
+  height: 96px;
+  margin-top: 4px;
+  object-fit: cover;
+  width: 96px;
+}
+
+.field {
+  $border-color: #428ff3;
+  $border: 3px solid $border-color;
+  border-bottom: $border;
+  border-left: $border;
+  border-right: $border;
+  border-top: 1px solid $border-color;
+  background-color: #71baff;
+  position: relative;
+
+}
+
+.field-label {
+  $height: 34px;
+  background-color: $white;
+  border-radius: 2px 2px 0 0;
+  box-shadow: 0 1px 0 0 rgba(7, 83, 198, 0.33);
+  font-family: Merriweather;
+  font-size: 14px;
+  height: $height;
+  line-height: $height;
+  padding-left: 21px;
+  position: relative;
+
+  .txt {
     color: #3f3f3f;
   }
+}
+
+.right-col {
+  padding: 0 35px 100px 17px;
+  width: 450px;
+
+
 
   .field-wrap {
     position: relative;
+  }
 
-    .disable-overlay {
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(67, 82, 95, 0.79);
-      position: absolute;
-      z-index: 2;
+  .text-field-input {
+    display: inline-block;
+    margin: 22px 11px 0 15px;
+  }
+
+  .text-input {
+    font-size: 13px;
+    height: 34px;
+    padding: 0 0 0 13px;
+    width: 294px;
+  }
+
+  .font-size-box {
+    background-color: #5fa1e7;
+    display: inline-block;
+    height: 77px;
+    position: relative;
+    vertical-align: top;
+    width: 72px;
+  }
+
+  .font-size-label {
+    color: $white;
+    font-size: 10px;
+    font-weight: $semibold;
+    margin-top: 14px;
+    text-align: center;
+  }
+
+  .font-size {
+    $height: 24px;
+
+    background-color: $white;
+    cursor: pointer;
+    font-size: 10px;
+    height: $height;
+    line-height: $height;
+    margin: 3px auto 0 auto;
+    position: relative;
+    text-align: center;
+    width: 48px;
+
+    &.active {
+      color: #a09d9d;
     }
   }
 
-  .field {
-    $border-color: #428ff3;
-    $border: 3px solid $border-color;
-    border-bottom: $border;
-    border-left: $border;
-    border-right: $border;
-    border-top: 1px solid $border-color;
-    background-color: #71baff;
-    position: relative;
+  $font-size-option-border: solid 1px #2582e0;
 
-    .text-input {
-      height: 34px;
-      display: inline-block;
-      font-size: 13px;
-      margin: 22px 11px 0 15px;
-      padding: 0 0 0 13px;
-      width: 294px;
-    }
+  .font-size-select {
+    border-top: $font-size-option-border;
+    border-left: $font-size-option-border;
+    border-bottom: $font-size-option-border;
+    display: flex;
+    max-width: 420px;
+    overflow: hidden;
+    position: absolute;
+    right: -10px;
+    top: -11px;
+    white-space: nowrap;
+    z-index: 3;
+  }
 
-    .font-size-box {
-      background-color: #5fa1e7;
-      display: inline-block;
-      height: 77px;
-      position: relative;
-      vertical-align: top;
-      width: 72px;
-    }
+  .font-size-option {
+    $height: 28px;
+    background-color: #c8ecff;
+  	border-right: $font-size-option-border;
+    color: #0353bc;
+    cursor: pointer;
+    flex: 0 0 auto;
+    font-size: 10px;
+    font-weight: $semibold;
+    height: $height;
+    line-height: $height;
+    text-align: center;
+    width: 42px;
 
-    .font-size-label {
-      color: $white;
-      font-size: 10px;
-      font-weight: $semibold;
-      margin-top: 14px;
-      text-align: center;
-    }
-
-    .font-size {
-      $height: 24px;
-
+    &.selected {
       background-color: $white;
-      cursor: pointer;
-      font-size: 10px;
-      height: $height;
-      line-height: $height;
-      margin: 3px auto 0 auto;
-      position: relative;
-      text-align: center;
-      width: 48px;
-
-      &.active {
-        color: #a09d9d;
-      }
+      color: #353535;
     }
+  }
 
-    $font-size-option-border: solid 1px #2582e0;
+  .img-lib {
+    cursor: pointer;
+    margin-top: 22px;
+  }
 
-    .font-size-select {
-      border-top: $font-size-option-border;
-      border-left: $font-size-option-border;
-      border-bottom: $font-size-option-border;
-      display: flex;
-      max-width: 420px;
-      overflow: hidden;
-      position: absolute;
-      right: -10px;
-      top: -11px;
-      white-space: nowrap;
-      z-index: 3;
-    }
+  .img-field-sec {
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+  }
 
-    .font-size-option {
-      $height: 28px;
-      background-color: #c8ecff;
-    	border-right: $font-size-option-border;
-      color: #0353bc;
-      cursor: pointer;
-      flex: 0 0 auto;
-      font-size: 10px;
-      font-weight: $semibold;
-      height: $height;
-      line-height: $height;
-      text-align: center;
-      width: 42px;
+  .img-lib-hdr {
+    background-color: $white;
+    border-radius: 1.4px;
+    color: #242424;
+    font-size: 13px;
+    font-weight: $light;
+    $height: 34px;
+    height: $height;
+    line-height: $height;
+    text-align: center;
+  }
 
-      &.selected {
-        background-color: $white;
-        color: #353535;
-      }
-    }
+  .img-lib-thumbs {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3px;
+  }
+
+  .img-field-sep {
+    box-shadow: 0 1px 1px 0 $white;
+    background-color: #1a85fd;
+    height: 1px;
+    margin: 30px auto 3px auto;
+    width: 350px;
+  }
+
+  .img-or {
+    color: #2c79dd;
+    font-size: 13px;
+    font-style: italic;
+    font-weight: $bold;
+    margin-bottom: 13px;
+    text-align: center;
+  }
+
+  .img-url-input {
+    width: 100%;
+  }
+
+  .img-upload {
+    margin-bottom: 30px;
+  }
+
+  .img-upload-btn {
+    $height: 34px;
+    background-color: $white;
+    border-radius: 2px;
+    cursor: pointer;
+    height: $height;
+    line-height: $height;
+    text-align: center;
+  }
+
+  .img-upload-btn-txt, .img-upload-btn-icon {
+    display: inline-block;
+  }
+
+  .img-upload-btn-icon {
+    color: #4b4b4b;
+  }
+
+  .img-upload-btn-txt {
+    color: #242424;
+    font-size: 13px;
+    font-weight: $light;
+    padding-left: 4px;
   }
 
   .field-sep {

@@ -20,6 +20,7 @@ window.ImageControls = (function() {
       , pct
       , previewThumbTemplate
       , cardWrapper
+      , fieldIdsToThumbs = {}
       ;
 
     function updatePctTxt() {
@@ -95,17 +96,25 @@ window.ImageControls = (function() {
         , $thumbs = $('#PreviewImgSelect')
         ;
 
+      fieldIdsToThumbs = {};
+
       for (var i = 0; i < imgFields.length; i++) {
         var field = imgFields[i]
           , val = cardWrapper.getFieldValue(field)
+          , url = val.thumbUrl
           , $thumb = $(previewThumbTemplate({
               name: field.label,
-              url: val.url
+              url: val.thumbUrl
             }));
 
         $thumb.find('.thumb').click(function() {
           thumbClicked(this, field.id);
         });
+
+        fieldIdsToThumbs[field.id] = {
+          src: url,
+          $elmt: $thumb
+        };
 
         $thumbs.append($thumb);
 
@@ -170,8 +179,29 @@ window.ImageControls = (function() {
       setInverseImgBool('flipVert');
     }
 
+    function fieldChanged(e) {
+      var $thumbWrap
+        , url
+        ;
+
+      if (e.field.type === 'image') {
+        url = e.resolvedData.thumbUrl;
+        thumb = fieldIdsToThumbs[e.field.id];
+
+        if (thumb && thumb.src !== url) {
+          thumb.$elmt.find('.thumb').attr('src', url);
+          thumb.src = url;
+
+          if (selectedImgId === e.field.id) {
+            setupForSelected();
+          }
+        }
+      }
+    }
+
     this.setCard = function(theCardWrapper) {
       cardWrapper = theCardWrapper;
+      cardWrapper.change(fieldChanged);
       setupThumbs();
     }
 

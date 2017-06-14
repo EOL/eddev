@@ -19,9 +19,11 @@ window.CardForm = (function() {
     // Handlebars
     Handlebars.registerPartial('labelTempl', $('#FieldLabelTempl').html());
     Handlebars.registerPartial('textField', $('#TextFieldTempl').html());
+    Handlebars.registerPartial('imageField', $('#ImageFieldTempl').html());
 
     var fieldTempl = Handlebars.compile($('#FieldTempl').html())
       , fieldSepTempl = Handlebars.compile($('#FieldSepTempl').html())
+      , imgLibTempl = Handlebars.compile($('#ImageLibTempl').html())
       ;
 
     function setCard(theCard) {
@@ -112,9 +114,9 @@ window.CardForm = (function() {
     }
 
     function buildTextField(field) {
-      var $elmt// = buildField('textField', field)
-        , $txtInput// = $elmt.find('.text-input')
-        , $fontSize// = $elmt.find('.font-size')
+      var $elmt
+        , $txtInput
+        , $fontSize
         , fontSizes = []
         , $fontSizeSelect
         , fieldValue = card.getFieldValue(field)
@@ -156,6 +158,54 @@ window.CardForm = (function() {
       return $elmt;
     }
 
+    function openImgLib(fieldId, choices) {
+      var $cols = $('#Cols')
+        , $imgLib
+        , $disableOverlay = $cols.children('.disable-overlay')
+        ;
+
+
+      $disableOverlay.removeClass('hidden');
+      $('body').addClass('noscroll');
+
+      $imgLib = $(imgLibTempl({ choices: choices }));
+      $imgLib.find('.img-lib-thumb').click(function() {
+        card.setChoiceIndex(fieldId, $(this).data('index'));
+      });
+
+      $cols.append($imgLib);
+
+      $(document).click(function() {
+        $imgLib.remove();
+        $('body').removeClass('noscroll');
+        $disableOverlay.addClass('hidden');
+      });
+
+      return false;
+    }
+
+    function buildImageField(field) {
+      var choices = card.getFieldChoices(field.id)
+        , numThumbUrls = Math.min(3, choices.length)
+        , thumbUrls = new Array(numThumbUrls)
+        , $elmt
+        , $imgLib
+        ;
+
+      for (var i = 0; i < numThumbUrls; i++) {
+        thumbUrls[i] = choices[i].thumbUrl;
+      }
+
+      $elmt = buildField('imageField', field, {
+        thumbUrls: thumbUrls
+      });
+
+      $imgLib = $elmt.find('.img-lib');
+      $imgLib.click(openImgLib.bind(null, field.id, choices));
+
+      return $elmt;
+    }
+
     function rebuildFields() {
       var $cardFields = $('#CardFields')
         , fields = card.editableFields()
@@ -172,6 +222,9 @@ window.CardForm = (function() {
         switch (field.type) {
           case 'text':
             $elmt = buildTextField(field);
+            break;
+          case 'image':
+            $elmt = buildImageField(field);
             break;
           default:
             console.log(field, 'type not recognized');

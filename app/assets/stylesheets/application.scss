@@ -54,6 +54,10 @@ p a, .std-link {
   overflow: hidden;
 }
 
+.noscroll {
+  overflow: hidden;
+}
+
 /* FOOTER */
 .footer {
   $footer-v-spacing: 23 / $em * 1em;

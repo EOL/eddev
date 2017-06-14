@@ -459,14 +459,13 @@ $col-border-width: 5px;
   background-color: $black;
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;
-  padding: 1px 6px 6px 6px;
+  padding: 2px 6px 6px 2px;
 }
 
 .img-lib-thumb {
   cursor: pointer;
   height: 96px;
-  margin-top: 4px;
+  margin: 4px 0 0 4px;
   object-fit: cover;
   width: 96px;
 }

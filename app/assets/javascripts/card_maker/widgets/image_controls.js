@@ -96,6 +96,8 @@ window.ImageControls = (function() {
         , $thumbs = $('#PreviewImgSelect')
         ;
 
+      $thumbs.empty();
+
       fieldIdsToThumbs = {};
 
       for (var i = 0; i < imgFields.length; i++) {

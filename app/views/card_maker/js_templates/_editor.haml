@@ -13,8 +13,12 @@
   .field-wrap
     .disable-overlay.hidden
     {{> labelTempl }}
-    .field
-      {{> (fieldPart) }}
+    :plain
+      {{#if noBorder}}
+        <div class="field no-border">{{> (fieldPart) }}</div>
+      {{else}}
+        <div class="field">{{> (fieldPart) }}</div>
+      {{/if}}
 
 %script#TextFieldTempl{:type => "text/x-handlebars-template"}
   %input.text-input.text-field-input{:type => "text"}>
@@ -63,3 +67,10 @@
             {{#each choices}}
               <img src="{{this.thumbUrl}}" data-index="{{@index}}" class="img-lib-thumb">
             {{/each}}
+
+%script#ColorSchemeFieldTempl{:type => "text/x-handlebars-template"}
+  .color-schemes
+    :plain
+      {{#each pc.colorSchemes}}
+        <div class="color-scheme noselect" data-bg="{{this.bg}}" data-text="{{this.text}}" data-index="{{@index}}">&mdash;</div>
+      {{/each}}

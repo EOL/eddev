@@ -481,6 +481,9 @@ $col-border-width: 5px;
   background-color: #71baff;
   position: relative;
 
+  &.no-border {
+    border: 0;
+  }
 }
 
 .field-label {
@@ -670,6 +673,20 @@ $col-border-width: 5px;
     font-size: 13px;
     font-weight: $light;
     padding-left: 4px;
+  }
+
+  .color-schemes {
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  .color-scheme {
+    $height: 38px;
+    cursor: pointer;
+    height: $height;
+    line-height: $height;
+    text-align: center;
+    width: 50%;
   }
 
   .field-sep {

@@ -20,6 +20,7 @@ window.CardForm = (function() {
     Handlebars.registerPartial('labelTempl', $('#FieldLabelTempl').html());
     Handlebars.registerPartial('textField', $('#TextFieldTempl').html());
     Handlebars.registerPartial('imageField', $('#ImageFieldTempl').html());
+    Handlebars.registerPartial('colorSchemeField', $('#ColorSchemeFieldTempl').html());
 
     var fieldTempl = Handlebars.compile($('#FieldTempl').html())
       , fieldSepTempl = Handlebars.compile($('#FieldSepTempl').html())
@@ -32,12 +33,21 @@ window.CardForm = (function() {
     }
     that.setCard = setCard;
 
-    function buildField(templName, field, partialContext) {
+    function buildFieldHelper(templName, field, partialContext, noBorder) {
       return $(fieldTempl({
         fieldPart: function() { return templName },
         field: field,
-        pc: partialContext
+        pc: partialContext,
+        noBorder: noBorder
       }));
+    }
+
+    function buildField(templName, field, partialContext) {
+      return buildFieldHelper(templName, field, partialContext, false);
+    }
+
+    function buildFieldNoBorder(templName, field, partialContext) {
+      return buildFieldHelper(templName, field, partialContext, true);
     }
 
     function showFontSizeSelector($fontSizeSelect, $target) {
@@ -206,6 +216,28 @@ window.CardForm = (function() {
       return $elmt;
     }
 
+    function buildColorSchemeField(field) {
+      var choices = card.getFieldChoices(field.id)
+        , $elmt = buildFieldNoBorder('colorSchemeField', field, {
+            colorSchemes: choices
+          })
+        , $colorSchemeElmts = $elmt.find('.color-scheme')
+        ;
+
+      $colorSchemeElmts.each(function(i, colorScheme) {
+        var $colorScheme = $(colorScheme);
+
+        $colorScheme.css('background', $colorScheme.data('bg'));
+        $colorScheme.css('color', $colorScheme.data('text'));
+      });
+
+      $colorSchemeElmts.click(function() {
+        card.setChoiceIndex(field.id, $(this).data('index'));
+      });
+
+      return $elmt;
+    }
+
     function rebuildFields() {
       var $cardFields = $('#CardFields')
         , fields = card.editableFields()
@@ -225,6 +257,9 @@ window.CardForm = (function() {
             break;
           case 'image':
             $elmt = buildImageField(field);
+            break;
+          case 'color-scheme':
+            $elmt = buildColorSchemeField(field);
             break;
           default:
             console.log(field, 'type not recognized');

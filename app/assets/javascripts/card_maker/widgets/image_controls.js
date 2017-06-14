@@ -216,7 +216,7 @@ window.ImageControls = (function() {
       }
     });
 
-    $zoomPlus.click(function() {
+    $zoomPlus.click(function(e) {
       if (pct < maxPct) {
         pct += 1;
         setKnobTop();
@@ -224,7 +224,7 @@ window.ImageControls = (function() {
       }
     });
 
-    $zoomMinus.click(function() {
+    $zoomMinus.click(function(e) {
       if (pct > minPct) {
         pct -= 1;
         setKnobTop();

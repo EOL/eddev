@@ -162,7 +162,7 @@ window.ImageControls = (function() {
 
     function rotateClicked() {
       var rotation =
-        (cardWrapper.getDataAttr(selectedImgId, 'rotate', 0) + 90) % 360;
+        (cardWrapper.getDataAttr(selectedImgId, 'rotate', 360) - 90) % 360;
 
 
       cardWrapper.setDataAttr(selectedImgId, 'rotate', rotation);

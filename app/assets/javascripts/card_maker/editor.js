@@ -5,6 +5,7 @@ window.CardEditor = (function() {
     , cardWrapper
     , imageControls
     , cardForm
+    , closeCb
     ;
 
   // Handlebars (set onload)
@@ -137,11 +138,26 @@ window.CardEditor = (function() {
     $preview.css('top', top);
   }
 
+  function close(cb) {
+    closeCb = cb;
+  }
+  exports.close = close;
+
+  function fireClose() {
+    if (closeCb) {
+      closeCb(cardWrapper.id());
+    }
+  }
+
   $(function() {
     $(document).scroll(setPreviewTopMargin);
 
     imageControls = ImageControls.getInstance();
     cardForm = CardForm.getInstance();
+
+    $('.preview-btns .close').click(function() {
+      fireClose();
+    });
   });
 
   return exports;

@@ -87,28 +87,26 @@
 %script#UserDecksTemplate{ :type => "text/x-handlebars-template"}
   .deck-wrap.user-deck-wrap
 
-%h1.new-card-hdr Card Generator Test Page
-
-%h2.user-resources-hdr.card-hdr Card Manager
-.card-manager-controls
-  %ul#ViewSelector.view-selector
-    %li.card-view.view.selected.first> Cards
-    %li.deck-view.view> Decks
-    %li.deck-cards-view.view.hidden>
-.user-resources.user-decks#UserResources
-  #NewResource.resource-wrap.new-resource
-    .resource-frame
-      %i.fa.fa-plus.fa-3x.new-resource-icon
-
 .card-hdr-box
   .card-hdr-inner
     .left-blur-bg
     %h2.create-card-hdr.hdr
       = image_tag "welcome/eol_logo.png", :class => :'hdr-logo'
-      Card Editor
+      Card Maker
     .right-blur-bg
 .hdr-spacer
-#CardGenerator.card-generator
+#CardManager.card-manager.card-screen
+  %h2.user-resources-hdr.card-hdr Card Manager
+  .card-manager-controls
+    %ul#ViewSelector.view-selector
+      %li.card-view.view.selected.first> Cards
+      %li.deck-view.view> Decks
+      %li.deck-cards-view.view.hidden>
+  .user-resources.user-decks#UserResources
+    #NewResource.resource-wrap.new-resource
+      .resource-frame
+        %i.fa.fa-plus.fa-3x.new-resource-icon
+#CardGenerator.card-generator.card-screen
   .card-generator-inner
     .welcome-block
       %h3.welcome-txt>

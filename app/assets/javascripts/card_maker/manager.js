@@ -1,13 +1,15 @@
-$(function() {
+window.CardManager = (function() {
+  var exports = {};
+
   var apiPath = '/card_maker_ajax';
 
   /*
    * Handlebars templates
    */
-  var cardPlaceholderTemplate =
-        Handlebars.compile($('#CardPlaceholderTemplate').html())
-    , cardImgTemplate = Handlebars.compile($('#CardImgTemplate').html())
-    , cardOverlayTemplate = Handlebars.compile($('#CardOverlayTemplate').html())
+  var cardPlaceholderTemplate
+    , cardImgTemplate
+    , cardOverlayTemplate
+    , cardSelectedCb
     ;
 
   /*
@@ -125,7 +127,7 @@ $(function() {
   /*
    * Click handler for cards
    */
-  function cardSelected($card, id, event) {
+  function cardClicked($card, id, event) {
     return resourceSelected(
       cardOverlayTemplate,
       destroyCard,
@@ -170,7 +172,7 @@ $(function() {
    *   id - the card id
    */
   function loadCardImgAndBindEvents($card, id) {
-    $card.click(cardSelected.bind(null, $card, id));
+    $card.click(cardClicked.bind(null, $card, id));
 
     loadCardImg($card, id);
   }
@@ -224,10 +226,19 @@ $(function() {
       url: apiPath + '/cards/' + id + '/json',
       method: 'GET',
       contentType: 'application/json',
-      success: function(card) {
-        CardEditor.setCard(card);
-      }
+      success: fireCardSelected
     });
+  }
+
+  function cardSelected(cb) {
+    cardSeletedCb = cb;
+  }
+  exports.cardSelected = cardSelected;
+
+  function fireCardSelected(cardData) {
+    if (cardSeletedCb) {
+      cardSeletedCb(cardData);
+    }
   }
 
   /*
@@ -310,5 +321,15 @@ $(function() {
       }
     });
   }
-  reloadUserCards();
-});
+
+  $(function() {
+    cardPlaceholderTemplate = Handlebars.compile($('#CardPlaceholderTemplate').html());
+    cardImgTemplate = Handlebars.compile($('#CardImgTemplate').html());
+    cardOverlayTemplate = Handlebars.compile($('#CardOverlayTemplate').html());
+
+    reloadUserCards();
+  });
+
+
+  return exports;
+})();

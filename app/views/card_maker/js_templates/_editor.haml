@@ -72,5 +72,5 @@
   .color-schemes
     :plain
       {{#each pc.colorSchemes}}
-        <div class="color-scheme noselect" data-bg="{{this.bg}}" data-text="{{this.text}}" data-index="{{@index}}">&mdash;</div>
+        <div class="color-scheme noselect" data-bg="{{this.colors.bg}}" data-text="{{this.colors.text}}" data-index="{{@index}}">{{{this.tip}}}</div>
       {{/each}}

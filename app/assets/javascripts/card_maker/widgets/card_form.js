@@ -218,11 +218,26 @@ window.CardForm = (function() {
 
     function buildColorSchemeField(field) {
       var choices = card.getFieldChoices(field.id)
-        , $elmt = buildFieldNoBorder('colorSchemeField', field, {
-            colorSchemes: choices
-          })
-        , $colorSchemeElmts = $elmt.find('.color-scheme')
+        , choiceTips = card.getFieldChoiceTips(field.id) || []
+        , colorData = new Array(choices.length)
+        , $elmt
+        , $colorSchemeElmts
         ;
+
+      for (var i = 0; i < choices.length; i++) {
+        var tip = i < choiceTips.length ? choiceTips[i] : '&mdash;';
+
+        colorData[i] = {
+          colors: choices[i],
+          tip: tip
+        };
+      }
+
+      $elmt = buildFieldNoBorder('colorSchemeField', field, {
+          colorSchemes: colorData
+      });
+
+      $colorSchemeElmts = $elmt.find('.color-scheme')
 
       $colorSchemeElmts.each(function(i, colorScheme) {
         var $colorScheme = $(colorScheme);

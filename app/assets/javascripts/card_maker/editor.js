@@ -42,7 +42,7 @@ window.CardEditor = (function() {
    * Canvas supplier for TemplateRenderer
    */
   var canvasSupplier = {
-    supply: function(width, height) {
+    drawingCanvas: function(width, height) {
       var $canvas = $('#CardCanvas'),
           canvas  = $canvas[0];
 
@@ -55,6 +55,13 @@ window.CardEditor = (function() {
       canvas.getContext('2d').setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 
       return canvas;
+    },
+    transformCanvas: function(width, height) {
+      var $canvas = $('<canvas>');
+      $canvas.attr('width', width);
+      $canvas.attr('height', height);
+
+      return $canvas[0];
     }
   }
 

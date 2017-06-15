@@ -214,6 +214,7 @@ $col-border-width: 5px;
     position: relative;
 
     .btn {
+      color: $white;
       cursor: pointer;
       height: 60px;
       width: 135px;
@@ -232,10 +233,16 @@ $col-border-width: 5px;
         background-color: #4aa86a;
         text-shadow: 0 1px 1px rgba(28, 78, 0, 0.68);
       }
+
+      &.disabled {
+        background-color: #555;
+        background-image: none;
+        color: #999;
+        cursor: auto;
+      }
     }
 
     .btn-txt {
-      color: $white;
       font-family: Merriweather;
     	font-size: 13px;
       margin-top: 40px;

@@ -9,6 +9,7 @@ $(function() {
   var $managerScreen = $('#CardManager')
     , $editorScreen  = $('#CardGenerator')
     , fadeMs = 500
+    , editCardId
     ;
 
   function screenTransition($cur, $next) {
@@ -19,10 +20,12 @@ $(function() {
 
   CardManager.cardSelected(function(card) {
     CardEditor.setCard(card);
+    editCardId = card.id;
     screenTransition($managerScreen, $editorScreen);
   });
 
   CardEditor.close(function() {
     screenTransition($editorScreen, $managerScreen);
+    CardManager.reloadCardImg(editCardId);
   });
 });

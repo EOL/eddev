@@ -9,8 +9,15 @@ window.CardManager = (function() {
   var cardPlaceholderTemplate
     , cardImgTemplate
     , cardOverlayTemplate
+    , spinnerTemplate
     , cardSelectedCb
     ;
+
+
+  /*
+   * STATE
+   */
+  var idsToElmts;
 
   /*
    * Helper function to create a new card without a deck
@@ -266,6 +273,8 @@ window.CardManager = (function() {
   function buildCards(cards, decks, newResourceClickFn) {
     var $userCards = cleanUserResources();
 
+    idsToElmts = {};
+
     $('#NewResource').click(newResourceClickFn);
 
     $.each(cards, function(i, card) {
@@ -277,22 +286,23 @@ window.CardManager = (function() {
         , $deckSelector = $placeholder.find('.deck-selector')
         ;
 
-        if (deckId) {
-          $deckSelector.val(deckId);
+      if (deckId) {
+        $deckSelector.val(deckId);
+      }
+
+      $deckSelector.on('change', function() {
+        var deckId = $(this).val();
+
+        if (deckId === 'none') {
+          removeCardDeck(card.id);
+        } else {
+          setCardDeck(card.id, deckId);
         }
+      });
 
-        $deckSelector.on('change', function() {
-          var deckId = $(this).val();
-
-          if (deckId === 'none') {
-            removeCardDeck(card.id);
-          } else {
-            setCardDeck(card.id, deckId);
-          }
-        });
-
-        $userCards.append($placeholder);
-        loadCardImgAndBindEvents($placeholder, card.id);
+      idsToElmts[card.id] = $placeholder;
+      $userCards.append($placeholder);
+      loadCardImgAndBindEvents($placeholder, card.id);
     });
   }
 
@@ -322,10 +332,26 @@ window.CardManager = (function() {
     });
   }
 
+  function reloadCardImg(cardId) {
+    var $elmt = idsToElmts[cardId]
+      , $spinner = $(spinnerTemplate())
+      ;
+
+    if (!$elmt) {
+      // TODO: handle error
+      return;
+    }
+
+    $elmt.find('.user-resource').replaceWith($spinner);
+    loadCardImgAndBindEvents($elmt, cardId);
+  }
+  exports.reloadCardImg = reloadCardImg;
+
   $(function() {
     cardPlaceholderTemplate = Handlebars.compile($('#CardPlaceholderTemplate').html());
     cardImgTemplate = Handlebars.compile($('#CardImgTemplate').html());
     cardOverlayTemplate = Handlebars.compile($('#CardOverlayTemplate').html());
+    spinnerTemplate = Handlebars.compile($('#SpinnerTemplate').html());
 
     reloadUserCards();
   });

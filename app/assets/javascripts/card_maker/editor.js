@@ -85,7 +85,28 @@ window.CardEditor = (function() {
     }
   }
 
+  var cardDataPersistence = {
+    save: function(card, cb) {
+      var url = apiPath + '/cards/' + card.id + '/data';
+
+      $.ajax({
+        url: url,
+        method: 'PUT',
+        data: JSON.stringify(card.data),
+        contentType: 'application/json',
+        success: function() {
+          cb()
+        },
+        error: function() {
+          //TODO: log error?
+          cb(new Error('Failed to save card'));
+        }
+      });
+    }
+  };
+
   CardWrapper.setTemplateSupplier(templateSupplier);
+  CardWrapper.setDataPersistence(cardDataPersistence);
 
   var renderer =
     new TemplateRenderer(canvasSupplier, imageFetcher);
@@ -94,6 +115,14 @@ window.CardEditor = (function() {
     renderer.draw(cardWrapper, function(err) {
       if (err) console.log(err);
     });
+  }
+
+  function handleDirtyChange(val) {
+    if (val) {
+      enableSave();
+    } else {
+      disableSave();
+    }
   }
 
   function setCard(theCard) {
@@ -107,6 +136,9 @@ window.CardEditor = (function() {
       cardForm.setCard(cardWrapper);
 
       cardWrapper.change(draw);
+      cardWrapper.dirtyChange(handleDirtyChange);
+
+      disableSave();
 
       draw();
     });
@@ -150,10 +182,44 @@ window.CardEditor = (function() {
   }
   exports.close = close;
 
+  function saveAndClose() {
+    if (!cardWrapper.isDirty()) return;
+
+    save(function(err) {
+      if (err) console.log(err); // TODO: handle
+
+      fireClose();
+    });
+  }
+
+  function save(cb) {
+    if (!cardWrapper.isDirty()) return cb(new Error('Card not saved because it is not dirty'));
+
+    cardWrapper.save(function(err) {
+      if (err) return cb(err)
+
+      return cb();
+    });
+  }
+
   function fireClose() {
-    if (closeCb) {
+    var proceed = true;
+
+    if (cardWrapper.isDirty()) {
+      proceed = confirm('Are you sure you want to close? You will lose any unsaved changes.');
+    }
+
+    if (proceed && closeCb) {
       closeCb(cardWrapper.id());
     }
+  }
+
+  function disableSave() {
+    $('.preview-btns .save, .preview-btns .save-exit').addClass('disabled');
+  }
+
+  function enableSave() {
+    $('.preview-btns .save, .preview-btns .save-exit').removeClass('disabled');
   }
 
   $(function() {
@@ -162,9 +228,11 @@ window.CardEditor = (function() {
     imageControls = ImageControls.getInstance();
     cardForm = CardForm.getInstance();
 
-    $('.preview-btns .close').click(function() {
-      fireClose();
-    });
+    $('.preview-btns .close').click(fireClose);
+    $('.preview-btns .save').click(save.bind(null, function(err) {
+      // TODO: handle error
+    }));
+    $('.preview-btns .save-exit').click(saveAndClose);
   });
 
   return exports;

@@ -105,8 +105,30 @@ window.CardEditor = (function() {
     }
   };
 
+  var imageUploader = {
+    upload: function(file, cb) {
+      var url = apiPath + '/images';
+
+      $.ajax({
+        url: url,
+        method: 'POST',
+        data: file,
+        contentType: 'application/octet-stream',
+        processData: false,
+        success: function(data) {
+          cb(null, data);
+        },
+        error: function() {
+          cb(new Error('Failed to upload image'));
+        }
+      });
+    }
+  }
+
   CardWrapper.setTemplateSupplier(templateSupplier);
   CardWrapper.setDataPersistence(cardDataPersistence);
+
+  CardForm.setImageUploader(imageUploader);
 
   var renderer =
     new TemplateRenderer(canvasSupplier, imageFetcher);

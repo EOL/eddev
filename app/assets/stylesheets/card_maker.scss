@@ -693,6 +693,10 @@ $col-border-width: 5px;
     padding-left: 4px;
   }
 
+  .img-upload-file {
+    display: none;
+  }
+
   .color-schemes {
     display: flex;
     flex-flow: row wrap;

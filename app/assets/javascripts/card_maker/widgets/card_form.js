@@ -3,16 +3,27 @@ window.CardForm = (function() {
 
   var instance = null;
 
+  var imageUploader = null;
+
+  function setImageUploader(uploader) {
+    imageUploader = uploader;
+  }
+  exports.setImageUploader = setImageUploader;
+
   function getInstance() {
     if (instance === null) {
-      instance = new CardForm();
+      if (imageUploader === null) {
+        throw new Error('must set image uploader using setImageUploader');
+      }
+
+      instance = new CardForm(imageUploader);
     }
 
     return instance;
   }
   exports.getInstance = getInstance;
 
-  function CardForm() {
+  function CardForm(imageUploader) {
     var that = this
       , card;
 
@@ -202,6 +213,8 @@ window.CardForm = (function() {
         , thumbUrls = new Array(numThumbUrls)
         , $elmt
         , $imgLib
+        , $uploadBtn
+        , $fileInput
         ;
 
       for (var i = 0; i < numThumbUrls; i++) {
@@ -214,6 +227,36 @@ window.CardForm = (function() {
 
       $imgLib = $elmt.find('.img-lib');
       $imgLib.click(openImgLib.bind(null, field.id, choices));
+
+      $uploadBtn = $elmt.find('.img-upload-btn');
+      $fileInput = $elmt.find('.img-upload-file');
+
+      $fileInput.click(function(e) {
+        e.stopPropagation();
+      });
+
+      $fileInput.on('change', function() {
+        var files = $fileInput[0].files
+          , file = files[0]
+          ;
+
+        if (file) {
+          imageUploader.upload(file, function(err, data) {
+            if (err) {
+              throw err;
+            }
+
+            card.wipeData(field.id);
+            card.setDataAttr(field.id, 'url', data.url);
+            card.setDataAttr(field.id, 'thumbUrl', data.thumbUrl);
+          });
+        }
+      });
+
+      $uploadBtn.click(function() {
+        $fileInput.click();
+        return false;
+      });
 
       return $elmt;
     }

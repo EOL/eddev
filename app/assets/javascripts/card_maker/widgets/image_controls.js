@@ -182,7 +182,7 @@ window.ImageControls = (function() {
     }
 
     function fieldChanged(e) {
-      var $thumbWrap
+      var thumb
         , url
         ;
 

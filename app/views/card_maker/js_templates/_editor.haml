@@ -74,3 +74,13 @@
       {{#each pc.colorSchemes}}
         <div class="color-scheme noselect" data-bg="{{this.colors.bg}}" data-text="{{this.colors.text}}" data-index="{{@index}}">{{{this.tip}}}</div>
       {{/each}}
+
+%script#LabeledChoiceImageFieldTempl{:type => "text/x-handlebars-template"}
+  .labeled-choice-drop
+    .selected-txt
+    %ul.choices
+      .choice{:data => { :index => -1, :text => "Select one"}} &mdash;
+      :plain
+        {{#each pc.labels}}
+          <li class="choice" data-index="{{@index}}" data-text="{{this}}">{{this}}</li>
+        {{/each}}

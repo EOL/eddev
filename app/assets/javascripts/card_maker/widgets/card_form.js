@@ -21,6 +21,7 @@ window.CardForm = (function() {
     Handlebars.registerPartial('textField', $('#TextFieldTempl').html());
     Handlebars.registerPartial('imageField', $('#ImageFieldTempl').html());
     Handlebars.registerPartial('colorSchemeField', $('#ColorSchemeFieldTempl').html());
+    Handlebars.registerPartial('labeledChoiceImageField', $('#LabeledChoiceImageFieldTempl').html());
 
     var fieldTempl = Handlebars.compile($('#FieldTempl').html())
       , fieldSepTempl = Handlebars.compile($('#FieldSepTempl').html())
@@ -54,12 +55,12 @@ window.CardForm = (function() {
       $target.append($fontSizeSelect);
     }
 
-    function disableField($fieldWrap, $exemptElmt) {
-      var $disableOverlay = $fieldWrap.find('.disable-overlay')
+    function disableFields($exemptElmt) {
+      var $disableOverlay = $('#CardFieldsWrap').children('.disable-overlay').first()
         , exemptZIndex = $exemptElmt.css('z-index');
 
       $disableOverlay.removeClass('hidden');
-      $exemptElmt.css('z-index', parseInt($disableOverlay.css('z-index') + 1));
+      $exemptElmt.css('z-index', parseInt($disableOverlay.css('z-index')) + 1);
 
       return function() {
         $exemptElmt.css('z-index', exemptZIndex);
@@ -99,7 +100,7 @@ window.CardForm = (function() {
     }
 
     function openFontSizeSelect(fieldId, $fieldWrap, $fontSize, $fontSizeSelect) {
-      var enableFn = disableField($fieldWrap, $fontSize)
+      var enableFn = disableFields($fontSize)
         , closeFn;
 
       bindFontSizeSelectEvents(fieldId, $fontSize, $fontSizeSelect);
@@ -253,6 +254,63 @@ window.CardForm = (function() {
       return $elmt;
     }
 
+    function dropdownClicked() {
+      var $that = $(this)
+        , $drop = $that.find('.choices')
+        , enableFn = disableFields($that)
+        ;
+
+      $that.addClass('open');
+      $that.off('click', dropdownClicked);
+
+      $(document).one('click', function() {
+        $that.removeClass('open');
+        enableFn();
+        $that.click(dropdownClicked);
+      });
+
+      return false;
+    }
+
+    function buildLabeledChoiceImageField(field) {
+      var choices = card.getFieldChoices(field.id)
+        , noChoiceIndexVal = -1
+        , choiceIndex = card.getChoiceIndex(field.id, noChoiceIndexVal)
+        , labels = choices.map(function(choice) {
+            return choice.label;
+          })
+        , $elmt = buildField('labeledChoiceImageField', field, {
+            labels: labels
+          })
+        , $options = $elmt.find('.choices')
+        , $choiceElmts = $options.find('.choice')
+        , $txt = $elmt.find('.selected-txt')
+        , $drop = $elmt.find('.labeled-choice-drop')
+        , $selected
+        ;
+
+      $selected = $choiceElmts.filter('[data-index="' + choiceIndex +'"]');
+      $txt.html($selected.data('text'));
+
+      $choiceElmts.click(function() {
+        var $that = $(this)
+          , newChoiceIndex = $that.data('index')
+          ;
+
+        if (newChoiceIndex === noChoiceIndexVal) {
+          newChoiceIndex = null;
+        }
+
+        card.setChoiceIndex(field.id, newChoiceIndex);
+
+        $txt.html($that.data('text'));
+      });
+
+      $drop.click(dropdownClicked);
+
+      return $elmt;
+    }
+
     function rebuildFields() {
       var $cardFields = $('#CardFields')
         , fields = card.editableFields()
@@ -276,11 +334,14 @@ window.CardForm = (function() {
           case 'color-scheme':
             $elmt = buildColorSchemeField(field);
             break;
+          case 'labeled-choice-image':
+            $elmt = buildLabeledChoiceImageField(field);
+            break;
           default:
             console.log(field, 'type not recognized');
         }
 
-        if ($elmt !== null) {
+        if ($elmt) {
           $cardFields.append($elmt);
 
           if (i < fields.length - 1) {

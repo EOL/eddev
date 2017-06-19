@@ -68,8 +68,6 @@
 
 
 
-
-
 %script#DeckTemplate{:type => "text/x-handlebars-template"}
   .resource-wrap.user-resource-wrap
     .resource-frame.user-resource-frame
@@ -152,7 +150,9 @@
         .col-head-box
           .col-head-txt Card Form
           .col-head-sub-txt (enter information that will appear on the card)
-        #CardFields.card-fields
+        #CardFieldsWrap.card-fields-wrap
+          .disable-overlay.hidden
+          #CardFields.card-fields
 
 
   -#

@@ -2,6 +2,8 @@
 
 $editor-width: 940;
 
+$active-select-text-color: #a09d9d;
+
 .new-card-hdr {
   font-size: 24px;
   font-weight: $bold;
@@ -510,6 +512,10 @@ $col-border-width: 5px;
   }
 }
 
+.card-fields-wrap {
+  position: relative;
+}
+
 .right-col {
   padding: 0 35px 100px 17px;
   width: 450px;
@@ -563,7 +569,7 @@ $col-border-width: 5px;
     width: 48px;
 
     &.active {
-      color: #a09d9d;
+      color: $active-select-text-color;
     }
   }
 
@@ -685,6 +691,14 @@ $col-border-width: 5px;
   .color-schemes {
     display: flex;
     flex-flow: row wrap;
+
+
+    &:hover {
+
+      .disable-overlay {
+        display: none;
+      }
+    }
   }
 
   .color-scheme {
@@ -694,6 +708,62 @@ $col-border-width: 5px;
     line-height: $height;
     text-align: center;
     width: 50%;
+
+    &.selected {
+      z-index: 2;
+    }
+  }
+
+  .labeled-choice-drop {
+    $height: 34px;
+    $width: 300px;
+    $txt-color: #242424;
+
+    background-color: $white;
+    border-radius: 2px;
+    color: $txt-color;
+    cursor: pointer;
+    display: block;
+    font-size: 13px;
+    font-weight: $light;
+    height: $height;
+    line-height: $height;
+    margin: 22px auto;
+    padding-left: 16px;
+    position: relative;
+    width: $width;
+
+    &.open {
+      .choices {
+        display: block;
+      }
+
+      .selected-txt {
+        color: $active-select-text-color;
+      }
+    }
+
+    .choices {
+      display: none;
+      background-color: $white;
+      box-shadow: inset 0 1px 3px 0 rgba(167, 193, 205, 0.5);
+      left: 0;
+      position: absolute;
+      top: $height;
+      width: $width;
+      border-radius: 2px;
+    }
+
+    .choice {
+      $border-color: #cbcfd4;
+      border-top: solid 0.5px $border-color;
+      padding-left: 16px;
+
+      &:hover {
+        background-color: $border-color;
+        color: $black;
+      }
+    }
   }
 
   .field-sep {

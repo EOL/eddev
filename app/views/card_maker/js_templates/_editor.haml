@@ -79,8 +79,18 @@
   .labeled-choice-drop
     .selected-txt
     %ul.choices
-      .choice{:data => { :index => -1, :text => "Select one"}} &mdash;
+      .choice{:data => {:index => -1, :text => "Select one"}} &mdash;
       :plain
         {{#each pc.labels}}
           <li class="choice" data-index="{{@index}}" data-text="{{this}}">{{this}}</li>
         {{/each}}
+
+%script#KeyValListFieldTempl{:type => "text/x-handlebars-template"}
+  %ul.key-val-fields
+    :plain
+      {{#each pc.fieldDatas}}
+        <li class="key-val-row" data-index={{@index}}>
+          <input type="text" class="key text-input key-val-field" value="{{this.key}}">
+          <input type="text" class="val text-input key-val-field" value="{{this.val}}">
+        </li>
+      {{/each}}

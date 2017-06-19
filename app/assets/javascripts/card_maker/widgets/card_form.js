@@ -22,6 +22,7 @@ window.CardForm = (function() {
     Handlebars.registerPartial('imageField', $('#ImageFieldTempl').html());
     Handlebars.registerPartial('colorSchemeField', $('#ColorSchemeFieldTempl').html());
     Handlebars.registerPartial('labeledChoiceImageField', $('#LabeledChoiceImageFieldTempl').html());
+    Handlebars.registerPartial('keyValListField', $('#KeyValListFieldTempl').html());
 
     var fieldTempl = Handlebars.compile($('#FieldTempl').html())
       , fieldSepTempl = Handlebars.compile($('#FieldSepTempl').html())
@@ -311,6 +312,47 @@ window.CardForm = (function() {
       return $elmt;
     }
 
+    function buildKeyValListField(field) {
+      var fieldDatas = new Array(field.max)
+        , cardDatas = card.getFieldValue(field)
+        , $elmt = buildField('keyValListField', field, { fieldDatas: [] })
+        , curKey
+        , curVal
+        , curCardData
+        , $keyValInputs
+        , $keyValRows
+        ;
+
+      for (var i = 0; i < fieldDatas.length; i++) {
+        curKey = '';
+        curVal = '';
+
+        if (i < cardDatas.length) {
+          curCardData = cardDatas[i];
+          curKey = curCardData.key.text;
+          curVal = curCardData.val.text;
+        }
+
+        fieldDatas[i] = { key: curKey, val: curVal };
+      }
+
+      $elmt = buildField('keyValListField', field, { fieldDatas: fieldDatas });
+      $keyValInputs = $elmt.find('.key-val-field');
+      $keyValRows = $elmt.find('.key-val-row');
+
+      $keyValInputs.keyup(function() {
+        var $that = $(this)
+          , keyOrVal = $that.hasClass('key') ? 'key' : 'val'
+          , index = $that.parent('.key-val-row').data('index')
+          , value = $that.val()
+          ;
+
+        card.setKeyValText(field.id, keyOrVal, index, value);
+      });
+
+      return $elmt;
+    }
+
     function rebuildFields() {
       var $cardFields = $('#CardFields')
         , fields = card.editableFields()
@@ -336,6 +378,9 @@ window.CardForm = (function() {
             break;
           case 'labeled-choice-image':
             $elmt = buildLabeledChoiceImageField(field);
+            break;
+          case 'key-val-list':
+            $elmt = buildKeyValListField(field);
             break;
           default:
             console.log(field, 'type not recognized');

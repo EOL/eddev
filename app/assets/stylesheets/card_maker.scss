@@ -529,13 +529,18 @@ $col-border-width: 5px;
   .text-field-input {
     display: inline-block;
     margin: 22px 11px 0 15px;
+    width: 294px;
   }
 
   .text-input {
+    border: none;
+    border-radius: 1.4px;
+    color: #242424;
     font-size: 13px;
+    font-weight: $light;
     height: 34px;
+    outline: none;
     padding: 0 0 0 13px;
-    width: 294px;
   }
 
   .font-size-box {
@@ -666,7 +671,7 @@ $col-border-width: 5px;
   .img-upload-btn {
     $height: 34px;
     background-color: $white;
-    border-radius: 2px;
+    border-radius: 1.4px;
     cursor: pointer;
     height: $height;
     line-height: $height;
@@ -720,7 +725,7 @@ $col-border-width: 5px;
     $txt-color: #242424;
 
     background-color: $white;
-    border-radius: 2px;
+    border-radius: 1.4px;
     color: $txt-color;
     cursor: pointer;
     display: block;
@@ -751,7 +756,7 @@ $col-border-width: 5px;
       position: absolute;
       top: $height;
       width: $width;
-      border-radius: 2px;
+      border-radius: 1.4px;
     }
 
     .choice {
@@ -763,6 +768,34 @@ $col-border-width: 5px;
         background-color: $border-color;
         color: $black;
       }
+    }
+  }
+
+  .key-val-fields {
+    $field-height: 34px;
+    $field-width: 174px;
+    $field-spacing: 2px;
+
+    margin: (22px - $field-spacing) auto 22px auto;
+    position: relative;
+    width: $field-width * 2 + $field-spacing;
+
+    .key-val-row {
+      height: $field-height;
+      margin-top: $field-spacing;
+      width: 100%;
+    }
+
+    .key-val-field {
+      width: $field-width;
+    }
+
+    .key {
+      float: left;
+    }
+
+    .val {
+      float: right;
     }
   }
 

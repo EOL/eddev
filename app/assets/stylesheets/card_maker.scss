@@ -161,6 +161,56 @@ $col-border-width: 5px;
   z-index: 1;
 }
 
+.suggestions {
+  $outer-color: #72baff;
+  $inner-color: #5585ca;
+  $border: 3px solid $outer-color;
+  $head-height: 38px;
+
+  background-color: $inner-color;
+  border-right: $border;
+  border-left: $border;
+  border-bottom: $border;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 100;
+
+  .hdr {
+    background-color: $outer-color;
+    color: $white;
+    font-size: 14px;
+    font-weight: $light;
+    height: $head-height;
+    line-height: $head-height;
+    text-align: center;
+  }
+
+  .items {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    padding: 23px 24px 25px 24px;
+  }
+
+  .item {
+    $height: 32px;
+
+    background-color: $white;
+    color: #0353bc;
+    cursor: pointer;
+    flex: 0 0 auto;
+    font-size: 10px;
+    font-weight: $semibold;
+    height: $height;
+    line-height: $height;
+    margin-top: 2px;
+    text-align: center;
+    width: 171px;
+  }
+}
+
 .col-head-box {
   $height: $head-box-height;
 
@@ -805,6 +855,7 @@ $col-border-width: 5px;
     }
 
     .key-val-field {
+      position: relative;
       width: $field-width;
     }
 

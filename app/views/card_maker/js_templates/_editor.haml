@@ -100,3 +100,12 @@
 
 %script#ThumbSpinTempl{:type => "text/x-handlebars-template"}
   %i.fa.fa-spinner.fa-lg.fa-spin.spinner
+
+%script#SuggestionsTempl{:type => "text/x-handlebars-template"}
+  .suggestions
+    .hdr Suggestions
+    %ul.items
+      :plain
+        {{#each items}}
+          <li class="item" data-index="{{@index}}">{{this}}</li>
+        {{/each}}

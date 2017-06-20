@@ -5,6 +5,16 @@ window.CardForm = (function() {
 
   var imageUploader = null;
 
+  // Handlebars
+
+
+  var fieldTempl
+    , fieldSepTempl
+    , imgLibTempl
+    , thumbSpinTempl
+    , suggestionsTempl
+    ;
+
   function setImageUploader(uploader) {
     imageUploader = uploader;
   }
@@ -30,20 +40,6 @@ window.CardForm = (function() {
       , srcUpload = 'upload'
       , srcLib = 'lib'
       , srcUrl = 'url'
-      ;
-
-    // Handlebars
-    Handlebars.registerPartial('labelTempl', $('#FieldLabelTempl').html());
-    Handlebars.registerPartial('textField', $('#TextFieldTempl').html());
-    Handlebars.registerPartial('imageField', $('#ImageFieldTempl').html());
-    Handlebars.registerPartial('colorSchemeField', $('#ColorSchemeFieldTempl').html());
-    Handlebars.registerPartial('labeledChoiceImageField', $('#LabeledChoiceImageFieldTempl').html());
-    Handlebars.registerPartial('keyValListField', $('#KeyValListFieldTempl').html());
-
-    var fieldTempl = Handlebars.compile($('#FieldTempl').html())
-      , fieldSepTempl = Handlebars.compile($('#FieldSepTempl').html())
-      , imgLibTempl = Handlebars.compile($('#ImageLibTempl').html())
-      , thumbSpinTempl = Handlebars.compile($('#ThumbSpinTempl').html())
       ;
 
     function setCard(theCard) {
@@ -427,12 +423,15 @@ window.CardForm = (function() {
     function buildKeyValListField(field) {
       var fieldDatas = new Array(field.max)
         , cardDatas = card.getFieldValue(field)
+        , fieldChoices = card.getFieldChoices(field.id)
         , $elmt = buildField('keyValListField', field, { fieldDatas: [] })
         , curKey
         , curVal
         , curCardData
         , $keyValInputs
+        , $keyInputs
         , $keyValRows
+        , suggestions
         ;
 
       for (var i = 0; i < fieldDatas.length; i++) {
@@ -450,9 +449,10 @@ window.CardForm = (function() {
 
       $elmt = buildField('keyValListField', field, { fieldDatas: fieldDatas });
       $keyValInputs = $elmt.find('.key-val-field');
+      $keyInputs = $keyValInputs.filter('.key');
       $keyValRows = $elmt.find('.key-val-row');
 
-      $keyValInputs.keyup(function() {
+      $keyValInputs.on('input', function() {
         var $that = $(this)
           , keyOrVal = $that.hasClass('key') ? 'key' : 'val'
           , index = $that.parent('.key-val-row').data('index')
@@ -461,6 +461,29 @@ window.CardForm = (function() {
 
         card.setKeyValText(field.id, keyOrVal, index, value);
       });
+
+      if (fieldChoices) {
+        suggestions = new SuggestionMenu(fieldChoices);
+
+        $keyInputs.focus(function() {
+          var $that = $(this)
+            , enableFn = disableFields($that)
+            ;
+
+          suggestions.select(function(val) {
+            $that.val(val);
+            $that.triggerHandler('input');
+            $that.blur();
+          });
+
+          suggestions.show($that);
+
+          $that.one('blur', function() {
+            suggestions.hide();
+            enableFn();
+          });
+        });
+      }
 
       return $elmt;
     }
@@ -508,6 +531,67 @@ window.CardForm = (function() {
       }
     }
   }
+
+  function SuggestionMenu(items) {
+    var that = this
+      , $elmt = $(suggestionsTempl({items: items}))
+      , selectCb
+      , $items = $elmt.find('.item')
+      ;
+
+    function show($anchor) {
+      var $cardFields = $('#CardFields')
+        , cardFieldsTop = $cardFields.offset().top
+        , anchorTop = $anchor.offset().top
+        , anchorHeight = $anchor.outerHeight()
+        , arrowHeight = 10
+        , top = anchorTop - cardFieldsTop + anchorHeight + arrowHeight
+        ;
+
+      $items.mousedown(function(e) {
+        e.preventDefault();
+      });
+
+      $items.click(function() {
+        fireSelect($(this).html());
+      });
+
+      $cardFields.append($elmt);
+      $elmt.css('top', top);
+    }
+    that.show = show;
+
+    function hide() {
+      $elmt.remove();
+    }
+    that.hide = hide;
+
+    function select(cb) {
+      selectCb = cb;
+    }
+    that.select = select;
+
+    function fireSelect(val) {
+      if (selectCb) {
+        selectCb(val);
+      }
+    }
+  }
+
+  $(function() {
+    Handlebars.registerPartial('labelTempl', $('#FieldLabelTempl').html());
+    Handlebars.registerPartial('textField', $('#TextFieldTempl').html());
+    Handlebars.registerPartial('imageField', $('#ImageFieldTempl').html());
+    Handlebars.registerPartial('colorSchemeField', $('#ColorSchemeFieldTempl').html());
+    Handlebars.registerPartial('labeledChoiceImageField', $('#LabeledChoiceImageFieldTempl').html());
+    Handlebars.registerPartial('keyValListField', $('#KeyValListFieldTempl').html());
+
+    fieldTempl = Handlebars.compile($('#FieldTempl').html());
+    fieldSepTempl = Handlebars.compile($('#FieldSepTempl').html());
+    imgLibTempl = Handlebars.compile($('#ImageLibTempl').html());
+    thumbSpinTempl = Handlebars.compile($('#ThumbSpinTempl').html());
+    suggestionsTempl = Handlebars.compile($('#SuggestionsTempl').html());
+  });
 
   return exports;
 })();

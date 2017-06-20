@@ -537,15 +537,23 @@ window.CardForm = (function() {
       , $elmt = $(suggestionsTempl({items: items}))
       , selectCb
       , $items = $elmt.find('.item')
+      , $arrow = $elmt.find('.arrow')
+      , arrowHeight = 20
+      , extraTopSpace = 5
       ;
 
     function show($anchor) {
       var $cardFields = $('#CardFields')
-        , cardFieldsTop = $cardFields.offset().top
-        , anchorTop = $anchor.offset().top
+        , cardFieldsOffset = $cardFields.offset()
+        , cardFieldsTop = cardFieldsOffset.top
+        , anchorOffset = $anchor.offset()
+        , anchorTop = anchorOffset.top
         , anchorHeight = $anchor.outerHeight()
-        , arrowHeight = 10
-        , top = anchorTop - cardFieldsTop + anchorHeight + arrowHeight
+        , anchorLeftRel = anchorOffset.left - cardFieldsOffset.left
+        , anchorWidth = $anchor.outerWidth()
+        , menuBorder = 3
+        , arrowLeft = anchorLeftRel + anchorWidth / 2 - menuBorder
+        , top = anchorTop - cardFieldsTop + anchorHeight + arrowHeight + extraTopSpace
         ;
 
       $items.mousedown(function(e) {
@@ -556,8 +564,10 @@ window.CardForm = (function() {
         fireSelect($(this).html());
       });
 
-      $cardFields.append($elmt);
       $elmt.css('top', top);
+      $arrow.css('left', arrowLeft);
+
+      $cardFields.append($elmt);
     }
     that.show = show;
 

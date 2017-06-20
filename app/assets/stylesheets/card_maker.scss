@@ -1,8 +1,8 @@
 @import "layout_vars.scss";
 
 $editor-width: 940;
-
 $active-select-text-color: #a09d9d;
+$thumb-size: 80px;
 
 .new-card-hdr {
   font-size: 24px;
@@ -193,6 +193,22 @@ $col-border-width: 5px;
   margin-top: 6px;
 }
 
+.thumb {
+  background-color: $white;
+  box-sizing: content-box;
+  cursor: pointer;
+  display: block;
+  height: $thumb-size;
+  box-sizing: content-box;
+  object-fit: cover;
+  width: $thumb-size;
+
+  &.selected {
+    border: 2px solid $white;
+    border-radius: 1px;
+  }
+}
+
 .left-col {
   $preview-left-width: 110px;
 
@@ -260,8 +276,6 @@ $col-border-width: 5px;
   }
 
   .img-wrap {
-    $thumb-size: 80px;
-
     margin-top: 7px;
 
     .img-title {
@@ -272,20 +286,7 @@ $col-border-width: 5px;
     }
 
     .thumb {
-      background-color: $white;
-      box-sizing: content-box;
-      cursor: pointer;
-      display: block;
-      height: $thumb-size;
       margin: 5px auto 0 auto;
-      box-sizing: content-box;
-      object-fit: cover;
-      width: $thumb-size;
-
-      &.selected {
-        border: 2px solid $white;
-        border-radius: 1px;
-      }
     }
   }
 
@@ -651,6 +652,19 @@ $col-border-width: 5px;
     width: 350px;
   }
 
+  .thumb {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 20px auto 0 auto;
+
+    .img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
   .img-or {
     color: #2c79dd;
     font-size: 13px;
@@ -991,14 +1005,6 @@ $col-border-width: 5px;
     .img {
       height: 100%;
     }
-  }
-}
-
-.thumb {
-  height: 100px;
-
-  &.selected {
-    border: 2px solid #000;
   }
 }
 

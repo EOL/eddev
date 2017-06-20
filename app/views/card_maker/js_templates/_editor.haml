@@ -54,6 +54,8 @@
       %i.fa.fa-upload.fa-lg.img-upload-btn-icon{:'aria-hidden' => true}
       .img-upload-btn-txt Upload an image
       %input.img-upload-file{:type => "file"}
+    .upload-img-preview.thumb.hidden
+      %img.img
 
 %script#FieldSepTempl{:type => "text/x-handlebars-template"}
   .field-sep
@@ -95,3 +97,6 @@
           <input type="text" class="val text-input key-val-field" value="{{this.val}}">
         </li>
       {{/each}}
+
+%script#ThumbSpinTempl{:type => "text/x-handlebars-template"}
+  %i.fa.fa-spinner.fa-lg.fa-spin.spinner

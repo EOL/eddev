@@ -25,7 +25,12 @@ window.CardForm = (function() {
 
   function CardForm(imageUploader) {
     var that = this
-      , card;
+      , card
+      , imgSrcProp = 'imageSource'
+      , srcUpload = 'upload'
+      , srcLib = 'lib'
+      , srcUrl = 'url'
+      ;
 
     // Handlebars
     Handlebars.registerPartial('labelTempl', $('#FieldLabelTempl').html());
@@ -38,6 +43,7 @@ window.CardForm = (function() {
     var fieldTempl = Handlebars.compile($('#FieldTempl').html())
       , fieldSepTempl = Handlebars.compile($('#FieldSepTempl').html())
       , imgLibTempl = Handlebars.compile($('#ImageLibTempl').html())
+      , thumbSpinTempl = Handlebars.compile($('#ThumbSpinTempl').html())
       ;
 
     function setCard(theCard) {
@@ -181,7 +187,7 @@ window.CardForm = (function() {
       return $elmt;
     }
 
-    function openImgLib(fieldId, choices) {
+    function openImgLib(fieldId, $field, choices) {
       var $cols = $('#Cols')
         , $imgLib
         , $disableOverlay = $cols.children('.disable-overlay')
@@ -193,7 +199,9 @@ window.CardForm = (function() {
 
       $imgLib = $(imgLibTempl({ choices: choices }));
       $imgLib.find('.img-lib-thumb').click(function() {
+        removeThumbSelected($field);
         card.setChoiceIndex(fieldId, $(this).data('index'));
+        card.setMetaData(fieldId, imgSrcProp, srcLib);
       });
 
       $cols.append($imgLib);
@@ -207,6 +215,33 @@ window.CardForm = (function() {
       return false;
     }
 
+    function removeThumbSelected($elmt) {
+      $elmt.find('.thumb').removeClass('selected');
+    }
+
+    function setImgData(fieldId, data) {
+      card.wipeData(fieldId);
+      card.setDataAttr(fieldId, 'url', data.url);
+      card.setDataAttr(fieldId, 'thumbUrl', data.thumbUrl);
+    }
+
+    function restoreThumb(fieldId, $uploadThumb) {
+      var imgSrc = card.getMetaData(fieldId, imgSrcProp)
+        , thumbUrl = card.getDataAttr(fieldId, 'thumbUrl')
+        , url = card.getDataAttr(fieldId, 'url')
+        ;
+
+      if (imgSrc === srcUpload) {
+        $uploadThumb.find('.img').attr('src', thumbUrl);
+        $uploadThumb.removeClass('hidden');
+        $uploadThumb.addClass('selected');
+        $uploadThumb.data('urls', {
+          url: url,
+          thumbUrl: thumbUrl
+        });
+      }
+    }
+
     function buildImageField(field) {
       var choices = card.getFieldChoices(field.id)
         , numThumbUrls = Math.min(3, choices.length)
@@ -215,6 +250,9 @@ window.CardForm = (function() {
         , $imgLib
         , $uploadBtn
         , $fileInput
+        , $previewThumb
+        , uploadedImgData
+        , curImgSrc
         ;
 
       for (var i = 0; i < numThumbUrls; i++) {
@@ -226,10 +264,11 @@ window.CardForm = (function() {
       });
 
       $imgLib = $elmt.find('.img-lib');
-      $imgLib.click(openImgLib.bind(null, field.id, choices));
+      $imgLib.click(openImgLib.bind(null, field.id, $elmt, choices));
 
       $uploadBtn = $elmt.find('.img-upload-btn');
       $fileInput = $elmt.find('.img-upload-file');
+      $previewThumb = $elmt.find('.upload-img-preview');
 
       $fileInput.click(function(e) {
         e.stopPropagation();
@@ -238,17 +277,30 @@ window.CardForm = (function() {
       $fileInput.on('change', function() {
         var files = $fileInput[0].files
           , file = files[0]
+          , $previewThumbImg = $previewThumb.find('.img')
+          , $spin = $(thumbSpinTempl())
           ;
 
         if (file) {
+          $previewThumb.removeClass('hidden');
+          $previewThumbImg.addClass('hidden');
+          $previewThumb.append($spin);
+
           imageUploader.upload(file, function(err, data) {
             if (err) {
               throw err;
             }
 
-            card.wipeData(field.id);
-            card.setDataAttr(field.id, 'url', data.url);
-            card.setDataAttr(field.id, 'thumbUrl', data.thumbUrl);
+            $previewThumb.data('urls', data);
+            removeThumbSelected($elmt);
+            setImgData(field.id, data);
+            card.setMetaData(field.id, imgSrcProp, srcUpload);
+
+            $previewThumb.addClass('selected');
+
+            $previewThumbImg.attr('src', data.thumbUrl);
+            $spin.remove();
+            $previewThumbImg.removeClass('hidden');
           });
         }
       });
@@ -257,6 +309,23 @@ window.CardForm = (function() {
         $fileInput.click();
         return false;
       });
+
+      $previewThumb.click(function() {
+        var $that = $(this)
+          , urls = $that.data('urls')
+          ;
+
+        if (!$that.hasClass('selected')) {
+          removeThumbSelected($elmt);
+          $that.addClass('selected');
+          setImgData(field.id, {
+            url: urls.url,
+            thumbUrl: urls.thumbUrl
+          });
+        }
+      });
+
+      restoreThumb(field.id, $previewThumb);
 
       return $elmt;
     }

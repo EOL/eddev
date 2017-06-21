@@ -58,7 +58,7 @@ Rails.application.routes.draw do
 
   post   "card_maker_ajax/cards"                    => "card_maker_ajax#create_card"
   post   "card_maker_ajax/decks/:deck_id/cards"     => "card_maker_ajax#create_deck_card"
-  put    "card_maker_ajax/cards/:card_id/data"      => "card_maker_ajax#update_card"
+  put    "card_maker_ajax/cards/:card_id/save"      => "card_maker_ajax#save_card"
   get    "card_maker_ajax/cards/:card_id/svg"       => "card_maker_ajax#render_svg"
   get    "card_maker_ajax/cards/:card_id/png"       => "card_maker_ajax#render_png"
   get    "card_maker_ajax/cards/:card_id/json"      => "card_maker_ajax#card_json"

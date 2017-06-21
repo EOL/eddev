@@ -87,12 +87,12 @@ window.CardEditor = (function() {
 
   var cardDataPersistence = {
     save: function(card, cb) {
-      var url = apiPath + '/cards/' + card.id + '/data';
+      var url = apiPath + '/cards/' + card.id + '/save';
 
       $.ajax({
         url: url,
         method: 'PUT',
-        data: JSON.stringify(card.data),
+        data: JSON.stringify({ data: card.data, userData: card.userData }),
         contentType: 'application/json',
         success: function() {
           cb()

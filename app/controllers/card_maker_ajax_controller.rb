@@ -30,9 +30,9 @@ class CardMakerAjaxController < ApplicationController
   end
 
   # PUT /cardgen/cards/:card_id/data
-  def update_card
+  def save_card
     json_response(
-      CardServiceCaller.update_card_data(
+      CardServiceCaller.save_card(
         logged_in_user.id,
         params[:card_id],
         request.raw_post

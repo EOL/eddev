@@ -37,9 +37,9 @@ module CardServiceCaller
     HTTParty.get("#{self.user_prefix(user_id)}/decks")
   end
 
-  def self.update_card_data(user_id, card_id, data)
+  def self.save_card(user_id, card_id, data)
     HTTParty.put(
-      "#{self.user_prefix(user_id)}/cards/#{card_id}/data",
+      "#{self.user_prefix(user_id)}/cards/#{card_id}/save",
       :body => data,
       :headers => JSON_HEADERS
     )

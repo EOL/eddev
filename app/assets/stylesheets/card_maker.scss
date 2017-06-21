@@ -679,6 +679,25 @@ $col-border-width: 5px;
     margin-left: auto;
     margin-right: auto;
     width: 300px;
+
+    .text-input {
+      width: 100%;
+    }
+  }
+
+  .img-credit {
+    margin: 12px auto 37px auto;
+  }
+
+  .img-credit-label {
+    font-size: 12px;
+    color: $white;
+    padding-left: 14px;
+    text-shadow: 0 1px 1px #548ad0;
+  }
+
+  .img-credit-input {
+    margin-top: 6px;
   }
 
   .img-lib-hdr {
@@ -727,10 +746,6 @@ $col-border-width: 5px;
     font-weight: $bold;
     margin-bottom: 13px;
     text-align: center;
-  }
-
-  .img-url-input {
-    width: 100%;
   }
 
   .img-upload {

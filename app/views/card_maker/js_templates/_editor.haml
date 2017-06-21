@@ -46,7 +46,13 @@
   .img-field-sep
   .img-url.img-field-sec
     .img-or or
-    %input.img-url-input.text-input{:type => :text}
+    .img-url-wrap
+      %input.img-url-input.text-input{:type => :text, :placeholder => "Type/paste URL"}>
+      .img-url-btn
+        %i.fa.fa-upload.fa-lg
+    .img-url-error.hidden Failed to load image from URL
+    .url-img-preview.thumb.hidden
+      %img.img
   .img-field-sep
   .img-upload.img-field-sec
     .img-or or

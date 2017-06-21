@@ -596,7 +596,7 @@ $col-border-width: 5px;
     font-weight: $light;
     height: 34px;
     outline: none;
-    padding: 0 0 0 13px;
+    padding: 0 13px;
   }
 
   .font-size-box {
@@ -726,6 +726,38 @@ $col-border-width: 5px;
     width: 350px;
   }
 
+  .img-url-wrap {
+    $btn-width: 67px;
+    $height: 34px;
+
+    height: $height;
+    position: relative;
+
+    .img-url-btn {
+      background-color: $white;
+      border-radius: 0 1.4px 1.4px 0;
+      cursor: pointer;
+      display: inline-block;
+      height: $height;
+      line-height: $height;
+      text-align: center;
+      vertical-align: top;
+      width: $btn-width;
+    }
+
+    .img-url-input {
+      background-image: linear-gradient(to left, #eaf5ff, $white);
+      border-radius: 1.4px 0 0 1.4px;
+      display: inline-block;
+      width: 300px - $btn-width;
+    }
+  }
+
+  .img-url-error {
+    font-size: 13px;
+    margin-top: 5px;
+  }
+
   .thumb {
     align-items: center;
     display: flex;
@@ -785,9 +817,7 @@ $col-border-width: 5px;
     display: flex;
     flex-flow: row wrap;
 
-
     &:hover {
-
       .disable-overlay {
         display: none;
       }

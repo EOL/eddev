@@ -189,7 +189,6 @@ window.CardForm = (function() {
         , $disableOverlay = $cols.children('.disable-overlay')
         ;
 
-
       $disableOverlay.removeClass('hidden');
       $('body').addClass('noscroll');
 
@@ -215,14 +214,14 @@ window.CardForm = (function() {
       $elmt.find('.thumb').removeClass('selected');
     }
 
-    function setImgData(fieldId, data, $creditInput) {
-      card.setUserData(fieldId, 'upload', data);
-      card.setUserDataRef(fieldId, 'upload');
+    function setImgData(fieldId, data, $creditInput, type) {
+      card.setUserData(fieldId, type, data);
+      card.setUserDataRef(fieldId, type);
       $creditInput.val('');
     }
 
-    function setImgDataSrcUpload(fieldId) {
-      card.setUserDataRef(fieldId, 'upload');
+    function setImgDataSrc(fieldId, type) {
+      card.setUserDataRef(fieldId, type);
     }
 
     function setCreditValFromCard(fieldId, $creditInput) {
@@ -231,18 +230,47 @@ window.CardForm = (function() {
       $creditInput.val(creditText);
     }
 
-    function restoreUploadThumb(fieldId, $uploadThumb) {
-      var uploadData = card.getUserData(fieldId, 'upload')
+    function restoreThumb(fieldId, $thumb, type) {
+      var data = card.getUserData(fieldId, type)
         , userDataRef = card.getUserDataRef(fieldId)
         ;
 
-      if (uploadData) {
-        $uploadThumb.find('.img').attr('src', uploadData.thumbUrl);
-        $uploadThumb.removeClass('hidden');
+      if (data) {
+        $thumb.find('.img').attr('src', data.thumbUrl);
+        $thumb.removeClass('hidden');
 
-        if (userDataRef && userDataRef === 'upload') {
-          $uploadThumb.addClass('selected');
+        if (userDataRef === type) {
+          $thumb.addClass('selected');
         }
+      }
+
+      return data;
+    }
+
+    function restoreUploadThumb(fieldId, $uploadThumb) {
+      restoreThumb(fieldId, $uploadThumb, 'upload');
+    }
+
+    function restoreUrlField(fieldId, $urlThumb, $urlInput) {
+      var data = restoreThumb(fieldId, $urlThumb, 'fromUrl');
+
+      if (data && data.url) {
+        $urlInput.val(data.url);
+      }
+    }
+
+    function showThumbSpin($thumb) {
+      var $spin = $(thumbSpinTempl())
+        , $img = $thumb.find('.img')
+        ;
+
+      $thumb.removeClass('hidden');
+      $img.addClass('hidden');
+      $thumb.append($spin);
+
+      return function() {
+        $spin.remove();
+        $img.removeClass('hidden');
       }
     }
 
@@ -265,7 +293,7 @@ window.CardForm = (function() {
 
           $previewThumb.data('urls', data);
           removeThumbSelected($field);
-          setImgData(fieldId, data, $creditInput);
+          setImgData(fieldId, data, $creditInput, 'upload');
 
           $previewThumb.addClass('selected');
 
@@ -273,6 +301,46 @@ window.CardForm = (function() {
           $spin.remove();
           $previewThumbImg.removeClass('hidden');
         });
+      }
+    }
+
+    function loadImgFromUrl(fieldId, $field, $imgUrlInput, $urlPreviewThumb, $error,
+      $creditInput) {
+      var url = $imgUrlInput.val()
+        , $img = $urlPreviewThumb.find('.img')
+        , showImgFn
+        ;
+
+      if (url) {
+        showImgFn = showThumbSpin($urlPreviewThumb);
+
+        $error.addClass('hidden');
+
+
+        $img.one('load', function() {
+          $img.off();
+          showImgFn();
+          setImgData(fieldId, {url: url, thumbUrl: url}, $creditInput, 'fromUrl');
+          thumbSelect(fieldId, $field, $urlPreviewThumb, $creditInput, 'fromUrl');
+        });
+
+        $img.one('error', function(e) {
+          $img.off();
+          $error.removeClass('hidden');
+          showImgFn();
+          restoreUrlField(fieldId, $urlPreviewThumb, $imgUrlInput)
+        });
+
+        $img.attr('src', url);
+      }
+    }
+
+    function thumbSelect(fieldId, $field, $thumb, $creditInput, type) {
+      if (!$thumb.hasClass('selected')) {
+        removeThumbSelected($field);
+        $thumb.addClass('selected');
+        setImgDataSrc(fieldId, type);
+        setCreditValFromCard(fieldId, $creditInput);
       }
     }
 
@@ -285,7 +353,11 @@ window.CardForm = (function() {
         , $uploadBtn
         , $fileInput
         , $previewThumb
+        , $urlPreviewThumb
         , $creditInput
+        , $urlInput
+        , $urlBtn
+        , $urlError
         , uploadedImgData
         , curImgSrc
         , creditText
@@ -302,7 +374,11 @@ window.CardForm = (function() {
       $uploadBtn = $elmt.find('.img-upload-btn');
       $fileInput = $elmt.find('.img-upload-file');
       $previewThumb = $elmt.find('.upload-img-preview');
+      $urlPreviewThumb = $elmt.find('.url-img-preview');
       $creditInput = $elmt.find('.img-credit-input');
+      $urlInput = $elmt.find('.img-url-input');
+      $urlBtn = $elmt.find('.img-url-btn');
+      $urlError = $elmt.find('.img-url-error');
 
       $imgLib = $elmt.find('.img-lib');
       $imgLib.click(openImgLib.bind(null, field.id, $elmt, choices,
@@ -313,7 +389,8 @@ window.CardForm = (function() {
       });
 
       $fileInput.on('change',
-        imageFileInputChange.bind(null, field.id, $elmt, $fileInput, $previewThumb, $creditInput)
+        imageFileInputChange.bind(null, field.id, $elmt, $fileInput, $previewThumb,
+          $creditInput)
       );
 
       $uploadBtn.click(function() {
@@ -321,25 +398,20 @@ window.CardForm = (function() {
         return false;
       });
 
-      $previewThumb.click(function() {
-        var $that = $(this)
-          , urls = $that.data('urls')
-          ;
-
-        if (!$that.hasClass('selected')) {
-          removeThumbSelected($elmt);
-          $that.addClass('selected');
-          setImgDataSrcUpload(field.id);
-          setCreditValFromCard(field.id, $creditInput);
-        }
-      });
+      $previewThumb.click(thumbSelect.bind(null, field.id, $elmt, $previewThumb,
+        $creditInput, 'upload'));
+      $urlPreviewThumb.click(thumbSelect.bind(null, field.id, $elmt, $urlPreviewThumb,
+        $creditInput, 'fromUrl'));
 
       $creditInput.on('input', function() {
         card.setDataAttr(field.id, 'credit', { text: $(this).val() });
       });
 
-      restoreUploadThumb(field.id, $previewThumb);
+      $urlBtn.click(loadImgFromUrl.bind(null, field.id, $elmt, $urlInput,
+        $urlPreviewThumb, $urlError, $creditInput));
 
+      restoreUploadThumb(field.id, $previewThumb);
+      restoreUrlField(field.id, $urlPreviewThumb, $urlInput);
       setCreditValFromCard(field.id, $creditInput);
 
       return $elmt;

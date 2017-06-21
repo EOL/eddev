@@ -144,7 +144,7 @@ window.CardForm = (function() {
         , $fontSize
         , fontSizes = []
         , $fontSizeSelect
-        , fieldValue = card.getFieldValue(field)
+        , fieldValue = card.resolvedFieldData(field)
         , $disableOverlay
         ;
 
@@ -214,9 +214,10 @@ window.CardForm = (function() {
       $elmt.find('.thumb').removeClass('selected');
     }
 
-    function setImgData(fieldId, data, $creditInput, type) {
-      card.setUserData(fieldId, type, data);
-      card.setUserDataRef(fieldId, type);
+    function setImgData(fieldId, data, $creditInput, bucket) {
+      card.setUserDataAttr(fieldId, bucket, 'url', data.url);
+      card.setUserDataAttr(fieldId, bucket, 'thumbUrl', data.url);
+      card.setUserDataRef(fieldId, bucket);
       $creditInput.val('');
     }
 
@@ -230,21 +231,19 @@ window.CardForm = (function() {
       $creditInput.val(creditText);
     }
 
-    function restoreThumb(fieldId, $thumb, type) {
-      var data = card.getUserData(fieldId, type)
+    function restoreThumb(fieldId, $thumb, bucket) {
+      var thumbUrl = card.getUserDataAttr(fieldId, bucket, 'thumbUrl')
         , userDataRef = card.getUserDataRef(fieldId)
         ;
 
-      if (data) {
-        $thumb.find('.img').attr('src', data.thumbUrl);
+      if (thumbUrl) {
+        $thumb.find('.img').attr('src', thumbUrl);
         $thumb.removeClass('hidden');
 
-        if (userDataRef === type) {
+        if (userDataRef === bucket) {
           $thumb.addClass('selected');
         }
       }
-
-      return data;
     }
 
     function restoreUploadThumb(fieldId, $uploadThumb) {
@@ -252,10 +251,12 @@ window.CardForm = (function() {
     }
 
     function restoreUrlField(fieldId, $urlThumb, $urlInput) {
-      var data = restoreThumb(fieldId, $urlThumb, 'fromUrl');
+      var url = card.getUserDataAttr(fieldId, 'fromUrl', 'url');
 
-      if (data && data.url) {
-        $urlInput.val(data.url);
+      restoreThumb(fieldId, $urlThumb, 'fromUrl');
+
+      if (url) {
+        $urlInput.val(url);
       }
     }
 
@@ -513,7 +514,7 @@ window.CardForm = (function() {
 
     function buildKeyValListField(field) {
       var fieldDatas = new Array(field.max)
-        , cardDatas = card.getFieldValue(field)
+        , cardDatas = card.resolvedFieldData(field)
         , fieldChoices = card.getFieldChoices(field.id)
         , $elmt = buildField('keyValListField', field, { fieldDatas: [] })
         , curKey

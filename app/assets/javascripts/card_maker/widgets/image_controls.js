@@ -102,7 +102,7 @@ window.ImageControls = (function() {
 
       for (var i = 0; i < imgFields.length; i++) {
         var field = imgFields[i]
-          , val = cardWrapper.getFieldValue(field)
+          , val = cardWrapper.resolvedFieldData(field)
           , url = val.thumbUrl
           , $thumb = $(previewThumbTemplate({
               name: field.label,

@@ -68,6 +68,7 @@ window.ImageControls = (function() {
     }
 
     function cardCanvasClicked(clickEvent) {
+      console.log('click');
       var $that = $(this)
         , panX = cardWrapper.getDataAttr(selectedImgId, 'panX', 0)
         , panY = cardWrapper.getDataAttr(selectedImgId, 'panY', 0)
@@ -144,17 +145,19 @@ window.ImageControls = (function() {
 
       dragArea = cardWrapper.getImageLocation(selectedImgId);
 
-      $cardCanvas.off('click');
+      $cardCanvas.off('mousedown', cardCanvasClicked);
       $cardCanvas.mousedown(cardCanvasClicked);
 
-      $cardCanvas.off('mousemove');
-      $cardCanvas.mousemove(function(e) {
+      function mousemove(e) {
         if (selectedImageContains(e)) {
           $(this).css('cursor', 'move');
         } else {
           $(this).css('cursor', 'auto');
         }
-      });
+      }
+
+      $cardCanvas.off('mousemove', mousemove);
+      $cardCanvas.mousemove(mousemove);
 
       updatePctTxt();
       setKnobTop();

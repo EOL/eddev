@@ -250,11 +250,9 @@ $col-border-width: 5px;
 
 .thumb {
   background-color: $white;
-  box-sizing: content-box;
   cursor: pointer;
   display: block;
   height: $thumb-size;
-  box-sizing: content-box;
   object-fit: cover;
   width: $thumb-size;
 
@@ -576,44 +574,95 @@ $col-border-width: 5px;
   padding: 0 35px 100px 17px;
   width: 450px;
 
-
-
   .field-wrap {
     position: relative;
   }
 
-  .text-field-input {
-    display: inline-block;
-    margin: 22px 11px 0 15px;
-    width: 294px;
-  }
-
-  .text-input {
+  .text-entry {
     border: none;
     border-radius: 1.4px;
     color: #242424;
     font-size: 13px;
     font-weight: $light;
-    height: 34px;
     outline: none;
+  }
+
+  .text-input {
+    height: 34px;
     padding: 0 13px;
   }
+
+  .multiline-text-field-input {
+    display: block;
+    resize: none;
+    margin: 22px auto;
+    height: 162px;
+    padding: 7px 12px;
+    width: 350px;
+  }
+
+  .text-field-wrap {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 77px;
+  }
+
+  .text-field-input {
+    margin: 0 13px;
+    width: 294px;
+  }
+
 
   .font-size-box {
     background-color: #5fa1e7;
     display: inline-block;
-    height: 77px;
+    height: 100%;
     position: relative;
     vertical-align: top;
     width: 72px;
+
+    .font-size-label {
+      margin-top: 14px;
+      text-align: center;
+    }
+
+    .font-size {
+      margin: 3px auto 0 auto;
+    }
+
+    .font-size-label {
+      font-weight: $semibold;
+    }
+
+    .font-size-select {
+      right: -10px;
+      top: -11px;
+    }
+  }
+
+  .font-size-inline {
+    margin: 6px 28px 8px 0;
+    position: relative;
+    text-align: right;
+
+    .font-size-label, .font-size {
+      display: inline-block;
+    }
+
+    .font-size-select {
+      right: -35px;
+      top: -34px;
+    }
+
+    .font-size-label {
+      font-weight: $light;
+    }
   }
 
   .font-size-label {
     color: $white;
     font-size: 10px;
-    font-weight: $semibold;
-    margin-top: 14px;
-    text-align: center;
   }
 
   .font-size {
@@ -624,7 +673,6 @@ $col-border-width: 5px;
     font-size: 10px;
     height: $height;
     line-height: $height;
-    margin: 3px auto 0 auto;
     position: relative;
     text-align: center;
     width: 48px;
@@ -644,8 +692,6 @@ $col-border-width: 5px;
     max-width: 420px;
     overflow: hidden;
     position: absolute;
-    right: -10px;
-    top: -11px;
     white-space: nowrap;
     z-index: 3;
   }

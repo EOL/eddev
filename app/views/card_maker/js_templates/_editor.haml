@@ -20,20 +20,29 @@
         <div class="field">{{> (fieldPart) }}</div>
       {{/if}}
 
+%script#FontSizeInnerTempl{:type => "text/x-handlebars-template"}
+  .font-size-label Font size:
+  .font-size
+  .font-size-select.hidden
+    :plain
+      {{#each pc.fontSizes}}
+        {{#if this.selected}}
+          <div class="font-size-option selected">{{this.value}}</div>
+        {{else}}
+          <div class="font-size-option">{{this.value}}</div>
+        {{/if}}
+      {{/each}}
+
 %script#TextFieldTempl{:type => "text/x-handlebars-template"}
-  %input.text-input.text-field-input{:type => "text"}>
-  .font-size-box>
-    .font-size-label Font size:
-    .font-size
-    .font-size-select.hidden
-      :plain
-        {{#each pc.fontSizes}}
-          {{#if this.selected}}
-            <div class="font-size-option selected">{{this.value}}</div>
-          {{else}}
-            <div class="font-size-option">{{this.value}}</div>
-          {{/if}}
-        {{/each}}
+  .text-field-wrap
+    %input.text-input.text-field-input.text-entry{:type => "text"}>
+    :plain
+      {{#if pc.fontSizes}}
+        <div class="font-size-box">{{> fontSizeInner }}</div>
+      {{/if}}
+
+%script#MultilineTextFieldTempl{:type => "text/x-handlebars-template"}
+  %textarea.text-entry.multiline-text-field-input
 
 %script#ImageFieldTempl{:type => "text/x-handlebars-template"}
   .img-lib.img-field-sec
@@ -47,7 +56,7 @@
   .img-url.img-field-sec
     .img-or or
     .img-url-wrap
-      %input.img-url-input.text-input{:type => :text, :placeholder => "Type/paste URL"}>
+      %input.img-url-input.text-input.text-entry{:type => :text, :placeholder => "Type/paste URL"}>
       .img-url-btn
         %i.fa.fa-upload.fa-lg
     .img-url-error.hidden Failed to load image from URL
@@ -65,7 +74,7 @@
   .img-field-sep
   .img-credit.img-field-sec
     .img-credit-label Image Credit
-    %input.img-credit-input.text-input{:type => :text}
+    %input.img-credit-input.text-input.text-entry{:type => :text}
 
 %script#FieldSepTempl{:type => "text/x-handlebars-template"}
   .field-sep
@@ -103,8 +112,8 @@
     :plain
       {{#each pc.fieldDatas}}
         <li class="key-val-row" data-index={{@index}}>
-          <input type="text" class="key text-input key-val-field" value="{{this.key}}">
-          <input type="text" class="val text-input key-val-field" value="{{this.val}}">
+          <input type="text" class="key text-input text-entry key-val-field" value="{{this.key}}">
+          <input type="text" class="val text-input text-entry key-val-field" value="{{this.val}}">
         </li>
       {{/each}}
 

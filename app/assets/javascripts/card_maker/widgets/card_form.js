@@ -87,7 +87,6 @@ window.CardForm = (function() {
         , $origSelected = $fontSizeChoices.filter('.selected')
         ;
 
-
       $fontSizeChoices.mouseenter(function() {
         $fontSizeChoices.removeClass('selected');
         $(this).addClass('selected');
@@ -138,25 +137,27 @@ window.CardForm = (function() {
       enableFn();
     }
 
-    function buildTextField(field) {
+    function buildTextFieldHelper(field, partialName) {
       var $elmt
         , $txtInput
         , $fontSize
-        , fontSizes = []
+        , fontSizes
         , $fontSizeSelect
         , fieldValue = card.resolvedFieldData(field)
         , $disableOverlay
+        , curFontSize
         ;
 
-      for (var i = field.minFontSz; i <= field.maxFontSz; i++) {
-        fontSizes.push({
-          value: i,
-          selected: i === fieldValue.fontSz
+      if (field.fontSizes) {
+        fontSizes = field.fontSizes.map(function(sz) {
+          return { value: sz, selected: sz === fieldValue.fontSz };
         });
+      } else {
+        fontSizes = [];
       }
 
-      $elmt = buildField('textField', field, { fontSizes: fontSizes });
-      $txtInput = $elmt.find('.text-input');
+      $elmt = buildField(partialName, field, { fontSizes: fontSizes });
+      $txtInput = $elmt.find('.text-entry');
       $fontSize = $elmt.find('.font-size');
       $fontSizeSelect = $elmt.find('.font-size-select');
 
@@ -176,11 +177,19 @@ window.CardForm = (function() {
         $fontSizeSelect
       ));
 
-      $txtInput.keyup(function() {
+      $txtInput.on('input', function() {
         card.setDataAttr(field.id, 'text', $(this).val());
       });
 
       return $elmt;
+    }
+
+    function buildTextField(field) {
+      return buildTextFieldHelper(field, 'textField');
+    }
+
+    function buildMultilineTextField(field)  {
+      return buildTextFieldHelper(field, 'multilineTextField');
     }
 
     function openImgLib(fieldId, $field, choices, $creditInput) {
@@ -609,6 +618,9 @@ window.CardForm = (function() {
           case 'key-val-list':
             $elmt = buildKeyValListField(field);
             break;
+          case 'multiline-text':
+            $elmt = buildMultilineTextField(field);
+            break;
           default:
             console.log(field, 'type not recognized');
         }
@@ -683,10 +695,12 @@ window.CardForm = (function() {
   $(function() {
     Handlebars.registerPartial('labelTempl', $('#FieldLabelTempl').html());
     Handlebars.registerPartial('textField', $('#TextFieldTempl').html());
+    Handlebars.registerPartial('multilineTextField', $('#MultilineTextFieldTempl').html());
     Handlebars.registerPartial('imageField', $('#ImageFieldTempl').html());
     Handlebars.registerPartial('colorSchemeField', $('#ColorSchemeFieldTempl').html());
     Handlebars.registerPartial('labeledChoiceImageField', $('#LabeledChoiceImageFieldTempl').html());
     Handlebars.registerPartial('keyValListField', $('#KeyValListFieldTempl').html());
+    Handlebars.registerPartial('fontSizeInner', $('#FontSizeInnerTempl').html());
 
     fieldTempl = Handlebars.compile($('#FieldTempl').html());
     fieldSepTempl = Handlebars.compile($('#FieldSepTempl').html());

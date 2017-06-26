@@ -279,6 +279,8 @@ window.CardForm = (function() {
         if (userDataRef === bucket) {
           $thumb.addClass('selected');
         }
+      } else {
+        $thumb.addClass('hidden');
       }
     }
 

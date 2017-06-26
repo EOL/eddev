@@ -145,6 +145,7 @@ window.CardForm = (function() {
         , $disableOverlay
         , curFontSize
         , choices = card.getFieldChoices(field.id)
+        , menu
         ;
 
       if (field.fontSizes) {
@@ -182,6 +183,30 @@ window.CardForm = (function() {
       $txtInput.on('input', function() {
         card.setDataAttr(field.id, 'text', $(this).val());
       });
+
+      if (choices) {
+        menu = new SuggestionMenu(choices.map(function(choice) {
+          return choice.text;
+        }));
+
+        $elmt.find('.text-input-btn').click(function() {
+          var enableFn = disableFields($elmt.find('.text-input-wrap'));
+
+          menu.show($(this));
+
+          menu.select(function(val) {
+            $txtInput.val(val);
+            $txtInput.trigger('input');
+          });
+
+          $(document).one('click', function() {
+            enableFn();
+            menu.hide();
+          });
+
+          return false;
+        });
+      }
 
       return $elmt;
     }

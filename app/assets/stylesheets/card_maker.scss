@@ -1115,9 +1115,12 @@ $col-border-width: 5px;
 .user-resources {
   background-color: #28404f;
   box-shadow: inset 0px -61px 77px -44px rgba(0,0,0,0.75);
+  display: flex;
+  flex-flow: row wrap;
   max-height: 660px;
   overflow: auto;
-  padding: 47px 39px;
+  overflow-x: hidden;
+  padding: 37px 25px 47px 39px;
   position: relative;
 
   .user-resources-overlay {
@@ -1133,8 +1136,8 @@ $col-border-width: 5px;
   .resource-wrap {
     cursor: pointer;
     display: inline-block;
-    margin-right: 5px;
     margin-top: 10px;
+    margin-right: 14px;
     position: relative;
     vertical-align: top;
   }
@@ -1156,26 +1159,26 @@ $col-border-width: 5px;
   }
 
   .resource-frame {
-    $height: 268.8px;
-    $width: 192.8px;
+    $height: 286px;
+    $width: 205px;
 
     background-color: #fff;
-    border: 2px solid #000;
-    box-sizing: content-box;
-    height: $height;
     position: relative;
+    height: $height;
+    line-height: $height;
+    text-align: center;
     width: $width;
 
     .resource-overlay {
       background: rgba(50, 50, 50, .5);
       display: flex;
       flex-direction: column;
-      height: $height;
       justify-content: space-around;
       position: absolute;
       top: 0;
+      right: 0;
+      bottom: 0;
       left: 0;
-      width: $width;
 
       .btn {
         color: #fff;
@@ -1189,8 +1192,7 @@ $col-border-width: 5px;
   }
 
   .img-placeholder {
-    display: block;
-    margin: 124px auto 0 auto;
+    display: inline-block;
     width: 32px;
   }
 
@@ -1201,6 +1203,7 @@ $col-border-width: 5px;
   }
 
   .user-resource {
+    vertical-align: top;
     width: 100%;
   }
 }

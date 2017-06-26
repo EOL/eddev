@@ -42,7 +42,8 @@ window.CardManager = (function() {
       return;
     }
 
-    $('#NewResource').after($cardPlaceholder);
+    $('#UserResources').prepend($cardPlaceholder);
+    fixLayout();
 
     $.ajax({
       url: apiPath + path,
@@ -57,6 +58,7 @@ window.CardManager = (function() {
       success: function(card) {
         var $newPlaceholder = $(cardPlaceholderTemplate({ cardId: card.id }));
         $cardPlaceholder.replaceWith($newPlaceholder);
+        fixLayout();
         $newPlaceholder.click(cardSelected.bind(null, $newPlaceholder, card.id));
         $newPlaceholder.click();
         $newPlaceholder.find('.card-overlay .edit-btn').click();
@@ -218,6 +220,7 @@ window.CardManager = (function() {
       success: function() {
         $card.remove();
         $('#CardGenerator').addClass('hidden');
+        fixLayout();
       }
     });
   }
@@ -275,8 +278,6 @@ window.CardManager = (function() {
 
     idsToElmts = {};
 
-    $('#NewResource').click(newResourceClickFn);
-
     $.each(cards, function(i, card) {
       var deckId = card.deck ? card.deck.id : null
         , $placeholder = $(cardPlaceholderTemplate({
@@ -327,9 +328,22 @@ window.CardManager = (function() {
       success: function(summaries) {
         getDecks(function(decks) {
           buildCards(summaries, decks, newCard);
+          fixLayout();
         });
       }
     });
+  }
+
+  // TODO: this may only work in Chrome. See how other browsers treat scrollbars.
+  function fixLayout() {
+    var $userResources = $('#UserResources')
+      , scrollWidth = $userResources[0].offsetWidth - $userResources[0].clientWidth
+      , innerWidth = $userResources.width()
+      , resourceWidth = $('.resource-wrap').outerWidth()
+      ;
+
+    $('.resource-wrap').css('margin-right',
+      (innerWidth - scrollWidth - resourceWidth * 4) / 4.0);
   }
 
   function reloadCardImg(cardId) {
@@ -352,6 +366,8 @@ window.CardManager = (function() {
     cardImgTemplate = Handlebars.compile($('#CardImgTemplate').html());
     cardOverlayTemplate = Handlebars.compile($('#CardOverlayTemplate').html());
     spinnerTemplate = Handlebars.compile($('#SpinnerTemplate').html());
+
+    $('#NewCard').click(newCard);
 
     reloadUserCards();
   });

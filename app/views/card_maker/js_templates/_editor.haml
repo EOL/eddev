@@ -35,7 +35,12 @@
 
 %script#TextFieldTempl{:type => "text/x-handlebars-template"}
   .text-field-wrap
-    %input.text-input.text-field-input.text-entry{:type => "text"}>
+    .text-input-wrap.flex-wrap
+      %input.text-input.text-field-input.text-entry{:type => "text"}>
+      :plain
+        {{#if pc.choices}}
+          <div class="text-input-btn"></div>
+        {{/if}}
     :plain
       {{#if pc.fontSizes}}
         <div class="font-size-box">{{> fontSizeInner }}</div>
@@ -55,9 +60,9 @@
   .img-field-sep
   .img-url.img-field-sec
     .img-or or
-    .img-url-wrap
+    .img-url-wrap.flex-wrap
       %input.img-url-input.text-input.text-entry{:type => :text, :placeholder => "Type/paste URL"}>
-      .img-url-btn
+      .img-url-btn.text-input-btn
         %i.fa.fa-upload.fa-lg
     .img-url-error.hidden Failed to load image from URL
     .url-img-preview.thumb.hidden

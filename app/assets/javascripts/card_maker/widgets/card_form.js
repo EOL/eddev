@@ -6,8 +6,6 @@ window.CardForm = (function() {
   var imageUploader = null;
 
   // Handlebars
-
-
   var fieldTempl
     , fieldSepTempl
     , imgLibTempl
@@ -146,6 +144,7 @@ window.CardForm = (function() {
         , fieldValue = card.resolvedFieldData(field)
         , $disableOverlay
         , curFontSize
+        , choices = card.getFieldChoices(field.id)
         ;
 
       if (field.fontSizes) {
@@ -156,7 +155,10 @@ window.CardForm = (function() {
         fontSizes = [];
       }
 
-      $elmt = buildField(partialName, field, { fontSizes: fontSizes });
+      $elmt = buildField(partialName, field, {
+        fontSizes: fontSizes,
+        choices: choices
+      });
       $txtInput = $elmt.find('.text-entry');
       $fontSize = $elmt.find('.font-size');
       $fontSizeSelect = $elmt.find('.font-size-select');

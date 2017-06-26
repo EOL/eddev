@@ -2,87 +2,19 @@
 = render "card_maker/js_templates/editor"
 
 -#
-  %script#LabelTemplate{:type => "text/x-handlebars-template"}
-    .label {{label}}
+  %script#DeckTemplate{:type => "text/x-handlebars-template"}
+    .resource-wrap.user-resource-wrap
+      .resource-frame.user-resource-frame
+        %i.fa.fa-image.fa-4x.title-card-placeholder
+      .deck-name {{name}}
 
-  %script#TextInputTemplate{:type => "text/x-handlebars-template"}
-    .fields
-      %input.text-input.text-field{:id => "{{id}}", :value => "{{defaultVal}}"}
+  %script#DeckOverlayTemplate{:type => "text/x-handlebars-template"}
+    .deck-overlay.resource-overlay
+      %i.fa.fa-folder-open-o.fa-3x.edit-btn.btn
+      %i.fa.fa-trash-o.fa-3x.trash-btn.btn
 
-  %script#TextareaTemplate{:type => "text/x-handlebars-template"}
-    .fields
-      %textarea.textarea.text-field{:id => "{{id}}"} {{defaultVal}}
-
-  %script#ImageInputTemplate{:type => "text/x-handlebars-template"}
-    .fields.image-input{:id => "{{id}}"}
-      .zoom-controls
-        %i.fa.fa-minus-circle.fa-2x
-        %i.fa.fa-plus-circle.fa-2x
-      .img-selector
-        :plain
-          {{#each images}}
-            <img class="thumb" src="{{this.src}}" data-index="{{this.index}}" data-credit="{{this.credit}}"/>
-          {{/each}}
-      .image-upload
-        .upload-preview
-        %input.image-upload-input{:type => "file"}
-      .fields
-        %label{:for => "{{id}}Credit"} Image credit:
-        %input.text-input{:id => "{{id}}Credit", :class => "image-credit"}
-
-  %script#LabeledImageInputTemplate{:type => "text/x-handlebars-template"}
-    .fields.labeled-image-input
-      %select
-        :plain
-          {{#each images}}
-            <option value="{{this.index}}">{{this.label}}</option>
-          {{/each}}
-
-
-  %script#ColorInputTemplate{:type => "text/x-handlebars-template"}
-    .fields.color-input
-      .color-row
-        :plain
-          {{#each colors}}
-            <div class="color" data-color="{{this}}" data-index="{{@index}}"></div>
-          {{/each}}
-
-  %script#KeyValListInputTemplate{:type => "text/x-handlebars-template"}
-    .fields.key-val-list
-      :plain
-        {{#each data}}
-          <div class="key-val-wrap" data-index="{{this.index}}">
-            <input class="key-input" type="text" value="{{this.key}}">
-            <input class="val-input" type="text" value="{{this.val}}">
-          </div>
-        {{/each}}
-
-  %script#MultiImageTemplate{:type => "text/x-handlebars-template"}
-    .fields.multi-image
-      :plain
-        {{#each images}}
-          <div class="img-wrap" data-index="{{@index}}">
-            <img src="{{this.url}}" class="img">
-          </div>
-        {{/each}}
-
-
-
-%script#DeckTemplate{:type => "text/x-handlebars-template"}
-  .resource-wrap.user-resource-wrap
-    .resource-frame.user-resource-frame
-      %i.fa.fa-image.fa-4x.title-card-placeholder
-    .deck-name {{name}}
-
-
-
-%script#DeckOverlayTemplate{:type => "text/x-handlebars-template"}
-  .deck-overlay.resource-overlay
-    %i.fa.fa-folder-open-o.fa-3x.edit-btn.btn
-    %i.fa.fa-trash-o.fa-3x.trash-btn.btn
-
-%script#UserDecksTemplate{ :type => "text/x-handlebars-template"}
-  .deck-wrap.user-deck-wrap
+  %script#UserDecksTemplate{ :type => "text/x-handlebars-template"}
+    .deck-wrap.user-deck-wrap
 
 .card-hdr-box
   .card-hdr-inner
@@ -91,76 +23,83 @@
       = image_tag "welcome/eol_logo.png", :class => :'hdr-logo'
       Card Maker
     .right-blur-bg
-.hdr-spacer
-#CardManager.card-manager.card-screen
-  %h2.user-resources-hdr.card-hdr Card Manager
-  .card-manager-controls
-    %ul#ViewSelector.view-selector
-      %li.card-view.view.selected.first> Cards
-      %li.deck-view.view> Decks
-      %li.deck-cards-view.view.hidden>
-  .user-resources.user-decks#UserResources
-    #NewResource.resource-wrap.new-resource
-      .resource-frame
-        %i.fa.fa-plus.fa-3x.new-resource-icon
-#CardGenerator.card-generator.card-screen
-  .card-generator-inner
-    .welcome-block
-      %h3.welcome-txt>
-        %span.big-letter> W
-        elcome to the EOL Card Editor.
-      .tips-box>
-        .tips-txt tips
-    #Cols.cols
-      .disable-overlay.hidden
-      #LeftCol.col.left-col>
-        #LeftColHeadBox.col-head-box
-          .col-head-txt Card Preview
-          .col-head-sub-txt (Live Preview, Image Controls, Save + Exit Options)
-        #Preview.preview
-          #PreviewImgSelect.img-select>
-          .controls-card-wrap
-            .img-controls>
-              #ImgBtnLabel.txt.tip Flip horizontal
-              #ImgBtns.btns.ctrl.img-btns
-                = image_tag "card_maker/icons/rotate.png", :class => "btn top", :id => "RotateBtn", :data => { :label => "Rotate 90&deg;"}
-                = image_tag "card_maker/icons/flip_horiz.png", :class => "btn mid", :id => "FlipHorizBtn", :data => { :label => "Flip horizontal" }
-                = image_tag "card_maker/icons/flip_vert.png", :class => "btn bot", :id => "FlipVertBtn", :data => { :label => "Flip vertical" }
-              .sep
-              #ZoomControls
-                #ZoomPct.zoom-txt.txt
-                .zoom.ctrl
-                  #ZoomPlus.dir.plus.noselect +
-                  #ZoomStem.stem
-                    .lft>
-                    .rt>
-                    #ZoomKnob.knob
-                  #ZoomMinus.dir.minus.noselect &ndash;
-            .card-box
-              %canvas#CardCanvas.card-canvas
-            .preview-btns
-              .btn.close
-                .btn-txt Close
-              .btn.save-exit
-                .btn-txt Save + Exit
-              .btn.save
-                .btn-txt Quick Save
+#CardManagerWrap
+  .hdr-spacer.red
+  #CardManager.card-manager.card-screen
+    .screen-inner.manager-inner
+      .welcome-block.maker-welcome-block
+        %h3.welcome-txt>
+          %span.big-letter> W
+          elcome to the EOL Card Manager.
+      .manager-ctrls
+        .new-resource-btns
+          .new-resource-btn-wrap
+            .new-resource-txt Create a new card
+            .new-resource-btn.new-card-btn
+          .new-resource-btn-wrap
+            .new-resource-txt Create a new deck
+            .new-resource-btn.new-deck-btn
+        .filters
+          .filter.selected>
+            .filter-icon>
+            .filter-drop> All cards
+          .filter>
+            .filter-icon>
+            .filter-drop> All decks
 
-      #RightCol.col.right-col>
-        .col-head-box
-          .col-head-txt Card Form
-          .col-head-sub-txt (enter information that will appear on the card)
-        #CardFieldsWrap.card-fields-wrap
-          .disable-overlay.hidden
-          #CardFields.card-fields
+      .user-resources.user-decks#UserResources
+        #NewResource.resource-wrap.new-resource
+          .resource-frame
+            %i.fa.fa-plus.fa-3x.new-resource-icon
+#CardGeneratorWrap.card-generator-wrap
+  .hdr-spacer.green
+  #CardGenerator.card-generator.card-screen
+    .screen-inner
+      .welcome-block.generator-welcome-block
+        %h3.welcome-txt>
+          %span.big-letter> W
+          elcome to the EOL Card Editor.
+        .tips-box>
+          .tips-txt tips
+      #Cols.cols
+        .disable-overlay.hidden
+        #LeftCol.col.left-col>
+          #LeftColHeadBox.col-head-box
+            .col-head-txt Card Preview
+            .col-head-sub-txt (Live Preview, Image Controls, Save + Exit Options)
+          #Preview.preview
+            #PreviewImgSelect.img-select>
+            .controls-card-wrap
+              .img-controls>
+                #ImgBtnLabel.txt.tip Flip horizontal
+                #ImgBtns.btns.ctrl.img-btns
+                  = image_tag "card_maker/icons/rotate.png", :class => "btn top", :id => "RotateBtn", :data => { :label => "Rotate 90&deg;"}
+                  = image_tag "card_maker/icons/flip_horiz.png", :class => "btn mid", :id => "FlipHorizBtn", :data => { :label => "Flip horizontal" }
+                  = image_tag "card_maker/icons/flip_vert.png", :class => "btn bot", :id => "FlipVertBtn", :data => { :label => "Flip vertical" }
+                .sep
+                #ZoomControls
+                  #ZoomPct.zoom-txt.txt
+                  .zoom.ctrl
+                    #ZoomPlus.dir.plus.noselect +
+                    #ZoomStem.stem
+                      .lft>
+                      .rt>
+                      #ZoomKnob.knob
+                    #ZoomMinus.dir.minus.noselect &ndash;
+              .card-box
+                %canvas#CardCanvas.card-canvas
+              .preview-btns
+                .btn.close
+                  .btn-txt Close
+                .btn.save-exit
+                  .btn-txt Save + Exit
+                .btn.save
+                  .btn-txt Quick Save
 
-
-  -#
-    .left-col
-      .controls#GeneratorControls
-
-    .right-col
-      #CanvasWrap
-        %canvas.canvas#Canvas
-        .btns-wrap
-          %i#SaveBtn.fa.fa-floppy-o.fa-3x.save-btn.btn.last
+        #RightCol.col.right-col>
+          .col-head-box
+            .col-head-txt Card Form
+            .col-head-sub-txt (enter information that will appear on the card)
+          #CardFieldsWrap.card-fields-wrap
+            .disable-overlay.hidden
+            #CardFields.card-fields

@@ -6,8 +6,8 @@
 //= require card_maker/manager
 
 $(function() {
-  var $managerScreen = $('#CardManager')
-    , $editorScreen  = $('#CardGenerator')
+  var $managerScreen = $('#CardManagerWrap')
+    , $editorScreen  = $('#CardGeneratorWrap')
     , fadeMs = 500
     , editCardId
     ;

@@ -10,19 +10,36 @@ window.CardManager = (function() {
     , cardImgTemplate
     , cardOverlayTemplate
     , spinnerTemplate
-    , cardSelectedCb
+    , deckTemplate
     ;
 
+  /*
+   * CONSTANTS
+   */
+  var allCardsScreen = 'allCards'
+    , allDecksScreen = 'allDecks'
+    ;
 
   /*
    * STATE
    */
-  var idsToElmts;
+  var idsToElmts
+    , cardSelectedCb
+    , curScreen
+    ;
 
   /*
    * Helper function to create a new card without a deck
    */
   function newCard() {
+    if (curScreen !== allCardsScreen) {
+      reloadCardsWithCb(newCardHelper);
+    } else {
+      newCardHelper();
+    }
+  }
+
+  function newCardHelper() {
     newCardForDeck(null);
   }
 
@@ -59,12 +76,37 @@ window.CardManager = (function() {
         var $newPlaceholder = $(cardPlaceholderTemplate({ cardId: card.id }));
         $cardPlaceholder.replaceWith($newPlaceholder);
         fixLayout();
-        $newPlaceholder.click(cardSelected.bind(null, $newPlaceholder, card.id));
+        $newPlaceholder.click(cardClicked.bind(null, $newPlaceholder, card.id));
         $newPlaceholder.click();
         $newPlaceholder.find('.card-overlay .edit-btn').click();
-        loadCardImg($newPlaceholder, card.id);
+        loadCardImgAndBindEvents($newPlaceholder, card.id);
       }
     });
+  }
+
+  function newDeckHelper() {
+    var deckName = prompt('Deck name:');
+
+    if (!deckName) return;
+
+    $.ajax({
+      url: apiPath + '/decks',
+      method: 'POST',
+      data: JSON.stringify({ name: deckName }),
+      success: function(deck) {
+        var $deckElmt = $(deckTemplate({ name: deck.name }));
+        $('#UserResources').prepend($deckElmt);
+        fixLayout();
+      }
+    });
+  }
+
+  function newDeck() {
+    if (curScreen !== allDecksScreen) {
+      reloadDecksWithCb(newDeckHelper);
+    } else {
+      newDeckHelper();
+    }
   }
 
   /*
@@ -74,10 +116,8 @@ window.CardManager = (function() {
   function cleanUserResources() {
     var $userResources = $('#UserResources');
 
-    $userResources.find('.user-resource-wrap').remove();
-    $userResources.find('.new-resource').off('click');
-
-    $userResources.off('click');
+    $userResources.find('*').remove();
+    $userResources.off();
     $userResources.click(unselectResource);
 
     return $userResources;
@@ -182,7 +222,6 @@ window.CardManager = (function() {
    */
   function loadCardImgAndBindEvents($card, id) {
     $card.click(cardClicked.bind(null, $card, id));
-
     loadCardImg($card, id);
   }
 
@@ -241,13 +280,13 @@ window.CardManager = (function() {
   }
 
   function cardSelected(cb) {
-    cardSeletedCb = cb;
+    cardSelectedCb = cb;
   }
   exports.cardSelected = cardSelected;
 
   function fireCardSelected(cardData) {
-    if (cardSeletedCb) {
-      cardSeletedCb(cardData);
+    if (cardSelectedCb) {
+      cardSelectedCb(cardData);
     }
   }
 
@@ -318,20 +357,72 @@ window.CardManager = (function() {
     });
   }
 
-  /*
-   * Load the user's cards into the #UserResources area
-   */
-  function reloadUserCards() {
+  function selectFilter(id) {
+    $('.filter').removeClass('selected');
+    $('#' + id).addClass('selected');
+  }
+
+  function reloadCardsWithCb(cb) {
+    curScreen = allCardsScreen;
+
     $.ajax({
       url: apiPath + '/card_summaries',
       method: 'GET',
       success: function(summaries) {
         getDecks(function(decks) {
+          selectFilter('CardFilter');
           buildCards(summaries, decks, newCard);
           fixLayout();
+
+          if (cb) {
+            cb();
+          }
         });
       }
     });
+  }
+
+  /*
+   * Load the user's cards into the #UserResources area
+   */
+  function reloadCards() {
+    reloadCardsWithCb(null);
+  }
+
+  function reloadDecksWithCb(cb) {
+    curScreen = allDecksScreen;
+
+    $.ajax({
+      url: apiPath + '/decks',
+      method: 'GET',
+      success: function(decks) {
+        var deckContainer = cleanUserResources();
+
+        selectFilter('DeckFilter');
+
+        $.each(decks, function(i, deck) {
+          var $deckElmt = $(deckTemplate({ name: deck.name }));
+
+          if (deck.titleCardId) {
+            loadCardImg($deckElmt, deck.titleCardId);
+          }
+
+          //$deckElmt.click(deckSelected.bind(null, $deckElmt, deck));
+
+          deckContainer.append($deckElmt);
+        });
+
+        fixLayout();
+
+        if (cb) {
+          cb();
+        }
+      }
+    });
+  }
+
+  function reloadDecks() {
+    reloadDecksWithCb(null);
   }
 
   // TODO: this may only work in Chrome. See how other browsers treat scrollbars.
@@ -366,10 +457,14 @@ window.CardManager = (function() {
     cardImgTemplate = Handlebars.compile($('#CardImgTemplate').html());
     cardOverlayTemplate = Handlebars.compile($('#CardOverlayTemplate').html());
     spinnerTemplate = Handlebars.compile($('#SpinnerTemplate').html());
+    deckTemplate = Handlebars.compile($('#DeckTemplate').html());
 
     $('#NewCard').click(newCard);
+    $('#NewDeck').click(newDeck);
+    $('#CardFilter').click(reloadCards);
+    $('#DeckFilter').click(reloadDecks);
 
-    reloadUserCards();
+    reloadCards();
   });
 
 

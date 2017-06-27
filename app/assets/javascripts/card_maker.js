@@ -18,13 +18,24 @@ $(function() {
     });
   }
 
+  function areYouSure(e) {
+    var msg = 'Are you sure you want to leave this page? Unsaved changes will be discarded.';
+
+    e.returnValue = msg;
+    return msg;
+  }
+
   CardManager.cardSelected(function(card) {
     CardEditor.setCard(card);
     editCardId = card.id;
     screenTransition($managerScreen, $editorScreen);
+
+    $(window).on('beforeunload', areYouSure);
   });
 
   CardEditor.close(function() {
+    $(window).off('beforeunload', areYouSure);
+
     screenTransition($editorScreen, $managerScreen);
     CardManager.reloadCardImg(editCardId);
   });

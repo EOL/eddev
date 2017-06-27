@@ -97,6 +97,20 @@ window.CardManager = (function() {
         var $deckElmt = $(deckTemplate({ name: deck.name }));
         $('#UserResources').prepend($deckElmt);
         fixLayout();
+      },
+      error: function(err) {
+        var alertMsg = '';
+
+        if (err.status === 422 &&
+            err.responseJSON &&
+            err.responseJSON.errors
+        ) { // Validation error
+          alertMsg = err.responseJSON.errors.join('\n');
+        } else {
+          alertMsg = "An unexpected error occurred"
+        }
+
+        alert(alertMsg);
       }
     });
   }

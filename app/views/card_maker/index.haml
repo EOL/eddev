@@ -2,11 +2,6 @@
 = render "card_maker/js_templates/editor"
 
 -#
-  %script#DeckTemplate{:type => "text/x-handlebars-template"}
-    .resource-wrap.user-resource-wrap
-      .resource-frame.user-resource-frame
-        %i.fa.fa-image.fa-4x.title-card-placeholder
-      .deck-name {{name}}
 
   %script#DeckOverlayTemplate{:type => "text/x-handlebars-template"}
     .deck-overlay.resource-overlay
@@ -42,9 +37,11 @@
         .filters
           #CardFilter.filter.selected>
             .filter-icon>
+              #CardCount.count &mdash;
             .filter-drop> All cards
           #DeckFilter.filter>
             .filter-icon>
+              #DeckCount.count &mdash;
             .filter-drop> All decks
 
       .user-resources.user-decks#UserResources

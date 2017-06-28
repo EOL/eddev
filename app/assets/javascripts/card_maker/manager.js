@@ -60,6 +60,7 @@ window.CardManager = (function() {
     }
 
     $('#UserResources').prepend($cardPlaceholder);
+    incrCardCount(1);
     fixLayout();
 
     $.ajax({
@@ -96,6 +97,7 @@ window.CardManager = (function() {
       success: function(deck) {
         var $deckElmt = $(deckTemplate({ name: deck.name }));
         $('#UserResources').prepend($deckElmt);
+        incrDeckCount(1);
         fixLayout();
       },
       error: function(err) {
@@ -273,6 +275,7 @@ window.CardManager = (function() {
       success: function() {
         $card.remove();
         $('#CardGenerator').addClass('hidden');
+        incrCardCount(-1);
         fixLayout();
       }
     });
@@ -386,6 +389,8 @@ window.CardManager = (function() {
         getDecks(function(decks) {
           selectFilter('CardFilter');
           buildCards(summaries, decks, newCard);
+          setCardCount(summaries.length);
+          setDeckCount(decks.length);
           fixLayout();
 
           if (cb) {
@@ -426,6 +431,7 @@ window.CardManager = (function() {
           deckContainer.append($deckElmt);
         });
 
+        setDeckCount(decks.length);
         fixLayout();
 
         if (cb) {
@@ -465,6 +471,31 @@ window.CardManager = (function() {
     loadCardImgAndBindEvents($elmt, cardId);
   }
   exports.reloadCardImg = reloadCardImg;
+
+  function setDeckCount(count) {
+    setCount(count, 'DeckCount');
+  }
+
+  function setCardCount(count) {
+    setCount(count, 'CardCount');
+  }
+
+  function setCount(count, id) {
+    $('#' + id).html(count);
+  }
+
+  function incrCardCount(incr) {
+    incrCount(incr, 'CardCount');
+  }
+
+  function incrDeckCount(incr) {
+    incrCount(incr, 'DeckCount');
+  }
+
+  function incrCount(incr, id) {
+    var $elmt = $('#' + id);
+    $elmt.html(incr + parseInt($elmt.html()));
+  }
 
   $(function() {
     cardPlaceholderTemplate = Handlebars.compile($('#CardPlaceholderTemplate').html());

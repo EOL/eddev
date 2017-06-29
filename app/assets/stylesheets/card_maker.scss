@@ -255,7 +255,18 @@ $thumb-size: 80px;
   display: inline-block;
 }
 
+.species-search {
+  background-color: $white;
 
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  width: 100px;
+  height: 100px;
+}
 
 $col-width: ($editor-width / 2) * 1px;
 $head-box-height: 109px;
@@ -275,7 +286,7 @@ $col-border-width: 5px;
   bottom: 0;
   background-color: rgba(67, 82, 95, 0.79);
   position: absolute;
-  z-index: 2;
+  z-index: 50;
 }
 
 .col {
@@ -285,7 +296,6 @@ $col-border-width: 5px;
   padding-bottom: 50px;
   position: relative;
   vertical-align: top;
-  z-index: 1;
 }
 
 .suggestions {

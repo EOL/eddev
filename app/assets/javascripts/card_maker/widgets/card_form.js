@@ -68,16 +68,7 @@ window.CardForm = (function() {
     }
 
     function disableFields($exemptElmt) {
-      var $disableOverlay = $('#CardFieldsWrap').children('.disable-overlay').first()
-        , exemptZIndex = $exemptElmt.css('z-index');
-
-      $disableOverlay.removeClass('hidden');
-      $exemptElmt.css('z-index', parseInt($disableOverlay.css('z-index')) + 1);
-
-      return function() {
-        $exemptElmt.css('z-index', exemptZIndex);
-        $disableOverlay.addClass('hidden');
-      }
+      return Util.disablePage($exemptElmt);
     }
 
     function bindFontSizeSelectEvents(fieldId, $fontSize, $fontSizeSelect) {
@@ -222,10 +213,9 @@ window.CardForm = (function() {
     function openImgLib(fieldId, $field, choices, $creditInput) {
       var $cols = $('#Cols')
         , $imgLib
-        , $disableOverlay = $cols.children('.disable-overlay')
+        , enableFn
         ;
 
-      $disableOverlay.removeClass('hidden');
       $('body').addClass('noscroll');
 
       $imgLib = $(imgLibTempl({ choices: choices }));
@@ -237,10 +227,12 @@ window.CardForm = (function() {
 
       $cols.append($imgLib);
 
+      enableFn = Util.disablePage($imgLib)
+
       $(document).click(function() {
         $imgLib.remove();
+        enableFn();
         $('body').removeClass('noscroll');
-        $disableOverlay.addClass('hidden');
       });
 
       return false;
@@ -561,7 +553,6 @@ window.CardForm = (function() {
         , $keyValInputs
         , $keyInputs
         , $keyValRows
-        , suggestions
         ;
 
       for (var i = 0; i < fieldDatas.length; i++) {
@@ -597,7 +588,7 @@ window.CardForm = (function() {
 
         $keyInputs.focus(function() {
           var $that = $(this)
-            , enableFn = disableFields($that)
+            , enableFn
             ;
 
           suggestions.select(function(val) {
@@ -610,7 +601,6 @@ window.CardForm = (function() {
 
           $that.one('blur', function() {
             suggestions.hide();
-            enableFn();
           });
         });
       }
@@ -673,6 +663,7 @@ window.CardForm = (function() {
       , $arrow = $elmt.find('.arrow')
       , arrowHeight = 20
       , extraTopSpace = 5
+      , enableFn
       ;
 
     function show($anchor) {
@@ -701,11 +692,13 @@ window.CardForm = (function() {
       $arrow.css('left', arrowLeft);
 
       $cardFields.append($elmt);
+      enableFn = Util.disablePage($anchor, $elmt);
     }
     that.show = show;
 
     function hide() {
       $elmt.remove();
+      enableFn();
     }
     that.hide = hide;
 

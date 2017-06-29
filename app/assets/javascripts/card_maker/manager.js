@@ -66,6 +66,7 @@ window.CardManager = (function() {
     , spinnerTemplate
     , deckTemplate
     , deckOverlayTemplate
+    , speciesSearchTempl
     ;
 
   /*
@@ -90,8 +91,18 @@ window.CardManager = (function() {
    * Helper function to create a new card without a deck
    */
   function newCard() {
-    showCards();
-    newCardForDeck(null);
+    var $search = $(speciesSearchTempl())
+      , enableFn = Util.disablePage($search)
+      ;
+
+    $('#Page').prepend($search);
+
+    $(document).click(function() {
+      $search.remove();
+      enableFn();
+    });
+
+    return false;
   }
 
   /*
@@ -617,6 +628,7 @@ window.CardManager = (function() {
     spinnerTemplate = Handlebars.compile($('#SpinnerTemplate').html());
     deckTemplate = Handlebars.compile($('#DeckTemplate').html());
     deckOverlayTemplate = Handlebars.compile($('#DeckOverlayTemplate').html());
+    speciesSearchTempl = Handlebars.compile($('#SpeciesSearchTemplate').html());
 
     $('#NewCard').click(newCard);
     $('#NewDeck').click(newDeck);
@@ -637,7 +649,6 @@ window.CardManager = (function() {
       });
     });
   });
-
 
   return exports;
 })();

@@ -1,4 +1,33 @@
 window.CardManager = (function() {
+  function ResourceCollection(items) {
+    var that = this
+      ;
+
+    that.length = function() {
+      return items.length;
+    }
+
+    that.push = function(item) {
+      items.unshift(item);
+      fireChange();
+    }
+
+    that.items = function() {
+      return items;
+    }
+
+    that.delete = function(id) {
+      items.splice(items.findIndex(function(item) {
+        return item.id === id
+      }), 1);
+      fireChange();
+    }
+
+    function fireChange() {
+      $(that).triggerHandler('change');
+    }
+  }
+
   var exports = {};
 
   var apiPath = '/card_maker_ajax';
@@ -11,13 +40,15 @@ window.CardManager = (function() {
     , cardOverlayTemplate
     , spinnerTemplate
     , deckTemplate
+    , deckOverlayTemplate
     ;
 
   /*
    * CONSTANTS
    */
-  var allCardsScreen = 'allCards'
-    , allDecksScreen = 'allDecks'
+  var allCardsScreen  = 'allCards'
+    , allDecksScreen  = 'allDecks'
+    , deckCardsScreen = 'deckCards'
     ;
 
   /*
@@ -26,6 +57,8 @@ window.CardManager = (function() {
   var idsToElmts
     , cardSelectedCb
     , curScreen
+    , cards
+    , decks
     ;
 
   /*
@@ -60,7 +93,6 @@ window.CardManager = (function() {
     }
 
     $('#UserResources').prepend($cardPlaceholder);
-    incrCardCount(1);
     fixLayout();
 
     $.ajax({
@@ -75,14 +107,48 @@ window.CardManager = (function() {
       method: 'POST',
       success: function(card) {
         var $newPlaceholder = $(cardPlaceholderTemplate({ cardId: card.id }));
-        $cardPlaceholder.replaceWith($newPlaceholder);
-        fixLayout();
+
+        pushCard(card);
+
         $newPlaceholder.click(cardClicked.bind(null, $newPlaceholder, card.id));
         $newPlaceholder.click();
         $newPlaceholder.find('.card-overlay .edit-btn').click();
+
+        $cardPlaceholder.replaceWith($newPlaceholder);
+
+        fixLayout();
+
         loadCardImgAndBindEvents($newPlaceholder, card.id);
       }
     });
+  }
+
+  function pushCard(card) {
+    cards.push(card);
+  }
+
+  function pushDeck(deck) {
+    decks.push(deck);
+  }
+
+  function deleteCard(id) {
+    cards.delete(id);
+  }
+
+  function deleteDeck(id) {
+    decks.delete(id);
+  }
+
+  function deleteResource(resources, id) {
+    resources.splice(resources.findIndex(function(curResource) {
+      return curResource.id === id
+    }), 1);
+    $(resources).triggerHandler('x.change');
+  }
+
+  function pushResource(resources, resource) {
+    resources.unshift(resource);
+    $(resources).triggerHandler('x.change');
   }
 
   function newDeckHelper() {
@@ -96,8 +162,9 @@ window.CardManager = (function() {
       data: JSON.stringify({ name: deckName }),
       success: function(deck) {
         var $deckElmt = $(deckTemplate({ name: deck.name }));
+        $deckElmt.click(deckClicked.bind(null, $deckElmt, deck));
         $('#UserResources').prepend($deckElmt);
-        incrDeckCount(1);
+        pushDeck(deck);
         fixLayout();
       },
       error: function(err) {
@@ -204,6 +271,35 @@ window.CardManager = (function() {
   }
 
   /*
+   * Click handler for decks
+   */
+  function deckClicked($deck, deck, event) {
+    return resourceSelected(
+      deckOverlayTemplate,
+      destroyDeck.bind(null, $deck, deck),
+      loadDeckCards.bind(null, deck),
+      $deck,
+      deck.id,
+      event
+    );
+  }
+
+  function destroyDeck($deckElmt, deck) {
+    var confirmation = confirm('Are you sure you want to delete this deck?');
+
+    if (!confirmation) return;
+
+    $.ajax({
+      url: apiPath + '/decks/' + deck.id,
+      method: 'DELETE',
+      success: function() {
+        deleteDeck(deck);
+        $deckElmt.remove();
+      }
+    });
+  }
+
+  /*
    * Load a card image and replace a placeholder's spinner with it.
    *
    * Parameters:
@@ -273,9 +369,9 @@ window.CardManager = (function() {
       url: apiPath + '/cards/' + id,
       method: 'DELETE',
       success: function() {
+        deleteCard(id);
         $card.remove();
         $('#CardGenerator').addClass('hidden');
-        incrCardCount(-1);
         fixLayout();
       }
     });
@@ -367,10 +463,15 @@ window.CardManager = (function() {
    * Make AJAX call to get user's decks
    */
   function getDecks(cb) {
+    if (decks) return cb(decks.items());
+
     $.ajax({
       url: apiPath + '/decks',
       method: 'GET',
-      success: cb
+      success: function(theDecks) {
+        decks = new ResourceCollection(theDecks);
+        getDecks(cb)
+      }
     });
   }
 
@@ -379,26 +480,59 @@ window.CardManager = (function() {
     $('#' + id).addClass('selected');
   }
 
+  function loadDeckCards(deck) {
+    $.ajax({
+      url: apiPath + '/decks/' + deck.id + '/card_ids',
+      method: 'GET',
+      success: function(ids) {
+        loadCardsFromIds(ids, function() {
+          newCardForDeck(deck.id);
+        });
+      }
+    });
+  }
+
   function reloadCardsWithCb(cb) {
     curScreen = allCardsScreen;
+
+    getCardSummaries(function(summaries) {
+      getDecks(function(decks) {
+        selectFilter('CardFilter');
+        buildCards(summaries, decks, newCard);
+        setCardCount(summaries.length);
+        setDeckCount(decks.length);
+        fixLayout();
+
+        if (cb) {
+          cb();
+        }
+      });
+    });
+  }
+
+  function getCardSummaries(cb) {
+    if (cards) return cb(cards.items());
 
     $.ajax({
       url: apiPath + '/card_summaries',
       method: 'GET',
       success: function(summaries) {
-        getDecks(function(decks) {
-          selectFilter('CardFilter');
-          buildCards(summaries, decks, newCard);
-          setCardCount(summaries.length);
-          setDeckCount(decks.length);
-          fixLayout();
-
-          if (cb) {
-            cb();
-          }
-        });
+        cards = new ResourceCollection(summaries);
+        getCardSummaries(cb);
       }
     });
+  }
+
+  function loadCardsFromIds(ids, newResourceClickFn) {
+    var $userCards = cleanUserResources();
+
+    $.each(ids, function(i, id) {
+      var $placeholder = $(cardPlaceholderTemplate({ cardId: id }));
+      $userCards.append($placeholder);
+      loadCardImgAndBindEvents($placeholder, id);
+    });
+
+    fixLayout();
   }
 
   /*
@@ -411,32 +545,28 @@ window.CardManager = (function() {
   function reloadDecksWithCb(cb) {
     curScreen = allDecksScreen;
 
-    $.ajax({
-      url: apiPath + '/decks',
-      method: 'GET',
-      success: function(decks) {
-        var deckContainer = cleanUserResources();
+    getDecks(function(decks) {
+      var deckContainer = cleanUserResources();
 
-        selectFilter('DeckFilter');
+      selectFilter('DeckFilter');
 
-        $.each(decks, function(i, deck) {
-          var $deckElmt = $(deckTemplate({ name: deck.name }));
+      $.each(decks, function(i, deck) {
+        var $deckElmt = $(deckTemplate({ name: deck.name }));
 
-          if (deck.titleCardId) {
-            loadCardImg($deckElmt, deck.titleCardId);
-          }
-
-          //$deckElmt.click(deckSelected.bind(null, $deckElmt, deck));
-
-          deckContainer.append($deckElmt);
-        });
-
-        setDeckCount(decks.length);
-        fixLayout();
-
-        if (cb) {
-          cb();
+        if (deck.titleCardId) {
+          loadCardImg($deckElmt, deck.titleCardId);
         }
+
+        $deckElmt.click(deckClicked.bind(null, $deckElmt, deck));
+
+        deckContainer.append($deckElmt);
+      });
+
+      setDeckCount(decks.length);
+      fixLayout();
+
+      if (cb) {
+        cb();
       }
     });
   }
@@ -484,32 +614,28 @@ window.CardManager = (function() {
     $('#' + id).html(count);
   }
 
-  function incrCardCount(incr) {
-    incrCount(incr, 'CardCount');
-  }
-
-  function incrDeckCount(incr) {
-    incrCount(incr, 'DeckCount');
-  }
-
-  function incrCount(incr, id) {
-    var $elmt = $('#' + id);
-    $elmt.html(incr + parseInt($elmt.html()));
-  }
-
   $(function() {
     cardPlaceholderTemplate = Handlebars.compile($('#CardPlaceholderTemplate').html());
     cardImgTemplate = Handlebars.compile($('#CardImgTemplate').html());
     cardOverlayTemplate = Handlebars.compile($('#CardOverlayTemplate').html());
     spinnerTemplate = Handlebars.compile($('#SpinnerTemplate').html());
     deckTemplate = Handlebars.compile($('#DeckTemplate').html());
+    deckOverlayTemplate = Handlebars.compile($('#DeckOverlayTemplate').html());
 
     $('#NewCard').click(newCard);
     $('#NewDeck').click(newDeck);
     $('#CardFilter').click(reloadCards);
     $('#DeckFilter').click(reloadDecks);
 
-    reloadCards();
+    reloadCardsWithCb(function() {
+      $(decks).on('change', function() {
+        setDeckCount(this.length());
+      });
+
+      $(cards).on('change', function() {
+        setCardCount(this.length());
+      });
+    });
   });
 
 

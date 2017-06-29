@@ -19,3 +19,11 @@
     .resource-frame.user-resource-frame
       %i.fa.fa-image.fa-4x.title-card-placeholder
     .deck-name {{name}}
+
+%script#DeckOverlayTemplate{:type => "text/x-handlebars-template"}
+  .deck-overlay.resource-overlay
+    %i.fa.fa-folder-open-o.fa-3x.edit-btn.btn
+    %i.fa.fa-trash-o.fa-3x.trash-btn.btn
+
+%script#DeckFilterItemTemplate{:type => "text/x-handlebars-template"}
+  .filter-item

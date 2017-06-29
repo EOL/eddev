@@ -3,10 +3,7 @@
 
 -#
 
-  %script#DeckOverlayTemplate{:type => "text/x-handlebars-template"}
-    .deck-overlay.resource-overlay
-      %i.fa.fa-folder-open-o.fa-3x.edit-btn.btn
-      %i.fa.fa-trash-o.fa-3x.trash-btn.btn
+
 
   %script#UserDecksTemplate{ :type => "text/x-handlebars-template"}
     .deck-wrap.user-deck-wrap
@@ -43,6 +40,7 @@
             .filter-icon>
               #DeckCount.count &mdash;
             .filter-drop> All decks
+            .filter-items.hidden
 
       .user-resources.user-decks#UserResources
 #CardGeneratorWrap.card-generator-wrap

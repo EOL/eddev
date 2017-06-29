@@ -1,13 +1,38 @@
 window.CardManager = (function() {
-  function ResourceCollection(items) {
+  function ResourceCollection(loadFn, wrapperFn) {
     var that = this
+      , items
       ;
+
+    that.reload = function(cb) {
+      loadFn(function(newItems) {
+        var wrapped;
+
+        if (wrapperFn) {
+          wrapped = new Array(newItems.length);
+
+          for (var i = 0; i < newItems.length; i++) {
+            wrapped[i] = wrapperFn(newItems[i]);
+          }
+        } else {
+          wrapped = newItems;
+        }
+
+        items = wrapped;
+        fireChange();
+        cb(that);
+      });
+    }
 
     that.length = function() {
       return items.length;
     }
 
     that.push = function(item) {
+      if (wrapperFn) {
+        item = wrapperFn(item);
+      }
+
       items.unshift(item);
       fireChange();
     }
@@ -57,22 +82,15 @@ window.CardManager = (function() {
   var idsToElmts
     , cardSelectedCb
     , curScreen
-    , cards
-    , decks
+    , cards = new ResourceCollection(reloadCards, cardSummaryWrap)
+    , decks = new ResourceCollection(reloadDecks)
     ;
 
   /*
    * Helper function to create a new card without a deck
    */
   function newCard() {
-    if (curScreen !== allCardsScreen) {
-      reloadCardsWithCb(newCardHelper);
-    } else {
-      newCardHelper();
-    }
-  }
-
-  function newCardHelper() {
+    showCards();
     newCardForDeck(null);
   }
 
@@ -185,11 +203,8 @@ window.CardManager = (function() {
   }
 
   function newDeck() {
-    if (curScreen !== allDecksScreen) {
-      reloadDecksWithCb(newDeckHelper);
-    } else {
-      newDeckHelper();
-    }
+    showDecks();
+    newDeckHelper();
   }
 
   /*
@@ -371,7 +386,6 @@ window.CardManager = (function() {
       success: function() {
         deleteCard(id);
         $card.remove();
-        $('#CardGenerator').addClass('hidden');
         fixLayout();
       }
     });
@@ -425,16 +439,17 @@ window.CardManager = (function() {
    *           deck selection dropdown
    *   newResourceClickFn - click handler for the new resource button
    */
-  function buildCards(cards, decks, newResourceClickFn) {
-    var $userCards = cleanUserResources();
+  function buildCards() {
+    var $userCards = cleanUserResources()
+      ;
 
     idsToElmts = {};
 
-    $.each(cards, function(i, card) {
+    $.each(cards.items(), function(i, card) {
       var deckId = card.deck ? card.deck.id : null
         , $placeholder = $(cardPlaceholderTemplate({
             cardId: card.id,
-            decks: decks
+            decks: decks.items()
           }))
         , $deckSelector = $placeholder.find('.deck-selector')
         ;
@@ -463,16 +478,7 @@ window.CardManager = (function() {
    * Make AJAX call to get user's decks
    */
   function getDecks(cb) {
-    if (decks) return cb(decks.items());
-
-    $.ajax({
-      url: apiPath + '/decks',
-      method: 'GET',
-      success: function(theDecks) {
-        decks = new ResourceCollection(theDecks);
-        getDecks(cb)
-      }
-    });
+    return cb(decks.items());
   }
 
   function selectFilter(id) {
@@ -492,37 +498,6 @@ window.CardManager = (function() {
     });
   }
 
-  function reloadCardsWithCb(cb) {
-    curScreen = allCardsScreen;
-
-    getCardSummaries(function(summaries) {
-      getDecks(function(decks) {
-        selectFilter('CardFilter');
-        buildCards(summaries, decks, newCard);
-        setCardCount(summaries.length);
-        setDeckCount(decks.length);
-        fixLayout();
-
-        if (cb) {
-          cb();
-        }
-      });
-    });
-  }
-
-  function getCardSummaries(cb) {
-    if (cards) return cb(cards.items());
-
-    $.ajax({
-      url: apiPath + '/card_summaries',
-      method: 'GET',
-      success: function(summaries) {
-        cards = new ResourceCollection(summaries);
-        getCardSummaries(cb);
-      }
-    });
-  }
-
   function loadCardsFromIds(ids, newResourceClickFn) {
     var $userCards = cleanUserResources();
 
@@ -538,19 +513,26 @@ window.CardManager = (function() {
   /*
    * Load the user's cards into the #UserResources area
    */
-  function reloadCards() {
-    reloadCardsWithCb(null);
+  function showCards() {
+    if (curScreen !== allCardsScreen) {
+      curScreen = allCardsScreen;
+
+      selectFilter('CardFilter');
+      buildCards();
+      fixLayout();
+    }
   }
 
-  function reloadDecksWithCb(cb) {
-    curScreen = allDecksScreen;
+  function showDecks() {
+    var deckContainer;
 
-    getDecks(function(decks) {
-      var deckContainer = cleanUserResources();
+    if (curScreen !== allDecksScreen) {
+      curScreen = allDecksScreen;
+      deckContainer = cleanUserResources();
 
       selectFilter('DeckFilter');
 
-      $.each(decks, function(i, deck) {
+      $.each(decks.items(), function(i, deck) {
         var $deckElmt = $(deckTemplate({ name: deck.name }));
 
         if (deck.titleCardId) {
@@ -562,17 +544,8 @@ window.CardManager = (function() {
         deckContainer.append($deckElmt);
       });
 
-      setDeckCount(decks.length);
       fixLayout();
-
-      if (cb) {
-        cb();
-      }
-    });
-  }
-
-  function reloadDecks() {
-    reloadDecksWithCb(null);
+    }
   }
 
   // TODO: this may only work in Chrome. See how other browsers treat scrollbars.
@@ -614,6 +587,29 @@ window.CardManager = (function() {
     $('#' + id).html(count);
   }
 
+  function reloadCards(cb) {
+    $.ajax({
+      url: apiPath + '/card_summaries',
+      method: 'GET',
+      success: cb
+    });
+  }
+
+  function reloadDecks(cb) {
+    $.ajax({
+      url: apiPath + '/decks',
+      method: 'GET',
+      success: cb
+    });
+  }
+
+  function cardSummaryWrap(card) {
+    return {
+      id: card.id,
+      deck: card.deck
+    };
+  }
+
   $(function() {
     cardPlaceholderTemplate = Handlebars.compile($('#CardPlaceholderTemplate').html());
     cardImgTemplate = Handlebars.compile($('#CardImgTemplate').html());
@@ -624,16 +620,20 @@ window.CardManager = (function() {
 
     $('#NewCard').click(newCard);
     $('#NewDeck').click(newDeck);
-    $('#CardFilter').click(reloadCards);
-    $('#DeckFilter').click(reloadDecks);
+    $('#CardFilter').click(showCards);
+    $('#DeckFilter').click(showDecks);
 
-    reloadCardsWithCb(function() {
-      $(decks).on('change', function() {
-        setDeckCount(this.length());
-      });
+    $(decks).on('change', function() {
+      setDeckCount(this.length());
+    });
 
-      $(cards).on('change', function() {
-        setCardCount(this.length());
+    $(cards).on('change', function() {
+      setCardCount(this.length());
+    });
+
+    decks.reload(function() {
+      cards.reload(function() {
+        showCards();
       });
     });
   });

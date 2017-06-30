@@ -29,4 +29,20 @@
   .filter-item
 
 %script#SpeciesSearchTemplate{:type => "text/x-handlebars-template"}
-  .species-search
+  .fixed-center-wrap
+    .species-search
+      .field-label.lightbox-label Search
+      .search-area
+        %input.search-field{:type => :text, :placeholder => "Search for a species or taxon"}
+      .search-results-wrap.hidden
+        .result-count-wrap
+          .result-count.hidden 0 results
+        %ul.search-results
+      .create-menu.hidden
+
+%script#SearchResultTemplate{:type => "text/x-handlebars-template"}
+  %li.search-result{:data => { :id => "{{id}}"}} {{sciName}}
+
+%script#SearchSpinnerTemplate{:type => "text/x-handlebars-template"}
+  %li.search-spin
+    %i.fa.fa-spinner.fa-spin.fa-3x

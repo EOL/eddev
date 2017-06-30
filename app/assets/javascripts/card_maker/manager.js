@@ -67,6 +67,8 @@ window.CardManager = (function() {
     , deckTemplate
     , deckOverlayTemplate
     , speciesSearchTempl
+    , searchResultTempl
+    , searchSpinnerTempl
     ;
 
   /*
@@ -92,18 +94,98 @@ window.CardManager = (function() {
    */
   function newCard() {
     var $search = $(speciesSearchTempl())
+      , $results = $search.find('.search-results')
+      , $resultsWrap = $search.find('.search-results-wrap')
+      , $createMenu = $search.find('.create-menu')
+      , $resultCount = $search.find('.result-count')
       , enableFn = Util.disablePage($search)
+      , closeFn
+      , resultSelectFn
+      , reqCount = 0
       ;
 
     $('#Page').prepend($search);
 
-    $(document).click(function() {
+    closeFn = function() {
       $search.remove();
       enableFn();
+    };
+
+    resultSelectFn = function() {
+      closeFn();
+      newCardForDeck($(this).data('id'), null);
+    }
+
+    $(document).click(closeFn);
+
+    $search.click(function() {
+      return false;
     });
+
+    $search.find('.search-field').on('input', function() {
+      var $that = $(this)
+        , val = $that.val()
+        , $spin
+        ;
+
+      $results.empty();
+      $createMenu.addClass('hidden');
+      $resultCount.addClass('hidden');
+
+      if (val && val.length >= 3) {
+        $spin = $(searchSpinnerTempl());
+        $resultsWrap.removeClass('hidden');
+        $results.append($spin);
+
+        taxonSearch(val, function(data) {
+          var countStr;
+
+          $spin.remove();
+
+          if (!(data && data.results)) {
+            return;
+          }
+
+          if (data.results.length) {
+            $createMenu.removeClass('hidden');
+          }
+
+          data.results.forEach(function(result) {
+            var $result = $(searchResultTempl({
+              id: result.id,
+              sciName: result.title
+            }));
+
+            $result.click(resultSelectFn);
+            $results.append($result);
+          });
+
+          countStr = data.results.length + ' ';
+          countStr += (data.results.length === 1 ? 'result' : 'results');
+          $resultCount.html(countStr);
+          $resultCount.removeClass('hidden');
+        });
+      } else {
+        $resultsWrap.addClass('hidden');
+      }
+    });
+
+    function taxonSearch(query, cb) {
+      var reqNum = ++reqCount;
+
+      $.getJSON('/card_maker_ajax/taxon_search/' + query, function(data) {
+        if (reqNum === reqCount) {
+          cb(data)
+        } else {
+          console.log('canceled', reqNum, reqCount);
+        }
+      });
+    }
 
     return false;
   }
+
+
 
   /*
    * Create a new card and add it to the manager
@@ -111,9 +193,8 @@ window.CardManager = (function() {
    * Parameters:
    *    deckId - optional - the deck that the card should belong to
    */
-  function newCardForDeck(deckId) {
-    var taxonId = window.prompt('Enter EOL taxon ID', '327940')
-      , $cardPlaceholder = $(cardPlaceholderTemplate())
+  function newCardForDeck(taxonId, deckId) {
+    var $cardPlaceholder = $(cardPlaceholderTemplate())
       , path = deckId === null ? '/cards' : '/decks/' + deckId + '/cards'
       ;
 
@@ -629,6 +710,8 @@ window.CardManager = (function() {
     deckTemplate = Handlebars.compile($('#DeckTemplate').html());
     deckOverlayTemplate = Handlebars.compile($('#DeckOverlayTemplate').html());
     speciesSearchTempl = Handlebars.compile($('#SpeciesSearchTemplate').html());
+    searchResultTempl = Handlebars.compile($('#SearchResultTemplate').html());
+    searchSpinnerTempl = Handlebars.compile($('#SearchSpinnerTemplate').html());
 
     $('#NewCard').click(newCard);
     $('#NewDeck').click(newDeck);

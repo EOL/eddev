@@ -73,6 +73,7 @@ Rails.application.routes.draw do
   get    "card_maker_ajax/templates/:template_name" => "card_maker_ajax#template"
   delete "card_maker_ajax/cards/:card_id"           => "card_maker_ajax#delete_card"
   delete "card_maker_ajax/decks/:deck_id"           => "card_maker_ajax#delete_deck"
+  get    "card_maker_ajax/taxon_search/:query"      => "card_maker_ajax#taxon_search"
 
   get    "card_maker"                       => "card_maker#index", :as => :new_card
 

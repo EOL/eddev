@@ -101,6 +101,10 @@ module CardServiceCaller
     HTTParty.delete(self.card_deck_path(user_id, card_id))
   end
 
+  def self.taxon_summary(taxon_id)
+    HTTParty.get("#{SERVICE_URL}/taxonSummaries/#{taxon_id}")
+  end
+
   private
     def self.user_prefix(user_id)
       "#{SERVICE_URL}/users/#{user_id}"

@@ -43,6 +43,14 @@
 %script#SearchResultTemplate{:type => "text/x-handlebars-template"}
   %li.search-result{:data => { :id => "{{id}}"}} {{sciName}}
 
+%script#SearchResultDetailsTemplate{:type => "text/x-handlebars-template"}
+  .result-details
+    %img{ :src => "{{thumbUrl}}" }
+    .common-name Common name: {{commonName}}
+
+%script#ResultDetailSpinnerTemplate{:type => "text/x-handlebars-template"}
+  %i.fa.fa-spin.fa-spinner.fa-3x.result-detail-spinner
+
 %script#SearchSpinnerTemplate{:type => "text/x-handlebars-template"}
   %li.search-spin
     %i.fa.fa-spinner.fa-spin.fa-3x

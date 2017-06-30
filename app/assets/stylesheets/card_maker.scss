@@ -320,6 +320,15 @@ $thumb-size: 80px;
     overflow: hidden;
     text-align: center;
     width: 286px;
+
+    &.expanded {
+      height: 227px;
+    }
+  }
+
+  .result-detail-spinner {
+    display: block;
+    margin: 40px auto;
   }
 
   .search-spin {

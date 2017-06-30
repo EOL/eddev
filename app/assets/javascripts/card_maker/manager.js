@@ -69,6 +69,8 @@ window.CardManager = (function() {
     , speciesSearchTempl
     , searchResultTempl
     , searchSpinnerTempl
+    , searchResultDetailsTempl
+    , resultDetailSpinnerTempl
     ;
 
   /*
@@ -111,11 +113,6 @@ window.CardManager = (function() {
       enableFn();
     };
 
-    resultSelectFn = function() {
-      closeFn();
-      newCardForDeck($(this).data('id'), null);
-    }
-
     $(document).click(closeFn);
 
     $search.click(function() {
@@ -156,7 +153,7 @@ window.CardManager = (function() {
               sciName: result.title
             }));
 
-            $result.click(resultSelectFn);
+            $result.click(expandSearchResult);
             $results.append($result);
           });
 
@@ -176,8 +173,6 @@ window.CardManager = (function() {
       $.getJSON('/card_maker_ajax/taxon_search/' + query, function(data) {
         if (reqNum === reqCount) {
           cb(data)
-        } else {
-          console.log('canceled', reqNum, reqCount);
         }
       });
     }
@@ -185,7 +180,24 @@ window.CardManager = (function() {
     return false;
   }
 
+  function expandSearchResult() {
+    var $that = $(this)
+      , $spinner
+      ;
 
+    $that.siblings('.expanded').removeClass('expanded');
+    $that.addClass('expanded');
+
+    if (!$that.find('.result-details').length) {
+      $spinner = $(resultDetailSpinnerTempl());
+      $that.append($spinner);
+
+      $.getJSON('/card_maker_ajax/taxon_details/' + $that.data('id'), function(data) {
+        $spinner.remove();
+        $that.append($(searchResultDetailsTempl(data)));
+      });
+    }
+  }
 
   /*
    * Create a new card and add it to the manager
@@ -712,6 +724,8 @@ window.CardManager = (function() {
     speciesSearchTempl = Handlebars.compile($('#SpeciesSearchTemplate').html());
     searchResultTempl = Handlebars.compile($('#SearchResultTemplate').html());
     searchSpinnerTempl = Handlebars.compile($('#SearchSpinnerTemplate').html());
+    searchResultDetailsTempl = Handlebars.compile($('#SearchResultDetailsTemplate').html());
+    resultDetailSpinnerTempl = Handlebars.compile($('#ResultDetailSpinnerTemplate').html())
 
     $('#NewCard').click(newCard);
     $('#NewDeck').click(newDeck);

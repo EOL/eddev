@@ -150,6 +150,11 @@ class CardMakerAjaxController < ApplicationController
     json_response_helper(parsed_body, eol_res.code)
   end
 
+  # GET /card_maker_ajax/taxon_details/:id
+  def taxon_details
+    json_response(CardServiceCaller.taxon_summary(params[:id]))
+  end
+
   private
     def json_response(httpartyResponse)
       json_response_helper(httpartyResponse.body, httpartyResponse.code)

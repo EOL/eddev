@@ -96,9 +96,11 @@ window.CardManager = (function() {
    */
   function newCard() {
     var $search = $(speciesSearchTempl())
+      , $inner = $search.find('.species-search')
       , $results = $search.find('.search-results')
       , $resultsWrap = $search.find('.search-results-wrap')
       , $createMenu = $search.find('.create-menu')
+      , $createBtn = $createMenu.find('.create-btn-wrap')
       , $resultCount = $search.find('.result-count')
       , enableFn = Util.disablePage($search)
       , closeFn
@@ -115,9 +117,14 @@ window.CardManager = (function() {
 
     $(document).click(closeFn);
 
-    $search.click(function() {
+    $inner.click(function() {
       return false;
     });
+
+    function fixSearchLayout() {
+      fixLayoutHelper($results, $results.find('.search-result'), 3);
+    }
+
 
     $search.find('.search-field').on('input', function() {
       var $that = $(this)
@@ -143,10 +150,6 @@ window.CardManager = (function() {
             return;
           }
 
-          if (data.results.length) {
-            $createMenu.removeClass('hidden');
-          }
-
           data.results.forEach(function(result) {
             var $result = $(searchResultTempl({
               id: result.id,
@@ -155,6 +158,7 @@ window.CardManager = (function() {
 
             $result.click(expandSearchResult);
             $results.append($result);
+            fixSearchLayout();
           });
 
           countStr = data.results.length + ' ';
@@ -167,37 +171,48 @@ window.CardManager = (function() {
       }
     });
 
+    $createBtn.click(createBtnClick);
+
     function taxonSearch(query, cb) {
       var reqNum = ++reqCount;
 
-      $.getJSON('/card_maker_ajax/taxon_search/' + query, function(data) {
+      $.getJSON(apiPath + '/taxon_search/' + query, function(data) {
         if (reqNum === reqCount) {
-          cb(data)
+          cb(data);
         }
       });
+    }
+
+    function expandSearchResult() {
+      var $that = $(this)
+        , $spinner
+        ;
+
+      $that.siblings('.expanded').removeClass('expanded');
+      $that.addClass('expanded');
+      fixSearchLayout();
+      $createMenu.removeClass('hidden');
+
+      if (!$that.find('.result-details').length && !$that.find('.result-detail-spinner').length) {
+        $spinner = $(resultDetailSpinnerTempl());
+        $that.append($spinner);
+
+        $.getJSON(apiPath + '/taxon_details/' + $that.data('id'), function(data) {
+          $spinner.remove();
+          $that.append($(searchResultDetailsTempl(data)));
+        });
+      }
+    }
+
+    function createBtnClick() {
+      var $selected = $results.find('.search-result.expanded');
+      newCardForDeck($selected.data('id'), null);
+      closeFn();
     }
 
     return false;
   }
 
-  function expandSearchResult() {
-    var $that = $(this)
-      , $spinner
-      ;
-
-    $that.siblings('.expanded').removeClass('expanded');
-    $that.addClass('expanded');
-
-    if (!$that.find('.result-details').length) {
-      $spinner = $(resultDetailSpinnerTempl());
-      $that.append($spinner);
-
-      $.getJSON('/card_maker_ajax/taxon_details/' + $that.data('id'), function(data) {
-        $spinner.remove();
-        $that.append($(searchResultDetailsTempl(data)));
-      });
-    }
-  }
 
   /*
    * Create a new card and add it to the manager
@@ -240,6 +255,7 @@ window.CardManager = (function() {
 
         fixLayout();
 
+        idsToElmts[card.id] = $newPlaceholder;
         loadCardImgAndBindEvents($newPlaceholder, card.id);
       }
     });
@@ -652,16 +668,19 @@ window.CardManager = (function() {
     }
   }
 
-  // TODO: this may only work in Chrome. See how other browsers treat scrollbars.
-  function fixLayout() {
-    var $userResources = $('#UserResources')
-      , scrollWidth = $userResources[0].offsetWidth - $userResources[0].clientWidth
-      , innerWidth = $userResources.width()
-      , resourceWidth = $('.resource-wrap').outerWidth()
+  function fixLayoutHelper($container, $items, numPerRow) {
+    var scrollWidth = $container[0].offsetWidth - $container[0].clientWidth
+      , innerWidth = $container.width()
+      , resourceWidth = $items.outerWidth()
       ;
 
-    $('.resource-wrap').css('margin-right',
-      (innerWidth - scrollWidth - resourceWidth * 4) / 4.0);
+    $items.css('margin-right',
+      (innerWidth - scrollWidth - resourceWidth * numPerRow) / (numPerRow * 1.0));
+  }
+
+  // TODO: this may only work in Chrome. See how other browsers treat scrollbars.
+  function fixLayout() {
+    fixLayoutHelper($('#UserResources'), $('.resource-wrap'), 4);
   }
 
   function reloadCardImg(cardId) {

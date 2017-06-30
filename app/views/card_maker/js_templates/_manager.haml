@@ -39,6 +39,9 @@
           .result-count.hidden 0 results
         %ul.search-results
       .create-menu.hidden
+        .create-btn-wrap.disabled
+          .create-btn-label Create a card from selection
+          .create-btn-body
 
 %script#SearchResultTemplate{:type => "text/x-handlebars-template"}
   %li.search-result{:data => { :id => "{{id}}"}} {{sciName}}

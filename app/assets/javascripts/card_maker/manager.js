@@ -129,6 +129,8 @@ window.CardManager = (function() {
       , reqCount = 0
       ;
 
+    showCards();
+
     $(document).click(closeFn);
 
     $inner.click(function() {

@@ -101,29 +101,37 @@ window.CardForm = (function() {
       $fontSize.html(parsedSz);
     }
 
-    function openFontSizeSelect(fieldId, $fieldWrap, $fontSize, $fontSizeSelect) {
-      var enableFn = disableFields($fontSize)
-        , closeFn;
-
-      bindFontSizeSelectEvents(fieldId, $fontSize, $fontSizeSelect);
-      $fontSizeSelect.removeClass('hidden');
-      $fontSize.addClass('active');
-
-      closeFn = function() {
-        offFontSizeSelectEvents($fontSizeSelect);
-        closeFontSizeSelect(enableFn, $fontSize, $fontSizeSelect);
-        $(document).off('click', closeFn);
-      };
-
-      $(document).click(closeFn);
-
-      return false;
-    }
-
     function closeFontSizeSelect(enableFn, $fontSize, $fontSizeSelect) {
       $fontSizeSelect.addClass('hidden');
       $fontSize.removeClass('active');
       enableFn();
+    }
+
+    function fontSizeOpenEvents(fieldId, $fieldWrap, $fontSize, $fontSizeSelect) {
+      function open() {
+        var enableFn = Util.disablePage($fontSize, $fontSizeSelect)
+          , closeFn
+          ;
+
+        $fontSize.off('click', open);
+
+        bindFontSizeSelectEvents(fieldId, $fontSize, $fontSizeSelect);
+        $fontSizeSelect.removeClass('hidden');
+        $fontSize.addClass('active');
+
+        function closeFn() {
+          offFontSizeSelectEvents($fontSizeSelect);
+          closeFontSizeSelect(enableFn, $fontSize, $fontSizeSelect);
+          $(document).off('click', closeFn);
+          $fontSize.click(open);
+        };
+
+        $(document).click(closeFn);
+
+        return false;
+      };
+
+      $fontSize.click(open);
     }
 
     function buildTextFieldHelper(field, partialName) {
@@ -163,13 +171,7 @@ window.CardForm = (function() {
         $fontSize.html(fieldValue.fontSz);
       }
 
-      $fontSize.click(openFontSizeSelect.bind(
-        null,
-        field.id,
-        $elmt,
-        $fontSize,
-        $fontSizeSelect
-      ));
+      fontSizeOpenEvents(field.id, $elmt, $fontSize, $fontSizeSelect);
 
       $txtInput.on('input', function() {
         card.setDataAttr(field.id, 'text', $(this).val());

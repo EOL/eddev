@@ -66,7 +66,6 @@ window.CardManager = (function() {
     , spinnerTemplate
     , deckTemplate
     , deckOverlayTemplate
-    , speciesSearchTempl
     , searchResultTempl
     , searchSpinnerTempl
     , searchResultDetailsTempl
@@ -91,29 +90,44 @@ window.CardManager = (function() {
     , decks = new ResourceCollection(reloadDecks)
     ;
 
+  function openLightbox(templName) {
+    var $lightbox = $(lightboxTempl({
+          templ: function() {
+            return templName
+          }}))
+      , enableFn = Util.disablePage($lightbox)
+      ;
+
+    $('#Page').prepend($lightbox);
+
+    function closeFn() {
+      $lightbox.remove();
+      enableFn();
+    }
+
+    return {
+      lightbox: $lightbox,
+      inner: $lightbox.find('.lightbox'),
+      closeFn: closeFn
+    }
+  }
+
   /*
    * Helper function to create a new card without a deck
    */
   function newCard() {
-    var $search = $(speciesSearchTempl())
-      , $inner = $search.find('.species-search')
+    var lightboxResult = openLightbox('speciesSearch')
+      , $search = lightboxResult.lightbox
+      , $inner = lightboxResult.inner
       , $results = $search.find('.search-results')
       , $resultsWrap = $search.find('.search-results-wrap')
       , $createMenu = $search.find('.create-menu')
       , $createBtn = $createMenu.find('.create-btn-wrap')
       , $resultCount = $search.find('.result-count')
-      , enableFn = Util.disablePage($search)
-      , closeFn
+      , closeFn = lightboxResult.closeFn
       , resultSelectFn
       , reqCount = 0
       ;
-
-    $('#Page').prepend($search);
-
-    closeFn = function() {
-      $search.remove();
-      enableFn();
-    };
 
     $(document).click(closeFn);
 
@@ -124,7 +138,6 @@ window.CardManager = (function() {
     function fixSearchLayout() {
       fixLayoutHelper($results, $results.find('.search-result'), 3);
     }
-
 
     $search.find('.search-field').on('input', function() {
       var $that = $(this)
@@ -289,42 +302,58 @@ window.CardManager = (function() {
     $(resources).triggerHandler('x.change');
   }
 
-  function newDeckHelper() {
-    var deckName = prompt('Deck name:');
+  function newDeckHelper(e) {
+    var lightboxResult = openLightbox('newDeck')
+      , $nameInput = lightboxResult.lightbox.find('.deck-name')
+      , $submitBtn = lightboxResult.lightbox.find('.create-deck-btn')
+      ;
 
-    if (!deckName) return;
+    $nameInput.click(function() {
+      return false;
+    });
 
-    $.ajax({
-      url: apiPath + '/decks',
-      method: 'POST',
-      data: JSON.stringify({ name: deckName }),
-      success: function(deck) {
-        var $deckElmt = $(deckTemplate({ name: deck.name }));
-        $deckElmt.click(deckClicked.bind(null, $deckElmt, deck));
-        $('#UserResources').prepend($deckElmt);
-        pushDeck(deck);
-        fixLayout();
-      },
-      error: function(err) {
-        var alertMsg = '';
+    $(document).click(lightboxResult.closeFn);
 
-        if (err.status === 422 &&
-            err.responseJSON &&
-            err.responseJSON.errors
-        ) { // Validation error
-          alertMsg = err.responseJSON.errors.join('\n');
-        } else {
-          alertMsg = "An unexpected error occurred"
-        }
+    $submitBtn.click(function() {
+      var deckName = $nameInput.val();
 
-        alert(alertMsg);
+      if (deckName) {
+        $.ajax({
+          url: apiPath + '/decks',
+          method: 'POST',
+          data: JSON.stringify({ name: deckName }),
+          success: function(deck) {
+            var $deckElmt = $(deckTemplate({ name: deck.name }));
+            $deckElmt.click(deckClicked.bind(null, $deckElmt, deck));
+            $('#UserResources').prepend($deckElmt);
+            pushDeck(deck);
+            fixLayout();
+          },
+          error: function(err) {
+            var alertMsg = '';
+
+            if (err.status === 422 &&
+                err.responseJSON &&
+                err.responseJSON.errors
+            ) { // Validation error
+              alertMsg = err.responseJSON.errors.join('\n');
+            } else {
+              alertMsg = "An unexpected error occurred"
+            }
+
+            alert(alertMsg);
+          }
+        });
+      } else {
+        return false;
       }
     });
   }
 
-  function newDeck() {
+  function newDeck(e) {
     showDecks();
-    newDeckHelper();
+    newDeckHelper(e);
+    return false;
   }
 
   /*
@@ -740,11 +769,14 @@ window.CardManager = (function() {
     spinnerTemplate = Handlebars.compile($('#SpinnerTemplate').html());
     deckTemplate = Handlebars.compile($('#DeckTemplate').html());
     deckOverlayTemplate = Handlebars.compile($('#DeckOverlayTemplate').html());
-    speciesSearchTempl = Handlebars.compile($('#SpeciesSearchTemplate').html());
     searchResultTempl = Handlebars.compile($('#SearchResultTemplate').html());
     searchSpinnerTempl = Handlebars.compile($('#SearchSpinnerTemplate').html());
     searchResultDetailsTempl = Handlebars.compile($('#SearchResultDetailsTemplate').html());
-    resultDetailSpinnerTempl = Handlebars.compile($('#ResultDetailSpinnerTemplate').html())
+    resultDetailSpinnerTempl = Handlebars.compile($('#ResultDetailSpinnerTemplate').html());
+    lightboxTempl = Handlebars.compile($('#LightboxTemplate').html());
+
+    Handlebars.registerPartial('speciesSearch', $('#SpeciesSearchTemplate').html());
+    Handlebars.registerPartial('newDeck', $('#NewDeckLightboxTemplate').html());
 
     $('#NewCard').click(newCard);
     $('#NewDeck').click(newDeck);

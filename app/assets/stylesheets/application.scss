@@ -44,6 +44,11 @@ p a, .std-link {
   @include standard-link;
 }
 
+input[type='text'] {
+  border: none;
+  outline: none;
+}
+
 .hidden {
   display: none !important;
 }

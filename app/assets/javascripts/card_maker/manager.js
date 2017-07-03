@@ -70,6 +70,7 @@ window.CardManager = (function() {
     , searchSpinnerTempl
     , searchResultDetailsTempl
     , resultDetailSpinnerTempl
+    , deckOptionsTempl
     ;
 
   /*
@@ -124,9 +125,11 @@ window.CardManager = (function() {
       , $createMenu = $search.find('.create-menu')
       , $createBtn = $createMenu.find('.create-btn-wrap')
       , $resultCount = $search.find('.result-count')
+      , $deckSelect = $search.find('.deck-select')
       , closeFn = lightboxResult.closeFn
       , resultSelectFn
       , reqCount = 0
+      , noDeckId = -1
       ;
 
     showCards();
@@ -187,6 +190,10 @@ window.CardManager = (function() {
     });
 
     $createBtn.click(createBtnClick);
+    $deckSelect.html($(deckOptionsTempl({
+      decks: decks.items(),
+      noSelectionId: noDeckId
+    })));
 
     function taxonSearch(query, cb) {
       var reqNum = ++reqCount;
@@ -220,8 +227,17 @@ window.CardManager = (function() {
     }
 
     function createBtnClick() {
-      var $selected = $results.find('.search-result.expanded');
-      newCardForDeck($selected.data('id'), null);
+      var $selected = $results.find('.search-result.expanded')
+        , deckSelection = parseInt($deckSelect.val()) 
+        ;
+
+      if (deckSelection === noDeckId) {
+        deckSelection = null;
+      }
+
+      console.log(deckSelection);
+
+      newCardForDeck($selected.data('id'), deckSelection);
       closeFn();
     }
 
@@ -776,6 +792,7 @@ window.CardManager = (function() {
     searchResultDetailsTempl = Handlebars.compile($('#SearchResultDetailsTemplate').html());
     resultDetailSpinnerTempl = Handlebars.compile($('#ResultDetailSpinnerTemplate').html());
     lightboxTempl = Handlebars.compile($('#LightboxTemplate').html());
+    deckOptionsTempl = Handlebars.compile($('#DeckOptionsTemplate').html());
 
     Handlebars.registerPartial('speciesSearch', $('#SpeciesSearchTemplate').html());
     Handlebars.registerPartial('newDeck', $('#NewDeckLightboxTemplate').html());

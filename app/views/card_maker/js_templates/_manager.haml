@@ -38,6 +38,7 @@
         .result-count.hidden 0 results
       %ul.search-results
     .create-menu.hidden
+      %select.deck-select
       .create-btn-wrap.disabled
         .create-btn-label Create a card from selection
         .create-btn-body
@@ -64,3 +65,10 @@
 %script#SearchSpinnerTemplate{:type => "text/x-handlebars-template"}
   %li.search-spin
     %i.fa.fa-spinner.fa-spin.fa-3x
+
+%script#DeckOptionsTemplate{:type => "text/x-handlebars-template"}
+  :plain
+    <option value="{{noSelectionId}}">Select a deck (optional)</div>
+    {{#each decks}}
+      <option value="{{this.id}}">{{this.name}}</option>
+    {{/each}}

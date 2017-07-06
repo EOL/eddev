@@ -747,11 +747,17 @@ window.CardManager = (function() {
     fixLayout();
   }
 
+  function selectDeckFilter() {
+    selectFilter('DeckFilter');
+    showSelectedDeck($('#DeckFilter .filter-items'));
+    return false;
+  }
+
   function openDeckFilter() {
     var $filterItems = $('#DeckFilter .filter-items');
+
+    selectDeckFilter();
     $filterItems.removeClass('hidden');
-    selectFilter('DeckFilter');
-    showSelectedDeck($filterItems);
 
     $(document).one('click', function() {
       $filterItems.addClass('hidden')
@@ -883,7 +889,8 @@ window.CardManager = (function() {
     $('#NewCard').click(newCard.bind(null, null));
     $('#NewDeck').click(newDeck);
     $('#CardFilter').click(showCards);
-    $('#DeckFilter .btn').click(openDeckFilter);
+    $('#DeckFilter .btn').click(selectDeckFilter);
+    $('#DeckFilter .down-arrow').click(openDeckFilter);
 
     $(decks).on('change', function() {
       setDeckCount(this.length());

@@ -228,6 +228,7 @@ $thumb-size: 80px;
 .filter {
   $height: 59px;
   $icon-width: $height;
+  $arrow-width: 65px;
   $width: 300px;
 
   background-color: #bdd5e5;
@@ -263,7 +264,20 @@ $thumb-size: 80px;
     line-height: $height;
     text-align: center;
     vertical-align: top;
-    width: $width - $icon-width;
+    width: $width - $icon-width - $arrow-width;
+  }
+
+  .down-arrow {
+    display: inline-block;
+    height: $height;
+    line-height: $height;
+    text-align: left;
+    width: $arrow-width;
+  }
+
+  .down-arrow-img {
+    display: inline;
+    width: 25px;
   }
 
   &.selected {
@@ -277,7 +291,7 @@ $thumb-size: 80px;
       text-shadow: 0 2px 4px rgba(10, 54, 118, 0.57);
     }
 
-    .filter-selection {
+    .filter-selection, .down-arrow {
       background-color: $white;
       color: #323232;
     }

@@ -38,11 +38,14 @@
             .filter-icon>
               #CardCount.count> &mdash;
             .filter-selection> All cards
+            .down-arrow
           #DeckFilter.filter>
             .btn
               .filter-icon>
                 #DeckCount.count> &mdash;
               .filter-selection> All decks
+              .down-arrow
+                = image_tag "card_maker/down_arrow.png", :class => "down-arrow-img"
             %ul.filter-items.hidden
       .user-resources.user-decks#UserResources
       .manager-bottom

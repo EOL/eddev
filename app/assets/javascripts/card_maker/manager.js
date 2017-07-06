@@ -124,10 +124,7 @@ window.CardManager = (function() {
   /*
    * CONSTANTS
    */
-  var allCardsScreen  = 'allCards'
-    , allDecksScreen  = 'allDecks'
-    , deckCardsScreen = 'deckCards'
-    , allDecksId = -1
+  var allDecksId = -1
     ;
 
   /*
@@ -724,6 +721,7 @@ window.CardManager = (function() {
           $.each(ids, function(i, id) {
             var $placeholder = $(cardPlaceholderTemplate({ cardId: id }));
             $userCards.append($placeholder);
+            idsToElmts[id] = $placeholder;
             loadCardImgAndBindEvents($placeholder, id);
           });
         } else {
@@ -740,8 +738,6 @@ window.CardManager = (function() {
    * Load the user's cards into the #UserResources area
    */
   function showCards() {
-    curScreen = allCardsScreen;
-
     selectFilter('CardFilter');
     buildCards();
     fixLayout();
@@ -767,7 +763,6 @@ window.CardManager = (function() {
   }
 
   function loadAllDecksScreen() {
-    curScreen = allDecksScreen;
     selectFilter('DeckFilter');
     showDecks();
 

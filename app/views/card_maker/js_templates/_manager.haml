@@ -40,6 +40,7 @@
     .create-menu.hidden
       %select.deck-select
       .create-btn-wrap.disabled
+        .btn-disable
         .create-btn-label Create a card from selection
         .create-btn-body
 
@@ -72,3 +73,20 @@
     {{#each decks}}
       <option value="{{this.id}}">{{this.name}}</option>
     {{/each}}
+
+%script#NewCardInDeckTemplate{:type => "text/x-handlebars-template"}
+  .user-resource-wrap.resource-wrap
+    .new-card-in-deck
+      .no-cards-msg There are no cards in this deck yet.
+      .new-btn Create a card in this deck
+
+%script#DeckFilterItemsTemplate{:type => "text/x-handlebars-template"}
+  :plain
+    <li class="filter-item selected" data-id="{{allId}}">All decks</li>
+    {{#each decks}}
+      <li class="filter-item" data-id="{{this.id}}">{{this.name}}</li>
+    {{/each}}
+
+%script#LoadingTemplate{:type => "text/x-handlebars-template"}
+  .global-loading.lightbox
+    %i.fa.fa-spin.fa-spinner.fa-4x

@@ -119,6 +119,14 @@ class CardMakerAjaxController < ApplicationController
     ))
   end
 
+  # GET /card_maker_ajax/decks/:deck_id
+  def get_deck
+    json_response(CardServiceCaller.get_deck(
+      logged_in_user.id,
+      params[:deck_id]
+    ))
+  end
+
   # PUT /card_maker_ajax/cards/:card_id/deck_id
   def set_card_deck
     json_response(CardServiceCaller.set_card_deck(

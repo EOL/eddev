@@ -65,6 +65,10 @@ module CardServiceCaller
     HTTParty.delete("#{self.user_prefix(user_id)}/decks/#{deck_id}")
   end
 
+  def self.get_deck(user_id, deck_id)
+    HTTParty.get("#{self.user_prefix(user_id)}/decks/#{deck_id}")
+  end
+
   def self.upload_image(user_id, data)
     HTTParty.post(
       "#{self.user_prefix(user_id)}/images",

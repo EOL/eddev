@@ -16,6 +16,7 @@
       = image_tag "welcome/eol_logo.png", :class => :'hdr-logo'
       Card Maker
     .right-blur-bg
+
 #CardManagerWrap
   .hdr-spacer.red
   #CardManager.card-manager.card-screen
@@ -35,17 +36,18 @@
         .filters
           #CardFilter.filter.selected.first>
             .filter-icon>
-              #CardCount.count &mdash;
-            .filter-drop> All cards
+              #CardCount.count> &mdash;
+            .filter-selection> All cards
           #DeckFilter.filter>
-            .filter-icon>
-              #DeckCount.count &mdash;
-            .filter-drop> All decks
-            .filter-items.hidden
+            .btn
+              .filter-icon>
+                #DeckCount.count> &mdash;
+              .filter-selection> All decks
+            %ul.filter-items.hidden
       .user-resources.user-decks#UserResources
       .manager-bottom
 
-      
+
 #CardGeneratorWrap.card-generator-wrap
   .hdr-spacer.green
   #CardGenerator.card-generator.card-screen

@@ -11,6 +11,17 @@ $thumb-size: 80px;
   text-align: center;
 }
 
+.global-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: $white;
+  margin-top: 200px;
+  text-align: center;
+}
+
 .card-hdr-box {
   $height: 147px;
 
@@ -225,6 +236,7 @@ $thumb-size: 80px;
   display: inline-block;
   height: $height;
   margin-left: 48px;
+  position: relative;
   vertical-align: top;
   width: $width;
 
@@ -243,7 +255,8 @@ $thumb-size: 80px;
   	text-align: center;
   }
 
-  .filter-drop {
+  .filter-selection {
+    display: inline-block;
     font-size: 14px;
     font-weight: $semibold;
     height: 100%;
@@ -264,7 +277,7 @@ $thumb-size: 80px;
       text-shadow: 0 2px 4px rgba(10, 54, 118, 0.57);
     }
 
-    .filter-drop {
+    .filter-selection {
       background-color: $white;
       color: #323232;
     }
@@ -272,6 +285,27 @@ $thumb-size: 80px;
 
   &.first {
     margin-left: 146px;
+  }
+
+  .filter-items {
+    background-color: $white;
+    border-radius: 0 0 2px 2px;
+    box-shadow: inset 0 1px 3px 0 rgba(167, 193, 205, 0.5);
+    color: #777;
+    font-size: 13px;
+    position: absolute;
+    width: $width;
+    z-index: 2;
+  }
+
+  .filter-item {
+    border-top: solid 1px #cbcfd4;
+    padding: 16px 8px;
+
+    &.selected {
+      color: #242424;
+      font-weight: $bold;
+    }
   }
 }
 
@@ -287,8 +321,6 @@ $thumb-size: 80px;
 
 .species-search {
   background-color: #6689aa;
-
-  margin: 50px auto;
   width: $main-col-width * 1px;
 
   .search-area  {
@@ -311,7 +343,7 @@ $thumb-size: 80px;
   .search-results-wrap {
     background-color: #485e7a;
     box-shadow: inset 0 1px 3px 0 rgba(13, 38, 106, 0.5);
-    max-height: 539px;
+    max-height: 300px;
     overflow: auto;
     padding: 0 ($p-lr - $res-m) $p-tb $p-lr;
   }
@@ -373,12 +405,28 @@ $thumb-size: 80px;
     height: 115px;
   }
 
+  .btn-disable {
+    display: none;
+  }
+
   .create-btn-wrap {
     cursor: pointer;
     float: right;
     margin: 13px 38px 0 0;
     position: relative;
     width: 350px;
+
+    &.disabled .btn-disable {
+      cursor: auto;
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(100, 100, 100, .5);
+      z-index: 2;
+    }
   }
 
   .create-btn-label {
@@ -1391,6 +1439,30 @@ $col-border-width: 5px;
   .user-resource {
     vertical-align: top;
     width: 100%;
+  }
+
+  .new-card-in-deck {
+    .new-btn {
+      background-color: #537698;
+      color: $white;
+      cursor: pointer;
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
+    }
+  }
+
+  .no-cards-msg {
+    align-items: center;
+    background-color: #38454e;
+    color: $white;
+    display: flex;
+    justify-content: center;
+    width: 206px;
+    height: 186px;
+    font-size: 14px;
+    padding: 0 36px;
+    text-align: center;
   }
 }
 

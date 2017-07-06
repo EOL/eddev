@@ -68,7 +68,7 @@ window.CardForm = (function() {
     }
 
     function disableFields($exemptElmt) {
-      return Util.disablePage($exemptElmt);
+      return Util.disableElmt($('#RightCol'), [$exemptElmt]);
     }
 
     function bindFontSizeSelectEvents(fieldId, $fontSize, $fontSizeSelect) {
@@ -109,7 +109,7 @@ window.CardForm = (function() {
 
     function fontSizeOpenEvents(fieldId, $fieldWrap, $fontSize, $fontSizeSelect) {
       function open() {
-        var enableFn = Util.disablePage($fontSize, $fontSizeSelect)
+        var enableFn = Util.disableElmt($('#RightCol'), [$fontSize, $fontSizeSelect])
           , closeFn
           ;
 
@@ -701,7 +701,7 @@ window.CardForm = (function() {
       $arrow.css('left', arrowLeft);
 
       $cardFields.append($elmt);
-      enableFn = Util.disablePage($anchor, $elmt);
+      enableFn = Util.disableElmt($('#RightCol'), [$anchor, $elmt]);
     }
     that.show = show;
 

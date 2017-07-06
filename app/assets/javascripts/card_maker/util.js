@@ -5,12 +5,15 @@ window.Util = (function() {
   var disableOverlayTempl;
 
   function disablePage() {
+    return disableElmt($('#Page'), Array.prototype.slice.call(arguments));
+  }
+  exports.disablePage = disablePage;
+
+  function disableElmt($elmt, exemptElmts) {
     var $overlay = $(disableOverlayTempl())
-      , exemptElmts = arguments
-      , $exemptElmt
       ;
 
-    $('#Page').prepend($overlay);
+    $elmt.prepend($overlay);
 
     for (var i = 0; i < exemptElmts.length; i++) {
       $exemptElmt = exemptElmts[i];
@@ -28,7 +31,7 @@ window.Util = (function() {
       }
     };
   }
-  exports.disablePage = disablePage;
+  exports.disableElmt = disableElmt;
 
   $(function() {
     disableOverlayTempl = Handlebars.compile($('#DisableOverlayTemplate').html());

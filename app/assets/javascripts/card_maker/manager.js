@@ -333,12 +333,7 @@ window.CardManager = (function() {
       contentType: 'application/json',
       method: 'POST',
       success: function(card) {
-        var $newPlaceholder = $(cardPlaceholderTemplate({ cardId: card.id }));
-
         cards.push(card);
-
-        $newPlaceholder.click(cardClicked.bind(null, $newPlaceholder, card.id));
-
         removeLoadingFn();
 
         if (deckId) {
@@ -346,13 +341,10 @@ window.CardManager = (function() {
         } else {
           showCards();
         }
-
-        $('#UserResources').prepend($newPlaceholder);
-        fixLayout();
-
-        idsToElmts[card.id] = $newPlaceholder;
-
-        loadCardImgAndBindEvents($newPlaceholder, card.id);
+      },
+      error: function() {
+        removeLoadingFn();
+        alert('An unexpected error occurred');
       }
     });
   }

@@ -182,10 +182,14 @@ window.CardForm = (function() {
           return choice.text;
         }));
 
-        $elmt.find('.text-input-btn').click(function() {
-          var enableFn = disableFields($elmt.find('.text-input-wrap'));
+        function btnClick() {
+          var enableFn = disableFields($elmt.find('.text-input-wrap'))
+            , $that = $(this)
+            ;
 
-          menu.show($(this));
+          menu.show($that);
+
+          $that.off('click', btnClick);
 
           menu.select(function(val) {
             $txtInput.val(val);
@@ -193,12 +197,15 @@ window.CardForm = (function() {
           });
 
           $(document).one('click', function() {
+            $that.on('click', btnClick);
             enableFn();
             menu.hide();
           });
 
           return false;
-        });
+        }
+
+        $elmt.find('.text-input-btn').click(btnClick);
       }
 
       return $elmt;
@@ -459,7 +466,7 @@ window.CardForm = (function() {
         ;
 
       for (var i = 0; i < choices.length; i++) {
-        var tip = i < choiceTips.length ? choiceTips[i] : '&mdash;';
+        var tip = choiceTips[i] ? choiceTips[i]: '&mdash;';
 
         colorData[i] = {
           colors: choices[i],

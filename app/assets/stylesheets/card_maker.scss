@@ -386,10 +386,32 @@ $thumb-size: 80px;
     $bg-color: #f9fcff;
     $color: #5c5c5c;
 
+    .sci-name {
+      align-items: center;
+      display: flex;
+      height: $height;
+      justify-content: center;
+    }
+
+    .common-name {
+      align-items: center;
+      display: flex;
+      height: 42px;
+      justify-content: center;
+      margin-top: 4px;
+      padding: 0 4px;
+    }
+
+    .img {
+      $dim: 130px;
+
+      height: $dim;
+      width: $dim;
+    }
+
     background-color: $bg-color;
     cursor: pointer;
     height: $height;
-    line-height: $height;
     font-size: 14px;
   	color: $color;
     margin: $res-m $res-m 0 0;
@@ -400,7 +422,7 @@ $thumb-size: 80px;
     &.expanded {
       background-color: $color;
       color: $bg-color;
-      height: 227px;
+      height: 223px;
     }
   }
 
@@ -479,17 +501,30 @@ $thumb-size: 80px;
   }
 
   .deck-name {
+    $color: #343434;
+
+    background-color: #f0f8ff;
+    box-shadow: inset 0 1px 18px 0 rgba(191, 205, 218, 0.5);
+    color: $color;
     width: 407px;
+
+    &::placeholder {
+      color: $color;
+    }
   }
 
   .col-id {
+    background-color: #405d7a;
+    box-shadow: inset 0 1px 34px 0 rgba(71, 141, 191, 0.68);
+    color: $white;
     width: 100%;
+
+    &::placeholder {
+      color: $white;
+    }
   }
 
   .input {
-    background-color: #f0f8ff;
-    box-shadow: inset 0 1px 18px 0 rgba(191, 205, 218, 0.5);
-    color: #343434;
     display: inline-block;
     font-size: 14px;
     height: 100%;

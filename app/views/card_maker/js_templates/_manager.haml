@@ -50,18 +50,18 @@
       %input.deck-name.input{:type => "text", :placeholder => "Enter deck name"}>
       .create-deck-btn>
     .col-id-wrap.wrap
-      .col-id-placeholder
-      %input.col-id.input{:type => "text", :placeholder => "Enter collection id (optional)"}
+      %input.col-id.input{:type => "text", :placeholder => "Enter EOL collection id (optional)"}
 
 %script#LightboxTemplate{:type => "text/x-handlebars-template"}
   .fixed-center-wrap {{> (templ) }}
 
 %script#SearchResultTemplate{:type => "text/x-handlebars-template"}
-  %li.search-result{:data => { :id => "{{id}}"}} {{sciName}}
+  %li.search-result{:data => { :id => "{{id}}"}}
+    .sci-name {{sciName}}
 
 %script#SearchResultDetailsTemplate{:type => "text/x-handlebars-template"}
   .result-details
-    %img{ :src => "{{thumbUrl}}" }
+    %img.img{ :src => "{{thumbUrl}}" }
     .common-name Common name: {{commonName}}
 
 %script#ResultDetailSpinnerTemplate{:type => "text/x-handlebars-template"}

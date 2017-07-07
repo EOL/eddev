@@ -279,6 +279,11 @@ window.CardManager = (function() {
 
         $.getJSON(apiPath + '/taxon_details/' + $that.data('id'), function(data) {
           $spinner.remove();
+
+          if (!data.commonName) {
+            data.commonName = '(not found)';
+          }
+
           $that.append($(searchResultDetailsTempl(data)));
         });
       }
@@ -397,7 +402,6 @@ window.CardManager = (function() {
         ;
 
       if (deckName) {
-        lightboxResult.closeFn();
         closeLoadingFn = loadingState().closeFn;
 
         $.ajax({
@@ -406,15 +410,19 @@ window.CardManager = (function() {
           data: JSON.stringify({ name: deckName }),
           success: function(deck) {
             decks.push(deck);
+            lightboxResult.closeFn();
 
             if (colId) {
               populateDeckFromCollection(deck.id, colId, function() {
                 closeLoadingFn();
                 cards.reload(function() {
-                  selectDeck(deck.id);
+                  decks.reloadItem(deck.id, function() {
+                    selectDeck(deck.id);
+                  })
                 });
               });
             } else {
+              lightboxResult.closeFn();
               closeLoadingFn();
               selectDeck(deck.id);
             }
@@ -431,17 +439,18 @@ window.CardManager = (function() {
               alertMsg = "An unexpected error occurred"
             }
 
+            closeLoadingFn();
             alert(alertMsg);
           }
         });
       } else {
+        lightboxResult.inner.effect('shake');
         return false;
       }
     });
   }
 
   function newDeck(e) {
-    loadAllDecksScreen();
     newDeckHelper(e);
     return false;
   }
@@ -456,6 +465,8 @@ window.CardManager = (function() {
     $userResources.find('*').remove();
     $userResources.off();
     $userResources.click(unselectResource);
+
+    idsToElmts = {};
 
     return $userResources;
   }
@@ -722,9 +733,27 @@ window.CardManager = (function() {
 
         idsToElmts[card.id] = $placeholder;
         $userCards.append($placeholder);
-        loadCardImgAndBindEvents($placeholder, card.id);
+        loadVisibleCards();
+        $userCards.scroll(loadVisibleCards);
       });
     }
+  }
+
+  function loadVisibleCards() {
+    var $userResources = $('#UserResources')
+      , innerHeight = $userResources.innerHeight();
+      ;
+
+    $userResources.find('.resource-wrap').each(function() {
+      var $card = $(this)
+        , cardPosnTop = $card.position().top
+        , cardMargin = $card.outerHeight() - $card.innerHeight()
+        ;
+
+      if (cardPosnTop + cardMargin < innerHeight) {
+        loadCardImgAndBindEvents($card, $card.data('cardId'));
+      }
+    });
   }
 
   /*

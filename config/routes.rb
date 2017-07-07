@@ -76,6 +76,8 @@ Rails.application.routes.draw do
   delete "card_maker_ajax/decks/:deck_id"           => "card_maker_ajax#delete_deck"
   get    "card_maker_ajax/taxon_search/:query"      => "card_maker_ajax#taxon_search"
   get    "card_maker_ajax/taxon_details/:id"        => "card_maker_ajax#taxon_details"
+  post   "card_maker_ajax/decks/:id/populateFromCollection" => "card_maker_ajax#populate_deck_from_collection"
+  get    "card_maker_ajax/collectionJob/:id/status" => "card_maker_ajax#collection_job_status"
 
   get    "card_maker"                       => "card_maker#index", :as => :new_card
 

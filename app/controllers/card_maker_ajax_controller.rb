@@ -163,6 +163,21 @@ class CardMakerAjaxController < ApplicationController
     json_response(CardServiceCaller.taxon_summary(params[:id]))
   end
 
+  # POST /card_maker_ajax/decks/:id/populateFromCollection
+  def populate_deck_from_collection
+    logger.debug("raw post: #{request.raw_post}")
+    json_response(CardServiceCaller.populate_deck_from_collection(
+      logged_in_user.id,
+      params[:id],
+      request.raw_post
+    ))
+  end
+
+  # GET /card_maker_ajax/collectionJob/:id/status
+  def collection_job_status
+    json_response(CardServiceCaller.collection_job_status(params[:id]))
+  end
+
   private
     def json_response(httpartyResponse)
       json_response_helper(httpartyResponse.body, httpartyResponse.code)

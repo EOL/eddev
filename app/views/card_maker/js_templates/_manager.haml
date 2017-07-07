@@ -46,8 +46,12 @@
 
 %script#NewDeckLightboxTemplate{:type => "text/x-handlebars-template"}
   .new-deck.lightbox
-    %input.deck-name{:type => "text", :placeholder => "Enter deck name"}>
-    .create-deck-btn>
+    .deck-name-wrap.wrap
+      %input.deck-name.input{:type => "text", :placeholder => "Enter deck name"}>
+      .create-deck-btn>
+    .col-id-wrap.wrap
+      .col-id-placeholder
+      %input.col-id.input{:type => "text", :placeholder => "Enter collection id (optional)"}
 
 %script#LightboxTemplate{:type => "text/x-handlebars-template"}
   .fixed-center-wrap {{> (templ) }}

@@ -353,32 +353,71 @@ window.CardManager = (function() {
     cards.delete(id);
   }
 
+  function populateDeckFromCollection(deckId, colId, cb) {
+    $.ajax({
+      method: 'POST',
+      contentType: 'application/json',
+      url: apiPath + '/decks/' + deckId + '/populateFromCollection',
+      data: JSON.stringify({
+              colId: colId
+            }),
+      success: function(data) {
+        pollCollectionJob(data.jobId, cb);
+      }
+    });
+  }
+
+  function pollCollectionJob(jobId, cb) {
+    $.getJSON(apiPath + '/collectionJob/' + jobId + '/status', function(data) {
+      if (data.status === 'pending') {
+        setTimeout(pollCollectionJob.bind(null, jobId, cb), 1000);
+      } else {
+        cb();
+      }
+    });
+  }
+
   function newDeckHelper(e) {
     var lightboxResult = openLightbox('newDeck')
       , $nameInput = lightboxResult.lightbox.find('.deck-name')
       , $submitBtn = lightboxResult.lightbox.find('.create-deck-btn')
+      , $colIdInput = lightboxResult.lightbox.find('.col-id')
       ;
 
-    $nameInput.click(function() {
+    lightboxResult.inner.click(function() {
       return false;
     });
 
     $(document).click(lightboxResult.closeFn);
 
     $submitBtn.click(function() {
-      var deckName = $nameInput.val();
+      var deckName = $nameInput.val()
+        , colId = $colIdInput.val()
+        , closeLoadingFn
+        ;
 
       if (deckName) {
+        lightboxResult.closeFn();
+        closeLoadingFn = loadingState().closeFn;
+
         $.ajax({
           url: apiPath + '/decks',
           method: 'POST',
           data: JSON.stringify({ name: deckName }),
           success: function(deck) {
-            var $deckElmt = $(deckTemplate({ name: deck.name }));
-            $deckElmt.click(deckClicked.bind(null, $deckElmt, deck));
-            $('#UserResources').prepend($deckElmt);
             decks.push(deck);
-            fixLayout();
+
+            if (colId) {
+              populateDeckFromCollection(deck.id, colId, function() {
+                closeLoadingFn();
+                cards.reload(function() {
+                  selectDeck(deck.id);
+                });
+              });
+            } else {
+              closeLoadingFn();
+              selectDeck(deck.id);
+            }
           },
           error: function(err) {
             var alertMsg = '';

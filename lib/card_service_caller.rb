@@ -109,6 +109,18 @@ module CardServiceCaller
     HTTParty.get("#{SERVICE_URL}/taxonSummaries/#{taxon_id}")
   end
 
+  def self.populate_deck_from_collection(user_id, deck_id, post_body)
+    HTTParty.post(
+      "#{self.user_prefix(user_id)}/decks/#{deck_id}/populateFromCollection",
+      :body => post_body,
+      :headers => JSON_HEADERS
+    )
+  end
+
+  def self.collection_job_status(job_id)
+    HTTParty.get("#{SERVICE_URL}/collectionJob/#{job_id}/status")
+  end
+
   private
     def self.user_prefix(user_id)
       "#{SERVICE_URL}/users/#{user_id}"

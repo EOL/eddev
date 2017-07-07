@@ -88,7 +88,7 @@
   :plain
     <li class="filter-item selected" data-id="{{allId}}">All decks</li>
     {{#each decks}}
-      <li class="filter-item" data-id="{{this.id}}">{{this.name}}</li>
+      <li class="filter-item" data-id="{{this.id}}">{{this.name}} ({{this.cardIds.length}})</li>
     {{/each}}
 
 %script#LoadingTemplate{:type => "text/x-handlebars-template"}

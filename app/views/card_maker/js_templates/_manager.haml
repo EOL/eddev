@@ -80,9 +80,15 @@
 
 %script#NewCardInDeckTemplate{:type => "text/x-handlebars-template"}
   .user-resource-wrap.resource-wrap
-    .new-card-in-deck
-      .no-cards-msg There are no cards in this deck yet.
+    .empty-new-item
+      .no-items-msg There are no cards in this deck yet.
       .new-btn Create a card in this deck
+
+%script#EmptyNewTemplate{:type => "text/x-handlebars-template"}
+  .user-resource-wrap.resource-wrap
+    .empty-new-item
+      .no-items-msg {{noItemsMsg}}
+      .new-btn {{createItemMsg}}
 
 %script#DeckFilterItemsTemplate{:type => "text/x-handlebars-template"}
   :plain

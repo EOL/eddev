@@ -124,6 +124,7 @@ window.CardManager = (function() {
     , deckOptionsTempl
     , deckFilterItemsTempl
     , loadingTempl
+    , emptyNewTempl
     ;
 
   /*
@@ -347,7 +348,9 @@ window.CardManager = (function() {
         removeLoadingFn();
 
         if (deckId) {
-          selectDeck(deckId);
+          decks.reloadItem(deckId, function() {
+            selectDeck(deckId);
+          });
         } else {
           showCards();
         }
@@ -577,7 +580,9 @@ window.CardManager = (function() {
       success: function() {
         decks.delete(deck.id);
         $deckElmt.remove();
-        cards.reload(function() {});
+        cards.reload(function() {
+          showDecks();
+        });
       }
     });
   }
@@ -654,7 +659,7 @@ window.CardManager = (function() {
       success: function() {
         cards.delete(id);
         $card.remove();
-        fixLayout();
+        showCards();
       }
     });
   }
@@ -709,6 +714,7 @@ window.CardManager = (function() {
    */
   function buildCards() {
     var $userCards = cleanUserResources()
+      , $newCardElmt
       ;
 
     idsToElmts = {};
@@ -742,6 +748,14 @@ window.CardManager = (function() {
         loadVisibleCards();
         $userCards.scroll(loadVisibleCards);
       });
+    } else {
+      $newCardElmt = $(emptyNewTempl({
+        noItemsMsg: "You don't have any cards yet.",
+        createItemMsg: 'Create a card'
+      }));
+
+      $newCardElmt.click(newCard);
+      $userCards.append($newCardElmt);
     }
   }
 
@@ -824,18 +838,30 @@ window.CardManager = (function() {
   }
 
   function showDecks() {
-    var deckContainer = cleanUserResources();
+    var $deckContainer = cleanUserResources()
+      , $newBtn
+      ;
 
-    $.each(decks.items(), function(i, deck) {
-      var $deckElmt = $(deckTemplate({ name: deck.name }));
+    if (decks.items().length) {
+      $.each(decks.items(), function(i, deck) {
+        var $deckElmt = $(deckTemplate({ name: deck.name }));
 
-      if (deck.titleCardId) {
-        loadCardImg($deckElmt, deck.titleCardId);
-      }
+        if (deck.titleCardId) {
+          loadCardImg($deckElmt, deck.titleCardId);
+        }
 
-      $deckElmt.click(deckClicked.bind(null, $deckElmt, deck));
-      deckContainer.append($deckElmt);
-    });
+        $deckElmt.click(deckClicked.bind(null, $deckElmt, deck));
+        $deckContainer.append($deckElmt);
+      });
+    } else {
+      $newBtn = $(emptyNewTempl({
+        noItemsMsg: "You don't have any decks yet.",
+        createItemMsg: "Create a deck"
+      }));
+
+      $newBtn.click(newDeck);
+      $deckContainer.append($newBtn);
+    }
 
     fixLayout();
   }
@@ -928,6 +954,7 @@ window.CardManager = (function() {
     deckOptionsTempl = Handlebars.compile($('#DeckOptionsTemplate').html());
     newCardInDeckTempl = Handlebars.compile($('#NewCardInDeckTemplate').html());
     deckFilterItemsTempl = Handlebars.compile($('#DeckFilterItemsTemplate').html());
+    emptyNewTempl = Handlebars.compile($('#EmptyNewTemplate').html());
 
     Handlebars.registerPartial('loading', $('#LoadingTemplate').html());
     Handlebars.registerPartial('speciesSearch', $('#SpeciesSearchTemplate').html());

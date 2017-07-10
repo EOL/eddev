@@ -1503,7 +1503,7 @@ $col-border-width: 5px;
     width: 100%;
   }
 
-  .new-card-in-deck {
+  .empty-new-item {
     .new-btn {
       background-color: #537698;
       color: $white;
@@ -1514,7 +1514,7 @@ $col-border-width: 5px;
     }
   }
 
-  .no-cards-msg {
+  .no-items-msg {
     align-items: center;
     background-color: #38454e;
     color: $white;

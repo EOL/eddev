@@ -558,15 +558,18 @@ window.CardManager = (function() {
   }
 
   function selectDeck(id) {
+    setDeckFilterSelection(id);
+    selectFilter('DeckFilter');
+    showSelectedDeck($('#DeckFilter .filter-items'));
+  }
+
+  function setDeckFilterSelection(id) {
     var $selection = $('#DeckFilter .filter-item[data-id="' + id + '"]');
 
     $('#DeckFilter .filter-items').addClass('hidden');
     $('#DeckFilter .filter-item').removeClass('selected');
     $selection.addClass('selected');
     $('#DeckFilter .filter-selection').html($selection.html());
-    selectFilter('DeckFilter');
-
-    showSelectedDeck($('#DeckFilter .filter-items'));
   }
 
   function destroyDeck($deckElmt, deck) {
@@ -691,15 +694,13 @@ window.CardManager = (function() {
   }
 
   /*
-   * Click handler for card overlay edit buttons. Marks the button as active
-   * and loads the card for editing.
+   * Click handler for card overlay edit buttons.
    *
    * Parameters:
    *   $btn - the button
    *   id - the card id
    */
   function cardEditClicked($btn, id) {
-    $btn.addClass('active');
     loadCardForEditing(id);
   }
 
@@ -910,6 +911,9 @@ window.CardManager = (function() {
 
   function setDeckFilterOptions() {
     var $container = $('#DeckFilter .filter-items')
+      , $selected = $container.find('.selected')
+      , selectedId = $selected.length ? $selected.data('id') : null
+      , curSelection = $
       , $elmt = $(deckFilterItemsTempl({
           decks: decks.items(),
           allId: allDecksId
@@ -917,6 +921,10 @@ window.CardManager = (function() {
       ;
 
     $container.html($elmt);
+
+    if (selectedId !== null) {
+      setDeckFilterSelection(selectedId);
+    }
 
     $container.find('.filter-item').click(function() {
       selectDeck($(this).data('id'));

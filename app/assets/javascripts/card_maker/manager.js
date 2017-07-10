@@ -28,10 +28,11 @@ window.CardManager = (function() {
       if (loadSingleFn) {
         loadSingleFn(id, function(item) {
           replace(id, item);
+          fireChange();
           cb(item);
         });
       } else {
-        // TODO: error handling
+        throw new Error('loadSingleFn not set');
       }
     }
 
@@ -907,9 +908,7 @@ window.CardManager = (function() {
   }
 
   function reloadCardDeckIfPresent(e, card) {
-    console.log('card', card);
     if (card.deck) {
-      console.log('got a deck id');
       decks.reloadItem(card.deck.id, function() {});
     }
   }

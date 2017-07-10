@@ -566,7 +566,7 @@ window.CardManager = (function() {
   }
 
   function destroyDeck($deckElmt, deck) {
-    var confirmation = confirm('Are you sure you want to delete this deck?');
+    var confirmation = confirm('Are you sure you want to delete this deck and all its cards?');
 
     if (!confirmation) return;
 
@@ -576,6 +576,7 @@ window.CardManager = (function() {
       success: function() {
         decks.delete(deck.id);
         $deckElmt.remove();
+        cards.reload(function() {});
       }
     });
   }

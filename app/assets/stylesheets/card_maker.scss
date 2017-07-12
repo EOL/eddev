@@ -148,16 +148,67 @@ $thumb-size: 80px;
   $tips-width: 144px;
 
   background-color: #4aa86a;
+  display: flex;
+  justify-content: space-between;
 
+  .manager-btn {
+    color: $white;
+    cursor: pointer;
+    position: relative;
+    height: 100%;
+    width: 199px;
+  }
+
+  .ladybug {
+    -webkit-transform: rotate(-90deg);
+  	transform: rotate(-90deg);
+    left: 220px;
+  }
+
+  .manager-btn-bg {
+    background-color: #cd5945;
+    box-shadow: inset 0 3px 4px 1px #9b4f41;
+    height: 100%;
+    left: -10px;
+    position: absolute;
+    transform: skewX(-15deg);
+
+    width: 199px;
+  }
+
+  .manager-btn-back-txt{
+    $height: 25px;
+
+    height: $height;
+    line-height: $height;
+  	font-size: 13px;
+    margin-left: -3px;
+  	text-align: center;
+
+    //position: absolute;
+    width: 100%;
+    background-color: #aa5142;
+  	box-shadow: inset 0 3px 4px 1px #9b4f41;
+    transform: skewX(-15deg);
+  }
+
+  .manager-btn-txt {
+    font-size: 12px;
+    font-family: Merriweather;
+    position: relative;
+    z-index: 2;
+  }
+
+  /*
   .welcome-txt {
     padding-left: $tips-width;
     width: $editor-width - $tips-width;
   }
+  */
 
   .tips-box {
     background-color: $white;
     box-shadow: inset 0 1px 17px 0 rgba(127, 205, 255, 0.5);
-    display: inline-block;
     height: 100%;
     padding-left: 44px;
     vertical-align: top;

@@ -250,7 +250,7 @@ window.CardEditor = (function() {
     imageControls = ImageControls.getInstance();
     cardForm = CardForm.getInstance();
 
-    $('.preview-btns .close').click(fireClose);
+    $('.preview-btns .close, #BackToManagerBtn').click(fireClose);
     $('.preview-btns .save').click(save.bind(null, function(err) {
       // TODO: handle error
     }));

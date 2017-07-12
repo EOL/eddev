@@ -62,11 +62,16 @@
   #CardGenerator.card-generator.card-screen
     .screen-inner
       .welcome-block.generator-welcome-block
+        #BackToManagerBtn.manager-btn
+          .manager-btn-bg
+          .manager-btn-back-txt go back to
+          .manager-btn-txt Card Manager
         %h3.welcome-txt>
           %span.big-letter> W
           elcome to the EOL Card Editor.
         .tips-box>
           .tips-txt tips
+        = image_tag icon_path("ladybug.png"), :class => "ladybug"
       #Cols.cols
         #LeftCol.col.left-col>
           #LeftColHeadBox.col-head-box

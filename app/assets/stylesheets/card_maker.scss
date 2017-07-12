@@ -121,11 +121,17 @@ $thumb-size: 80px;
   width: $editor-width * 1px;
   z-index: 2;
 
+  .ladybug {
+    left: 253px;
+    position: absolute;
+    top: 17px;
+  }
+
   .welcome-txt {
     color: $white;
     display: inline-block;
     font-family: Merriweather;
-  	font-size: 17px;
+  	font-size: 16px;
     height: 100%;
     line-height: $height;
     text-align: center;
@@ -200,7 +206,10 @@ $thumb-size: 80px;
 }
 
 .new-resource-btn {
+  align-items: center;
+  display: flex;
   height: 56px;
+  justify-content: center;
 }
 
 .new-card-btn {

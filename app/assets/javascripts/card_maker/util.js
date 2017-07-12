@@ -5,13 +5,17 @@ window.Util = (function() {
   var disableOverlayTempl;
 
   function disablePage() {
-    return disableElmt($('#Page'), Array.prototype.slice.call(arguments));
+    return disableElmt($('#Page'), Array.prototype.slice.call(arguments), true);
   }
   exports.disablePage = disablePage;
 
-  function disableElmt($elmt, exemptElmts) {
+  function disableElmt($elmt, exemptElmts, noscroll) {
     var $overlay = $(disableOverlayTempl())
       ;
+
+    if (noscroll) {
+      $('body').addClass('noscroll');
+    }
 
     $elmt.prepend($overlay);
 
@@ -22,6 +26,7 @@ window.Util = (function() {
     }
 
     return function() {
+      $('body').removeClass('noscroll');
       $overlay.remove();
 
       for (var i = 0; i < exemptElmts.length; i++) {

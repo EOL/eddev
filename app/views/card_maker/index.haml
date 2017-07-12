@@ -22,17 +22,23 @@
   #CardManager.card-manager.card-screen
     .screen-inner.manager-inner
       .welcome-block.maker-welcome-block
+        = image_tag icon_path("ladybug.png"), :class => "ladybug"
         %h3.welcome-txt>
           %span.big-letter> W
-          elcome to the EOL Card Manager.
+          elcome to the
+          = image_tag icon_path("eol_logo_hdr.png"), :class => "eol_logo"
+          Card Manager.
       .manager-ctrls
         .new-resource-btns
           #NewCard.new-resource-btn-wrap
             .new-resource-txt Create a card
             .new-resource-btn.new-card-btn
+              = image_tag icon_path("new_card.png")
+          = image_tag icon_path("card_manager_logo.png"), :class => "manager-logo", :id => "ManagerLogo"
           #NewDeck.new-resource-btn-wrap
             .new-resource-txt Create a deck
             .new-resource-btn.new-deck-btn
+              = image_tag icon_path("new_deck.png")
         .filters
           #CardFilter.filter.selected.first>
             .filter-icon>

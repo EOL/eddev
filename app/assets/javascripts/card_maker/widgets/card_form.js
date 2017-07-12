@@ -225,8 +225,6 @@ window.CardForm = (function() {
         , enableFn
         ;
 
-      $('body').addClass('noscroll');
-
       $imgLib = $(imgLibTempl({ choices: choices }));
       $imgLib.find('.img-lib-thumb').click(function() {
         removeThumbSelected($field);
@@ -241,7 +239,6 @@ window.CardForm = (function() {
       $(document).click(function() {
         $imgLib.remove();
         enableFn();
-        $('body').removeClass('noscroll');
       });
 
       return false;

@@ -442,6 +442,18 @@ $thumb-size: 80px;
     height: 115px;
   }
 
+  .deck-select-label {
+    color: $white;
+    font-size: 14px;
+    font-weight: $semibold;
+    margin: 13px 0 7px 0;
+  }
+
+  .deck-select-wrap {
+    display: inline-block;
+    margin-left: 35px;
+  }
+
   .btn-disable {
     display: none;
   }

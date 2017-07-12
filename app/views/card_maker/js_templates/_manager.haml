@@ -38,11 +38,19 @@
         .result-count.hidden 0 results
       %ul.search-results
     .create-menu.hidden
-      %select.deck-select
+      .deck-select-wrap
+        .deck-select-label Save card to a deck:
       .create-btn-wrap.disabled
         .btn-disable
         .create-btn-label Create a card from selection
         .create-btn-body
+
+%script#DeckOptionsTemplate{:type => "text/x-handlebars-template"}
+  :plain
+    <li data-id="{{noSelectionId}}" class="filter-item">&mdash;</li>
+    {{#each decks}}
+      <li data-id="{{this.id}}" class="filter-item">{{this.name}}</option>
+    {{/each}}
 
 %script#NewDeckLightboxTemplate{:type => "text/x-handlebars-template"}
   .new-deck.lightbox
@@ -70,13 +78,6 @@
 %script#SearchSpinnerTemplate{:type => "text/x-handlebars-template"}
   %li.search-spin
     %i.fa.fa-spinner.fa-spin.fa-3x
-
-%script#DeckOptionsTemplate{:type => "text/x-handlebars-template"}
-  :plain
-    <option value="{{noSelectionId}}">Select a deck (optional)</div>
-    {{#each decks}}
-      <option value="{{this.id}}">{{this.name}}</option>
-    {{/each}}
 
 %script#NewCardInDeckTemplate{:type => "text/x-handlebars-template"}
   .user-resource-wrap.resource-wrap

@@ -178,19 +178,29 @@ window.CardManager = (function() {
       , $createMenu = $search.find('.create-menu')
       , $createBtn = $createMenu.find('.create-btn-wrap')
       , $resultCount = $search.find('.result-count')
-      , $deckSelect = $search.find('.deck-select')
+      , $deckSelectWrap = $search.find('.deck-select-wrap')
+      , $deckSelectClone = $('#DeckFilter').clone()
       , closeFn = lightboxResult.closeFn
+      , noDeckId = '-1'
+      , disableDeckSelect = defaultDeckId != null
+      , selectedDeckId = defaultDeckId != null ? defaultDeckId : noDeckId
+      , docClickHandler
       , resultSelectFn
       , reqCount = 0
-      , noDeckId = '-1'
+      , deckSelect
       ;
 
-    $(document).click(closeFn);
+    docClickHandler = function(e) {
+      if (!e.originalEvent.searchContains) {
+        closeFn();
+      }
+    };
 
-    $inner.click(function() {
-      return false;
+    $inner.click(function(e) {
+      e.originalEvent.searchContains = true;
     });
 
+    $(document).on('click.closeSearch', docClickHandler);
     $createBtn.click(createBtnClick);
 
     function fixSearchLayout() {
@@ -244,10 +254,22 @@ window.CardManager = (function() {
       }
     });
 
-    $deckSelect.html($(deckOptionsTempl({
+    // TODO: Hackity hack hack hack. Gross.
+    $deckSelectClone.attr('id', null);
+    $deckSelectClone.addClass('selected');
+    $deckSelectClone.css('margin-left', 0);
+    $deckSelectWrap.append($deckSelectClone);
+
+    $deckSelectClone.find('.filter-items').html($(deckOptionsTempl({
       decks: decks.items(),
       noSelectionId: noDeckId
     })));
+
+    deckSelect = new SelectFilter($deckSelectClone, selectedDeckId, 'click.closeSearch', docClickHandler);
+
+    if (disableDeckSelect) {
+      deckSelect.disable();
+    }
 
     function taxonSearch(query, cb) {
       var reqNum = ++reqCount;
@@ -269,15 +291,6 @@ window.CardManager = (function() {
       fixSearchLayout();
 
       $createBtn.removeClass('disabled');
-
-      // This doesn't work if the element is hidden, so we have to do it here
-      if (defaultDeckId != null) {
-        $deckSelect.val(defaultDeckId);
-        $deckSelect.attr('disabled', true);
-      } else {
-        $deckSelect.val(noDeckId);
-        $deckSelect.attr('disabled', false);
-      }
 
       if (!$that.find('.result-details').length && !$that.find('.result-detail-spinner').length) {
         $spinner = $(resultDetailSpinnerTempl());
@@ -301,7 +314,7 @@ window.CardManager = (function() {
       }
 
       var $selected = $results.find('.search-result.expanded')
-        , deckSelection = $deckSelect.val()
+        , deckSelection = deckSelect.selection()
         ;
 
       if (deckSelection == noDeckId) {
@@ -944,6 +957,82 @@ window.CardManager = (function() {
   function reloadCardDeckIfPresent(e, card) {
     if (card.deck) {
       decks.reloadItem(card.deck.id, function() {});
+    }
+  };
+
+  function SelectFilter($elmt, selectedId, suspendDocEvent, suspendDocHandler) {
+    var that = this
+      , $arrow = $elmt.find('.down-arrow')
+      , $choicesWrap = $elmt.find('.filter-items')
+      , $choices = $elmt.find('.filter-item')
+      , $selection = $elmt.find('.filter-selection')
+      , disabled = false
+      , selectedId
+      ;
+
+    function selectItem($item) {
+      var text = $item.html()
+        , id = $item.data('id')
+        ;
+
+      $choices.removeClass('selected');
+      $item.addClass('selected');
+      $selection.html(text);
+
+      selectedId = id;
+
+      return id;
+    }
+
+    function clearEvents() {
+      $elmt.off();
+      $elmt.find('*').off();
+    }
+
+    function bindEvents() {
+      clearEvents(); //make idempotent
+
+      $elmt.click(function() {
+        $(that).triggerHandler('click');
+      });
+
+      $arrow.click(function() {
+        $choicesWrap.removeClass('hidden');
+
+        if (suspendDocEvent) {
+          $(document).off(suspendDocEvent);
+        }
+
+        $(document).one('click', function() {
+          $choicesWrap.addClass('hidden');
+          $(document).on(suspendDocEvent, suspendDocHandler);
+          return false;
+        });
+
+        return false;
+      });
+
+      $choices.click(function() {
+        var id = selectItem($(this));
+        $(that).triggerHandler('select', id);
+      });
+    }
+
+    selectItem($choices.filter('[data-id="' + selectedId + '"]'));
+    bindEvents();
+
+    that.disable = function() {
+      $elmt.removeClass('selected');
+      clearEvents();
+    }
+
+    that.enable = function() {
+      $elmt.addClass('selected');
+      bindEvents();
+    }
+
+    that.selection = function() {
+      return selectedId;
     }
   }
 

@@ -79,13 +79,17 @@ window.CardForm = (function() {
       $fontSizeChoices.mouseenter(function() {
         $fontSizeChoices.removeClass('selected');
         $(this).addClass('selected');
-        setFontSizeVal(fieldId, $(this), $fontSize);
+        setFontSizeVal(fieldId, $(this), $fontSize, true);
+      });
+
+      $fontSizeChoices.click(function() {
+        card.forceDirty();
       });
 
       $fontSizeChoices.mouseout(function() {
         $(this).removeClass('selected');
         $origSelected.addClass('selected');
-        setFontSizeVal(fieldId, $origSelected, $fontSize);
+        setFontSizeVal(fieldId, $origSelected, $fontSize, true);
       });
     }
 
@@ -94,10 +98,15 @@ window.CardForm = (function() {
       $fontSizeSelect.find('*').off();
     }
 
-    function setFontSizeVal(fieldId, $selectedOption, $fontSize) {
+    function setFontSizeVal(fieldId, $selectedOption, $fontSize, preview) {
       var parsedSz = parseInt($selectedOption.html());
 
-      card.setDataAttr(fieldId, 'fontSz', parsedSz);
+      if (preview) {
+        card.setDataAttrNotDirty(fieldId, 'fontSz', parsedSz);
+      } else {
+        card.setDataAttr(fieldId, 'fontSz', parsedSz);
+      }
+
       $fontSize.html(parsedSz);
     }
 

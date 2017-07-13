@@ -40,8 +40,8 @@ module Eddev
     config.action_mailer.smtp_settings = {
       address:              "smtp.gmail.com",
       port:                 587,
-      user_name:            ENV["email_user_name"],
-      password:             ENV["email_password"],
+      user_name:            Figaro.env.email_user_name,
+      password:             Figaro.env.email_password,
       authentication:       "plain",
       enable_starttls_auto: true,
     }

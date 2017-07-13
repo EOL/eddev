@@ -1,25 +1,27 @@
-%h1= t(".sign_up")
+.form-wrap
+  %h1.hdr= t(".sign_up")
 
-= form_for(@user) do |f|
   = render "errors"
-  
-  .field
-    = f.label :email
-    = f.email_field :email, :required => true
 
-  .field
-    = f.label :user_name
-    = f.text_field :user_name,
-        :pattern  => User::USER_NAME_PATTERN, 
-        :required => true, 
-        :title    => t_model_error(:user, :user_name, :invalid)
+  = form_for(@user, :html => { :class => "form" }) do |f|
 
-  .field
-    = f.label :full_name
-    = f.text_field :full_name, :required => true
-  
-  = render :partial => "password_fields", :locals => { :f => f}
+    .field
+      = f.label :email, :class => "label"
+      = f.email_field :email, :required => true, :class => "input"
 
-  .actions
-    = f.submit t(".sign_up")
+    .field
+      = f.label :user_name, :class => "label"
+      = f.text_field :user_name,
+          :pattern  => User::USER_NAME_PATTERN,
+          :required => true,
+          :title    => t_model_error(:user, :user_name, :invalid),
+          :class    => "input"
 
+    .field
+      = f.label :full_name, :class => "label"
+      = f.text_field :full_name, :required => true, :class => "input"
+
+    = render :partial => "password_fields", :locals => { :f => f}
+
+    .actions
+      = f.submit t(".sign_up"), :class => "submit"

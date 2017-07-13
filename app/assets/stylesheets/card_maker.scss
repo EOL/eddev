@@ -4,6 +4,11 @@ $editor-width: 940;
 $active-select-text-color: #a09d9d;
 $thumb-size: 80px;
 
+input[type='text'] {
+  border: none;
+  outline: none;
+}
+
 .new-card-hdr {
   font-size: 24px;
   font-weight: $bold;

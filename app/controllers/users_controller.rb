@@ -18,7 +18,7 @@ class UsersController < ApplicationController
       if @user.save
         SignupConfirmationMailer.confirmation_email(@user).deliver_now
         format.html { render :confirmation_pending }
-        format.json do 
+        format.json do
           render :json => {
             :success => true,
             :msg => t("welcome.index.accounts.signup_success_msg")
@@ -43,8 +43,8 @@ class UsersController < ApplicationController
 
     if !@user.confirmed?
       @user.confirm!
-      flash[:account_notice] = t(".success", :user_name => @user.user_name)
-      redirect_to root_path
+      flash[:notice] = t(".success", :user_name => @user.user_name)
+      redirect_to login_path
     else
       raise NotFoundError
     end
@@ -89,11 +89,16 @@ class UsersController < ApplicationController
   def reset_password
     if @user.update(change_password_params.merge(:force_password_validation => true))
       @reset_token.mark_used if @reset_token
-      flash[:account_notice] = t(".success")
-      redirect_to root_path
+      flash[:notice] = t(".success")
+      redirect_to login_path
     else
       render :reset_password_form
     end
+  end
+
+  def email_test
+    @user = User.first
+    render :confirmation_pending
   end
 
   private

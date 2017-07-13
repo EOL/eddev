@@ -1,25 +1,29 @@
-- if notice
-  #Notice= notice
+.form-wrap
+  - if notice
+    .notice= notice
 
-%h1= t(".sign_in")
+  %h1.hdr= t(".sign_in")
 
-- if @error_msg
-  #error_explanation= @error_msg
+  - if @error_msg
+    %ul.errors
+      %li.error= @error_msg
 
-= form_for(:user_session) do |f|
-  .field
-    = f.label :user_name, t(".user_name")
-    = f.text_field :user_name
+  = form_for(:user_session, :html => { :class => "form" }) do |f|
+    .field
+      = f.label :user_name, t(".user_name")
+      = f.text_field :user_name, :class => "input"
 
+    .field
+      = f.label :password, t(".password")
+      = f.password_field :password, :class => "input"
 
-  .field
-    = f.label :password, t(".password")
-    = f.password_field :password
+    - if @return_to
+      = hidden_field_tag :return_to, @return_to
 
-  - if @return_to
-    = hidden_field_tag :return_to, @return_to
+    .links
+      .link-wrap
+        = link_to t(".forgot_password"), forgot_password_path, :class => "link"
+      .link-wrap
+        = link_to t(".sign_up"), new_user_path, :class => "link"
 
-  .field
-    = link_to t(".forgot_password"), forgot_password_path
-    
-  = f.submit t(".sign_in")
+    = f.submit t(".sign_in"), :class => "submit"

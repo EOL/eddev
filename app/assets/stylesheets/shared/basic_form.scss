@@ -1,0 +1,71 @@
+@import 'shared/layout_vars';
+
+.hdr {
+  font-size: 24px;
+  font-weight: $semibold;
+  text-align: center;
+}
+
+.form-wrap {
+  margin: 20px auto;
+  width: 500px;
+}
+
+.form {
+  margin-top: 25px;
+}
+
+.input {
+  height: 25px;
+  width: 300px;
+}
+
+.field {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  width: 100%;
+}
+
+.field_with_errors {
+  $error-red: #f00;
+
+  .label {
+    color: $error-red;
+  }
+
+  .input {
+    border-color: $error-red;
+  }
+}
+
+.actions {
+  margin-top: 20px;
+}
+
+.submit {
+  display: block;
+  width: 100%;
+}
+
+.links {
+  margin: 20px 0;
+}
+
+.errors {
+  border: 2px solid #f00;
+  color: #f00;
+  margin-top: 20px;
+  padding: 15px 20px 20px 20px;
+}
+
+.error {
+  margin-top: 5px
+}
+
+.notice {
+  border: 1px solid $black;
+  margin: 40px auto;
+  padding: 20px 30px;
+  width: 500px;
+}

@@ -768,7 +768,10 @@ window.CardManager = (function() {
         createItemMsg: 'Create a card'
       }));
 
-      $newCardElmt.click(newCard);
+      $newCardElmt.click(function() {
+        newCard();
+        return false;
+      });
       $userCards.append($newCardElmt);
     }
   }

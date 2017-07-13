@@ -153,13 +153,12 @@ input[type='text'] {
   $tips-width: 144px;
 
   background-color: #4aa86a;
-  display: flex;
   justify-content: space-between;
 
   .manager-btn {
     color: $white;
     cursor: pointer;
-    position: relative;
+    position: absolute;
     height: 100%;
     width: 199px;
   }

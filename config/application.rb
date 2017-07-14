@@ -50,7 +50,7 @@ module Eddev
     config.middleware.use Rack::Deflater
 
     # card service
-    config.x.card_service_host = "localhost"
-    config.x.card_service_port = 8080
+    config.x.card_service_host = Figaro.env.card_service_host
+    config.x.card_service_port = Figaro.env.card_service_port
   end
 end

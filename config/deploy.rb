@@ -58,3 +58,18 @@ namespace :deploy do
     end
   end
 end
+
+Rake::Task["git:create_release"].clear_actions
+namespace :git do
+  task :create_release => :'git:update' do
+    on release_roles :all do
+      with fetch(:git_environmental_variables) do
+        within repo_path do
+          execute :mkdir, "-p", release_path
+          execute :git, :clone, "-b", fetch(:branch), "--recursive", ".", release_path
+        end
+      end
+    end
+  end
+end
+

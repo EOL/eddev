@@ -52,5 +52,7 @@ module Eddev
     # card service
     config.x.card_service_host = Figaro.env.card_service_host
     config.x.card_service_port = Figaro.env.card_service_port
+    config.x.card_service_key  = Figaro.env.card_service_key
+    config.x.card_service_enable_https = Figaro.env.card_service_enable_https
   end
 end

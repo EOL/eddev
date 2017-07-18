@@ -679,6 +679,8 @@ $col-border-width: 5px;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
+    max-height: 400px;
+    overflow: auto;
     padding: 23px 24px 25px 24px;
   }
 
@@ -695,7 +697,7 @@ $col-border-width: 5px;
     line-height: $height;
     margin-top: 2px;
     text-align: center;
-    width: 171px;
+    width: 163px;
   }
 
   .arrow {

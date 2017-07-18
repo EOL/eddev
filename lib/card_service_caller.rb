@@ -6,11 +6,9 @@ module CardServiceCaller
   SERVICE_HOST = Rails.application.config.x.card_service_host
   SERVICE_PORT = Rails.application.config.x.card_service_port
   SERVICE_KEY  = Rails.application.config.x.card_service_key
-  USE_HTTPS    = Rails.application.config.x.card_service_enable_https
+  USE_HTTPS    = Rails.application.config.x.card_service_use_https
   PROTOCOL     = USE_HTTPS ? "https" : "http"
   SERVICE_URL = "#{PROTOCOL}://#{SERVICE_HOST}:#{SERVICE_PORT}"
-
-  puts SERVICE_URL
 
   JSON_HEADERS = { "Content-Type" => "application/json" }
 

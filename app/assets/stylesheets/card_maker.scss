@@ -1513,35 +1513,66 @@ $col-border-width: 5px;
     margin-top: 10px;
     margin-right: 14px;
     position: relative;
+    width: 205px;
     vertical-align: top;
   }
 
+  /*
   .deck-selector, .deck-name {
     height: 28px;
     width: 100%;
   }
+  */
 
-  .deck-name {
-    color: #69aef3;
-    font-size: 14px;
-    margin: 5px 0 15px 0;
-  	text-align: center;
+  .deck-assign-select {
+    position: relative;
+    width: 205px;
+    z-index: 2;
+
+    .deck-name {
+      color: $white;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .open-msg {
+      color: #72baff;
+      cursor: pointer;
+      font-size: 12px;
+      font-style: italic;
+      text-align: center;
+    }
+
+    .deck-assign-choices {
+      background-color: $white;
+      border-radius: 0 0 2px 2px;
+      box-shadow: inset 0 1px 3px 0 rgba(167, 193, 205, 0.5);
+      position: absolute;
+      width: 100%;
+    }
+
+    .deck-assign-choice {
+      border-top: solid 1px #cbcfd4;
+      height: 35px;
+      line-height: 35px;
+      padding-left: 16px;
+    }
+
+    .deck-assign-top {
+      background-color: #445f7f;
+      padding: 7px 0;
+    }
   }
+
 
   .title-card-placeholder {
     text-align: center;
   }
 
   .resource-frame {
-    $height: 286px;
-    $width: 205px;
-
     background-color: #fff;
     position: relative;
-    height: $height;
-    line-height: $height;
     text-align: center;
-    width: $width;
 
     .resource-overlay {
       background: rgba(50, 50, 50, .5);

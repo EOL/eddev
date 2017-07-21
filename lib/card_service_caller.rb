@@ -12,8 +12,6 @@ module CardServiceCaller
 
   JSON_HEADERS = { "Content-Type" => "application/json" }
 
-  
-
   def self.create_card(user_id, json)
     HTTParty.post(
       "#{self.user_prefix(user_id)}/cards",

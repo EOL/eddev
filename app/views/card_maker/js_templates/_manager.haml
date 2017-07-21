@@ -1,3 +1,22 @@
+%script#UserResourceTemplate{:type => "text/x-handlebars-template"}
+  .resource-wrap.user-resource-wrap{:'data-id' => "{{id}}"}
+    .deck-assign-select
+      .deck-assign-top
+        .deck-name
+        .open-msg &mdash;
+      %ul.deck-assign-choices.hidden
+        :plain
+          <li class="deck-assign-choice" data-id="-1" data-display-name="No deck assigned" data-open-msg="assign to deck">&mdash;</li>
+          {{#each decks}}
+            <li class="deck-assign-choice" data-id="{{this.id}}" data-display-name="{{this.name}}" data-open-msg="move">{{this.name}}</li>
+          {{/each}}
+    .resource-frame.user-resource-frame
+      {{> (inner) }}
+
+%script#CardResourceTemplate{:type => "text/x-handlebars-template"}
+  .resource-frame.user-resource-frame
+    %i.fa.fa-spinner.fa-spin.fa-2x.img-placeholder
+
 %script#CardPlaceholderTemplate{:type => "text/x-handlebars-template"}
   .resource-wrap.user-resource-wrap{:'data-card-id' => "{{cardId}}", :id => "Card-{{cardId}}"}
     .resource-frame.user-resource-frame
@@ -18,7 +37,6 @@
   .resource-wrap.user-resource-wrap
     .resource-frame.user-resource-frame
       %i.fa.fa-image.fa-4x.title-card-placeholder
-    .deck-name {{name}}
 
 %script#DeckOverlayTemplate{:type => "text/x-handlebars-template"}
   .deck-overlay.resource-overlay

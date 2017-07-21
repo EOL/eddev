@@ -63,7 +63,7 @@ window.CardManager = (function() {
 
     function findIndex(id) {
       return items.findIndex(function(item) {
-        return item.id === id
+        return item.id === id;
       });
     }
 
@@ -125,6 +125,7 @@ window.CardManager = (function() {
     , deckFilterItemsTempl
     , loadingTempl
     , emptyNewTempl
+    , userResourceTempl
     ;
 
   /*
@@ -167,6 +168,10 @@ window.CardManager = (function() {
 
   function loadingState() {
     return openLightbox('loading');
+  }
+
+  function errorAlert() {
+    alert('An unexpected error occurred');
   }
 
   function newCard(defaultDeckId) {
@@ -370,7 +375,7 @@ window.CardManager = (function() {
       },
       error: function() {
         removeLoadingFn();
-        alert('An unexpected error occurred');
+        errorAlert();
       }
     });
   }
@@ -485,89 +490,10 @@ window.CardManager = (function() {
 
     $userResources.find('*').remove();
     $userResources.off();
-    $userResources.click(unselectResource);
 
     idsToElmts = {};
 
     return $userResources;
-  }
-
-  /*
-   * Select a resource. Should be called on click. Builds and adds an overlay
-   * from the provided template, which should have edit and delete buttons with
-   * classes .edit-btn and .trash-btn respectively. Adds a click handler to the
-   * #UserResources area to unselect the resource if the click wasn't on the
-   * resource.
-   *
-   * Parameters:
-   *   overlayTemplate - template for the overlay to add to the card
-   *   destroyFn - handler for when the overlay's delete button is clicked
-   *   editFn - handler for when the overlay's edit button is clicked
-   *   $elmt - the selected resource
-   *   id - the resource's id (card id or deck id)
-   *   event - the click event that triggered this handler
-   */
-  function resourceSelected(
-    overlayTemplate,
-    destroyFn,
-    editFn,
-    $elmt,
-    id,
-    event
-  ) {
-    var $overlay = $(overlayTemplate())
-      ;
-
-    event.stopPropagation();
-
-    if ($elmt.hasClass('selected')) {
-      return false;
-    }
-
-    unselectResource();
-
-    $overlay.find('.trash-btn').click(function() {
-      destroyFn($elmt, id);
-      return false;
-    });
-
-    $overlay.find('.edit-btn').click(function() {
-      editFn($(this), id);
-      return false;
-    });
-
-    $elmt.find('.resource-frame').append($overlay);
-    $elmt.addClass('selected');
-
-    return false;
-  }
-
-  /*
-   * Click handler for cards
-   */
-  function cardClicked($card, id, event) {
-    return resourceSelected(
-      cardOverlayTemplate,
-      destroyCard,
-      cardEditClicked,
-      $card,
-      id,
-      event
-    );
-  }
-
-  /*
-   * Click handler for decks
-   */
-  function deckClicked($deck, deck, event) {
-    return resourceSelected(
-      deckOverlayTemplate,
-      destroyDeck.bind(null, $deck, deck),
-      selectDeck.bind(null, deck.id),
-      $deck,
-      deck.id,
-      event
-    );
   }
 
   function selectDeck(id) {
@@ -630,18 +556,6 @@ window.CardManager = (function() {
   }
 
   /*
-   * Add click event handler to a card and load its image
-   *
-   * Parameters:
-   *   $card - card element
-   *   id - the card id
-   */
-  function loadCardImgAndBindEvents($card, id) {
-    $card.click(cardClicked.bind(null, $card, id));
-    loadCardImg($card, id);
-  }
-
-  /*
    * Unselect the currently selected resource
    */
   function unselectResource() {
@@ -659,6 +573,95 @@ window.CardManager = (function() {
       $resource.find('.resource-overlay').remove();
       $resource.removeClass('selected');
     }
+  }
+
+  /*
+   * Select a resource. Should be called on click. Builds and adds an overlay
+   * from the provided template, which should have edit and delete buttons with
+   * classes .edit-btn and .trash-btn respectively. Adds a click handler to the
+   * #UserResources area to unselect the resource if the click wasn't on the
+   * resource.
+   *
+   * Parameters:
+   *   overlayTemplate - template for the overlay to add to the card
+   *   destroyFn - handler for when the overlay's delete button is clicked
+   *   editFn - handler for when the overlay's edit button is clicked
+   *   $elmt - the selected resource
+   *   id - the resource's id (card id or deck id)
+   *   event - the click event that triggered this handler
+   */
+  function resourceSelected(
+    overlayTemplate,
+    destroyFn,
+    editFn,
+    $elmt,
+    id,
+    event
+  ) {
+    var $overlay;
+
+    if ($elmt.hasClass('selected')) {
+      return;
+    }
+
+    $overlay = $(overlayTemplate());
+
+    $overlay.find('.trash-btn').click(function() {
+      destroyFn($elmt, id);
+      return false;
+    });
+
+    $overlay.find('.edit-btn').click(function() {
+      editFn($(this), id);
+      return false;
+    });
+
+    $elmt.find('.resource-frame').append($overlay);
+    $elmt.addClass('selected');
+
+    return false;
+  }
+
+  /*
+   * Click handler for cards
+   */
+  function cardMouseenter($card, id, event) {
+    return resourceSelected(
+      cardOverlayTemplate,
+      destroyCard,
+      cardEditClicked,
+      $card,
+      id,
+      event
+    );
+  }
+
+  /*
+   * Click handler for decks
+   */
+  function deckClicked($deck, deck, event) {
+    return resourceSelected(
+      deckOverlayTemplate,
+      destroyDeck.bind(null, $deck, deck),
+      selectDeck.bind(null, deck.id),
+      $deck,
+      deck.id,
+      event
+    );
+  }
+
+  /*
+   * Add click event handler to a card and load its image
+   *
+   * Parameters:
+   *   $card - card element
+   *   id - the card id
+   */
+  function loadCardImgAndBindEvents($card, id) {
+    $card.mouseenter(cardMouseenter.bind(null, $card, id));
+    $card.mouseleave(unselectResourceHelper.bind(null, $card));
+
+    loadCardImg($card, id);
   }
 
   /*
@@ -717,6 +720,58 @@ window.CardManager = (function() {
     loadCardForEditing(id);
   }
 
+  function deckIdUrl(cardId) {
+    return apiPath + '/cards/' + cardId + '/deck_id';
+  }
+
+  function setCardDeck(cardId, deckId, success, error) {
+    $.ajax({
+      method: 'put',
+      url: deckIdUrl(cardId),
+      data: deckId,
+      contentType: 'text/plain',
+      success: success,
+      error: error
+    });
+  }
+
+  function removeCardDeck(cardId, success, error) {
+    $.ajax({
+      method: 'delete',
+      url: deckIdUrl(cardId),
+      success: success,
+      error: error
+    });
+  }
+
+  function cardResource(card) {
+    var deckName = card.deck ? card.deck.name : 'Deck name'
+      , $cardElmt = $(userResourceTempl({
+          inner: function() {
+            return 'cardResource';
+          },
+          decks: decks.items(),
+          id: card.id
+        }))
+      , select
+      , noDeckId = -1
+      ;
+
+    select = new DeckAssignSelect(
+      $cardElmt.find('.deck-assign-select'),
+      card.deck ? card.deck.id : noDeckId,
+      function(deckId, success, error) {
+        if (deckId === noDeckId) {
+          removeCardDeck(card.id, success, error);
+        } else {
+          setCardDeck(card.id, deckId, success, error);
+        }
+      }
+    );
+
+    return $cardElmt;
+  }
+
   /*
    * Populate the #UserResources area with a list of cards
    *
@@ -735,18 +790,9 @@ window.CardManager = (function() {
 
     if (cards.items().length) {
       $.each(cards.items(), function(i, card) {
-        var deckId = card.deck ? card.deck.id : null
-          , $placeholder = $(cardPlaceholderTemplate({
-              cardId: card.id,
-              decks: decks.items()
-            }))
-          , $deckSelector = $placeholder.find('.deck-selector')
-          ;
+        var $placeholder = cardResource(card)
 
-        if (deckId) {
-          $deckSelector.val(deckId);
-        }
-
+        /*
         $deckSelector.on('change', function() {
           var deckId = $(this).val();
 
@@ -756,6 +802,7 @@ window.CardManager = (function() {
             setCardDeck(card.id, deckId);
           }
         });
+        */
 
         idsToElmts[card.id] = $placeholder;
         $userCards.append($placeholder);
@@ -788,7 +835,7 @@ window.CardManager = (function() {
         ;
 
       if (cardPosnTop + cardMargin < innerHeight) {
-        loadCardImgAndBindEvents($card, $card.data('cardId'));
+        loadCardImgAndBindEvents($card, $card.data('id'));
       }
     });
   }
@@ -867,7 +914,8 @@ window.CardManager = (function() {
           loadCardImg($deckElmt, deck.titleCardId);
         }
 
-        $deckElmt.click(deckClicked.bind(null, $deckElmt, deck));
+        $deckElmt.mouseenter(deckClicked.bind(null, $deckElmt, deck));
+        $deckElmt.mouseleave(unselectResourceHelper.bind(null, $deckElmt));
         $deckContainer.append($deckElmt);
       });
     } else {
@@ -1039,6 +1087,53 @@ window.CardManager = (function() {
     }
   }
 
+  function DeckAssignSelect($elmt, selectedId, changeFn) {
+    var that = this
+      , $choiceWrap = $elmt.find('.deck-assign-choices')
+      , $choices = $elmt.find('.deck-assign-choice')
+      , $deckName = $elmt.find('.deck-name')
+      , $topArea = $elmt.find('.deck-assign-top')
+      , $openMsg = $elmt.find('.open-msg')
+      ;
+
+    function setSelection($choice) {
+      $deckName.html($choice.data('display-name'));
+      $openMsg.html($choice.data('open-msg'));
+    }
+
+    setSelection($choices.filter('[data-id="' + selectedId + '"]'));
+
+    $topArea.click(function(e) {
+      var top = this;
+
+      if ($choiceWrap.hasClass('hidden')) {
+        $choiceWrap.removeClass('hidden');
+
+        function deckAssignClose(e) {
+          if (
+            !$(e.target).is($(top)) &&
+            !$(e.target).parent('.deck-assign-top').is($(top))
+          ) {
+            $choiceWrap.addClass('hidden');
+            $(document).off('click', deckAssignClose);
+          }
+        }
+
+        $(document).on('click', deckAssignClose);
+      }
+    });
+
+    $choices.click(function() {
+      var $choice = $(this);
+
+      changeFn($choice.data('id'), function() {
+        setSelection($choice);
+      }, function() {
+        errorAlert();
+      });
+    });
+  }
+
   $(function() {
     cardPlaceholderTemplate = Handlebars.compile($('#CardPlaceholderTemplate').html());
     cardImgTemplate = Handlebars.compile($('#CardImgTemplate').html());
@@ -1055,10 +1150,12 @@ window.CardManager = (function() {
     newCardInDeckTempl = Handlebars.compile($('#NewCardInDeckTemplate').html());
     deckFilterItemsTempl = Handlebars.compile($('#DeckFilterItemsTemplate').html());
     emptyNewTempl = Handlebars.compile($('#EmptyNewTemplate').html());
+    userResourceTempl = Handlebars.compile($('#UserResourceTemplate').html());
 
     Handlebars.registerPartial('loading', $('#LoadingTemplate').html());
     Handlebars.registerPartial('speciesSearch', $('#SpeciesSearchTemplate').html());
     Handlebars.registerPartial('newDeck', $('#NewDeckLightboxTemplate').html());
+    Handlebars.registerPartial('cardResource', $('#CardResourceTemplate').html());
 
     $('#NewCard').click(newCard.bind(null, null));
     $('#NewDeck').click(newDeck);

@@ -790,19 +790,7 @@ window.CardManager = (function() {
 
     if (cards.items().length) {
       $.each(cards.items(), function(i, card) {
-        var $placeholder = cardResource(card)
-
-        /*
-        $deckSelector.on('change', function() {
-          var deckId = $(this).val();
-
-          if (deckId === 'none') {
-            removeCardDeck(card.id);
-          } else {
-            setCardDeck(card.id, deckId);
-          }
-        });
-        */
+        var $placeholder = cardResource(card);
 
         idsToElmts[card.id] = $placeholder;
         $userCards.append($placeholder);

@@ -1570,8 +1570,13 @@ $col-border-width: 5px;
   }
 
   .resource-frame {
+    $height: 287px;
+    $width: 205px;
+
     background-color: #fff;
     position: relative;
+    height: $height;
+    line-height: $height;
     text-align: center;
 
     .resource-overlay {

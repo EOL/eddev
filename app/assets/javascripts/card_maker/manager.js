@@ -896,7 +896,7 @@ window.CardManager = (function() {
 
     if (decks.items().length) {
       $.each(decks.items(), function(i, deck) {
-        var $deckElmt = $(deckTemplate({ name: deck.name }));
+        var $deckElmt = $(deckTemplate({ deckName: deck.name }));
 
         if (deck.titleCardId) {
           loadCardImg($deckElmt, deck.titleCardId);

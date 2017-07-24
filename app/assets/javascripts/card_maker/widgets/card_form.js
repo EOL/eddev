@@ -8,7 +8,6 @@ window.CardForm = (function() {
   // Handlebars
   var fieldTempl
     , fieldSepTempl
-    , imgLibTempl
     , thumbSpinTempl
     , suggestionsTempl
     ;
@@ -228,31 +227,6 @@ window.CardForm = (function() {
       return buildTextFieldHelper(field, 'multilineTextField');
     }
 
-    function openImgLib(fieldId, $field, choices, $creditInput) {
-      var $cols = $('#Cols')
-        , $imgLib
-        , enableFn
-        ;
-
-      $imgLib = $(imgLibTempl({ choices: choices }));
-      $imgLib.find('.img-lib-thumb').click(function() {
-        removeThumbSelected($field);
-        card.setChoiceIndex(fieldId, $(this).data('index'));
-        setCreditValFromCard(fieldId, $creditInput);
-      });
-
-      $cols.append($imgLib);
-
-      enableFn = Util.disablePage($imgLib)
-
-      $(document).click(function() {
-        $imgLib.remove();
-        enableFn();
-      });
-
-      return false;
-    }
-
     function removeThumbSelected($elmt) {
       $elmt.find('.thumb').removeClass('selected');
     }
@@ -404,6 +378,9 @@ window.CardForm = (function() {
         , $urlInput
         , $urlBtn
         , $urlError
+        , $imgThumbs
+        , $mainSection
+        , $closeLibBtn
         , uploadedImgData
         , curImgSrc
         , creditText
@@ -414,7 +391,8 @@ window.CardForm = (function() {
       }
 
       $elmt = buildField('imageField', field, {
-        thumbUrls: thumbUrls
+        thumbUrls: thumbUrls,
+        choices: choices
       });
 
       $uploadBtn = $elmt.find('.img-upload-btn');
@@ -425,10 +403,27 @@ window.CardForm = (function() {
       $urlInput = $elmt.find('.img-url-input');
       $urlBtn = $elmt.find('.img-url-btn');
       $urlError = $elmt.find('.img-url-error');
+      $imgLibLink = $elmt.find('.img-lib-link');
+      $imgLib = $elmt.find('.img-lib-expanded');
+      $mainSection = $elmt.find('.img-field-main');
+      $imgThumbs = $elmt.find('.img-thumb');
+      $closeLibBtn = $elmt.find('.back-btn');
 
-      $imgLib = $elmt.find('.img-lib');
-      $imgLib.click(openImgLib.bind(null, field.id, $elmt, choices,
-        $creditInput));
+      $imgLibLink.click(function() {
+        $imgLib.removeClass('hidden');
+        $mainSection.addClass('hidden');
+      });
+
+      $closeLibBtn.click(function() {
+        $imgLib.addClass('hidden');
+        $mainSection.removeClass('hidden');
+      });
+
+      $imgThumbs.click(function() {
+        removeThumbSelected($elmt);
+        card.setChoiceIndex(field.id, $(this).data('index'));
+        setCreditValFromCard(field.id, $creditInput);
+      });
 
       $fileInput.click(function(e) {
         e.stopPropagation();
@@ -741,7 +736,6 @@ window.CardForm = (function() {
 
     fieldTempl = Handlebars.compile($('#FieldTempl').html());
     fieldSepTempl = Handlebars.compile($('#FieldSepTempl').html());
-    imgLibTempl = Handlebars.compile($('#ImageLibTempl').html());
     thumbSpinTempl = Handlebars.compile($('#ThumbSpinTempl').html());
     suggestionsTempl = Handlebars.compile($('#SuggestionsTempl').html());
   });

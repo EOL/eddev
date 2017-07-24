@@ -68,7 +68,6 @@ window.ImageControls = (function() {
     }
 
     function cardCanvasClicked(clickEvent) {
-      console.log('click');
       var $that = $(this)
         , panX = cardWrapper.getDataAttr(selectedImgId, 'panX', 0)
         , panY = cardWrapper.getDataAttr(selectedImgId, 'panY', 0)

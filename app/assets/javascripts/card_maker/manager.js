@@ -754,19 +754,12 @@ window.CardManager = (function() {
           id: card.id
         }))
       , select
-      , noDeckId = -1
       ;
 
     select = new DeckAssignSelect(
       $cardElmt.find('.deck-assign-select'),
-      card.deck ? card.deck.id : noDeckId,
-      function(deckId, success, error) {
-        if (deckId === noDeckId) {
-          removeCardDeck(card.id, success, error);
-        } else {
-          setCardDeck(card.id, deckId, success, error);
-        }
-      }
+      card.id,
+      card.deck ? card.deck.id : null
     );
 
     return $cardElmt;
@@ -1075,14 +1068,19 @@ window.CardManager = (function() {
     }
   }
 
-  function DeckAssignSelect($elmt, selectedId, changeFn) {
+  function DeckAssignSelect($elmt, cardId, selectedId) {
     var that = this
       , $choiceWrap = $elmt.find('.deck-assign-choices')
       , $choices = $elmt.find('.deck-assign-choice')
       , $deckName = $elmt.find('.deck-name')
       , $topArea = $elmt.find('.deck-assign-top')
       , $openMsg = $elmt.find('.open-msg')
+      , noDeckId = -1
       ;
+
+    if (selectedId === null) {
+      selectedId = noDeckId;
+    }
 
     function setSelection($choice) {
       $deckName.html($choice.data('display-name'));
@@ -1112,13 +1110,20 @@ window.CardManager = (function() {
     });
 
     $choices.click(function() {
-      var $choice = $(this);
+      var $choice = $(this)
+        , deckId = $choice.data('id')
+        ;
 
-      changeFn($choice.data('id'), function() {
+      function success() {
         setSelection($choice);
-      }, function() {
-        errorAlert();
-      });
+        decks.reload(function() {});
+      }
+
+      if (deckId === noDeckId) {
+        removeCardDeck(cardId, success, errorAlert);
+      } else {
+        setCardDeck(cardId, deckId, success, errorAlert);
+      }
     });
   }
 

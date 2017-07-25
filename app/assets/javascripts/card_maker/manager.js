@@ -187,7 +187,7 @@ window.CardManager = (function() {
       , $deckSelectClone = $('#DeckFilter').clone()
       , closeFn = lightboxResult.closeFn
       , noDeckId = '-1'
-      , disableDeckSelect = defaultDeckId != null
+      , disableDeckSelect = defaultDeckId != null || !decks.items().length
       , selectedDeckId = defaultDeckId != null ? defaultDeckId : noDeckId
       , docClickHandler
       , resultSelectFn

@@ -15,6 +15,7 @@ $(function() {
 
   function screenTransition($cur, $next) {
     $cur.fadeOut(fadeMs, function() {
+      window.scrollTo(0, 0);
       $next.fadeIn(fadeMs);
     });
   }

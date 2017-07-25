@@ -74,31 +74,32 @@ class User < ActiveRecord::Base
     end
   end
 
-  def authenticate(password)
-    # A user should either have a password_digest or a legacy_password_digest
-    # (enforced by validations). If neither are present, return false and log an error.
-    if password_digest
-      super(password) # defined in bcrypt
-    elsif legacy_password_digest
-      digest = UnixCrypt::MD5.build(password, legacy_salt)[digest_start_index..-1]
-
-      if digest == legacy_password_digest # auth success
-        if self.update(:password => password,
-                       :password_confirmation => password)
-          Rails.logger.info("Successfully migrated password for user #{id}/#{user_name}")
-        else
-          Rails.logger.error("Failed to migrate password for user #{id}/#{user_name}")
-        end
-
-        self
-      else # auth failure
-        false
-      end
-    else
-      Rails.logger.error("User #{self.id} does not have a password_digest or legacy_password_digest")
-      false
-    end
-  end
+  # XXX: commented out to just use bcrypt
+  # def authenticate(password)
+  #   # A user should either have a password_digest or a legacy_password_digest
+  #   # (enforced by validations). If neither are present, return false and log an error.
+  #   if password_digest
+  #     super(password) # defined in bcrypt
+  #   elsif legacy_password_digest
+  #     digest = UnixCrypt::MD5.build(password, legacy_salt)[digest_start_index..-1]
+  #
+  #     if digest == legacy_password_digest # auth success
+  #       if self.update(:password => password,
+  #                      :password_confirmation => password)
+  #         Rails.logger.info("Successfully migrated password for user #{id}/#{user_name}")
+  #       else
+  #         Rails.logger.error("Failed to migrate password for user #{id}/#{user_name}")
+  #       end
+  #
+  #       self
+  #     else # auth failure
+  #       false
+  #     end
+  #   else
+  #     Rails.logger.error("User #{self.id} does not have a password_digest or legacy_password_digest")
+  #     false
+  #   end
+  # end
 
   # Set confirmed_at to the current time and save
   def confirm!

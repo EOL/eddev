@@ -537,6 +537,10 @@ window.CardManager = (function() {
    *   cardId - the card id
    */
   function loadCardImg($placeholder, cardId) {
+    if ($placeholder.find('.user-resource').length) {
+      return;
+    }
+
     var $img = $(cardImgTemplate({
       src: apiPath + '/cards/' + cardId + '/svg'
     }));
@@ -787,9 +791,11 @@ window.CardManager = (function() {
 
         idsToElmts[card.id] = $placeholder;
         $userCards.append($placeholder);
-        loadVisibleCards();
-        $userCards.scroll(loadVisibleCards);
       });
+
+      fixLayout();
+      loadVisibleCards();
+      $userCards.scroll(loadVisibleCards);
     } else {
       $newCardElmt = $(emptyNewTempl({
         noItemsMsg: "You don't have any cards yet.",
@@ -853,7 +859,6 @@ window.CardManager = (function() {
   function showCards() {
     selectFilter('CardFilter');
     buildCards();
-    fixLayout();
   }
 
   function selectDeckFilter() {

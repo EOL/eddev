@@ -690,14 +690,13 @@ $col-border-width: 5px;
     background-color: $white;
     color: #0353bc;
     cursor: pointer;
-    flex: 0 0 auto;
+    flex: 0 1 49.5%;
     font-size: 10px;
     font-weight: $semibold;
     height: $height;
     line-height: $height;
     margin-top: 2px;
     text-align: center;
-    width: 164px;
   }
 
   .arrow {

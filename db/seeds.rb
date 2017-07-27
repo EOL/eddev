@@ -482,6 +482,48 @@ LessonPlan.create_with(:grade_level => grade_level_2).create!([
 Deck.delete_all
 Deck.create!([
   {
+    :title_key => "andorra",
+    :subtitle_key => "add_vertebrates",
+    :desc_key => "andorra_add_vertebrates",
+    :file_name => "andorra_additional_vertebrates",
+    :image_file_name => "andorra_add_verts"
+  },
+  {
+    :title_key => "andorra",
+    :subtitle_key => "fungi",
+    :desc_key => "andorra_fungi",
+    :file_name => "andorra_fungi",
+    :image_file_name => "andorra_fungi"
+  },
+  {
+    :title_key => "andorra",
+    :subtitle_key => "plants",
+    :desc_key => "andorra_plants",
+    :file_name => "andorra_plants",
+    :image_file_name => "andorra_plants"
+  },
+  {
+    :title_key => "andorra",
+    :subtitle_key => "passerine",
+    :desc_key => "andorra_passerine",
+    :file_name => "andorra_passerines",
+    :image_file_name => "andorra_passerines"
+  },
+  {
+    :title_key => "andorra",
+    :subtitle_key => "small_mammals",
+    :desc_key => "andorra_small_mammals",
+    :file_name => "andorra_small_mammals",
+    :image_file_name => "andorra_small_mammals"
+  },
+  {
+    :title_key => "andorra",
+    :subtitle_key => "snowbed_plants",
+    :desc_key => "andorra_snowbed",
+    :file_name => "andorra_snowbed",
+    :image_file_name => "andorra_snowbed"
+  },
+  {
     :title_key  => "aquatic",
     :desc_key   => "aquatic",
     :image_file_name => "aquatic_insects",

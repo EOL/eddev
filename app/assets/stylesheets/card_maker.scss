@@ -1,3 +1,8 @@
+/*
+ *= require card_maker_icons
+ *= require_self
+ */
+
 @import "layout_vars.scss";
 
 $editor-width: 940;
@@ -25,6 +30,10 @@ input[type='text'] {
   color: $white;
   margin-top: 200px;
   text-align: center;
+}
+
+.screen-hdr-logo {
+  font-size: 16px;
 }
 
 .card-hdr-box {
@@ -307,17 +316,22 @@ input[type='text'] {
 
   .filter-icon {
   	box-shadow: inset 0 1px 6px 0 #8dc2ff;
-    height: 100%;
+    height: $icon-width;
+    padding-top: 7px;
     vertical-align: top;
     width: $icon-width;
-  }
-
-  .count {
     font-size: 12px;
-  	font-weight: $bold;
-    height: $height;
-    line-height: $height;
-  	text-align: center;
+    font-weight: $bold;
+    text-align: center;
+
+    .icon {
+      font-size: 20px;
+    }
+
+    .count, .icon {
+      display: block;
+      width: 100%
+    }
   }
 
   .filter-selection {
@@ -349,9 +363,6 @@ input[type='text'] {
     .filter-icon {
       background-color: #72baff;
       box-shadow: inset 0 1px 6px 0 rgba(105, 105, 105, 0.5);
-    }
-
-    .count {
       color: $white;
       text-shadow: 0 2px 4px rgba(10, 54, 118, 0.57);
     }

@@ -8,7 +8,7 @@ Rails.application.config.assets.version = '1.0'
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-Rails.application.config.assets.precompile += %w(reset.css polyfill/border-box.htc lesson_plan_icons.css)
+Rails.application.config.assets.precompile += %w(reset.css polyfill/border-box.htc lesson_plan_icons.css card_maker_icons.css)
 
 Rails.application.config.assets.precompile += %w(card_templates/*.js generator.js)
 

@@ -625,8 +625,20 @@ input[type='text'] {
     cursor: pointer;
     display: inline-block;
     height: 100%;
+    text-align: center;
     vertical-align: top;
     width: 127px;
+
+    .icon-new-deck {
+      color: #e6694d;
+      font-size: 40px;
+    }
+  }
+
+  .create-deck-txt {
+    color: #4e4e4e;
+    font-size: 15px;
+    margin-top: 12px;
   }
 }
 
@@ -1640,6 +1652,11 @@ $col-border-width: 5px;
       text-align: center;
       width: 100%;
       z-index: 2;
+    }
+
+    .icon-deck {
+      font-size: 26px;
+      vertical-align: middle
     }
 
     .resource-overlay {

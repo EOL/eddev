@@ -425,7 +425,7 @@ window.CardManager = (function() {
 
     $(document).click(lightboxResult.closeFn);
 
-    $submitBtn.click(function() {
+    function submit() {
       var deckName = $nameInput.val()
         , colId = $colIdInput.val()
         , closeLoadingFn
@@ -477,7 +477,17 @@ window.CardManager = (function() {
         lightboxResult.inner.effect('shake');
         return false;
       }
-    });
+    }
+
+    function submitIfEnter(e) {
+      if (e.which === 13) {
+        submit();
+      }
+    }
+
+    $submitBtn.click(submit);
+    $nameInput.keyup(submitIfEnter);
+    $colIdInput.keyup(submitIfEnter);
   }
 
   function newDeck(e) {

@@ -35,7 +35,9 @@
 
 %script#DeckTemplate{:type => "text/x-handlebars-template"}
   .resource-wrap.user-resource-wrap.deck-resource
-    .deck-name {{deckName}}
+    .deck-name
+      %i.icon-deck
+      {{deckName}}
     .resource-frame.user-resource-frame
       %i.fa.fa-image.fa-4x.title-card-placeholder
 
@@ -76,6 +78,8 @@
     .deck-name-wrap.wrap
       %input.deck-name.input{:type => "text", :placeholder => "Enter deck name"}>
       .create-deck-btn>
+        .create-deck-txt Create deck
+        %i.icon-new-deck
     .col-id-wrap.wrap
       %input.col-id.input{:type => "text", :placeholder => "Enter EOL collection id (optional)"}
 

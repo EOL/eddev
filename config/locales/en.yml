@@ -247,6 +247,7 @@ en:
         sea_turtles: "Sea Turtles of the World"
       subtitles:
         adaptations: "Adaptations"
+        add_vertebrates: "Additional Vertebrates"
         amphibians_reptiles: "Amphibians and Reptiles"
         bh_rocky_inter: "Boston Harbor Rocky Intertidal"
         biodiversity: "Biodiversity"
@@ -279,6 +280,7 @@ en:
         vernal_pools: "Vernal Pools"
         wright_farm: "Wright Farm"
       descs:
+        andorra_add_vertebrates: "Beyond small mammals and passerine birds, this deck explores the threats, adaptability, and population trends of 19 other vertebrate species in the Pyrenees."
         andorra_fungi: "Explore the traits of 17 diverse species of fungi that thrive high in the Pyrenees mountains of Andorra."
         andorra_passerine: "Explore how 13 passerine bird species may respond to effects of climate change in the Pyrenees mountains."
         andorra_plants: "Explore the climate responses of 36 alpine plants surveyed as part of the Wildlife in the Changing Andorran Pyrenees Earthwatch Institute project."

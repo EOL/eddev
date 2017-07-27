@@ -6,9 +6,11 @@ window.CardEditor = (function() {
     , imageControls
     , cardForm
     , closeCb
+    , canvas
+    , defaultWidth = 240
+    , defaultHeight = 336
     ;
 
-  // Handlebars (set onload)
   var previewThumbTemplate;
 
   // http://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas/15666143#15666143
@@ -43,9 +45,6 @@ window.CardEditor = (function() {
    */
   var canvasSupplier = {
     drawingCanvas: function(width, height) {
-      var $canvas = $('#CardCanvas'),
-          canvas  = $canvas[0];
-
       canvas.width = width * pixelRatio;
       canvas.height = height * pixelRatio;
 
@@ -133,6 +132,19 @@ window.CardEditor = (function() {
   var renderer =
     new TemplateRenderer(canvasSupplier, imageFetcher);
 
+  function clearCanvas() {
+    var ctx = canvas.getContext('2d');
+
+    canvas.width = defaultWidth;
+    canvas.height = defaultHeight
+
+    canvas.style.width = defaultWidth + 'px';
+    canvas.style.height = defaultHeight + 'px';
+
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
   function draw() {
     renderer.draw(cardWrapper, function(err) {
       if (err) console.log(err);
@@ -161,7 +173,7 @@ window.CardEditor = (function() {
       cardWrapper.dirtyChange(handleDirtyChange);
 
       disableSave();
-
+      clearCanvas(); // don't show last drawn card
       draw();
     });
   }
@@ -255,6 +267,8 @@ window.CardEditor = (function() {
       // TODO: handle error
     }));
     $('.preview-btns .save-exit').click(saveAndClose);
+
+    canvas = $('#CardCanvas')[0];
   });
 
   return exports;

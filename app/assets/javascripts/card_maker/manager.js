@@ -97,6 +97,10 @@ window.CardManager = (function() {
     $.getJSON(apiPath + '/decks/' + id, cb);
   }
 
+  function loadSingleCard(id, cb) {
+    $.getJSON(apiPath + '/cards/' + id + '/json', cb);
+  }
+
   function cardSummaryWrap(card) {
     return {
       id: card.id,
@@ -140,7 +144,7 @@ window.CardManager = (function() {
   var idsToElmts
     , cardSelectedCb
     , curScreen
-    , cards = new ResourceCollection(reloadCards, null, cardSummaryWrap)
+    , cards = new ResourceCollection(reloadCards, loadSingleCard, cardSummaryWrap)
     , decks = new ResourceCollection(reloadDecks, loadSingleDeck, null)
     ;
 
@@ -1121,7 +1125,9 @@ window.CardManager = (function() {
 
       function success() {
         setSelection($choice);
-        decks.reload(function() {});
+        cards.reloadItem(cardId, function() {
+          decks.reload(function() {});
+        });
       }
 
       if (deckId === noDeckId) {

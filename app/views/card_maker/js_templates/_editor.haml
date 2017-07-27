@@ -38,7 +38,9 @@
       %input.text-input.text-field-input.text-entry{:type => "text"}>
       :plain
         {{#if pc.choices}}
-          <div class="text-input-btn"></div>
+          <div class="text-input-btn">
+            <i class="icon-drop suggestion-icon"></i>
+          </div>
         {{/if}}
     :plain
       {{#if pc.fontSizes}}
@@ -100,7 +102,9 @@
 
 %script#LabeledChoiceImageFieldTempl{:type => "text/x-handlebars-template"}
   .labeled-choice-drop
-    .selected-txt
+    .selected-txt-wrap
+      .selected-txt
+      %i.icon-drop
     %ul.choices
       .choice{:data => {:index => -1, :text => "Select one"}} &mdash;
       :plain

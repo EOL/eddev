@@ -1096,6 +1096,10 @@ $col-border-width: 5px;
 
 .card-fields-wrap {
   position: relative;
+
+  .icon-drop {
+    color: #428cff;
+  }
 }
 
 .right-col {
@@ -1163,6 +1167,10 @@ $col-border-width: 5px;
     text-align: center;
     vertical-align: top;
     width: $btn-width;
+  }
+
+  .suggestion-icon {
+    vertical-align: middle;
   }
 
   .font-size-box {
@@ -1459,7 +1467,7 @@ $col-border-width: 5px;
     height: $height;
     line-height: $height;
     margin: 22px auto;
-    padding-left: 16px;
+    padding: 0 28px 0 16px;
     position: relative;
     width: $width;
 
@@ -1471,6 +1479,17 @@ $col-border-width: 5px;
       .selected-txt {
         color: $active-select-text-color;
       }
+    }
+
+    .selected-txt-wrap {
+      position: relative;
+    }
+
+    .icon-drop {
+      font-size: 18px;
+      position: absolute;
+      right: 0;
+      top: 3px;
     }
 
     .choices {

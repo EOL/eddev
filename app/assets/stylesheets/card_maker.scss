@@ -322,6 +322,7 @@ input[type='text'] {
   position: relative;
   vertical-align: top;
   width: $width;
+  z-index: 10;
 
   .filter-icon {
   	box-shadow: inset 0 1px 6px 0 #8dc2ff;
@@ -756,7 +757,6 @@ $col-border-width: 5px;
   padding-top: 25px;
   position: relative;
   text-align: center;
-  width: $col-width;
 }
 
 .col-head-txt {

@@ -148,17 +148,33 @@ window.CardManager = (function() {
     , decks = new ResourceCollection(reloadDecks, loadSingleDeck, null)
     ;
 
-  function openLightbox(templName) {
+  function openLightbox(templName, suppressDocClick) {
     var $lightbox = $(lightboxTempl({
           templ: function() {
             return templName
           }}))
+      , inner = $lightbox.find('.lightbox')
       , enableFn = Util.disablePage($lightbox)
       ;
 
     $('#Page').prepend($lightbox);
 
+    function docClickHandler(e) {
+      if (!e.originalEvent.innerContains) {
+        closeFn();
+      }
+    }
+
+    if (!suppressDocClick) {
+      inner.click(function(e) {
+        e.originalEvent.innerContains = true;
+      });
+
+      $(document).click(docClickHandler);
+    }
+
     function closeFn() {
+      $(document).off('click', docClickHandler);
       $lightbox.remove();
       enableFn();
     }
@@ -171,7 +187,7 @@ window.CardManager = (function() {
   }
 
   function loadingState() {
-    return openLightbox('loading');
+    return openLightbox('loading', true);
   }
 
   function errorAlert() {
@@ -199,17 +215,6 @@ window.CardManager = (function() {
       , deckSelect
       ;
 
-    docClickHandler = function(e) {
-      if (!e.originalEvent.searchContains) {
-        closeFn();
-      }
-    };
-
-    $inner.click(function(e) {
-      e.originalEvent.searchContains = true;
-    });
-
-    $(document).on('click.closeSearch', docClickHandler);
     $createBtn.click(createBtnClick);
 
     function fixSearchLayout() {
@@ -418,12 +423,6 @@ window.CardManager = (function() {
       , $submitBtn = lightboxResult.lightbox.find('.create-deck-btn')
       , $colIdInput = lightboxResult.lightbox.find('.col-id')
       ;
-
-    lightboxResult.inner.click(function() {
-      return false;
-    });
-
-    $(document).click(lightboxResult.closeFn);
 
     function submit() {
       var deckName = $nameInput.val()

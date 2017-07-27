@@ -205,9 +205,18 @@ input[type='text'] {
     transform: skewX(-15deg);
   }
 
+  .manager-btn-txt-wrap {
+    .icon-deck {
+      font-size: 32px;
+      position: relative;
+      z-index: 2;
+    }
+  }
+
   .manager-btn-txt {
     font-size: 12px;
     font-family: Merriweather;
+    margin-top: -8px;
     position: relative;
     z-index: 2;
   }
@@ -569,7 +578,14 @@ input[type='text'] {
   .create-btn-body {
     background-image: linear-gradient(to bottom, #ffce6c, #f9c546);
     box-shadow: inset 0 1px 3px 1px rgba(255, 217, 18, 0.5);
+    color: $white;
     height: 56px;
+    line-height: 56px;
+    text-align: center;
+
+    .icon-new-card {
+      font-size: 50px;
+    }
   }
 }
 

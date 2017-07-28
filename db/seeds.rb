@@ -477,6 +477,46 @@ LessonPlan.create_with(:grade_level => grade_level_2).create!([
     :overview_file_name => "9-12_Interdependence_LessonOverview",
     :human_name => "food_chains_rummy"
   },
+  {
+    :theme => science_skills_theme,
+    :name_key => "intro_to_biodiv",
+    :desc_key => "explore_biodiv",
+    :objective_keys => ["compare_biodiv_html", "hypo_species_html"],
+    :perks => [bio_stats_perk, species_card_perk],
+    :file_name => "9-12_CitSci1_IntroToBiodiversity",
+    :overview_file_name => "9-12_CitSci-Overview",
+    :human_name => "intro_to_biodiversity"
+  },
+  {
+    :theme => science_skills_theme,
+    :name_key => "biodiv_guided_cit_sci",
+    :desc_key => "explore_broad_spectrum",
+    :objective_keys => ["address_mis_sci_html", "explore_public_participate_html", "discuss_benefits_cit_sci_html"],
+    :perks => [bio_stats_perk],
+    :file_name => "9-12_CitSci2_CitSci-OpenSci-Presentation",
+    :overview_file_name => "9-12_CitSci-Overview",
+    :human_name => "citizen_science_presentation"
+  },
+  {
+    :theme => science_skills_theme,
+    :name_key => "biodiv_intro_inat",
+    :desc_key => "students_learn_inat",
+    :objective_keys => ["contribute_discover_biodiv_html", "practice_filter_inat_html"],
+    :perks => [field_work_perk],
+    :file_name => "9-12_CitSci3_IntroToINat",
+    :overview_file_name => "9-12_CitSci-Overview",
+    :human_name => "intro_to_inaturalist"
+  },
+  {
+    :theme => science_skills_theme,
+    :name_key => "biodiv_cnc_data",
+    :desc_key => "using_data_cnc",
+    :objective_keys => ["compare_cnc_html", "infer_species_html"],
+    :perks => [bio_stats_perk],
+    :file_name => "9-12_CitSci4_CNC-Data",
+    :overview_file_name => "9-12_CitSci-Overview",
+    :human_name => "cnc_data_exploration"
+  },
 ])
 
 Deck.delete_all

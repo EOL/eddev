@@ -331,6 +331,10 @@ en:
         grades_9_12: "Grades 9–12 (Ages 14–17)"
     lesson_plan:
       names:
+        intro_to_biodiv: "Biodiversity + Open Science Activity 1: Introduction to Biodiversity"
+        biodiv_cnc_data: "Biodiversity + Open Science Activity 4: City Nature Challenge Data Exploration"
+        biodiv_guided_cit_sci: "Biodiversity + Open Science Activity 2: Guided Citizen Science Presentation"
+        biodiv_intro_inat: "Biodiversity + Open Science Activity 3: Introduction to iNaturalist"
         classification_1: "Classification Activity 1: What is Classification?"
         classification_2: "Classification Activity 2: Animal Classification"
         plant_classification: "Classification Activity 3: Plant Classification"
@@ -397,6 +401,10 @@ en:
         podcast_business_crawfish_html: "Students listen to a podcast that examines how both biology and business helped crawfish circumnavigate the globe.  This activity was designed by <a href=\"http://nationalgeographic.org/education\">National Geographic</a>."
         podcast_ocean_acidification_html: "Students listen to a podcast that discusses how marine food webs are affected by ocean acidification. This activity was designed by <a href=\"http://nationalgeographic.org/education\">National Geographic</a>."
         podcast_dolphins_tuna_html: "Students listen to a podcast that examines how dolphin populations are impacted by tuna fishing. This activity was designed by <a href=\"https://listenwise.com\">Listenwise</a>."
+        explore_broad_spectrum: "Students explore the broad spectrum citizen science projects and learn how individuals can contribute to global biodiversity knowledge. <a href=\"%{guide_path}\" download>Download Educator Guide</a> for this unit."
+        students_learn_inat: "Students learn how to use the iNaturalist.org platform to search, filter, and organize observation data. They practice making observations and contributing to this online community. <a href=\"%{guide_path}\" download>Download Educator Guide</a> for this unit."
+        using_data_cnc: "Using data from the 2017 iNaturalist City Nature Challenge (CNC) students research and compare information about participating cities and their city and share information and outcomes. <a href=\"%{guide_path}\" download>Download Educator Guide</a> for this unit."
+        explore_biodiv: "Students explore local and global biodiversity by the numbers. They compare and contrast biodiversity graphs representing scientifically described species vs. those observed on iNaturalist.org, an online observation platform. <a href=\"%{guide_path}\" download>Download Educator Guide</a> for this unit."
       objectives:
         classify_adaptations_traits_html: "Students will <strong>classify</strong> organisms into groups based on adaptations and traits"
         compare_contrast_discuss_html: "Students will <strong>compare, contrast, and discuss</strong> the traits of different organisms"
@@ -459,7 +467,15 @@ en:
         observe_acidification_pteropods_html: "Students will <strong>observe</strong> the effect that ocean acidification has on the fragile shells of Pteropods"
         discuss_tuna_dolphins_html: "Students will <strong>discuss</strong> how technological advances in tuna fishing have impacted dolphins"
         understand_dolphin_tissue_html: "Students will <strong>understand</strong> how studying dolphin tissue samples from impacted dolphins can help scientists protect dolphin populations"
-
+        compare_biodiv_html: "Students will <strong>compare and contrast</strong> biodiversity at different scales"
+        hypo_species_html: "Students will <strong>hypothesize</strong> the global numbers of species of plants, animals, fungi, and other organisms"
+        address_mis_sci_html: "Students will <strong>address misconceptions</strong> about science and who can &lquot;do&rquot; science"
+        explore_public_participate_html: "Students will <strong>explore</strong> how the public can participate in the scientific process through citizen science and open science pathways"
+        discuss_benefits_cit_sci_html: "Students will <strong>discuss</strong> the benefits and challenges of citizen science"
+        contribute_discover_biodiv_html: "Students will <strong>contribute</strong> to the ongoing effort to discover and document biodiversity"
+        practice_filter_inat_html: "Students will <strong>practice</strong> how to filter, search, and organize observations in iNaturalist"
+        compare_cnc_html: "Students will <strong>compare and contrast</strong> observations in different cities from the CNC"
+        infer_species_html: "Students will <strong>investigate and draw inferences</strong> about invasive, endangered, and unique species in their communities"
   activerecord:
     errors:
       template:

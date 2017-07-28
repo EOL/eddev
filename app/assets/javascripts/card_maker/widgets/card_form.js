@@ -672,6 +672,7 @@ window.CardForm = (function() {
       , $items = $elmt.find('.item')
       , $arrow = $elmt.find('.arrow')
       , arrowHeight = 20
+      , arrowWidth = arrowHeight
       , extraTopSpace = 5
       , enableFn
       ;
@@ -686,7 +687,7 @@ window.CardForm = (function() {
         , anchorLeftRel = anchorOffset.left - cardFieldsOffset.left
         , anchorWidth = $anchor.outerWidth()
         , menuBorder = 3
-        , arrowLeft = anchorLeftRel + anchorWidth / 2 - menuBorder
+        , arrowLeft = anchorLeftRel + anchorWidth / 2.0 - arrowWidth / 2.0 - menuBorder
         , top = anchorTop - cardFieldsTop + anchorHeight + arrowHeight + extraTopSpace
         ;
 

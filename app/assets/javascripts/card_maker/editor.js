@@ -172,6 +172,12 @@ window.CardEditor = (function() {
       cardWrapper.change(draw);
       cardWrapper.dirtyChange(handleDirtyChange);
 
+      $('#EolLink').attr('href',
+        'http://eol.org/pages/' +
+        theCard.templateParams.speciesId +
+        '/overview'
+      );
+
       disableSave();
       clearCanvas(); // don't show last drawn card
       draw();

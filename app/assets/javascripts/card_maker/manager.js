@@ -1147,6 +1147,7 @@ window.CardManager = (function() {
     });
   }
 
+  /*
   $(function() {
     cardPlaceholderTemplate = Handlebars.compile($('#CardPlaceholderTemplate').html());
     cardImgTemplate = Handlebars.compile($('#CardImgTemplate').html());
@@ -1196,6 +1197,7 @@ window.CardManager = (function() {
       });
     });
   });
+  */
 
   return exports;
 })();

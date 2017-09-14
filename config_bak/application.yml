@@ -1,0 +1,8 @@
+secret_key_base: 3ed366927eb23fef0f74f9cbc7dbd48000d5f9288fa908a7d37b78b0bbaf20df8d8b4f3247105246832160596172d26cf33652952e805c7e1d77988f4698fca3
+MYSQL_PASSWORD: eol1234
+rails_host: localhost
+email_user_name: eol.learning.and.education
+email_password: places1234
+card_service_host: localhost
+card_service_port: "8080"
+card_service_key: asdf1234

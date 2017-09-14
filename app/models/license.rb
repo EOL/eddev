@@ -1,5 +1,5 @@
 # Creative commons license
-class License < ActiveRecord::Base
+class License < ApplicationRecord
   validates :code, presence: true, uniqueness: true
   validates :translation_key, presence: true
 

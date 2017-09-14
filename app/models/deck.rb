@@ -1,4 +1,4 @@
-class Deck < ActiveRecord::Base
+class Deck < ApplicationRecord
   include LocalizedContent
 
   validates_presence_of :title_key

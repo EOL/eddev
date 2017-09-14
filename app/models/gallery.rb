@@ -1,4 +1,4 @@
-class Gallery < ActiveRecord::Base
+class Gallery < ApplicationRecord
   validates_presence_of :user
 
   belongs_to :user

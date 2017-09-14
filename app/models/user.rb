@@ -1,6 +1,6 @@
 require "unix_crypt"
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   ##########################################################
   # DO NOT ALTER MAPPINGS - ONLY ADD NEW ONES AS NECESSARY #
   ##########################################################

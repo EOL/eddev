@@ -1,5 +1,5 @@
-class Habitat < ActiveRecord::Base
-  include ContentModel 
+class Habitat < ApplicationRecord
+  include ContentModel
 
   belongs_to :place
 

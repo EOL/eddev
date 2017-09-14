@@ -1,4 +1,4 @@
-class Place < ActiveRecord::Base
+class Place < ApplicationRecord
   include ContentModel
 
   supplies_edit_permissions_with :can_user_edit_content?

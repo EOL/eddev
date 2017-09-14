@@ -1,12 +1,12 @@
 # Represents the state of a content model and its EditorContents in a locale
-class ContentModelState < ActiveRecord::Base
+class ContentModelState < ApplicationRecord
   belongs_to :content_model, polymorphic: true
   has_many :editor_contents, :dependent => :destroy
 
   validates_presence_of :content_model
   validates_uniqueness_of :content_model_id, :scope => [:content_model_type, :locale]
   validates :published, :inclusion => { :in => [true, false] }
-  validates :editor_content_version, :presence => true, 
+  validates :editor_content_version, :presence => true,
     :numericality => { :greater_than_or_equal_to => 0 }
   validates_presence_of :locale
 
@@ -17,7 +17,7 @@ class ContentModelState < ActiveRecord::Base
   def create_content!(key, value)
     editor_contents.create!(
       :key => key,
-      :value => value, 
+      :value => value,
       :version => version_for_new_values
     )
   end
@@ -41,7 +41,7 @@ class ContentModelState < ActiveRecord::Base
       self.save!
     end
   end
-  
+
   def has_unpublished_content?
     max_version = editor_contents.maximum(:version) || INITIAL_CONTENT_VERSION
     max_version > editor_content_version
@@ -53,10 +53,10 @@ class ContentModelState < ActiveRecord::Base
     # If content_model is set, don't set defaults for these attributes since they will
     # result in duplicate query parameters
     if !options.key?(:content_model)
-      base_options.merge!({content_model_id: nil, content_model_type: nil}) 
+      base_options.merge!({content_model_id: nil, content_model_type: nil})
     end
 
-    base_options.merge!(options) 
+    base_options.merge!(options)
     self.where(base_options).first_or_create!
   end
 

@@ -1,4 +1,4 @@
-class LessonPlan < ActiveRecord::Base
+class LessonPlan < ApplicationRecord
   include HasNameKey
 
   validates_presence_of :theme
@@ -33,7 +33,7 @@ class LessonPlan < ActiveRecord::Base
   def overview_path
     overview_file_name.present? ? path_helper(overview_file_name) : nil
   end
-  
+
   def path_helper(name)
     "/lesson_plans/#{name}.pdf"
   end
@@ -41,7 +41,7 @@ class LessonPlan < ActiveRecord::Base
 #  def has_perk?(perk_name)
 #    perks.find_by(:human_name => perk_name).present?
 #  end
-  
+
   def has_perk?(perk)
     perks.include?(perk)
   end
@@ -49,22 +49,22 @@ class LessonPlan < ActiveRecord::Base
   def localized_desc
     I18n.translate("models.lesson_plan.descriptions.#{desc_key}",
       (overview_file_name.present? ?
-        { :guide_path => overview_path } : 
+        { :guide_path => overview_path } :
         {}
       )
     ).html_safe
   end
 
   def localized_objectives
-    objective_keys.map do |k| 
+    objective_keys.map do |k|
       I18n.translate("models.lesson_plan.objectives.#{k}").html_safe
     end
   end
 
   private
-    FILE_NAME_NEITHER_VALIDATION_ERROR_MSG = 
-      "Either file_name or external_url must be present" 
-    
+    FILE_NAME_NEITHER_VALIDATION_ERROR_MSG =
+      "Either file_name or external_url must be present"
+
     FILE_NAME_BOTH_VALIDATION_ERROR_MSG =
       "file_name and external_url cannot both be present"
 

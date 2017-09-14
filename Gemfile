@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.9'
+gem 'rails', '5.0.0'
 # Use mysql for database
 gem 'mysql2'
 # Use SCSS for stylesheets
@@ -60,7 +60,7 @@ group :development, :test do
   gem 'rspec-collection_matchers'
 
   # Matchers for concise common rspec tests
-  gem 'shoulda-matchers', '~> 3.1'
+  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
 
   # Model factory for testing
   gem 'factory_girl_rails', '~> 4.0'

@@ -1,5 +1,4 @@
-require File.expand_path('../boot', __FILE__)
-
+require_relative 'boot'
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -25,23 +24,20 @@ module Eddev
     config.i18n.available_locales = [:en, :es]
     config.i18n.fallbacks = [:en]
 
-    # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
+    config.secret_key_base = ENV['secret_key_base']
 
-    config.secret_key_base = Figaro.env.secret_key_base
+    config.x.app_uri_prefix = ENV['RAILS_RELATIVE_URL_ROOT'] ? ENV['RAILS_RELATIVE_URL_ROOT'] : ""
+#    config.x.legacy_password_salt = Figaro.env.legacy_password_salt
 
-    config.x.app_uri_prefix = Figaro.env.RAILS_RELATIVE_URL_ROOT ? Figaro.env.RAILS_RELATIVE_URL_ROOT : ""
-    config.x.legacy_password_salt = Figaro.env.legacy_password_salt
-
-    config.x.enable_ga = Figaro.env.enable_ga? && Figaro.env.enable_ga == "true"
+    config.x.enable_ga = ENV['enable_ga'] == "true"
 
     # mail config
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
       address:              "smtp.gmail.com",
       port:                 587,
-      user_name:            Figaro.env.email_user_name,
-      password:             Figaro.env.email_password,
+      user_name:            ENV['email_user_name'],
+      password:             ENV['email_password'],
       authentication:       "plain",
       enable_starttls_auto: true,
     }
@@ -50,11 +46,11 @@ module Eddev
     config.middleware.use Rack::Deflater
 
     # card service
-    config.x.card_service_host = Figaro.env.card_service_host
-    config.x.card_service_port = Figaro.env.card_service_port
-    config.x.card_service_key  = Figaro.env.card_service_key
+    config.x.card_service_host = ENV['card_service_host']
+    config.x.card_service_port = ENV['card_service_port']
+    config.x.card_service_key  = ENV['card_service_key']
     config.x.card_service_use_https =
-      Figaro.env.card_service_use_https == "true" ?
+      ENV['card_service_use_https'] == "true" ?
       true :
       false
   end

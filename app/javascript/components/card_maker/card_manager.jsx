@@ -1,14 +1,17 @@
-window.CardManagerReact = {};
+import React from 'react'
+import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 
-window.CardManagerReact.UserResources = React.createClass({
-  getInitialState: function() {
-    return {
+class UserResources extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       cards: [],
       decks: []
-    }
-  },
+    };
+  }
 
-  componentDidMount: function() {
+  componentDidMount() {
     var that = this;
 
     $.ajax({
@@ -20,13 +23,13 @@ window.CardManagerReact.UserResources = React.createClass({
           decks: []
         });
       }
-    })
-  },
+    });
+  }
 
-  render: function() {
+  render() {
     var cardElmts = this.state.cards.map(function(card) {
       return (
-        <CardManagerReact.Card
+        <Card
           id={card.id}
           key={card.id}
         />
@@ -35,42 +38,43 @@ window.CardManagerReact.UserResources = React.createClass({
 
     return <div className="user-resources">{cardElmts}</div>;
   }
-});
+}
 
-window.CardManagerReact.Card = React.createClass({
-  getInitialState: function() {
-    return {
+class Card extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       imgLoaded: false,
       showOverlay: false
-    };
-  },
+    }
+  }
 
-  imgUrl: function(id) {
+  imgUrl(id) {
     return 'card_maker_ajax/cards/' + id + '/svg';
-  },
+  }
 
-  imgLoaded: function() {
+  imgLoaded = () => {
     this.setState({
       imgLoaded: true,
       showOverlay: this.state.showOverlay
-    });
-  },
+    })
+  }
 
-  handleMouseEnter: function() {
+  handleMouseEnter = () => {
     this.setState({
       imgLoaded: this.state.imgLoaded,
       showOverlay: true
-    });
-  },
+    })
+  }
 
-  handleMouseLeave: function() {
+  handleMouseLeave = () => {
     this.setState({
       imgLoaded: this.state.imgLoaded,
       showOverlay: false
     })
-  },
+  }
 
-  render: function() {
+  render() {
     var imgClass = 'user-resource'
       , spinClass = 'fa fa-spinner fa-spin fa-2x img-placeholder'
       , overlayClass = 'card-overlay resource-overlay'
@@ -106,4 +110,6 @@ window.CardManagerReact.Card = React.createClass({
       </div>
     )
   }
-});
+}
+
+export { UserResources };

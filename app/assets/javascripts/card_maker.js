@@ -41,6 +41,4 @@ $(function() {
     screenTransition($editorScreen, $managerScreen);
     CardManager.reloadCardImg(editCardId);
   });
-
-  ReactRailsUJS.mountComponents();
 });

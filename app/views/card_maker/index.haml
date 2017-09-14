@@ -8,6 +8,7 @@
 
   %script#UserDecksTemplate{ :type => "text/x-handlebars-template"}
     .deck-wrap.user-deck-wrap
+= javascript_pack_tag 'card_maker'
 
 .card-hdr-box
   .card-hdr-inner
@@ -55,9 +56,7 @@
               .down-arrow
                 = image_tag "card_maker/down_arrow.png", :class => "down-arrow-img"
             %ul.filter-items.hidden
-      -#.user-resources.user-decks#UserResources
-      = react_component("CardManagerReact.UserResources",
-        { :msg => "hi there"})
+      #UserResourcesReact
       .manager-bottom
 
 

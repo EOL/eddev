@@ -12,6 +12,3 @@
 //
 //= require util
 //= require global_behaviors
-//= require react
-//= require react_ujs
-//= require components

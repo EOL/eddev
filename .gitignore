@@ -39,3 +39,6 @@ app/assets/javascripts/card_templates
 
 # ctags
 tags
+/public/packs
+/public/packs-test
+/node_modules

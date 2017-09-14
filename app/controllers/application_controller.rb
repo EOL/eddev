@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
 #  before_filter :set_locale
 #  before_filter :ensure_user
-  before_filter :init_content_editor_state
+  before_action :init_content_editor_state
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.

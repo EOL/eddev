@@ -7,11 +7,11 @@ RSpec.describe PasswordResetToken, type: :model do
   it { should belong_to :user }
 
   describe "#create_for_user" do
-    let(:user) { create(:user) } 
+    let(:user) { create(:user) }
     let(:token) { PasswordResetToken.create_for_user(user) }
 
     it "sets the user" do
-      expect(token.user).to eq user 
+      expect(token.user).to eq user
     end
 
     it "generates a token" do
@@ -26,7 +26,7 @@ RSpec.describe PasswordResetToken, type: :model do
       expect(token.used_at).to be_nil
 
       before_time = DateTime.now
-      token.mark_used 
+      token.mark_used
       after_time = DateTime.now
 
       expect(token.used_at).not_to be_blank

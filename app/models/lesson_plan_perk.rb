@@ -1,4 +1,4 @@
-class LessonPlanPerk < ActiveRecord::Base
+class LessonPlanPerk < ApplicationRecord
   #TODO: find a way to make models like this read-only without breaking shoulda-matchers
   #
   include HasNameKey

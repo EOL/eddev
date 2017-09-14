@@ -1,4 +1,4 @@
-class LessonPlanTheme < ActiveRecord::Base
+class LessonPlanTheme < ApplicationRecord
   include HasNameKey
 
   validates_presence_of :name_key

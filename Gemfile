@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.0.4'
+gem 'rails', '5.0.5'
 # Use mysql for database
 gem 'mysql2'
 # Use SCSS for stylesheets

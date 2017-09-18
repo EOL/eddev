@@ -3,12 +3,51 @@ import React from 'react'
 import downArrowIcon from 'images/card_maker/down_arrow.png'
 
 class UserResourceFilter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      menuOpen: false,
+    }
+  }
+
+  handleClickOutside = (event) => {
+    if (
+      this.state.menuOpen &&
+      this.node &&
+      !this.node.contains(event.target)
+    ) {
+      this.setState((prevState, props) => {
+        return { menuOpen: false };
+      });
+    }
+  }
+
+  setRef = (node) => {
+    this.node = node;
+  }
+
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
+  }
+
   handleFilterItemClick(id) {
     this.props.handleSelect(id)
   }
 
   hasDropdown() {
     return this.props.filterItems.length > 1
+  }
+
+  handleArrowClick = () => {
+    this.setState((prevState, props) => {
+      return {
+        menuOpen: true,
+      }
+    });
   }
 
   render() {
@@ -25,14 +64,12 @@ class UserResourceFilter extends React.Component {
       topClass += ' first';
     }
 
-    console.log(this.props);
-
-    if (!this.props.menuOpen) {
+    if (!this.state.menuOpen) {
       menuClass += ' hidden';
     }
 
     return (
-      <div className={topClass} onClick={this.props.handleClick}>
+      <div className={topClass} onClick={this.props.handleClick} ref={this.setRef}>
         <div className='btn'>
           <div className='filter-icon'>
             <i className={iconClass} />
@@ -44,7 +81,7 @@ class UserResourceFilter extends React.Component {
               <img
                 src={downArrowIcon}
                 className='down-arrow-img'
-                onClick={this.props.handleMenuOpenClick}
+                onClick={this.handleArrowClick}
               />
             }
           </div>

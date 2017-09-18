@@ -16,8 +16,7 @@ class CardManager extends React.Component {
     this.state = {
       cards: [],
       decks: [],
-      selectedFilter: 'cards',
-      decksMenuOpen: false
+      selectedFilter: 'cards'
     }
   }
 
@@ -68,16 +67,6 @@ class CardManager extends React.Component {
     return [{
       name: 'All cards'
     }];
-  }
-
-  handleDeckMenuOpenClick = () => {
-    if (!this.state.decksMenuOpen) {
-      this.setState((prevState, props) => {
-        return {
-          decksMenuOpen: true,
-        }
-      });
-    }
   }
 
   handleDeckFilterSelect(id) {
@@ -150,7 +139,6 @@ class CardManager extends React.Component {
                   filterItems={this.deckFilterItems()}
                   handleSelect={this.handleDeckFilterSelect}
                   handleClick={this.handleDeckFilterClick}
-                  menuOpen={this.state.decksMenuOpen}
                   handleMenuOpenClick={this.handleDeckMenuOpenClick}
                 />
               </div>

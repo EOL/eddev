@@ -262,6 +262,7 @@ window.CardEditor = (function() {
     $('.preview-btns .save, .preview-btns .save-exit').removeClass('disabled');
   }
 
+  /*
   $(function() {
     $(document).scroll(setPreviewTopMargin);
 
@@ -276,6 +277,7 @@ window.CardEditor = (function() {
 
     canvas = $('#CardCanvas')[0];
   });
+  */
 
   return exports;
 })();

@@ -1,44 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
-
-class UserResources extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      cards: [],
-      decks: []
-    };
-  }
-
-  componentDidMount() {
-    var that = this;
-
-    $.ajax({
-      url: 'card_maker_ajax/card_summaries',
-      method: 'GET',
-      success: function(cards) {
-        that.setState({
-          cards: cards,
-          decks: []
-        });
-      }
-    });
-  }
-
-  render() {
-    var cardElmts = this.state.cards.map(function(card) {
-      return (
-        <Card
-          id={card.id}
-          key={card.id}
-        />
-      )
-    });
-
-    return <div className="user-resources">{cardElmts}</div>;
-  }
-}
 
 class Card extends React.Component {
   constructor(props) {
@@ -112,4 +72,4 @@ class Card extends React.Component {
   }
 }
 
-export { UserResources };
+export default Card;

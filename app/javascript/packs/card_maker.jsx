@@ -1,11 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import { UserResources } from 'components/card_maker/card_manager'
+import CardManager from '../components/card-maker/card-manager'
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <UserResources />,
-    document.getElementById('UserResourcesReact'),
+    <CardManager />,
+    document.getElementById('CardManagerReact'),
   )
 })

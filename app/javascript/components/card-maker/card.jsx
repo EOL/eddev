@@ -1,5 +1,7 @@
 import React from 'react'
 
+const noDeckId = -1;
+
 class Card extends React.Component {
   constructor(props) {
     super(props);
@@ -9,8 +11,8 @@ class Card extends React.Component {
     }
   }
 
-  imgUrl(id) {
-    return 'card_maker_ajax/cards/' + id + '/svg';
+  imgUrl() {
+    return 'card_maker_ajax/cards/' + this.props.data.id + '/svg';
   }
 
   imgLoaded = () => {
@@ -34,6 +36,34 @@ class Card extends React.Component {
     })
   }
 
+  deckAssignItems() {
+    const items = this.props.decks.map((deck) => {
+      return {
+        menuText: deck.name,
+        selectedText: deck.name,
+        openText: 'move',
+        id: deck.id,
+      }
+    });
+
+    items.unshift({
+      menuText: '—',
+      selectedText: 'No deck assigned',
+      openText: 'Assign to deck',
+      id: noDeckId,
+    });
+
+    return items;
+  }
+
+  selectedDeckId() {
+    return this.props.data.deck ? this.props.data.deck.id : noDeckId;
+  }
+
+  handleDeckSelect = (deckId) => {
+    this.props.handleDeckSelect(deckId === noDeckId ? null : deckId);
+  }
+
   render() {
     var imgClass = 'user-resource'
       , spinClass = 'fa fa-spinner fa-spin fa-2x img-placeholder'
@@ -51,15 +81,21 @@ class Card extends React.Component {
     }
 
     return (
+
       <div className='resource-wrap'
            onMouseEnter={this.handleMouseEnter}
            onMouseLeave={this.handleMouseLeave}
       >
+        <DeckAssignSelect
+          items={this.deckAssignItems()}
+          selectedId={this.selectedDeckId()}
+          handleSelect={this.handleDeckSelect}
+        />
         <div className='resource-frame'>
           <i className={spinClass} />
           <img
             className={imgClass}
-            src={this.imgUrl(this.props.id)}
+            src={this.imgUrl()}
             onLoad={this.imgLoaded}
           />
           <div className={overlayClass}>
@@ -68,6 +104,113 @@ class Card extends React.Component {
           </div>
         </div>
       </div>
+    )
+  }
+}
+
+class DeckAssignSelect extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+    }
+  }
+
+  docClickHander = (event) => {
+    if (this.state.open &&
+      this.node &&
+      !this.node.contains(event.target)
+    ) {
+      this.closeMenu();
+    }
+  }
+
+  setNode = (node) => {
+    this.node = node;
+  }
+
+  componentDidMount() {
+    document.addEventListener('mousedown', this.docClickHander);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.docClickHander)
+  }
+
+  deckAssignItems() {
+    const that = this;
+
+    return this.props.items.map((item) => {
+      return (
+        <DeckAssignItem
+          name={item.menuText}
+          key={item.id}
+          selected={item.id === that.props.selectedId}
+          handleClick={() => that.props.handleSelect(item.id)}
+        />
+      )
+    });
+  }
+
+  selectedItem() {
+    const that = this;
+
+    return that.props.items.find((deck) => {
+      return deck.id === that.props.selectedId
+    }) || that.props.items[0];
+  }
+
+  handleOpenClick = () => {
+    if (!this.state.open) {
+      this.openMenu();
+    } else {
+      this.closeMenu();
+    }
+  }
+
+  openMenu() {
+    this.setState((prevState, props) => {
+      return {
+        open: true
+      }
+    });
+  }
+
+  closeMenu() {
+    this.setState((prevState, props) => {
+      return {
+        open: false
+      }
+    });
+  }
+
+  render() {
+    const selectedDeck = this.selectedItem();
+
+    var menuClassName = 'deck-assign-choices';
+
+    if (!this.state.open) {
+      menuClassName += ' hidden';
+    }
+
+    return (
+      <div className='deck-assign-select' onClick={this.handleOpenClick} ref={this.setNode}>
+        <div className='deck-assign-top'>
+          <div className='deck-name'>{selectedDeck.selectedText}</div>
+          <div className='open-msg'>{selectedDeck.openText}</div>
+          <ul className={menuClassName}>{this.deckAssignItems()}</ul>
+        </div>
+      </div>
+    )
+  }
+}
+
+class DeckAssignItem extends React.Component {
+  render() {
+    var className = 'deck-assign-choice';
+
+    return (
+      <li className={className} onClick={this.props.handleClick}>{this.props.name}</li>
     )
   }
 }

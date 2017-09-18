@@ -1,8 +1,10 @@
 import React from 'react'
+import update from 'immutability-helper'
 
 import UserResources from './user-resources'
 import NewResourceBtn from './new-resource-btn'
 import UserResourceFilter from './user-resource-filter'
+import Card from './card'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
 import eolHdrIcon from 'images/card_maker/icons/eol_logo_sub_hdr.png'
@@ -11,12 +13,15 @@ import managerLogo from 'images/card_maker/icons/card_manager_logo.png'
 import newDeckIcon from 'images/card_maker/icons/new_deck.png'
 
 class CardManager extends React.Component {
+  static allDecksId = -1;
+
   constructor(props) {
     super(props);
     this.state = {
       cards: [],
       decks: [],
-      selectedFilter: 'cards'
+      selectedFilter: 'cards',
+      selectedDeckId: CardManager.allDecksId,
     }
   }
 
@@ -43,6 +48,35 @@ class CardManager extends React.Component {
     });
   }
 
+  assignCardDeck = (cardId, deckId) => {
+    const url = '/card_maker_ajax/cards/' + cardId + '/deck_id'
+    if (deckId != null) {
+      $.ajax(url, {
+        method: 'PUT',
+        data: deckId,
+        contentType: 'text/plain',
+        success: this.replaceCard
+      });
+    } else {
+      $.ajax(url, {
+        method: 'DELETE',
+        success: this.replaceCard
+      });
+    }
+  }
+
+  replaceCard = (card) => {
+    const index = this.state.cards.findIndex((oldCard) => {
+      return oldCard.id === card.id;
+    });
+
+    this.setState((prevState, props) => {
+      return update(prevState, {
+        cards: { [index]: { $set: card } }
+      })
+    });
+  }
+
   newCardClick() {
     alert('new card clicked');
   }
@@ -57,7 +91,7 @@ class CardManager extends React.Component {
     });
     items.unshift({
       name: 'All decks',
-      id: -1,
+      id: CardManager.allDecksId,
       count: this.state.decks.length
     });
     return items;
@@ -69,8 +103,12 @@ class CardManager extends React.Component {
     }];
   }
 
-  handleDeckFilterSelect(id) {
-
+  handleDeckFilterSelect = deckId => {
+    this.setState((prevState, props) => {
+      return {
+        selectedDeckId: deckId
+      }
+    });
   }
 
   handleDeckFilterClick = () => {
@@ -140,10 +178,16 @@ class CardManager extends React.Component {
                   handleSelect={this.handleDeckFilterSelect}
                   handleClick={this.handleDeckFilterClick}
                   handleMenuOpenClick={this.handleDeckMenuOpenClick}
+                  selectedId={this.state.selectedDeckId}
                 />
               </div>
             </div>
-            <UserResources cards={this.state.cards}/>
+            <UserResources
+              resources={this.state.cards}
+              decks={this.state.decks}
+              resourceType='card'
+              handleCardDeckSelect={this.assignCardDeck}
+            />
           </div>
         </div>
       </div>

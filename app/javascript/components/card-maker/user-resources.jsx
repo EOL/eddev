@@ -1,19 +1,32 @@
 import React from 'react'
 import Card from './card'
 
-class UserResources extends React.Component {
-  render() {
-    console.log('render resources');
-    const cardElmts = this.props.cards.map(function(card) {
-      return (
-        <Card
-          id={card.id}
-          key={card.id}
-        />
-      )
-    });
+const resourceTypes = {
+  card: Card
+}
 
-    return <div className="user-resources">{cardElmts}</div>;
+class UserResources extends React.Component {
+  buildResources() {
+    var resourceMapFn;
+
+    if (this.props.resourceType === 'card') {
+      resourceMapFn = (resource) => {
+        return (
+          <Card
+            data={resource}
+            decks={this.props.decks}
+            key={resource.id}
+            handleDeckSelect={this.props.handleCardDeckSelect.bind(null, resource.id)}
+          />
+        )
+      }
+    }
+
+    return this.props.resources.map(resourceMapFn);
+  }
+
+  render() {
+    return <div className='user-resources'>{this.buildResources()}</div>;
   }
 }
 

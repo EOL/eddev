@@ -42,6 +42,10 @@ class UserResourceFilter extends React.Component {
     return this.props.filterItems.length > 1
   }
 
+  selectedItemName() {
+    this.props.filterItems.find
+  }
+
   handleArrowClick = () => {
     this.setState((prevState, props) => {
       return {
@@ -90,10 +94,11 @@ class UserResourceFilter extends React.Component {
           <ul className={menuClass}>
             {this.props.filterItems.map((item) => {
               return (<FilterItem
-                handleClick={() => this.handleSelect(item.id)}
+                handleClick={() => this.props.handleSelect(item.id)}
                 name={item.name}
                 key={item.id}
                 count={item.count}
+                selected={this.props.selectedId === item.id}
               />)
             })}
           </ul>
@@ -105,8 +110,14 @@ class UserResourceFilter extends React.Component {
 
 class FilterItem extends React.Component {
   render() {
+    var className = 'filter-item';
+
+    if (this.props.selected) {
+      className += ' selected';
+    }
+
     return (
-      <li onClick={this.props.handleClick} className="filter-item">
+      <li onClick={this.props.handleClick} className={className}>
         {this.props.name} ({this.props.count})
       </li>
     )

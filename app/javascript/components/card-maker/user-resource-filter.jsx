@@ -16,9 +16,35 @@ class UserResourceFilter extends React.Component {
       this.node &&
       !this.node.contains(event.target)
     ) {
-      this.setState((prevState, props) => {
-        return { menuOpen: false };
-      });
+      this.closeMenu();
+    }
+  }
+
+  closeMenu = () => {
+    this.setState((prevState, props) => {
+      this.removeClickOutsideHandler();
+
+      return {
+        menuOpen: false
+      };
+    });
+  }
+
+  openMenu = () => {
+    this.setState((prevState, props) => {
+      this.addClickOutsideHandler();
+
+      return {
+        menuOpen: true,
+      }
+    });
+  }
+
+  handleArrowClick = () => {
+    if (this.state.menuOpen) {
+      this.closeMenu();
+    } else {
+      this.openMenu();
     }
   }
 
@@ -26,12 +52,16 @@ class UserResourceFilter extends React.Component {
     this.node = node;
   }
 
-  componentDidMount() {
+  addClickOutsideHandler = () => {
     document.addEventListener('mousedown', this.handleClickOutside);
   }
 
-  componentWillUnmount() {
+  removeClickOutsideHandler = () => {
     document.removeEventListener('mousedown', this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    this.removeClickOutsideHandler();
   }
 
   handleFilterItemClick(id) {
@@ -44,14 +74,6 @@ class UserResourceFilter extends React.Component {
 
   selectedItemName() {
     this.props.filterItems.find
-  }
-
-  handleArrowClick = () => {
-    this.setState((prevState, props) => {
-      return {
-        menuOpen: true,
-      }
-    });
   }
 
   render() {

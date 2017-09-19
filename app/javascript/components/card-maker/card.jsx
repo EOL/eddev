@@ -125,16 +125,20 @@ class DeckAssignSelect extends React.Component {
     }
   }
 
+  addDocClickCloseHandler = () => {
+    document.addEventListener('mousedown', this.docClickHander);
+  }
+
+  removeDocClickCloseHandler = () => {
+    document.removeEventListener('mousedown', this.docClickHander);
+  }
+
   setNode = (node) => {
     this.node = node;
   }
 
-  componentDidMount() {
-    document.addEventListener('mousedown', this.docClickHander);
-  }
-
   componentWillUnmount() {
-    document.removeEventListener('mousedown', this.docClickHander)
+    this.removeDocClickCloseHandler();
   }
 
   deckAssignItems() {
@@ -168,16 +172,20 @@ class DeckAssignSelect extends React.Component {
     }
   }
 
-  openMenu() {
+  openMenu = () => {
     this.setState((prevState, props) => {
+      this.addDocClickCloseHandler();
+
       return {
         open: true
       }
     });
   }
 
-  closeMenu() {
+  closeMenu = () => {
     this.setState((prevState, props) => {
+      this.removeDocClickCloseHandler();
+
       return {
         open: false
       }

@@ -1,10 +1,54 @@
 import React from 'react'
 
 import CardManager from './card-manager'
+import CardEditor from './card-editor'
 
 import eolLogoHdr from 'images/card_maker/icons/eol_logo_hdr.png'
 
 class CardMaker extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      screen: 'manager'
+    }
+  }
+
+  handleEditCard = (cardId) => {
+    this.setState((prevState, props) => {
+      return {
+        screen: 'editor'
+      }
+    });
+  }
+
+  handleManagerClose = () => {
+    this.setState((prevState, props) => {
+      return {
+        screen: 'manager'
+      }
+    });
+  }
+
+  screenComponent = () => {
+    var component;
+
+    if (this.state.screen === 'manager') {
+      component = (
+        <CardManager
+          handleEditCard={this.handleEditCard}
+        />
+      )
+    } else if (this.state.screen === 'editor') {
+      component = (
+        <CardEditor
+          handleCloseClick={this.handleManagerClose}
+        />
+      )
+    }
+
+    return component;
+  }
+
   render() {
     return (
       <div className='card-maker'>
@@ -18,7 +62,7 @@ class CardMaker extends React.Component {
             <div className='right-blur-bg'></div>
           </div>
         </div>
-        <CardManager />
+        {this.screenComponent()}
       </div>
     )
   }

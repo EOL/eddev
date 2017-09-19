@@ -19,6 +19,7 @@ class UserResources extends React.Component {
             decks={this.props.decks}
             key={resource.id}
             handleDeckSelect={this.props.handleCardDeckSelect.bind(null, resource.id)}
+            handleEditClick={() => this.props.handleEditCard(resource.id)}
           />
         )
       }

@@ -270,6 +270,7 @@ class CardManager extends React.Component {
               decks={this.state.decks}
               resourceType={resourceResult.resourceType}
               handleCardDeckSelect={this.assignCardDeck}
+              handleEditCard={this.props.handleEditCard}
             />
           </div>
         </div>

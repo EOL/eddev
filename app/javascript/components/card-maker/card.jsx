@@ -48,26 +48,16 @@ class Card extends React.Component {
         />
         <div className='resource-frame'>
           <LoadingSpinnerImage src={this.imgUrl()} />
-          <CardOverlay show={this.props.showOverlay} />
+          {this.props.showOverlay &&
+            <div className='card-overlay resource-overlay'>
+              <i className='i fa fa-edit fa-3x edit-btn btn' />
+              <i className='i fa fa-trash-o fa-3x trash-btn btn' />
+            </div>
+          }
         </div>
       </div>
     )
   }
-}
-
-function CardOverlay(props) {
-  var overlayClass = 'card-overlay resource-overlay';
-
-  if (!props.show) {
-    overlayClass += ' hidden';
-  }
-
-  return (
-    <div className={overlayClass}>
-      <i className='i fa fa-edit fa-3x edit-btn btn' />
-      <i className='i fa fa-trash-o fa-3x trash-btn btn' />
-    </div>
-  );
 }
 
 class DeckAssignSelect extends React.Component {

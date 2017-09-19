@@ -1,11 +1,9 @@
 import React from 'react'
 
 import CardFields from './card-fields'
+import CardPreview from './card-preview'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
-import rotateIcon from 'images/card_maker/icons/rotate.png'
-import flipHorizIcon from 'images/card_maker/icons/flip_horiz.png'
-import flipVertIcon from 'images/card_maker/icons/flip_vert.png'
 
 class CardEditor extends React.Component {
   constructor(props) {
@@ -76,51 +74,8 @@ class CardEditor extends React.Component {
                     (Live Preview, Image Controls, Save + Exit Options)
                   </div>
                 </div>
-                <div className='preview'>
-                  <div className='img-select'></div>
-                  <div className='controls-card-wrap'>
-                    <div className='img-controls'>
-                      <div className='txt tip'></div>
-                      <div className='btns ctrl img-btns'>
-                        <img src={rotateIcon} className='btn top' />
-                        <img src={flipHorizIcon} className='btn mid' />
-                        <img src={flipVertIcon} className='btn bot' />
-                      </div>
-                      <div className='sep'></div>
-                      <div className='zoom-controls'>
-                        <div className='zoom-txt txt'></div>
-                        <div className='zoom ctrl'>
-                          <div className='dir plus noselect'>+</div>
-                          <div className='stem'>
-                            <div className='lft'></div>
-                            <div className='rt'></div>
-                            <div className='knob'></div>
-                          </div>
-                          <div className='dir minus noselect'>&ndash;</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className='card-box'>
-                    <canvas id='CardCanvas' className='card-canvas' />
-                    <a href='#' target='_blank' className='eol-link'>
-                      <span>Open</span>
-                      <i className='icon-eol-logo' />
-                      <span>taxon page</span>
-                    </a>
-                  </div>
-                  <div className='preview-btns'>
-                    <div className='btn close'>
-                      <div className='btn-txt'>Close</div>
-                    </div>
-                    <div className='btn save-exit'>
-                      <div className='btn-txt'>Save + Exit</div>
-                    </div>
-                    <div className='btn save'>
-                      <div className='btn-txt'>Quick Save</div>
-                    </div>
-                  </div>
-                </div>
+
+                <CardPreview card={this.state.card}/>
               </div>
               <div className='right-col'>
                 <div className='col-head-box'>

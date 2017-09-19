@@ -1,5 +1,7 @@
 import React from 'react'
 
+import LoadingSpinnerImage from './loading-spinner-image'
+
 const noDeckId = -1;
 
 class Card extends React.Component {
@@ -65,23 +67,14 @@ class Card extends React.Component {
   }
 
   render() {
-    var imgClass = 'user-resource'
-      , spinClass = 'fa fa-spinner fa-spin fa-2x img-placeholder'
-      , overlayClass = 'card-overlay resource-overlay'
+    var overlayClass = 'card-overlay resource-overlay'
       ;
-
-    if (this.state.imgLoaded) {
-      spinClass += ' hidden';
-    } else {
-      imgClass += ' hidden';
-    }
 
     if (!this.state.showOverlay) {
       overlayClass += ' hidden';
     }
 
     return (
-
       <div className='resource-wrap'
            onMouseEnter={this.handleMouseEnter}
            onMouseLeave={this.handleMouseLeave}
@@ -92,12 +85,7 @@ class Card extends React.Component {
           handleSelect={this.handleDeckSelect}
         />
         <div className='resource-frame'>
-          <i className={spinClass} />
-          <img
-            className={imgClass}
-            src={this.imgUrl()}
-            onLoad={this.imgLoaded}
-          />
+          <LoadingSpinnerImage src={this.imgUrl()} />
           <div className={overlayClass}>
             <i className='i fa fa-edit fa-3x edit-btn btn' />
             <i className='i fa fa-trash-o fa-3x trash-btn btn' />

@@ -12,16 +12,16 @@ import newCardIcon from 'images/card_maker/icons/new_card.png'
 import managerLogo from 'images/card_maker/icons/card_manager_logo.png'
 import newDeckIcon from 'images/card_maker/icons/new_deck.png'
 
-class CardManager extends React.Component {
-  static allDecksId = -1;
+const allDecksId = -1;
 
+class CardManager extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       cards: [],
       decks: [],
       selectedFilter: 'cards',
-      selectedDeckId: CardManager.allDecksId,
+      selectedDeckId: allDecksId,
     }
   }
 
@@ -50,31 +50,72 @@ class CardManager extends React.Component {
 
   assignCardDeck = (cardId, deckId) => {
     const url = '/card_maker_ajax/cards/' + cardId + '/deck_id'
+        , card = this.state.cards.find((card) => {
+            return card.id === cardId
+          })
+        , decksToReloadIds = []
+        ;
+
+    var successFn;
+
+    if (card.deck) {
+      decksToReloadIds.push(card.deck.id);
+    }
+
+    if (deckId != null) {
+      decksToReloadIds.push(deckId);
+    }
+
+    console.log('ids', decksToReloadIds);
+
+    successFn = this.replaceCardAndReloadDecks.bind(null, decksToReloadIds);
+
     if (deckId != null) {
       $.ajax(url, {
         method: 'PUT',
         data: deckId,
         contentType: 'text/plain',
-        success: this.replaceCard
+        success: successFn,
       });
     } else {
       $.ajax(url, {
         method: 'DELETE',
-        success: this.replaceCard
+        success: successFn,
       });
     }
   }
 
-  replaceCard = (card) => {
-    const index = this.state.cards.findIndex((oldCard) => {
-      return oldCard.id === card.id;
+  // To be called after a card has a deck assigned/unassigned, since the
+  // deck's titleCardId may have changed
+  replaceCardAndReloadDecks = (deckIds, card) => {
+    this.replaceCard(card);
+
+    for (const deckId of deckIds) {
+      $.ajax('/card_maker_ajax/decks/' + deckId, {
+        method: 'GET',
+        success: this.replaceDeck,
+      })
+    }
+  }
+
+  replaceResource = (colName, resource) => {
+    const index = this.state[colName].findIndex((oldResource) => {
+      return oldResource.id === resource.id;
     });
 
     this.setState((prevState, props) => {
       return update(prevState, {
-        cards: { [index]: { $set: card } }
+        [colName]: { [index]: { $set: resource } }
       })
     });
+  }
+
+  replaceCard = (card) => {
+    this.replaceResource('cards', card)
+  }
+
+  replaceDeck = (deck) => {
+    this.replaceResource('decks', deck);
   }
 
   newCardClick() {
@@ -91,7 +132,7 @@ class CardManager extends React.Component {
     });
     items.unshift({
       name: 'All decks',
-      id: CardManager.allDecksId,
+      id: allDecksId,
       count: this.state.decks.length
     });
     return items;
@@ -127,7 +168,49 @@ class CardManager extends React.Component {
     });
   }
 
+  selectedResources = () => {
+    const that = this;
+
+    var resources
+      , resourceType
+      ;
+
+    if (that.state.selectedFilter === 'decks') {
+      if (that.state.selectedDeckId === allDecksId) {
+        resources = that.state.decks;
+        resourceType = 'deck';
+      } else {
+        resources = that.state.cards.filter((card) => {
+          return card.deck && card.deck.id === that.state.selectedDeckId;
+        });
+        resourceType = 'card';
+      }
+    } else {
+      resources = that.state.cards;
+      resourceType = 'card';
+    }
+
+    return {
+      resources: resources,
+      resourceType: resourceType,
+    };
+  }
+
+  selectedResourceType = () => {
+    var resourceType;
+
+    if (this.state.selectedFilter === 'decks' &&
+      this.state.selectedDeckId === allDecksId
+    ) {
+      resourceType = 'deck';
+    } else {
+      resourceType = 'card'
+    }
+  }
+
   render() {
+    var resourceResult = this.selectedResources();
+
     return (
       <div id='CardManagerWrap'>
         <div className='hdr-spacer red'></div>
@@ -183,9 +266,9 @@ class CardManager extends React.Component {
               </div>
             </div>
             <UserResources
-              resources={this.state.cards}
+              resources={resourceResult.resources}
               decks={this.state.decks}
-              resourceType='card'
+              resourceType={resourceResult.resourceType}
               handleCardDeckSelect={this.assignCardDeck}
             />
           </div>

@@ -6,7 +6,46 @@ import flipHorizIcon from 'images/card_maker/icons/flip_horiz.png'
 import flipVertIcon from 'images/card_maker/icons/flip_vert.png'
 
 class CardEditor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      card: null
+    }
+  }
+
+  componentDidMount() {
+    const cardUrl = '/card_maker_ajax/cards/' + this.props.cardId + '/json'
+        , that = this
+        ;
+
+    CardWrapper.setTemplateSupplier({
+      supply: function(templateName, cb) {
+        $.getJSON('/card_maker_ajax/templates/trait', function(data) {
+          cb(null, data);
+        })
+          .fail(function() {
+            cb(new Error('Failed to retrieve template'));
+          });
+      }
+    });
+
+    $.ajax(cardUrl, {
+      method: 'GET',
+      success: (card) => {
+        CardWrapper.newInstance(card, (err, wrapped) => {
+          that.setState((prevState, props) => {
+            return {
+              card: wrapped
+            }
+          });
+        });
+      }
+    })
+  }
+
   render() {
+    console.log('state at render', this.state);
+
     return (
       <div id='CardGeneratorWrap' className='card-generator-wrap'>
         <div className='hdr-spacer green'></div>

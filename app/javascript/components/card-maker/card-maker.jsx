@@ -16,7 +16,8 @@ class CardMaker extends React.Component {
   handleEditCard = (cardId) => {
     this.setState((prevState, props) => {
       return {
-        screen: 'editor'
+        screen: 'editor',
+        editCardId: cardId,
       }
     });
   }
@@ -41,6 +42,7 @@ class CardMaker extends React.Component {
     } else if (this.state.screen === 'editor') {
       component = (
         <CardEditor
+          cardId={this.state.editCardId}
           handleCloseClick={this.handleManagerClose}
         />
       )

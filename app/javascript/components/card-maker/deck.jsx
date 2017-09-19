@@ -1,6 +1,7 @@
 import React from 'react'
 
 import LoadingSpinnerImage from './loading-spinner-image'
+import resourceWrapper from './resource-wrapper'
 
 class Deck extends React.Component {
   imgPart() {
@@ -18,7 +19,7 @@ class Deck extends React.Component {
 
   render() {
     return (
-      <div className='resource-wrap user-resource-wrap deck-resource'>
+      <div>
         <div className='deck-name'>
           <i className='icon-deck' />
           <span> {this.props.name}</span>
@@ -31,4 +32,4 @@ class Deck extends React.Component {
   }
 }
 
-export default Deck
+export default resourceWrapper(Deck, ['deck-resource'])

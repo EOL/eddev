@@ -1,41 +1,13 @@
 import React from 'react'
 
 import LoadingSpinnerImage from './loading-spinner-image'
+import resourceWrapper from './resource-wrapper'
 
 const noDeckId = -1;
 
 class Card extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      imgLoaded: false,
-      showOverlay: false
-    }
-  }
-
   imgUrl() {
     return 'card_maker_ajax/cards/' + this.props.data.id + '/svg';
-  }
-
-  imgLoaded = () => {
-    this.setState({
-      imgLoaded: true,
-      showOverlay: this.state.showOverlay
-    })
-  }
-
-  handleMouseEnter = () => {
-    this.setState({
-      imgLoaded: this.state.imgLoaded,
-      showOverlay: true
-    })
-  }
-
-  handleMouseLeave = () => {
-    this.setState({
-      imgLoaded: this.state.imgLoaded,
-      showOverlay: false
-    })
   }
 
   deckAssignItems() {
@@ -67,18 +39,8 @@ class Card extends React.Component {
   }
 
   render() {
-    var overlayClass = 'card-overlay resource-overlay'
-      ;
-
-    if (!this.state.showOverlay) {
-      overlayClass += ' hidden';
-    }
-
     return (
-      <div className='resource-wrap'
-           onMouseEnter={this.handleMouseEnter}
-           onMouseLeave={this.handleMouseLeave}
-      >
+      <div>
         <DeckAssignSelect
           items={this.deckAssignItems()}
           selectedId={this.selectedDeckId()}
@@ -86,14 +48,26 @@ class Card extends React.Component {
         />
         <div className='resource-frame'>
           <LoadingSpinnerImage src={this.imgUrl()} />
-          <div className={overlayClass}>
-            <i className='i fa fa-edit fa-3x edit-btn btn' />
-            <i className='i fa fa-trash-o fa-3x trash-btn btn' />
-          </div>
+          <CardOverlay show={this.props.showOverlay} />
         </div>
       </div>
     )
   }
+}
+
+function CardOverlay(props) {
+  var overlayClass = 'card-overlay resource-overlay';
+
+  if (!props.show) {
+    overlayClass += ' hidden';
+  }
+
+  return (
+    <div className={overlayClass}>
+      <i className='i fa fa-edit fa-3x edit-btn btn' />
+      <i className='i fa fa-trash-o fa-3x trash-btn btn' />
+    </div>
+  );
 }
 
 class DeckAssignSelect extends React.Component {
@@ -211,4 +185,4 @@ class DeckAssignItem extends React.Component {
   }
 }
 
-export default Card;
+export default resourceWrapper(Card, []);

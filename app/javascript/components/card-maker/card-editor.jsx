@@ -1,5 +1,7 @@
 import React from 'react'
 
+import CardFields from './card-fields'
+
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
 import rotateIcon from 'images/card_maker/icons/rotate.png'
 import flipHorizIcon from 'images/card_maker/icons/flip_horiz.png'
@@ -128,9 +130,9 @@ class CardEditor extends React.Component {
                   </div>
                 </div>
                 <div className='card-fields-wrap'>
-                  <div className='card-fields'>
-
-                  </div>
+                  {this.state.card &&
+                    <CardFields card={this.state.card} />
+                  }
                 </div>
               </div>
             </div>

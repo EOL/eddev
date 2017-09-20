@@ -36,6 +36,8 @@ const imageFetcher = {
   }
 }
 
+const selectedImgId = 'mainPhoto';
+
 class CardPreview extends React.Component {
   setCanvas = (canvas) => {
     this.canvas = canvas;
@@ -75,6 +77,14 @@ class CardPreview extends React.Component {
     }
   }
 
+  getImageData = (attr, defaultVal) => {
+    return this.props.getCardData(selectedImgId, attr, defaultVal);
+  }
+
+  setImageData = (attr, val) => {
+    this.props.setCardData(selectedImgId, attr, val);
+  }
+
   render() {
     this.draw();
 
@@ -84,13 +94,13 @@ class CardPreview extends React.Component {
         <div className='controls-card-wrap'>
           <div className='img-controls'>
             <ImageControlButtons
-              setCardData={this.props.setCardData}
-              getCardData={this.props.getCardData}
+              setImageData={this.setImageData}
+              getImageData={this.getImageData}
             />
             <div className='sep'></div>
             <ImageZoomControls
-              setCardData={this.props.setCardData}
-              getCardData={this.props.getCardData}
+              setImageData={this.setImageData}
+              getImageData={this.getImageData}
             />
           </div>
           <div className='card-box'>

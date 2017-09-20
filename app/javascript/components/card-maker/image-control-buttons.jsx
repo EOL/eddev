@@ -4,8 +4,6 @@ import rotateIcon from 'images/card_maker/icons/rotate.png'
 import flipHorizIcon from 'images/card_maker/icons/flip_horiz.png'
 import flipVertIcon from 'images/card_maker/icons/flip_vert.png'
 
-const selectedImg = 'mainPhoto';
-
 class ImageControlButtons extends React.Component {
   constructor(props) {
     super(props);
@@ -31,14 +29,14 @@ class ImageControlButtons extends React.Component {
   }
 
   handleRotateClick = () => {
-    this.props.setCardData(selectedImg, 'rotate',
-      this.props.getCardData(selectedImg, 'rotate', 360) - 90 % 360
+    this.props.setImageData('rotate',
+      this.props.getImageData('rotate', 360) - 90 % 360
     );
   }
 
   handleFlipClick = (attr) => {
-    this.props.setCardData(selectedImg, attr,
-      !this.props.getCardData(selectedImg, attr, false)
+    this.props.setImageData(attr,
+      !this.props.getImageData(attr, false)
     );
   }
 

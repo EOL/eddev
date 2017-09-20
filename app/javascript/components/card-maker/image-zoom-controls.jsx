@@ -3,12 +3,11 @@ import React from 'react'
 const minPct = 1
     , maxPct = 100
     , zoomLevelOffset = 50
-    , selectedImgId = 'mainPhoto'
     ;
 
 class ImageZoomControls extends React.Component {
   getPctFromCard = () => {
-    var data = this.props.getCardData(selectedImgId, 'zoomLevel', 0)
+    var data = this.props.getImageData('zoomLevel', 0)
       ;
 
     if (!data) {
@@ -24,7 +23,7 @@ class ImageZoomControls extends React.Component {
   }
 
   updatePct = (newPct) => {
-    this.props.setCardData(selectedImgId, 'zoomLevel', newPct - zoomLevelOffset);
+    this.props.setImageData('zoomLevel', newPct - zoomLevelOffset);
   }
 
   initIfReady = () => {

@@ -83,9 +83,15 @@ class CardPreview extends React.Component {
         <div className='img-select'></div>
         <div className='controls-card-wrap'>
           <div className='img-controls'>
-            <ImageControlButtons />
+            <ImageControlButtons
+              setCardData={this.props.setCardData}
+              getCardData={this.props.getCardData}
+            />
             <div className='sep'></div>
-            <ImageZoomControls />
+            <ImageZoomControls
+              setCardData={this.props.setCardData}
+              getCardData={this.props.getCardData}
+            />
           </div>
           <div className='card-box'>
             <canvas id='CardCanvas' className='card-canvas' ref={this.setCanvas}/>

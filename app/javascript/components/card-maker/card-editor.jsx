@@ -13,6 +13,26 @@ class CardEditor extends React.Component {
     }
   }
 
+  getCardData = (fieldName, attr, defaultVal) => {
+    var data;
+
+    if (this.state.card) {
+      data = this.state.card.getDataAttr(fieldName, attr, defaultVal);
+    } else {
+      data = null;
+    }
+
+    return data;
+  }
+
+  setCardData = (fieldName, attr, value) => {
+    this.setState((prevState, props) => {
+      return {
+        card: prevState.card.setDataAttr(fieldName, attr, value),
+      }
+    });
+  }
+
   componentDidMount() {
     const cardUrl = '/card_maker_ajax/cards/' + this.props.cardId + '/json'
         , that = this
@@ -75,7 +95,11 @@ class CardEditor extends React.Component {
                   </div>
                 </div>
 
-                <CardPreview card={this.state.card}/>
+                <CardPreview
+                  card={this.state.card}
+                  setCardData={this.setCardData}
+                  getCardData={this.getCardData}
+                />
               </div>
               <div className='right-col'>
                 <div className='col-head-box'>

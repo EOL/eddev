@@ -2,23 +2,29 @@ import React from 'react'
 
 const minPct = 1
     , maxPct = 100
+    , zoomLevelOffset = 50
+    , selectedImgId = 'mainPhoto'
     ;
 
 class ImageZoomControls extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      pct: maxPct,
+  getPctFromCard = () => {
+    var data = this.props.getCardData(selectedImgId, 'zoomLevel', 0)
+      ;
+
+    if (!data) {
+      data = 0;
     }
+
+    return data + zoomLevelOffset;
   }
 
   handleDrag = (event, ui) => {
-    this.setState((prevState, props) => {
-      return {
-        pct: Math.round((this.maxTop - ui.position.top) * maxPct * 1.0 /
-          this.maxTop)
-      };
-    });
+    this.updatePct(Math.round((this.maxTop - ui.position.top) * maxPct * 1.0 /
+      this.maxTop));
+  }
+
+  updatePct = (newPct) => {
+    this.props.setCardData(selectedImgId, 'zoomLevel', newPct - zoomLevelOffset);
   }
 
   initIfReady = () => {
@@ -50,7 +56,7 @@ class ImageZoomControls extends React.Component {
   calcKnobStyle = () => {
     if (this.maxTop) {
       return {
-        top: -1 * ((this.state.pct * this.maxTop / (maxPct * 1.0)) - this.maxTop)
+        top: -1 * ((this.pct * this.maxTop / (maxPct * 1.0)) - this.maxTop)
       }
     } else {
       return {};
@@ -58,25 +64,23 @@ class ImageZoomControls extends React.Component {
   }
 
   handlePlusClick = () => {
-    this.setState((prevState, props) => {
-      return {
-        pct: Math.min(prevState.pct + 1, maxPct),
-      }
-    })
+    this.updatePct(Math.min(this.pct + 1, maxPct));
   }
 
   handleMinusClick = () => {
-    this.setState((prevState, props) => {
-      return {
-        pct: Math.max(prevState.pct - 1, minPct),
-      }
-    });
+    this.updatePct(Math.max(this.pct - 1, minPct));
+  }
+
+  updatePctFromCard = () => {
+    this.pct = this.getPctFromCard();
   }
 
   render() {
+    this.updatePctFromCard()
+
     return (
       <div className='zoom-controls'>
-        <div className='zoom-txt txt'>{this.state.pct + '%'}</div>
+        <div className='zoom-txt txt'>{this.pct + '%'}</div>
         <div className='zoom ctrl'>
           <div className='dir plus noselect' onClick={this.handlePlusClick}>+</div>
           <div className='stem' ref={this.setStemNode}>

@@ -1,8 +1,7 @@
 import React from 'react'
 
-import rotateIcon from 'images/card_maker/icons/rotate.png'
-import flipHorizIcon from 'images/card_maker/icons/flip_horiz.png'
-import flipVertIcon from 'images/card_maker/icons/flip_vert.png'
+import ImageControlButtons from './image-control-buttons'
+import ImageZoomControls from './image-zoom-controls'
 
 // http://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas/15666143#15666143
 const pixelRatio = (function () {
@@ -84,25 +83,9 @@ class CardPreview extends React.Component {
         <div className='img-select'></div>
         <div className='controls-card-wrap'>
           <div className='img-controls'>
-            <div className='txt tip'></div>
-            <div className='btns ctrl img-btns'>
-              <img src={rotateIcon} className='btn top' />
-              <img src={flipHorizIcon} className='btn mid' />
-              <img src={flipVertIcon} className='btn bot' />
-            </div>
+            <ImageControlButtons />
             <div className='sep'></div>
-            <div className='zoom-controls'>
-              <div className='zoom-txt txt'></div>
-              <div className='zoom ctrl'>
-                <div className='dir plus noselect'>+</div>
-                <div className='stem'>
-                  <div className='lft'></div>
-                  <div className='rt'></div>
-                  <div className='knob'></div>
-                </div>
-                <div className='dir minus noselect'>&ndash;</div>
-              </div>
-            </div>
+            <ImageZoomControls />
           </div>
           <div className='card-box'>
             <canvas id='CardCanvas' className='card-canvas' ref={this.setCanvas}/>

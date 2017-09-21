@@ -75,8 +75,6 @@ class CardEditor extends React.Component {
       imgId = imageFields[0].id
     }
 
-    console.log('img id', imgId);
-
     return imgId;
   }
 

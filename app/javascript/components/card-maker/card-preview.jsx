@@ -63,7 +63,28 @@ class CardPreview extends React.Component {
     return fns;
   }
 
+  eolLinkAttrs = () => {
+    var attrs;
+
+    if (this.props.card) {
+      attrs = {
+        href: 'http://eol.org/pages/' +
+          this.props.card.getTemplateParam('speciesId') + '/overview',
+        target: '_blank',
+      }
+    } else {
+      attrs = {
+        href:'#',
+        target: '',
+      }
+    }
+
+    return attrs;
+  }
+
   render() {
+    var eolLinkAttrs = this.eolLinkAttrs();
+
     return (
       <div className='preview'>
         <div className='img-select'>{this.imageSelectItems()}</div>
@@ -83,7 +104,7 @@ class CardPreview extends React.Component {
               selectedImgId={this.props.selectedImgId}
               {...this.imageDataFns()}
             />
-            <a href='#' target='_blank' className='eol-link'>
+            <a href={eolLinkAttrs.href} target={eolLinkAttrs.target} className='eol-link'>
               <span>Open </span>
               <i className='icon-eol-logo' />
               <span> taxon page</span>

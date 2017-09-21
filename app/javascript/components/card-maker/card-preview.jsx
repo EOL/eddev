@@ -3,6 +3,7 @@ import React from 'react'
 import ImageControlButtons from './image-control-buttons'
 import ImageZoomControls from './image-zoom-controls'
 import PreviewCanvas from './preview-canvas'
+import SaveExitBtns from './save-exit-btns'
 
 class CardPreview extends React.Component {
   imageSelectItems = () => {
@@ -88,17 +89,12 @@ class CardPreview extends React.Component {
               <span> taxon page</span>
             </a>
           </div>
-          <div className='preview-btns'>
-            <div className='btn close'>
-              <div className='btn-txt'>Close</div>
-            </div>
-            <div className='btn save-exit'>
-              <div className='btn-txt'>Save + Exit</div>
-            </div>
-            <div className='btn save'>
-              <div className='btn-txt'>Quick Save</div>
-            </div>
-          </div>
+          <SaveExitBtns
+            dirty={this.props.card && this.props.card.isDirty()}
+            handleClose={this.props.handleClose}
+            handleSave={this.props.handleSave}
+            handleSaveAndExit={this.props.handleSaveAndExit}
+          />
         </div>
       </div>
     )

@@ -88,16 +88,62 @@ class CardEditor extends React.Component {
     });
   }
 
-  render() {
-    console.log('state at render', this.state);
+  handleCloseHelper = (force) => {
+    var proceed = true;
 
+    if (!force && this.state.card && this.state.card.isDirty()) {
+      proceed = confirm(
+        'Are you sure you want to leave this page? All unsaved work will be lost.'
+      );
+    }
+
+    if (proceed) {
+      this.props.handleCloseClick();
+    }
+  }
+
+  handleClose = () => {
+    this.handleCloseHelper(false);
+  }
+
+  saveWithCb = (cb) => {
+    if (this.state.card) {
+      this.state.card.save(cb)
+    }
+  }
+
+  handleSave = () => {
+    this.saveWithCb((err, newCard) => {
+      if (err) {
+        throw err;
+      }
+
+      this.setState((prevState, props) => {
+        return {
+          card: newCard
+        }
+      });
+    });
+  }
+
+  handleSaveAndExit = () => {
+    this.saveWithCb((err, newCard) => {
+      if (err) {
+        throw err;
+      }
+
+      this.handleCloseHelper(true);
+    });
+  }
+
+  render() {
     return (
       <div id='CardGeneratorWrap' className='card-generator-wrap'>
         <div className='hdr-spacer green'></div>
         <div id='CardGenerator' className='card-generator card-screen'>
           <div className='screen-inner'>
             <div className='welcome-block generator-welcome-block'>
-              <div className='manager-btn' onClick={this.props.handleCloseClick}>
+              <div className='manager-btn' onClick={this.handleClose}>
                 <div className='manager-btn-bg'></div>
                 <div className='manager-btn-back-txt'> go back to</div>
                 <div className='manager-btn-txt-wrap'>
@@ -126,6 +172,9 @@ class CardEditor extends React.Component {
                   getCardData={(this.state.card ? this.getCardData : null)}
                   selectedImgId={this.state.selectedImgId}
                   setSelectedImgId={this.setSelectedImgId}
+                  handleClose={this.handleClose}
+                  handleSave={this.handleSave}
+                  handleSaveAndExit={this.handleSaveAndExit}
                 />
               </div>
               <div className='right-col'>

@@ -60,7 +60,7 @@ class CardFields extends React.Component {
           fieldElmts.push(elmt);
 
           if (i < fields.length - 1) {
-            // push separator
+            fieldElmts.push(<div className='field-sep' key={'field-sep-' + i}></div>);
           }
         }
       }

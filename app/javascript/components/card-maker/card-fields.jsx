@@ -12,6 +12,7 @@ class CardFields extends React.Component {
       for (let i = 0; i < fields.length; i++) {
         let field = fields[i]
           , value = this.props.card.resolvedFieldData(field)
+          , choices = this.props.card.getFieldChoices(field.id)
           , setDataAttr = this.props.setCardData.bind(null, field.id)
           , setDataAttrNotDirty = this.props.setCardDataNotDirty.bind(null, field.id)
           , elmt = null
@@ -25,6 +26,7 @@ class CardFields extends React.Component {
                 field={field}
                 key={field.id}
                 value={value}
+                choices={choices}
                 setDataAttr={setDataAttr}
                 setDataAttrNotDirty={setDataAttrNotDirty}
                 forceCardDirty={this.props.forceCardDirty}

@@ -15,7 +15,7 @@ function fieldWrapper(WrappedElmt, noBorder) {
             <div className='txt'>{this.props.field.label}</div>
           </div>
           <div className={innerClassName}>
-            <WrappedElmt />
+            <WrappedElmt {...this.props} />
           </div>
         </div>
       )

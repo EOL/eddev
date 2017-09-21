@@ -10,8 +10,29 @@ class CardEditor extends React.Component {
     super(props);
     this.state = {
       card: null,
-      selectedImgId: null
+      selectedImgId: null,
+      rightColDisabled: false,
     }
+  }
+
+  setRightColNode = (node) => {
+    this.rightColNode = node;
+  }
+
+  disableRightCol = () => {
+    this.setState((prevState, props) => {
+      return {
+        rightColDisabled: true,
+      }
+    });
+  }
+
+  enableRightCol = () => {
+    this.setState((prevState, props) => {
+      return {
+        rightColDisabled: false,
+      }
+    });
   }
 
   getCardData = (fieldName, attr, defaultVal) => {
@@ -30,6 +51,22 @@ class CardEditor extends React.Component {
     this.setState((prevState, props) => {
       return {
         card: prevState.card.setDataAttr(fieldName, attr, value),
+      }
+    });
+  }
+
+  setCardDataNotDirty = (fieldName, attr, value) => {
+    this.setState((prevState, props) => {
+      return {
+        card: prevState.card.setDataAttrNotDirty(fieldName, attr, value),
+      }
+    });
+  }
+
+  forceDirty = () => {
+    this.setState((prevState, props) => {
+      return {
+        card: prevState.card.forceDirty(),
       }
     });
   }
@@ -175,7 +212,14 @@ class CardEditor extends React.Component {
                   handleSaveAndExit={this.handleSaveAndExit}
                 />
               </div>
-              <div className='right-col'>
+              <div
+                className='col right-col'
+                ref={this.setRightColNode}
+              >
+                {
+                  this.state.rightColDisabled &&
+                  <div className='disable-overlay'></div>
+                }
                 <div className='col-head-box'>
                   <div className='col-head-txt'>Card Form</div>
                   <div className='col-head-sub-txt'>
@@ -184,7 +228,14 @@ class CardEditor extends React.Component {
                 </div>
                 <div className='card-fields-wrap'>
                   {this.state.card &&
-                    <CardFields card={this.state.card} />
+                    <CardFields
+                      card={this.state.card}
+                      setCardData={this.setCardData}
+                      setCardDataNotDirty={this.setCardDataNotDirty}
+                      forceCardDirty={this.forceDirty}
+                      disableCol={this.disableRightCol}
+                      enableCol={this.enableRightCol}
+                    />
                   }
                 </div>
               </div>

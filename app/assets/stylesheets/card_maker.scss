@@ -676,6 +676,10 @@ $col-border-width: 5px;
   z-index: 50;
 }
 
+.disable-exempt {
+  z-index: 100 !important;
+}
+
 .col {
   border-radius: 4px;
   min-height: $head-box-height;

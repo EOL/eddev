@@ -4,45 +4,62 @@ import TextField from './editor-fields/text-field'
 
 class CardFields extends React.Component {
   buildFields = () => {
-    const fieldElmts = []
-        , fields = this.props.card.editableFields()
-        ;
+    const fieldElmts = [];
 
-    for (let i = 0; i < fields.length; i++) {
-      let field = fields[i]
-        , elmt = null
-        ;
+    if (this.props.card) {
+      let fields = this.props.card.editableFields();
 
-      switch (field.type) {
-        case 'text':
-          elmt = <TextField field={field} key={field.id}/>
-          break;
-        /*
-        case 'image':
-          $elmt = buildImageField(field);
-          break;
-        case 'color-scheme':
-          $elmt = buildColorSchemeField(field);
-          break;
-        case 'labeled-choice-image':
-          $elmt = buildLabeledChoiceImageField(field);
-          break;
-        case 'key-val-list':
-          $elmt = buildKeyValListField(field);
-          break;
-        case 'multiline-text':
-          $elmt = buildMultilineTextField(field);
-          break;
-        */
-        default:
-          console.log(field, 'type not recognized');
-      }
+      for (let i = 0; i < fields.length; i++) {
+        let field = fields[i]
+          , value = this.props.card.resolvedFieldData(field)
+          , setDataAttr = this.props.setCardData.bind(null, field.id)
+          , setDataAttrNotDirty = this.props.setCardDataNotDirty.bind(null, field.id)
+          , elmt = null
+          ;
 
-      if (elmt) {
-        fieldElmts.push(elmt);
 
-        if (i < fields.length - 1) {
-          // push separator
+        switch (field.type) {
+          case 'text':
+            elmt = (
+              <TextField
+                field={field}
+                key={field.id}
+                value={value}
+                setDataAttr={setDataAttr}
+                setDataAttrNotDirty={setDataAttrNotDirty}
+                forceCardDirty={this.props.forceCardDirty}
+                disableCol={this.props.disableCol}
+                enableCol={this.props.enableCol}
+              />
+            );
+            break;
+          /*
+          case 'image':
+            $elmt = buildImageField(field);
+            break;
+          case 'color-scheme':
+            $elmt = buildColorSchemeField(field);
+            break;
+          case 'labeled-choice-image':
+            $elmt = buildLabeledChoiceImageField(field);
+            break;
+          case 'key-val-list':
+            $elmt = buildKeyValListField(field);
+            break;
+          case 'multiline-text':
+            $elmt = buildMultilineTextField(field);
+            break;
+          */
+          default:
+            //console.log(field, 'type not recognized');
+        }
+
+        if (elmt) {
+          fieldElmts.push(elmt);
+
+          if (i < fields.length - 1) {
+            // push separator
+          }
         }
       }
     }

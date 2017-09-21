@@ -4,55 +4,83 @@ import ImageControlButtons from './image-control-buttons'
 import ImageZoomControls from './image-zoom-controls'
 import PreviewCanvas from './preview-canvas'
 
-const selectedImgId = 'mainPhoto';
-
 class CardPreview extends React.Component {
-  getImageData = (attr, defaultVal) => {
-    return this.props.getCardData(selectedImgId, attr, defaultVal);
+  imageSelectItems = () => {
+    if (!this.props.card) {
+      return [];
+    }
+
+    const imgFields = this.props.card.imageFields()
+        , items = []
+        ;
+
+    for (const field of imgFields) {
+      let val = this.props.card.resolvedFieldData(field)
+        , url = val.thumbUrl
+        , thumbClass = 'thumb'
+        ;
+
+      if (this.props.selectedImgId === field.id) {
+        thumbClass += ' selected';
+      }
+
+      items.push((
+        <div key={field.id}
+          className='img-wrap'
+          onClick={() => this.props.setSelectedImgId(field.id)}
+        >
+          <div className='img-title'>{field.label}</div>
+          <img className={thumbClass} src={url} />
+        </div>
+      ))
+    }
+
+    return items;
   }
 
   setImageData = (attr, val) => {
-    this.props.setCardData(selectedImgId, attr, val);
+    this.props.setCardData(this.props.selectedImgId, attr, val);
   }
 
-  getImageLocation = () => {
-    return this.props.card ?
-      this.props.card.getImageLocation(selectedImgId)
-      : null;
+  getImageData = (attr, defaultVal) => {
+    return this.props.getCardData(this.props.selectedImgId, attr, defaultVal);
   }
 
-  draw = () => {
-    if (this.renderer && this.props.card) {
-      this.renderer.draw(this.props.card, function(err) {
-        if (err) console.log(err);
-      });
+  imageDataFns = () => {
+    const fns = {};
+
+    if (this.props.selectedImgId) {
+      if (this.props.setCardData) {
+        fns.setImageData = this.setImageData;
+      }
+
+      if (this.props.getCardData) {
+        fns.getImageData = this.getImageData;
+      }
     }
+
+    return fns;
   }
 
   render() {
-    this.draw();
-
     return (
       <div className='preview'>
-        <div className='img-select'></div>
+        <div className='img-select'>{this.imageSelectItems()}</div>
         <div className='controls-card-wrap'>
           <div className='img-controls'>
             <ImageControlButtons
-              setImageData={this.setImageData}
-              getImageData={this.getImageData}
+              {...this.imageDataFns()}
             />
             <div className='sep'></div>
             <ImageZoomControls
-              setImageData={this.setImageData}
-              getImageData={this.getImageData}
+              {...this.imageDataFns()}
             />
           </div>
           <div className='card-box'>
             <PreviewCanvas
               card={this.props.card}
-              imageLocation={this.getImageLocation()}
-              setImageData={this.setImageData}
-              getImageData={this.getImageData}
+              selectedImgId={this.props.selectedImgId}
+              {...this.imageDataFns()}
             />
             <a href='#' target='_blank' className='eol-link'>
               <span>Open </span>

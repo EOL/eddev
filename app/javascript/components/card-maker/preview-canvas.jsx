@@ -78,11 +78,15 @@ class PreviewCanvas extends React.Component {
   }
 
   imageContains = (event) => {
-    if (!this.props.imageLocation) {
+    const dragArea = this.props.card && this.props.selectedImgId ?
+      this.props.card.getImageLocation(this.props.selectedImgId) :
+      null
+    ;
+
+    if (!dragArea) {
       return false;
     } else {
-      let dragArea = this.props.imageLocation
-        , minX = dragArea.x
+      let minX = dragArea.x
         , minY = dragArea.y
         , maxX = minX + dragArea.width
         , maxY = minY + dragArea.height

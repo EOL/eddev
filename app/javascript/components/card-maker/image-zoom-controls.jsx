@@ -18,8 +18,10 @@ class ImageZoomControls extends React.Component {
   }
 
   handleDrag = (event, ui) => {
-    this.updatePct(Math.round((this.maxTop - ui.position.top) * maxPct * 1.0 /
-      this.maxTop));
+    if (this.active()) {
+      this.updatePct(Math.round((this.maxTop - ui.position.top) * maxPct * 1.0 /
+        this.maxTop));
+    }
   }
 
   updatePct = (newPct) => {
@@ -39,6 +41,8 @@ class ImageZoomControls extends React.Component {
         axis: 'y',
         drag: this.handleDrag
       });
+
+      this.initialized = true;
     }
   }
 
@@ -53,7 +57,7 @@ class ImageZoomControls extends React.Component {
   }
 
   calcKnobStyle = () => {
-    if (this.maxTop) {
+    if (this.active()) {
       return {
         top: -1 * ((this.pct * this.maxTop / (maxPct * 1.0)) - this.maxTop)
       }
@@ -63,15 +67,27 @@ class ImageZoomControls extends React.Component {
   }
 
   handlePlusClick = () => {
-    this.updatePct(Math.min(this.pct + 1, maxPct));
+    if (this.active()) {
+      this.updatePct(Math.min(this.pct + 1, maxPct));
+    }
   }
 
   handleMinusClick = () => {
-    this.updatePct(Math.max(this.pct - 1, minPct));
+    if (this.active()) {
+      this.updatePct(Math.max(this.pct - 1, minPct));
+    }
   }
 
   updatePctFromCard = () => {
-    this.pct = this.getPctFromCard();
+    if (this.active()) {
+      this.pct = this.getPctFromCard();
+    }
+  }
+
+  active = () => {
+    return this.initialized &&
+      this.props.getImageData != null &&
+      this.props.setImageData != null;
   }
 
   render() {
@@ -79,7 +95,7 @@ class ImageZoomControls extends React.Component {
 
     return (
       <div className='zoom-controls'>
-        <div className='zoom-txt txt'>{this.pct + '%'}</div>
+        <div className='zoom-txt txt'>{this.pct ? (this.pct + '%') : '—'}</div>
         <div className='zoom ctrl'>
           <div className='dir plus noselect' onClick={this.handlePlusClick}>+</div>
           <div className='stem' ref={this.setStemNode}>

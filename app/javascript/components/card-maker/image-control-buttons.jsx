@@ -29,15 +29,24 @@ class ImageControlButtons extends React.Component {
   }
 
   handleRotateClick = () => {
-    this.props.setImageData('rotate',
-      this.props.getImageData('rotate', 360) - 90 % 360
-    );
+    if (this.initialized()) {
+      this.props.setImageData('rotate',
+        this.props.getImageData('rotate', 360) - 90 % 360
+      );
+    }
   }
 
   handleFlipClick = (attr) => {
-    this.props.setImageData(attr,
-      !this.props.getImageData(attr, false)
-    );
+    if (this.initialized()) {
+      this.props.setImageData(attr,
+        !this.props.getImageData(attr, false)
+      );
+    }
+  }
+
+  initialized = () => {
+    return this.props.setImageData !== null &&
+      this.props.getImageData !== null;
   }
 
   render() {

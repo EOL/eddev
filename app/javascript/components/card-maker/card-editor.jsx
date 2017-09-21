@@ -9,7 +9,8 @@ class CardEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      card: null
+      card: null,
+      selectedImgId: null
     }
   }
 
@@ -53,14 +54,38 @@ class CardEditor extends React.Component {
       method: 'GET',
       success: (card) => {
         CardWrapper.newInstance(card, (err, wrapped) => {
+          var imgId = that.firstImgIdFromCard(wrapped);
+
           that.setState((prevState, props) => {
             return {
-              card: wrapped
+              card: wrapped,
+              selectedImgId: imgId,
             }
           });
         });
       }
     })
+  }
+
+  firstImgIdFromCard = (card) => {
+    var imgId = null;
+    const imageFields = card.imageFields();
+
+    if (imageFields.length) {
+      imgId = imageFields[0].id
+    }
+
+    console.log('img id', imgId);
+
+    return imgId;
+  }
+
+  setSelectedImgId = (imageId) => {
+    this.setState((prevState, props) => {
+      return {
+        selectedImgId: imageId,
+      }
+    });
   }
 
   render() {
@@ -97,8 +122,10 @@ class CardEditor extends React.Component {
 
                 <CardPreview
                   card={this.state.card}
-                  setCardData={this.setCardData}
-                  getCardData={this.getCardData}
+                  setCardData={(this.state.card ? this.setCardData : null)}
+                  getCardData={(this.state.card ? this.getCardData : null)}
+                  selectedImgId={this.state.selectedImgId}
+                  setSelectedImgId={this.setSelectedImgId}
                 />
               </div>
               <div className='right-col'>

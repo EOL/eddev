@@ -55,6 +55,14 @@ class CardEditor extends React.Component {
     });
   }
 
+  setCardChoiceIndex = (fieldName, index) => {
+    this.setState((prevState, props) => {
+      return {
+        card: prevState.card.setChoiceIndex(fieldName, index)
+      }
+    });
+  }
+
   setCardDataNotDirty = (fieldName, attr, value) => {
     this.setState((prevState, props) => {
       return {
@@ -232,6 +240,7 @@ class CardEditor extends React.Component {
                       card={this.state.card}
                       setCardData={this.setCardData}
                       setCardDataNotDirty={this.setCardDataNotDirty}
+                      setCardChoiceIndex={this.setCardChoiceIndex}
                       forceCardDirty={this.forceDirty}
                       disableCol={this.disableRightCol}
                       enableCol={this.enableRightCol}

@@ -12,6 +12,7 @@ class CardEditor extends React.Component {
       card: null,
       selectedImgId: null,
       rightColDisabled: false,
+      previewStyle: {},
     }
   }
 
@@ -77,39 +78,6 @@ class CardEditor extends React.Component {
         card: prevState.card.forceDirty(),
       }
     });
-  }
-
-  componentDidMount() {
-    const cardUrl = '/card_maker_ajax/cards/' + this.props.cardId + '/json'
-        , that = this
-        ;
-
-    CardWrapper.setTemplateSupplier({
-      supply: function(templateName, cb) {
-        $.getJSON('/card_maker_ajax/templates/trait', function(data) {
-          cb(null, data);
-        })
-          .fail(function() {
-            cb(new Error('Failed to retrieve template'));
-          });
-      }
-    });
-
-    $.ajax(cardUrl, {
-      method: 'GET',
-      success: (card) => {
-        CardWrapper.newInstance(card, (err, wrapped) => {
-          var imgId = that.firstImgIdFromCard(wrapped);
-
-          that.setState((prevState, props) => {
-            return {
-              card: wrapped,
-              selectedImgId: imgId,
-            }
-          });
-        });
-      }
-    })
   }
 
   firstImgIdFromCard = (card) => {
@@ -179,6 +147,104 @@ class CardEditor extends React.Component {
     });
   }
 
+  setPreviewNode = (node) => {
+    this.previewNode = node;
+    this.setPreviewStyle();
+  }
+
+  setLeftColNode = (node) => {
+    this.leftColNode = node;
+    this.setPreviewStyle();
+  }
+
+  setLeftColHeadBoxNode = (node) => {
+    this.leftColHeadBoxNode = node;
+    this.setPreviewStyle();
+  }
+
+  setPreviewStyle = () => {
+    if (!(this.previewNode && this.leftColNode && this.leftColHeadBoxNode)) {
+      return;
+    }
+
+    let scrollTop = $(document).scrollTop()
+      , $preview = $(this.previewNode)
+      , $col = $(this.leftColNode)
+      , $colHead = $(this.leftColHeadBoxNode)
+      , colOffsetTop = $col.offset().top
+      , colViewOffset = colOffsetTop - scrollTop
+      , colHeadHeight = $colHead.outerHeight()
+      , colHeight = $col.outerHeight()
+      , innerColViewOffset = colViewOffset + colHeadHeight
+      , previewHeight = $preview.outerHeight()
+      , top
+      , position
+      ;
+
+    if (innerColViewOffset < 0) {
+      if (colHeight - previewHeight < -colViewOffset) {
+        position = 'absolute';
+        top = colHeight - previewHeight;
+      } else {
+        position = 'fixed';
+        top = 0;
+      }
+    } else {
+      position = 'absolute';
+      top = colHeadHeight;
+    }
+
+    // XXX: selectively render components for performance. Shoudn't have to
+    // re-render the whole editor just to move the preview box. 
+    this.setState((prevState, props) => {
+      return {
+        previewStyle: {
+          position: position,
+          top: top,
+        }
+      }
+    });
+  }
+
+  componentDidMount() {
+    const cardUrl = '/card_maker_ajax/cards/' + this.props.cardId + '/json'
+        , that = this
+        ;
+
+    CardWrapper.setTemplateSupplier({
+      supply: function(templateName, cb) {
+        $.getJSON('/card_maker_ajax/templates/trait', function(data) {
+          cb(null, data);
+        })
+          .fail(function() {
+            cb(new Error('Failed to retrieve template'));
+          });
+      }
+    });
+
+    $.ajax(cardUrl, {
+      method: 'GET',
+      success: (card) => {
+        CardWrapper.newInstance(card, (err, wrapped) => {
+          var imgId = that.firstImgIdFromCard(wrapped);
+
+          that.setState((prevState, props) => {
+            return {
+              card: wrapped,
+              selectedImgId: imgId,
+            }
+          });
+        });
+      }
+    })
+
+    document.addEventListener('scroll', this.setPreviewStyle);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('scroll', this.setPreviewStyle);
+  }
+
   render() {
     return (
       <div id='CardGeneratorWrap' className='card-generator-wrap'>
@@ -201,8 +267,8 @@ class CardEditor extends React.Component {
               <img src={ladybugIcon} className='ladybug' />
             </div>
             <div className='cols'>
-              <div className='col left-col'>
-                <div className='col-head-box'>
+              <div className='col left-col' ref={this.setLeftColNode}>
+                <div className='col-head-box' ref={this.setLeftColHeadBoxNode}>
                   <div className='col-head-txt'>Card Preview</div>
                   <div className='col-head-sub-txt'>
                     (Live Preview, Image Controls, Save + Exit Options)
@@ -218,6 +284,8 @@ class CardEditor extends React.Component {
                   handleClose={this.handleClose}
                   handleSave={this.handleSave}
                   handleSaveAndExit={this.handleSaveAndExit}
+                  setRootNode={this.setPreviewNode}
+                  rootStyle={this.state.previewStyle}
                 />
               </div>
               <div

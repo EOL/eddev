@@ -86,7 +86,7 @@ class CardPreview extends React.Component {
     var eolLinkAttrs = this.eolLinkAttrs();
 
     return (
-      <div className='preview'>
+      <div className='preview' ref={this.props.setRootNode} style={this.props.rootStyle}>
         <div className='img-select'>{this.imageSelectItems()}</div>
         <div className='controls-card-wrap'>
           <div className='img-controls'>

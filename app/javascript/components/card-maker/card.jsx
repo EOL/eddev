@@ -54,9 +54,6 @@ class Card extends React.Component {
               <i className='i fa fa-edit fa-3x edit-btn btn'
                 onClick={this.props.handleEditClick}
               />
-              <div style={{height: '20px', width: '20px', 'backgroundColor': '#f00'}}
-                onClick={this.props.handleEditClick}
-              />
               <i className='i fa fa-trash-o fa-3x trash-btn btn' />
             </div>
           }

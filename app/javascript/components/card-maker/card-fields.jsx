@@ -2,10 +2,12 @@ import React from 'react'
 
 import TextField from './editor-fields/text-field'
 import ColorSchemeField from './editor-fields/color-scheme-field'
+import LabeledChoiceImageField from './editor-fields/labeled-choice-image-field'
 
 const fieldTypesToComponents = {
   'text': TextField,
-  'color-scheme': ColorSchemeField
+  'color-scheme': ColorSchemeField,
+  'labeled-choice-image': LabeledChoiceImageField,
 }
 
 class CardFields extends React.Component {

@@ -64,6 +64,22 @@ class CardEditor extends React.Component {
     });
   }
 
+  setCardUserDataAttr = (fieldName, bucket, key, value) => {
+    this.setState((prevState, props) => {
+      return {
+        card: prevState.card.setUserDataAttr(fieldName, bucket, key, value),
+      }
+    })
+  }
+
+  setCardUserDataRef = (fieldName, key) => {
+    this.setState((prevState, props) => {
+      return {
+        card: prevState.card.setUserDataRef(fieldName, key),
+      }
+    })
+  }
+
   setCardDataNotDirty = (fieldName, attr, value) => {
     this.setState((prevState, props) => {
       return {
@@ -195,7 +211,7 @@ class CardEditor extends React.Component {
     }
 
     // XXX: selectively render components for performance. Shoudn't have to
-    // re-render the whole editor just to move the preview box. 
+    // re-render the whole editor just to move the preview box.
     this.setState((prevState, props) => {
       return {
         previewStyle: {
@@ -309,6 +325,8 @@ class CardEditor extends React.Component {
                       setCardData={this.setCardData}
                       setCardDataNotDirty={this.setCardDataNotDirty}
                       setCardChoiceIndex={this.setCardChoiceIndex}
+                      setCardUserDataAttr={this.setCardUserDataAttr}
+                      setCardUserDataRef={this.setCardUserDataRef}
                       forceCardDirty={this.forceDirty}
                       disableCol={this.disableRightCol}
                       enableCol={this.enableRightCol}

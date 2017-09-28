@@ -174,7 +174,7 @@ class TextField extends React.Component {
         onChange={this.handleChange}
         className='text-input text-field-input text-entry'
         type='text'
-        value={this.props.value.text}
+        value={this.props.value.text || ''}
       />
     ));
 

@@ -5,6 +5,7 @@ import ColorSchemeField from './editor-fields/color-scheme-field'
 import LabeledChoiceImageField from './editor-fields/labeled-choice-image-field'
 import ImageField from './editor-fields/image-field'
 import KeyValListField from './editor-fields/key-val-list-field'
+import MultilineTextField from './editor-fields/multiline-text-field'
 
 const fieldTypesToComponents = {
   'text': TextField,
@@ -12,6 +13,7 @@ const fieldTypesToComponents = {
   'labeled-choice-image': LabeledChoiceImageField,
   'image': ImageField,
   'key-val-list': KeyValListField,
+  'multiline-text': MultilineTextField,
 }
 
 class CardFields extends React.Component {

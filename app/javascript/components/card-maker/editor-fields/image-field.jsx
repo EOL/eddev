@@ -266,44 +266,4 @@ class ImageField extends React.Component {
   }
 }
 
-/*
-.img-field-main
-  .img-lib-link.img-field-sec
-    .img-lib-hdr.img-lib-btn Image Library
-    .img-lib-thumbs
-      :plain
-        {{#each pc.thumbUrls}}
-          <img src="{{this}}" class="img-lib-thumb">
-        {{/each}}
-  .img-field-sep
-  .img-url.img-field-sec
-    .img-or or
-    .img-url-wrap.flex-wrap
-      %input.img-url-input.text-input.text-entry{:type => :text, :placeholder => "Type/paste URL"}>
-      .img-url-btn.text-input-btn
-        %i.fa.fa-upload.fa-lg
-    .img-url-error.hidden Failed to load image from URL
-    .url-img-preview.thumb.hidden
-      %img.img
-  .img-field-sep
-  .img-upload.img-field-sec
-    .img-or or
-    .img-upload-btn
-      %i.fa.fa-upload.fa-lg.img-upload-btn-icon{:'aria-hidden' => true}
-      .img-upload-btn-txt Upload an image
-      %input.img-upload-file{:type => "file"}
-    .upload-img-preview.thumb.hidden
-      %img.img
-  .img-field-sep
-  .img-credit.img-field-sec
-    .img-credit-label Image Credit
-    %input.img-credit-input.text-input.text-entry{:type => :text}
-.img-lib-expanded.hidden
-  .img-thumbs
-    :plain
-      {{#each pc.choices}}
-        <img src="{{this.thumbUrl}}" data-index="{{@index}}" class="img-thumb">
-      {{/each}}
-  .back-btn.img-lib-btn Close image library
-*/
 export default fieldWrapper(ImageField)

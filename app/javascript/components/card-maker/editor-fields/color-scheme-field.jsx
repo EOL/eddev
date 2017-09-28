@@ -48,4 +48,4 @@ class ColorSchemeField extends React.Component {
   }
 }
 
-export default fieldWrapper(ColorSchemeField, ['noborder']);
+export default fieldWrapper(ColorSchemeField, true);

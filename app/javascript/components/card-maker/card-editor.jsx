@@ -1,5 +1,6 @@
 import React from 'react'
 
+import newImmutableCardInstance from 'lib/immutable-card'
 import CardFields from './card-fields'
 import CardPreview from './card-preview'
 
@@ -235,6 +236,7 @@ class CardEditor extends React.Component {
         , that = this
         ;
 
+    /* TODO: this probably doesn't belong here at all */
     CardWrapper.setTemplateSupplier({
       supply: function(templateName, cb) {
         $.getJSON('/card_maker_ajax/templates/trait', function(data) {
@@ -249,7 +251,7 @@ class CardEditor extends React.Component {
     $.ajax(cardUrl, {
       method: 'GET',
       success: (card) => {
-        CardWrapper.newInstance(card, (err, wrapped) => {
+        newImmutableCardInstance(card, (err, wrapped) => {
           var imgId = that.firstImgIdFromCard(wrapped);
 
           that.setState((prevState, props) => {

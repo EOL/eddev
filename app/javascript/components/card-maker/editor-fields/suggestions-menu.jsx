@@ -35,7 +35,9 @@ class SuggestionsMenu extends React.Component {
 
   getArrowStyle = () => {
     let left = this.props.anchor ?
-          this.props.anchor.offsetLeft + this.props.anchor.getBoundingClientRect().width / 2 - arrowDim / 2 - menuBorder:
+          this.props.anchor.offsetLeft +
+            this.props.anchor.getBoundingClientRect().width / 2 - arrowDim /
+            2 - menuBorder :
           0
       ;
 
@@ -44,15 +46,24 @@ class SuggestionsMenu extends React.Component {
     }
   }
 
+  /*
+   * When a suggestion item is clicked, it does not get focus; therefore,
+   * a blur event isn't fired. Parents that close the menu on anchor blur
+   * should do so manually in their handleSelect function
+   */
+  handleItemMouseDown = (event) => {
+    event.preventDefault();
+  }
+
   render() {
     let rootClass = 'suggestions disable-exempt';
 
-    if (!this.props.open) {
-      rootClass += ' hidden';
-    }
-
     return (
-      <div className={rootClass} style={this.getRootStyle()}>
+      <div
+        className={rootClass}
+        style={this.getRootStyle()}
+        onMouseDown={this.handleRootMouseDown}
+      >
         <img
           src={blueArrow}
           className='arrow'
@@ -68,6 +79,7 @@ class SuggestionsMenu extends React.Component {
                   className='item'
                   key={item}
                   onClick={() => this.props.handleSelect(item)}
+                  onMouseDown={this.handleItemMouseDown}
                 >
                   {item}
                 </li>

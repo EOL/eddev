@@ -4,12 +4,14 @@ import TextField from './editor-fields/text-field'
 import ColorSchemeField from './editor-fields/color-scheme-field'
 import LabeledChoiceImageField from './editor-fields/labeled-choice-image-field'
 import ImageField from './editor-fields/image-field'
+import KeyValListField from './editor-fields/key-val-list-field'
 
 const fieldTypesToComponents = {
   'text': TextField,
   'color-scheme': ColorSchemeField,
   'labeled-choice-image': LabeledChoiceImageField,
   'image': ImageField,
+  'key-val-list': KeyValListField,
 }
 
 class CardFields extends React.Component {
@@ -29,6 +31,7 @@ class CardFields extends React.Component {
           , setDataAttrNotDirty = this.props.setCardDataNotDirty.bind(null, field.id)
           , setUserDataAttr = this.props.setCardUserDataAttr.bind(null, field.id)
           , setUserDataRef = this.props.setCardUserDataRef.bind(null, field.id)
+          , setKeyValText = this.props.setCardKeyValText.bind(null, field.id)
           , getDataAttr = this.props.card.getDataAttr.bind(null, field.id)
           , getUserDataAttr = this.props.card.getUserDataAttr.bind(null, field.id)
           , FieldComponent = fieldTypesToComponents[field.type]
@@ -49,6 +52,7 @@ class CardFields extends React.Component {
               setChoiceIndex={setChoiceIndex}
               setUserDataAttr={setUserDataAttr}
               setUserDataRef={setUserDataRef}
+              setKeyValText={setKeyValText}
               getUserDataAttr={getUserDataAttr}
               userDataRef={this.props.card.getUserDataRef(field.id)}
               forceCardDirty={this.props.forceCardDirty}

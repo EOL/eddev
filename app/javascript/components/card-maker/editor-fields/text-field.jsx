@@ -189,19 +189,21 @@ class TextField extends React.Component {
           <i className='icon-drop suggestion-icon'></i>
         </div>
       ))
-      elmts.push((
-        <SuggestionsMenu
-          key='suggestMenu'
-          items={
-            this.props.choices.map((choice) => {
-              return choice.text
-            })
-          }
-          anchor={this.state.suggestBtnNode}
-          open={this.state.suggestionsOpen}
-          handleSelect={this.handleSuggestionSelect}
-        />
-      ))
+
+      if (this.state.suggestionsOpen) {
+        elmts.push((
+          <SuggestionsMenu
+            key='suggestMenu'
+            items={
+              this.props.choices.map((choice) => {
+                return choice.text
+              })
+            }
+            anchor={this.state.suggestBtnNode}
+            handleSelect={this.handleSuggestionSelect}
+          />
+        ))
+      }
     }
 
     return elmts;

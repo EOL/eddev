@@ -54,18 +54,13 @@ class SpeciesSearchLightbox extends React.Component {
     });
   }
 
-  handleCreateCard = () => {
-    if (!this.state.selectedId) {
-      return;
-    }
-  }
-
-  handleDeckSelect = (id) => {
+  handleRequestClose = () => {
     this.setState(() => {
       return {
-        selectedDeckId: id,
+        results: null,
       }
-    })
+    });
+    this.props.handleClose();
   }
 
   render() {
@@ -77,7 +72,7 @@ class SpeciesSearchLightbox extends React.Component {
         overlayClassName='fixed-center-wrap disable-overlay'
         className='species-search lightbox'
         bodyOpenClassName='noscroll'
-        onRequestClose={this.props.handleClose}
+        onRequestClose={this.handleRequestClose}
       >
         <div className='field-label lightbox-label'>Search</div>
         <div className='search-area'>

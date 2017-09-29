@@ -229,6 +229,7 @@ class CardManager extends React.Component {
     this.setState(() => {
       return {
         speciesSearchOpen: false,
+        speciesSearchDeckId: allDecksId,
       }
     })
   }

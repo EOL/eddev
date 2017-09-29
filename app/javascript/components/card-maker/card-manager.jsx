@@ -7,6 +7,7 @@ import NewResourceBtn from './new-resource-btn'
 import UserResourceFilter from './user-resource-filter'
 import Card from './card'
 import SpeciesSearchLightbox from './species-search-lightbox'
+import NewDeckLightbox from './new-deck-lightbox'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
 import eolHdrIcon from 'images/card_maker/icons/eol_logo_sub_hdr.png'
@@ -25,6 +26,7 @@ class CardManager extends React.Component {
       selectedFilter: 'cards',
       selectedDeckId: allDecksId,
       speciesSearchOpen: false,
+      newDeckOpen: false,
       speciesSearchDeckId: allDecksId,
     }
   }
@@ -127,6 +129,14 @@ class CardManager extends React.Component {
     this.setState(() => {
       return {
         speciesSearchOpen: true,
+      }
+    })
+  }
+
+  newDeckClick = () => {
+    this.setState(() => {
+      return {
+        newDeckOpen: true,
       }
     })
   }
@@ -286,6 +296,64 @@ class CardManager extends React.Component {
     })
   }
 
+  handleCreateDeck = (deckName, colId) => {
+    const that = this;
+
+    $.ajax({
+      url: 'card_maker_ajax/decks',
+      method: 'POST',
+      data: JSON.stringify({ name: deckName }),
+      success: function(deck) {
+        that.setState((prevState, props) => {
+          return update(prevState, {
+            decks: { $unshift: [deck]},
+          });
+        });
+        /*
+        decks.push(deck);
+        lightboxResult.closeFn();
+
+        if (colId) {
+          populateDeckFromCollection(deck.id, colId, function() {
+            closeLoadingFn();
+            cards.reload(function() {
+              decks.reloadItem(deck.id, function() {
+                selectDeck(deck.id);
+              })
+            });
+          });
+        } else {
+          lightboxResult.closeFn();
+          closeLoadingFn();
+          selectDeck(deck.id);
+        }
+        */
+      },
+      error: function(err) {
+        var alertMsg = '';
+
+        if (err.status === 422 &&
+            err.responseJSON &&
+            err.responseJSON.errors
+        ) { // Validation error
+          alertMsg = err.responseJSON.errors.join('\n');
+        } else {
+          alertMsg = "An unexpected error occurred"
+        }
+
+        alert(alertMsg);
+      }
+    });
+  }
+
+  handleDeckRequestClose = () => {
+    this.setState(() => {
+      return {
+        newDeckOpen: false,
+      }
+    });
+  }
+
   handleSpeciesSearchDeckSelect = (id) => {
     this.setState(() => {
       return {
@@ -344,7 +412,12 @@ class CardManager extends React.Component {
                   id='NewDeck'
                   text='Create a deck'
                   btnClass='new-deck-btn'
-                  handleClick={this.newCardClick}
+                  handleClick={this.newDeckClick}
+                />
+                <NewDeckLightbox
+                  isOpen={this.state.newDeckOpen}
+                  handleCreate={this.handleCreateDeck}
+                  handleRequestClose={this.handleDeckRequestClose}
                 />
               </div>
               <div className='filters'>

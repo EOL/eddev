@@ -125,7 +125,7 @@ class CardManager extends React.Component {
     this.replaceResource('decks', deck);
   }
 
-  newCardClick = () => {
+  handleOpenNewCardLightbox = () => {
     this.setState(() => {
       return {
         speciesSearchOpen: true,
@@ -133,7 +133,7 @@ class CardManager extends React.Component {
     })
   }
 
-  newDeckClick = () => {
+  handleOpenNewDeckLightbox = () => {
     this.setState(() => {
       return {
         newDeckOpen: true,
@@ -396,7 +396,7 @@ class CardManager extends React.Component {
                   id='NewCard'
                   text='Create a card'
                   btnClass='new-card-btn'
-                  handleClick={this.newCardClick}
+                  handleClick={this.handleOpenNewCardLightbox}
                 />
                 <SpeciesSearchLightbox
                   isOpen={this.state.speciesSearchOpen}
@@ -412,7 +412,7 @@ class CardManager extends React.Component {
                   id='NewDeck'
                   text='Create a deck'
                   btnClass='new-deck-btn'
-                  handleClick={this.newDeckClick}
+                  handleClick={this.handleOpenNewDeckLightbox}
                 />
                 <NewDeckLightbox
                   isOpen={this.state.newDeckOpen}
@@ -448,6 +448,8 @@ class CardManager extends React.Component {
               resourceType={resourceResult.resourceType}
               handleCardDeckSelect={this.assignCardDeck}
               handleEditCard={this.props.handleEditCard}
+              handleNewCard={this.handleOpenNewCardLightbox}
+              handleNewDeck={this.handleOpenNewDeckLightbox}
             />
           </div>
         </div>

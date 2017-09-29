@@ -17,9 +17,10 @@ class ImageField extends React.Component {
 
   buildImgLibPreviewThumbs = () => {
     const thumbs = []
-        , numThumbs = Math.min(Math.max(
-            this.props.choices.length, maxImgLibPreviewThumbs
-          ), maxImgLibPreviewThumbs)
+        , numThumbs = Math.min(
+            this.props.choices.length,
+            maxImgLibPreviewThumbs
+          )
         ;
 
     for (let i = 0; i < numThumbs; i++) {

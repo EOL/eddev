@@ -193,9 +193,14 @@ class CardManager extends React.Component {
   }
 
   handleOpenNewCardLightbox = () => {
-    this.setState(() => {
+    this.setState((prevState) => {
       return {
         speciesSearchOpen: true,
+        speciesSearchDeckId: (
+          this.state.selectedFilter === 'decks' ?
+          this.state.selectedDeckId :
+          allDecksId
+        ),
       }
     })
   }
@@ -238,7 +243,7 @@ class CardManager extends React.Component {
     }];
   }
 
-  handleDeckFilterSelect = deckId => {
+  handleDeckSelect = deckId => {
     this.setState((prevState, props) => {
       return {
         selectedDeckId: deckId
@@ -493,7 +498,7 @@ class CardManager extends React.Component {
                   iconClass='icon-card'
                   className='first'
                   count={this.state.cards.length}
-                  handleSelect={this.handleDeckFilterSelect}
+                  handleSelect={this.handleDeckSelect}
                   handleClick={this.handleCardFilterClick}
                   filterItems={this.cardFilterItems()}
                 />
@@ -502,7 +507,7 @@ class CardManager extends React.Component {
                   iconClass='icon-deck'
                   count={this.state.decks.length}
                   filterItems={this.deckFilterItems()}
-                  handleSelect={this.handleDeckFilterSelect}
+                  handleSelect={this.handleDeckSelect}
                   handleClick={this.handleDeckFilterClick}
                   handleMenuOpenClick={this.handleDeckMenuOpenClick}
                   selectedId={this.state.selectedDeckId}
@@ -515,6 +520,7 @@ class CardManager extends React.Component {
               resourceType={resourceResult.resourceType}
               handleCardDeckSelect={this.assignCardDeck}
               handleEditCard={this.props.handleEditCard}
+              handleDeckSelect={this.handleDeckSelect}
               handleDestroyCard={this.handleDestroyCard}
               handleDestroyDeck={this.handleDestroyDeck}
               handleNewCard={this.handleOpenNewCardLightbox}

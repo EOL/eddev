@@ -29,7 +29,10 @@ class Deck extends React.Component {
           {this.props.showOverlay &&
             <div className='deck-overlay resource-overlay'>
               <i className='fa fa-folder-open-o fa-3x edit-btn btn' />
-              <i className='fa fa-trash-o fa-3x trash-btn btn' />
+              <i
+                className='fa fa-trash-o fa-3x trash-btn btn'
+                onClick={this.props.handleDestroyClick}
+              />
             </div>
           }
         </div>

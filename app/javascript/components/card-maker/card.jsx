@@ -51,10 +51,14 @@ class Card extends React.Component {
           {this.props.showOverlay &&
             <div className='card-overlay resource-overlay'>
 
-              <i className='i fa fa-edit fa-3x edit-btn btn'
+              <i
+                className='i fa fa-edit fa-3x edit-btn btn'
                 onClick={this.props.handleEditClick}
               />
-              <i className='i fa fa-trash-o fa-3x trash-btn btn' />
+              <i
+                className='i fa fa-trash-o fa-3x trash-btn btn'
+                onClick={this.props.handleDestroyClick}
+              />
             </div>
           }
 

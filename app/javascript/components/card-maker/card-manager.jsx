@@ -105,10 +105,14 @@ class CardManager extends React.Component {
     this.reloadDeckIds(deckIds);
   }
 
-  replaceResource = (colName, resource) => {
-    const index = this.state[colName].findIndex((oldResource) => {
-      return oldResource.id === resource.id;
+  findResourceIndex = (colName, id) => {
+    return this.state[colName].findIndex((resource) => {
+      return resource.id === id;
     });
+  }
+
+  replaceResource = (colName, resource) => {
+    const index = this.findResourceIndex(colName, resource.id);
 
     this.setState((prevState, props) => {
       return update(prevState, {
@@ -117,12 +121,75 @@ class CardManager extends React.Component {
     });
   }
 
+  removeResource = (colName, id) => {
+    const index = this.findResourceIndex(colName, id);
+    this.setState((prevState, props) => {
+      return update(prevState, {
+        [colName]: { $splice: [[index, 1]]}
+      })
+    })
+  }
+
+  removeCard = (cardId) => {
+    this.removeResource('cards', cardId);
+  }
+
   replaceCard = (card) => {
     this.replaceResource('cards', card)
   }
 
   replaceDeck = (deck) => {
     this.replaceResource('decks', deck);
+  }
+
+  showLoadingOverlay = () => {
+    this.setState(() => {
+      return {
+        showLoadingOverlay: true,
+      }
+    })
+  }
+
+  hideLoadingOverlay = () => {
+    this.setState(() => {
+      return {
+        showLoadingOverlay: false,
+      }
+    })
+  }
+
+  handleDestroyResource(confirmMsg, resourceType, id) {
+    const that = this
+        , shouldDestroy = confirm(confirmMsg)
+        ;
+
+    if (!shouldDestroy) return;
+
+    that.showLoadingOverlay();
+    $.ajax({
+      url: 'card_maker_ajax/' + resourceType + '/' + id,
+      method: 'DELETE',
+      success: () => {
+        that.removeResource(resourceType, id);
+        that.hideLoadingOverlay();
+      }
+    });
+  }
+
+  handleDestroyCard = (id) => {
+    this.handleDestroyResource(
+      'Are you sure you want to delete this card?',
+      'cards',
+      id
+    );
+  }
+
+  handleDestroyDeck = (id) => {
+    this.handleDestroyResource(
+      'Are you sure you want to delete this deck?',
+      'decks',
+      id
+    );
   }
 
   handleOpenNewCardLightbox = () => {
@@ -448,6 +515,8 @@ class CardManager extends React.Component {
               resourceType={resourceResult.resourceType}
               handleCardDeckSelect={this.assignCardDeck}
               handleEditCard={this.props.handleEditCard}
+              handleDestroyCard={this.handleDestroyCard}
+              handleDestroyDeck={this.handleDestroyDeck}
               handleNewCard={this.handleOpenNewCardLightbox}
               handleNewDeck={this.handleOpenNewDeckLightbox}
             />

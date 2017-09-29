@@ -24,6 +24,7 @@ class UserResources extends React.Component {
               key={resource.id}
               handleDeckSelect={this.props.handleCardDeckSelect.bind(null, resource.id)}
               handleEditClick={() => this.props.handleEditCard(resource.id)}
+              handleDestroyClick={() => this.props.handleDestroyCard(resource.id)}
             />
           )
         }
@@ -34,6 +35,7 @@ class UserResources extends React.Component {
               name={resource.name}
               titleCardId={resource.titleCardId}
               key={resource.id}
+              handleDestroyClick={() => {this.props.handleDestroyDeck(resource.id)}}
             />
           )
         }
@@ -61,6 +63,7 @@ class UserResources extends React.Component {
           createMsg={createMsg}
           emptyMsg={emptyMsg}
           handleCreate={handleCreate}
+          key='0'
         />
       )]
     }

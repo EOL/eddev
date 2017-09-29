@@ -5,6 +5,7 @@ import UserResources from './user-resources'
 import NewResourceBtn from './new-resource-btn'
 import UserResourceFilter from './user-resource-filter'
 import Card from './card'
+import SpeciesSearchLightbox from './species-search-lightbox'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
 import eolHdrIcon from 'images/card_maker/icons/eol_logo_sub_hdr.png'
@@ -234,6 +235,9 @@ class CardManager extends React.Component {
                   btnClass='new-card-btn'
                   handleClick={this.newCardClick}
                 />
+                <SpeciesSearchLightbox isOpen={true}>
+                  <div>Heeeeyyyy</div>
+                </SpeciesSearchLightbox>
                 <img src={managerLogo} className='manager-logo' id='ManagerLogo' />
                 <NewResourceBtn
                   icon={newDeckIcon}

@@ -5,7 +5,8 @@
     "immutability-helper": "^2.4.0",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "react-modal": "^2.3.2"
   },
   "devDependencies": {
     "webpack-dev-server": "^2.8.1"

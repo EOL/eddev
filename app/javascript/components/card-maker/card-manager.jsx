@@ -25,6 +25,7 @@ class CardManager extends React.Component {
       selectedFilter: 'cards',
       selectedDeckId: allDecksId,
       speciesSearchOpen: false,
+      speciesSearchDeckId: allDecksId,
     }
   }
 
@@ -86,17 +87,20 @@ class CardManager extends React.Component {
     }
   }
 
-  // To be called after a card has a deck assigned/unassigned, since the
-  // deck's titleCardId may have changed
-  replaceCardAndReloadDecks = (deckIds, card) => {
-    this.replaceCard(card);
-
+  reloadDecks = (deckIds) => {
     for (const deckId of deckIds) {
       $.ajax('/card_maker_ajax/decks/' + deckId, {
         method: 'GET',
         success: this.replaceDeck,
       })
     }
+  }
+
+  // To be called after a card has a deck assigned/unassigned, since the
+  // deck's titleCardId may have changed
+  replaceCardAndReloadDecks = (deckIds, card) => {
+    this.replaceCard(card);
+    this.reloadDeckIds(deckIds);
   }
 
   replaceResource = (colName, resource) => {
@@ -127,20 +131,28 @@ class CardManager extends React.Component {
     })
   }
 
-  deckFilterItems() {
+  deckFilterItemsHelper = (noSelectionText, includeCount) => {
     const items = this.state.decks.map((deck) => {
       return {
         name: deck.name,
         id: deck.id,
-        count: deck.cardIds.length
+        count: (includeCount ? deck.cardIds.length : null),
       }
     });
     items.unshift({
-      name: 'All decks',
+      name: noSelectionText,
       id: allDecksId,
-      count: this.state.decks.length
+      count: (includeCount ? this.state.decks.length : null),
     });
     return items;
+  }
+
+  deckFilterItems = () => {
+    return this.deckFilterItemsHelper('All decks', true);
+  }
+
+  deckFilterItemsForNewCard = () => {
+    return this.deckFilterItemsHelper('—', false);
   }
 
   cardFilterItems() {
@@ -222,7 +234,12 @@ class CardManager extends React.Component {
   }
 
   handleCreateCard = (id) => {
-    const that = this;
+    const that = this
+        , deckId = that.state.speciesSearchDeckId
+        , url = deckId !== allDecksId ?
+          '/card_maker_ajax/decks/' + deckId + '/cards' :
+          '/card_maker_ajax/cards'
+        ;
 
     if (!id) {
       return;
@@ -236,7 +253,7 @@ class CardManager extends React.Component {
     });
 
     $.ajax({
-      url: '/card_maker_ajax/cards',
+      url: url,
       data: JSON.stringify({
         templateName: 'trait',
         templateParams: {
@@ -251,7 +268,11 @@ class CardManager extends React.Component {
             cards: { $unshift: [card] },
             showLoadingOverlay: { $set: false },
           })
-        })
+        });
+
+        if (deckId !== allDecksId) {
+          that.reloadDecks([deckId]);
+        }
       },
       error: () => {
         alert('Something went wrong');
@@ -260,6 +281,14 @@ class CardManager extends React.Component {
             showLoadingOverlay: false
           }
         })
+      }
+    })
+  }
+
+  handleSpeciesSearchDeckSelect = (id) => {
+    this.setState(() => {
+      return {
+        speciesSearchDeckId: id,
       }
     })
   }
@@ -304,6 +333,9 @@ class CardManager extends React.Component {
                   isOpen={this.state.speciesSearchOpen}
                   handleClose={this.handleSpeciesSearchClose}
                   handleCreateCard={this.handleCreateCard}
+                  deckFilterItems={this.deckFilterItemsForNewCard()}
+                  selectedDeckId={this.state.speciesSearchDeckId}
+                  handleDeckSelect={this.handleSpeciesSearchDeckSelect}
                 />
                 <img src={managerLogo} className='manager-logo' id='ManagerLogo' />
                 <NewResourceBtn
@@ -318,7 +350,7 @@ class CardManager extends React.Component {
                 <UserResourceFilter
                   selected={this.state.selectedFilter === 'cards'}
                   iconClass='icon-card'
-                  first={true}
+                  className='first'
                   count={this.state.cards.length}
                   handleSelect={this.handleDeckFilterSelect}
                   handleClick={this.handleCardFilterClick}

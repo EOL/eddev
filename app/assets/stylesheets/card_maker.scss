@@ -301,6 +301,15 @@ input[type='text'] {
   border-bottom: $border;
   height: $height;
   padding-top: 23px;
+
+  .filter {
+    display: inline-block;
+    margin-left: 48px;
+
+    &.first {
+      margin-left: 146px;
+    }
+  }
 }
 
 .filter {
@@ -312,9 +321,7 @@ input[type='text'] {
   background-color: #bdd5e5;
   color: #426083;
   cursor: pointer;
-  display: inline-block;
   height: $height;
-  margin-left: 48px;
   position: relative;
   vertical-align: top;
   width: $width;
@@ -377,10 +384,6 @@ input[type='text'] {
       background-color: $white;
       color: #323232;
     }
-  }
-
-  &.first {
-    margin-left: 146px;
   }
 
   .filter-items {

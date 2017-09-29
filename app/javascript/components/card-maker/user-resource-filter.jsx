@@ -72,8 +72,19 @@ class UserResourceFilter extends React.Component {
     return this.props.filterItems.length > 1
   }
 
-  selectedItemName() {
-    this.props.filterItems.find
+  selectedItemName = () => {
+    const selected = this.props.filterItems.find((item) => {
+      return item.id === this.props.selectedId;
+    });
+    return selected.name;
+  }
+
+  handleItemClick = (id) => {
+    this.closeMenu();
+
+    if (this.props.handleSelect) {
+      this.props.handleSelect(id);
+    }
   }
 
   render() {
@@ -86,8 +97,8 @@ class UserResourceFilter extends React.Component {
       topClass += ' selected';
     }
 
-    if (this.props.first) {
-      topClass += ' first';
+    if (this.props.className) {
+      topClass += ' ' + this.props.className;
     }
 
     if (!this.state.menuOpen) {
@@ -101,7 +112,7 @@ class UserResourceFilter extends React.Component {
             <i className={iconClass} />
             <div className='count'>{this.props.count}</div>
           </div>
-          <div className='filter-selection'>{this.props.filterItems[0].name}</div>
+          <div className='filter-selection'>{this.selectedItemName()}</div>
           <div className='down-arrow'>
             {this.hasDropdown() &&
               <img
@@ -116,7 +127,7 @@ class UserResourceFilter extends React.Component {
           <ul className={menuClass}>
             {this.props.filterItems.map((item) => {
               return (<FilterItem
-                handleClick={() => this.props.handleSelect(item.id)}
+                handleClick={() => this.handleItemClick(item.id)}
                 name={item.name}
                 key={item.id}
                 count={item.count}
@@ -140,7 +151,7 @@ class FilterItem extends React.Component {
 
     return (
       <li onClick={this.props.handleClick} className={className}>
-        {this.props.name} ({this.props.count})
+        {this.props.name + (this.props.count !== null ? (' (' + this.props.count + ')') : '')}
       </li>
     )
   }

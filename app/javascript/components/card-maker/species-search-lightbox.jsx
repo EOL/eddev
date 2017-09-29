@@ -2,6 +2,7 @@ import React from 'react'
 import ReactModal from 'react-modal'
 
 import SpeciesSearchResult from './species-search-result'
+import UserResourceFilter from './user-resource-filter'
 
 class SpeciesSearchLightbox extends React.Component {
   constructor(props) {
@@ -59,6 +60,14 @@ class SpeciesSearchLightbox extends React.Component {
     }
   }
 
+  handleDeckSelect = (id) => {
+    this.setState(() => {
+      return {
+        selectedDeckId: id,
+      }
+    })
+  }
+
   render() {
     return (
       <ReactModal
@@ -112,6 +121,14 @@ class SpeciesSearchLightbox extends React.Component {
           (<div className='create-menu'>
             <div className='deck-select-wrap'>
               <div className='deck-select-label'>Save card to a deck:</div>
+              <UserResourceFilter
+                selected={true}
+                iconClass='icon-deck'
+                count={this.props.deckFilterItems.length - 1}
+                filterItems={this.props.deckFilterItems}
+                selectedId={this.props.selectedDeckId}
+                handleSelect={this.props.handleDeckSelect}
+              />
             </div>
             <div
               className={'create-btn-wrap' + (this.state.selectedId === null ? ' disabled' : '')}

@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactModal from 'react-modal'
 import update from 'immutability-helper'
 
 import UserResources from './user-resources'
@@ -23,6 +24,7 @@ class CardManager extends React.Component {
       decks: [],
       selectedFilter: 'cards',
       selectedDeckId: allDecksId,
+      speciesSearchOpen: false,
     }
   }
 
@@ -66,8 +68,6 @@ class CardManager extends React.Component {
     if (deckId != null) {
       decksToReloadIds.push(deckId);
     }
-
-    console.log('ids', decksToReloadIds);
 
     successFn = this.replaceCardAndReloadDecks.bind(null, decksToReloadIds);
 
@@ -119,8 +119,12 @@ class CardManager extends React.Component {
     this.replaceResource('decks', deck);
   }
 
-  newCardClick() {
-    alert('new card clicked');
+  newCardClick = () => {
+    this.setState(() => {
+      return {
+        speciesSearchOpen: true,
+      }
+    })
   }
 
   deckFilterItems() {
@@ -209,11 +213,72 @@ class CardManager extends React.Component {
     }
   }
 
+  handleSpeciesSearchClose = () => {
+    this.setState(() => {
+      return {
+        speciesSearchOpen: false,
+      }
+    })
+  }
+
+  handleCreateCard = (id) => {
+    const that = this;
+
+    if (!id) {
+      return;
+    }
+
+    this.setState(() => {
+      return {
+        showLoadingOverlay: true,
+        speciesSearchOpen: false,
+      }
+    });
+
+    $.ajax({
+      url: '/card_maker_ajax/cards',
+      data: JSON.stringify({
+        templateName: 'trait',
+        templateParams: {
+          speciesId: id
+        }
+      }),
+      contentType: 'application/json',
+      method: 'POST',
+      success: (card) => {
+        that.setState((prevState, props) => {
+          return update(prevState, {
+            cards: { $unshift: [card] },
+            showLoadingOverlay: { $set: false },
+          })
+        })
+      },
+      error: () => {
+        alert('Something went wrong');
+        this.setState(() => {
+          return {
+            showLoadingOverlay: false
+          }
+        })
+      }
+    })
+  }
+
   render() {
     var resourceResult = this.selectedResources();
 
     return (
       <div id='CardManagerWrap'>
+        <ReactModal
+          isOpen={this.state.showLoadingOverlay}
+          parentSelector={() => {return document.getElementById('Page')}}
+          contentLabel='Loading spinner'
+          className='global-loading lightbox'
+          overlayClassName='fixed-center-wrap disable-overlay'
+          bodyOpenClassName='noscroll'
+        >
+          <i className='fa fa-spin fa-spinner fa-4x' />
+        </ReactModal>
         <div className='hdr-spacer red'></div>
         <div id='CardManager' className='card-manager card-screen'>
           <div className='screen-inner manager-inner'>
@@ -235,9 +300,11 @@ class CardManager extends React.Component {
                   btnClass='new-card-btn'
                   handleClick={this.newCardClick}
                 />
-                <SpeciesSearchLightbox isOpen={true}>
-                  <div>Heeeeyyyy</div>
-                </SpeciesSearchLightbox>
+                <SpeciesSearchLightbox
+                  isOpen={this.state.speciesSearchOpen}
+                  handleClose={this.handleSpeciesSearchClose}
+                  handleCreateCard={this.handleCreateCard}
+                />
                 <img src={managerLogo} className='manager-logo' id='ManagerLogo' />
                 <NewResourceBtn
                   icon={newDeckIcon}

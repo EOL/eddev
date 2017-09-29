@@ -9,7 +9,7 @@ class SpeciesSearchLightbox extends React.Component {
     this.state = {
       inFlight: false,
       results: null,
-      expandedId: null,
+      selectedId: null,
     }
     this.reqCount = 0;
   }
@@ -19,6 +19,12 @@ class SpeciesSearchLightbox extends React.Component {
         , reqNum = ++this.reqCount
         , that = this
         ;
+
+    this.setState(() => {
+      return {
+        selectedId: null,
+      }
+    });
 
     $.getJSON('/card_maker_ajax/taxon_search/' + query, function(data) {
       if (reqNum === that.reqCount) {
@@ -36,15 +42,21 @@ class SpeciesSearchLightbox extends React.Component {
         inFlight: true,
         results: null,
       }
-    })
+    });
   }
 
   handleExpandResult = (id) => {
     this.setState(() => {
       return {
-        expandedId: id,
+        selectedId: id,
       }
     });
+  }
+
+  handleCreateCard = () => {
+    if (!this.state.selectedId) {
+      return;
+    }
   }
 
   render() {
@@ -53,9 +65,10 @@ class SpeciesSearchLightbox extends React.Component {
         isOpen={this.props.isOpen}
         contentLabel='Species search'
         parentSelector={() => {return document.getElementById('Page')}}
-        overlayClassName='fixed-center-wrap'
+        overlayClassName='fixed-center-wrap disable-overlay'
         className='species-search lightbox'
         bodyOpenClassName='noscroll'
+        onRequestClose={this.props.handleClose}
       >
         <div className='field-label lightbox-label'>Search</div>
         <div className='search-area'>
@@ -68,13 +81,13 @@ class SpeciesSearchLightbox extends React.Component {
         </div>
         {(this.state.inFlight || this.state.results != null) &&
           (<div className='search-results-wrap'>
+            <div className='result-count-wrap'>
             {this.state.results != null &&
-              (<div className='result-count-wrap'>
-                <div className='result-count'>
+              (<div className='result-count'>
                   {this.state.results.length + ' results'}
-                </div>
-              </div>)
+                </div>)
             }
+            </div>
             <ul className='search-results'>
               {this.state.inFlight ?
                 (<li className='search-spin'>
@@ -86,7 +99,7 @@ class SpeciesSearchLightbox extends React.Component {
                       key={i}
                       sciName={result.title}
                       id={result.id}
-                      expanded={this.state.expandedId === result.id}
+                      expanded={this.state.selectedId === result.id}
                       handleClick={() => this.handleExpandResult(result.id)}
                     />
                   )
@@ -95,18 +108,24 @@ class SpeciesSearchLightbox extends React.Component {
             </ul>
           </div>)
         }
-        <div className='create-menu'>
-          <div className='deck-select-wrap'>
-            <div className='deck-select-label'>Save card to a deck:</div>
-          </div>
-          <div className='create-btn-wrap disabled'>
-            <div className='btn-disable'></div>
-            <div className='create-btn-label'>Create a card from selection</div>
-            <div className='create-btn-body'>
-              <i className='icon-new-card' />
+        {this.state.results !== null && this.state.results.length > 0 &&
+          (<div className='create-menu'>
+            <div className='deck-select-wrap'>
+              <div className='deck-select-label'>Save card to a deck:</div>
             </div>
-          </div>
-        </div>
+            <div
+              className={'create-btn-wrap' + (this.state.selectedId === null ? ' disabled' : '')}
+              onClick={() => this.props.handleCreateCard(this.state.selectedId)}
+            >
+              <div className='btn-disable'></div>
+              <div className='create-btn-label'>Create a card from selection</div>
+              <div className='create-btn-body'>
+                <i className='icon-new-card' />
+              </div>
+            </div>
+          </div>)
+        }
+
       </ReactModal>
     )
   }

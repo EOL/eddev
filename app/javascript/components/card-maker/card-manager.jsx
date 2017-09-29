@@ -102,7 +102,7 @@ class CardManager extends React.Component {
   // deck's titleCardId may have changed
   replaceCardAndReloadDecks = (deckIds, card) => {
     this.replaceCard(card);
-    this.reloadDeckIds(deckIds);
+    this.reloadDecks(deckIds);
   }
 
   findResourceIndex = (colName, id) => {
@@ -186,7 +186,7 @@ class CardManager extends React.Component {
 
   handleDestroyDeck = (id) => {
     this.handleDestroyResource(
-      'Are you sure you want to delete this deck?',
+      'Are you sure you want to delete this deck and all its cards?',
       'decks',
       id
     );

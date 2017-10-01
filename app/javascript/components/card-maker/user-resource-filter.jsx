@@ -113,12 +113,14 @@ class UserResourceFilter extends React.Component {
             <div className='count'>{this.props.count}</div>
           </div>
           <div className='filter-selection'>{this.selectedItemName()}</div>
-          <div className='down-arrow'>
+          <div
+            className='down-arrow'
+            onClick={this.hasDropdown() ? this.handleArrowClick : null}
+          >
             {this.hasDropdown() &&
               <img
                 src={downArrowIcon}
                 className='down-arrow-img'
-                onClick={this.handleArrowClick}
               />
             }
           </div>

@@ -31,7 +31,7 @@ class CardManager extends React.Component {
     }
   }
 
-  reloadResources = () => {
+  reloadResources = (cb) => {
     var that = this;
 
     $.ajax({
@@ -42,12 +42,10 @@ class CardManager extends React.Component {
           url: 'card_maker_ajax/card_summaries',
           method: 'GET',
           success: (cards) => {
-            that.setState((prevState, props) => {
-              return {
-                cards: cards,
-                decks: decks,
-              }
-            });
+            that.setState({
+              cards: cards,
+              decks: decks,
+            }, cb);
           }
         });
       }
@@ -291,24 +289,72 @@ class CardManager extends React.Component {
   }
 
   showAllDecks = () => {
+    this.showDeck(allDecksId);
+  }
+
+  showDeck = (id) => {
     this.setState(() => {
       return {
         selectedFilter: 'decks',
-        selectedDeckId: allDecksId,
+        selectedDeckId: id,
       }
     })
   }
 
-  handleCreateDeck = (deckName, colId) => {
+  populateDeckFromCollection = (deckId, colId, cb) => {
     const that = this;
+
+    $.ajax({
+      method: 'POST',
+      contentType: 'application/json',
+      url: 'card_maker_ajax/decks/' + deckId + '/populateFromCollection',
+      data: JSON.stringify({
+        colId: colId
+      }),
+      success: function(data) {
+        that.pollCollectionJob(data.jobId, cb);
+      }
+    });
+  }
+
+  pollCollectionJob = (jobId, cb) => {
+    const that = this
+        , pollIntervalMillis = 1000
+        ;
+
+    $.getJSON('card_maker_ajax/collectionJob/' + jobId + '/status', function(data) {
+      if (data.status === 'pending') {
+        setTimeout(that.pollCollectionJob.bind(null, jobId, cb), pollIntervalMillis);
+      } else {
+        cb();
+      }
+    });
+  }
+
+  handleCreateDeck = (deckName, colId) => {
+    const that = this
+        , doneFn = (deckId) => {
+            that.reloadResources(() => {
+              that.showDeck(deckId);
+              that.hideLoadingOverlay();
+            });
+          }
+        ;
+
+    that.showLoadingOverlay();
 
     $.ajax({
       url: 'card_maker_ajax/decks',
       method: 'POST',
       data: JSON.stringify({ name: deckName }),
-      success: () => {
-        that.showAllDecks();
-        that.reloadResources();
+      success: (data) => {
+        const cb = () => doneFn(data.id);
+
+        if (colId != null && colId.length) {
+          that.populateDeckFromCollection(data.id, colId, cb);
+        } else {
+          cb();
+        }
       },
       error: function(err) {
         var alertMsg = '';

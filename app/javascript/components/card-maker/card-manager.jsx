@@ -75,6 +75,7 @@ class CardManager extends React.Component {
       });
     }
   }
+
   showLoadingOverlay = () => {
     this.setState(() => {
       return {
@@ -289,6 +290,15 @@ class CardManager extends React.Component {
     })
   }
 
+  showAllDecks = () => {
+    this.setState(() => {
+      return {
+        selectedFilter: 'decks',
+        selectedDeckId: allDecksId,
+      }
+    })
+  }
+
   handleCreateDeck = (deckName, colId) => {
     const that = this;
 
@@ -296,26 +306,10 @@ class CardManager extends React.Component {
       url: 'card_maker_ajax/decks',
       method: 'POST',
       data: JSON.stringify({ name: deckName }),
-      success: that.reloadResources,
-        /*
-        decks.push(deck);
-        lightboxResult.closeFn();
-
-        if (colId) {
-          populateDeckFromCollection(deck.id, colId, function() {
-            closeLoadingFn();
-            cards.reload(function() {
-              decks.reloadItem(deck.id, function() {
-                selectDeck(deck.id);
-              })
-            });
-          });
-        } else {
-          lightboxResult.closeFn();
-          closeLoadingFn();
-          selectDeck(deck.id);
-        }
-        */
+      success: () => {
+        that.showAllDecks();
+        that.reloadResources();
+      },
       error: function(err) {
         var alertMsg = '';
 

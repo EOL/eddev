@@ -29,7 +29,8 @@ class NewDeckLightbox extends React.Component {
 
   handleCreate = () => {
     if (this.state.deckName.length) {
-      this.props.handleCreate(this.state.deckName, this.state.colId)
+      this.props.handleRequestClose();
+      this.props.handleCreate(this.state.deckName, this.state.colId);
     } else {
       $(this.rootNode).effect('shake');
     }

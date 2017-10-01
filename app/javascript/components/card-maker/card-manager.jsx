@@ -8,6 +8,7 @@ import UserResourceFilter from './user-resource-filter'
 import Card from './card'
 import SpeciesSearchLightbox from './species-search-lightbox'
 import NewDeckLightbox from './new-deck-lightbox'
+import {cardMakerUrl} from 'lib/card-maker/url-helper'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
 import eolHdrIcon from 'images/card_maker/icons/eol_logo_sub_hdr.png'
@@ -31,15 +32,15 @@ class CardManager extends React.Component {
     }
   }
 
-  reloadResources = (cb) => {
+  reloadResourcesWithCb = (cb) => {
     var that = this;
 
     $.ajax({
-      url: 'card_maker_ajax/decks',
+      url: cardMakerUrl('decks'),
       method: 'GET',
       success: (decks) => {
         $.ajax({
-          url: 'card_maker_ajax/card_summaries',
+          url: cardMakerUrl('card_summaries'),
           method: 'GET',
           success: (cards) => {
             that.setState({
@@ -52,12 +53,16 @@ class CardManager extends React.Component {
     });
   }
 
+  reloadResources = () => {
+    this.reloadResourcesWithCb(null);
+  }
+
   componentDidMount() {
     this.reloadResources();
   }
 
   assignCardDeck = (cardId, deckId) => {
-    const url = '/card_maker_ajax/cards/' + cardId + '/deck_id';
+    const url = cardMakerUrl('cards/' + cardId + '/deck_id');
 
     if (deckId != null) {
       $.ajax(url, {
@@ -99,7 +104,7 @@ class CardManager extends React.Component {
 
     that.showLoadingOverlay();
     $.ajax({
-      url: 'card_maker_ajax/' + resourceType + '/' + id,
+      url: cardMakerUrl(resourceType + '/' + id),
       method: 'DELETE',
       success: () => {
         that.reloadResources();
@@ -252,8 +257,8 @@ class CardManager extends React.Component {
     const that = this
         , deckId = that.state.speciesSearchDeckId
         , url = deckId !== allDecksId ?
-          '/card_maker_ajax/decks/' + deckId + '/cards' :
-          '/card_maker_ajax/cards'
+          cardMakerUrl('decks/' + deckId + '/cards') :
+          cardMakerUrl('cards')
         ;
 
     if (!id) {
@@ -307,7 +312,7 @@ class CardManager extends React.Component {
     $.ajax({
       method: 'POST',
       contentType: 'application/json',
-      url: 'card_maker_ajax/decks/' + deckId + '/populateFromCollection',
+      url: cardMakerUrl('decks/' + deckId + '/populateFromCollection'),
       data: JSON.stringify({
         colId: colId
       }),
@@ -322,7 +327,7 @@ class CardManager extends React.Component {
         , pollIntervalMillis = 1000
         ;
 
-    $.getJSON('card_maker_ajax/collectionJob/' + jobId + '/status', function(data) {
+    $.getJSON(cardMakerUrl('collectionJob/' + jobId + '/status'), function(data) {
       if (data.status === 'pending') {
         setTimeout(that.pollCollectionJob.bind(null, jobId, cb), pollIntervalMillis);
       } else {
@@ -334,7 +339,7 @@ class CardManager extends React.Component {
   handleCreateDeck = (deckName, colId) => {
     const that = this
         , doneFn = (deckId) => {
-            that.reloadResources(() => {
+            that.reloadResourcesWithCb(() => {
               that.showDeck(deckId);
               that.hideLoadingOverlay();
             });
@@ -344,7 +349,7 @@ class CardManager extends React.Component {
     that.showLoadingOverlay();
 
     $.ajax({
-      url: 'card_maker_ajax/decks',
+      url: cardMakerUrl('decks'),
       method: 'POST',
       data: JSON.stringify({ name: deckName }),
       success: (data) => {

@@ -1,8 +1,9 @@
 import React from 'react'
 
-import newImmutableCardInstance from 'lib/immutable-card'
+import newImmutableCardInstance from 'lib/card-maker/immutable-card'
 import CardFields from './card-fields'
 import CardPreview from './card-preview'
+import { cardMakerUrl } from 'lib/card-maker/url-helper'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
 
@@ -232,14 +233,14 @@ class CardEditor extends React.Component {
   }
 
   componentDidMount() {
-    const cardUrl = '/card_maker_ajax/cards/' + this.props.cardId + '/json'
+    const cardUrl = cardMakerUrl('cards/' + this.props.cardId + '/json')
         , that = this
         ;
 
     /* TODO: this probably doesn't belong here at all */
     CardWrapper.setTemplateSupplier({
       supply: function(templateName, cb) {
-        $.getJSON('/card_maker_ajax/templates/trait', function(data) {
+        $.getJSON(cardMakerUrl('templates/trait'), function(data) {
           cb(null, data);
         })
           .fail(function() {

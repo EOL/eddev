@@ -2,13 +2,14 @@ import React from 'react'
 
 import LoadingSpinnerImage from './loading-spinner-image'
 import resourceWrapper from './resource-wrapper'
+import {cardMakerUrl} from 'lib/card-maker/url-helper'
 
 class Deck extends React.Component {
   imgPart() {
     if (this.props.titleCardId) {
       return (
         <LoadingSpinnerImage
-          src={'/card_maker_ajax/cards/' + this.props.titleCardId + '/svg'}
+          src={cardMakerUrl('cards/' + this.props.titleCardId + '/svg')}
         />
       )
     } else {

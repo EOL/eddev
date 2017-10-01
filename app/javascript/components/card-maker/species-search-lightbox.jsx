@@ -3,6 +3,7 @@ import ReactModal from 'react-modal'
 
 import SpeciesSearchResult from './species-search-result'
 import UserResourceFilter from './user-resource-filter'
+import {cardMakerUrl} from 'lib/card-maker/url-helper'
 
 class SpeciesSearchLightbox extends React.Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class SpeciesSearchLightbox extends React.Component {
       }
     });
 
-    $.getJSON('/card_maker_ajax/taxon_search/' + query, function(data) {
+    $.getJSON(cardMakerUrl('taxon_search/' + query), function(data) {
       if (reqNum === that.reqCount) {
         that.setState(() => {
           return {

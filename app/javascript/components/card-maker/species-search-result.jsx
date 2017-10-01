@@ -1,5 +1,7 @@
 import React from 'react'
 
+import {cardMakerUrl} from 'lib/card-maker/url-helper'
+
 class SpeciesSearchResult extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +18,7 @@ class SpeciesSearchResult extends React.Component {
 
     if (!that.state.dataLoaded && !that.dataInFlight) {
       that.dataInFlight = true;
-      $.getJSON('card_maker_ajax/taxon_details/' + this.props.id, function(data) {
+      $.getJSON(cardMakerUrl('taxon_details/' + this.props.id), function(data) {
         that.setState(() => {
           return {
             dataLoaded: true,

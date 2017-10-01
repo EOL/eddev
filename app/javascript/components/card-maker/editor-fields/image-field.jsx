@@ -1,6 +1,7 @@
 import React from 'react'
 
 import fieldWrapper from './field-wrapper'
+import {cardMakerUrl} from 'lib/card-maker/url-helper'
 
 const maxImgLibPreviewThumbs = 3;
 
@@ -63,7 +64,7 @@ class ImageField extends React.Component {
     });
 
     $.ajax({
-      url: '/card_maker_ajax/images',
+      url: cardMakerUrl('images'),
       method: 'POST',
       data: file,
       contentType: 'application/octet-stream',

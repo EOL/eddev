@@ -10,7 +10,7 @@ class NewDeckLightbox extends React.Component {
     }
   }
 
-  handleInputHelper(event, propName) {
+  handleChangeHelper(event, propName) {
     const value = event.target.value;
     this.setState(() => {
       return {
@@ -19,17 +19,17 @@ class NewDeckLightbox extends React.Component {
     });
   }
 
-  handleDeckNameInput = (event) => {
-    this.handleInputHelper(event, 'deckName')
+  handleDeckNameChange = (event) => {
+    this.handleChangeHelper(event, 'deckName')
   }
 
-  handleColIdInput = (event) => {
-    this.handleInputHelper(event, 'colId')
+  handleColIdChange = (event) => {
+    this.handleChangeHelper(event, 'colId')
   }
 
   handleCreate = () => {
     if (this.state.deckName.length) {
-      this.props.handleRequestClose();
+      this.handleRequestClose();
       this.props.handleCreate(this.state.deckName, this.state.colId);
     } else {
       $(this.rootNode).effect('shake');
@@ -63,7 +63,7 @@ class NewDeckLightbox extends React.Component {
               type='text'
               placeholder='Enter deck name'
               value={this.state.deckName}
-              onInput={this.handleDeckNameInput}
+              onChange={this.handleDeckNameChange}
             />
             <div
               className='create-deck-btn'
@@ -79,7 +79,7 @@ class NewDeckLightbox extends React.Component {
               type='text'
               placeholder='Enter EOL collection id (optional)'
               value={this.state.colId}
-              onInput={this.handleColIdInput}
+              onChange={this.handleColIdChange}
             />
           </div>
         </div>

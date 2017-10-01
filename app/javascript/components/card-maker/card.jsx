@@ -2,12 +2,13 @@ import React from 'react'
 
 import LoadingSpinnerImage from './loading-spinner-image'
 import resourceWrapper from './resource-wrapper'
+import {cardMakerUrl} from 'lib/card-maker/url-helper'
 
 const noDeckId = -1;
 
 class Card extends React.Component {
   imgUrl() {
-    return 'card_maker_ajax/cards/' + this.props.data.id + '/svg';
+    return cardMakerUrl('cards/' + this.props.data.id + '/svg');
   }
 
   deckAssignItems() {

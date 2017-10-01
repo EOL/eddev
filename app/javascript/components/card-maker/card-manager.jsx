@@ -31,7 +31,7 @@ class CardManager extends React.Component {
     }
   }
 
-  componentDidMount() {
+  reloadResources = () => {
     var that = this;
 
     $.ajax({
@@ -54,94 +54,27 @@ class CardManager extends React.Component {
     });
   }
 
+  componentDidMount() {
+    this.reloadResources();
+  }
+
   assignCardDeck = (cardId, deckId) => {
-    const url = '/card_maker_ajax/cards/' + cardId + '/deck_id'
-        , card = this.state.cards.find((card) => {
-            return card.id === cardId
-          })
-        , decksToReloadIds = []
-        ;
-
-    var successFn;
-
-    if (card.deck) {
-      decksToReloadIds.push(card.deck.id);
-    }
-
-    if (deckId != null) {
-      decksToReloadIds.push(deckId);
-    }
-
-    successFn = this.replaceCardAndReloadDecks.bind(null, decksToReloadIds);
+    const url = '/card_maker_ajax/cards/' + cardId + '/deck_id';
 
     if (deckId != null) {
       $.ajax(url, {
         method: 'PUT',
         data: deckId,
         contentType: 'text/plain',
-        success: successFn,
+        success: this.reloadResources,
       });
     } else {
       $.ajax(url, {
         method: 'DELETE',
-        success: successFn,
+        success: this.reloadResources,
       });
     }
   }
-
-  reloadDecks = (deckIds) => {
-    for (const deckId of deckIds) {
-      $.ajax('/card_maker_ajax/decks/' + deckId, {
-        method: 'GET',
-        success: this.replaceDeck,
-      })
-    }
-  }
-
-  // To be called after a card has a deck assigned/unassigned, since the
-  // deck's titleCardId may have changed
-  replaceCardAndReloadDecks = (deckIds, card) => {
-    this.replaceCard(card);
-    this.reloadDecks(deckIds);
-  }
-
-  findResourceIndex = (colName, id) => {
-    return this.state[colName].findIndex((resource) => {
-      return resource.id === id;
-    });
-  }
-
-  replaceResource = (colName, resource) => {
-    const index = this.findResourceIndex(colName, resource.id);
-
-    this.setState((prevState, props) => {
-      return update(prevState, {
-        [colName]: { [index]: { $set: resource } }
-      })
-    });
-  }
-
-  removeResource = (colName, id) => {
-    const index = this.findResourceIndex(colName, id);
-    this.setState((prevState, props) => {
-      return update(prevState, {
-        [colName]: { $splice: [[index, 1]]}
-      })
-    })
-  }
-
-  removeCard = (cardId) => {
-    this.removeResource('cards', cardId);
-  }
-
-  replaceCard = (card) => {
-    this.replaceResource('cards', card)
-  }
-
-  replaceDeck = (deck) => {
-    this.replaceResource('decks', deck);
-  }
-
   showLoadingOverlay = () => {
     this.setState(() => {
       return {
@@ -170,7 +103,7 @@ class CardManager extends React.Component {
       url: 'card_maker_ajax/' + resourceType + '/' + id,
       method: 'DELETE',
       success: () => {
-        that.removeResource(resourceType, id);
+        that.reloadResources();
         that.hideLoadingOverlay();
       }
     });
@@ -328,9 +261,9 @@ class CardManager extends React.Component {
       return;
     }
 
+    that.showLoadingOverlay();
     this.setState(() => {
       return {
-        showLoadingOverlay: true,
         speciesSearchOpen: false,
       }
     });
@@ -345,25 +278,13 @@ class CardManager extends React.Component {
       }),
       contentType: 'application/json',
       method: 'POST',
-      success: (card) => {
-        that.setState((prevState, props) => {
-          return update(prevState, {
-            cards: { $unshift: [card] },
-            showLoadingOverlay: { $set: false },
-          })
-        });
-
-        if (deckId !== allDecksId) {
-          that.reloadDecks([deckId]);
-        }
+      success: () => {
+        that.hideLoadingOverlay();
+        that.reloadResources();
       },
       error: () => {
         alert('Something went wrong');
-        this.setState(() => {
-          return {
-            showLoadingOverlay: false
-          }
-        })
+        that.hideLoadingOverlay();
       }
     })
   }
@@ -375,12 +296,7 @@ class CardManager extends React.Component {
       url: 'card_maker_ajax/decks',
       method: 'POST',
       data: JSON.stringify({ name: deckName }),
-      success: function(deck) {
-        that.setState((prevState, props) => {
-          return update(prevState, {
-            decks: { $unshift: [deck]},
-          });
-        });
+      success: that.reloadResources,
         /*
         decks.push(deck);
         lightboxResult.closeFn();
@@ -400,7 +316,6 @@ class CardManager extends React.Component {
           selectDeck(deck.id);
         }
         */
-      },
       error: function(err) {
         var alertMsg = '';
 

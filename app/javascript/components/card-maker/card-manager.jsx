@@ -107,8 +107,7 @@ class CardManager extends React.Component {
       url: cardMakerUrl(resourceType + '/' + id),
       method: 'DELETE',
       success: () => {
-        that.reloadResources();
-        that.hideLoadingOverlay();
+        that.reloadResourcesWithCb(that.hideLoadingOverlay);
       }
     });
   }
@@ -283,8 +282,7 @@ class CardManager extends React.Component {
       contentType: 'application/json',
       method: 'POST',
       success: () => {
-        that.hideLoadingOverlay();
-        that.reloadResources();
+        that.reloadResourcesWithCb(that.hideLoadingOverlay);
       },
       error: () => {
         alert('Something went wrong');

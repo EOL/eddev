@@ -5,15 +5,21 @@ import SpeciesSearchResult from './species-search-result'
 import UserResourceFilter from './user-resource-filter'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
 
+const cleanState = {
+  inFlight: false,
+  results: null,
+  selectedId: null,
+};
+
 class SpeciesSearchLightbox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      inFlight: false,
-      results: null,
-      selectedId: null,
-    }
+    this.state = cleanState;
     this.reqCount = 0;
+  }
+
+  resetState = () => {
+    this.setState(cleanState);
   }
 
   handleInput = (event) => {
@@ -56,12 +62,13 @@ class SpeciesSearchLightbox extends React.Component {
   }
 
   handleRequestClose = () => {
-    this.setState(() => {
-      return {
-        results: null,
-      }
-    });
+    this.resetState();
     this.props.handleClose();
+  }
+
+  handleCreateCard = () => {
+    this.props.handleCreateCard(this.state.selectedId);
+    this.resetState();
   }
 
   render() {
@@ -128,7 +135,7 @@ class SpeciesSearchLightbox extends React.Component {
             </div>
             <div
               className={'create-btn-wrap' + (this.state.selectedId === null ? ' disabled' : '')}
-              onClick={() => this.props.handleCreateCard(this.state.selectedId)}
+              onClick={this.handleCreateCard}
             >
               <div className='btn-disable'></div>
               <div className='create-btn-label'>Create a card from selection</div>

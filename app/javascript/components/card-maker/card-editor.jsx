@@ -220,8 +220,6 @@ class CardEditor extends React.Component {
       top = colHeadHeight;
     }
 
-    // XXX: selectively render components for performance. Shoudn't have to
-    // re-render the whole editor just to move the preview box.
     this.setState((prevState, props) => {
       return {
         previewStyle: {
@@ -236,18 +234,6 @@ class CardEditor extends React.Component {
     const cardUrl = cardMakerUrl('cards/' + this.props.cardId + '/json')
         , that = this
         ;
-
-    /* TODO: this probably doesn't belong here at all */
-    CardWrapper.setTemplateSupplier({
-      supply: function(templateName, cb) {
-        $.getJSON(cardMakerUrl('templates/trait'), function(data) {
-          cb(null, data);
-        })
-          .fail(function() {
-            cb(new Error('Failed to retrieve template'));
-          });
-      }
-    });
 
     $.ajax(cardUrl, {
       method: 'GET',

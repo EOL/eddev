@@ -98,6 +98,11 @@ class ApplicationController < ActionController::Base
       @disable_main_col = true
     end
 
+    def js_packs
+      []
+    end
+    helper_method :js_packs
+
   private
   def set_locale
     locale = params[:locale]

@@ -15,7 +15,7 @@ class LabeledChoiceImageField extends React.Component {
       <li
         key={choiceKey}
         className='choice'
-        onClick={() => this.props.setChoiceKey(choiceIndex)}
+        onClick={() => this.props.setChoiceKey(choiceKey)}
       >
         {menuTxt}
       </li>

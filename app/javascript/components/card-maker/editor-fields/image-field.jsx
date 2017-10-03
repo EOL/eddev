@@ -26,7 +26,7 @@ class ImageField extends React.Component {
 
     for (let i = 0; i < numThumbs; i++) {
       let thumbUrl = this.props.choices[i].thumbUrl;
-      thumbs.push(<img src={thumbUrl} className='img-lib-thumb' key={i}/>);
+      thumbs.push(<img src={thumbUrl} className='img-lib-thumb' key={thumbUrl}/>);
     }
 
     return thumbs;
@@ -254,8 +254,8 @@ class ImageField extends React.Component {
                 <img
                   src={choice.thumbUrl}
                   className='img-thumb'
-                  key={i}
-                  onClick={() => this.props.setChoiceKey(choice.key)}
+                  key={choice.choiceKey}
+                  onClick={() => this.props.setChoiceKey(choice.choiceKey)}
                 />
               );
             })}

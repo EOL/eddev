@@ -81,9 +81,9 @@ class ImmutableCard {
     });
   }
 
-  setChoiceIndex = (fieldName, index) => {
+  setChoiceKey = (fieldName, key) => {
     return this.copyAndApply((copy) => {
-      copy.setChoiceIndex(fieldName, index);
+      copy.setChoiceKey(fieldName, key);
     });
   }
 

@@ -29,7 +29,7 @@ class CardFields extends React.Component {
           , choices = this.props.card.getFieldChoices(field.id)
           , choiceTips = this.props.card.getFieldChoiceTips(field.id)
           , setDataAttr = this.props.setCardData.bind(null, field.id)
-          , setChoiceIndex = this.props.setCardChoiceIndex.bind(null, field.id)
+          , setChoiceKey = this.props.setCardChoiceKey.bind(null, field.id)
           , setDataAttrNotDirty = this.props.setCardDataNotDirty.bind(null, field.id)
           , setUserDataAttr = this.props.setCardUserDataAttr.bind(null, field.id)
           , setUserDataRef = this.props.setCardUserDataRef.bind(null, field.id)
@@ -51,7 +51,7 @@ class CardFields extends React.Component {
               setDataAttr={setDataAttr}
               setDataAttrNotDirty={setDataAttrNotDirty}
               getDataAttr={getDataAttr}
-              setChoiceIndex={setChoiceIndex}
+              setChoiceKey={setChoiceKey}
               setUserDataAttr={setUserDataAttr}
               setUserDataRef={setUserDataRef}
               setKeyValText={setKeyValText}

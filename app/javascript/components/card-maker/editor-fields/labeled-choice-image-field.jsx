@@ -10,12 +10,12 @@ class LabeledChoiceImageField extends React.Component {
     }
   }
 
-  buildChoiceElmt = (selectedTxt, menuTxt, choiceIndex) => {
+  buildChoiceElmt = (selectedTxt, menuTxt, choiceKey) => {
     return (
       <li
-        key={choiceIndex}
+        key={choiceKey}
         className='choice'
-        onClick={() => this.props.setChoiceIndex(choiceIndex)}
+        onClick={() => this.props.setChoiceKey(choiceIndex)}
       >
         {menuTxt}
       </li>
@@ -27,7 +27,7 @@ class LabeledChoiceImageField extends React.Component {
 
     for (let i = 0; i < this.props.choices.length; i++) {
       let choice = this.props.choices[i];
-      elmts.push(this.buildChoiceElmt(choice.label, choice.label, i));
+      elmts.push(this.buildChoiceElmt(choice.label, choice.label, choice.choiceKey));
     }
 
     return elmts;

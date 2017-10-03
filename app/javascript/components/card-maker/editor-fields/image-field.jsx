@@ -255,7 +255,7 @@ class ImageField extends React.Component {
                   src={choice.thumbUrl}
                   className='img-thumb'
                   key={i}
-                  onClick={() => this.props.setChoiceIndex(i)}
+                  onClick={() => this.props.setChoiceKey(choice.key)}
                 />
               );
             })}

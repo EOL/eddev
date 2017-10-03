@@ -58,10 +58,10 @@ class CardEditor extends React.Component {
     });
   }
 
-  setCardChoiceIndex = (fieldName, index) => {
+  setCardChoiceKey = (fieldName, key) => {
     this.setState((prevState, props) => {
       return {
-        card: prevState.card.setChoiceIndex(fieldName, index)
+        card: prevState.card.setChoiceKey(fieldName, key)
       }
     });
   }
@@ -321,7 +321,7 @@ class CardEditor extends React.Component {
                       card={this.state.card}
                       setCardData={this.setCardData}
                       setCardDataNotDirty={this.setCardDataNotDirty}
-                      setCardChoiceIndex={this.setCardChoiceIndex}
+                      setCardChoiceKey={this.setCardChoiceKey}
                       setCardUserDataAttr={this.setCardUserDataAttr}
                       setCardUserDataRef={this.setCardUserDataRef}
                       setCardKeyValText={this.setCardKeyValText}

@@ -3,8 +3,8 @@ import React from 'react'
 import fieldWrapper from './field-wrapper'
 
 class ColorSchemeField extends React.Component {
-  setChoiceIndex = (i) => {
-    this.props.setChoiceIndex(i);
+  setChoiceKey = (key) => {
+    this.props.setChoiceKey(key);
   }
 
   buildColorElmts = () => {
@@ -22,6 +22,7 @@ class ColorSchemeField extends React.Component {
               backgroundColor: choice.bg,
               color: choice.text
             }
+          , key = choice.choiceKey
           ;
 
         items.push((
@@ -29,7 +30,7 @@ class ColorSchemeField extends React.Component {
             key={i}
             className='color-scheme'
             style={style}
-            onClick={() => this.setChoiceIndex(i)}
+            onClick={() => this.setChoiceKey(key)}
           >
             {choiceTip}
           </li>));

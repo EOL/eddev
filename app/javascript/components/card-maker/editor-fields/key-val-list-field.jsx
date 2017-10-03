@@ -76,7 +76,7 @@ class KeyValListField extends React.Component {
           {i === this.state.focusIndex &&
             <SuggestionsMenu
               anchor={this.state.focusTarget}
-              items={this.props.choices}
+              items={this.props.choices.map((choice) => {return choice.text})}
               handleSelect={this.handleSuggestionsSelect}
             />
           }

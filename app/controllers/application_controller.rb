@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-#  before_filter :set_locale
+  before_action :set_locale
 #  before_filter :ensure_user
   before_action :init_content_editor_state
 
@@ -110,14 +110,12 @@ class ApplicationController < ActionController::Base
     # If we have a locale from the URL, set it for the duration of the request
     if !locale.nil?
       I18n.locale = locale
-    # Always redirect to a url with an explicit locale.
     # If there is a user, redirect to the url from the request with the locale added
-    elsif logged_in_user
+    elsif logged_in_user && logged_in_user.locale != I18n.default_locale
       redirect_to url_for request.params.merge({locale: logged_in_user.locale})
-    else
-    # Redirect to the url from the request with the default locale added
-      redirect_to url_for request.params.merge({locale: I18n.default_locale})
     end
+    # Otherwise, we are on the / version of the site, and I18n will correctly
+    # use the default locale
   end
 
   def init_content_editor_state

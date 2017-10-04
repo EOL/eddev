@@ -26,7 +26,8 @@ CardWrapper.setDataPersistence({
 });
 
 CardWrapper.setTemplateSupplier({
-  supply: function(templateName, cb) {
+  supply: function(templateName, locale, cb) {
+    // TODO: pass locale through when supported by controller
     $.getJSON(cardMakerUrl('templates/' + templateName), function(data) {
       cb(null, data);
     })

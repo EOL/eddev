@@ -1,0 +1,2 @@
+I18n.translations || (I18n.translations = {});
+I18n.translations["en"] = I18n.extend((I18n.translations["en"] || {}), {"react":{"card_maker":{"card_maker_title":"Card Maker","welcome_card_manager_html":"\u003cspan className='big-letter'\u003eW\u003c/span\u003e\u003cspan\u003eelcome to the \u003c/span\u003e \u003cimg src=%{eolHdrIconPath} className='eol_logo' /\u003e \u003cspan\u003e Card Manager.\u003c/span\u003e\n"}}});

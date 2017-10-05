@@ -412,12 +412,12 @@ class CardManager extends React.Component {
           <div className='screen-inner manager-inner'>
             <div className='welcome-block maker-welcome-block'>
               <img src={ladybugIcon} className='ladybug' />
-              <h3 className='welcome-txt'>
-                <span className='big-letter'>W</span>
-                <span>elcome to the </span>
-                <img src={eolHdrIcon} className='eol_logo' />
-                <span> Card Manager.</span>
-              </h3>
+              <h3 className='welcome-txt'
+                dangerouslySetInnerHTML={{
+                  __html: I18n.t('react.card_maker.welcome_card_manager_html', {
+                    eolHdrIconPath: eolHdrIcon,
+                  })}}
+              />
             </div>
             <div className="manager-ctrls">
               <div className="new-resource-btns">

@@ -57,5 +57,8 @@ module Eddev
       ENV['card_service_use_https'] == "true" ?
       true :
       false
+
+    # build i18n-js translation files (configured in i18n-js.yml)
+    config.middleware.use I18n::JS::Middleware
   end
 end

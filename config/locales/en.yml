@@ -433,6 +433,13 @@ en:
         discuss_tuna_dolphins_html: "Students will <strong>discuss</strong> how technological advances in tuna fishing have impacted dolphins"
         understand_dolphin_tissue_html: "Students will <strong>understand</strong> how studying dolphin tissue samples from impacted dolphins can help scientists protect dolphin populations"
 
+  react:
+    card_maker:
+      card_maker_title: 'Card Maker'
+      welcome_card_manager_html: >
+        <span className='big-letter'>W</span><span>elcome to the </span>
+        <img src=%{eolHdrIconPath} className='eol_logo' />
+        <span> Card Manager.</span>
   activerecord:
     errors:
       template:

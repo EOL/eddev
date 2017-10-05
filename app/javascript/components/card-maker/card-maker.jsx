@@ -59,7 +59,7 @@ class CardMaker extends React.Component {
             <div className='left-blur-bg'></div>
             <h2 className='create-card-hdr hdr'>
               <img src={eolLogoHdr} className='hdr-logo' />
-              <span> Card Maker</span>
+              <span> {I18n.t('react.card_maker.card_maker_title')}</span>
             </h2>
             <div className='right-blur-bg'></div>
           </div>

@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :set_locale
 #  before_filter :ensure_user
-  before_action :init_content_editor_state
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -102,6 +101,10 @@ class ApplicationController < ActionController::Base
       []
     end
     helper_method :js_packs
+
+    def set_js_translations_root(rootKey)
+      @js_translations = I18n.t(rootKey).to_json.html_safe
+    end
 
   private
   def set_locale

@@ -22,11 +22,7 @@
 # byebug history file
 .byebug_history
 
-#/vendor/*
-/vendor/bundle
-/public/system/*
-/public/assets/*
-/public/javascripts/i18n/* # translation files
+/public/packs
 
 # application configuration
 /config/application.yml
@@ -34,11 +30,6 @@
 # OS X .DS_Store
 .DS_Store
 
-# Symlink to card-templates repo checkout
-app/assets/javascripts/card_templates
-
 # ctags
 tags
-/public/packs
-/public/packs-test
 /node_modules

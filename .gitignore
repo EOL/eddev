@@ -26,7 +26,7 @@
 /vendor/bundle
 /public/system/*
 /public/assets/*
-
+/public/javascripts/i18n/* # translation files
 
 # application configuration
 /config/application.yml

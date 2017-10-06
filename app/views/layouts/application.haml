@@ -24,11 +24,6 @@
     -if asset_exists? "#{params[:controller]}.js"
       = javascript_include_tag params[:controller]
 
-    -if @js_translations
-      = javascript_include_tag "i18n"
-      :javascript
-        I18n.setTranslations(#{@js_translations})
-
     - js_packs.each do |pack_name|
       = javascript_pack_tag pack_name
 

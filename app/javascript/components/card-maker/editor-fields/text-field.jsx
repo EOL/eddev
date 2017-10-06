@@ -107,7 +107,7 @@ class TextField extends React.Component {
 
       elmt = (
         <div className='font-size-box'>
-          <div className='font-size-label'>Font size:</div>
+          <div className='font-size-label'>{I18n.t('react.card_maker.font_size')}</div>
           <div
             className={fontSizeClass}
             onClick={this.handleFontSizeClick}

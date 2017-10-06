@@ -29,13 +29,13 @@ function saveExitBtns(props) {
   return (
     <div className='preview-btns'>
       <div className='btn close' onClick={props.handleClose}>
-        <div className='btn-txt'>Close</div>
+        <div className='btn-txt'>{I18n.t('react.card_maker.close')}</div>
       </div>
       <div className={saveExitClass} onClick={handleSaveAndExit}>
-        <div className='btn-txt'>Save + Exit</div>
+        <div className='btn-txt'>{I18n.t('react.card_maker.save_+_exit')}</div>
       </div>
       <div className={saveClass} onClick={handleSave}>
-        <div className='btn-txt'>Quick Save</div>
+        <div className='btn-txt'>{I18n.t('react.card_maker.quick_save')}</div>
       </div>
     </div>
   );

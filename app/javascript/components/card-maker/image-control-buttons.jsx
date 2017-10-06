@@ -57,21 +57,21 @@ class ImageControlButtons extends React.Component {
           <img
             src={rotateIcon}
             className='btn top'
-            onMouseEnter={this.handleButtonMouseEnter.bind(null, 'Rotate 90°')}
+            onMouseEnter={this.handleButtonMouseEnter.bind(null, I18n.t('react.card_maker.rotate_90'))}
             onMouseLeave={this.handleButtonMouseLeave}
             onClick={this.handleRotateClick}
           />
           <img
             src={flipHorizIcon}
             className='btn mid'
-            onMouseEnter={this.handleButtonMouseEnter.bind(null, 'Flip horizontal')}
+            onMouseEnter={this.handleButtonMouseEnter.bind(null, I18n.t('react.card_maker.flip_horiz'))}
             onMouseLeave={this.handleButtonMouseLeave}
             onClick={this.handleFlipClick.bind(null, 'flipHoriz')}
           />
           <img
             src={flipVertIcon}
             className='btn bot'
-            onMouseEnter={this.handleButtonMouseEnter.bind(null, 'Flip vertical')}
+            onMouseEnter={this.handleButtonMouseEnter.bind(null, I18n.t('react.card_maker.flip_vert'))}
             onMouseLeave={this.handleButtonMouseLeave}
             onClick={this.handleFlipClick.bind(null, 'flipVert')}
           />

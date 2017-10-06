@@ -70,7 +70,7 @@ class SuggestionsMenu extends React.Component {
           ref={this.setArrowNode}
           style={this.getArrowStyle()}
         />
-        <div className='hdr'>Suggestions</div>
+        <div className='hdr'>{I18n.t('react.card_maker.suggestions')}</div>
         <ul className='items'>
           {
             this.props.items.map((item) => {

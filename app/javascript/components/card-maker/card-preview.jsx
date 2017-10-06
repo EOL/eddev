@@ -104,11 +104,13 @@ class CardPreview extends React.Component {
               selectedImgId={this.props.selectedImgId}
               {...this.imageDataFns()}
             />
-            <a href={eolLinkAttrs.href} target={eolLinkAttrs.target} className='eol-link'>
-              <span>Open </span>
-              <i className='icon-eol-logo' />
-              <span> taxon page</span>
-            </a>
+            <a
+              href={eolLinkAttrs.href} target={eolLinkAttrs.target}
+              className='eol-link'
+              dangerouslySetInnerHTML={{
+                __html: I18n.t('react.card_maker.open_eol_taxon_page_html')
+              }}
+            />
           </div>
           <SaveExitBtns
             dirty={this.props.card && this.props.card.isDirty()}

@@ -6,6 +6,8 @@ import CardPreview from './card-preview'
 import { cardMakerUrl } from 'lib/card-maker/url-helper'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
+import eolHdrIcon from 'images/card_maker/icons/eol_logo_sub_hdr.png'
+
 
 class CardEditor extends React.Component {
   constructor(props) {
@@ -267,25 +269,25 @@ class CardEditor extends React.Component {
             <div className='welcome-block generator-welcome-block'>
               <div className='manager-btn' onClick={this.handleClose}>
                 <div className='manager-btn-bg'></div>
-                <div className='manager-btn-back-txt'> go back to</div>
+                <div className='manager-btn-back-txt'> {I18n.t('react.card_maker.go_back_to')}</div>
                 <div className='manager-btn-txt-wrap'>
                   <i className='icon-deck' />
-                  <div className='manager-btn-txt'>Card Manager</div>
+                  <div className='manager-btn-txt'>{I18n.t('react.card_maker.card_manager')}</div>
                 </div>
               </div>
-              <h3 className='welcome-txt'>
-                <span className='big-letter'>W</span>
-                <span>elcome to the EOL Card Editor.</span>
-              </h3>
+              <h3 className='welcome-txt'
+                dangerouslySetInnerHTML={{
+                  __html: I18n.t('react.card_maker.welcome_card_editor_html', {
+                    eolHdrIconPath: eolHdrIcon,
+                  })}}
+              />
               <img src={ladybugIcon} className='ladybug' />
             </div>
             <div className='cols'>
               <div className='col left-col' ref={this.setLeftColNode}>
                 <div className='col-head-box' ref={this.setLeftColHeadBoxNode}>
-                  <div className='col-head-txt'>Card Preview</div>
-                  <div className='col-head-sub-txt'>
-                    (Live Preview, Image Controls, Save + Exit Options)
-                  </div>
+                  <div className='col-head-txt'>{I18n.t('react.card_maker.card_preview')}</div>
+                  <div className='col-head-sub-txt'>{I18n.t('react.card_maker.card_preview_parens')}</div>
                 </div>
 
                 <CardPreview
@@ -310,10 +312,8 @@ class CardEditor extends React.Component {
                   <div className='disable-overlay'></div>
                 }
                 <div className='col-head-box'>
-                  <div className='col-head-txt'>Card Form</div>
-                  <div className='col-head-sub-txt'>
-                    (enter information that will appear on the card)
-                  </div>
+                  <div className='col-head-txt'>{I18n.t('react.card_maker.card_form')}</div>
+                  <div className='col-head-sub-txt'>{I18n.t('react.card_maker.card_form_parens')}</div>
                 </div>
                 <div className='card-fields-wrap'>
                   {this.state.card &&

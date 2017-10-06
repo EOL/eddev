@@ -437,9 +437,13 @@ en:
     card_maker:
       card_maker_title: 'Card Maker'
       welcome_card_manager_html: >
-        <span className='big-letter'>W</span><span>elcome to the </span>
-        <img src=%{eolHdrIconPath} className='eol_logo' />
+        <span class='big-letter'>W</span><span>elcome to the </span>
+        <img src=%{eolHdrIconPath} class='eol_logo' />
         <span> Card Manager.</span>
+      welcome_card_editor_html: >
+        <span class='big-letter'>W</span><span>elcome to the </span>
+        <img src=%{eolHdrIconPath} class='eol_logo' />
+        <span> Card Editor.</span>
       create_a_card: Create a card
       create_a_deck: Create a deck
       all_cards: All cards
@@ -460,6 +464,30 @@ en:
       create_deck: Create deck
       enter_collection_id: Enter EOL collection id (optional)
       unexpected_error_msg: An unexpected error occurred
+      go_back_to: go back to
+      card_manager: Card Manager
+      card_preview: Card Preview
+      card_preview_parens: (Live Preview, Image Controls, Save + Exit Options)
+      card_form: Card Form
+      card_form_parens: (enter information that will appear on the card)
+      open_eol_taxon_page_html: >
+        <span>Open </span>
+        <i class='icon-eol-logo'></i>
+        <span> taxon page</span>
+      rotate_90: Rotate 90°
+      flip_horiz: Flip horizontal
+      flip_vert: Flip vertical
+      close: Close
+      save_+_exit: Save + exit
+      quick_save: Quick save
+      font_size: "Font size:"
+      suggestions: Suggestions
+      image_library: Image Library
+      or: or
+      type_paste_url: Type/paste URL
+      failed_to_load_image_url: Failed to load image from URL
+      upload_an_image: Upload an image
+      image_credit: Image credit
   activerecord:
     errors:
       template:

@@ -182,19 +182,19 @@ class ImageField extends React.Component {
       {!this.state.libOpen &&
         (<div className='img-field-main'>
           <div className='img-lib-link img-field-sec' onClick={this.handleLibOpenClick}>
-            <div className='img-lib-hdr img-lib-btn'>Image Library</div>
+            <div className='img-lib-hdr img-lib-btn'>{I18n.t('react.card_maker.image_library')}</div>
             <div className='img-lib-thumbs'>
               {this.buildImgLibPreviewThumbs()}
             </div>
           </div>
           <div className='img-field-sep'></div>
           <div className='img-url img-field-sec'>
-            <div className='img-or'>or</div>
+            <div className='img-or'>{I18n.t('react.card_maker.or')}</div>
             <div className='img-url-wrap flex-wrap'>
               <input
                 className='img-url-input text-input text-entry'
                 type='text'
-                placeholder='Type/paste URL'
+                placeholder={I18n.t('react.card_maker.type_paste_url')}
                 ref={(node) => this.urlInputNode = node}
               />
               <div
@@ -205,16 +205,16 @@ class ImageField extends React.Component {
               </div>
             </div>
             {this.state.urlLoadError &&
-              <div className='img-url-error'>Failed to load image from URL</div>
+              <div className='img-url-error'>{I18n.t('react.card_maker.failed_to_load_image_url')}</div>
             }
             {this.buildUrlThumb()}
           </div>
           <div className='img-field-sep'></div>
           <div className='img-upload img-field-sec'>
-            <div className='img-or'>or</div>
+            <div className='img-or'>{I18n.t('react.card_maker.or')}</div>
             <div className='img-upload-btn' onClick={() => this.fileInputNode.click() }>
               <i className='fa fa-upload fa-lg img-upload-btn-icon' aria-hidden='true'/>
-              <div className='img-upload-btn-txt'>Upload an image</div>
+              <div className='img-upload-btn-txt'>{I18n.t('react.card_maker.upload_an_image')}</div>
               <input
                 className='img-upload-file'
                 type='file'
@@ -236,7 +236,7 @@ class ImageField extends React.Component {
           </div>
           <div className='img-field-sep'></div>
           <div className='img-credit img-field-sec'>
-            <div className='img-credit-label'>Image Credit</div>
+            <div className='img-credit-label'>{I18n.t('react.card_maker.image_credit')}</div>
             <input
               className='img-credit-input text-input text-entry'
               type='text'

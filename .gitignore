@@ -23,6 +23,7 @@
 .byebug_history
 
 /public/packs
+/public/javascripts
 
 # application configuration
 /config/application.yml

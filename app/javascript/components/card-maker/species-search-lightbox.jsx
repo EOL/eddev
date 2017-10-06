@@ -75,19 +75,19 @@ class SpeciesSearchLightbox extends React.Component {
     return (
       <ReactModal
         isOpen={this.props.isOpen}
-        contentLabel='Species search'
+        contentLabel={I18n.t('react.card_maker.species_search')}
         parentSelector={() => {return document.getElementById('Page')}}
         overlayClassName='fixed-center-wrap disable-overlay'
         className='species-search lightbox'
         bodyOpenClassName='noscroll'
         onRequestClose={this.handleRequestClose}
       >
-        <div className='field-label lightbox-label'>Search</div>
+        <div className='field-label lightbox-label'>{I18n.t('react.card_maker.search')}</div>
         <div className='search-area'>
           <input
             className='search-field'
             type='text'
-            placeholder='Search for a species or taxon'
+            placeholder={I18n.t('react.card_maker.search_species_taxon')}
             onInput={this.handleInput}
           />
         </div>
@@ -123,7 +123,7 @@ class SpeciesSearchLightbox extends React.Component {
         {this.state.results !== null && this.state.results.length > 0 &&
           (<div className='create-menu'>
             <div className='deck-select-wrap'>
-              <div className='deck-select-label'>Save card to a deck:</div>
+              <div className='deck-select-label'>{I18n.t('react.card_maker.save_card_to_deck')}</div>
               <UserResourceFilter
                 selected={true}
                 iconClass='icon-deck'
@@ -138,7 +138,7 @@ class SpeciesSearchLightbox extends React.Component {
               onClick={this.handleCreateCard}
             >
               <div className='btn-disable'></div>
-              <div className='create-btn-label'>Create a card from selection</div>
+              <div className='create-btn-label'>{I18n.t('react.card_maker.create_card_from_selection')}</div>
               <div className='create-btn-body'>
                 <i className='icon-new-card' />
               </div>
@@ -150,24 +150,5 @@ class SpeciesSearchLightbox extends React.Component {
     )
   }
 }
-
-/*
-.species-search.lightbox
-  .field-label.lightbox-label Search
-  .search-area
-    %input.search-field{:type => :text, :placeholder => "Search for a species or taxon"}
-  .search-results-wrap.hidden
-    .result-count-wrap
-      .result-count.hidden 0 results
-    %ul.search-results
-  .create-menu.hidden
-    .deck-select-wrap
-      .deck-select-label Save card to a deck:
-    .create-btn-wrap.disabled
-      .btn-disable
-      .create-btn-label Create a card from selection
-      .create-btn-body
-        %i.icon-new-card
-*/
 
 export default SpeciesSearchLightbox;

@@ -23,8 +23,8 @@ class Card extends React.Component {
 
     items.unshift({
       menuText: '—',
-      selectedText: 'No deck assigned',
-      openText: 'Assign to deck',
+      selectedText: I18n.t('react.card_maker.no_deck_assigned'),
+      openText: I18n.t('react.card_maker.assign_to_deck'),
       id: noDeckId,
     });
 

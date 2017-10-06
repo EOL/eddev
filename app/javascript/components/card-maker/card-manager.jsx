@@ -114,7 +114,7 @@ class CardManager extends React.Component {
 
   handleDestroyCard = (id) => {
     this.handleDestroyResource(
-      'Are you sure you want to delete this card?',
+      I18n.t('react.card_maker.are_you_sure_delete_card'),
       'cards',
       id
     );
@@ -122,7 +122,7 @@ class CardManager extends React.Component {
 
   handleDestroyDeck = (id) => {
     this.handleDestroyResource(
-      'Are you sure you want to delete this deck and all its cards?',
+      I18n.t('react.card_maker.are_you_sure_delete_deck'),
       'decks',
       id
     );
@@ -166,7 +166,7 @@ class CardManager extends React.Component {
   }
 
   deckFilterItems = () => {
-    return this.deckFilterItemsHelper('All decks', true);
+    return this.deckFilterItemsHelper(I18n.t('react.card_maker.all_decks'), true);
   }
 
   deckFilterItemsForNewCard = () => {
@@ -175,7 +175,7 @@ class CardManager extends React.Component {
 
   cardFilterItems() {
     return [{
-      name: 'All cards'
+      name: I18n.t('react.card_maker.all_cards')
     }];
   }
 
@@ -285,7 +285,7 @@ class CardManager extends React.Component {
         that.reloadResourcesWithCb(that.hideLoadingOverlay);
       },
       error: () => {
-        alert('Something went wrong');
+        alert(I18n.t('react.card_manager.unexpected_error_msg'));
         that.hideLoadingOverlay();
       }
     })
@@ -368,7 +368,7 @@ class CardManager extends React.Component {
         ) { // Validation error
           alertMsg = err.responseJSON.errors.join('\n');
         } else {
-          alertMsg = "An unexpected error occurred"
+          alertMsg = I18n.t('react.card_manager.unexpected_error_msg')
         }
 
         alert(alertMsg);
@@ -424,7 +424,7 @@ class CardManager extends React.Component {
                 <NewResourceBtn
                   icon={newCardIcon}
                   id='NewCard'
-                  text='Create a card'
+                  text={I18n.t('react.card_maker.create_a_card')}
                   btnClass='new-card-btn'
                   handleClick={this.handleOpenNewCardLightbox}
                 />
@@ -440,7 +440,7 @@ class CardManager extends React.Component {
                 <NewResourceBtn
                   icon={newDeckIcon}
                   id='NewDeck'
-                  text='Create a deck'
+                  text={I18n.t('react.card_maker.create_a_deck')}
                   btnClass='new-deck-btn'
                   handleClick={this.handleOpenNewDeckLightbox}
                 />

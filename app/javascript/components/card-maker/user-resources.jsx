@@ -50,12 +50,12 @@ class UserResources extends React.Component {
         ;
 
       if (this.props.resourceType === 'card') {
-        emptyMsg = "You don't have any cards yet.";
-        createMsg = 'Create a card';
+        emptyMsg = I18n.t('react.card_maker.no_cards_yet');
+        createMsg = I18n.t('react.card_maker.create_a_card');
         handleCreate = this.props.handleNewCard;
       } else if (this.props.resourceType === 'deck') {
-        emptyMsg = "You don't have any decks yet";
-        createMsg = 'Create a deck';
+        emptyMsg = I18n.t('react.card_maker.no_decks_yet')
+        createMsg = I18n.t('react.card_maker.create_a_deck');
         handleCreate = this.props.handleNewDeck;
       }
 

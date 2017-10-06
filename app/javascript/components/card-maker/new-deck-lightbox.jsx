@@ -50,7 +50,7 @@ class NewDeckLightbox extends React.Component {
     return (
       <ReactModal
         isOpen={this.props.isOpen}
-        contentLabel='New deck'
+        contentLabel={I18n.t('react.card_maker.new_deck')}
         parentSelector={() => {return document.getElementById('Page')}}
         overlayClassName='fixed-center-wrap disable-overlay'
         className='new-deck lightbox'
@@ -61,7 +61,7 @@ class NewDeckLightbox extends React.Component {
             <input
               className='deck-name input'
               type='text'
-              placeholder='Enter deck name'
+              placeholder={I18n.t('react.card_maker.enter_deck_name')}
               value={this.state.deckName}
               onChange={this.handleDeckNameChange}
             />
@@ -69,7 +69,7 @@ class NewDeckLightbox extends React.Component {
               className='create-deck-btn'
               onClick={this.handleCreate}
             >
-              <div className='create-deck-txt'>Create deck</div>
+              <div className='create-deck-txt'>{I18n.t('react.card_maker.create_deck')}</div>
               <i className='icon-new-deck' />
             </div>
           </div>
@@ -77,7 +77,7 @@ class NewDeckLightbox extends React.Component {
             <input
               className='col-id input'
               type='text'
-              placeholder='Enter EOL collection id (optional)'
+              placeholder={I18n.t('react.card_maker.enter_collection_id')}
               value={this.state.colId}
               onChange={this.handleColIdChange}
             />

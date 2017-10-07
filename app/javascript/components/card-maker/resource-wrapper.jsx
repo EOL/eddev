@@ -33,6 +33,8 @@ function resourceWrapper(WrappedComponent, additionalClassNames) {
         <div className={classNames.join(' ')}
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
+          ref={this.props.setRef}
+          style={this.props.style}
         >
           <WrappedComponent
             showOverlay={this.state.showOverlay}

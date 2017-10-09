@@ -3,6 +3,7 @@ import React from 'react'
 import Card from './card'
 import Deck from './deck'
 import EmptyResourcesPlaceholder from './empty-resources-placeholder'
+import AdjustsForScrollbarContainer from './adjusts-for-scrollbar-container'
 
 const resourceTypes = {
        card: Card
@@ -83,7 +84,7 @@ class UserResources extends React.Component {
       let resourceMapFn;
 
       if (this.props.resourceType === 'card') {
-        resourceMapFn = (resource, style) => {
+        resourceMapFn = (resource) => {
           return (
             <Card
               data={resource}
@@ -92,13 +93,11 @@ class UserResources extends React.Component {
               handleDeckSelect={this.props.handleCardDeckSelect.bind(null, resource.id)}
               handleEditClick={() => this.props.handleEditCard(resource.id)}
               handleDestroyClick={() => this.props.handleDestroyCard(resource.id)}
-              setRef={this.resourceRef}
-              style={style}
             />
           )
         }
       } else if (this.props.resourceType === 'deck') {
-        resourceMapFn = (resource, style) => {
+        resourceMapFn = (resource) => {
           return (
             <Deck
               name={resource.name}
@@ -106,23 +105,12 @@ class UserResources extends React.Component {
               key={resource.id}
               handleDestroyClick={() => this.props.handleDestroyDeck(resource.id)}
               handleOpenClick={() => this.props.handleDeckSelect(resource.id)}
-              setRef={this.resourceRef}
-              style={style}
             />
           )
         }
       }
 
-      resources = this.props.resources.map((resource, i) => {
-        const style = {};
-
-        // Apply resourceMarginRight to all except the last item in each row
-        if ((i + 1) % resourcesPerRow !== 0) {
-          style.marginRight = this.state.resourceMarginRight;
-        }
-
-        return resourceMapFn(resource, style);
-      });
+      resources = this.props.resources.map(resourceMapFn);
     } else {
       resources = this.buildEmptyResourcesPlaceholder();
     }
@@ -134,12 +122,12 @@ class UserResources extends React.Component {
     this.resourceCount = this.props.resources.length;
     this.resourceRefCount = 0;
     return (
-      <div
+      <AdjustsForScrollbarContainer
         className='user-resources'
-        ref={this.setRootNode}
+        itemsPerRow={resourcesPerRow}
       >
         {this.buildResources()}
-      </div>
+      </AdjustsForScrollbarContainer>
     );
   }
 }

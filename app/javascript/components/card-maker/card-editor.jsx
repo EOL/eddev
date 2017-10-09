@@ -14,7 +14,7 @@ class CardEditor extends React.Component {
     super(props);
     this.state = {
       card: null,
-      selectedImgId: null,
+      selectedImgId: this.firstImgIdFromCard(),
       rightColDisabled: false,
       previewStyle: {},
     }
@@ -43,8 +43,8 @@ class CardEditor extends React.Component {
   getCardData = (fieldName, attr, defaultVal) => {
     var data;
 
-    if (this.state.card) {
-      data = this.state.card.getDataAttr(fieldName, attr, defaultVal);
+    if (this.props.card) {
+      data = this.props.card.getDataAttr(fieldName, attr, defaultVal);
     } else {
       data = null;
     }
@@ -53,64 +53,50 @@ class CardEditor extends React.Component {
   }
 
   setCardData = (fieldName, attr, value) => {
-    this.setState((prevState, props) => {
-      return {
-        card: prevState.card.setDataAttr(fieldName, attr, value),
-      }
+    this.props.updateCard((card) => {
+      return card.setDataAttr(fieldName, attr, value)
     });
   }
 
   setCardChoiceKey = (fieldName, key) => {
-    this.setState((prevState, props) => {
-      return {
-        card: prevState.card.setChoiceKey(fieldName, key)
-      }
+    this.props.updateCard((card) => {
+      return card.setChoiceKey(fieldName, key)
     });
   }
 
   setCardUserDataAttr = (fieldName, bucket, key, value) => {
-    this.setState((prevState, props) => {
-      return {
-        card: prevState.card.setUserDataAttr(fieldName, bucket, key, value),
-      }
-    })
+    this.props.updateCard((card) => {
+      return card.setUserDataAttr(fieldName, bucket, key, value);
+    });
   }
 
   setCardUserDataRef = (fieldName, key) => {
-    this.setState((prevState, props) => {
-      return {
-        card: prevState.card.setUserDataRef(fieldName, key),
-      }
-    })
+    this.props.updateCard((card) => {
+      return card.setUserDataRef(fieldName, key);
+    });
   }
 
   setCardDataNotDirty = (fieldName, attr, value) => {
-    this.setState((prevState, props) => {
-      return {
-        card: prevState.card.setDataAttrNotDirty(fieldName, attr, value),
-      }
+    this.props.updateCard((card) => {
+      return card.setDataAttrNotDirty(fieldName, attr, value);
     });
   }
 
   setCardKeyValText = (fieldName, keyOrVal, index, value) => {
-    this.setState((prevState, props) => {
-      return {
-        card: prevState.card.setKeyValText(fieldName, keyOrVal, index, value),
-      }
-    })
-  }
-
-  forceDirty = () => {
-    this.setState((prevState, props) => {
-      return {
-        card: prevState.card.forceDirty(),
-      }
+    this.props.updateCard((card) => {
+      return card.setKeyValText(fieldName, keyOrVal, index, value);
     });
   }
 
-  firstImgIdFromCard = (card) => {
+  forceDirty = () => {
+    this.props.updateCard((card) => {
+      return card.forceDirty();
+    });
+  }
+
+  firstImgIdFromCard = () => {
     var imgId = null;
-    const imageFields = card.imageFields();
+    const imageFields = this.props.card.imageFields();
 
     if (imageFields.length) {
       imgId = imageFields[0].id
@@ -130,7 +116,7 @@ class CardEditor extends React.Component {
   handleCloseHelper = (force) => {
     var proceed = true;
 
-    if (!force && this.state.card && this.state.card.isDirty()) {
+    if (!force && this.props.card && this.props.card.isDirty()) {
       proceed = confirm(
         'Are you sure you want to leave this page? All unsaved work will be lost.'
       );
@@ -146,8 +132,8 @@ class CardEditor extends React.Component {
   }
 
   saveWithCb = (cb) => {
-    if (this.state.card) {
-      this.state.card.save(cb)
+    if (this.props.card) {
+      this.props.card.save(cb)
     }
   }
 
@@ -157,11 +143,7 @@ class CardEditor extends React.Component {
         throw err;
       }
 
-      this.setState((prevState, props) => {
-        return {
-          card: newCard
-        }
-      });
+      this.props.updateCard(newCard);
     });
   }
 
@@ -233,26 +215,6 @@ class CardEditor extends React.Component {
   }
 
   componentDidMount() {
-    const cardUrl = cardMakerUrl('cards/' + this.props.cardId + '/json')
-        , that = this
-        ;
-
-    $.ajax(cardUrl, {
-      method: 'GET',
-      success: (card) => {
-        newImmutableCardInstance(card, (err, wrapped) => {
-          var imgId = that.firstImgIdFromCard(wrapped);
-
-          that.setState((prevState, props) => {
-            return {
-              card: wrapped,
-              selectedImgId: imgId,
-            }
-          });
-        });
-      }
-    })
-
     document.addEventListener('scroll', this.setPreviewStyle);
   }
 
@@ -291,9 +253,9 @@ class CardEditor extends React.Component {
                 </div>
 
                 <CardPreview
-                  card={this.state.card}
-                  setCardData={(this.state.card ? this.setCardData : null)}
-                  getCardData={(this.state.card ? this.getCardData : null)}
+                  card={this.props.card}
+                  setCardData={(this.props.card ? this.setCardData : null)}
+                  getCardData={(this.props.card ? this.getCardData : null)}
                   selectedImgId={this.state.selectedImgId}
                   setSelectedImgId={this.setSelectedImgId}
                   handleClose={this.handleClose}
@@ -316,9 +278,9 @@ class CardEditor extends React.Component {
                   <div className='col-head-sub-txt'>{I18n.t('react.card_maker.card_form_parens')}</div>
                 </div>
                 <div className='card-fields-wrap'>
-                  {this.state.card &&
+                  {this.props.card &&
                     <CardFields
-                      card={this.state.card}
+                      card={this.props.card}
                       setCardData={this.setCardData}
                       setCardDataNotDirty={this.setCardDataNotDirty}
                       setCardChoiceKey={this.setCardChoiceKey}

@@ -27,33 +27,35 @@ class SpeciesSearchLightbox extends React.Component {
 
   handleInput = (event) => {
     const query = event.target.value
-        , reqNum = ++this.reqCount
+        , reqNum = ++this.reqCount // increment reqCount whether or not query is blank to invalidate previous query if it exists
         , that = this
         ;
 
-    this.setState(() => {
-      return {
-        selectedId: null,
-      }
-    });
+    if (query) {
+      this.setState(() => {
+        return {
+          selectedId: null,
+        }
+      });
 
-    $.getJSON(cardMakerUrl('taxon_search/' + query), function(data) {
-      if (reqNum === that.reqCount) {
-        that.setState(() => {
-          return {
-            inFlight: false,
-            results: data.results,
-          }
-        })
-      }
-    });
+      $.getJSON(cardMakerUrl('taxon_search/' + query), function(data) {
+        if (reqNum === that.reqCount) {
+          that.setState(() => {
+            return {
+              inFlight: false,
+              results: data.results,
+            }
+          })
+        }
+      });
 
-    this.setState(() => {
-      return {
+      this.setState({
         inFlight: true,
         results: null,
-      }
-    });
+      });
+    } else {
+      this.resetState();
+    }
   }
 
   handleExpandResult = (id) => {

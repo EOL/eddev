@@ -39,6 +39,8 @@ class SpeciesSearchResult extends React.Component {
       <li
         className={'search-result' + (this.props.expanded ? ' expanded' : '')}
         onClick={this.props.handleClick}
+        ref={this.props.setRef}
+        style={this.props.style}
       >
         <div className='sci-name'>{this.props.sciName}</div>
         {this.props.expanded &&

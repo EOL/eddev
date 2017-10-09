@@ -3,13 +3,16 @@ import ReactModal from 'react-modal'
 
 import SpeciesSearchResult from './species-search-result'
 import UserResourceFilter from './user-resource-filter'
+import AdjustsForScrollbarContainer from './adjusts-for-scrollbar-container'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
 
 const cleanState = {
-  inFlight: false,
-  results: null,
-  selectedId: null,
-};
+        inFlight: false,
+        results: null,
+        selectedId: null,
+      }
+    , resultsPerRow = 3
+    ;
 
 class SpeciesSearchLightbox extends React.Component {
   constructor(props) {
@@ -91,8 +94,8 @@ class SpeciesSearchLightbox extends React.Component {
             onInput={this.handleInput}
           />
         </div>
-        {(this.state.inFlight || this.state.results != null) &&
-          (<div className='search-results-wrap'>
+        {(this.state.inFlight || this.state.results != null) && (
+          <div className='search-results-wrap'>
             <div className='result-count-wrap'>
             {this.state.results != null &&
               (<div className='result-count'>
@@ -100,12 +103,18 @@ class SpeciesSearchLightbox extends React.Component {
                 </div>)
             }
             </div>
-            <ul className='search-results'>
-              {this.state.inFlight ?
-                (<li className='search-spin'>
+            {this.state.inFlight ? (
+              <ul className='search-results'>
+                <li className='search-spin'>
                   <i className='fa fa-spinner fa-spin fa-3x' />
-                </li>) :
-                this.state.results.map((result, i) => {
+                </li>
+              </ul>
+            ) : (
+              <AdjustsForScrollbarContainer
+                className='search-results'
+                itemsPerRow={resultsPerRow}
+              >
+                {this.state.results.map((result, i) => {
                   return (
                     <SpeciesSearchResult
                       key={i}
@@ -115,11 +124,11 @@ class SpeciesSearchLightbox extends React.Component {
                       handleClick={() => this.handleExpandResult(result.id)}
                     />
                   )
-                })
-              }
-            </ul>
-          </div>)
-        }
+                })}
+              </AdjustsForScrollbarContainer>
+            )}
+          </div>
+        )}
         {this.state.results !== null && this.state.results.length > 0 &&
           (<div className='create-menu'>
             <div className='deck-select-wrap'>

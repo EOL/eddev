@@ -113,27 +113,17 @@ class CardEditor extends React.Component {
     });
   }
 
-  handleCloseHelper = (force) => {
-    var proceed = true;
-
-    if (!force && this.props.card && this.props.card.isDirty()) {
-      proceed = confirm(
-        'Are you sure you want to leave this page? All unsaved work will be lost.'
-      );
-    }
-
-    if (proceed) {
-      this.props.handleCloseClick();
-    }
-  }
-
   handleClose = () => {
-    this.handleCloseHelper(false);
+    this.props.handleRequestClose(false);
   }
 
   saveWithCb = (cb) => {
     if (this.props.card) {
-      this.props.card.save(cb)
+      this.props.showLoadingOverlay();
+      this.props.card.save((err, newCard) => {
+        cb(err, newCard)
+        this.props.hideLoadingOverlay();
+      });
     }
   }
 
@@ -143,17 +133,25 @@ class CardEditor extends React.Component {
         throw err;
       }
 
-      this.props.updateCard(newCard);
+      this.props.updateCard(() => {
+        return newCard
+      });
     });
   }
 
   handleSaveAndExit = () => {
-    this.saveWithCb((err, newCard) => {
+    const that = this;
+
+    that.saveWithCb((err, newCard) => {
       if (err) {
         throw err;
       }
 
-      this.handleCloseHelper(true);
+      this.props.updateCard(() => {
+        return newCard
+      }, () => {
+        that.props.handleRequestClose();        
+      })
     });
   }
 

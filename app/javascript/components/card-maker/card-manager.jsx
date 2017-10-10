@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactModal from 'react-modal'
 import update from 'immutability-helper'
 
 import UserResources from './user-resources'
@@ -79,22 +78,6 @@ class CardManager extends React.Component {
     }
   }
 
-  showLoadingOverlay = () => {
-    this.setState(() => {
-      return {
-        showLoadingOverlay: true,
-      }
-    })
-  }
-
-  hideLoadingOverlay = () => {
-    this.setState(() => {
-      return {
-        showLoadingOverlay: false,
-      }
-    })
-  }
-
   handleDestroyResource(confirmMsg, resourceType, id) {
     const that = this
         , shouldDestroy = confirm(confirmMsg)
@@ -102,12 +85,12 @@ class CardManager extends React.Component {
 
     if (!shouldDestroy) return;
 
-    that.showLoadingOverlay();
+    that.props.showLoadingOverlay();
     $.ajax({
       url: cardMakerUrl(resourceType + '/' + id),
       method: 'DELETE',
       success: () => {
-        that.reloadResourcesWithCb(that.hideLoadingOverlay);
+        that.reloadResourcesWithCb(that.props.hideLoadingOverlay);
       }
     });
   }
@@ -264,7 +247,7 @@ class CardManager extends React.Component {
       return;
     }
 
-    that.showLoadingOverlay();
+    that.props.showLoadingOverlay();
     this.setState(() => {
       return {
         speciesSearchOpen: false,
@@ -282,11 +265,11 @@ class CardManager extends React.Component {
       contentType: 'application/json',
       method: 'POST',
       success: () => {
-        that.reloadResourcesWithCb(that.hideLoadingOverlay);
+        that.reloadResourcesWithCb(that.props.hideLoadingOverlay);
       },
       error: () => {
         alert(I18n.t('react.card_manager.unexpected_error_msg'));
-        that.hideLoadingOverlay();
+        that.props.hideLoadingOverlay();
       }
     })
   }
@@ -339,12 +322,12 @@ class CardManager extends React.Component {
         , doneFn = (deckId) => {
             that.reloadResourcesWithCb(() => {
               that.showDeck(deckId);
-              that.hideLoadingOverlay();
+              that.props.hideLoadingOverlay();
             });
           }
         ;
 
-    that.showLoadingOverlay();
+    that.props.showLoadingOverlay();
 
     $.ajax({
       url: cardMakerUrl('decks'),
@@ -397,16 +380,6 @@ class CardManager extends React.Component {
 
     return (
       <div id='CardManagerWrap'>
-        <ReactModal
-          isOpen={this.state.showLoadingOverlay}
-          parentSelector={() => {return document.getElementById('Page')}}
-          contentLabel='Loading spinner'
-          className='global-loading lightbox'
-          overlayClassName='fixed-center-wrap disable-overlay'
-          bodyOpenClassName='noscroll'
-        >
-          <i className='fa fa-spin fa-spinner fa-4x' />
-        </ReactModal>
         <div className='hdr-spacer red'></div>
         <div id='CardManager' className='card-manager card-screen'>
           <div className='screen-inner manager-inner'>

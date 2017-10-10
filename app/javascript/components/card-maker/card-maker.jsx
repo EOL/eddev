@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactModal from 'react-modal'
 
 import CardManager from './card-manager'
 import CardEditor from './card-editor'
@@ -12,18 +13,20 @@ class CardMaker extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      screen: 'manager'
+      screen: 'manager',
+      showLoadingOverlay: false,
     }
   }
 
   componentDidMount() {
     window.addEventListener('popstate', (event) => {
-      console.log('pop', event);
       this.handleHistoryStateChange(event.state);
     });
   }
 
   handleHistoryStateChange = (state) => {
+    console.log(state);
+
     if (state && state.editorCardId) {
       this.loadCard(state.editorCardId, (err, card) => {
         if (err) throw err; // TODO: graceful handling
@@ -33,9 +36,25 @@ class CardMaker extends React.Component {
         });
       });
     } else {
+      this.closeIfSafe(state);
+    }
+  }
+
+  closeIfSafe = (state) => {
+    let proceed = true;
+
+    if (this.state.editorCard && this.state.editorCard.isDirty()) {
+      proceed = confirm(
+        'Are you sure you want to leave this page? All unsaved work will be lost.'
+      );
+    }
+
+    if (proceed) {
       this.setState({
         screen: 'manager'
       });
+    } else {
+      window.history.pushState(state, '');
     }
   }
 
@@ -62,25 +81,31 @@ class CardMaker extends React.Component {
     this.handleHistoryStateChange(state);
   }
 
-  updateEditorCard = (mapFn, next) => {
+  updateEditorCard = (mapFn, cb) => {
     this.setState((prevState) => {
       return {
         editorCard: mapFn(prevState.editorCard),
       }
-    });
+    }, cb);
   }
 
-  handleEditorClose = () => {
+  handleEditorCloseRequest = () => {
     window.history.back();
   }
 
   screenComponent = () => {
-    var component;
+    const commonProps = {
+      showLoadingOverlay: this.showLoadingOverlay,
+      hideLoadingOverlay: this.hideLoadingOverlay,
+    }
+
+    let component;
 
     if (this.state.screen === 'manager') {
       component = (
         <CardManager
           handleEditCard={this.handleEditCard}
+          {...commonProps}
         />
       )
     } else if (this.state.screen === 'editor') {
@@ -88,7 +113,8 @@ class CardMaker extends React.Component {
         <CardEditor
           card={this.state.editorCard}
           updateCard={this.updateEditorCard}
-          handleCloseClick={this.handleEditorClose}
+          handleRequestClose={this.handleEditorCloseRequest}
+          {...commonProps}
         />
       )
     }
@@ -96,9 +122,32 @@ class CardMaker extends React.Component {
     return component;
   }
 
+  showLoadingOverlay = () => {
+    this.setState({
+      showLoadingOverlay: true,
+    });
+  }
+
+  hideLoadingOverlay = () => {
+    this.setState({
+      showLoadingOverlay: false,
+    });
+  }
+
   render() {
     return (
       <div className='card-maker'>
+        <ReactModal
+          isOpen={this.state.showLoadingOverlay}
+          parentSelector={() => {return document.getElementById('Page')}}
+          contentLabel='Loading spinner'
+          className='global-loading lightbox'
+          overlayClassName='fixed-center-wrap disable-overlay'
+          bodyOpenClassName='noscroll'
+        >
+          <i className='fa fa-spin fa-spinner fa-4x' />
+        </ReactModal>
+
         <div className='card-hdr-box'>
           <div className='card-hdr-inner'>
             <div className='left-blur-bg'></div>

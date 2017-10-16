@@ -71,9 +71,9 @@ class CardMakerAjaxController < ApplicationController
     )
   end
 
-  # GET /card_maker_ajax/templates/:template_name
+  # GET /card_maker_ajax/templates/:template_name/:template_version
   def template
-    json_response(CardServiceCaller.get_template(params[:template_name]))
+    json_response(CardServiceCaller.get_template(params[:template_name], params[:template_version]))
   end
 
   # GET /card_maker_ajax/card_ids

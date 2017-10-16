@@ -26,14 +26,16 @@ CardWrapper.setDataPersistence({
 });
 
 CardWrapper.setTemplateSupplier({
-  supply: function(templateName, locale, cb) {
-    // TODO: pass locale through when supported by controller
-    $.getJSON(cardMakerUrl('templates/' + templateName), function(data) {
-      cb(null, data);
-    })
-      .fail(function() {
+  supply: function(name, version, locale, cb) {
+    $.ajax({
+      url: cardMakerUrl('templates/' + name + '/' + version),
+      success: function(data) {
+        cb(null, data);
+      },
+      error: function() {
         cb(new Error('Failed to retrieve template'));
-      });
+      }
+    });
   }
 });
 

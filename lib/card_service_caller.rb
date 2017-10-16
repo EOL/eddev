@@ -100,9 +100,9 @@ module CardServiceCaller
     )
   end
 
-  def self.get_template(name)
+  def self.get_template(name, version)
     HTTParty.get(
-      "#{SERVICE_URL}/templates/#{name}",
+      "#{SERVICE_URL}/templates/#{name}/#{version}",
       :headers => self.add_api_headers({})
     )
   end

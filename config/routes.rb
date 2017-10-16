@@ -33,7 +33,8 @@ Rails.application.routes.draw do
     post   "card_maker_ajax/decks"                    => "card_maker_ajax#create_deck"
     get    "card_maker_ajax/decks"                    => "card_maker_ajax#decks"
     post   "card_maker_ajax/images"                   => "card_maker_ajax#upload_image"
-    get    "card_maker_ajax/templates/:template_name" => "card_maker_ajax#template"
+    get    "card_maker_ajax/templates/:template_name/:template_version" => "card_maker_ajax#template", 
+      :constraints => { :template_version => /\d\.\d/ }
     delete "card_maker_ajax/cards/:card_id"           => "card_maker_ajax#delete_card"
     get    "card_maker_ajax/decks/:deck_id"           => "card_maker_ajax#get_deck"
     delete "card_maker_ajax/decks/:deck_id"           => "card_maker_ajax#delete_deck"

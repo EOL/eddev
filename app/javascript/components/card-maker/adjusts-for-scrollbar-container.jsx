@@ -6,15 +6,22 @@ class AdjustsForScrollbarContainer extends React.Component {
     this.state = {
       itemMarginRight: null,
     }
+
+    this.itemNodes = {};
   }
 
   // Set margin of resources dynamically to account for scrollbar weirdness
-  // once all node refs are in
   updateItemMarginRight = () => {
-    if (this.itemNode && this.rootNode) {
-      const scrollbarWidth = this.rootNode.offsetWidth - this.rootNode.clientWidth
+    var itemNodeKeys = Object.keys(this.itemNodes);
+
+    if (
+      this.rootNode &&
+      itemNodeKeys.length
+    ) {
+      const itemNode = this.itemNodes[itemNodeKeys[0]]
+          , scrollbarWidth = this.rootNode.offsetWidth - this.rootNode.clientWidth
           , innerWidth = $(this.rootNode).width()
-          , resourceWidth = $(this.itemNode).outerWidth()
+          , resourceWidth = $(itemNode).outerWidth()
           , marginRight = (
               innerWidth - scrollbarWidth -
               resourceWidth * this.props.itemsPerRow
@@ -30,9 +37,11 @@ class AdjustsForScrollbarContainer extends React.Component {
     }
   }
 
-  itemRef = (node) => {
+  itemRef = (key, node) => {
     if (node) {
-      this.itemNode = node;
+      this.itemNodes[key] = node;
+    } else if (key in this.itemNodes) {
+      delete this.itemNodes[key];
     }
   }
 
@@ -41,7 +50,7 @@ class AdjustsForScrollbarContainer extends React.Component {
       this.rootNode = node;
     }
   }
-  
+
   componentDidMount() {
     this.updateItemMarginRight();
   }
@@ -61,7 +70,7 @@ class AdjustsForScrollbarContainer extends React.Component {
               }
 
               return React.cloneElement(child, {
-                setRef: that.itemRef,
+                setRef: that.itemRef.bind(null, child.key),
                 style: style,
               });
             })

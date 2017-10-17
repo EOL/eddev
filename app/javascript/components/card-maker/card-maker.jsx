@@ -25,8 +25,6 @@ class CardMaker extends React.Component {
   }
 
   handleHistoryStateChange = (state) => {
-    console.log(state);
-
     if (state && state.editorCardId) {
       this.loadCard(state.editorCardId, (err, card) => {
         if (err) throw err; // TODO: graceful handling

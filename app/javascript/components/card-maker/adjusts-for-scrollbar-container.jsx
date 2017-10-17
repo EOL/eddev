@@ -11,13 +11,7 @@ class AdjustsForScrollbarContainer extends React.Component {
   // Set margin of resources dynamically to account for scrollbar weirdness
   // once all node refs are in
   updateItemMarginRight = () => {
-    const childCount = React.Children.count(this.props.children);
-
-    if (
-      this.rootNode &&
-      this.itemNode &&
-      this.itemRefCount === childCount
-    ) {
+    if (this.itemNode && this.rootNode) {
       const scrollbarWidth = this.rootNode.offsetWidth - this.rootNode.clientWidth
           , innerWidth = $(this.rootNode).width()
           , resourceWidth = $(this.itemNode).outerWidth()
@@ -28,31 +22,35 @@ class AdjustsForScrollbarContainer extends React.Component {
             (this.props.itemsPerRow - 1)
           ;
 
-      this.setState({
-        itemMarginRight: marginRight,
-      });
+      if (this.state.itemMarginRight !== marginRight) {
+        this.setState({
+          itemMarginRight: marginRight,
+        });
+      }
     }
   }
 
   itemRef = (node) => {
     if (node) {
-      this.itemRefCount++;
       this.itemNode = node;
-      this.updateItemMarginRight();
     }
   }
 
   rootRef = (node) => {
     if (node) {
       this.rootNode = node;
-      this.updateItemMarginRight();
     }
+  }
+  
+  componentDidMount() {
+    this.updateItemMarginRight();
+  }
+
+  componentDidUpdate() {
+    this.updateItemMarginRight();
   }
 
   render() {
-    this.itemCount = this.props.children.length;
-    this.itemRefCount = 0;
-
     const that = this
         , augmentedChildren =
             React.Children.toArray(this.props.children).map((child, i) => {

@@ -488,6 +488,7 @@ en:
       failed_to_load_image_url: Failed to load image from URL
       upload_an_image: Upload an image
       image_credit: Image credit
+      card_preview_lightbox: Card preview lightbox
   activerecord:
     errors:
       template:

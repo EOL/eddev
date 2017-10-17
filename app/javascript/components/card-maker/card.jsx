@@ -2,15 +2,11 @@ import React from 'react'
 
 import LoadingSpinnerImage from './loading-spinner-image'
 import resourceWrapper from './resource-wrapper'
-import {cardMakerUrl} from 'lib/card-maker/url-helper'
+import {cardMakerUrl, cardImageUrl} from 'lib/card-maker/url-helper'
 
 const noDeckId = -1;
 
 class Card extends React.Component {
-  imgUrl() {
-    return cardMakerUrl('cards/' + this.props.data.id + '/svg');
-  }
-
   deckAssignItems() {
     const items = this.props.decks.map((deck) => {
       return {
@@ -48,13 +44,16 @@ class Card extends React.Component {
           handleSelect={this.handleDeckSelect}
         />
         <div className='resource-frame'>
-          <LoadingSpinnerImage src={this.imgUrl()} />
+          <LoadingSpinnerImage src={cardImageUrl(this.props.data.id)} />
           {this.props.showOverlay &&
             <div className='card-overlay resource-overlay'>
-
               <i
                 className='i fa fa-edit fa-3x edit-btn btn'
                 onClick={this.props.handleEditClick}
+              />
+              <i
+                className="i fa fa-search fa-3x btn"
+                onClick={this.props.handleZoomClick}
               />
               <i
                 className='i fa fa-trash-o fa-3x trash-btn btn'

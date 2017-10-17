@@ -598,6 +598,15 @@ input[type='text'] {
   }
 }
 
+.card-zoom-lightbox {
+  margin-top: 80px;
+  width: 300px;
+
+  .image {
+    width: 100%;
+  }
+}
+
 .new-deck {
   $elmt-height: 86px;
   margin-top: 100px;

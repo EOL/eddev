@@ -78,7 +78,7 @@ class ImageField extends React.Component {
         })
       },
       error: (err) => {
-        alert('Something went wrong. Please try again later.');
+        alert(I18n.t('react.card_maker.unexpected_error_msg'));
         this.setState(() => {
           return {
             uploadInFlight: false,

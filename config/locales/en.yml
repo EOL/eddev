@@ -489,6 +489,7 @@ en:
       upload_an_image: Upload an image
       image_credit: Image credit
       card_preview_lightbox: Card preview lightbox
+      unexpected_error_msg: An unexpected error occurred
   activerecord:
     errors:
       template:

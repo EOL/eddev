@@ -309,7 +309,7 @@ class CardManager extends React.Component {
         ;
 
     $.getJSON(cardMakerUrl('collectionJob/' + jobId + '/status'), function(data) {
-      if (data.status === 'pending') {
+      if (data.status === 'running') {
         setTimeout(that.pollCollectionJob.bind(null, jobId, cb), pollIntervalMillis);
       } else {
         cb();

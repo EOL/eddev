@@ -36,7 +36,7 @@ Rails.application.routes.draw do
 #
 #    get 'tinymce_test'                      => 'tinymce_test#index'
 #    get 'i18ntest'                          => 'i18n_test#index', as: :i18n_test
-#    get 'foodweb_test'                      => 'foodweb_test#index', as: :foodweb_test
+    get 'foodweb_test'                      => 'foodweb_test#index', as: :foodweb_test
 #
 #    get  ''                                 => 'welcome#index'
 #  end

@@ -107,6 +107,7 @@ class UserResources extends React.Component {
               key={resource.id}
               handleDestroyClick={() => this.props.handleDestroyDeck(resource.id)}
               handleOpenClick={() => this.props.handleDeckSelect(resource.id)}
+              handlePdfClick={() => this.props.handleDeckPdf(resource.id)}
             />
           )
         }

@@ -15,7 +15,10 @@ import newCardIcon from 'images/card_maker/icons/new_card.png'
 import managerLogo from 'images/card_maker/icons/card_manager_logo.png'
 import newDeckIcon from 'images/card_maker/icons/new_deck.png'
 
-const allDecksId = -1;
+const allDecksId = -1
+    , pollIntervalMillis = 1000
+    ;
+
 
 class CardManager extends React.Component {
   constructor(props) {
@@ -304,9 +307,7 @@ class CardManager extends React.Component {
   }
 
   pollCollectionJob = (jobId, cb) => {
-    const that = this
-        , pollIntervalMillis = 1000
-        ;
+    const that = thisß;
 
     $.getJSON(cardMakerUrl('collectionJob/' + jobId + '/status'), function(data) {
       if (data.status === 'running') {
@@ -373,6 +374,41 @@ class CardManager extends React.Component {
         speciesSearchDeckId: id,
       }
     })
+  }
+
+  handleDeckPdf = (id) => {
+    const that = this;
+
+    that.props.showLoadingOverlay();
+
+    $.ajax({
+      url: cardMakerUrl('deck_pdfs'),
+      data: JSON.stringify({
+        deckId: id
+      }),
+      method: 'POST',
+      success: (result) => {
+        that.pollPdfJob(result.jobId)
+      }
+    });
+  }
+
+  pollPdfJob = (id) => {
+    const that = this;
+
+    $.getJSON(cardMakerUrl('deck_pdfs/' + id + '/status'), (result) => {
+      if (result.status === 'done') {
+        that.props.hideLoadingOverlay();
+        window.open(cardMakerUrl('deck_pdfs/' + id + '/result'));
+      } else if (result.status === 'running') {
+        setTimeout(() => {
+          that.pollPdfJob(id)
+        }, pollIntervalMillis)
+      } else {
+        that.props.hideLoadingOverlay();
+        alert(I18n.t('react.card_manager.unexpected_error_msg'));
+      }
+    });
   }
 
   render() {
@@ -456,6 +492,7 @@ class CardManager extends React.Component {
               handleDestroyDeck={this.handleDestroyDeck}
               handleNewCard={this.handleOpenNewCardLightbox}
               handleNewDeck={this.handleOpenNewDeckLightbox}
+              handleDeckPdf={this.handleDeckPdf}
             />
           </div>
         </div>

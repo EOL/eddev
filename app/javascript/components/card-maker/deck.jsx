@@ -34,6 +34,10 @@ class Deck extends React.Component {
                 onClick={this.props.handleOpenClick}
               />
               <i
+                className='fa fa-print fa-3x btn'
+                onClick={this.props.handlePdfClick}
+              />
+              <i
                 className='fa fa-trash-o fa-3x trash-btn btn'
                 onClick={this.props.handleDestroyClick}
               />

@@ -44,15 +44,7 @@ class CardMakerAjaxController < ApplicationController
   # GET /card_maker_ajax/cards/:card_id/svg
   def render_svg
     svc_res = CardServiceCaller.svg(logged_in_user.id, params[:card_id])
-    content_type = svc_res.headers["content-type"]
-    opts = {
-      :status => svc_res.code,
-      :type => svc_res.headers["content-type"]
-    }
-
-    opts[:disposition] = :inline unless svc_res.code != 200
-
-    send_data svc_res.body, opts
+    data_pass_thru_response(svc_res)
   end
 
   # GET /card_maker_ajax/cards/:card_id/png
@@ -165,7 +157,6 @@ class CardMakerAjaxController < ApplicationController
 
   # POST /card_maker_ajax/decks/:id/populateFromCollection
   def populate_deck_from_collection
-    logger.debug("raw post: #{request.raw_post}")
     json_response(CardServiceCaller.populate_deck_from_collection(
       logged_in_user.id,
       params[:id],
@@ -176,6 +167,28 @@ class CardMakerAjaxController < ApplicationController
   # GET /card_maker_ajax/collectionJob/:id/status
   def collection_job_status
     json_response(CardServiceCaller.collection_job_status(params[:id]))
+  end
+
+  # POST /card_maker_ajax/deck_pdfs
+  def create_deck_pdf
+    json_response(CardServiceCaller.create_deck_pdf(
+      logged_in_user.id,
+      request.raw_post
+    ))
+  end
+
+  # GET /card_maker_ajax/deck_pdfs/:id/status
+  def deck_pdf_status
+    json_response(CardServiceCaller.deck_pdf_status(
+      logged_in_user.id,
+      params[:id]
+    ))
+  end
+
+  # GET /card_maker_ajax/deck_pdfs/:id/result
+  def deck_pdf_result
+    svc_res = CardServiceCaller.deck_pdf_result(logged_in_user.id, params[:id])
+    data_pass_thru_response(svc_res)
   end
 
   private
@@ -192,6 +205,18 @@ class CardMakerAjaxController < ApplicationController
           )
         end
       end
+    end
+
+    def data_pass_thru_response(svc_res)
+      content_type = svc_res.headers["content-type"]
+      opts = {
+        :status => svc_res.code,
+        :type => svc_res.headers["content-type"]
+      }
+
+      opts[:disposition] = :inline unless svc_res.code != 200
+
+      send_data svc_res.body, opts
     end
 
     def set_cache_headers

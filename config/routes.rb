@@ -33,7 +33,7 @@ Rails.application.routes.draw do
     post   "card_maker_ajax/decks"                    => "card_maker_ajax#create_deck"
     get    "card_maker_ajax/decks"                    => "card_maker_ajax#decks"
     post   "card_maker_ajax/images"                   => "card_maker_ajax#upload_image"
-    get    "card_maker_ajax/templates/:template_name/:template_version" => "card_maker_ajax#template", 
+    get    "card_maker_ajax/templates/:template_name/:template_version" => "card_maker_ajax#template",
       :constraints => { :template_version => /\d\.\d/ }
     delete "card_maker_ajax/cards/:card_id"           => "card_maker_ajax#delete_card"
     get    "card_maker_ajax/decks/:deck_id"           => "card_maker_ajax#get_deck"
@@ -42,6 +42,9 @@ Rails.application.routes.draw do
     get    "card_maker_ajax/taxon_details/:id"        => "card_maker_ajax#taxon_details"
     post   "card_maker_ajax/decks/:id/populateFromCollection" => "card_maker_ajax#populate_deck_from_collection"
     get    "card_maker_ajax/collectionJob/:id/status" => "card_maker_ajax#collection_job_status"
+    post   "card_maker_ajax/deck_pdfs"                => "card_maker_ajax#create_deck_pdf"
+    get    "card_maker_ajax/deck_pdfs/:id/status"     => "card_maker_ajax#deck_pdf_status"
+    get    "card_maker_ajax/deck_pdfs/:id/result"     => "card_maker_ajax#deck_pdf_result"
 
     get    "card_maker"                               => "card_maker#index", :as => :new_card
   end

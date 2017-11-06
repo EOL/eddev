@@ -406,7 +406,7 @@ class CardManager extends React.Component {
         }, pollIntervalMillis)
       } else {
         that.props.hideLoadingOverlay();
-        alert(I18n.t('react.card_manager.unexpected_error_msg'));
+        alert(I18n.t('react.card_maker.unexpected_error_msg'));
       }
     });
   }

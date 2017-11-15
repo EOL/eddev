@@ -42,9 +42,7 @@ class CardMaker extends React.Component {
     let proceed = true;
 
     if (this.state.editorCard && this.state.editorCard.isDirty()) {
-      proceed = confirm(
-        'Are you sure you want to leave this page? All unsaved work will be lost.'
-      );
+      proceed = confirm(I18n.t('react.card_maker.are_you_sure_unsaved'));
     }
 
     if (proceed) {

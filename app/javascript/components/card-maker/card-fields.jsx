@@ -11,6 +11,7 @@ const fieldTypesToComponents = {
   'text': TextField,
   'color-scheme': ColorSchemeField,
   'labeled-choice-image': LabeledChoiceImageField,
+  'text-icon': LabeledChoiceImageField,
   'image': ImageField,
   'key-val-list': KeyValListField,
   'multiline-text': MultilineTextField,

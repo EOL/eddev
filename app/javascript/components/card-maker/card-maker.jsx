@@ -12,6 +12,7 @@ import eolLogoHdr from 'images/card_maker/icons/eol_logo_hdr.png'
 class CardMaker extends React.Component {
   constructor(props) {
     super(props);
+    
     this.state = {
       screen: 'manager',
       showLoadingOverlay: false,
@@ -22,6 +23,9 @@ class CardMaker extends React.Component {
     window.addEventListener('popstate', (event) => {
       this.handleHistoryStateChange(event.state);
     });
+    // If this is a page refresh, and the editor was previously open,
+    // open it now.
+    this.handleHistoryStateChange(history.state); 
   }
 
   handleHistoryStateChange = (state) => {
@@ -33,7 +37,7 @@ class CardMaker extends React.Component {
           editorCard: card,
         });
       });
-    } else {
+    } else if (this.state.screen === 'editor') {
       this.closeIfSafe(state);
     }
   }
@@ -42,9 +46,7 @@ class CardMaker extends React.Component {
     let proceed = true;
 
     if (this.state.editorCard && this.state.editorCard.isDirty()) {
-      proceed = confirm(
-        'Are you sure you want to leave this page? All unsaved work will be lost.'
-      );
+      proceed = confirm(I18n.t('react.card_maker.are_you_sure_unsaved'));
     }
 
     if (proceed) {

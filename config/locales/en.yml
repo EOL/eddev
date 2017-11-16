@@ -490,6 +490,7 @@ en:
       image_credit: Image credit
       card_preview_lightbox: Card preview lightbox
       unexpected_error_msg: An unexpected error occurred
+      are_you_sure_unsaved: Are you sure you want to leave this page? All unsaved work will be lost.
   activerecord:
     errors:
       template:

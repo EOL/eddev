@@ -98,9 +98,13 @@ class ApplicationController < ActionController::Base
     end
 
     def js_packs
-      []
+      @js_packs || []
     end
     helper_method :js_packs
+
+    def js_packs=(packs)
+      @js_packs = packs
+    end
 
     def set_js_translations_root(rootKey)
       @js_translations = I18n.t(rootKey).to_json.html_safe

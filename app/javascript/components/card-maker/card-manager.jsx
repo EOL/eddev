@@ -15,6 +15,8 @@ import newCardIcon from 'images/card_maker/icons/new_card.png'
 import managerLogo from 'images/card_maker/icons/card_manager_logo.png'
 import newDeckIcon from 'images/card_maker/icons/new_deck.png'
 
+import styles from "styles/card-manager"
+
 const allDecksId = -1
     , pollIntervalMillis = 1000
     ;
@@ -413,7 +415,12 @@ class CardManager extends React.Component {
 
   render() {
     var resourceResult = this.selectedResources();
+    console.log(styles);
+    return (
+      <div className={styles.main} />
+    );
 
+    /*
     return (
       <div id='CardManagerWrap'>
         <div className='hdr-spacer red'></div>
@@ -498,6 +505,7 @@ class CardManager extends React.Component {
         </div>
       </div>
     )
+    */
   }
 }
 

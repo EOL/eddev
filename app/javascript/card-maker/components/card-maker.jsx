@@ -148,16 +148,6 @@ class CardMaker extends React.Component {
           <i className='fa fa-spin fa-spinner fa-4x' />
         </ReactModal>
 
-        <div className='card-hdr-box'>
-          <div className='card-hdr-inner'>
-            <div className='left-blur-bg'></div>
-            <h2 className='create-card-hdr hdr'>
-              <img src={eolLogoHdr} className='hdr-logo' />
-              <span> {I18n.t('react.card_maker.card_maker_title')}</span>
-            </h2>
-            <div className='right-blur-bg'></div>
-          </div>
-        </div>
         {this.screenComponent()}
       </div>
     )

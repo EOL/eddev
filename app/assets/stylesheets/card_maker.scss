@@ -36,62 +36,6 @@ input[type='text'] {
   font-size: 16px;
 }
 
-.card-hdr-box {
-  $height: 147px;
-
-  height: $height;
-  background-color: $white;
-  min-width: $editor-width * 1px;
-
-  .card-hdr-inner {
-    height: 100%;
-    position: relative;
-  }
-
-  .hdr {
-    color: #7f7f7f;
-    font-size: 48px;
-  	font-weight: $light;
-    line-height: $height;
-    text-align: center;
-    vertical-align: top;
-  }
-
-  $left-blur-bg-width: 282px;
-  $right-blur-bg-width: 149px;
-
-
-  .left-blur-bg {
-    display: inline-block;
-    height: 100%;
-    left: 0;
-    opacity: 0.27;
-    position: absolute;
-    top: 0;
-    width: $left-blur-bg-width;
-    background-image: linear-gradient(302deg, #e1ebff, #89c2ff);
-    -webkit-filter: blur(12.7px);
-    filter: blur(12.7px);
-  }
-
-  .right-blur-bg {
-    display: inline-block;
-    height: 100%;
-    opacity: 0.27;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: $right-blur-bg-width;
-    -webkit-filter: blur(12.7px);
-    filter: blur(12.7px);
-    background-color: rgba(179, 205, 255, 0.39);
-  }
-
-  .hdr-logo {
-    height: 38px;
-  }
-}
-
 .hdr-spacer {
   height: 8px;
 

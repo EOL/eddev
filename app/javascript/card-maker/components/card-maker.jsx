@@ -6,6 +6,7 @@ import CardEditor from './card-editor'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
 import newImmutableCardInstance from 'lib/card-maker/immutable-card'
 
+import styles from 'stylesheets/card_maker/card_maker'
 
 import eolLogoHdr from 'images/card_maker/icons/eol_logo_hdr.png'
 
@@ -148,7 +149,9 @@ class CardMaker extends React.Component {
           <i className='fa fa-spin fa-spinner fa-4x' />
         </ReactModal>
 
-        {this.screenComponent()}
+        <div className={styles.lMainCol}>
+          {this.screenComponent()}
+        </div>
       </div>
     )
   }

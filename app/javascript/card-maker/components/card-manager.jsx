@@ -14,8 +14,9 @@ import eolHdrIcon from 'images/card_maker/icons/eol_logo_sub_hdr.png'
 import newCardIcon from 'images/card_maker/icons/new_card.png'
 import managerLogo from 'images/card_maker/icons/card_manager_logo.png'
 import newDeckIcon from 'images/card_maker/icons/new_deck.png'
+import iguanaBanner from 'images/card_maker/iguana_banner.jpg'
 
-import styles from "../styles/card-manager"
+import styles from "stylesheets/card_maker/card_manager"
 
 const allDecksId = -1
     , pollIntervalMillis = 1000
@@ -417,7 +418,9 @@ class CardManager extends React.Component {
     var resourceResult = this.selectedResources();
     console.log(styles);
     return (
-      <div className={styles.main} />
+      <div className={styles.lBanner}>
+        <img src={iguanaBanner} />
+      </div>
     );
 
     /*

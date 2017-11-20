@@ -19,6 +19,7 @@ import iguanaBanner from 'images/card_maker/iguana_banner.jpg'
 import styles from "stylesheets/card_maker/card_manager"
 
 const allDecksId = -1
+    , allCardsId = -2
     , pollIntervalMillis = 1000
     ;
 
@@ -30,7 +31,7 @@ class CardManager extends React.Component {
       cards: [],
       decks: [],
       selectedFilter: 'cards',
-      selectedDeckId: allDecksId,
+      selectedDeckId: allCardsId,
       speciesSearchOpen: false,
       newDeckOpen: false,
       speciesSearchDeckId: allDecksId,
@@ -414,6 +415,21 @@ class CardManager extends React.Component {
     });
   }
 
+  deckItem = (id, name) => {
+    return (
+      <li
+        key={id}
+        onClick={() => this.handleDeckSelect(id)}  
+        className={[styles.deck, 
+          (this.state.selectedDeckId === id ? styles.isDeckSel : '')
+        ].join(' ')}
+      >
+        {name}
+      </li>
+    )
+  }
+
+  // TODO: add cardsHdr icons after building a proper icon font. Last round was a hack job.
   render() {
     var resourceResult = this.selectedResources();
     return (
@@ -422,8 +438,32 @@ class CardManager extends React.Component {
           <img src={iguanaBanner} />
         </div>
         <div className={styles.lLeftRail}>
+          <div className={styles.cardsHdr}>
+            <h2>Cards logo goes here</h2>
+          </div>
+          <div className={styles.ctrls}>
+            <div className={[styles.btn, styles.btnCtrls].join(' ')}>NEW</div>
+            <div className={styles.libCtrls} >
+              <div className={styles.libCtrlsActive}>your cards</div>
+              <div className={styles.tog}>view public cards</div>
+            </div>
+            <input type='text' className={styles.search} placeholder='search decks...'/>
+          </div>
+          <ul className={styles.decks}>
+            {this.deckItem(allCardsId, 'all cards')}
+            {this.deckItem(allDecksId, 'all decks')}
+            {this.state.decks.map((deck) => {
+              return this.deckItem(deck.id, deck.name);
+            })}
+          </ul>
         </div>
         <div className={styles.lResources}>
+          <div className={styles.menuBar}>
+            <div className={styles.menuAnchor}>
+              <span>Amphibians &nbsp;&nbsp;</span>
+              <i className='fa fa-caret-down' />
+            </div>
+          </div>
         </div>
       </div>
     );

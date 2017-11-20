@@ -3,6 +3,15 @@
 $left-rail-width: 226px;
 $left-rail-margin-neg: 110px;
 $resources-height: 552px;
+$left-rail-height: $resources-height + $left-rail-margin-neg; 
+$ctrls-height: 106px;
+$cards-hdr-height: 44px;
+$decks-height: $left-rail-height - $cards-hdr-height - $ctrls-height;
+$btn-height: 36px;
+$left-rail-color: #516063;
+$btn-bg: #55c0cc;
+$ctrls-bg: rgba(243,244,245,.76);
+$decks-bg:  #eff4f5;
 
 /* LAYOUTS */
 
@@ -13,10 +22,10 @@ $resources-height: 552px;
 }
 
 .lLeftRail {
-  background: #eff4f5;
   display: inline-block;
-  height: $resources-height + $left-rail-margin-neg;
+  height: $left-rail-height;
   margin-top: $left-rail-margin-neg * -1;
+  vertical-align: top;
   width: $left-rail-width;
 }
 
@@ -28,3 +37,105 @@ $resources-height: 552px;
 }
 
 /* MODULES */
+
+/* GENERAL PURPOSE (should probably be moved out of here) */
+.btn {
+  background: $btn-bg;
+  color: $white;
+  cursor: pointer;
+  font-size: 12px;
+  height: $btn-height;
+  line-height: $btn-height;
+  padding: 0 19px;
+}
+
+.tog {
+  background: $white; 
+  border-radius: 13px;
+  color: $link-blue;
+  cursor: pointer;
+  padding: 5px 15px;
+}
+
+.search {
+  border-radius: 16px;
+  height: 32px;
+  padding: 0 16px;
+  width: 205px;
+}
+/* END GENERAL PURPOSE */
+
+.cardsHdr {
+  background: $white;
+  color: $link-blue;
+  height: $cards-hdr-height;
+  line-height: $cards-hdr-height;
+  width: 100%;
+}
+
+
+.ctrls {
+  background: $ctrls-bg;
+  height: $ctrls-height;
+  padding-left: 9px;
+}
+
+  .btnCtrls {
+    float: right;
+  }
+
+
+.libCtrls {
+  color: $left-rail-color;
+  font-size: 14px;
+  float: left;
+  margin: 7px 0 9px 0;
+}
+  .libCtrlsActive {
+    margin: 0 0 4px 8px;
+  }
+
+.decks {
+  background: $decks-bg;
+  color: $left-rail-color;
+  font-size: 12px;
+  height: $decks-height;
+  list-style: none;
+  padding: 10px;
+}
+
+.deck {
+  $height: 24px;
+  cursor: pointer;
+  height: $height;
+  line-height: $height;
+  padding-left: 19px;
+}
+
+  .isDeckSel {
+    $height: 40px;
+    background: $white;
+    height: $height;
+    line-height: $height;
+  }
+
+.menuBar {
+  background: $white; 
+  background-image: linear-gradient(to right, #dde6ea, $white);
+  height: 40px;
+  padding-left: 8px;
+  position: relative;
+}
+
+.menuAnchor {
+  $height: 50px;
+  background: $white;
+  cursor: pointer;
+  font-size: 16px;
+  height: $height; 
+  line-height: $height;
+  position: absolute;
+  text-align: center;
+  top: -5px;
+  width: 177px;
+}

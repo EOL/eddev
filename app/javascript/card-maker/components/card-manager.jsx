@@ -416,99 +416,17 @@ class CardManager extends React.Component {
 
   render() {
     var resourceResult = this.selectedResources();
-    console.log(styles);
     return (
-      <div className={styles.lBanner}>
-        <img src={iguanaBanner} />
-      </div>
-    );
-
-    /*
-    return (
-      <div id='CardManagerWrap'>
-        <div className='hdr-spacer red'></div>
-        <div id='CardManager' className='card-manager card-screen'>
-          <div className='screen-inner manager-inner'>
-            <div className='welcome-block maker-welcome-block'>
-              <img src={ladybugIcon} className='ladybug' />
-              <h3 className='welcome-txt'
-                dangerouslySetInnerHTML={{
-                  __html: I18n.t('react.card_maker.welcome_card_manager_html', {
-                    eolHdrIconPath: eolHdrIcon,
-                  })}}
-              />
-            </div>
-            <div className="manager-ctrls">
-              <div className="new-resource-btns">
-                <NewResourceBtn
-                  icon={newCardIcon}
-                  id='NewCard'
-                  text={I18n.t('react.card_maker.create_a_card')}
-                  btnClass='new-card-btn'
-                  handleClick={this.handleOpenNewCardLightbox}
-                />
-                <SpeciesSearchLightbox
-                  isOpen={this.state.speciesSearchOpen}
-                  handleClose={this.handleSpeciesSearchClose}
-                  handleCreateCard={this.handleCreateCard}
-                  deckFilterItems={this.deckFilterItemsForNewCard()}
-                  selectedDeckId={this.state.speciesSearchDeckId}
-                  handleDeckSelect={this.handleSpeciesSearchDeckSelect}
-                />
-                <img src={managerLogo} className='manager-logo' id='ManagerLogo' />
-                <NewResourceBtn
-                  icon={newDeckIcon}
-                  id='NewDeck'
-                  text={I18n.t('react.card_maker.create_a_deck')}
-                  btnClass='new-deck-btn'
-                  handleClick={this.handleOpenNewDeckLightbox}
-                />
-                <NewDeckLightbox
-                  isOpen={this.state.newDeckOpen}
-                  handleCreate={this.handleCreateDeck}
-                  handleRequestClose={this.handleDeckRequestClose}
-                />
-              </div>
-              <div className='filters'>
-                <UserResourceFilter
-                  selected={this.state.selectedFilter === 'cards'}
-                  iconClass='icon-card'
-                  className='first'
-                  count={this.state.cards.length}
-                  handleSelect={this.handleDeckSelect}
-                  handleClick={this.handleCardFilterClick}
-                  filterItems={this.cardFilterItems()}
-                />
-                <UserResourceFilter
-                  selected={this.state.selectedFilter === 'decks'}
-                  iconClass='icon-deck'
-                  count={this.state.decks.length}
-                  filterItems={this.deckFilterItems()}
-                  handleSelect={this.handleDeckSelect}
-                  handleClick={this.handleDeckFilterClick}
-                  handleMenuOpenClick={this.handleDeckMenuOpenClick}
-                  selectedId={this.state.selectedDeckId}
-                />
-              </div>
-            </div>
-            <UserResources
-              resources={resourceResult.resources}
-              decks={this.state.decks}
-              resourceType={resourceResult.resourceType}
-              handleCardDeckSelect={this.assignCardDeck}
-              handleEditCard={this.props.handleEditCard}
-              handleDeckSelect={this.handleDeckSelect}
-              handleDestroyCard={this.handleDestroyCard}
-              handleDestroyDeck={this.handleDestroyDeck}
-              handleNewCard={this.handleOpenNewCardLightbox}
-              handleNewDeck={this.handleOpenNewDeckLightbox}
-              handleDeckPdf={this.handleDeckPdf}
-            />
-          </div>
+      <div>
+        <div className={styles.lBanner}>
+          <img src={iguanaBanner} />
+        </div>
+        <div className={styles.lLeftRail}>
+        </div>
+        <div className={styles.lResources}>
         </div>
       </div>
-    )
-    */
+    );
   }
 }
 

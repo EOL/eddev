@@ -149,8 +149,10 @@ class CardMaker extends React.Component {
           <i className='fa fa-spin fa-spinner fa-4x' />
         </ReactModal>
 
-        <div className={styles.lMainCol}>
-          {this.screenComponent()}
+        <div className={styles.lPage}>
+          <div className={styles.lMainCol}>
+            {this.screenComponent()}
+          </div>
         </div>
       </div>
     )

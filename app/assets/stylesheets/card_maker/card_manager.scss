@@ -1,5 +1,30 @@
+@import '../shared/layout_vars';
+
+$left-rail-width: 226px;
+$left-rail-margin-neg: 110px;
+$resources-height: 552px;
+
+/* LAYOUTS */
+
 .lBanner {
   height: 211px;
   overflow: hidden;
   width: 100%;
 }
+
+.lLeftRail {
+  background: #eff4f5;
+  display: inline-block;
+  height: $resources-height + $left-rail-margin-neg;
+  margin-top: $left-rail-margin-neg * -1;
+  width: $left-rail-width;
+}
+
+.lResources {
+  display: inline-block;
+  height: $resources-height;
+  vertical-align: top;
+  width: $main-col-width-px - $left-rail-width;
+}
+
+/* MODULES */

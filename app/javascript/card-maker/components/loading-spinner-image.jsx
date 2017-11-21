@@ -1,5 +1,7 @@
 import React from 'react'
 
+import styles from 'stylesheets/card_maker/card_manager'
+
 class LoadingSpinnerImage extends React.Component {
   constructor(props) {
     super(props);
@@ -17,16 +19,16 @@ class LoadingSpinnerImage extends React.Component {
   }
 
   render() {
-    var imgClass = 'user-resource';
+    var imgClass = styles.fillParent;
 
     if (!this.state.loaded) {
-      imgClass += ' hidden';
+      imgClass += ' is-hidden';
     }
 
     return (
-      <div className='loading-resource-image'>
+      <div>
         {!this.state.loaded &&
-          <i className='fa fa-spinner fa-spin fa-2x img-placeholder' />
+          <i className='fa fa-spinner fa-spin fa-2x' />
         }
         <img
           className={imgClass}

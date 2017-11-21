@@ -1,5 +1,7 @@
 import React from 'react'
 
+import styles from 'stylesheets/card_maker/card_manager'
+
 function resourceWrapper(WrappedComponent, additionalClassNames) {
   return class extends React.Component {
     constructor(props) {
@@ -27,7 +29,7 @@ function resourceWrapper(WrappedComponent, additionalClassNames) {
 
     render() {
       const classNames = additionalClassNames.slice();
-      classNames.push('resource-wrap');
+      classNames.push(styles.resource);
 
       return (
         <div className={classNames.join(' ')}

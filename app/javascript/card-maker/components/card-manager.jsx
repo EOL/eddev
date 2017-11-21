@@ -465,17 +465,31 @@ class CardManager extends React.Component {
           </ul>
         </div>
         <div className={styles.lResources}>
-          <div className={styles.menuBar}>
-            <div className={styles.menuBarAnchorContain}>
+          <div className={[styles.bar, styles.barMenu].join(' ')}>
+            <div className={styles.barMenuAnchorContain}>
               <div className={styles.menuAnchor}>
                 <span>{this.state.selectedDeck ? this.state.selectedDeck.name : ''} &nbsp;&nbsp;</span>
                 <i className='fa fa-caret-down' />
               </div>
             </div>
-            <div className={styles.menuBarCount}>
+            <div className={styles.barMenuCount}>
               {this.selectedResourceCount(resourceResult)}
             </div>
           </div>
+          <div className={styles.desc}>TODO: description here</div>
+          <div className={[styles.bar, styles.barFilter].join(' ')}></div>
+          <UserResources
+            resources={resourceResult.resources}
+            resourceType={resourceResult.resourceType}
+            handleCardDeckSelect={this.assignCardDeck}
+            handleEditCard={this.props.handleEditCard}
+            handleDeckSelect={this.handleDeckSelect}
+            handleDestroyCard={this.handleDestroyCard}
+            handleDestroyDeck={this.handleDestroyDeck}
+            handleNewCard={this.handleOpenNewCardLightbox}
+            handleNewDeck={this.handleOpenNewDeckLightbox}
+            handleDeckPdf={this.handleDeckPdf}
+          />
         </div>
       </div>
     );

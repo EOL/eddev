@@ -38,31 +38,23 @@ class Card extends React.Component {
   render() {
     return (
       <div>
-        <DeckAssignSelect
-          items={this.deckAssignItems()}
-          selectedId={this.selectedDeckId()}
-          handleSelect={this.handleDeckSelect}
-        />
-        <div className='resource-frame'>
-          <LoadingSpinnerImage src={cardImageUrl(this.props.data.id)} />
-          {this.props.showOverlay &&
-            <div className='card-overlay resource-overlay'>
-              <i
-                className='i fa fa-edit fa-3x edit-btn btn'
-                onClick={this.props.handleEditClick}
-              />
-              <i
-                className="i fa fa-search fa-3x btn"
-                onClick={this.props.handleZoomClick}
-              />
-              <i
-                className='i fa fa-trash-o fa-3x trash-btn btn'
-                onClick={this.props.handleDestroyClick}
-              />
-            </div>
-          }
-
-        </div>
+        <LoadingSpinnerImage src={cardImageUrl(this.props.data.id)} />
+        {this.props.showOverlay &&
+          <div>
+            <i
+              className='i fa fa-edit fa-3x edit-btn btn'
+              onClick={this.props.handleEditClick}
+            />
+            <i
+              className="i fa fa-search fa-3x btn"
+              onClick={this.props.handleZoomClick}
+            />
+            <i
+              className='i fa fa-trash-o fa-3x trash-btn btn'
+              onClick={this.props.handleDestroyClick}
+            />
+          </div>
+        }
       </div>
     )
   }

@@ -6,50 +6,15 @@ import EmptyResourcesPlaceholder from './empty-resources-placeholder'
 import AdjustsForScrollbarContainer from './adjusts-for-scrollbar-container'
 import CardZoomLightbox from './card-zoom-lightbox'
 
-const resourceTypes = {
-       card: Card
-     }
-   , resourcesPerRow = 4
+import styles from 'stylesheets/card_maker/card_manager'
+
+const resourcesPerRow = 4
    ;
 
 class UserResources extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      resourceMarginRight: {}
-    };
-  }
-
-  // Set margin of resources dynamically to account for scrollbar weirdness
-  // once all node refs are in
-  updateResourceMarginRight = () => {
-    if (
-      this.rootNode &&
-      this.resourceNode &&
-      this.resourceRefCount === this.resourceCount
-    ) {
-      const scrollbarWidth = this.rootNode.offsetWidth - this.rootNode.clientWidth
-          , innerWidth = $(this.rootNode).width()
-          , resourceWidth = $(this.resourceNode).outerWidth()
-          , marginRight = (innerWidth - scrollbarWidth - resourceWidth * resourcesPerRow) /
-              (resourcesPerRow - 1)
-          ;
-
-      this.setState({
-        resourceMarginRight: marginRight,
-      });
-    }
-  }
-
-  resourceRef = (node) => {
-    this.resourceRefCount++;
-    this.resourceNode = node;
-    this.updateResourceMarginRight();
-  }
-
-  setRootNode = (node) => {
-    this.rootNode = node;
-    this.updateResourceMarginRight();
+    this.state = {};
   }
 
   buildEmptyResourcesPlaceholder = () => {
@@ -89,7 +54,6 @@ class UserResources extends React.Component {
           return (
             <Card
               data={resource}
-              decks={this.props.decks}
               key={resource.id}
               handleDeckSelect={this.props.handleCardDeckSelect.bind(null, resource.id)}
               handleEditClick={() => this.props.handleEditCard(resource.id)}
@@ -123,8 +87,7 @@ class UserResources extends React.Component {
 
   handleCardZoomClick = (cardId) => {
     this.setState({
-      cardZoomId: cardId
-    });
+      cardZoomId: cardId });
   }
 
   handleCardZoomRequestClose = () => {
@@ -135,7 +98,16 @@ class UserResources extends React.Component {
 
   render() {
     this.resourceCount = this.props.resources.length;
-    this.resourceRefCount = 0;
+    
+    return (
+      <AdjustsForScrollbarContainer
+        className={styles.resources}
+        itemsPerRow={resourcesPerRow}
+      >
+        {this.buildResources()}
+      </AdjustsForScrollbarContainer>
+    );
+    /*
     return (
       <div>
         <CardZoomLightbox
@@ -143,13 +115,14 @@ class UserResources extends React.Component {
           handleRequestClose={this.handleCardZoomRequestClose}
         />
         <AdjustsForScrollbarContainer
-          className='user-resources'
+          className={styles.resources}
           itemsPerRow={resourcesPerRow}
         >
           {this.buildResources()}
         </AdjustsForScrollbarContainer>
       </div>
     );
+    */
   }
 }
 

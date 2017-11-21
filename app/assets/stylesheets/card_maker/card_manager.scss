@@ -1,5 +1,7 @@
 @import '../shared/layout_vars';
 
+// TODO: standardize font colors!!!
+
 $left-rail-width: 226px;
 $left-rail-margin-neg: 110px;
 $resources-height: 552px;
@@ -8,6 +10,7 @@ $ctrls-height: 106px;
 $cards-hdr-height: 44px;
 $decks-height: $left-rail-height - $cards-hdr-height - $ctrls-height;
 $btn-height: 36px;
+$menu-bar-height: 40px;
 $left-rail-color: #516063;
 $btn-bg: #55c0cc;
 $ctrls-bg: rgba(243,244,245,.76);
@@ -122,10 +125,25 @@ $decks-bg:  #eff4f5;
 .menuBar {
   background: $white; 
   background-image: linear-gradient(to right, #dde6ea, $white);
-  height: 40px;
+  height: $menu-bar-height;
   padding-left: 8px;
-  position: relative;
 }
+
+  .menuBarAnchorContain {
+    display: inline-block;
+    height: 100%;
+    position: relative;
+    width: 177px;
+  }
+
+  .menuBarCount {
+    display: inline-block;
+    font-size: 11px;
+    height: $menu-bar-height;
+    line-height: $menu-bar-height;
+    padding: 0 15px;
+    vertical-align: top;
+  }
 
 .menuAnchor {
   $height: 50px;
@@ -137,5 +155,5 @@ $decks-bg:  #eff4f5;
   position: absolute;
   text-align: center;
   top: -5px;
-  width: 177px;
+  width: 100%;
 }

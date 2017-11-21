@@ -18,8 +18,14 @@ import iguanaBanner from 'images/card_maker/iguana_banner.jpg'
 
 import styles from "stylesheets/card_maker/card_manager"
 
-const allDecksId = -1
-    , allCardsId = -2
+const allDecksDeck = {
+        id: -1,
+        name: I18n.t('react.card_maker.all_decks'),
+      }
+    , allCardsDeck = {
+        id: -2,
+        name: I18n.t('react.card_maker.all_cards'),
+      }
     , pollIntervalMillis = 1000
     ;
 
@@ -31,10 +37,9 @@ class CardManager extends React.Component {
       cards: [],
       decks: [],
       selectedFilter: 'cards',
-      selectedDeckId: allCardsId,
+      selectedDeck: allCardsDeck,
       speciesSearchOpen: false,
       newDeckOpen: false,
-      speciesSearchDeckId: allDecksId,
     }
   }
 
@@ -169,11 +174,9 @@ class CardManager extends React.Component {
     }];
   }
 
-  handleDeckSelect = deckId => {
-    this.setState((prevState, props) => {
-      return {
-        selectedDeckId: deckId
-      }
+  handleDeckSelect = (deck) => {
+    this.setState({
+      selectedDeck: deck
     });
   }
 
@@ -196,41 +199,29 @@ class CardManager extends React.Component {
   selectedResources = () => {
     const that = this;
 
-    var resources
+    let resources
       , resourceType
       ;
 
-    if (that.state.selectedFilter === 'decks') {
-      if (that.state.selectedDeckId === allDecksId) {
-        resources = that.state.decks;
-        resourceType = 'deck';
+    if (that.state.selectedDeck === allDecksDeck) {
+      resourceType = 'deck';
+      resources = this.state.decks;
+    } else {
+      resourceType = 'card';
+      
+      if (that.state.selectedDeck === allCardsDeck) {
+        resources = that.state.cards;
       } else {
         resources = that.state.cards.filter((card) => {
-          return card.deck && card.deck.id === that.state.selectedDeckId;
+          return card.deck && card.deck.id === that.state.selectedDeck.id
         });
-        resourceType = 'card';
       }
-    } else {
-      resources = that.state.cards;
-      resourceType = 'card';
     }
 
     return {
       resources: resources,
       resourceType: resourceType,
     };
-  }
-
-  selectedResourceType = () => {
-    var resourceType;
-
-    if (this.state.selectedFilter === 'decks' &&
-      this.state.selectedDeckId === allDecksId
-    ) {
-      resourceType = 'deck';
-    } else {
-      resourceType = 'card'
-    }
   }
 
   handleSpeciesSearchClose = () => {
@@ -415,18 +406,36 @@ class CardManager extends React.Component {
     });
   }
 
-  deckItem = (id, name) => {
+  deckItem = (deck) => {
     return (
       <li
-        key={id}
-        onClick={() => this.handleDeckSelect(id)}  
+        key={deck.id}
+        onClick={() => this.handleDeckSelect(deck)}  
         className={[styles.deck, 
-          (this.state.selectedDeckId === id ? styles.isDeckSel : '')
+          (this.state.selectedDeck === deck ? styles.isDeckSel : '')
         ].join(' ')}
       >
-        {name}
+        {deck.name}
       </li>
     )
+  }
+
+  selectedResourceCount = (resourceResult) => {
+    const count = resourceResult.resources.length;
+    let i18nKey;
+
+    if (resourceResult.resourceType === 'card') {
+      i18nKey = 'react.card_maker.n_cards';
+    } else if (resourceResult.resourceType === 'deck') {
+      i18nKey = 'react.card_maker.n_decks';
+    } else {
+      throw new TypeError('Resource type invalid: ' 
+        + resourceResult.resourceType);
+    }
+
+    return I18n.t(i18nKey, {
+      count: count
+    });
   }
 
   // TODO: add cardsHdr icons after building a proper icon font. Last round was a hack job.
@@ -450,18 +459,21 @@ class CardManager extends React.Component {
             <input type='text' className={styles.search} placeholder='search decks...'/>
           </div>
           <ul className={styles.decks}>
-            {this.deckItem(allCardsId, 'all cards')}
-            {this.deckItem(allDecksId, 'all decks')}
-            {this.state.decks.map((deck) => {
-              return this.deckItem(deck.id, deck.name);
-            })}
+            {this.deckItem(allCardsDeck)}
+            {this.deckItem(allDecksDeck)}
+            {this.state.decks.map(this.deckItem)}
           </ul>
         </div>
         <div className={styles.lResources}>
           <div className={styles.menuBar}>
-            <div className={styles.menuAnchor}>
-              <span>Amphibians &nbsp;&nbsp;</span>
-              <i className='fa fa-caret-down' />
+            <div className={styles.menuBarAnchorContain}>
+              <div className={styles.menuAnchor}>
+                <span>{this.state.selectedDeck ? this.state.selectedDeck.name : ''} &nbsp;&nbsp;</span>
+                <i className='fa fa-caret-down' />
+              </div>
+            </div>
+            <div className={styles.menuBarCount}>
+              {this.selectedResourceCount(resourceResult)}
             </div>
           </div>
         </div>

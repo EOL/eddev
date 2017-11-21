@@ -491,6 +491,12 @@ en:
       card_preview_lightbox: Card preview lightbox
       unexpected_error_msg: An unexpected error occurred
       are_you_sure_unsaved: Are you sure you want to leave this page? All unsaved work will be lost.
+      n_cards:
+        one: "1 card"
+        other: "%{count} cards"
+      n_decks:
+        one: "1 deck"
+        other: "%{count} decks"
   activerecord:
     errors:
       template:

@@ -11,6 +11,7 @@ $cards-hdr-height: 44px;
 $decks-height: $left-rail-height - $cards-hdr-height - $ctrls-height;
 $btn-height: 36px;
 $menu-bar-height: 40px;
+$deck-sel-shadow-color: #c6cfd1;
 $left-rail-color: #516063;
 $btn-bg: #55c0cc;
 $ctrls-bg: rgba(243,244,245,.76);
@@ -118,6 +119,8 @@ $decks-bg:  #eff4f5;
   .isDeckSel {
     $height: 40px;
     background: $white;
+    border-radius: 2px;
+    box-shadow: 0 2px 0 0 $deck-sel-shadow-color;
     height: $height;
     line-height: $height;
   }

@@ -45,6 +45,7 @@ Rails.application.routes.draw do
     post   "card_maker_ajax/deck_pdfs"                => "card_maker_ajax#create_deck_pdf"
     get    "card_maker_ajax/deck_pdfs/:id/status"     => "card_maker_ajax#deck_pdf_status"
     get    "card_maker_ajax/deck_pdfs/:id/result"     => "card_maker_ajax#deck_pdf_result"
+    post   "card_maker_ajax/decks/:deck_id/desc"      => "card_maker_ajax#set_deck_desc"
 
     get    "card_maker"                               => "card_maker#index", :as => :new_card
   end

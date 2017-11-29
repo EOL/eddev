@@ -21,6 +21,7 @@ $filter-bar-shadow-color: #48636b;
 $user-resources-bg: #5c7f89;
 $resource-new-msg-bg: #38454e;
 $resource-new-cta-bg: #537698;
+$desc-btn-bg: #d8e2e6;
 
 /* LAYOUTS */
 
@@ -175,9 +176,36 @@ $resource-new-cta-bg: #537698;
 
 // TODO: this and other gradients look wrong
 .desc {
+  align-items: center;
   background-image: linear-gradient(to left, #f0f4f6, #d3d9da);
+  display: flex;
   flex: 0 0 auto;
+  flex-direction: column;
+  font-size: 11px;
+  justify-content: center;
   padding: 13px;
+  width: 100%;
+}
+
+.descBtn {
+  $height: 28px;
+  background: $desc-btn-bg;
+  border-radius: 2px;
+  display: inline-block;
+  cursor: pointer;
+  height: $height;
+  line-height: $height;
+  padding: 0 18px;
+}
+
+.descBtnMargin {
+  margin-top: 10px;
+}
+
+.descInput {
+  background: none;
+  border: none;
+  height: 80px;
   width: 100%;
 }
 
@@ -188,6 +216,7 @@ $resource-new-cta-bg: #537698;
   height: 100%;
   overflow: auto;
   padding: 0 11px 11px 11px;
+  text-align: center;
   width: 100%;
 }
 
@@ -266,7 +295,6 @@ $resource-new-cta-bg: #537698;
     line-height: $height;
   }
 }
-
 
 /*
 .user-resources {

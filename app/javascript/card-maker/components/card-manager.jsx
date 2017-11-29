@@ -40,7 +40,9 @@ class CardManager extends React.Component {
       selectedDeck: allCardsDeck,
       speciesSearchOpen: false,
       newDeckOpen: false,
-      newMenuOpen: false
+      newMenuOpen: false,
+      showDescInput: false,
+      deckDescVal: '',
     }
   }
 
@@ -59,9 +61,18 @@ class CardManager extends React.Component {
           url: cardMakerUrl('card_summaries'),
           method: 'GET',
           success: (cards) => {
+            const selectedDeck = decks.find((deck) => {
+              return deck.id === this.state.selectedDeck.id;
+            });
+
+            if (!selectedDeck) {
+              selectedDeck = allCardsDeck;
+            }
+
             that.setState({
               cards: cards,
               decks: decks,
+              selectedDeck: selectedDeck,
             }, cb);
           }
         });
@@ -468,6 +479,79 @@ class CardManager extends React.Component {
     })
   }
 
+  handleDescBtnClick = () => {
+    this.setState({
+      showDescInput: true
+    });
+  }
+
+  handleSetDescBtnClick = () => {
+    const url = cardMakerUrl(
+            'decks/' +
+            this.state.selectedDeck.id +
+            '/desc'
+          )
+        ;
+
+    $.ajax({
+      method: 'POST',
+      data: this.state.deckDescVal,
+      url: url,
+      success: rslt => {
+        this.setState({
+          deckDescVal: '',
+          showDescInput: false,
+        });
+      }
+    });
+  }
+
+  handleDescInputChange = e => {
+    this.setState({
+      deckDescVal: e.target.value
+    })
+  }
+
+  deckDescElements = () => {
+    let result; 
+
+    if (this.state.showDescInput) {
+      result = [
+        (
+          <textarea 
+            className={styles.descInput} 
+            value={this.state.deckDescVal}
+            onChange={this.handleDescInputChange}
+            key='0'
+          ></textarea>
+        ),
+        (
+          <div 
+            className={[styles.descBtn, styles.descBtnMargin].join(' ')}
+            onClick={this.handleSetDescBtnClick}
+            key='1'
+          >{I18n.t('react.card_maker.add_desc')}</div>
+        )
+      ];
+    } else if (this.state.selectedDeck === allCardsDeck) {
+      result = [I18n.t('react.card_maker.viewing_all_your_cards')];
+    } else {
+      if (this.state.selectedDeck.desc) {
+        result = [this.state.selectedDeck.desc];
+      } else {
+        result = [(
+          <div 
+            className={styles.descBtn}
+            onClick={this.handleDescBtnClick}
+            key='0'
+          >add a description</div>
+        )];
+      }
+    }
+
+    return result;
+  }
+
   // TODO: add cardsHdr icons after building a proper icon font. Last round was a hack job.
   render() {
     var resourceResult = this.selectedResources();
@@ -519,7 +603,9 @@ class CardManager extends React.Component {
               {this.selectedResourceCount(resourceResult)}
             </div>
           </div>
-          <div className={styles.desc}>TODO: description here</div>
+          <div className={styles.desc}>
+            {this.deckDescElements()} 
+          </div>
           <div className={[styles.bar, styles.barFilter].join(' ')}></div>
           <UserResources
             resources={resourceResult.resources}

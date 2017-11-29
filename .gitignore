@@ -34,3 +34,6 @@
 # ctags
 tags
 /node_modules
+
+# vim session
+Session.vim

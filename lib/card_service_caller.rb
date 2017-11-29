@@ -11,6 +11,7 @@ module CardServiceCaller
   SERVICE_URL = "#{PROTOCOL}://#{SERVICE_HOST}:#{SERVICE_PORT}"
 
   JSON_HEADERS = { "Content-Type" => "application/json" }
+  TEXT_PLAIN_HEADERS = { "Content-Type" => "text/plain" }
 
   def self.create_card(user_id, json)
     HTTParty.post(
@@ -132,9 +133,7 @@ module CardServiceCaller
     HTTParty.put(
       self.card_deck_path(user_id, card_id),
       :body => deck_id,
-      :headers => self.add_api_headers({
-        "Content-Type" => "text/plain"
-      })
+      :headers => self.add_api_headers(TEXT_PLAIN_HEADERS)
     )
   end
 
@@ -186,6 +185,14 @@ module CardServiceCaller
     HTTParty.get(
       "#{self.user_prefix(user_id)}/deckPdfs/#{job_id}/result",
       :headers => self.add_api_headers({})
+    )
+  end
+
+  def self.set_deck_desc(user_id, deck_id, desc)
+    HTTParty.post(
+      "#{self.user_prefix(user_id)}/decks/#{deck_id}/desc",
+      :body => desc,
+      :headers => self.add_api_headers(TEXT_PLAIN_HEADERS)
     )
   end
 

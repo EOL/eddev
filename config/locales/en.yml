@@ -504,6 +504,9 @@ en:
       view_your_cards: view your cards
       card: card
       deck: deck
+      viewing_all_your_cards: Viewing all of your cards
+      viewing_all_public_cards: Viewing all public cards
+      add_desc: add description
   activerecord:
     errors:
       template:

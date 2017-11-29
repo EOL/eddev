@@ -191,6 +191,17 @@ class CardMakerAjaxController < ApplicationController
     data_pass_thru_response(svc_res)
   end
 
+  # POST /card_maker_ajax/decks/:deck_id/
+  def set_deck_desc
+    puts "Got that far"
+    puts "Raw post: #{request.raw_post}"
+    json_response(CardServiceCaller.set_deck_desc(
+      logged_in_user.id, 
+      params[:deck_id], 
+      request.raw_post
+    ))
+  end
+
   private
     def json_response(httpartyResponse)
       json_response_helper(httpartyResponse.body, httpartyResponse.code)

@@ -497,6 +497,13 @@ en:
       n_decks:
         one: "1 deck"
         other: "%{count} decks"
+      new_upper: NEW
+      your_cards: your cards
+      public_cards: public cards
+      view_public_cards: view public cards
+      view_your_cards: view your cards
+      card: card
+      deck: deck
   activerecord:
     errors:
       template:

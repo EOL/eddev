@@ -18,7 +18,7 @@ import iguanaBanner from 'images/card_maker/iguana_banner.jpg'
 
 import styles from "stylesheets/card_maker/card_manager"
 
-const allDecksDeck = {
+const allDecksDeck = { // unused for now
         id: -1,
         name: I18n.t('react.card_maker.all_decks'),
       }
@@ -40,7 +40,12 @@ class CardManager extends React.Component {
       selectedDeck: allCardsDeck,
       speciesSearchOpen: false,
       newDeckOpen: false,
+      newMenuOpen: false
     }
+  }
+
+  newWrapRef = node => {
+    this.newWrapNode = node;
   }
 
   reloadResourcesWithCb = (cb) => {
@@ -68,8 +73,25 @@ class CardManager extends React.Component {
     this.reloadResourcesWithCb(null);
   }
 
+  componentWillMount() {
+    document.addEventListener('click', this.handleDocClick);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleDocClick);
+  }
+
   componentDidMount() {
     this.reloadResources();
+  }
+
+  handleDocClick = e => {
+    // XXX: if you add more menus, generalize this logic
+    if (this.newWrapNode && !this.newWrapNode.contains(e.target) && this.state.newMenuOpen) {
+      this.setState({
+        newMenuOpen: false
+      });
+    }
   }
 
   assignCardDeck = (cardId, deckId) => {
@@ -438,6 +460,14 @@ class CardManager extends React.Component {
     });
   }
 
+  toggleNewMenuOpen = () => {
+    this.setState((prevState) => {
+      return {
+        newMenuOpen: !prevState.newMenuOpen
+      }
+    })
+  }
+
   // TODO: add cardsHdr icons after building a proper icon font. Last round was a hack job.
   render() {
     var resourceResult = this.selectedResources();
@@ -451,16 +481,29 @@ class CardManager extends React.Component {
             <h2>Cards logo goes here</h2>
           </div>
           <div className={styles.ctrls}>
-            <div className={[styles.btn, styles.btnCtrls].join(' ')}>NEW</div>
+            <div className={styles.new} ref={this.newWrapRef}>
+              <div 
+                className={[styles.btn].join(' ')}
+                onClick={this.toggleNewMenuOpen}
+              >{I18n.t('react.card_maker.new_upper')}</div>
+              {this.state.newMenuOpen &&
+              <ul className={styles.menu} >
+                <li>{I18n.t('react.card_maker.card')}</li>
+                <li>{I18n.t('react.card_maker.deck')}</li>
+              </ul>}
+            </div>
             <div className={styles.libCtrls} >
-              <div className={styles.libCtrlsActive}>your cards</div>
-              <div className={styles.tog}>view public cards</div>
+              <div className={styles.libCtrlsActive}>
+                {I18n.t('react.card_maker.your_cards')}
+              </div>
+              <div className={styles.tog}>
+                {I18n.t('react.card_maker.view_public_cards')}
+              </div>
             </div>
             <input type='text' className={styles.search} placeholder='search decks...'/>
           </div>
           <ul className={styles.decks}>
             {this.deckItem(allCardsDeck)}
-            {this.deckItem(allDecksDeck)}
             {this.state.decks.map(this.deckItem)}
           </ul>
         </div>

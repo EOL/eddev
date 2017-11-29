@@ -19,6 +19,8 @@ $decks-bg:  #eff4f5;
 $filter-bar-bg: #90b8c5;
 $filter-bar-shadow-color: #48636b;
 $user-resources-bg: #5c7f89;
+$resource-new-msg-bg: #38454e;
+$resource-new-cta-bg: #537698;
 
 /* LAYOUTS */
 
@@ -40,7 +42,6 @@ $user-resources-bg: #5c7f89;
   display: inline-flex;
   flex-direction: column;
   height: $resources-height;
-  overflow: hidden;
   vertical-align: top;
   width: $main-col-width-px - $left-rail-width;
 }
@@ -73,10 +74,6 @@ $user-resources-bg: #5c7f89;
   width: 205px;
 }
 
-.fillParent {
-  height: 100%;
-  width: 100%;
-}
 /* END GENERAL PURPOSE */
 
 .cardsHdr {
@@ -93,11 +90,6 @@ $user-resources-bg: #5c7f89;
   height: $ctrls-height;
   padding-left: 9px;
 }
-
-  .btnCtrls {
-    float: right;
-  }
-
 
 .libCtrls {
   color: $left-rail-color;
@@ -193,7 +185,7 @@ $user-resources-bg: #5c7f89;
   background: $user-resources-bg;
   display: flex;
   flex-flow: row wrap;
-  min-height: 0;
+  height: 100%;
   overflow: auto;
   padding: 0 11px 11px 11px;
   width: 100%;
@@ -212,6 +204,67 @@ $user-resources-bg: #5c7f89;
   position: relative;
   width: $width;
   vertical-align: top;
+}
+
+.resourceOverlay {
+  align-items: center;
+  background: rgba(.5, .5, .5, .5);
+  bottom: 0; 
+  color: $white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  vertical-align: top;
+}
+
+.resourceNewBlock {
+  align-items: center;
+  color: $white;
+  display: flex;
+  justify-content: center;
+  padding: 0 10px;
+  text-align: center;
+}
+
+.resourceNewMsg {
+  background: $resource-new-msg-bg;
+  font-size: 14px;
+  height: 66%;
+}
+
+.resourceNewCta {
+  background: $resource-new-cta-bg; 
+  height: 34%;
+}
+
+// TODO: rename. Too generic.
+.fillParent {
+  height: 100%;
+  vertical-align: top;
+  width: 100%;
+}
+
+.new {
+  float: right;
+  position: relative;
+}
+
+.menu {
+  background: $white; 
+  font-size: 12px;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+
+  & > li {
+    $height: 30px;
+    height: $height;
+    line-height: $height;
+  }
 }
 
 

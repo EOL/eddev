@@ -4,6 +4,8 @@ import LoadingSpinnerImage from './loading-spinner-image'
 import resourceWrapper from './resource-wrapper'
 import {cardMakerUrl, cardImageUrl} from 'lib/card-maker/url-helper'
 
+import styles from "stylesheets/card_maker/card_manager"
+
 const noDeckId = -1;
 
 class Card extends React.Component {
@@ -40,7 +42,7 @@ class Card extends React.Component {
       <div>
         <LoadingSpinnerImage src={cardImageUrl(this.props.data.id)} />
         {this.props.showOverlay &&
-          <div>
+          <div className={styles.resourceOverlay}>
             <i
               className='i fa fa-edit fa-3x edit-btn btn'
               onClick={this.props.handleEditClick}

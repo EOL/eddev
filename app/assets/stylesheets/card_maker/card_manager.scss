@@ -69,6 +69,7 @@ $desc-btn-bg: #d8e2e6;
 }
 
 .search {
+  border: none;
   border-radius: 16px;
   height: 32px;
   padding: 0 16px;
@@ -117,6 +118,10 @@ $desc-btn-bg: #d8e2e6;
   height: $height;
   line-height: $height;
   padding-left: 19px;
+
+  & > strong {
+    font-weight: bold;
+  }
 }
 
   .isDeckSel {

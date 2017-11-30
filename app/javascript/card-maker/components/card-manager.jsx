@@ -43,6 +43,7 @@ class CardManager extends React.Component {
       newMenuOpen: false,
       showDescInput: false,
       deckDescVal: '',
+      deckSearchVal: ''
     }
   }
 
@@ -61,7 +62,7 @@ class CardManager extends React.Component {
           url: cardMakerUrl('card_summaries'),
           method: 'GET',
           success: (cards) => {
-            const selectedDeck = decks.find((deck) => {
+            let selectedDeck = decks.find((deck) => {
               return deck.id === this.state.selectedDeck.id;
             });
 
@@ -439,7 +440,12 @@ class CardManager extends React.Component {
     });
   }
 
-  deckItem = (deck) => {
+  deckItem = (deck, highlight) => {
+    const highlightedName = highlight && highlight.length ?  
+            deck.name.replace(highlight, '<strong>' + highlight + '</strong>') :
+            deck.name
+        ;
+
     return (
       <li
         key={deck.id}
@@ -447,9 +453,8 @@ class CardManager extends React.Component {
         className={[styles.deck, 
           (this.state.selectedDeck === deck ? styles.isDeckSel : '')
         ].join(' ')}
-      >
-        {deck.name}
-      </li>
+        dangerouslySetInnerHTML={{ __html: highlightedName }}
+      />
     )
   }
 
@@ -552,6 +557,22 @@ class CardManager extends React.Component {
     return result;
   }
 
+  handleDeckSearchChange = e => {
+    this.setState({
+      deckSearchVal: e.target.value
+    });
+  }
+
+  deckItems = () => {
+    let searchVal = this.state.deckSearchVal.trim();
+
+    return this.state.decks.filter((deck) => {
+      return deck.name.includes(searchVal);
+    }).map((deck) => {
+      return this.deckItem(deck, searchVal);
+    }); 
+  }
+
   // TODO: add cardsHdr icons after building a proper icon font. Last round was a hack job.
   render() {
     var resourceResult = this.selectedResources();
@@ -567,14 +588,15 @@ class CardManager extends React.Component {
           <div className={styles.ctrls}>
             <div className={styles.new} ref={this.newWrapRef}>
               <div 
-                className={[styles.btn].join(' ')}
+                className={styles.btn}
                 onClick={this.toggleNewMenuOpen}
               >{I18n.t('react.card_maker.new_upper')}</div>
               {this.state.newMenuOpen &&
-              <ul className={styles.menu} >
-                <li>{I18n.t('react.card_maker.card')}</li>
-                <li>{I18n.t('react.card_maker.deck')}</li>
-              </ul>}
+                <ul className={styles.menu} >
+                  <li>{I18n.t('react.card_maker.card')}</li>
+                  <li>{I18n.t('react.card_maker.deck')}</li>
+                </ul>
+              }
             </div>
             <div className={styles.libCtrls} >
               <div className={styles.libCtrlsActive}>
@@ -584,11 +606,17 @@ class CardManager extends React.Component {
                 {I18n.t('react.card_maker.view_public_cards')}
               </div>
             </div>
-            <input type='text' className={styles.search} placeholder='search decks...'/>
+            <input 
+              type='search' 
+              className={styles.search} 
+              placeholder='search decks...'
+              onChange={this.handleDeckSearchChange}
+              value={this.state.deckSearchVal}
+            />
           </div>
           <ul className={styles.decks}>
-            {this.deckItem(allCardsDeck)}
-            {this.state.decks.map(this.deckItem)}
+            {this.deckItem(allCardsDeck, null)}
+            {this.deckItems()}
           </ul>
         </div>
         <div className={styles.lResources}>

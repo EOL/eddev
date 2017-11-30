@@ -43,12 +43,22 @@ class CardManager extends React.Component {
       newMenuOpen: false,
       showDescInput: false,
       deckDescVal: '',
-      deckSearchVal: ''
+      deckSearchVal: '',
+      menus: {
+        new: {
+          open: false,
+          node: null
+        }, 
+        deck: {
+          open: false,
+          node: null
+        },
+      }
     }
-  }
-
-  newWrapRef = node => {
-    this.newWrapNode = node;
+    this.menuNodes = {
+      new: null,
+      deck: null,
+    }
   }
 
   reloadResourcesWithCb = (cb) => {
@@ -97,12 +107,37 @@ class CardManager extends React.Component {
     this.reloadResources();
   }
 
-  handleDocClick = e => {
-    // XXX: if you add more menus, generalize this logic
-    if (this.newWrapNode && !this.newWrapNode.contains(e.target) && this.state.newMenuOpen) {
-      this.setState({
-        newMenuOpen: false
+  closeMenu = (name) => {
+    this.setState((prevState) => {
+      return update(prevState, {
+        menus: {
+          [name]: {
+            open: { $set: false }
+          }
+        }
       });
+    });
+  }
+
+  toggleMenu = (name) => {
+    this.setState((prevState) => {
+      return update(prevState, {
+        menus: {
+          [name]: { $toggle: ['open'] }
+        }
+      });
+    });
+  }
+
+  handleDocClick = e => {
+    for (let [name, menu] of Object.entries(this.state.menus)) {
+      if (
+        this.menuNodes[name] &&
+        !this.menuNodes[name].contains(e.target) &&
+        menu.open
+      ) {
+        this.closeMenu(name);
+      }
     }
   }
 
@@ -476,13 +511,6 @@ class CardManager extends React.Component {
     });
   }
 
-  toggleNewMenuOpen = () => {
-    this.setState((prevState) => {
-      return {
-        newMenuOpen: !prevState.newMenuOpen
-      }
-    })
-  }
 
   handleDescBtnClick = () => {
     this.setState({
@@ -573,9 +601,14 @@ class CardManager extends React.Component {
     }); 
   }
 
+  setMenuNode = (name, node) => {
+    this.menuNodes[name] = node;
+  }
+
   // TODO: add cardsHdr icons after building a proper icon font. Last round was a hack job.
   render() {
     var resourceResult = this.selectedResources();
+
     return (
       <div>
         <div className={styles.lBanner}>
@@ -586,12 +619,12 @@ class CardManager extends React.Component {
             <h2>Cards logo goes here</h2>
           </div>
           <div className={styles.ctrls}>
-            <div className={styles.new} ref={this.newWrapRef}>
+            <div className={styles.new} ref={(node) => { this.setMenuNode('new', node) }}>
               <div 
                 className={styles.btn}
-                onClick={this.toggleNewMenuOpen}
+                onClick={() => this.toggleMenu('new')}
               >{I18n.t('react.card_maker.new_upper')}</div>
-              {this.state.newMenuOpen &&
+              {this.state.menus.new.open &&
                 <ul className={styles.menu} >
                   <li>{I18n.t('react.card_maker.card')}</li>
                   <li>{I18n.t('react.card_maker.deck')}</li>
@@ -621,11 +654,22 @@ class CardManager extends React.Component {
         </div>
         <div className={styles.lResources}>
           <div className={[styles.bar, styles.barMenu].join(' ')}>
-            <div className={styles.barMenuAnchorContain}>
-              <div className={styles.menuAnchor}>
+            <div 
+              className={styles.barMenuAnchorContain}
+              ref={node => this.setMenuNode('deck', node)}
+            >
+              <div 
+                className={styles.menuAnchor}
+                onClick={() => this.toggleMenu('deck')}
+              >
                 <span>{this.state.selectedDeck ? this.state.selectedDeck.name : ''} &nbsp;&nbsp;</span>
                 <i className='fa fa-caret-down' />
               </div>
+              {this.state.menus.deck.open &&
+                <ul className={styles.menu}>
+                  <li>print deck</li>
+                </ul>
+              }
             </div>
             <div className={styles.barMenuCount}>
               {this.selectedResourceCount(resourceResult)}

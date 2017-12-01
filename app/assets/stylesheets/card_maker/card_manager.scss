@@ -150,6 +150,7 @@ $desc-btn-bg: #d8e2e6;
     height: 100%;
     position: relative;
     width: 177px;
+    z-index: 2;
   }
 
   .barMenuCount {
@@ -199,15 +200,15 @@ $desc-btn-bg: #d8e2e6;
   cursor: pointer;
   height: $height;
   line-height: $height;
+  margin: 0 10px;
   padding: 0 18px;
 }
 
-.descBtnMargin {
+.editDescBtns {
   margin-top: 10px;
 }
 
 .descInput {
-  background: none;
   border: none;
   height: 80px;
   width: 100%;
@@ -295,9 +296,14 @@ $desc-btn-bg: #d8e2e6;
 
   & > li {
     $height: 30px;
+    cursor: pointer;
     height: $height;
     line-height: $height;
   }
+}
+
+.deckMenu {
+  font-size: 14px;
 }
 
 /*

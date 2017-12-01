@@ -507,6 +507,12 @@ en:
       viewing_all_your_cards: Viewing all of your cards
       viewing_all_public_cards: Viewing all public cards
       add_desc: add description
+      edit_desc: edit description
+      save_desc: save description
+
+      cancel: cancel
+      print: print
+      rename: rename
   activerecord:
     errors:
       template:

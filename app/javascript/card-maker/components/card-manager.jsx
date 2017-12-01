@@ -42,7 +42,7 @@ class CardManager extends React.Component {
       newDeckOpen: false,
       newMenuOpen: false,
       showDescInput: false,
-      deckDescVal: '',
+      deckDescVal: null,
       deckSearchVal: '',
       menus: {
         new: {
@@ -127,6 +127,12 @@ class CardManager extends React.Component {
         }
       });
     });
+  }
+
+  toggleDeckMenu = () => {
+    if (this.state.selectedDeck !== allCardsDeck) {
+      this.toggleMenu('deck');
+    }
   }
 
   handleDocClick = e => {
@@ -440,7 +446,7 @@ class CardManager extends React.Component {
     })
   }
 
-  handleDeckPdf = (id) => {
+  makeDeckPdf = () => {
     const that = this;
 
     that.props.showLoadingOverlay();
@@ -448,7 +454,7 @@ class CardManager extends React.Component {
     $.ajax({
       url: cardMakerUrl('deck_pdfs'),
       data: JSON.stringify({
-        deckId: id
+        deckId: this.state.selectedDeck.id
       }),
       method: 'POST',
       success: (result) => {
@@ -513,6 +519,7 @@ class CardManager extends React.Component {
 
 
   handleDescBtnClick = () => {
+    this.closeMenu('deck');
     this.setState({
       showDescInput: true
     });
@@ -530,11 +537,9 @@ class CardManager extends React.Component {
       method: 'POST',
       data: this.state.deckDescVal,
       url: url,
-      success: rslt => {
-        this.setState({
-          deckDescVal: '',
-          showDescInput: false,
-        });
+      success: () => {
+       this.closeAndClearDescInput(); 
+       this.reloadResources();
       }
     });
   }
@@ -545,26 +550,46 @@ class CardManager extends React.Component {
     })
   }
 
+  closeAndClearDescInput = () => {
+    this.setState({
+      showDescInput: false,
+      deckDescVal: null,
+    });
+  }
+
   deckDescElements = () => {
     let result; 
 
     if (this.state.showDescInput) {
       result = [
+        // Explicit this.state.deckDescVal === null is important since
+        // otherwise the value can't ever be ''.
         (
           <textarea 
             className={styles.descInput} 
-            value={this.state.deckDescVal}
+            value={this.state.deckDescVal === null ? 
+                   this.state.selectedDeck.desc :
+                   this.state.deckDescVal}
             onChange={this.handleDescInputChange}
             key='0'
+            ref={node => node && node.focus()}
           ></textarea>
         ),
         (
           <div 
-            className={[styles.descBtn, styles.descBtnMargin].join(' ')}
-            onClick={this.handleSetDescBtnClick}
+            className={styles.editDescBtns}
             key='1'
-          >{I18n.t('react.card_maker.add_desc')}</div>
-        )
+          >
+            <div 
+              className={styles.descBtn}
+              onClick={this.handleSetDescBtnClick}
+            >{I18n.t('react.card_maker.save_desc')}</div>
+            <div 
+              className={styles.descBtn}
+              onClick={this.closeAndClearDescInput}
+            >{I18n.t('react.card_maker.cancel')}</div>
+          </div>
+        ),
       ];
     } else if (this.state.selectedDeck === allCardsDeck) {
       result = [I18n.t('react.card_maker.viewing_all_your_cards')];
@@ -577,7 +602,7 @@ class CardManager extends React.Component {
             className={styles.descBtn}
             onClick={this.handleDescBtnClick}
             key='0'
-          >add a description</div>
+          >{I18n.t('react.card_maker.add_desc')}</div>
         )];
       }
     }
@@ -603,6 +628,22 @@ class CardManager extends React.Component {
 
   setMenuNode = (name, node) => {
     this.menuNodes[name] = node;
+  }
+
+  deckMenuContents = () => {
+    let contents = '<span>' + this.state.selectedDeck.name;
+
+    if (this.state.selectedDeck !== allCardsDeck) {
+      contents += '&nbsp;&nbsp;';
+    }
+
+    contents += '</span>';
+
+    if (this.state.selectedDeck !== allCardsDeck) {
+      contents += "<i class='fa fa-caret-down' />";
+    }
+
+    return contents;
   }
 
   // TODO: add cardsHdr icons after building a proper icon font. Last round was a hack job.
@@ -660,14 +701,24 @@ class CardManager extends React.Component {
             >
               <div 
                 className={styles.menuAnchor}
-                onClick={() => this.toggleMenu('deck')}
-              >
-                <span>{this.state.selectedDeck ? this.state.selectedDeck.name : ''} &nbsp;&nbsp;</span>
-                <i className='fa fa-caret-down' />
-              </div>
+                onClick={this.toggleDeckMenu}
+                dangerouslySetInnerHTML={{__html: this.deckMenuContents()}}
+              />
               {this.state.menus.deck.open &&
-                <ul className={styles.menu}>
-                  <li>print deck</li>
+                <ul className={[styles.menu, styles.deckMenu].join(' ')}>
+                  <li>{I18n.t('react.card_maker.rename')}</li>
+                  <li
+                    onClick={this.handleDescBtnClick} 
+                  >
+                  {this.state.selectedDeck.desc ? 
+                      I18n.t('react.card_maker.edit_desc') :
+                      I18n.t('react.card_maker.add_desc')
+                  }
+                  </li>
+                  <li
+                    onClick={this.makeDeckPdf}
+                  >{I18n.t('react.card_maker.print')}</li>
+
                 </ul>
               }
             </div>
@@ -689,7 +740,7 @@ class CardManager extends React.Component {
             handleDestroyDeck={this.handleDestroyDeck}
             handleNewCard={this.handleOpenNewCardLightbox}
             handleNewDeck={this.handleOpenNewDeckLightbox}
-            handleDeckPdf={this.handleDeckPdf}
+            makeDeckPdf={this.makeDeckPdf}
           />
         </div>
       </div>

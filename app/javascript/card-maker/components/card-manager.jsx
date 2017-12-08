@@ -198,15 +198,59 @@ class CardManager extends React.Component {
     );
   }
 
-  handleOpenNewCardLightbox = () => {
+  handleSpeciesSearchClose = () => {
+    this.setState(() => {
+      return {
+        speciesSearchOpen: false,
+        speciesSearchDeckId: allDecksId,
+      }
+    })
+  }
+
+  handleSpeciesSearchOpen = () => {
     this.setState((prevState) => {
       return {
         speciesSearchOpen: true,
-        speciesSearchDeckId: (
-          this.state.selectedFilter === 'decks' ?
-          this.state.selectedDeckId :
-          allDecksId
-        ),
+        speciesSearchDeckId: this.state.selectedDeck.id
+      }
+    })
+  }
+
+  handleCreateCard = (id) => {
+    const that = this
+        , deckId = that.state.speciesSearchDeckId
+        , url = deckId !== allCardsDeck.id ?
+          cardMakerUrl('decks/' + deckId + '/cards') :
+          cardMakerUrl('cards')
+        ;
+
+    if (!id) {
+      return;
+    }
+
+    that.props.showLoadingOverlay();
+    this.setState(() => {
+      return {
+        speciesSearchOpen: false,
+      }
+    });
+
+    $.ajax({
+      url: url,
+      data: JSON.stringify({
+        templateName: 'trait',
+        templateParams: {
+          speciesId: id
+        }
+      }),
+      contentType: 'application/json',
+      method: 'POST',
+      success: () => {
+        that.reloadResourcesWithCb(that.props.hideLoadingOverlay);
+      },
+      error: () => {
+        alert(I18n.t('react.card_manager.unexpected_error_msg'));
+        that.props.hideLoadingOverlay();
       }
     })
   }
@@ -219,17 +263,25 @@ class CardManager extends React.Component {
     })
   }
 
+  handleCloseNewDeckLightbox = () => {
+    this.setState(() => {
+      return {
+        newDeckOpen: false,
+      }
+    });
+  }
+
   deckFilterItemsHelper = (noSelectionText, includeCount) => {
     const items = this.state.decks.map((deck) => {
       return {
-        name: deck.name,
         id: deck.id,
+        name: deck.name,
         count: (includeCount ? deck.cardIds.length : null),
       }
     });
     items.unshift({
+      id: allCardsDeck.id,
       name: noSelectionText,
-      id: allDecksId,
       count: (includeCount ? this.state.decks.length : null),
     });
     return items;
@@ -299,53 +351,7 @@ class CardManager extends React.Component {
     };
   }
 
-  handleSpeciesSearchClose = () => {
-    this.setState(() => {
-      return {
-        speciesSearchOpen: false,
-        speciesSearchDeckId: allDecksId,
-      }
-    })
-  }
 
-  handleCreateCard = (id) => {
-    const that = this
-        , deckId = that.state.speciesSearchDeckId
-        , url = deckId !== allDecksId ?
-          cardMakerUrl('decks/' + deckId + '/cards') :
-          cardMakerUrl('cards')
-        ;
-
-    if (!id) {
-      return;
-    }
-
-    that.props.showLoadingOverlay();
-    this.setState(() => {
-      return {
-        speciesSearchOpen: false,
-      }
-    });
-
-    $.ajax({
-      url: url,
-      data: JSON.stringify({
-        templateName: 'trait',
-        templateParams: {
-          speciesId: id
-        }
-      }),
-      contentType: 'application/json',
-      method: 'POST',
-      success: () => {
-        that.reloadResourcesWithCb(that.props.hideLoadingOverlay);
-      },
-      error: () => {
-        alert(I18n.t('react.card_manager.unexpected_error_msg'));
-        that.props.hideLoadingOverlay();
-      }
-    })
-  }
 
   showAllDecks = () => {
     this.showDeck(allDecksId);
@@ -430,13 +436,6 @@ class CardManager extends React.Component {
     });
   }
 
-  handleDeckRequestClose = () => {
-    this.setState(() => {
-      return {
-        newDeckOpen: false,
-      }
-    });
-  }
 
   handleSpeciesSearchDeckSelect = (id) => {
     this.setState(() => {
@@ -652,6 +651,19 @@ class CardManager extends React.Component {
 
     return (
       <div>
+        <NewDeckLightbox
+          isOpen={this.state.newDeckOpen}
+          handleCreate={this.handleCreateDeck}
+          handleRequestClose={this.handleCloseNewDeckLightbox}
+        />
+        <SpeciesSearchLightbox
+          isOpen={this.state.speciesSearchOpen}
+          handleRequestClose={this.handleSpeciesSearchClose}
+          handleCreate={this.handleCreateCard}
+          deckFilterItems={this.deckFilterItemsForNewCard()}
+          selectedDeckId={this.state.selectedDeck.id}
+          handleCreateCard={this.handleCreateCard}
+        />
         <div className={styles.lBanner}>
           <img src={iguanaBanner} />
         </div>
@@ -667,8 +679,8 @@ class CardManager extends React.Component {
               >{I18n.t('react.card_maker.new_upper')}</div>
               {this.state.menus.new.open &&
                 <ul className={styles.menu} >
-                  <li>{I18n.t('react.card_maker.card')}</li>
-                  <li>{I18n.t('react.card_maker.deck')}</li>
+                  <li onClick={this.handleSpeciesSearchOpen}>{I18n.t('react.card_maker.card')}</li>
+                  <li onClick={this.handleOpenNewDeckLightbox}>{I18n.t('react.card_maker.deck')}</li>
                 </ul>
               }
             </div>
@@ -738,8 +750,8 @@ class CardManager extends React.Component {
             handleDeckSelect={this.handleDeckSelect}
             handleDestroyCard={this.handleDestroyCard}
             handleDestroyDeck={this.handleDestroyDeck}
-            handleNewCard={this.handleOpenNewCardLightbox}
-            handleNewDeck={this.handleOpenNewDeckLightbox}
+            handleNewCard={this.handleSpeciesSearchOpen}
+            handleNewDeck={this.HandleOpenNewDeckLightbox}
             makeDeckPdf={this.makeDeckPdf}
           />
         </div>

@@ -45,6 +45,21 @@ class UserSessionsController < ApplicationController
     redirect_to root_url
   end
 
+  def user_info
+    respond_to do |format|
+      format.json do
+        if !logged_in_user
+          head :not_found
+        else
+          render :json => { 
+            :user_name => logged_in_user.user_name,
+            :admin => logged_in_user.admin?
+          }
+        end
+      end
+    end
+  end
+
   private
   def redirect_if_logged_in
     redirect_to root_url if logged_in_user

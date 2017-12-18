@@ -196,6 +196,28 @@ module CardServiceCaller
     )
   end
 
+  def self.make_deck_public(user_id, deck_id)
+    HTTParty.post(
+      "#{self.user_prefix(user_id)}/decks/#{deck_id}/makePublic",
+      :body => nil,
+      :headers => self.add_api_headers({})
+    )
+  end
+
+  def self.get_public_decks()
+    HTTParty.get(
+      "#{SERVICE_URL}/public/decks",
+      :headers => self.add_api_headers({}) 
+    )
+  end
+
+  def self.get_public_cards()
+    HTTParty.get(
+      "#{SERVICE_URL}/public/cards",
+      :headers => self.add_api_headers({})
+    )
+  end
+
   private
     def self.user_prefix(user_id)
       "#{SERVICE_URL}/users/#{user_id}"

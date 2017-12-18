@@ -59,6 +59,7 @@ class UserResources extends React.Component {
               handleEditClick={() => this.props.handleEditCard(resource.id)}
               handleDestroyClick={() => this.props.handleDestroyCard(resource.id)}
               handleZoomClick={() => this.handleCardZoomClick(resource.id)}
+              editable={this.props.editable}
             />
           )
         }
@@ -78,8 +79,10 @@ class UserResources extends React.Component {
       }
 
       resources = this.props.resources.map(resourceMapFn);
-    } else {
+    } else if (this.props.editable) {
       resources = this.buildEmptyResourcesPlaceholder();
+    } else {
+      resources = null;
     }
 
     return resources;

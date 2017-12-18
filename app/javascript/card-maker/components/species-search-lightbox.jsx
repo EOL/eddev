@@ -156,7 +156,6 @@ class SpeciesSearchLightbox extends React.Component {
             </div>
           </div>)
         }
-
       </ReactModal>
     )
   }

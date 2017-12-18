@@ -38,12 +38,14 @@ class CardManager extends React.Component {
       decks: [],
       selectedFilter: 'cards',
       selectedDeck: allCardsDeck,
+      speciesSearchDeckId: allCardsDeck.id,
       speciesSearchOpen: false,
       newDeckOpen: false,
       newMenuOpen: false,
       showDescInput: false,
       deckDescVal: null,
       deckSearchVal: '',
+      library: 'user',
       menus: {
         new: {
           open: false,
@@ -62,14 +64,17 @@ class CardManager extends React.Component {
   }
 
   reloadResourcesWithCb = (cb) => {
-    var that = this;
+    var that = this
+      , decksUrl = this.state.library === 'user' ? 'decks'          : 'public/decks'
+      , cardsUrl = this.state.library === 'user' ? 'card_summaries' : 'public/cards'
+      ;
 
     $.ajax({
-      url: cardMakerUrl('decks'),
+      url: cardMakerUrl(decksUrl),
       method: 'GET',
       success: (decks) => {
         $.ajax({
-          url: cardMakerUrl('card_summaries'),
+          url: cardMakerUrl(cardsUrl),
           method: 'GET',
           success: (cards) => {
             let selectedDeck = decks.find((deck) => {
@@ -130,7 +135,7 @@ class CardManager extends React.Component {
   }
 
   toggleDeckMenu = () => {
-    if (this.state.selectedDeck !== allCardsDeck) {
+    if (this.state.library === 'user' && this.state.selectedDeck !== allCardsDeck) {
       this.toggleMenu('deck');
     }
   }
@@ -201,17 +206,16 @@ class CardManager extends React.Component {
   handleSpeciesSearchClose = () => {
     this.setState(() => {
       return {
-        speciesSearchOpen: false,
-        speciesSearchDeckId: allDecksId,
+        speciesSearchOpen: false
       }
-    })
+    });
   }
 
   handleSpeciesSearchOpen = () => {
     this.setState((prevState) => {
       return {
         speciesSearchOpen: true,
-        speciesSearchDeckId: this.state.selectedDeck.id
+        speciesSearchDeck: this.state.selectedDeck
       }
     })
   }
@@ -438,11 +442,10 @@ class CardManager extends React.Component {
 
 
   handleSpeciesSearchDeckSelect = (id) => {
-    this.setState(() => {
-      return {
-        speciesSearchDeckId: id,
-      }
-    })
+    console.log('select deck ' + id);
+    this.setState({
+      speciesSearchDeckId: id,
+    });
   }
 
   makeDeckPdf = () => {
@@ -591,7 +594,11 @@ class CardManager extends React.Component {
         ),
       ];
     } else if (this.state.selectedDeck === allCardsDeck) {
-      result = [I18n.t('react.card_maker.viewing_all_your_cards')];
+      if (this.state.library === 'user') {
+        result = [I18n.t('react.card_maker.viewing_all_your_cards')];
+      } else {
+        result = [I18n.t('react.card_maker.viewing_all_public_cards')];
+      }
     } else {
       if (this.state.selectedDeck.desc) {
         result = [this.state.selectedDeck.desc];
@@ -630,19 +637,70 @@ class CardManager extends React.Component {
   }
 
   deckMenuContents = () => {
-    let contents = '<span>' + this.state.selectedDeck.name;
+    let contents = '<span>' + this.state.selectedDeck.name
+      , isMenu = this.state.library === 'user' && this.state.selectedDeck !== allCardsDeck
+      ;
 
-    if (this.state.selectedDeck !== allCardsDeck) {
+    if (isMenu) {
       contents += '&nbsp;&nbsp;';
     }
 
     contents += '</span>';
 
-    if (this.state.selectedDeck !== allCardsDeck) {
+    if (isMenu) {
       contents += "<i class='fa fa-caret-down' />";
     }
 
     return contents;
+  }
+
+  makeDeckPublic = () => {
+    $.ajax({
+      url: cardMakerUrl('decks/' + this.state.selectedDeck.id + '/make_public'),
+      method: 'POST',
+      success: () => {
+        this.reloadResources();
+      }
+    });
+  }
+
+  libCtrls = () => {
+    var yourCards       = I18n.t('react.card_maker.your_cards')
+      , publicCards     = I18n.t('react.card_maker.public_cards')
+      , viewPublicCards = I18n.t('react.card_maker.view_public_cards') 
+      , viewYourCards   = I18n.t('react.card_maker.view_your_cards')
+      , active          = this.state.library === 'user' ? 
+                               yourCards : 
+                               publicCards
+      , inactive        = this.state.library === 'user' ?
+                               viewPublicCards :
+                               viewYourCards
+      ;
+
+    return (
+      <div className={styles.libCtrls} >
+        <div className={styles.libCtrlsActive}>{active}</div>
+        <div 
+          className={styles.tog}
+          onClick={this.toggleLibrary}
+        >{inactive}</div>
+      </div>
+    );
+  }
+    
+  toggleLibrary = () => {
+    var newLib;
+
+    if (this.state.library === 'user') {
+      newLib = 'public';
+    } else {
+      newLib = 'user';
+    }
+
+    this.setState({
+      library: newLib,
+      selectedDeck: allCardsDeck
+    }, this.reloadResources);
   }
 
   // TODO: add cardsHdr icons after building a proper icon font. Last round was a hack job.
@@ -658,10 +716,11 @@ class CardManager extends React.Component {
         />
         <SpeciesSearchLightbox
           isOpen={this.state.speciesSearchOpen}
-          handleRequestClose={this.handleSpeciesSearchClose}
+          handleClose={this.handleSpeciesSearchClose}
           handleCreate={this.handleCreateCard}
           deckFilterItems={this.deckFilterItemsForNewCard()}
-          selectedDeckId={this.state.selectedDeck.id}
+          handleDeckSelect={this.handleSpeciesSearchDeckSelect}
+          selectedDeckId={this.state.speciesSearchDeckId}
           handleCreateCard={this.handleCreateCard}
         />
         <div className={styles.lBanner}>
@@ -684,14 +743,7 @@ class CardManager extends React.Component {
                 </ul>
               }
             </div>
-            <div className={styles.libCtrls} >
-              <div className={styles.libCtrlsActive}>
-                {I18n.t('react.card_maker.your_cards')}
-              </div>
-              <div className={styles.tog}>
-                {I18n.t('react.card_maker.view_public_cards')}
-              </div>
-            </div>
+            {this.libCtrls()}
             <input 
               type='search' 
               className={styles.search} 
@@ -730,7 +782,10 @@ class CardManager extends React.Component {
                   <li
                     onClick={this.makeDeckPdf}
                   >{I18n.t('react.card_maker.print')}</li>
-
+                  {
+                    this.props.user.admin && 
+                    <li onClick={this.makeDeckPublic}>make deck public</li>
+                  }
                 </ul>
               }
             </div>
@@ -753,6 +808,7 @@ class CardManager extends React.Component {
             handleNewCard={this.handleSpeciesSearchOpen}
             handleNewDeck={this.HandleOpenNewDeckLightbox}
             makeDeckPdf={this.makeDeckPdf}
+            editable={this.state.library === 'user'}
           />
         </div>
       </div>

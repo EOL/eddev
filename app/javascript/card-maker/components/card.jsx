@@ -43,18 +43,24 @@ class Card extends React.Component {
         <LoadingSpinnerImage src={cardImageUrl(this.props.data.id)} />
         {this.props.showOverlay &&
           <div className={styles.resourceOverlay}>
-            <i
-              className='i fa fa-edit fa-3x edit-btn btn'
-              onClick={this.props.handleEditClick}
-            />
+            {
+              this.props.editable && 
+              <i
+                className='i fa fa-edit fa-3x edit-btn btn'
+                onClick={this.props.handleEditClick}
+              />
+            }
             <i
               className="i fa fa-search fa-3x btn"
               onClick={this.props.handleZoomClick}
             />
-            <i
-              className='i fa fa-trash-o fa-3x trash-btn btn'
-              onClick={this.props.handleDestroyClick}
-            />
+            {
+              this.props.editable && 
+              <i
+                className='i fa fa-trash-o fa-3x trash-btn btn'
+                onClick={this.props.handleDestroyClick}
+              />
+            }
           </div>
         }
       </div>

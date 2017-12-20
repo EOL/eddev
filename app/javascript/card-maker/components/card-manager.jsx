@@ -145,13 +145,10 @@ class CardManager extends React.Component {
     for (let [name, menu] of Object.entries(this.state.menus)) {
       if (
         this.menuNodes[name] &&
+        !this.menuNodes[name].contains(e.target) &&
         menu.open
       ) {
-        if (this.menuNodes[name].contains(e.target)) {
-          setTimeout(() => this.closeMenu(name), 0)
-        } else {
-          this.closeMenu(name);
-        }
+        this.closeMenu(name);
       }
     }
   }
@@ -219,7 +216,7 @@ class CardManager extends React.Component {
     this.setState((prevState) => {
       return {
         speciesSearchOpen: true,
-        speciesSearchDeck: this.state.selectedDeck
+        speciesSearchDeckId: this.state.selectedDeck.id
       }
     })
   }
@@ -444,7 +441,6 @@ class CardManager extends React.Component {
       }
     });
   }
-
 
   handleSpeciesSearchDeckSelect = (id) => {
     console.log('select deck ' + id);

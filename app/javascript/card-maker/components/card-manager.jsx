@@ -89,6 +89,7 @@ class CardManager extends React.Component {
               cards: cards,
               decks: decks,
               selectedDeck: selectedDeck,
+              showDescInput: false
             }, cb);
           }
         });
@@ -144,10 +145,13 @@ class CardManager extends React.Component {
     for (let [name, menu] of Object.entries(this.state.menus)) {
       if (
         this.menuNodes[name] &&
-        !this.menuNodes[name].contains(e.target) &&
         menu.open
       ) {
-        this.closeMenu(name);
+        if (this.menuNodes[name].contains(e.target)) {
+          setTimeout(() => this.closeMenu(name), 0)
+        } else {
+          this.closeMenu(name);
+        }
       }
     }
   }
@@ -307,7 +311,8 @@ class CardManager extends React.Component {
 
   handleDeckSelect = (deck) => {
     this.setState({
-      selectedDeck: deck
+      selectedDeck: deck,
+      showDescInput: false
     });
   }
 
@@ -654,9 +659,14 @@ class CardManager extends React.Component {
     return contents;
   }
 
-  makeDeckPublic = () => {
+  toggleDeckPublic = () => {
+    var action = this.state.selectedDeck.public ?
+          'make_private' :
+          'make_public'
+      ;
+
     $.ajax({
-      url: cardMakerUrl('decks/' + this.state.selectedDeck.id + '/make_public'),
+      url: cardMakerUrl('decks/' + this.state.selectedDeck.id + '/' + action),
       method: 'POST',
       success: () => {
         this.reloadResources();
@@ -770,7 +780,7 @@ class CardManager extends React.Component {
               />
               {this.state.menus.deck.open &&
                 <ul className={[styles.menu, styles.deckMenu].join(' ')}>
-                  <li>{I18n.t('react.card_maker.rename')}</li>
+                  { false && <li>{I18n.t('react.card_maker.rename')}</li> }
                   <li
                     onClick={this.handleDescBtnClick} 
                   >
@@ -784,7 +794,13 @@ class CardManager extends React.Component {
                   >{I18n.t('react.card_maker.print')}</li>
                   {
                     this.props.user.admin && 
-                    <li onClick={this.makeDeckPublic}>make deck public</li>
+                    <li onClick={this.toggleDeckPublic}>
+                      {
+                        this.state.selectedDeck.public ? 
+                        I18n.t('react.card_maker.make_deck_private') :
+                        I18n.t('react.card_maker.make_deck_public')
+                      }
+                    </li>
                   }
                 </ul>
               }

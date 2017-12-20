@@ -5,7 +5,7 @@ require "eol_api_caller"
 class CardMakerAjaxController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :ensure_user
-  before_action :ensure_admin, :only => [ :make_deck_public ]
+  before_action :ensure_admin, :only => [ :make_deck_public, :make_deck_private ]
   before_action :set_cache_headers
 
   wrap_parameters :post_json, :format => :json
@@ -204,6 +204,14 @@ class CardMakerAjaxController < ApplicationController
   # POST /card_maker_ajax/decks/:deck_id/make_public
   def make_deck_public
     json_response(CardServiceCaller.make_deck_public(
+      logged_in_user.id,
+      params[:deck_id]
+    ))
+  end
+
+  # POST /card_maker_ajax/decks/:deck_id/make_private
+  def make_deck_private
+    json_response(CardServiceCaller.make_deck_private(
       logged_in_user.id,
       params[:deck_id]
     ))

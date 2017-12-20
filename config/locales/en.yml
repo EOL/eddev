@@ -513,6 +513,8 @@ en:
       cancel: cancel
       print: print
       rename: rename
+      make_deck_public: make deck public
+      make_deck_private: make deck private
   activerecord:
     errors:
       template:

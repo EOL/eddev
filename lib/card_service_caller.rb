@@ -204,6 +204,14 @@ module CardServiceCaller
     )
   end
 
+  def self.make_deck_private(user_id, deck_id)
+    HTTParty.post(
+      "#{self.user_prefix(user_id)}/decks/#{deck_id}/makePrivate",
+      :body => nil,
+      :headers => self.add_api_headers({})
+    )
+  end
+
   def self.get_public_decks()
     HTTParty.get(
       "#{SERVICE_URL}/public/decks",

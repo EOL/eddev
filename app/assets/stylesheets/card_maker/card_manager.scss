@@ -1,16 +1,13 @@
 @import '../shared/layout_vars';
 
 // TODO: standardize font colors!!!
-
+$manager-height: 762px;
 $left-rail-width: 226px;
-$left-rail-margin-neg: 110px;
-$resources-height: 552px;
-$left-rail-height: $resources-height + $left-rail-margin-neg; 
 $ctrls-height: 106px;
 $cards-hdr-height: 44px;
-$decks-height: $left-rail-height - $cards-hdr-height - $ctrls-height;
 $btn-height: 36px;
 $menu-bar-height: 40px;
+$decks-height: $manager-height - $cards-hdr-height - $ctrls-height;
 $deck-sel-shadow-color: #c6cfd1;
 $left-rail-color: #516063;
 $btn-bg: #55c0cc;
@@ -22,19 +19,17 @@ $user-resources-bg: #5c7f89;
 $resource-new-msg-bg: #38454e;
 $resource-new-cta-bg: #537698;
 $desc-btn-bg: #d8e2e6;
+$bar-menu-dark-grey: #9db2b8;
+
 
 /* LAYOUTS */
-
-.lBanner {
-  height: 211px;
-  overflow: hidden;
-  width: 100%;
+.lManager {
+  height: $manager-height;
 }
 
 .lLeftRail {
   display: inline-block;
-  height: $left-rail-height;
-  margin-top: $left-rail-margin-neg * -1;
+  height: 100%;
   vertical-align: top;
   width: $left-rail-width;
 }
@@ -42,7 +37,7 @@ $desc-btn-bg: #d8e2e6;
 .lResources {
   display: inline-flex;
   flex-direction: column;
-  height: $resources-height;
+  height: 100%;
   vertical-align: top;
   width: $main-col-width-px - $left-rail-width;
 }
@@ -140,8 +135,7 @@ $desc-btn-bg: #d8e2e6;
 }
 
 .barMenu {
-  background: $white; 
-  background-image: linear-gradient(to right, #dde6ea, $white);
+  background-color: $bar-menu-dark-grey;
   padding-left: 8px;
 }
 
@@ -172,11 +166,6 @@ $desc-btn-bg: #d8e2e6;
   margin-top: -5px;
   text-align: center;
   width: 100%;
-}
-
-.barFilter {
-  background: $filter-bar-bg;
-  box-shadow: 0 1px 0 0 $filter-bar-shadow-color;
 }
 
 // TODO: this and other gradients look wrong

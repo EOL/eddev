@@ -714,7 +714,7 @@ class CardManager extends React.Component {
     var resourceResult = this.selectedResources();
 
     return (
-      <div>
+      <div className={styles.lManager}>
         <NewDeckLightbox
           isOpen={this.state.newDeckOpen}
           handleCreate={this.handleCreateDeck}
@@ -729,9 +729,6 @@ class CardManager extends React.Component {
           selectedDeckId={this.state.speciesSearchDeckId}
           handleCreateCard={this.handleCreateCard}
         />
-        <div className={styles.lBanner}>
-          <img src={iguanaBanner} />
-        </div>
         <div className={styles.lLeftRail}>
           <div className={styles.cardsHdr}>
             <h2>Cards logo goes here</h2>
@@ -808,7 +805,6 @@ class CardManager extends React.Component {
           <div className={styles.desc}>
             {this.deckDescElements()} 
           </div>
-          <div className={[styles.bar, styles.barFilter].join(' ')}></div>
           <UserResources
             resources={resourceResult.resources}
             resourceType={resourceResult.resourceType}

@@ -2,9 +2,11 @@
 
 .lPage {
   background: #538d9e;
+  background-image: linear-gradient(to bottom, #e7e7e7, #7e9fa7);
 }
 
 .lMainCol {
   margin: 0 auto;
+  padding-top: 24px;
   width: $main-col-width * 1px;
 }

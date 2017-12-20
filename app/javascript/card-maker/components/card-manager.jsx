@@ -604,18 +604,18 @@ class CardManager extends React.Component {
       } else {
         result = [I18n.t('react.card_maker.viewing_all_public_cards')];
       }
+    } else if (this.state.selectedDeck.desc) {
+      result = [this.state.selectedDeck.desc];
+    } else if (this.state.library === 'user') {
+      result = [(
+        <div 
+          className={styles.descBtn}
+          onClick={this.handleDescBtnClick}
+          key='0'
+        >{I18n.t('react.card_maker.add_desc')}</div>
+      )];
     } else {
-      if (this.state.selectedDeck.desc) {
-        result = [this.state.selectedDeck.desc];
-      } else {
-        result = [(
-          <div 
-            className={styles.descBtn}
-            onClick={this.handleDescBtnClick}
-            key='0'
-          >{I18n.t('react.card_maker.add_desc')}</div>
-        )];
-      }
+      result = [];
     }
 
     return result;

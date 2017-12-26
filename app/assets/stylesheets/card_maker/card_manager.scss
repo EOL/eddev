@@ -295,7 +295,26 @@ $bar-menu-dark-grey: #9db2b8;
   font-size: 14px;
 }
 
-/* Deck user overlay */
+.lightbox {
+  margin: 20px auto;
+  padding: 10px;
+}
+
+/* Deck user lightbox */
+.lightboxDeckUsers {
+  background: $white;
+  min-height: 300px;
+  width: 500px;
+
+  & strong {
+    font-weight: bold; 
+  }
+
+  & > h2 {
+    text-align: center;
+  }
+}
+
 .deckUserMinus {
   cursor: pointer;
 }

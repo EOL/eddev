@@ -73,9 +73,14 @@ class DeckUsersLightbox extends React.Component {
   userOptions = () => {
     return [<option key={noUserId} value={noUserId}>-----</option>].concat(
       this.state.userOptions.map((option) => {
-        return (
-          <option key={option.id} value={option.id}>{option.userName}</option>
-        );
+        var elmt;
+
+        if (option.id !== this.props.deck.userId) {
+          elmt = (
+            <option key={option.id} value={option.id}>{option.userName}</option>
+          );
+        }
+        return elmt;
       })
     );
   }
@@ -88,23 +93,27 @@ class DeckUsersLightbox extends React.Component {
         onRequestClose={this.handleRequestClose}
         contentLabel={I18n.t('react.card_maker.manage_deck_users')}
         parentSelector={() => {return document.getElementById('Page')}}
-        overlayClassName='fixed-center-wrap disable-overlay'
+        bodyOpenClassName='noscroll'
+        className={`${styles.lightbox} ${styles.lightboxDeckUsers}`}
+        overlayClassName={`fixed-center-wrap disable-overlay`}
       >
         <h2>Manage users for deck <strong>{this.props.deck.name}</strong></h2>
-        <div>Owner: {this.state.owner.userName}</div>
-        <div>Users:</div>
-        <ul>
-          { this.state.users.map((u) => {
-            return (
-              <li key={u.id}>
-                {u.userName}&nbsp;
-                <i onClick={ () => this.removeUser(u.id) } 
-                  className={`fa fa-lg fa-minus-circle ${styles.deckUserMinus}`}
-                />
-              </li>
-            );
-          })}
-        </ul>
+        <h2>Owner: {this.state.owner.userName}</h2>
+        <div className={styles.lightboxDeckUsersList}>
+          <div>Users:</div>
+          <ul>
+            { this.state.users.map((u) => {
+              return (
+                <li key={u.id}>
+                  {u.userName}&nbsp;
+                  <i onClick={ () => this.removeUser(u.id) } 
+                    className={`fa fa-lg fa-minus-circle ${styles.deckUserMinus}`}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        </div>
         <select 
           name='user_id'
           onChange={this.handleSelectChange}

@@ -515,6 +515,7 @@ en:
       rename: rename
       make_deck_public: make deck public
       make_deck_private: make deck private
+      manage_deck_users: manage deck users
   activerecord:
     errors:
       template:

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   #before_action :set_user, only: [:show, :edit, :update, :destroy]
-  #before_filter :ensure_admin
+  before_action :ensure_admin, :only => [ :list ]
   before_action :require_user, :only => [:change_password_form, :change_password]
   before_action :set_password_reset_vars, :only => [:reset_password_form, :reset_password]
 
@@ -99,6 +99,21 @@ class UsersController < ApplicationController
   def email_test
     @user = User.first
     render :confirmation_pending
+  end
+
+  def list
+    respond_to do |format|
+      format.json do
+        @user_data = User.order(:user_name).map do |u|
+          { 
+            :userName => u.user_name, 
+            :id => u.id 
+          } 
+        end
+
+        render :json => @user_data
+      end
+    end
   end
 
   private

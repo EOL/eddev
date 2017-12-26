@@ -1,11 +1,20 @@
 # Card service pass-through endpoints
+
 require "card_service_caller"
-require "eol_api_caller"
+require "eol_api_caller" # TODO: is this needed?
 
 class CardMakerAjaxController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :ensure_user
-  before_action :ensure_admin, :only => [ :make_deck_public, :make_deck_private ]
+  before_action :ensure_admin, :only => [ 
+    :make_deck_public, 
+    :make_deck_private, 
+    :add_deck_user, 
+    :remove_deck_user,
+    :deck_users 
+  ]
+
+  # TODO: add exceptions where appropriate
   before_action :set_cache_headers
 
   wrap_parameters :post_json, :format => :json
@@ -201,6 +210,21 @@ class CardMakerAjaxController < ApplicationController
     ))
   end
 
+
+  # GET /card_maker_ajax/public/decks
+  def get_public_decks
+    json_response(CardServiceCaller.get_public_decks)
+  end
+  
+  # GET /card_maker_ajax/public/cards
+  def get_public_cards
+    json_response(CardServiceCaller.get_public_cards)
+  end
+
+  ######################
+  # Admin-only actions #
+  ######################
+
   # POST /card_maker_ajax/decks/:deck_id/make_public
   def make_deck_public
     json_response(CardServiceCaller.make_deck_public(
@@ -216,15 +240,54 @@ class CardMakerAjaxController < ApplicationController
       params[:deck_id]
     ))
   end
-
-  # GET /card_maker_ajax/public/decks
-  def get_public_decks
-    json_response(CardServiceCaller.get_public_decks)
-  end
   
-  # GET /card_maker_ajax/public/cards
-  def get_public_cards
-    json_response(CardServiceCaller.get_public_cards)
+  # POST /card_maker_ajax/decks/:deck_id/users
+  def add_deck_user
+    json_response(CardServiceCaller.add_deck_user(
+      logged_in_user.id, 
+      params[:deck_id],
+      request.raw_post
+    ))
+  end
+
+  # DELETE /card_maker_ajax/decks/:deck_id/users/:user_id
+  def remove_deck_user
+    json_response(CardServiceCaller.remove_deck_user(
+      logged_in_user.id, 
+      params[:deck_id],
+      params[:user_id]
+    ))
+  end
+
+  # GET /card_maker_ajax/decks/:deck_id/users
+  def deck_users
+    svcRes = CardServiceCaller.deck_users(
+      logged_in_user.id,
+      params[:deck_id]
+    )
+
+    if svcRes.code != 200
+      return json_response(svcRes)
+    end
+
+    ownerId = svcRes["ownerId"]
+    userIds = svcRes["userIds"]
+
+    owner = User.find(ownerId)
+    users = userIds.any? ? User.find(userIds) : []
+
+    json_response_helper({
+      :owner => {
+        :userName => owner.user_name,
+        :id => owner.id
+      }, 
+      :users => users.map do |u|
+        {
+          :id => u.id,
+          :userName => u.user_name
+        }
+      end
+    }, :ok) 
   end
 
   private

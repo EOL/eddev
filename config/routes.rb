@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     patch "users/reset_password/:token" => "users#reset_password"
     get "users/change_password"         => "users#change_password_form"
     patch "users/change_password"       => "users#change_password"
+    get "users/list"                    => "users#list"
     get  "login"                        => "user_sessions#new"
     post "login"                        => "user_sessions#create"
     get  "logout"                       => "user_sessions#destroy"
@@ -50,6 +51,9 @@ Rails.application.routes.draw do
     post   "card_maker_ajax/decks/:deck_id/desc"      => "card_maker_ajax#set_deck_desc"
     post   "card_maker_ajax/decks/:deck_id/make_public" => "card_maker_ajax#make_deck_public"
     post   "card_maker_ajax/decks/:deck_id/make_private" => "card_maker_ajax#make_deck_private"
+    post   "card_maker_ajax/decks/:deck_id/users"     => "card_maker_ajax#add_deck_user"
+    delete "card_maker_ajax/decks/:deck_id/users/:user_id" => "card_maker_ajax#remove_deck_user"
+    get    "card_maker_ajax/decks/:deck_id/users"     => "card_maker_ajax#deck_users"
     get    "card_maker_ajax/public/cards"             => "card_maker_ajax#get_public_cards"
     get    "card_maker_ajax/public/decks"             => "card_maker_ajax#get_public_decks"
     get    "card_maker"                               => "card_maker#index", :as => :new_card

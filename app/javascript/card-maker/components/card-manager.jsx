@@ -7,6 +7,7 @@ import UserResourceFilter from './user-resource-filter'
 import Card from './card'
 import SpeciesSearchLightbox from './species-search-lightbox'
 import NewDeckLightbox from './new-deck-lightbox'
+import DeckUsersLightbox from './deck-users-lightbox'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
@@ -16,7 +17,7 @@ import managerLogo from 'images/card_maker/icons/card_manager_logo.png'
 import newDeckIcon from 'images/card_maker/icons/new_deck.png'
 import iguanaBanner from 'images/card_maker/iguana_banner.jpg'
 
-import styles from "stylesheets/card_maker/card_manager"
+import styles from 'stylesheets/card_maker/card_manager'
 
 const allDecksDeck = { // unused for now
         id: -1,
@@ -46,6 +47,7 @@ class CardManager extends React.Component {
       deckDescVal: null,
       deckSearchVal: '',
       library: 'user',
+      deckUsersOpen: false,
       menus: {
         new: {
           open: false,
@@ -715,6 +717,11 @@ class CardManager extends React.Component {
 
     return (
       <div className={styles.lManager}>
+        <DeckUsersLightbox
+          isOpen={this.state.deckUsersOpen}
+          handleRequestClose={() => this.setState({ deckUsersOpen: false })}
+          deck={this.state.selectedDeck}
+        />
         <NewDeckLightbox
           isOpen={this.state.newDeckOpen}
           handleCreate={this.handleCreateDeck}
@@ -793,7 +800,9 @@ class CardManager extends React.Component {
                         I18n.t('react.card_maker.make_deck_private') :
                         I18n.t('react.card_maker.make_deck_public')
                       }
-                    </li>
+                    </li> &&
+                    <li onClick={() => {this.setState({ deckUsersOpen: true })}}
+                    >{I18n.t('react.card_maker.manage_deck_users')}</li>
                   }
                 </ul>
               }

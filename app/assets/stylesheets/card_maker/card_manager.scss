@@ -7,11 +7,13 @@ $ctrls-height: 106px;
 $cards-hdr-height: 44px;
 $btn-height: 36px;
 $menu-bar-height: 40px;
+$menu-anchor-height: 50px;
 $new-btn-width: 64px;
 $new-row-height: 33px;
+$resources-box-shadow: inset 45px 0px 105px -83px rgba(0,0,0,0.41);
 $disabled-gray: #9db2b8;
 $deck-sel-shadow-color: #c6cfd1;
-$rail-bg: #ecf2f6;
+$light-gray: #ecf2f6;
 $filter-bar-bg: #90b8c5;
 $filter-bar-shadow-color: #48636b;
 $user-resources-bg: #5c7f89;
@@ -27,7 +29,7 @@ $bar-menu-dark-grey: #9db2b8;
 }
 
 .lLeftRail {
-  background: $rail-bg;
+  background: $light-gray;
   display: inline-block;
   height: 100%;
   vertical-align: top;
@@ -65,6 +67,7 @@ $bar-menu-dark-grey: #9db2b8;
 
   background: $white;
   border: none;
+  display: flex;
   height: $height;
   line-height: $height;
   width: 100%;
@@ -72,24 +75,30 @@ $bar-menu-dark-grey: #9db2b8;
   & > i {
     color: $eol-blue;
     display: inline-block;
+    flex: 0 0 auto;
     height: 100%;
+    line-height: $height;
     padding-left: 23px;
     width: $icon-width;
   }
 
   & > input {
-    display: inline-block;
+    flex: 1 0 auto;
     font-size: 12px;
     height: 100%;
     vertical-align: top;
-    width: $left-rail-width - $icon-width;
   }
+}
+
+.searchCard {
+  background: none;
+  width: 300px;
 }
 
 /* END GENERAL PURPOSE */
 .railCtrls {
   background: $white;
-  height: 117px;
+  height: 120px;
 }
 
 .cardsHdr {
@@ -159,43 +168,43 @@ $bar-menu-dark-grey: #9db2b8;
 
 .bar {
   flex: 0 0 auto;
-  height: $menu-bar-height;
   width: 100%;
 }
 
 .barMenu {
-  background-color: $bar-menu-dark-grey;
-  padding-left: 8px;
+  background-color: $light-gray;
+  box-shadow: $resources-box-shadow;
+  height: $menu-bar-height;
+  padding-left: 22px;
+  position: relative;
 }
 
-  .barMenuAnchorContain {
-    display: inline-block;
-    height: 100%;
-    position: relative;
-    width: 177px;
-    z-index: 2;
-  }
+.barMenuAnchorContain {
+  display: inline-block;
+  margin-top: $menu-bar-height - $menu-anchor-height;
+  width: 177px;
+  z-index: 2;
+}
 
-  .barMenuCount {
-    display: inline-block;
-    font-size: 11px;
-    height: $menu-bar-height;
-    line-height: $menu-bar-height;
-    padding: 0 15px;
-    vertical-align: top;
-  }
+.barMenuCount {
+  display: inline-block;
+  font-size: 11px;
+  height: $menu-bar-height;
+  line-height: $menu-bar-height;
+  padding: 0 15px;
+  vertical-align: top;
+}
 
 .menuAnchor {
-  $height: 50px;
   background: $white;
   cursor: pointer;
   font-size: 16px;
-  height: $height; 
-  line-height: $height;
-  margin-top: -5px;
+  height: $menu-anchor-height; 
+  line-height: $menu-anchor-height;
   text-align: center;
   width: 100%;
 }
+
 
 // TODO: this and other gradients look wrong
 .desc {
@@ -230,6 +239,12 @@ $bar-menu-dark-grey: #9db2b8;
   border: none;
   height: 80px;
   width: 100%;
+}
+
+.resourceFilterBar {
+  background: $white;
+  box-shadow: $resources-box-shadow;
+  padding-left: 10px;
 }
 
 .resources {

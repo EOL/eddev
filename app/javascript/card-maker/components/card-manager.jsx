@@ -8,6 +8,7 @@ import Card from './card'
 import SpeciesSearchLightbox from './species-search-lightbox'
 import NewDeckLightbox from './new-deck-lightbox'
 import DeckUsersLightbox from './deck-users-lightbox'
+import Search from './search'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
@@ -46,6 +47,7 @@ class CardManager extends React.Component {
       showDescInput: false,
       deckDescVal: null,
       deckSearchVal: '',
+      cardSearchVal: '',
       library: 'user',
       deckUsersOpen: false,
       menus: {
@@ -619,9 +621,9 @@ class CardManager extends React.Component {
     return result;
   }
 
-  handleDeckSearchChange = e => {
+  handleDeckSearchChange = val => {
     this.setState({
-      deckSearchVal: e.target.value
+      deckSearchVal: val
     });
   }
 
@@ -762,19 +764,11 @@ class CardManager extends React.Component {
             {this.deckItem(allCardsDeck, null)}
             <li className={`${styles.deck} ${styles.isDisabled}`}>all decks</li>
           </ul>
-          <div 
-            type='search' 
-            className={styles.search} 
-          >
-            <i className="fa fa-search" />
-            <input 
-              type='text'
-              className={styles.searchInput}
-              placeholder='search decks...'
-              onChange={this.handleDeckSearchChange}
-              value={this.state.deckSearchVal}
-            />
-          </div>
+          <Search 
+            handleChange={this.handleDeckSearchChange}
+            placeholder='search decks'
+            value={this.state.deckSearchVal}
+          />
           <ul className={styles.decks}>
             {this.deckItems()}
           </ul>
@@ -824,8 +818,18 @@ class CardManager extends React.Component {
               {this.selectedResourceCount(resourceResult)}
             </div>
           </div>
+          {/*
           <div className={styles.desc}>
             {this.deckDescElements()} 
+          </div>
+          */}
+          <div className={styles.resourceFilterBar}>
+            <Search 
+              handleChange={(val) => this.setState({ cardSearchVal: val})}
+              extraClass={styles.searchCard}
+              placeholder='search cards' 
+              value={this.state.cardSearchVal}
+            />
           </div>
           <UserResources
             resources={resourceResult.resources}

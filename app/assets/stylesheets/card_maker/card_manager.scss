@@ -7,12 +7,11 @@ $ctrls-height: 106px;
 $cards-hdr-height: 44px;
 $btn-height: 36px;
 $menu-bar-height: 40px;
-$decks-height: $manager-height - $cards-hdr-height - $ctrls-height;
+$new-btn-width: 64px;
+$new-row-height: 33px;
+$disabled-gray: #9db2b8;
 $deck-sel-shadow-color: #c6cfd1;
-$left-rail-color: #516063;
-$btn-bg: #55c0cc;
-$ctrls-bg: rgba(243,244,245,.76);
-$decks-bg:  #eff4f5;
+$rail-bg: #ecf2f6;
 $filter-bar-bg: #90b8c5;
 $filter-bar-shadow-color: #48636b;
 $user-resources-bg: #5c7f89;
@@ -28,6 +27,7 @@ $bar-menu-dark-grey: #9db2b8;
 }
 
 .lLeftRail {
+  background: $rail-bg;
   display: inline-block;
   height: 100%;
   vertical-align: top;
@@ -42,77 +42,109 @@ $bar-menu-dark-grey: #9db2b8;
   width: $main-col-width-px - $left-rail-width;
 }
 
+/* GENERAL STATE */
+.isDisabled {
+  color: $disabled-gray; 
+}
+
 /* MODULES */
 
 /* GENERAL PURPOSE (should probably be moved out of here) */
-.btn {
-  background: $btn-bg;
-  color: $white;
-  cursor: pointer;
-  font-size: 12px;
-  height: $btn-height;
-  line-height: $btn-height;
-  padding: 0 19px;
-}
 
 .tog {
   background: $white; 
   border-radius: 13px;
-  color: $link-blue;
+  color: $eol-blue;
   cursor: pointer;
   padding: 5px 15px;
 }
 
 .search {
+  $height: 53px;
+  $icon-width: 49px;
+
+  background: $white;
   border: none;
-  border-radius: 16px;
-  height: 32px;
-  padding: 0 16px;
-  width: 205px;
+  height: $height;
+  line-height: $height;
+  width: 100%;
+
+  & > i {
+    color: $eol-blue;
+    display: inline-block;
+    height: 100%;
+    padding-left: 23px;
+    width: $icon-width;
+  }
+
+  & > input {
+    display: inline-block;
+    font-size: 12px;
+    height: 100%;
+    vertical-align: top;
+    width: $left-rail-width - $icon-width;
+  }
 }
 
 /* END GENERAL PURPOSE */
-
-.cardsHdr {
+.railCtrls {
   background: $white;
-  color: $link-blue;
-  height: $cards-hdr-height;
-  line-height: $cards-hdr-height;
-  width: 100%;
+  height: 117px;
 }
 
-
-.ctrls {
-  background: $ctrls-bg;
-  height: $ctrls-height;
-  padding-left: 9px;
+.cardsHdr {
+  color: $eol-blue;
+  display: inline-block;
+  width: $left-rail-width - $new-btn-width;
 }
 
 .libCtrls {
-  color: $left-rail-color;
-  font-size: 14px;
-  float: left;
-  margin: 7px 0 9px 0;
+  padding: 9px 0 9px 28px;
 }
+
+.lib {
+  $height: 33px;
+  height: $height;
+  line-height: $height;
+}
+
+.activeLib {
+  font-size: 16px;
+}
+
+.altLib {
+  box-shadow: 0 1px 2px 0 #c6d1db;
+  color: $eol-blue;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 12px;
+  padding: 0 9px;
+
+
+  & > i {
+    margin-right: 8px;
+  }
+}
+
+/*
   .libCtrlsActive {
     margin: 0 0 4px 8px;
   }
+  */
 
 .decks {
-  background: $decks-bg;
-  color: $left-rail-color;
   font-size: 12px;
-  height: $decks-height;
   list-style: none;
-  padding: 10px;
+  padding: 17px 12px;
+}
+
+.decksAll {
+  height: 77px;
 }
 
 .deck {
-  $height: 24px;
   cursor: pointer;
-  height: $height;
-  line-height: $height;
-  padding-left: 19px;
+  padding: 3px 0 3px 19px;
 
   & > strong {
     font-weight: bold;
@@ -120,12 +152,9 @@ $bar-menu-dark-grey: #9db2b8;
 }
 
   .isDeckSel {
-    $height: 40px;
     background: $white;
     border-radius: 2px;
-    box-shadow: 0 2px 0 0 $deck-sel-shadow-color;
-    height: $height;
-    line-height: $height;
+    padding: 6px 0 6px 19px;
   }
 
 .bar {
@@ -271,13 +300,31 @@ $bar-menu-dark-grey: #9db2b8;
   width: 100%;
 }
 
+.newRow {
+  height: $new-row-height;
+  line-height: $new-row-height;
+}
+
 .new {
-  float: right;
+  background: $eol-blue;
+  color: $white;
+  display: inline-block;
+  height: 100%;
   position: relative;
+  vertical-align: top;
+  width: $new-btn-width;
+}
+
+.newBtn {
+  cursor: pointer;
+  font-size: 12px;
+  height: 100%;
+  text-align: center;
 }
 
 .menu {
-  background: $white; 
+  background: inherit;
+  color: inherit;
   font-size: 12px;
   position: absolute;
   text-align: center;

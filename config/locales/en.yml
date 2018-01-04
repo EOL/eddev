@@ -498,10 +498,8 @@ en:
         one: "1 deck"
         other: "%{count} decks"
       new_upper: NEW
-      your_cards: your cards
+      my_cards: my cards
       public_cards: public cards
-      view_public_cards: view public cards
-      view_your_cards: view your cards
       card: card
       deck: deck
       viewing_all_your_cards: Viewing all of your cards
@@ -509,7 +507,6 @@ en:
       add_desc: add description
       edit_desc: edit description
       save_desc: save description
-
       cancel: cancel
       print: print
       rename: rename

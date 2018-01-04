@@ -673,25 +673,26 @@ class CardManager extends React.Component {
   }
 
   libCtrls = () => {
-    var yourCards       = I18n.t('react.card_maker.your_cards')
+    var yourCards       = I18n.t('react.card_maker.my_cards')
       , publicCards     = I18n.t('react.card_maker.public_cards')
-      , viewPublicCards = I18n.t('react.card_maker.view_public_cards') 
-      , viewYourCards   = I18n.t('react.card_maker.view_your_cards')
       , active          = this.state.library === 'user' ? 
                                yourCards : 
                                publicCards
       , inactive        = this.state.library === 'user' ?
-                               viewPublicCards :
-                               viewYourCards
+                               publicCards :
+                               yourCards
       ;
 
     return (
       <div className={styles.libCtrls} >
-        <div className={styles.libCtrlsActive}>{active}</div>
+        <div className={`${styles.lib} ${styles.activeLib}`}>{active}</div>
         <div 
-          className={styles.tog}
+          className={`${styles.lib} ${styles.altLib}`}
           onClick={this.toggleLibrary}
-        >{inactive}</div>
+        >
+          <i className="fa fa-users" />
+          <span>{inactive}</span>
+        </div>
       </div>
     );
   }
@@ -737,37 +738,49 @@ class CardManager extends React.Component {
           handleCreateCard={this.handleCreateCard}
         />
         <div className={styles.lLeftRail}>
-          <div className={styles.cardsHdr}>
-            <h2>Cards logo goes here</h2>
-          </div>
-          <div className={styles.ctrls}>
-            <div className={styles.new} ref={(node) => { this.setMenuNode('new', node) }}>
-              <div 
-                className={styles.btn}
-                onClick={() => this.toggleMenu('new')}
-              >{I18n.t('react.card_maker.new_upper')}</div>
-              {this.state.menus.new.open &&
-                <ul className={styles.menu} >
-                  <li onClick={this.handleSpeciesSearchOpen}>{I18n.t('react.card_maker.card')}</li>
-                  <li onClick={this.handleOpenNewDeckLightbox}>{I18n.t('react.card_maker.deck')}</li>
-                </ul>
-              }
+          <div className={styles.railCtrls}>
+            <div className={styles.newRow}>
+              <div className={styles.cardsHdr}>
+                <h2>Cards logo goes here</h2>
+              </div>
+              <div className={styles.new} ref={(node) => { this.setMenuNode('new', node) }}>
+                <div 
+                  className={styles.newBtn}
+                  onClick={() => this.toggleMenu('new')}
+                >{I18n.t('react.card_maker.new_upper')}</div>
+                {this.state.menus.new.open &&
+                  <ul className={styles.menu} >
+                    <li onClick={this.handleSpeciesSearchOpen}>{I18n.t('react.card_maker.card')}</li>
+                    <li onClick={this.handleOpenNewDeckLightbox}>{I18n.t('react.card_maker.deck')}</li>
+                  </ul>
+                }
+              </div>
             </div>
             {this.libCtrls()}
+          </div>
+          <ul className={`${styles.decks} ${styles.decksAll}`}>
+            {this.deckItem(allCardsDeck, null)}
+            <li className={`${styles.deck} ${styles.isDisabled}`}>all decks</li>
+          </ul>
+          <div 
+            type='search' 
+            className={styles.search} 
+          >
+            <i className="fa fa-search" />
             <input 
-              type='search' 
-              className={styles.search} 
+              type='text'
+              className={styles.searchInput}
               placeholder='search decks...'
               onChange={this.handleDeckSearchChange}
               value={this.state.deckSearchVal}
             />
           </div>
           <ul className={styles.decks}>
-            {this.deckItem(allCardsDeck, null)}
             {this.deckItems()}
           </ul>
         </div>
         <div className={styles.lResources}>
+          <img className={styles.banner} src={iguanaBanner} />
           <div className={[styles.bar, styles.barMenu].join(' ')}>
             <div 
               className={styles.barMenuAnchorContain}

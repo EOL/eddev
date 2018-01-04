@@ -1,12 +1,14 @@
 @import "layout_vars";
 
+$txt-gray: #53666e;
+
 .lPage {
   background: #538d9e;
-  background-image: linear-gradient(to bottom, #e7e7e7, #7e9fa7);
+  background-image: linear-gradient(to bottom, #ecf2f6, #b9cbd4);
+  color: $txt-gray;
 }
 
 .lMainCol {
   margin: 0 auto;
-  padding-top: 24px;
   width: $main-col-width * 1px;
 }

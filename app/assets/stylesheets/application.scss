@@ -40,6 +40,11 @@ body, p {
   font: normal 100% $open-sans;
 }
 
+main {
+  padding-bottom: percentage(50 / $page-width-px);
+}
+
+
 p a, .std-link {
   @include standard-link;
 }
@@ -54,6 +59,10 @@ textarea {
 
 .is-hidden {
   display: none !important;
+}
+
+.is-nopad-bot {
+  padding-bottom: 0;
 }
 
 .noselect {
@@ -81,7 +90,6 @@ textarea {
   $footer-v-spacing: 23 / $em * 1em;
 
   background-color: #f0f0f0;
-  margin-top: percentage(50 / $page-width-px);
   padding: percentage(23 / $page-width-px) 0 percentage(37 / $page-width-px) 0;
 
   a {

@@ -64,7 +64,7 @@
         #HeroImage.hero-image
           = render @hero_image_partial
 
-      %main{:role => "main"}
+      %main{:role => "main", :class => (main_nopad_bot? ? "is-nopad-bot" : "")}
         - if @disable_main_col
           = yield
         - else

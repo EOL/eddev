@@ -180,6 +180,8 @@ class CardManager extends React.Component {
         , shouldDestroy = confirm(confirmMsg)
         ;
 
+    this.closeMenu('deck');
+
     if (!shouldDestroy) return;
 
     that.props.showLoadingOverlay();
@@ -258,7 +260,7 @@ class CardManager extends React.Component {
         that.reloadResourcesWithCb(that.props.hideLoadingOverlay);
       },
       error: () => {
-        alert(I18n.t('react.card_manager.unexpected_error_msg'));
+        alert(I18n.t('react.card_maker.unexpected_error_msg'));
         that.props.hideLoadingOverlay();
       }
     })
@@ -361,19 +363,16 @@ class CardManager extends React.Component {
     };
   }
 
-
-
-  showAllDecks = () => {
-    this.showDeck(allDecksId);
-  }
-
   showDeck = (id) => {
-    this.setState(() => {
-      return {
-        selectedFilter: 'decks',
-        selectedDeckId: id,
-      }
-    })
+    var deck = this.state.decks.find((deck) => {
+      return deck.id === id;
+    });
+
+    if (deck) {
+      this.setState({
+        selectedDeck: deck 
+      });
+    }
   }
 
   populateDeckFromCollection = (deckId, colId, cb) => {
@@ -388,12 +387,15 @@ class CardManager extends React.Component {
       }),
       success: function(data) {
         that.pollCollectionJob(data.jobId, cb);
+      },
+      error: function() {
+        cb(new Error('failed to populate deck'));
       }
     });
   }
 
   pollCollectionJob = (jobId, cb) => {
-    const that = thisß;
+    const that = this;
 
     $.getJSON(cardMakerUrl('collectionJob/' + jobId + '/status'), function(data) {
       if (data.status === 'running') {
@@ -407,10 +409,6 @@ class CardManager extends React.Component {
   handleCreateDeck = (deckName, colId) => {
     const that = this
         , doneFn = (deckId) => {
-            that.reloadResourcesWithCb(() => {
-              that.showDeck(deckId);
-              that.props.hideLoadingOverlay();
-            });
           }
         ;
 
@@ -421,7 +419,18 @@ class CardManager extends React.Component {
       method: 'POST',
       data: JSON.stringify({ name: deckName }),
       success: (data) => {
-        const cb = () => doneFn(data.id);
+        const cb = (err) => { 
+          if (err) {
+            console.log(err);
+            that.props.hideLoadingOverlay();
+            alert(I18n.t('react.card_maker.unexpected_error_msg'));
+          } else {
+            that.reloadResourcesWithCb(() => {
+              that.showDeck(data.id);
+              that.props.hideLoadingOverlay();
+            })
+          }
+        }
 
         if (colId != null && colId.length) {
           that.populateDeckFromCollection(data.id, colId, cb);
@@ -432,13 +441,15 @@ class CardManager extends React.Component {
       error: function(err) {
         var alertMsg = '';
 
+        that.props.hideLoadingOverlay();
+
         if (err.status === 422 &&
             err.responseJSON &&
             err.responseJSON.errors
         ) { // Validation error
           alertMsg = err.responseJSON.errors.join('\n');
         } else {
-          alertMsg = I18n.t('react.card_manager.unexpected_error_msg')
+          alertMsg = I18n.t('react.card_maker.unexpected_error_msg')
         }
 
         alert(alertMsg);
@@ -447,7 +458,6 @@ class CardManager extends React.Component {
   }
 
   handleSpeciesSearchDeckSelect = (id) => {
-    console.log('select deck ' + id);
     this.setState({
       speciesSearchDeckId: id,
     });
@@ -811,12 +821,15 @@ class CardManager extends React.Component {
                     <li onClick={() => {this.setState({ deckUsersOpen: true })}}
                     >{I18n.t('react.card_maker.manage_deck_users')}</li>
                   }
+                  <li onClick={() => this.handleDestroyDeck(this.state.selectedDeck.id)}>delete deck</li>
                 </ul>
               }
             </div>
+            {/*
             <div className={styles.barMenuCount}>
               {this.selectedResourceCount(resourceResult)}
             </div>
+            */}
           </div>
           {/*
           <div className={styles.desc}>
@@ -824,12 +837,14 @@ class CardManager extends React.Component {
           </div>
           */}
           <div className={styles.resourceFilterBar}>
+            {/*
             <Search 
               handleChange={(val) => this.setState({ cardSearchVal: val})}
               extraClass={styles.searchCard}
               placeholder='search cards' 
               value={this.state.cardSearchVal}
             />
+            */}
           </div>
           <UserResources
             resources={resourceResult.resources}

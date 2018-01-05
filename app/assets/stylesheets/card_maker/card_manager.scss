@@ -16,7 +16,6 @@ $deck-sel-shadow-color: #c6cfd1;
 $light-gray: #ecf2f6;
 $filter-bar-bg: #90b8c5;
 $filter-bar-shadow-color: #48636b;
-$user-resources-bg: #5c7f89;
 $resource-new-msg-bg: #38454e;
 $resource-new-cta-bg: #537698;
 $desc-btn-bg: #d8e2e6;
@@ -24,10 +23,6 @@ $bar-menu-dark-grey: #9db2b8;
 
 
 /* LAYOUTS */
-.lManager {
-  height: $manager-height;
-}
-
 .lLeftRail {
   background: $light-gray;
   display: inline-block;
@@ -39,7 +34,6 @@ $bar-menu-dark-grey: #9db2b8;
 .lResources {
   display: inline-flex;
   flex-direction: column;
-  height: 100%;
   vertical-align: top;
   width: $main-col-width-px - $left-rail-width;
 }
@@ -144,11 +138,14 @@ $bar-menu-dark-grey: #9db2b8;
 .decks {
   font-size: 12px;
   list-style: none;
+  max-height: 500px;
+  overflow: auto;
   padding: 17px 12px;
 }
 
 .decksAll {
   height: 77px;
+  overflow: hidden;
 }
 
 .deck {
@@ -172,16 +169,20 @@ $bar-menu-dark-grey: #9db2b8;
 }
 
 .barMenu {
-  background-color: $light-gray;
+  background: $light-gray;
   box-shadow: $resources-box-shadow;
-  height: $menu-bar-height;
+  /*height: $menu-bar-height;*/
+  height: 0;
   padding-left: 22px;
   position: relative;
 }
 
 .barMenuAnchorContain {
+  background: $white;
+  /*bottom: $menu-bar-height;*/
+  bottom: 0;
   display: inline-block;
-  margin-top: $menu-bar-height - $menu-anchor-height;
+  position: absolute;
   width: 177px;
   z-index: 2;
 }
@@ -196,7 +197,6 @@ $bar-menu-dark-grey: #9db2b8;
 }
 
 .menuAnchor {
-  background: $white;
   cursor: pointer;
   font-size: 16px;
   height: $menu-anchor-height; 
@@ -248,10 +248,9 @@ $bar-menu-dark-grey: #9db2b8;
 }
 
 .resources {
-  background: $user-resources-bg;
   display: flex;
   flex-flow: row wrap;
-  height: 100%;
+  max-height: 600px;
   overflow: auto;
   padding: 0 11px 11px 11px;
   text-align: center;

@@ -110,6 +110,14 @@ class ApplicationController < ActionController::Base
       @js_translations = I18n.t(rootKey).to_json.html_safe
     end
 
+    def main_nopad_bot
+      @main_nopad_bot = true
+    end
+
+    def main_nopad_bot?
+      @main_nopad_bot || false    
+    end
+    helper_method :main_nopad_bot?
   private
   def set_locale
     locale = params[:locale]

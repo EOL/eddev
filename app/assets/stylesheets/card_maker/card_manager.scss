@@ -287,31 +287,30 @@ $bar-menu-dark-grey: #9db2b8;
   vertical-align: top;
 }
 
-.resourceNewBlock {
-  align-items: center;
-  color: $white;
-  display: flex;
-  justify-content: center;
-  padding: 0 10px;
-  text-align: center;
-}
-
-.resourceNewMsg {
-  background: $resource-new-msg-bg;
-  font-size: 14px;
-  height: 66%;
-}
-
-.resourceNewCta {
-  background: $resource-new-cta-bg; 
-  height: 34%;
-}
-
 // TODO: rename. Too generic.
 .fillParent {
   height: 100%;
   vertical-align: top;
   width: 100%;
+}
+
+.newResource {
+  color: $eol-blue;
+  font-size: 14px;
+  text-align: center;
+
+  & > div {
+    height: 31px;
+    padding-top: 6px;
+  }
+
+  & > i {
+    align-items: center;
+    background: $light-gray;
+    display: flex;
+    height: 164px;
+    justify-content: center;
+  }
 }
 
 .newRow {

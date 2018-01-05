@@ -18,17 +18,14 @@ class UserResources extends React.Component {
   }
 
   buildEmptyResourcesPlaceholder = () => {
-    let emptyMsg
-      , createMsg
+    let createMsg
       , handleCreate
       ;
 
     if (this.props.resourceType === 'card') {
-      emptyMsg = I18n.t('react.card_maker.no_cards_yet');
       createMsg = I18n.t('react.card_maker.create_a_card');
       handleCreate = this.props.handleNewCard;
     } else if (this.props.resourceType === 'deck') {
-      emptyMsg = I18n.t('react.card_maker.no_decks_yet')
       createMsg = I18n.t('react.card_maker.create_a_deck');
       handleCreate = this.props.handleNewDeck;
     }
@@ -36,7 +33,6 @@ class UserResources extends React.Component {
     return [(
       <EmptyResourcesPlaceholder
         createMsg={createMsg}
-        emptyMsg={emptyMsg}
         handleCreate={handleCreate}
         key='0'
       />

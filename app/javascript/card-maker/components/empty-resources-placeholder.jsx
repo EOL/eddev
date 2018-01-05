@@ -6,18 +6,11 @@ class EmptyResourcesPlaceholder extends React.Component {
   render() {
     return (
       <div
-        className={styles.fillParent}
+        className={[styles.fillParent, styles.newResource].join(' ')}
         onClick={this.props.handleCreate}
       >
-        <div 
-          className={
-            [styles.resourceNewBlock, styles.resourceNewMsg].join(' ')
-          }
-        >{this.props.emptyMsg}</div>
-        <div 
-          className={
-            [styles.resourceNewBlock, styles.resourceNewCta].join(' ')
-          }>{this.props.createMsg}</div>
+        <div>{this.props.createMsg}</div>
+        <i className='fa fa-plus fa-2x' />
       </div>
     )
   }

@@ -51,7 +51,7 @@ class Card extends React.Component {
               />
             }
             <i
-              className="i fa fa-search fa-3x btn"
+              className="i fa fa-expand fa-3x btn"
               onClick={this.props.handleZoomClick}
             />
             {

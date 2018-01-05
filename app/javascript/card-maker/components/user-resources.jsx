@@ -86,7 +86,8 @@ class UserResources extends React.Component {
 
   handleCardZoomClick = (cardId) => {
     this.setState({
-      cardZoomId: cardId });
+      cardZoomId: cardId 
+    });
   }
 
   handleCardZoomRequestClose = () => {
@@ -98,15 +99,6 @@ class UserResources extends React.Component {
   render() {
     this.resourceCount = this.props.resources.length;
     
-    return (
-      <AdjustsForScrollbarContainer
-        className={styles.resources}
-        itemsPerRow={resourcesPerRow}
-      >
-        {this.buildResources()}
-      </AdjustsForScrollbarContainer>
-    );
-    /*
     return (
       <div>
         <CardZoomLightbox
@@ -121,7 +113,6 @@ class UserResources extends React.Component {
         </AdjustsForScrollbarContainer>
       </div>
     );
-    */
   }
 }
 

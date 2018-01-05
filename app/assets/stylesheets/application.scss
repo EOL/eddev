@@ -17,6 +17,8 @@
 
 $slide-menu-bg-color: #2e303d;
 $section-v-margin: 54px;
+$nav-menu-width: 120px;
+$dark-gray: #2e303d;
 
 @mixin hero-fluid($width, $height) {
   margin: 0 auto;
@@ -144,15 +146,46 @@ textarea {
   display: none;
 }
 
-.eol-nav {
-  left: 0;
-  top: 0;
+.nav-menu {
+  background: $dark-gray;
+  cursor: pointer;
   height: $topbar-height;
+  line-height: $topbar-height;
+  position: absolute;
+  text-align: center;
+  text-decoration: none;
+  width: $nav-menu-width;
 
-  &:hover .eol-dropdown, &.hover .eol-dropdown {
+  & > ul {
+    display: none;
+    font-size: 14px;
+    font-weight: $semibold;
+    position: absolute;
+    z-index: 2;
+  }
+
+  &:hover > ul, &.hover > ul {
     display: block;
   }
 }
+
+.nav-menu-eol {
+  left: 0;
+  top: 0;
+}
+
+.nav-menu-user {
+  right: 0;
+  top: 0;
+
+  & a {
+    color: $white;
+    height: 100%;
+    text-decoration: none;
+    width: 100%;
+  }
+}
+
 
 .eol-nav-a {
   display: block;
@@ -164,14 +197,9 @@ textarea {
   $eol-link-padding-px: 13;
   $font-size-px: 14;
 
-  display: none;
-  position: absolute;
-  font-size: 14px;
-  font-weight: $semibold;
   width: 170px;
   top: $topbar-height-px * 1px;
   left: 0;
-  z-index: 2;
 
   .eol-link {
     $height-em: 37 / $em;
@@ -185,6 +213,14 @@ textarea {
       text-decoration: none;
     }
   }
+}
+
+.user-dropdown {
+  background: $dark-gray;
+  color: $white;
+  min-width: 100%;
+  padding: 5px 10px;
+
 }
 
 .eol-link.selected {
@@ -226,15 +262,6 @@ textarea {
 
 .title-plus {
   color: $eol-green;
-}
-
-.nav-link {
-  $bg-gray: #2e303d;
-  background: $bg-gray;
-  cursor: pointer;
-  position: absolute;
-  text-decoration: none;
-  width: 120px;
 }
 
 .slide-menu {

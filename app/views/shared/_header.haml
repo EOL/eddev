@@ -1,7 +1,7 @@
 #Topbar.topbar<
   .topbar-inner
     #TitleContainer.title-container>
-      #EolNav.eol-nav.nav-link
+      #EolNav.nav-menu.nav-menu-eol.nav-link
         = link_to root_path, :class => "eol-nav-a" do
           = image_tag "welcome/eol_logo.png", :class => "eol-logo"
         %ul#EolDropdown.eol-dropdown
@@ -9,8 +9,13 @@
             = link_to t(".eol_nav.l_and_e"), root_path
           %li.eol-link
             = link_to t(".eol_nav.eol"), "http://www.eol.org"
-      -if !about_page?
-        = link_to t(".about_us"), about_path, :class => "about nav-link", :id => "About"
+      .nav-menu.nav-menu-user
+        -if logged_in_user
+          %div= logged_in_user.user_name
+          %ul.user-dropdown
+            %li= link_to t("shared.header.sign_out"), logout_path
+        -else
+          = link_to t("shared.header.sign_in"), login_path, :class => "about nav-link"
       #BarsIcon.bars.fa.fa-bars
       %h1#Title.title 
         = t ".main_title_html"
@@ -27,3 +32,4 @@
             %i.fa.fa-check.cur-page-check
         -else
           = link_to t(".about"), about_path, :class  => :link
+-# get rid of about_page?

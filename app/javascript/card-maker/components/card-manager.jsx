@@ -685,15 +685,22 @@ class CardManager extends React.Component {
   }
 
   libCtrls = () => {
-    var yourCards       = I18n.t('react.card_maker.my_cards')
-      , publicCards     = I18n.t('react.card_maker.public_cards')
-      , active          = this.state.library === 'user' ? 
-                               yourCards : 
-                               publicCards
-      , inactive        = this.state.library === 'user' ?
-                               publicCards :
-                               yourCards
+    let yourCards   = I18n.t('react.card_maker.my_cards')
+      , publicCards = I18n.t('react.card_maker.public_cards')
+      , faIcon
+      , active
+      , inactive
       ;
+
+    if (this.state.library === 'user') {
+      active = yourCards;
+      inactive = publicCards;
+      faIcon = 'users';
+    } else {
+      active = publicCards;
+      inactive = yourCards;
+      faIcon = 'user';
+    }
 
     return (
       <div className={styles.libCtrls} >
@@ -702,7 +709,7 @@ class CardManager extends React.Component {
           className={`${styles.lib} ${styles.altLib}`}
           onClick={this.toggleLibrary}
         >
-          <i className="fa fa-users" />
+          <i className={`fa fa-${faIcon}`} />
           <span>{inactive}</span>
         </div>
       </div>
@@ -817,7 +824,10 @@ class CardManager extends React.Component {
                         I18n.t('react.card_maker.make_deck_private') :
                         I18n.t('react.card_maker.make_deck_public')
                       }
-                    </li> &&
+                    </li>
+                  }
+                  {
+                    this.props.user.admin && 
                     <li onClick={() => {this.setState({ deckUsersOpen: true })}}
                     >{I18n.t('react.card_maker.manage_deck_users')}</li>
                   }

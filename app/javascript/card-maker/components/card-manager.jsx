@@ -73,11 +73,11 @@ class CardManager extends React.Component {
       , cardsUrl = this.state.library === 'user' ? 'card_summaries' : 'public/cards'
       ;
 
-    $.ajax({
+    this.req = $.ajax({
       url: cardMakerUrl(decksUrl),
       method: 'GET',
       success: (decks) => {
-        $.ajax({
+        this.req = $.ajax({
           url: cardMakerUrl(cardsUrl),
           method: 'GET',
           success: (cards) => {
@@ -110,6 +110,10 @@ class CardManager extends React.Component {
   }
 
   componentWillUnmount() {
+    if (this.req) {
+      this.req.abort();
+    }
+
     document.removeEventListener('click', this.handleDocClick);
   }
 

@@ -65,6 +65,8 @@ GEM
     capistrano-rails (1.2.3)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
+    capistrano-rails-collection (0.1.0)
+      capistrano-rails (~> 1.1)
     climate_control (0.2.0)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
@@ -230,6 +232,7 @@ DEPENDENCIES
   capistrano (~> 3.1)
   capistrano-passenger (~> 0.2.0)
   capistrano-rails (~> 1.1)
+  capistrano-rails-collection
   coffee-rails (~> 4.1.0)
   consistency_fail
   factory_girl_rails (~> 4.0)

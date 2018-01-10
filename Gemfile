@@ -77,6 +77,7 @@ group :development do
   # Capistrano for deployment
   gem 'capistrano', '~> 3.1'
   gem 'capistrano-rails', '~> 1.1'
+  gem 'capistrano-rails-collection'
   gem 'capistrano-passenger', '~> 0.2.0'
 
   gem 'better_errors'

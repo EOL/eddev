@@ -26,10 +26,8 @@
       .divider
       .section<
         .color-bar.blue
-        -if about_page? 
-          .link 
-            = t ".about"
-            %i.fa.fa-check.cur-page-check
+        -if logged_in_user
+          = link_to t("shared.header.sign_out"), logout_path, :class => :link
         -else
-          = link_to t(".about"), about_path, :class  => :link
--# get rid of about_page?
+          = link_to t("shared.header.sign_in"), login_path, :class  => :link
+

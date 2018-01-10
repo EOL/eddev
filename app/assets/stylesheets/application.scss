@@ -326,6 +326,10 @@ $hero-transition-width: 525;
     background: transparent;
   }
 
+  .nav-menu-user {
+    display: none;
+  }
+
   .slide-menu {
     $color-bar-width-px: 3;
     $width-px: 205;
@@ -395,8 +399,9 @@ $hero-transition-width: 525;
     top: 18px;
   }
 
-  .eol-nav {
+  .nav-menu-eol {
     display: inline-block;
+    line-height: normal;
     padding-top: 9 / $em * 1em;
     position: relative;
     height: auto;

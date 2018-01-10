@@ -7,10 +7,6 @@ module ApplicationHelper
     t("activerecord.errors.models.#{model.to_s}.attributes.#{attribute.to_s}.#{message.to_s}", inter_vars)
   end
 
-  def about_page?
-    current_page? :controller => "welcome", :action => "about" 
-  end
-
   # Abstract away different checks for dev and prod
   def asset_exists?(path)
     if Rails.configuration.assets.compile

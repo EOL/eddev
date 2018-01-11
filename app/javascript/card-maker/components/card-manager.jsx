@@ -655,22 +655,19 @@ class CardManager extends React.Component {
     this.menuNodes[name] = node;
   }
 
-  deckMenuContents = () => {
-    let contents = '<span>' + this.state.selectedDeck.name
-      , isMenu = this.state.library === 'user' && this.state.selectedDeck !== allCardsDeck
-      ;
-
-    if (isMenu) {
-      contents += '&nbsp;&nbsp;';
-    }
-
-    contents += '</span>';
-
-    if (isMenu) {
-      contents += "<i class='fa fa-caret-down' />";
-    }
-
-    return contents;
+  deckMenuAnchor = () => {
+    let isMenu = this.state.library === 'user' && this.state.selectedDeck !== allCardsDeck;
+    return (
+      <div 
+        className={styles.menuAnchor}
+        onClick={this.toggleDeckMenu}
+      >
+        <div className={styles.menuDeckName}>
+          {this.state.selectedDeck.name}
+        </div>
+        {isMenu && <i className={`${styles.menuCaret} fa fa-caret-down`} />}
+      </div>
+    );
   }
 
   toggleDeckPublic = () => {
@@ -808,11 +805,7 @@ class CardManager extends React.Component {
               className={styles.barMenuAnchorContain}
               ref={node => this.setMenuNode('deck', node)}
             >
-              <div 
-                className={styles.menuAnchor}
-                onClick={this.toggleDeckMenu}
-                dangerouslySetInnerHTML={{__html: this.deckMenuContents()}}
-              />
+              {this.deckMenuAnchor()}
               {this.state.menus.deck.open &&
                 <ul className={[styles.menu, styles.deckMenu].join(' ')}>
                   { false && <li>{I18n.t('react.card_maker.rename')}</li> }

@@ -144,9 +144,7 @@ class CardManager extends React.Component {
   }
 
   toggleDeckMenu = () => {
-    if (this.state.library === 'user' && this.state.selectedDeck !== allCardsDeck) {
-      this.toggleMenu('deck');
-    }
+    this.toggleMenu('deck');
   }
 
   handleDocClick = e => {
@@ -656,11 +654,11 @@ class CardManager extends React.Component {
   }
 
   deckMenuAnchor = () => {
-    let isMenu = this.state.library === 'user' && this.state.selectedDeck !== allCardsDeck;
+    let isMenu = this.state.selectedDeck !== allCardsDeck;
     return (
       <div 
         className={styles.menuAnchor}
-        onClick={this.toggleDeckMenu}
+        onClick={isMenu ? this.toggleDeckMenu : null}
       >
         <div className={styles.menuDeckName}>{this.state.selectedDeck.name}
         </div>
@@ -738,6 +736,10 @@ class CardManager extends React.Component {
     }, this.reloadResources);
   }
 
+  isUserLib = () => {
+    return this.state.library === 'user';
+  }
+
   // TODO: add cardsHdr icons after building a proper icon font. Last round was a hack job.
   render() {
     var resourceResult = this.selectedResources();
@@ -808,19 +810,19 @@ class CardManager extends React.Component {
               {this.state.menus.deck.open &&
                 <ul className={[styles.menu, styles.deckMenu].join(' ')}>
                   { false && <li>{I18n.t('react.card_maker.rename')}</li> }
-                  <li
+                  { false && <li
                     onClick={this.handleDescBtnClick} 
                   >
                   {this.state.selectedDeck.desc ? 
                       I18n.t('react.card_maker.edit_desc') :
                       I18n.t('react.card_maker.add_desc')
                   }
-                  </li>
+                  </li> }
                   <li
                     onClick={this.makeDeckPdf}
                   >{I18n.t('react.card_maker.print')}</li>
                   {
-                    this.props.user.admin && 
+                    this.props.user.admin && this.isUserLib() &&
                     <li onClick={this.toggleDeckPublic}>
                       {
                         this.state.selectedDeck.public ? 
@@ -830,11 +832,14 @@ class CardManager extends React.Component {
                     </li>
                   }
                   {
-                    this.props.user.admin && 
+                    this.props.user.admin && this.isUserLib() &&
                     <li onClick={() => {this.setState({ deckUsersOpen: true })}}
                     >{I18n.t('react.card_maker.manage_deck_users')}</li>
                   }
-                  <li onClick={() => this.handleDestroyDeck(this.state.selectedDeck.id)}>delete deck</li>
+                  {
+                    this.isUserLib() &&
+                    <li onClick={() => this.handleDestroyDeck(this.state.selectedDeck.id)}>delete deck</li>
+                  }
                 </ul>
               }
             </div>

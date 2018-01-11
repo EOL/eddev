@@ -677,15 +677,22 @@ class CardManager extends React.Component {
     var action = this.state.selectedDeck.public ?
           'make_private' :
           'make_public'
+      , proceed = confirm(
+          this.state.selectedDeck.public ?
+          I18n.t('react.card_maker.confirm_make_private') :
+          I18n.t('react.card_maker.confirm_make_public')
+        )
       ;
 
-    $.ajax({
-      url: cardMakerUrl('decks/' + this.state.selectedDeck.id + '/' + action),
-      method: 'POST',
-      success: () => {
-        this.reloadResources();
-      }
-    });
+    if (proceed) {
+      $.ajax({
+        url: cardMakerUrl('decks/' + this.state.selectedDeck.id + '/' + action),
+        method: 'POST',
+        success: () => {
+          this.reloadResources();
+        }
+      });
+    }
   }
 
   libCtrls = () => {

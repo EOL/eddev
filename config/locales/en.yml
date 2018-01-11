@@ -513,6 +513,8 @@ en:
       make_deck_public: make deck public
       make_deck_private: make deck private
       manage_deck_users: manage deck users
+      confirm_make_public: Are you sure you want to make this deck public?
+      confirm_make_private: Are you sure you want to make this deck private?
   activerecord:
     errors:
       template:

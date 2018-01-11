@@ -145,7 +145,7 @@ $bar-menu-dark-grey: #9db2b8;
 }
 
 .decksAll {
-  height: 77px;
+  height: 57px;
   overflow: hidden;
 }
 
@@ -221,9 +221,9 @@ $bar-menu-dark-grey: #9db2b8;
   overflow: hidden;
   text-overflow: ellipsis;
   vertical-align: middle;
+  white-space: nowrap;
   width: 130px;
 }
-
 
 // TODO: this and other gradients look wrong
 .desc {

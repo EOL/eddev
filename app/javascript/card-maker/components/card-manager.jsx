@@ -662,8 +662,7 @@ class CardManager extends React.Component {
         className={styles.menuAnchor}
         onClick={this.toggleDeckMenu}
       >
-        <div className={styles.menuDeckName}>
-          {this.state.selectedDeck.name}
+        <div className={styles.menuDeckName}>{this.state.selectedDeck.name}
         </div>
         {isMenu && <i className={`${styles.menuCaret} fa fa-caret-down`} />}
       </div>
@@ -787,7 +786,7 @@ class CardManager extends React.Component {
           </div>
           <ul className={`${styles.decks} ${styles.decksAll}`}>
             {this.deckItem(allCardsDeck, null)}
-            <li className={`${styles.deck} ${styles.isDisabled}`}>all decks</li>
+            {/*<li className={`${styles.deck} ${styles.isDisabled}`}>all decks</li>*/}
           </ul>
           <Search 
             handleChange={this.handleDeckSearchChange}

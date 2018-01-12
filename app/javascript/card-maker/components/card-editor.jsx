@@ -165,25 +165,18 @@ class CardEditor extends React.Component {
     this.setPreviewStyle();
   }
 
-  setLeftColHeadBoxNode = (node) => {
-    this.leftColHeadBoxNode = node;
-    this.setPreviewStyle();
-  }
-
   setPreviewStyle = () => {
-    if (!(this.previewNode && this.leftColNode && this.leftColHeadBoxNode)) {
+    if (!(this.previewNode && this.leftColNode)) {
       return;
     }
 
     let scrollTop = $(document).scrollTop()
       , $preview = $(this.previewNode)
       , $col = $(this.leftColNode)
-      , $colHead = $(this.leftColHeadBoxNode)
       , colOffsetTop = $col.offset().top
       , colViewOffset = colOffsetTop - scrollTop
-      , colHeadHeight = $colHead.outerHeight()
       , colHeight = $col.outerHeight()
-      , innerColViewOffset = colViewOffset + colHeadHeight
+      , innerColViewOffset = colViewOffset 
       , previewHeight = $preview.outerHeight()
       , top
       , position
@@ -199,7 +192,7 @@ class CardEditor extends React.Component {
       }
     } else {
       position = 'absolute';
-      top = colHeadHeight;
+      top = 0;
     }
 
     this.setState((prevState, props) => {
@@ -223,33 +216,10 @@ class CardEditor extends React.Component {
   render() {
     return (
       <div id='CardGeneratorWrap' className='card-generator-wrap'>
-        <div className='hdr-spacer green'></div>
         <div id='CardGenerator' className='card-generator card-screen'>
           <div className='screen-inner'>
-            <div className='welcome-block generator-welcome-block'>
-              <div className='manager-btn' onClick={this.handleClose}>
-                <div className='manager-btn-bg'></div>
-                <div className='manager-btn-back-txt'> {I18n.t('react.card_maker.go_back_to')}</div>
-                <div className='manager-btn-txt-wrap'>
-                  <i className='icon-deck' />
-                  <div className='manager-btn-txt'>{I18n.t('react.card_maker.card_manager')}</div>
-                </div>
-              </div>
-              <h3 className='welcome-txt'
-                dangerouslySetInnerHTML={{
-                  __html: I18n.t('react.card_maker.welcome_card_editor_html', {
-                    eolHdrIconPath: eolHdrIcon,
-                  })}}
-              />
-              <img src={ladybugIcon} className='ladybug' />
-            </div>
             <div className='cols'>
               <div className='col left-col' ref={this.setLeftColNode}>
-                <div className='col-head-box' ref={this.setLeftColHeadBoxNode}>
-                  <div className='col-head-txt'>{I18n.t('react.card_maker.card_preview')}</div>
-                  <div className='col-head-sub-txt'>{I18n.t('react.card_maker.card_preview_parens')}</div>
-                </div>
-
                 <CardPreview
                   card={this.props.card}
                   setCardData={(this.props.card ? this.setCardData : null)}
@@ -271,10 +241,6 @@ class CardEditor extends React.Component {
                   this.state.rightColDisabled &&
                   <div className='disable-overlay'></div>
                 }
-                <div className='col-head-box'>
-                  <div className='col-head-txt'>{I18n.t('react.card_maker.card_form')}</div>
-                  <div className='col-head-sub-txt'>{I18n.t('react.card_maker.card_form_parens')}</div>
-                </div>
                 <div className='card-fields-wrap'>
                   {this.props.card &&
                     <CardFields

@@ -623,6 +623,7 @@ $col-border-width: 5px;
   align-items: stretch;
   background-color: #43525f;
   display: flex;
+  padding-top: 20px;
   position: relative;
 }
 
@@ -759,7 +760,6 @@ $col-border-width: 5px;
 
   .preview {
     position: absolute;
-    top: $head-box-height;
     width: 436px;
   }
 

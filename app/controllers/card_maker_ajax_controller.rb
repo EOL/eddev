@@ -5,7 +5,15 @@ require "eol_api_caller" # TODO: is this needed?
 
 class CardMakerAjaxController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :ensure_user
+  before_action :ensure_user, :except => [
+    :get_public_cards, 
+    :get_public_decks,
+    :render_svg,
+    :create_deck_pdf,
+    :deck_pdf_status,
+    :deck_pdf_result
+  ]
+
   before_action :ensure_admin, :only => [ 
     :make_deck_public, 
     :make_deck_private, 
@@ -53,7 +61,7 @@ class CardMakerAjaxController < ApplicationController
 
   # GET /card_maker_ajax/cards/:card_id/svg
   def render_svg
-    svc_res = CardServiceCaller.svg(logged_in_user.id, params[:card_id])
+    svc_res = CardServiceCaller.svg(params[:card_id])
     data_pass_thru_response(svc_res)
   end
 
@@ -182,7 +190,6 @@ class CardMakerAjaxController < ApplicationController
   # POST /card_maker_ajax/deck_pdfs
   def create_deck_pdf
     json_response(CardServiceCaller.create_deck_pdf(
-      logged_in_user.id,
       request.raw_post
     ))
   end
@@ -190,14 +197,13 @@ class CardMakerAjaxController < ApplicationController
   # GET /card_maker_ajax/deck_pdfs/:id/status
   def deck_pdf_status
     json_response(CardServiceCaller.deck_pdf_status(
-      logged_in_user.id,
       params[:id]
     ))
   end
 
   # GET /card_maker_ajax/deck_pdfs/:id/result
   def deck_pdf_result
-    svc_res = CardServiceCaller.deck_pdf_result(logged_in_user.id, params[:id])
+    svc_res = CardServiceCaller.deck_pdf_result(params[:id])
     data_pass_thru_response(svc_res)
   end
 

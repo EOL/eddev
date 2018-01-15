@@ -48,7 +48,7 @@ class CardManager extends React.Component {
       deckDescVal: null,
       deckSearchVal: '',
       cardSearchVal: '',
-      library: 'user',
+      library: 'public',
       deckUsersOpen: false,
       menus: {
         new: {
@@ -112,13 +112,27 @@ class CardManager extends React.Component {
   componentWillUnmount() {
     if (this.req) {
       this.req.abort();
+      this.req = null;
     }
 
     document.removeEventListener('click', this.handleDocClick);
   }
 
   componentDidMount() {
-    this.reloadResources();
+    if (this.props.userRole) {
+      this.setState({
+        library: 'user'
+      }, this.reloadResources);
+    } else {
+      this.reloadResources();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.userRole && nextProps.userRole) {
+      console.log('set library');
+      this.setLibrary('user');
+    }
   }
 
   closeMenu = (name) => {
@@ -722,7 +736,12 @@ class CardManager extends React.Component {
   }
     
   toggleLibrary = () => {
-    var newLib;
+    if (!this.props.userRole) {
+      window.location = './login?return_to=/card_maker';
+      return;
+    }
+
+    let newLib;
 
     if (this.state.library === 'user') {
       newLib = 'public';
@@ -730,10 +749,16 @@ class CardManager extends React.Component {
       newLib = 'user';
     }
 
-    this.setState({
-      library: newLib,
-      selectedDeck: allCardsDeck
-    }, this.reloadResources);
+    this.setLibrary(newLib);
+  }
+
+  setLibrary = (newLib) => {
+    if (this.state.library !== newLib) {
+      this.setState({
+        library: newLib,
+        selectedDeck: allCardsDeck
+      }, this.reloadResources);
+    }
   }
 
   isUserLib = () => {
@@ -822,7 +847,7 @@ class CardManager extends React.Component {
                     onClick={this.makeDeckPdf}
                   >{I18n.t('react.card_maker.print')}</li>
                   {
-                    this.props.user.admin && this.isUserLib() &&
+                    this.props.userRole === 'admin' && this.isUserLib() &&
                     <li onClick={this.toggleDeckPublic}>
                       {
                         this.state.selectedDeck.public ? 
@@ -832,7 +857,7 @@ class CardManager extends React.Component {
                     </li>
                   }
                   {
-                    this.props.user.admin && this.isUserLib() &&
+                    this.props.userRole === 'admin' && this.isUserLib() &&
                     <li onClick={() => {this.setState({ deckUsersOpen: true })}}
                     >{I18n.t('react.card_maker.manage_deck_users')}</li>
                   }

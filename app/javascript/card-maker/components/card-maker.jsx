@@ -17,7 +17,7 @@ class CardMaker extends React.Component {
     this.state = {
       screen: 'manager',
       showLoadingOverlay: false,
-      user: {}
+      userRole: null
     }
   }
 
@@ -28,9 +28,9 @@ class CardMaker extends React.Component {
     // If this is a page refresh, and the editor was previously open,
     // open it now.
     this.handleHistoryStateChange(history.state); 
-    $.getJSON('/user_sessions/user_info', (user) => {
+    $.getJSON('/user_sessions/user_info', (userInfo) => {
       this.setState({
-        user: user
+        userRole: userInfo.role
       });
     });
   }
@@ -112,7 +112,7 @@ class CardMaker extends React.Component {
       component = (
         <CardManager
           handleEditCard={this.handleEditCard}
-          user={this.state.user}
+          userRole={this.state.userRole}
           {...commonProps}
         />
       )

@@ -52,9 +52,9 @@ module CardServiceCaller
     )
   end
 
-  def self.svg(user_id, card_id)
+  def self.svg(card_id)
     HTTParty.get(
-      "#{self.user_prefix(user_id)}/cards/#{card_id}/svg",
+      "#{SERVICE_URL}/cards/#{card_id}/svg",
       :headers => self.add_api_headers(JSON_HEADERS)
     )
   end
@@ -166,24 +166,24 @@ module CardServiceCaller
     )
   end
 
-  def self.create_deck_pdf(user_id, post_body)
+  def self.create_deck_pdf(post_body)
     HTTParty.post(
-      "#{self.user_prefix(user_id)}/deckPdfs",
+      "#{SERVICE_URL}/deckPdfs",
       :body => post_body,
       :headers => self.add_api_headers(JSON_HEADERS)
     )
   end
 
-  def self.deck_pdf_status(user_id, job_id)
+  def self.deck_pdf_status(job_id)
     HTTParty.get(
-      "#{self.user_prefix(user_id)}/deckPdfs/#{job_id}/status",
+      "#{SERVICE_URL}/deckPdfs/#{job_id}/status",
       :headers => self.add_api_headers(JSON_HEADERS)
     )
   end
 
-  def self.deck_pdf_result(user_id, job_id)
+  def self.deck_pdf_result(job_id)
     HTTParty.get(
-      "#{self.user_prefix(user_id)}/deckPdfs/#{job_id}/result",
+      "#{SERVICE_URL}/deckPdfs/#{job_id}/result",
       :headers => self.add_api_headers(JSON_HEADERS)
     )
   end

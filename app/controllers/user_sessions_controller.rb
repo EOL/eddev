@@ -48,14 +48,14 @@ class UserSessionsController < ApplicationController
   def user_info
     respond_to do |format|
       format.json do
-        if !logged_in_user
-          head :not_found
+        role = if !logged_in_user
+          nil
+        elsif logged_in_user.admin?
+          "admin"
         else
-          render :json => { 
-            :user_name => logged_in_user.user_name,
-            :admin => logged_in_user.admin?
-          }
+          "user"
         end
+        render :json => { role: role }
       end
     end
   end

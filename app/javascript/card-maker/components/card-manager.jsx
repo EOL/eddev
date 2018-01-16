@@ -130,7 +130,6 @@ class CardManager extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.userRole && nextProps.userRole) {
-      console.log('set library');
       this.setLibrary('user');
     }
   }

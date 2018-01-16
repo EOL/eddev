@@ -12,88 +12,88 @@
 
 ActiveRecord::Schema.define(version: 20170914110758) do
 
-  create_table "decks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.string   "human_name"
-    t.string   "file_name"
-    t.string   "image_file_name"
-    t.string   "title_key"
-    t.string   "desc_key"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.string   "subtitle_key"
-  end
-
-  create_table "lesson_plan_grade_levels", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.string   "name_key"
+  create_table "decks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "human_name"
+    t.string "file_name"
+    t.string "image_file_name"
+    t.string "title_key"
+    t.string "desc_key"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "human_name"
+    t.string "subtitle_key"
   end
 
-  create_table "lesson_plan_perks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.string   "name_key"
-    t.string   "icon_name"
+  create_table "lesson_plan_grade_levels", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name_key"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "human_name"
+    t.string "human_name"
   end
 
-  create_table "lesson_plan_themes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.string   "name_key"
-    t.string   "icon_file"
+  create_table "lesson_plan_perks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name_key"
+    t.string "icon_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "human_name"
+    t.string "human_name"
   end
 
-  create_table "lesson_plans", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.integer  "theme_id"
-    t.string   "name_key"
-    t.string   "objective_keys"
-    t.string   "desc_key"
-    t.string   "file_name"
-    t.string   "external_url"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.string   "overview_file_name"
-    t.integer  "grade_level_id"
-    t.string   "human_name"
-    t.index ["grade_level_id"], name: "index_lesson_plans_on_grade_level_id", using: :btree
-    t.index ["theme_id"], name: "index_lesson_plans_on_theme_id", using: :btree
+  create_table "lesson_plan_themes", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name_key"
+    t.string "icon_file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "human_name"
   end
 
-  create_table "lesson_plans_lesson_plan_perks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "lesson_plans", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "theme_id"
+    t.string "name_key"
+    t.string "objective_keys"
+    t.string "desc_key"
+    t.string "file_name"
+    t.string "external_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "overview_file_name"
+    t.integer "grade_level_id"
+    t.string "human_name"
+    t.index ["grade_level_id"], name: "index_lesson_plans_on_grade_level_id"
+    t.index ["theme_id"], name: "index_lesson_plans_on_theme_id"
+  end
+
+  create_table "lesson_plans_lesson_plan_perks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "lesson_plan_id"
     t.integer "lesson_plan_perk_id"
   end
 
-  create_table "password_reset_tokens", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.integer  "user_id"
-    t.string   "token"
-    t.datetime "used_at",          precision: 6
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-    t.boolean  "force_expiration"
-    t.index ["token"], name: "index_password_reset_tokens_on_token_unique", unique: true, using: :btree
-    t.index ["user_id"], name: "index_password_reset_tokens_on_user_id", using: :btree
+  create_table "password_reset_tokens", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "user_id"
+    t.string "token"
+    t.datetime "used_at", precision: 6
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "force_expiration"
+    t.index ["token"], name: "index_password_reset_tokens_on_token_unique", unique: true
+    t.index ["user_id"], name: "index_password_reset_tokens_on_user_id"
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.string   "email"
-    t.string   "user_name"
-    t.string   "full_name"
-    t.string   "api_key"
-    t.string   "password_digest"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.string   "locale"
-    t.integer  "role",                   default: 0
-    t.string   "legacy_password_digest"
-    t.integer  "legacy_id"
-    t.string   "confirm_token"
-    t.datetime "confirmed_at"
-    t.index ["confirm_token"], name: "index_users_on_confirm_token", unique: true, using: :btree
-    t.index ["user_name"], name: "index_users_on_user_name", unique: true, using: :btree
+  create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "email"
+    t.string "user_name"
+    t.string "full_name"
+    t.string "api_key"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "locale"
+    t.integer "role", default: 0
+    t.string "legacy_password_digest"
+    t.integer "legacy_id"
+    t.string "confirm_token"
+    t.timestamp "confirmed_at"
+    t.index ["confirm_token"], name: "index_users_on_confirm_token", unique: true
+    t.index ["user_name"], name: "index_users_on_user_name", unique: true
   end
 
   add_foreign_key "password_reset_tokens", "users"

@@ -1,4 +1,4 @@
-class AddUserToPlacePermissions < ActiveRecord::Migration
+class AddUserToPlacePermissions < ActiveRecord::Migration[4.2]
   def change
     add_reference :place_permissions, :user, index: true, foreign_key: true
   end

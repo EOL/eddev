@@ -1,4 +1,4 @@
-class RemoveNameAndDescriptionFromLicenses < ActiveRecord::Migration
+class RemoveNameAndDescriptionFromLicenses < ActiveRecord::Migration[4.2]
   def up
     remove_column :licenses, :name
     remove_column :licenses, :description

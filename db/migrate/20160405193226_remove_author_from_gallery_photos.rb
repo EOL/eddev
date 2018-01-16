@@ -1,4 +1,4 @@
-class RemoveAuthorFromGalleryPhotos < ActiveRecord::Migration
+class RemoveAuthorFromGalleryPhotos < ActiveRecord::Migration[4.2]
   def up
     remove_column :gallery_photos, :author
   end

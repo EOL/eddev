@@ -1,4 +1,4 @@
-class EditorContentValuesBelongToContentModelStates < ActiveRecord::Migration
+class EditorContentValuesBelongToContentModelStates < ActiveRecord::Migration[4.2]
   def change
     change_table :editor_content_values do |t|
       t.remove_references :editor_content_key, :foreign_key => true

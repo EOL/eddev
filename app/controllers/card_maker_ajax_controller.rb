@@ -8,7 +8,7 @@ class CardMakerAjaxController < ApplicationController
   before_action :ensure_user, :except => [
     :get_public_cards, 
     :get_public_decks,
-    :render_svg,
+    :get_card,
     :create_deck_pdf,
     :deck_pdf_status,
     :deck_pdf_result
@@ -59,10 +59,18 @@ class CardMakerAjaxController < ApplicationController
     )
   end
 
-  # GET /card_maker_ajax/cards/:card_id/svg
-  def render_svg
-    svc_res = CardServiceCaller.svg(params[:card_id])
-    data_pass_thru_response(svc_res)
+  def get_card
+    respond_to do |format|
+      format.json do
+        ensure_user
+        json_response(CardServiceCaller.json(logged_in_user.id, params[:card_id]))
+      end
+
+      format.svg do 
+        svc_res = CardServiceCaller.svg(params[:card_id])
+        data_pass_thru_response(svc_res)
+      end
+    end
   end
 
   # GET /card_maker_ajax/cards/:card_id/png
@@ -108,10 +116,6 @@ class CardMakerAjaxController < ApplicationController
     json_response(CardServiceCaller.get_decks(logged_in_user.id))
   end
 
-  # GET /card_maker_ajax/cards/:card_id/json
-  def card_json
-    json_response(CardServiceCaller.json(logged_in_user.id, params[:card_id]))
-  end
 
   # DELETE /card_maker_ajax/cards/:card_id
   def delete_card

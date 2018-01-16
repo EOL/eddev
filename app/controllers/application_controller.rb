@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :store_user_sessions_referrer
-#  before_filter :ensure_user
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -61,37 +60,6 @@ class ApplicationController < ActionController::Base
     def forbidden_unless(condition)
       raise ApplicationController::ForbiddenError unless condition
     end
-
-    # This method should be called in every controller action that results in a ContentModel draft page.
-    def set_draft_page(draft_model)
-      @draft_page = true
-      @draft_model = draft_model
-      set_content_editor_state(draft_model.state_for_cur_locale)
-    end
-
-    # This method should be called in every controller action that results in a published ContentModel page for which there exists a draft view.
-    def set_draftable_page(draft_model)
-      @draftable_page = true
-      @draft_model = draft_model
-    end
-
-    # True if the current page is a draft view of a ContentModel and the current user has edit privileges, false o/w.
-    def draft_page?
-      logged_in_user && @draft_page && @draft_model.can_be_edited_by?(logged_in_user)
-    end
-    helper_method :draft_page?
-
-    # True if the current page is a published view of a ContentModel for which there exists a draft view and the current user would be able to edit it.
-    def draftable_page?
-      logged_in_user && @draftable_page && @draft_model.can_be_edited_by?(logged_in_user)
-    end
-    helper_method :draftable_page?
-
-    # Used to populate the window.ContentEditorState JS variable in the footer, which is used by the content editor JS.
-    def content_editor_state
-      @content_editor_state
-    end
-    helper_method :content_editor_state
 
     def disable_main_col
       @disable_main_col = true
@@ -154,11 +122,11 @@ class ApplicationController < ActionController::Base
   def store_user_sessions_referrer
     if (
       request.get? && 
+      request.format.html? &&
       request.controller_class != UserSessionsController &&
       request.controller_class != UsersController &&
       !request.xhr?
     )
-      puts "STORE LOCATION"
       session[:user_sessions_referrer] = request.fullpath
     end
   end

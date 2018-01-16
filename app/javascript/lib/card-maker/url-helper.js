@@ -3,5 +3,5 @@ export function cardMakerUrl(path) {
 }
 
 export function cardImageUrl(cardId) {
-  return cardMakerUrl('cards/' + cardId + '/svg');
+  return cardMakerUrl('cards/' + cardId + '.svg');
 }

@@ -66,7 +66,7 @@ class CardMaker extends React.Component {
   }
 
   loadCard(cardId, cb) {
-    const cardUrl = cardMakerUrl('cards/' + cardId + '/json')
+    const cardUrl = cardMakerUrl('cards/' + cardId + '.json')
         , that = this
         ;
 

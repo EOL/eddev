@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :set_locale
-  before_action :store_location_for_login
+  before_action :store_user_sessions_referrer
 #  before_filter :ensure_user
 
   # Prevent CSRF attacks by raising an exception.
@@ -23,13 +23,13 @@ class ApplicationController < ActionController::Base
     nil
 
     if session[:user_id]
-      @logged_in_user ||= User.find(session[:user_id])
+      @logged_in_user ||= User.find_by(:id => session[:user_id])
     end
   end
   helper_method :logged_in_user
 
   def ensure_user
-    redirect_to login_path(:return_to => request.fullpath) unless logged_in_user
+    redirect_to login_path unless logged_in_user
   end
 
   def ensure_admin
@@ -151,18 +151,15 @@ class ApplicationController < ActionController::Base
     render(:file => File.join(Rails.root, 'public/404'), :status => 404, :layout => false)
   end
 
-  def store_location_for_login
-    puts "get? #{request.get?}"
-    puts "controller_class #{request.controller_class}"
-    puts "xhr? #{request.xhr?}"
-
+  def store_user_sessions_referrer
     if (
       request.get? && 
       request.controller_class != UserSessionsController &&
+      request.controller_class != UsersController &&
       !request.xhr?
     )
       puts "STORE LOCATION"
-      session[:login_location] = request.fullpath
+      session[:user_sessions_referrer] = request.fullpath
     end
   end
 end

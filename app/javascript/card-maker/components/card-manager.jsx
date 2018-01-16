@@ -737,7 +737,7 @@ class CardManager extends React.Component {
     
   toggleLibrary = () => {
     if (!this.props.userRole) {
-      window.location = './login?return_to=/card_maker';
+      window.location = './login';
       return;
     }
 

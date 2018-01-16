@@ -17,9 +17,6 @@
       = f.label :password, t(".password")
       = f.password_field :password, :class => "input"
 
-    - if @return_to
-      = hidden_field_tag :return_to, @return_to
-
     .links
       .link-wrap
         = link_to t(".forgot_password"), forgot_password_path, :class => "link"

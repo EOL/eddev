@@ -570,6 +570,13 @@ Deck.create!([
     :file_name => "aquatic_insects"
   },
   {
+    :title_key => "boston_harbor_islands",
+    :subtitle_key => "coastal_adaptations",
+    :desc_key => "bhi_coast_adapt",
+    :image_file_name => "boston_harbor_islands_adaptations",
+    :file_name => "boston_harbor_islands_adaptations"
+  },
+  {
     :title_key => "bioblitz",
     :subtitle_key => "common_animal_groups",
     :desc_key => "bioblitz_common",

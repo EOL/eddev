@@ -13,6 +13,7 @@
         -if logged_in_user
           %div= logged_in_user.user_name
           %ul.user-dropdown
+            %li= link_to t("shared.header.settings"), account_path
             %li= link_to t("shared.header.sign_out"), logout_path
         -else
           = link_to t("shared.header.sign_in"), login_path, :class => "about nav-link"
@@ -22,7 +23,10 @@
     #SlideMenu.slide-menu>
       .section<
         .color-bar.green
-        = link_to "EOL.org", "http://www.eol.org/", :class => :link
+        - if logged_in_user
+          = link_to t("shared.header.settings"), account_path, :class => :link
+        - else
+          = link_to "EOL.org", "http://www.eol.org/", :class => :link
       .divider
       .section<
         .color-bar.blue

@@ -84,9 +84,7 @@ input[type="submit"] {
   margin-top: 5px
 }
 
-.notice {
-  border: 1px solid $black;
-  margin: 40px auto;
-  padding: 20px 30px;
-  width: 500px;
+.form-notice {
+  margin-top: 25px;
+  width: 100%;
 }

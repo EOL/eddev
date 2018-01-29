@@ -1,12 +1,10 @@
 .l-form-box
-  - if notice
-    .notice= notice
-
   %h1= t(".sign_in")
 
-  - if @error_msg
-    %ul.errors
-      %li.error= @error_msg
+  - if notice
+    .txt.form-notice= notice
+
+  .txt.txt-block= @error_msg
 
   = form_for(:user_session, :html => { :class => "form" }) do |f|
     = f.text_field :user_name, :class => "block input", :placeholder => t(".user_name")

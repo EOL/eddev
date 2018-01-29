@@ -3,7 +3,7 @@
 
   = render "errors"
 
-  = form_for(@user, :html => { :class => "form", :novalidate => true}) do |f|
+  = form_for(@user, :html => { :class => "form" }) do |f|
     = f.email_field :email, :required => true, :class => "input block", :placeholder => true
     = f.text_field :user_name,
         :pattern  => User::USER_NAME_PATTERN,

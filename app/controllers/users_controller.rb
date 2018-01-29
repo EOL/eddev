@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   #before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :ensure_admin, :only => [ :list ]
-  before_action :require_user, :only => [:change_password_form, :change_password]
+  before_action :require_user, :only => [:change_password_form, :change_password, :show]
   before_action :set_password_reset_vars, :only => [:reset_password_form, :reset_password]
 
   # GET /users/new
@@ -38,6 +38,9 @@ class UsersController < ApplicationController
     end
   end
 
+  def account
+  end
+
   def confirm
     @user = User.find_by_confirm_token!(params[:token])
 
@@ -70,13 +73,20 @@ class UsersController < ApplicationController
 
   def change_password
     auth_success = @user.authenticate(params[:user][:current_password])
+
     if !auth_success
-      @user.errors.add(:current_password, :invalid, :message => "Current password is invalid")
-    elsif @user.update(change_password_params.merge(:force_password_validation => true))
-      @msg = t(".success")
+      @user.errors.add(:current_password, :invalid)
     end
 
-    render :change_password_form
+    success = auth_success && 
+      @user.update(change_password_params.merge(:force_password_validation => true))
+
+    if success
+      flash[:notice] = t(".success")
+      redirect_to account_path
+    else
+      render :change_password_form
+    end
   end
 
   def reset_password_form
@@ -117,25 +127,25 @@ class UsersController < ApplicationController
   end
 
   private
-  def set_user
-    @user = User.find(params[:id])
-  end
+    def set_user
+      @user = User.find(params[:id])
+    end
 
-  def require_user
-    @user = logged_in_user
-    raise NotFoundError if @user.nil?
-  end
+    def require_user
+      @user = logged_in_user
+      raise NotFoundError if @user.nil?
+    end
 
-  def set_password_reset_vars
-    @reset_token = PasswordResetToken.find_valid_by_token(params[:token])
-    @user = @reset_token.user
-  end
+    def set_password_reset_vars
+      @reset_token = PasswordResetToken.find_valid_by_token(params[:token])
+      @user = @reset_token.user
+    end
 
-  def user_params
-    params.fetch(:user, {}).permit(:email, :user_name, :full_name, :password, :password_confirmation)
-  end
+    def user_params
+      params.fetch(:user, {}).permit(:email, :user_name, :full_name, :password, :password_confirmation)
+    end
 
-  def change_password_params
-    params.fetch(:user, {}).permit(:password, :password_confirmation)
-  end
+    def change_password_params
+      params.fetch(:user, {}).permit(:password, :password_confirmation)
+    end
 end

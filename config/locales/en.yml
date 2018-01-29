@@ -208,8 +208,14 @@ en:
       sign_in_success: "Successfully signed in"
 
   users:
+    account:
+      change_password: "Change password"
     new:
       sign_up: "Sign up"
+    change_password_form:
+      change_password: "Change password"
+      current_password: "Current password"
+      success: "Password successfully changed"
     confirmation_pending:
       check_your_email: "Thanks for signing up, %{user_name}! Please check your email (%{email}) for instructions on how to complete your registration."
     confirm:

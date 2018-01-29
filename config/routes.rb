@@ -13,9 +13,10 @@ Rails.application.routes.draw do
     post "users/forgot_password"        => "users#mail_password_reset_token"
     get  "users/reset_password/:token"  => "users#reset_password_form", :as => :reset_password_form
     patch "users/reset_password/:token" => "users#reset_password"
-    get "users/change_password"         => "users#change_password_form"
+    get "users/change_password"         => "users#change_password_form", :as => :change_password_form
     patch "users/change_password"       => "users#change_password"
     get "users/list"                    => "users#list"
+    get "users/account"                 => "users#account", :as => :account
     get  "login"                        => "user_sessions#new"
     post "login"                        => "user_sessions#create"
     get  "logout"                       => "user_sessions#destroy"

@@ -1,0 +1,11 @@
+.l-account
+  -if notice
+    .user-card.user-card-notice= notice
+  .user-card
+    .user-card-user-name= logged_in_user.user_name
+    .user-card-full-name= logged_in_user.full_name
+
+    .user-card-bottom
+      .user-card-email= logged_in_user.email
+      = link_to t(".change_password"), change_password_form_path, :class => "std-link"
+

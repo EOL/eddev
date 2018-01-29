@@ -3,3 +3,34 @@
 *= require_self
 */
 @import 'shared/layout_vars';
+
+.l-account {
+  background: #e7ecef;
+  padding: 130px 0;
+}
+
+.user-card {
+  background: $white;
+  margin: 0 auto;
+  padding: 18px;
+  width: 409px;
+}
+
+.user-card-notice {
+  margin-bottom: 50px;
+  font-size: 14px; 
+  text-align: center;
+}
+
+.user-card-bottom {
+  font-size: 12px;
+  margin-top: 30px;
+}
+
+.user-card-user-name {
+  font-size: 18px;
+}
+
+.user-card-full-name {
+  font-size: 14px;
+}

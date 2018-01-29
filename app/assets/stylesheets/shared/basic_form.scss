@@ -19,15 +19,15 @@ $block-height: 55px;
   }
 }
 
-.block-txt {
+.txt, .txt > a {
+  color: #525252;
+  font-size: 14px;
+}
+
+.txt-block {
   display: block;
   margin-top: 12px;
   text-align: center;
-}
-
-.block-txt, .block-txt > a {
-  color: #525252;
-  font-size: 14px;
 }
 
 .block {
@@ -76,10 +76,8 @@ input[type="submit"] {
 }
 
 .errors {
-  border: 2px solid #f00;
-  color: #f00;
-  margin-top: 20px;
-  padding: 15px 20px 20px 20px;
+  list-style: disc outside;
+  margin-top: 25px;
 }
 
 .error {

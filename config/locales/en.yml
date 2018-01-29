@@ -197,11 +197,12 @@ en:
     descriptions:
   user_sessions:
     new:
-      sign_in: "Sign In"
-      user_name: "User name"
-      password: "Password"
+      dont_have_account_html: "Don't have an account? <a href='%{sign_up_path}'>Sign up</a>."
       forgot_password: "Forgot your password?"
-      sign_up: "Don't have an account?"
+      password: "Password"
+      sign_in: "Sign in"
+      sign_up: "Sign up"
+      user_name: "User name"
     create:
       invalid_creds: "Invalid user name and/or password"
       sign_in_success: "Successfully signed in"

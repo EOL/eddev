@@ -1,30 +1,57 @@
 @import 'shared/layout_vars';
 
-.hdr {
-  font-size: 24px;
-  font-weight: $semibold;
+$block-height: 55px;
+
+.l-form-box {
+  background: #f1f7fb;
+  margin: 53px auto 0 auto;
+  padding: 23px 58px 15px 58px;
+  width: 445px;
+
+  & > form {
+    margin-top: 25px;
+  }
+
+  & > h1 {
+    font-size: 16px;
+    font-weight: normal;
+    text-align: center;
+  }
+}
+
+.block-txt {
+  display: block;
+  margin-top: 12px;
   text-align: center;
 }
 
-.form-wrap {
-  margin: 20px auto;
-  width: 500px;
+.block-txt, .block-txt > a {
+  color: #525252;
+  font-size: 14px;
 }
 
-.form {
-  margin-top: 25px;
+.block {
+  border-radius: 1.4px;
+  display: block;
+  font-size: 13px;
+  height: $block-height;
+  line-height: $block-height;
+  width: 100%;
+}
+
+input[type="submit"] {
+  -webkit-appearance: none; 
+  background: $eol-blue;
+  border: none;
+  color: $white;
+  margin-top: 11px;
 }
 
 .input {
-  height: 25px;
-  width: 300px;
-}
-
-.field {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 12px;
-  width: 100%;
+  $height: 55px;
+  border: solid 0.7px #acacac;
+  margin-top: 7px;
+  padding: 0 26px;
 }
 
 .field_with_errors {
@@ -43,10 +70,6 @@
   margin-top: 20px;
 }
 
-.submit {
-  display: block;
-  width: 100%;
-}
 
 .links {
   margin: 20px 0;

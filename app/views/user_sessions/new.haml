@@ -1,26 +1,24 @@
-.form-wrap
+.l-form-box
   - if notice
     .notice= notice
 
-  %h1.hdr= t(".sign_in")
+  %h1= t(".sign_in")
 
   - if @error_msg
     %ul.errors
       %li.error= @error_msg
 
   = form_for(:user_session, :html => { :class => "form" }) do |f|
-    .field
-      = f.label :user_name, t(".user_name")
-      = f.text_field :user_name, :class => "input"
+    = f.text_field :user_name, :class => "block input", :placeholder => t(".user_name")
+    = f.password_field :password, :class => "block input", :placeholder => t(".password")
+    -#
+      .links
+        .link-wrap
+        .link-wrap
+          = link_to t(".sign_up"), new_user_path, :class => "link"
 
-    .field
-      = f.label :password, t(".password")
-      = f.password_field :password, :class => "input"
+    = f.submit t(".sign_in"), :class => "block submit"
 
-    .links
-      .link-wrap
-        = link_to t(".forgot_password"), forgot_password_path, :class => "link"
-      .link-wrap
-        = link_to t(".sign_up"), new_user_path, :class => "link"
+  = link_to t(".forgot_password"), forgot_password_path, :class => "block-txt"
 
-    = f.submit t(".sign_in"), :class => "submit"
+.block-txt= t(".dont_have_account_html", :sign_up_path => new_user_path)

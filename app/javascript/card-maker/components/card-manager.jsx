@@ -10,6 +10,7 @@ import NewDeckLightbox from './new-deck-lightbox'
 import DeckUsersLightbox from './deck-users-lightbox'
 import Search from './search'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
+import LeftRail from './manager-left-rail'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
 import eolHdrIcon from 'images/card_maker/icons/eol_logo_sub_hdr.png'
@@ -46,7 +47,6 @@ class CardManager extends React.Component {
       newMenuOpen: false,
       showDescInput: false,
       deckDescVal: null,
-      deckSearchVal: '',
       cardSearchVal: '',
       library: 'public',
       deckUsersOpen: false,
@@ -513,23 +513,6 @@ class CardManager extends React.Component {
     });
   }
 
-  deckItem = (deck, highlight) => {
-    const highlightedName = highlight && highlight.length ?  
-            deck.name.replace(highlight, '<strong>' + highlight + '</strong>') :
-            deck.name
-        ;
-
-    return (
-      <li
-        key={deck.id}
-        onClick={() => this.handleDeckSelect(deck)}  
-        className={[styles.deck, 
-          (this.state.selectedDeck === deck ? styles.isDeckSel : '')
-        ].join(' ')}
-        dangerouslySetInnerHTML={{ __html: highlightedName }}
-      />
-    )
-  }
 
   selectedResourceCount = (resourceResult) => {
     const count = resourceResult.resources.length;
@@ -646,21 +629,7 @@ class CardManager extends React.Component {
     return result;
   }
 
-  handleDeckSearchChange = val => {
-    this.setState({
-      deckSearchVal: val
-    });
-  }
 
-  deckItems = () => {
-    let searchVal = this.state.deckSearchVal.trim();
-
-    return this.state.decks.filter((deck) => {
-      return deck.name.includes(searchVal);
-    }).map((deck) => {
-      return this.deckItem(deck, searchVal);
-    }); 
-  }
 
   setMenuNode = (name, node) => {
     this.menuNodes[name] = node;
@@ -789,40 +758,14 @@ class CardManager extends React.Component {
           selectedDeckId={this.state.speciesSearchDeckId}
           handleCreateCard={this.handleCreateCard}
         />
-        <div className={styles.lLeftRail}>
-          <div className={styles.railCtrls}>
-            <div className={styles.newRow}>
-              <div className={styles.cardsHdr}>
-                <h2>Cards logo goes here</h2>
-              </div>
-              <div className={styles.new} ref={(node) => { this.setMenuNode('new', node) }}>
-                <div 
-                  className={styles.newBtn}
-                  onClick={() => this.toggleMenu('new')}
-                >{I18n.t('react.card_maker.new_upper')}</div>
-                {this.state.menus.new.open &&
-                  <ul className={styles.menu} >
-                    <li onClick={this.handleSpeciesSearchOpen}>{I18n.t('react.card_maker.card')}</li>
-                    <li onClick={this.handleOpenNewDeckLightbox}>{I18n.t('react.card_maker.deck')}</li>
-                  </ul>
-                }
-              </div>
-            </div>
-            {this.libCtrls()}
-          </div>
-          <ul className={`${styles.decks} ${styles.decksAll}`}>
-            {this.deckItem(allCardsDeck, null)}
-            {/*<li className={`${styles.deck} ${styles.isDisabled}`}>all decks</li>*/}
-          </ul>
-          <Search 
-            handleChange={this.handleDeckSearchChange}
-            placeholder='search decks'
-            value={this.state.deckSearchVal}
-          />
-          <ul className={styles.decks}>
-            {this.deckItems()}
-          </ul>
-        </div>
+        <LeftRail
+          library={this.state.library}
+          handleToggleLibrary={this.toggleLibrary}
+          handleDeckSelect={this.handleDeckSelect}
+          selectedDeck={this.state.selectedDeck}
+          decks={this.state.decks}
+          allCardsDeck={allCardsDeck}
+        />
         <div className={styles.lResources}>
           <img className={styles.banner} src={iguanaBanner} />
           <div className={[styles.bar, styles.barMenu].join(' ')}>

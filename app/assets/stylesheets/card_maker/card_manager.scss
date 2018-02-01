@@ -6,6 +6,7 @@ $left-rail-width: 226px;
 $ctrls-height: 106px;
 $cards-hdr-height: 44px;
 $btn-height: 36px;
+$lib-height: 32px;
 $menu-bar-height: 40px;
 $menu-anchor-height: 50px;
 $new-btn-width: 64px;
@@ -24,9 +25,9 @@ $bar-menu-dark-grey: #9db2b8;
 
 /* LAYOUTS */
 .lLeftRail {
-  background: $light-gray;
   display: inline-block;
   height: 100%;
+  position: relative;
   vertical-align: top;
   width: $left-rail-width;
 }
@@ -46,6 +47,12 @@ $bar-menu-dark-grey: #9db2b8;
 /* MODULES */
 
 /* GENERAL PURPOSE (should probably be moved out of here) */
+.banner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+}
 
 .tog {
   background: $white; 
@@ -96,38 +103,48 @@ $bar-menu-dark-grey: #9db2b8;
 }
 
 .cardsHdr {
+  background: $white;
   color: $eol-blue;
-  display: inline-block;
-  width: $left-rail-width - $new-btn-width;
+  height: 61px;
+  line-height: 61px;
+  text-align: center;
 }
 
-.libCtrls {
-  padding: 9px 0 9px 28px;
+.libs {
+  height: 81px;
+  padding-top: 9px;
 }
 
 .lib {
-  $height: 33px;
-  height: $height;
-  line-height: $height;
-}
-
-.activeLib {
-  font-size: 16px;
-}
-
-.altLib {
-  box-shadow: 0 1px 2px 0 #c6d1db;
-  color: $eol-blue;
+  background: $white;
+  border-radius: 2px;
   cursor: pointer;
-  display: inline-block;
-  font-size: 12px;
-  padding: 0 9px;
+  font-size: 13px;
+  height: $lib-height;
+  line-height: $lib-height;
+  margin: 0 auto 1px auto;
+  padding: 0 17px;
+  width: 158px;
+}
 
+  .libIcon {
+    margin-right: 7px;
+  }
 
-  & > i {
-    margin-right: 8px;
+  .libCheck {
+    display: none;
+    float: right;
+    line-height: $lib-height;
+  }
+
+.isLibActive {
+  color: $eol-blue;
+
+  .libCheck {
+    display: block;
   }
 }
+
 
 /*
   .libCtrlsActive {
@@ -330,11 +347,6 @@ $bar-menu-dark-grey: #9db2b8;
     height: 164px;
     justify-content: center;
   }
-}
-
-.newRow {
-  height: $new-row-height;
-  line-height: $new-row-height;
 }
 
 .new {

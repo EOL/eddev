@@ -17,7 +17,7 @@ import eolHdrIcon from 'images/card_maker/icons/eol_logo_sub_hdr.png'
 import newCardIcon from 'images/card_maker/icons/new_card.png'
 import managerLogo from 'images/card_maker/icons/card_manager_logo.png'
 import newDeckIcon from 'images/card_maker/icons/new_deck.png'
-import iguanaBanner from 'images/card_maker/iguana_banner.jpg'
+import iguanaBanner from 'images/card_maker/iguana_banner.png' /* TODO: convert to jpg */
 
 import styles from 'stylesheets/card_maker/card_manager'
 
@@ -758,6 +758,7 @@ class CardManager extends React.Component {
           selectedDeckId={this.state.speciesSearchDeckId}
           handleCreateCard={this.handleCreateCard}
         />
+        <img src={iguanaBanner} className={styles.banner} />
         <LeftRail
           library={this.state.library}
           handleToggleLibrary={this.toggleLibrary}
@@ -767,7 +768,6 @@ class CardManager extends React.Component {
           allCardsDeck={allCardsDeck}
         />
         <div className={styles.lResources}>
-          <img className={styles.banner} src={iguanaBanner} />
           <div className={[styles.bar, styles.barMenu].join(' ')}>
             <div 
               className={styles.barMenuAnchorContain}

@@ -66,7 +66,7 @@ $bar-menu-dark-grey: #9db2b8;
   $height: 53px;
   $icon-width: 49px;
 
-  background: $white;
+  background: rgba(255, 255, 255, 0.9);
   border: none;
   display: flex;
   height: $height;
@@ -84,6 +84,7 @@ $bar-menu-dark-grey: #9db2b8;
   }
 
   & > input {
+    background: none;
     flex: 1 0 auto;
     font-size: 12px;
     height: 100%;
@@ -131,18 +132,13 @@ $bar-menu-dark-grey: #9db2b8;
     margin-right: 7px;
   }
 
-  .libCheck {
-    display: none;
+  .checkLib {
     float: right;
     line-height: $lib-height;
   }
 
 .isLibActive {
   color: $eol-blue;
-
-  .libCheck {
-    display: block;
-  }
 }
 
 
@@ -153,36 +149,47 @@ $bar-menu-dark-grey: #9db2b8;
   */
 
 .decks {
+  background: $white;
   font-size: 12px;
   list-style: none;
   max-height: 500px;
   overflow: auto;
-  padding: 17px 12px;
+  padding: 17px 23px;
   width: 100%;
 }
 
-.decksAll {
-  height: 57px;
-  overflow: hidden;
-}
 
-.deck {
-  cursor: pointer;
-  overflow: hidden;
-  padding: 3px 0 3px 19px;
-  text-overflow: ellipsis;
-  width: 100%;
-
-  & > strong {
-    font-weight: bold;
+  .deck {
+    cursor: pointer;
+    overflow: hidden;
+    padding: 5px 0;
+    text-overflow: ellipsis;
+    width: 100%;
   }
-}
 
-  .isDeckSel {
-    background: $white;
-    border-radius: 2px;
-    padding: 6px 0 6px 19px;
-  }
+    .deckNew {
+      color: $eol-green;
+      margin-bottom: 19px;
+    }
+
+    .deckNewPlus {
+      margin-right: 10px;
+    }
+
+    .deckName {
+      & > strong {
+        font-weight: bold;
+      }
+    }
+
+    .isDeckActive {
+      color: $eol-blue;
+      padding-left: 12px;
+    }
+
+    .checkDeck {
+      margin-left: 5px;
+    }
 
 .bar {
   flex: 0 0 auto;

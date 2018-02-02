@@ -468,6 +468,7 @@ en:
       save_card_to_deck: "Save card to a deck:"
       create_card_from_selection: Create a card from selection
       new_deck: New deck
+      new_deck_lc: new deck
       enter_deck_name: Enter deck name
       create_deck: Create deck
       enter_collection_id: Enter EOL collection id (optional)

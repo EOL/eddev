@@ -281,7 +281,7 @@ class CardManager extends React.Component {
     })
   }
 
-  handleOpenNewDeckLightbox = () => {
+  openNewDeckLightbox = () => {
     this.setState(() => {
       return {
         newDeckOpen: true,
@@ -763,6 +763,7 @@ class CardManager extends React.Component {
           library={this.state.library}
           handleToggleLibrary={this.toggleLibrary}
           handleDeckSelect={this.handleDeckSelect}
+          handleNewDeck={this.openNewDeckLightbox}
           selectedDeck={this.state.selectedDeck}
           decks={this.state.decks}
           allCardsDeck={allCardsDeck}
@@ -840,7 +841,7 @@ class CardManager extends React.Component {
             handleDestroyCard={this.handleDestroyCard}
             handleDestroyDeck={this.handleDestroyDeck}
             handleNewCard={this.handleSpeciesSearchOpen}
-            handleNewDeck={this.HandleOpenNewDeckLightbox}
+            handleNewDeck={this.openNewDeckLightbox}
             makeDeckPdf={this.makeDeckPdf}
             editable={this.state.library === 'user'}
           />

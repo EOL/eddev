@@ -591,19 +591,19 @@ class CardManager extends React.Component {
           ></textarea>
         ),
         (
-          <div 
-            className={styles.editDescBtns}
+          <ul 
+            className={styles.descBtns}
             key='1'
           >
-            <div 
+            <li 
               className={styles.descBtn}
               onClick={this.handleSetDescBtnClick}
-            >{I18n.t('react.card_maker.save_desc')}</div>
-            <div 
+            >{I18n.t('react.card_maker.save_desc')}</li>
+            <li 
               className={styles.descBtn}
               onClick={this.closeAndClearDescInput}
-            >{I18n.t('react.card_maker.cancel')}</div>
-          </div>
+            >{I18n.t('react.card_maker.cancel')}</li>
+          </ul>
         ),
       ];
     } else if (this.state.selectedDeck === allCardsDeck) {
@@ -613,15 +613,20 @@ class CardManager extends React.Component {
         result = [I18n.t('react.card_maker.viewing_all_public_cards')];
       }
     } else if (this.state.selectedDeck.desc) {
-      result = [this.state.selectedDeck.desc];
+      result = [
+        this.state.selectedDeck.desc
+      ];
     } else if (this.state.library === 'user') {
-      result = [(
-        <div 
-          className={styles.descBtn}
+      result = [
+        <div
+          className={styles.descAdd}
           onClick={this.handleDescBtnClick}
           key='0'
-        >{I18n.t('react.card_maker.add_desc')}</div>
-      )];
+        >
+          <i className='fa fa-lg fa-edit' />
+          <span>{I18n.t('react.card_maker.add_desc')}</span>
+        </div>
+      ];
     } else {
       result = [];
     }
@@ -769,16 +774,16 @@ class CardManager extends React.Component {
           allCardsDeck={allCardsDeck}
         />
         <div className={styles.lResources}>
-          <div className={[styles.bar, styles.barMenu].join(' ')}>
+          <div className={styles.lDeckMenu}>
             <div 
-              className={styles.barMenuAnchorContain}
+              className={styles.menuWrap}
               ref={node => this.setMenuNode('deck', node)}
             >
               {this.deckMenuAnchor()}
               {this.state.menus.deck.open &&
                 <ul className={[styles.menu, styles.deckMenu].join(' ')}>
-                  { false && <li>{I18n.t('react.card_maker.rename')}</li> }
-                  { false && <li
+                  { <li>{I18n.t('react.card_maker.rename')}</li> }
+                  { <li
                     onClick={this.handleDescBtnClick} 
                   >
                   {this.state.selectedDeck.desc ? 
@@ -811,16 +816,21 @@ class CardManager extends React.Component {
                 </ul>
               }
             </div>
-            {/*
+            <div className={styles.lDesc}>
+              <div className={styles.desc}>
+                {this.deckDescElements()} 
+              </div>
+            </div>
+          </div>
+          {/*
+          <div className={[styles.bar, styles.barMenu].join(' ')}>
+            </div>
             <div className={styles.barMenuCount}>
               {this.selectedResourceCount(resourceResult)}
             </div>
-            */}
           </div>
+          */}
           {/*
-          <div className={styles.desc}>
-            {this.deckDescElements()} 
-          </div>
           */}
           <div className={styles.resourceFilterBar}>
             {/*

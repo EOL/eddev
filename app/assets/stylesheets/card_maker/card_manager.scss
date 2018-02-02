@@ -37,6 +37,14 @@ $bar-menu-dark-grey: #9db2b8;
   flex-direction: column;
   vertical-align: top;
   width: $main-col-width-px - $left-rail-width;
+} 
+
+.lDeckMenu {
+  /*height: 195px;*/
+  height: 245px;
+  padding-top: 50px;
+  position: relative;
+  width: 100%;
 }
 
 /* GENERAL STATE */
@@ -205,15 +213,6 @@ $bar-menu-dark-grey: #9db2b8;
   position: relative;
 }
 
-.barMenuAnchorContain {
-  background: $white;
-  /*bottom: $menu-bar-height;*/
-  bottom: 0;
-  display: inline-block;
-  position: absolute;
-  width: 177px;
-  z-index: 2;
-}
 
 .barMenuCount {
   display: inline-block;
@@ -224,15 +223,23 @@ $bar-menu-dark-grey: #9db2b8;
   vertical-align: top;
 }
 
-.menuAnchor {
-  cursor: pointer;
-  font-size: 16px;
-  height: $menu-anchor-height; 
-  line-height: $menu-anchor-height;
-  padding: 0 5px;
-  text-align: center;
-  width: 100%;
+.menuWrap {
+  background: $white;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  width: 176px;
 }
+
+  .menuAnchor {
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 16px;
+    height: $menu-anchor-height; 
+    line-height: $menu-anchor-height;
+    padding: 0 5px;
+    text-align: center;
+  }
 
 .menuCaret {
   display: inline-block;
@@ -249,40 +256,51 @@ $bar-menu-dark-grey: #9db2b8;
   width: 130px;
 }
 
-// TODO: this and other gradients look wrong
-.desc {
+.lDesc {
   align-items: center;
-  background-image: linear-gradient(to left, #f0f4f6, #d3d9da);
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
-  font-size: 11px;
   justify-content: center;
-  padding: 13px;
-  width: 100%;
+  margin: 5px auto;
 }
 
-.descBtn {
-  $height: 28px;
-  background: $desc-btn-bg;
-  border-radius: 2px;
-  display: inline-block;
-  cursor: pointer;
-  height: $height;
-  line-height: $height;
-  margin: 0 10px;
-  padding: 0 18px;
+.desc {
+  background: rgba(255, 255, 255, 0.94);
+  font-size: 12px;
+  max-height: 130px;
+  max-width: 688px;
+  padding: 14px 48px;
 }
 
-.editDescBtns {
-  margin-top: 10px;
-}
+  .descAdd {
+    cursor: pointer;
 
-.descInput {
-  border: none;
-  height: 80px;
-  width: 100%;
-}
+    & > i {
+      color: $eol-blue;
+      margin-right: 17px;
+    }
+  }
+
+  .descInput {
+    border: none;
+    height: 80px;
+    width: 591px;
+  }
+
+  .descBtns {
+    margin-top: 3px;
+    text-align: center;
+  }
+
+    .descBtn {
+      background: $light-gray;          
+      border-radius: 2px;
+      cursor: pointer;
+      display: inline-block;
+      margin: 0 5px;
+      padding: 5px 10px;
+    }
 
 .resourceFilterBar {
   background: $white;

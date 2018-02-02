@@ -43,8 +43,6 @@ class ManagerLeftRail extends React.Component {
         , selected = this.props.selectedDeck === deck 
         ;
 
-    console.log(highlightedName);
-
     return (
       <li
         key={deck.id}

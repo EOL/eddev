@@ -172,6 +172,7 @@ $bar-menu-dark-grey: #9db2b8;
     overflow: hidden;
     padding: 5px 0;
     text-overflow: ellipsis;
+    white-space: nowrap;
     width: 100%;
   }
 
@@ -185,6 +186,12 @@ $bar-menu-dark-grey: #9db2b8;
     }
 
     .deckName {
+      display: inline-block;
+      overflow: hidden;
+      max-width: 150px;
+      text-overflow: ellipsis;
+      vertical-align: middle;
+      white-space: nowrap;
       & > strong {
         font-weight: bold;
       }

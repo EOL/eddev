@@ -467,6 +467,7 @@ en:
       search: Search
       save_card_to_deck: "Save card to a deck:"
       create_card_from_selection: Create a card from selection
+      new_card_lc: new card
       new_deck: New deck
       new_deck_lc: new deck
       enter_deck_name: Enter deck name

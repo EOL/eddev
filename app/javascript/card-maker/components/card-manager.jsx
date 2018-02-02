@@ -782,15 +782,16 @@ class CardManager extends React.Component {
               {this.deckMenuAnchor()}
               {this.state.menus.deck.open &&
                 <ul className={[styles.menu, styles.deckMenu].join(' ')}>
-                  { <li>{I18n.t('react.card_maker.rename')}</li> }
-                  { <li
+                  { false && <li>{I18n.t('react.card_maker.rename')}</li> }
+                  <li
                     onClick={this.handleDescBtnClick} 
                   >
-                  {this.state.selectedDeck.desc ? 
+                    {
+                      this.state.selectedDeck.desc ? 
                       I18n.t('react.card_maker.edit_desc') :
                       I18n.t('react.card_maker.add_desc')
-                  }
-                  </li> }
+                    }
+                  </li>
                   <li
                     onClick={this.makeDeckPdf}
                   >{I18n.t('react.card_maker.print')}</li>

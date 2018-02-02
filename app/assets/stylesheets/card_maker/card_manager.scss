@@ -331,10 +331,12 @@ $bar-menu-dark-grey: #9db2b8;
   align-items: center;
   cursor: pointer;
   background: $white;
+  border-radius: 6px;
   display: inline-flex;
   height: (3.5 * $width) / 2.5; // cards have ratio of 2.5/3.5
   justify-content: center;
   margin-top: 10px;
+  overflow: hidden;
   position: relative;
   width: $width;
   vertical-align: top;
@@ -355,6 +357,10 @@ $bar-menu-dark-grey: #9db2b8;
   vertical-align: top;
 }
 
+.resourcePlaceholder {
+  background: $light-gray;
+}
+
 // TODO: rename. Too generic.
 .fillParent {
   height: 100%;
@@ -363,22 +369,10 @@ $bar-menu-dark-grey: #9db2b8;
 }
 
 .newResource {
-  color: $eol-blue;
+  color: $eol-green;
   font-size: 14px;
+  padding-top: 85px;
   text-align: center;
-
-  & > div {
-    height: 31px;
-    padding-top: 6px;
-  }
-
-  & > i {
-    align-items: center;
-    background: $light-gray;
-    display: flex;
-    height: 164px;
-    justify-content: center;
-  }
 }
 
 .new {

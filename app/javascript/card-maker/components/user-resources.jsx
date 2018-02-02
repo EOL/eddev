@@ -83,11 +83,13 @@ class UserResources extends React.Component {
       this.props.resources.map(resourceMapFn)
     );
 
-    minPlaceholders = resourcesPerRow + 
-      Math.min((resourcesPerRow - (resources.length % resourcesPerRow)), resourcesPerRow - 1);
+    if (this.props.editable) {
+      minPlaceholders = resourcesPerRow + 
+        Math.min((resourcesPerRow - (resources.length % resourcesPerRow)), resourcesPerRow - 1);
 
-    while (resources.length < minResources || placeholderKey < minPlaceholders) {
-      resources.push(<ResourcePlaceholder key={placeholderKey++} />);
+      while (resources.length < minResources || placeholderKey < minPlaceholders) {
+        resources.push(<ResourcePlaceholder key={placeholderKey++} />);
+      }
     }
 
     return resources;

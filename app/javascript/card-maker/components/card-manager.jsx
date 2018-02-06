@@ -370,6 +370,24 @@ class CardManager extends React.Component {
           return card.deck && card.deck.id === that.state.selectedDeck.id
         });
       }
+
+      if (this.state.library === 'user') {
+        resources = resources.slice(0).sort((a, b) => {
+          if (a.updatedAt < b.updatedAt) {
+            return 1;
+          } else {
+            return -1;
+          }
+        });
+      } else {
+        resources = resources.slice(0).sort((a, b) => {
+          if (a.commonName <= b.commonName) {
+            return -1;
+          } else {
+            return 1;
+          }
+        });
+      }
     }
 
     return {

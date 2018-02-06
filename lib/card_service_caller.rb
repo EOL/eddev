@@ -146,7 +146,7 @@ module CardServiceCaller
 
   def self.taxon_search(query)
     HTTParty.get(
-      "#{SERVICE_URL}/taxonSearch/#{query}",
+      "#{SERVICE_URL}/taxonSearch/#{CGI::escape(query)}",
       :headers => self.add_api_headers(JSON_HEADERS)
     )
   end

@@ -318,6 +318,7 @@ $bar-menu-dark-grey: #9db2b8;
 }
 
 .resources {
+  align-content: flex-start;
   display: flex;
   flex-flow: row wrap;
   height: 600px;

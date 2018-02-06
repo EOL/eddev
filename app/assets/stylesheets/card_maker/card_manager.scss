@@ -11,6 +11,8 @@ $menu-bar-height: 40px;
 $menu-anchor-height: 50px;
 $new-btn-width: 64px;
 $new-row-height: 33px;
+$search-results-width: 320px;
+$deck-select-arw-width: 50px;
 $resources-box-shadow: inset 45px 0px 105px -83px rgba(0,0,0,0.41);
 $disabled-gray: #9db2b8;
 $deck-sel-shadow-color: #c6cfd1;
@@ -437,6 +439,149 @@ $bar-menu-dark-grey: #9db2b8;
   cursor: pointer;
 }
 
+/* species search lightbox */
+.lNewCardLightbox {
+  background: $white;
+  margin: 0 auto;
+  padding: 66px 0;
+  width: $main-col-width-px;
+}
+
+.lSpeciesSearchCol {
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
+
+  & > div {
+    margin: 0 auto;
+    position: relative;
+    width: $search-results-width;
+  }
+}
+
+.lSpinCountRow {
+  $height: 50px;
+  height: $height;
+  line-height: $height;
+}
+
+.speciesSearchInput {
+  $height: 46px;
+  background-color: #f4f7fa;
+  border-radius: 27px;
+  display: block;
+  font-size: 14px;
+  height: $height;
+  line-height: $height;
+  margin:  0 auto;
+  text-align: center;
+  width: 532px;
+}
+
+.speciesResultCount {
+  font-size: 14px;
+  text-align: center;
+}
+
+.speciesSearchSpin {
+  text-align: center;
+}
+
+.speciesSearchResults {
+  font-size: 12px;
+  max-height: 400px;
+  overflow: auto;
+  width: 100%;
+}
+
+  .speciesSearchResult {
+    cursor: pointer;
+    display: block;
+    margin: 5px 0;
+    overflow: hidden;
+
+    & > img {
+      $dim: 66px;
+      height: $dim;
+      float: left;
+      margin-right: 10px;
+      width: $dim;
+    }
+  }
+
+  .isSpeciesSearchResultSelected {
+    background: $section-border-gray;
+    color: $white;
+  }
+
+  .speciesSearchSciName {
+    font-style: italic;
+  }
+
+  .createCardBtn {
+    background: $eol-blue;
+    border-radius: 2px;
+    color: $white;
+    cursor: pointer;
+    font-size: 16px;
+    height: 55px;
+    line-height: 40px;
+    text-align: center;
+    width: 100%;
+  }
+
+.deckSelectLabel {
+  font-size: 14px;
+  text-align: center;
+}
+
+.deckSelect {
+  cursor: pointer;
+  font-size: 14px;
+  position: relative;
+  margin: 8px auto 15px auto;
+}
+  .deckSelectAnchor {
+    border: 1px solid $section-border-gray;
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+  }
+
+  .deckSelectName {
+    text-align: center;
+  }
+
+  .deckSelectArw {
+    height: 100%;
+    position: absolute; 
+    right: 5px;
+    text-align: center;
+    top: 10px;
+    width: $deck-select-arw-width;
+  }
+
+  .deckSelectItems {
+    $border: 1px solid $section-border-gray;
+    background: $white;
+    border-bottom: $border;
+    border-left: $border;
+    border-right: $border;
+    position: absolute;
+    width: 100%;
+
+    & > li {
+      $height: 30px;
+      height: $height;
+      line-height: $height;
+      padding: 0 10px;
+
+      &:hover {
+        background: $section-border-gray;
+        color: $white;
+      }
+    }
+  }
 /*
 .user-resources {
   background-image: linear-gradient(to bottom, #3f5673, #3a5b71);

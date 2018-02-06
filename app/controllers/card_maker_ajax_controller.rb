@@ -174,7 +174,7 @@ class CardMakerAjaxController < ApplicationController
 
   # GET /card_maker_ajax/taxon_details/:id
   def taxon_details
-    json_response(CardServiceCaller.taxon_summary(params[:id]))
+    json_response(CardServiceCaller.taxon_summary(params[:ids]))
   end
 
   # POST /card_maker_ajax/decks/:id/populateFromCollection

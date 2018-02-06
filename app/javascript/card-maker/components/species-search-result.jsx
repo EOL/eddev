@@ -1,60 +1,30 @@
 import React from 'react'
 
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
+import styles from 'stylesheets/card_maker/card_manager'
 
 class SpeciesSearchResult extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      dataLoaded: false,
-      commonName: null,
-      thumbUrl: null,
-    };
-    this.dataInFlight = false;
-  }
-
-  ensureDataLoaded = () => {
-    const that = this;
-
-    if (!that.state.dataLoaded && !that.dataInFlight) {
-      that.dataInFlight = true;
-      $.getJSON(cardMakerUrl('taxon_details/' + this.props.id), function(data) {
-        that.setState(() => {
-          return {
-            dataLoaded: true,
-            commonName: data.commonName || '(not found)',
-            thumbUrl: data.thumbUrl,
-          }
-        });
-      });
-    }
   }
 
   render() {
-    if (this.props.expanded) {
-      this.ensureDataLoaded();
+    let classNames = [styles.speciesSearchResult];
+
+    if (this.props.selected) {
+      classNames.push(styles.isSpeciesSearchResultSelected);
     }
 
     return (
       <li
-        className={'search-result' + (this.props.expanded ? ' expanded' : '')}
+        className={classNames.join(' ')}
         onClick={this.props.handleClick}
-        ref={this.props.setRef}
-        style={this.props.style}
       >
-        <div className='sci-name'>{this.props.sciName}</div>
-        {this.props.expanded &&
-          (this.state.dataLoaded ?
-            (<div className='result-details'>
-              <img
-                className='img'
-                src={this.state.thumbUrl}
-              />
-              <div className='common-name'>
-                Common name: {this.state.commonName}
-              </div>
-            </div>) :
-            <i className='fa fa-spin fa-spinner fa-3x result-detail-spinner' />)}
+        <img
+          src={this.props.thumbUrl}
+        />
+        <div>{this.props.commonName}</div>
+        <div className={styles.speciesSearchSciName}>{this.props.sciName}</div>
       </li>
     )
   }

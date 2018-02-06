@@ -1,6 +1,7 @@
 import React from 'react'
 
 import downArrowIcon from 'images/card_maker/down_arrow.png'
+import styles from 'stylesheets/card_maker/card_manager'
 
 class UserResourceFilter extends React.Component {
   constructor(props) {
@@ -17,6 +18,14 @@ class UserResourceFilter extends React.Component {
       !this.node.contains(event.target)
     ) {
       this.closeMenu();
+    }
+  }
+
+  toggleOpen = () => {
+    if (this.state.menuOpen) {
+      this.closeMenu();
+    } else {
+      this.openMenu();
     }
   }
 
@@ -38,14 +47,6 @@ class UserResourceFilter extends React.Component {
         menuOpen: true,
       }
     });
-  }
-
-  handleArrowClick = () => {
-    if (this.state.menuOpen) {
-      this.closeMenu();
-    } else {
-      this.openMenu();
-    }
   }
 
   setRef = (node) => {
@@ -88,45 +89,17 @@ class UserResourceFilter extends React.Component {
   }
 
   render() {
-    var topClass = 'filter'
-      , iconClass = 'icon ' + this.props.iconClass
-      , menuClass = 'filter-items'
-      ;
-
-    if (this.props.selected) {
-      topClass += ' selected';
-    }
-
-    if (this.props.className) {
-      topClass += ' ' + this.props.className;
-    }
-
-    if (!this.state.menuOpen) {
-      menuClass += ' hidden';
-    }
-
     return (
-      <div className={topClass} onClick={this.props.handleClick} ref={this.setRef}>
-        <div className='btn'>
-          <div className='filter-icon'>
-            <i className={iconClass} />
-            <div className='count'>{this.props.count}</div>
-          </div>
-          <div className='filter-selection'>{this.selectedItemName()}</div>
-          <div
-            className='down-arrow'
-            onClick={this.hasDropdown() ? this.handleArrowClick : null}
-          >
-            {this.hasDropdown() &&
-              <img
-                src={downArrowIcon}
-                className='down-arrow-img'
-              />
-            }
-          </div>
+      <div className={styles.deckSelect} onClick={this.toggleOpen} ref={this.setRef}>
+        <div className={styles.deckSelectAnchor}>
+          <div className={styles.deckSelectName}>{this.selectedItemName()}</div>
+          {
+            this.hasDropdown() && 
+            <i className={`${styles.deckSelectArw} fa fa-caret-down`} />
+          }
         </div>
-        {this.hasDropdown() &&
-          <ul className={menuClass}>
+        {this.hasDropdown() && this.state.menuOpen && 
+          <ul className={styles.deckSelectItems}>
             {this.props.filterItems.map((item) => {
               return (<FilterItem
                 handleClick={() => this.handleItemClick(item.id)}
@@ -143,20 +116,8 @@ class UserResourceFilter extends React.Component {
   }
 }
 
-class FilterItem extends React.Component {
-  render() {
-    var className = 'filter-item';
-
-    if (this.props.selected) {
-      className += ' selected';
-    }
-
-    return (
-      <li onClick={this.props.handleClick} className={className}>
-        {this.props.name + (this.props.count !== null ? (' (' + this.props.count + ')') : '')}
-      </li>
-    )
-  }
+function FilterItem(props) {
+  return <li onClick={props.handleClick}>{props.name}</li>
 }
 
 export default UserResourceFilter

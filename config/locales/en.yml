@@ -446,6 +446,7 @@ en:
   react:
     card_maker:
       card_maker_title: 'Card Maker'
+      create_card: create card
       welcome_card_manager_html: >
         <span class='big-letter'>W</span><span>elcome to the </span>
         <img src=%{eolHdrIconPath} class='eol_logo' />
@@ -467,6 +468,7 @@ en:
       search: Search
       save_card_to_deck: "Save card to a deck:"
       create_card_from_selection: Create a card from selection
+      n_results: "%{count} results"
       new_card_lc: new card
       new_deck: New deck
       new_deck_lc: new deck
@@ -525,6 +527,8 @@ en:
       manage_deck_users: manage deck users
       confirm_make_public: Are you sure you want to make this deck public?
       confirm_make_private: Are you sure you want to make this deck private?
+      select_deck: select deck (optional)
+      press_enter_search: press enter to search
   activerecord:
     errors:
       template:

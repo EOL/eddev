@@ -1,7 +1,6 @@
 # Card service pass-through endpoints
 
 require "card_service_caller"
-require "eol_api_caller" # TODO: is this needed?
 
 class CardMakerAjaxController < ApplicationController
   skip_before_action :verify_authenticity_token
@@ -160,21 +159,7 @@ class CardMakerAjaxController < ApplicationController
 
   # GET /card_maker_ajax/taxon_search/:query
   def taxon_search
-    eol_res = EolApiCaller.search(params[:query])
-    parsed_body = JSON.parse(eol_res.body)
-    results = parsed_body["results"] # String keys are not the same as symbols!
-
-    # EOL returns duplicate pages
-    if results
-      results.uniq! { |r| r["id"] }
-    end
-
-    json_response_helper(parsed_body, eol_res.code)
-  end
-
-  # GET /card_maker_ajax/taxon_details/:id
-  def taxon_details
-    json_response(CardServiceCaller.taxon_summary(params[:ids]))
+    json_response(CardServiceCaller.taxon_search(params[:query]))
   end
 
   # POST /card_maker_ajax/decks/:id/populateFromCollection

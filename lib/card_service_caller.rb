@@ -144,9 +144,9 @@ module CardServiceCaller
     )
   end
 
-  def self.taxon_summary(taxon_ids)
+  def self.taxon_search(query)
     HTTParty.get(
-      "#{SERVICE_URL}/taxonSummaries/#{taxon_ids}",
+      "#{SERVICE_URL}/taxonSearch/#{query}",
       :headers => self.add_api_headers(JSON_HEADERS)
     )
   end

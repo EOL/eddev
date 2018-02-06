@@ -62,29 +62,10 @@ class SpeciesSearchLightbox extends React.Component {
 
       $.getJSON(cardMakerUrl('taxon_search/' + query), function(data) {
         if (reqNum === that.reqCount) {
-          let ids;
-
-          ids = data.results.map((result) => {
-            return result.id;
-          }).join(',');
-
-          $.getJSON(cardMakerUrl('taxon_details/' + ids), function(details) {
-            let results = data.results.map((result) => {
-              let taxonDetails = details[result.id];
-
-              if (taxonDetails) {
-                result.commonName = taxonDetails.commonName;
-                result.thumbUrl = taxonDetails.thumbUrl;
-              }
-
-              return result;
-            });
-
-            that.setState({
-              inFlight: false,
-              results: data.results,
-              selectedId: data.results.length ? data.results[0].id : null
-            });
+          that.setState({
+            inFlight: false,
+            results: data,
+            selectedId: data.length ? data[0].id : null
           });
         }
       });

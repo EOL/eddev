@@ -158,16 +158,18 @@ class SpeciesSearchLightbox extends React.Component {
             </div>
             <div className={styles.lSpeciesSearchCol}>
               <div>
-                <div className='deck-select-wrap'>
-                  <div className={styles.deckSelectLabel}>{I18n.t('react.card_maker.select_deck')}</div>
-                  <UserResourceFilter
-                    selected={true}
-                    count={this.props.deckFilterItems.length - 1}
-                    filterItems={this.props.deckFilterItems}
-                    selectedId={this.props.selectedDeckId}
-                    handleSelect={this.props.handleDeckSelect}
-                  />
-                </div>
+                {this.props.deckFilterItems && this.props.deckFilterItems.length > 1 &&
+                  <div className='deck-select-wrap'>
+                    <div className={styles.deckSelectLabel}>{I18n.t('react.card_maker.select_deck')}</div>
+                    <UserResourceFilter
+                      selected={true}
+                      count={this.props.deckFilterItems.length - 1}
+                      filterItems={this.props.deckFilterItems}
+                      selectedId={this.props.selectedDeckId}
+                      handleSelect={this.props.handleDeckSelect}
+                    />
+                  </div>
+                }
                 <button className={styles.createCardBtn} onClick={this.handleCreateCard}>
                   {I18n.t('react.card_maker.create_card')}
                 </button>

@@ -186,7 +186,7 @@ class TextField extends React.Component {
           onClick={this.handleSuggestBtnClick}
           key='suggestBtn'
         >
-          <i className='icon-drop suggestion-icon'></i>
+          <i className='cm-icon-sug-arrow-down suggestion-icon'></i>
         </div>
       ))
 

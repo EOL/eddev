@@ -91,7 +91,7 @@ class UserResourceFilter extends React.Component {
   render() {
     return (
       <div className={styles.deckSelect} onClick={this.toggleOpen} ref={this.setRef}>
-        <div className={styles.deckSelectAnchor}>
+        <div className={styles.newInput}>
           <div className={styles.deckSelectName}>{this.selectedItemName()}</div>
           {
             this.hasDropdown() && 

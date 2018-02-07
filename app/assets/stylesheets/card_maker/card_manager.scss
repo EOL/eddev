@@ -95,9 +95,11 @@ $bar-menu-dark-grey: #9db2b8;
 
   & > input {
     background: none;
+    border: none;
     flex: 1 0 auto;
     font-size: 12px;
     height: 100%;
+    outline: none;
     vertical-align: top;
   }
 }
@@ -441,14 +443,14 @@ $bar-menu-dark-grey: #9db2b8;
 }
 
 /* species search lightbox */
-.lNewCardLightbox {
+.lNewLightbox {
   background: $white;
   margin: 0 auto;
   padding: 66px 0;
   width: $main-col-width-px;
 }
 
-.lSpeciesSearchCol {
+.lNewCol {
   display: inline-block;
   vertical-align: top;
   width: 50%;
@@ -519,21 +521,40 @@ $bar-menu-dark-grey: #9db2b8;
     font-style: italic;
   }
 
-  .createCardBtn {
-    background: $eol-blue;
-    border-radius: 2px;
-    color: $white;
-    cursor: pointer;
-    font-size: 16px;
-    height: 55px;
-    line-height: 40px;
-    text-align: center;
-    width: 100%;
-  }
+.createBtn {
+  background: $eol-blue;
+  border-radius: 2px;
+  color: $white;
+  cursor: pointer;
+  font-size: 16px;
+  height: 55px;
+  line-height: 40px;
+  text-align: center;
+  width: 100%;
+}
 
 .deckSelectLabel {
   font-size: 14px;
   text-align: center;
+}
+
+.newInput {
+  border: 1px solid $section-border-gray;
+  height: 40px;
+  line-height: 40px;
+  position: relative;
+}
+
+.isNewInputError {
+  border-color: $red;
+}
+
+.newInputTxt {
+  padding: 0 15px;
+}
+
+.newInputColId {
+  margin-top: 20px;
 }
 
 .deckSelect {
@@ -542,12 +563,6 @@ $bar-menu-dark-grey: #9db2b8;
   position: relative;
   margin: 8px auto 15px auto;
 }
-  .deckSelectAnchor {
-    border: 1px solid $section-border-gray;
-    height: 40px;
-    line-height: 40px;
-    position: relative;
-  }
 
   .deckSelectName {
     text-align: center;
@@ -583,6 +598,11 @@ $bar-menu-dark-grey: #9db2b8;
       }
     }
   }
+
+
+.newInput {
+  width: 100%;
+}
 /*
 .user-resources {
   background-image: linear-gradient(to bottom, #3f5673, #3a5b71);

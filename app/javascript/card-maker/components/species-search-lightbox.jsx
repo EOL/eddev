@@ -114,7 +114,7 @@ class SpeciesSearchLightbox extends React.Component {
         contentLabel={I18n.t('react.card_maker.species_search')}
         parentSelector={() => {return document.getElementById('Page')}}
         overlayClassName='fixed-center-wrap disable-overlay'
-        className={styles.lNewCardLightbox}
+        className={styles.lNewLightbox}
         bodyOpenClassName='noscroll'
         onRequestClose={this.handleRequestClose}
       >
@@ -133,7 +133,7 @@ class SpeciesSearchLightbox extends React.Component {
         </div>
         {this.state.results != null && this.state.results.length > 0 && (
           <div>
-            <div className={styles.lSpeciesSearchCol}>
+            <div className={styles.lNewCol}>
               <div>
                 <div className='search-results-wrap'>
                   <ul className={styles.speciesSearchResults}>
@@ -156,7 +156,7 @@ class SpeciesSearchLightbox extends React.Component {
                 </div>
               </div>
             </div>
-            <div className={styles.lSpeciesSearchCol}>
+            <div className={styles.lNewCol}>
               <div>
                 {this.props.deckFilterItems && this.props.deckFilterItems.length > 1 &&
                   <div className='deck-select-wrap'>
@@ -170,7 +170,7 @@ class SpeciesSearchLightbox extends React.Component {
                     />
                   </div>
                 }
-                <button className={styles.createCardBtn} onClick={this.handleCreateCard}>
+                <button className={styles.createBtn} onClick={this.handleCreateCard}>
                   {I18n.t('react.card_maker.create_card')}
                 </button>
               </div>

@@ -606,6 +606,8 @@ $col-border-width: 5px;
       color: $white;
       cursor: pointer;
       height: 60px;
+      padding-top: 10px;
+      text-align: center;
       width: 135px;
 
       &.close {
@@ -629,13 +631,18 @@ $col-border-width: 5px;
         color: #999;
         cursor: auto;
       }
+
+      & > i {
+        font-size: 18px;
+        height: 18px;
+        line-height: 18px;
+        vertical-align: top;
+      }
     }
 
     .btn-txt {
       font-family: Merriweather;
-    	font-size: 13px;
-      margin-top: 40px;
-    	text-align: center;
+      margin-top: 5px;
     }
   }
 

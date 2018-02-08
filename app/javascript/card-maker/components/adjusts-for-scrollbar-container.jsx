@@ -4,7 +4,7 @@ class AdjustsForScrollbarContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemMarginRight: null,
+      margin: null,
     }
 
     this.itemNodes = {};
@@ -29,9 +29,9 @@ class AdjustsForScrollbarContainer extends React.Component {
             (this.props.itemsPerRow - 1)
           ;
 
-      if (this.state.itemMarginRight !== marginRight) {
+      if (this.state.margin !== marginRight) {
         this.setState({
-          itemMarginRight: marginRight,
+          margin: marginRight,
         });
       }
     }
@@ -65,9 +65,10 @@ class AdjustsForScrollbarContainer extends React.Component {
             React.Children.toArray(this.props.children).map((child, i) => {
               const style = {};
 
-              if (this.state.itemMarginRight && (i + 1) % this.props.itemsPerRow !== 0) {
-                style.marginRight = this.state.itemMarginRight;
+              if (this.state.margin && (i + 1) % this.props.itemsPerRow !== 0) {
+                style.marginRight = this.state.margin;
               }
+              style.marginTop = this.state.margin;
 
               return React.cloneElement(child, {
                 setRef: that.itemRef.bind(null, child.key),

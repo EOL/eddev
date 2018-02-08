@@ -113,11 +113,14 @@ class ManagerLeftRail extends React.Component {
           {this.lib(I18n.t('react.card_maker.my_cards'), 'user', 'user')}
           {this.lib(I18n.t('react.card_maker.public_cards'), 'users', 'public')}
         </ul>
-        <Search 
-          placeholder='search decks'
-          handleChange={val => this.setState({ deckSearchVal: val })}
-          value={this.state.deckSearchVal}
-        />
+        {
+          this.props.decks.length > 0 && 
+          <Search 
+            placeholder='search decks'
+            handleChange={val => this.setState({ deckSearchVal: val })}
+            value={this.state.deckSearchVal}
+          />
+        }
         <ul className={styles.decks}>
           {this.deckItems()}
         </ul>

@@ -467,7 +467,7 @@ en:
       are_you_sure_delete_card: Are you sure you want to delete this card?
       are_you_sure_delete_deck: Are you sure you want to delete this deck and all its cards?
       species_search: Species search
-      search_species_taxon: Search for a species or taxon
+      search_species_taxon: search for a species or taxon
       search: Search
       save_card_to_deck: "Save card to a deck:"
       create_card_from_selection: Create a card from selection
@@ -475,9 +475,9 @@ en:
       new_card_lc: new card
       new_deck: New deck
       new_deck_lc: new deck
-      enter_deck_name: Enter deck name
-      create_deck: Create deck
-      enter_collection_id: Enter EOL collection id (optional)
+      enter_deck_name: enter deck name
+      create_deck: create deck
+      enter_collection_id: enter EOL collection id (optional)
       unexpected_error_msg: An unexpected error occurred
       go_back_to: go back to
       card_manager: Card Manager
@@ -492,9 +492,9 @@ en:
       rotate_90: Rotate 90°
       flip_horiz: Flip horizontal
       flip_vert: Flip vertical
-      close: Close
-      save_+_exit: Save + exit
-      quick_save: Quick save
+      close: close
+      save_+_exit: save + exit
+      quick_save: quick save
       font_size: "Font size:"
       suggestions: Suggestions
       image_library: Image Library

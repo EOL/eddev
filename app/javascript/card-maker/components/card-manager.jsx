@@ -590,82 +590,102 @@ class CardManager extends React.Component {
     });
   }
 
-  deckDescElements = () => {
-    let result; 
+  descInput = () => {
+    return [
+      // Explicit this.state.deckDescVal === null is important since
+      // otherwise the value can't ever be ''.
+      (
+        <textarea 
+          className={styles.descInput} 
+          value={this.state.deckDescVal === null ? 
+                 this.state.selectedDeck.desc :
+                 this.state.deckDescVal}
+          onChange={this.handleDescInputChange}
+          key='0'
+          ref={node => node && node.focus()}
+        ></textarea>
+      ),
+      (
+        <ul 
+          className={styles.descBtns}
+          key='1'
+        >
+          <li 
+            className={styles.descBtn}
+            onClick={this.handleSetDescBtnClick}
+          >{I18n.t('react.card_maker.save_desc')}</li>
+          <li 
+            className={styles.descBtn}
+            onClick={this.closeAndClearDescInput}
+          >{I18n.t('react.card_maker.cancel')}</li>
+        </ul>
+      ),
+    ];
+  }
+
+  deckDesc = () => {
+    let inner = null
+      , result = null
+      ; 
 
     if (this.state.showDescInput) {
-      result = [
-        // Explicit this.state.deckDescVal === null is important since
-        // otherwise the value can't ever be ''.
-        (
-          <textarea 
-            className={styles.descInput} 
-            value={this.state.deckDescVal === null ? 
-                   this.state.selectedDeck.desc :
-                   this.state.deckDescVal}
-            onChange={this.handleDescInputChange}
-            key='0'
-            ref={node => node && node.focus()}
-          ></textarea>
-        ),
-        (
-          <ul 
-            className={styles.descBtns}
-            key='1'
+      inner = this.descInput();
+    } else if (this.state.selectedDeck !== allCardsDeck) {
+      if (this.state.selectedDeck.desc) {
+        inner = this.state.selectedDeck.desc;
+      } else if (this.state.library === 'user') {
+        inner = (
+          <div
+            className={styles.descAdd}
+            onClick={this.handleDescBtnClick}
           >
-            <li 
-              className={styles.descBtn}
-              onClick={this.handleSetDescBtnClick}
-            >{I18n.t('react.card_maker.save_desc')}</li>
-            <li 
-              className={styles.descBtn}
-              onClick={this.closeAndClearDescInput}
-            >{I18n.t('react.card_maker.cancel')}</li>
-          </ul>
-        ),
-      ];
-    } else if (this.state.selectedDeck === allCardsDeck) {
-      if (this.state.library === 'user') {
-        result = [I18n.t('react.card_maker.viewing_all_your_cards')];
-      } else {
-        result = [I18n.t('react.card_maker.viewing_all_public_cards')];
+            <i className='fa fa-lg fa-edit' />
+            <span>{I18n.t('react.card_maker.add_desc')}</span>
+          </div>
+        );
       }
-    } else if (this.state.selectedDeck.desc) {
-      result = [
-        this.state.selectedDeck.desc
-      ];
-    } else if (this.state.library === 'user') {
-      result = [
-        <div
-          className={styles.descAdd}
-          onClick={this.handleDescBtnClick}
-          key='0'
-        >
-          <i className='fa fa-lg fa-edit' />
-          <span>{I18n.t('react.card_maker.add_desc')}</span>
+    }
+
+    if (inner) {
+      result = (
+        <div className={styles.lDesc}>
+          <div className={styles.desc}>
+            {inner} 
+          </div>
         </div>
-      ];
-    } else {
-      result = [];
+      );
     }
 
     return result;
   }
 
-
-
   setMenuNode = (name, node) => {
     this.menuNodes[name] = node;
   }
 
+  allDecksName = () => {
+    return this.state.library === 'user' ? 
+      I18n.t('react.card_maker.all_my_cards') :
+      I18n.t('react.card_maker.all_public_cards');
+  }
+
   deckMenuAnchor = () => {
-    let isMenu = this.state.selectedDeck !== allCardsDeck;
+    let isMenu = this.state.selectedDeck !== allCardsDeck
+      ,  name = isMenu ? 
+          this.state.selectedDeck.name :
+          this.allDecksName()
+      ;
+
+
     return (
       <div 
-        className={styles.menuAnchor}
+        className={[
+          styles.menuAnchor,
+          (isMenu ? styles.isClickable : '')
+        ].join(' ')}
         onClick={isMenu ? this.toggleDeckMenu : null}
       >
-        <div className={styles.menuDeckName}>{this.state.selectedDeck.name}
+        <div className={styles.menuDeckName}>{name}
         </div>
         {isMenu && <i className={`${styles.menuCaret} fa fa-caret-down`} />}
       </div>
@@ -835,11 +855,7 @@ class CardManager extends React.Component {
                 </ul>
               }
             </div>
-            <div className={styles.lDesc}>
-              <div className={styles.desc}>
-                {this.deckDescElements()} 
-              </div>
-            </div>
+            {this.deckDesc()}
           </div>
           {/*
           <div className={[styles.bar, styles.barMenu].join(' ')}>

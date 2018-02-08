@@ -914,7 +914,7 @@ $col-border-width: 5px;
 .card-fields-wrap {
   position: relative;
 
-  .icon-drop {
+  i {
     color: #428cff;
   }
 }
@@ -1296,13 +1296,13 @@ $col-border-width: 5px;
 
     .selected-txt-wrap {
       position: relative;
-    }
 
-    .icon-drop {
-      font-size: 18px;
-      position: absolute;
-      right: 0;
-      top: 3px;
+      & > i {
+        font-size: 18px;
+        position: absolute;
+        right: 0;
+        top: 5px;
+      }
     }
 
     .choices {

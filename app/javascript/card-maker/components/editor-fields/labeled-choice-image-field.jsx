@@ -71,7 +71,7 @@ class LabeledChoiceImageField extends React.Component {
       <div className={rootClassName} onClick={this.handleMenuClick}>
         <div className='selected-txt-wrap'>
           <div className='selected-txt'>{displayText}</div>
-          <i className='icon-drop' />
+          <i className='cm-icon-sug-arrow-down' />
         </div>
         <ul className={choicesClassName}>
           {this.buildChoices()}

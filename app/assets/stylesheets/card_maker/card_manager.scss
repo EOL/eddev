@@ -502,17 +502,30 @@ $bar-menu-dark-grey: #9db2b8;
 }
 
   .speciesSearchResult {
+    $height: 66px;
+
     cursor: pointer;
     display: block;
+    height: $height;
     margin: 5px 0;
     overflow: hidden;
+    width: 100%;
+
+    $imgSize: percentage($height / $search-results-width);
 
     & > img {
-      $dim: 66px;
-      height: $dim;
-      float: left;
-      margin-right: 10px;
-      width: $dim;
+      display: inline-block;
+      height: 100%;
+      width: $imgSize;
+    }
+
+    & > div {
+      display: inline-block;
+      padding-left: 10px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: top;
+      width: 100% - $imgSize;
     }
   }
 
@@ -521,7 +534,12 @@ $bar-menu-dark-grey: #9db2b8;
     color: $white;
   }
 
-  .speciesSearchSciName {
+  .resultTxt {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .resultTxtSciName {
     font-style: italic;
   }
 

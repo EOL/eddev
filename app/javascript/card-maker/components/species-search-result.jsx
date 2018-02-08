@@ -23,8 +23,12 @@ class SpeciesSearchResult extends React.Component {
         <img
           src={this.props.thumbUrl}
         />
-        <div>{this.props.commonName}</div>
-        <div className={styles.speciesSearchSciName}>{this.props.sciName}</div>
+        <div>
+          <div className={styles.resultTxt}>{this.props.commonName}</div>
+          <div 
+            className={[styles.resultTxt, styles.resultTxtSciName].join(' ')}
+          >{this.props.sciName}</div>
+        </div>
       </li>
     )
   }

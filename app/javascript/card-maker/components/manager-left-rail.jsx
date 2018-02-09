@@ -1,6 +1,7 @@
 import React from 'react'
 import Search from './search'
 import styles from 'stylesheets/card_maker/card_manager'
+import eolLogo from 'images/welcome/eol_logo.png'
 
 
 class ManagerLeftRail extends React.Component {
@@ -107,7 +108,9 @@ class ManagerLeftRail extends React.Component {
     return (
       <div className={styles.lLeftRail}>
         <div className={styles.cardsHdr}>
-          <span>LOGO GOES HERE</span>
+          <img src={eolLogo} className={styles.cardsHdrEolLogo}/>
+          <i className={`cm-icon-two-cards ${styles.cardsHdrTwoCards}`} />
+          <div className={styles.cardsHdrTxt} dangerouslySetInnerHTML={{__html: I18n.t('react.card_maker.card_maker_html')}} />
         </div>
         <ul className={styles.libs} >
           {this.lib(I18n.t('react.card_maker.my_cards'), 'user', 'user')}

@@ -447,6 +447,7 @@ en:
     card_maker:
       all_my_cards: 'all my cards'
       all_public_cards: 'all public cards'
+      card_maker_html: 'card<br/>maker'
       card_maker_title: 'Card Maker'
       create_card: create card
       create_deck: create deck

@@ -121,10 +121,26 @@ $bar-menu-dark-grey: #9db2b8;
 
 .cardsHdr {
   background: $white;
-  color: $eol-blue;
+  color: $eol-green;
   height: 61px;
   line-height: 61px;
   text-align: center;
+}
+
+.cardsHdrEolLogo {
+  height: 18px;
+}
+
+.cardsHdrTwoCards {
+  margin: 0 5px;
+}
+
+.cardsHdrTxt {
+  display: inline-block;
+  line-height: .91;
+  font-size: 14px;
+  text-align: left;
+  vertical-align: middle;
 }
 
 .libs {
@@ -342,7 +358,7 @@ $bar-menu-dark-grey: #9db2b8;
   background: $white;
   border-radius: 6px;
   display: inline-flex;
-  height: (3.5 * $width) / 2.5; // cards have ratio of 2.5/3.5
+  height: (3.74 * $width) / 2.74; // cards have aspect ratio of 2.74/3.74 including bleed
   justify-content: center;
   margin-top: 10px;
   overflow: hidden;
@@ -625,6 +641,7 @@ $bar-menu-dark-grey: #9db2b8;
 .newInput {
   width: 100%;
 }
+
 /*
 .user-resources {
   background-image: linear-gradient(to bottom, #3f5673, #3a5b71);

@@ -3,11 +3,12 @@
 $txt-gray: #53666e;
 
 .lPage {
-  background-image: linear-gradient(to bottom, #ecf2f6, #b9cbd4);
+  background-image: linear-gradient(to bottom, #dde4e8, #b4c2c9);
   color: $txt-gray;
 }
 
 .lMainCol {
+  background-color: #c3cfd4;
   margin: 0 auto;
   position: relative;
   width: $main-col-width * 1px;

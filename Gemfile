@@ -84,6 +84,7 @@ group :development do
   gem 'capistrano', '~> 3.1'
   gem 'capistrano-rails', '~> 1.1'
   gem 'capistrano-passenger', '~> 0.2.0'
+  gem 'capistrano-git-with-submodules', '~> 2.0'
 
   gem 'better_errors'
 end

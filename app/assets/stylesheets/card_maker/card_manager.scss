@@ -656,6 +656,10 @@ $bar-menu-dark-grey: #9db2b8;
     display: block;
     margin: 0 auto;
   }
+
+  &:focus {
+    outline: 0;
+  }
 }
 
 .imageZoom {

@@ -69,14 +69,13 @@ class CardMakerAjaxController < ApplicationController
         svc_res = CardServiceCaller.svg(params[:card_id])
         data_pass_thru_response(svc_res)
       end
+
+      format.png do
+        data = CardServiceCaller.png(params[:card_id])
+        send_data data, :type => "image/png", :disposition => "attachment"
+      end
     end
   end
-
-  # GET /card_maker_ajax/cards/:card_id/png
-  #def render_png
-  #  data = CardServiceCaller.png(logged_in_user.id, params[:card_id])
-  #  send_data data, :type => "image/png", :disposition => "inline"
-  #end
 
   # POST /card_maker_ajax/images
   def upload_image

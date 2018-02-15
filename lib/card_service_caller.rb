@@ -55,13 +55,16 @@ module CardServiceCaller
   def self.svg(card_id)
     HTTParty.get(
       "#{SERVICE_URL}/cards/#{card_id}/svg",
-      :headers => self.add_api_headers(JSON_HEADERS)
+      :headers => self.add_api_headers({})
     )
   end
 
-  #def self.png(user_id, card_id)
-  #  HTTParty.get("#{self.user_prefix(user_id)}/cards/#{card_id}/png")
-  #end
+  def self.png(card_id)
+    HTTParty.get(
+      "#{SERVICE_URL}/cards/#{card_id}/png",
+      :headers => self.add_api_headers({})
+    )
+  end
 
   def self.json(user_id, card_id)
     HTTParty.get(

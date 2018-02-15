@@ -642,6 +642,26 @@ $bar-menu-dark-grey: #9db2b8;
   width: 100%;
 }
 
+/* Card zoom/png download lightbox */
+.lLightboxZoom {
+  margin: 20px auto 0 auto;
+  padding: 0;
+  width: 400px;
+
+  & > img {
+    width: 100%;
+  }
+
+  & > button {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.imageZoom {
+  width: 100%;
+}
+
 /*
 .user-resources {
   background-image: linear-gradient(to bottom, #3f5673, #3a5b71);

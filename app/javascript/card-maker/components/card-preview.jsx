@@ -83,6 +83,10 @@ class CardPreview extends React.Component {
   }
 
   render() {
+    console.log(I18n.t('react.card_maker.open_eol_taxon_page_html', {
+      iconClass: 'edu-icon-eol-logo'
+    }))
+
     var eolLinkAttrs = this.eolLinkAttrs();
 
     return (
@@ -108,7 +112,9 @@ class CardPreview extends React.Component {
               href={eolLinkAttrs.href} target={eolLinkAttrs.target}
               className='eol-link'
               dangerouslySetInnerHTML={{
-                __html: I18n.t('react.card_maker.open_eol_taxon_page_html')
+                __html: I18n.t('react.card_maker.open_eol_taxon_page_html', {
+                  iconClass: 'edu-icon-eol-logo'
+                })
               }}
             />
           </div>

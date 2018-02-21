@@ -489,7 +489,7 @@ en:
       card_form_parens: (enter information that will appear on the card)
       open_eol_taxon_page_html: >
         <span>Open </span>
-        <i class='icon-eol-logo'></i>
+        <i class='%{iconClass}'></i>
         <span> taxon page</span>
       rotate_90: Rotate 90°
       flip_horiz: Flip horizontal

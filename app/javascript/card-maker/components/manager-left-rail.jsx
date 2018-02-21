@@ -108,7 +108,8 @@ class ManagerLeftRail extends React.Component {
     return (
       <div className={styles.lLeftRail}>
         <div className={styles.cardsHdr}>
-          <img src={eolLogo} className={styles.cardsHdrEolLogo}/>
+          <i className='edu-icon-eol-logo' />
+          {/* <img src={eolLogo} className={styles.cardsHdrEolLogo}/> */}
           <i className={`cm-icon-two-cards ${styles.cardsHdrTwoCards}`} />
           <div className={styles.cardsHdrTxt} dangerouslySetInnerHTML={{__html: I18n.t('react.card_maker.card_maker_html')}} />
         </div>
@@ -127,18 +128,6 @@ class ManagerLeftRail extends React.Component {
         <ul className={styles.decks}>
           {this.deckItems()}
         </ul>
-        {/*
-        <div className={styles.railCtrls}>
-          <div className={styles.cardsHdr}>
-            <i className="cm-icon-eol" />
-            <i className="cm-icon-cards" />
-          </div>
-          {this.libCtrls()}
-        </div>
-        <ul className={`${styles.decks} ${styles.decksAll}`}>
-          {this.deckItem(this.props.allCardsDeck, null)}
-        </ul>
-        */}
       </div>
     );
   }

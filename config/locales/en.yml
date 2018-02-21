@@ -471,6 +471,8 @@ en:
       species_search: Species search
       search_species_taxon: search for a species or taxon
       search: Search
+      search_cards: search cards
+      search_decks: search decks
       save_card_to_deck: "Save card to a deck:"
       create_card_from_selection: Create a card from selection
       n_results: "%{count} results"

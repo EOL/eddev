@@ -59,7 +59,7 @@ class ManagerLeftRail extends React.Component {
   }
 
   deckItems = () => {
-    let searchVal = this.state.deckSearchVal.trim();
+    let searchVal = this.state.deckSearchVal;
 
     return [
       ( 
@@ -119,11 +119,13 @@ class ManagerLeftRail extends React.Component {
         </ul>
         {
           this.props.decks.length > 0 && 
-          <Search 
-            placeholder='search decks'
-            handleChange={val => this.setState({ deckSearchVal: val })}
-            value={this.state.deckSearchVal}
-          />
+          <div className={styles.searchContain}>
+            <Search 
+              placeholder={I18n.t('react.card_maker.search_decks')}
+              handleChange={val => this.setState({ deckSearchVal: val })}
+              value={this.state.deckSearchVal}
+            />
+          </div>
         }
         <ul className={styles.decks}>
           {this.deckItems()}

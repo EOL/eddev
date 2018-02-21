@@ -41,13 +41,13 @@ $bar-menu-dark-grey: #9db2b8;
 .lResources {
   display: inline-flex;
   flex-direction: column;
+  position: relative;
   vertical-align: top;
   width: $main-col-width-px - $left-rail-width;
 } 
 
 .lDeckMenu {
-  /*height: 195px;*/
-  height: 245px;
+  height: 192px;
   padding-top: 50px;
   position: relative;
   width: 100%;
@@ -76,11 +76,15 @@ $bar-menu-dark-grey: #9db2b8;
   padding: 5px 15px;
 }
 
+.searchContain {
+  background: rgba(255, 255, 255, 0.9);
+  width: 100%;
+}
+
 .search {
   $height: 53px;
   $icon-width: 49px;
 
-  background: rgba(255, 255, 255, 0.9);
   border: none;
   display: flex;
   height: $height;
@@ -122,7 +126,7 @@ $bar-menu-dark-grey: #9db2b8;
 .cardsHdr {
   background: $white;
   color: $eol-green;
-  height: 61px;
+  height: 58px;
   line-height: 61px;
   text-align: center;
 }
@@ -334,8 +338,7 @@ $bar-menu-dark-grey: #9db2b8;
     }
 
 .resourceFilterBar {
-  background: $white;
-  box-shadow: $resources-box-shadow;
+  background: rgba(#ffffff, 0.9);
   padding-left: 10px;
 }
 

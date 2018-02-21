@@ -362,14 +362,22 @@ class CardManager extends React.Component {
       resources = this.state.decks;
     } else {
       resourceType = 'card';
+      let unfilteredCards
+        , searchLower = this.state.cardSearchVal.toLowerCase()
+        ;
       
       if (that.state.selectedDeck === allCardsDeck) {
-        resources = that.state.cards;
+        unfilteredCards = that.state.cards;
       } else {
-        resources = that.state.cards.filter((card) => {
+        unfilteredCards = that.state.cards.filter((card) => {
           return card.deck && card.deck.id === that.state.selectedDeck.id
         });
       }
+
+      resources = unfilteredCards.filter((card) => {
+        return card.commonName.toLowerCase().includes(searchLower) ||
+          card.sciName.toLowerCase().includes(searchLower);
+      });
 
       if (this.state.library === 'user') {
         resources = resources.slice(0).sort((a, b) => {
@@ -876,15 +884,12 @@ class CardManager extends React.Component {
           */}
           {/*
           */}
-          <div className={styles.resourceFilterBar}>
-            {/*
+          <div className={styles.searchContain}>
             <Search 
               handleChange={(val) => this.setState({ cardSearchVal: val})}
-              extraClass={styles.searchCard}
-              placeholder='search cards' 
               value={this.state.cardSearchVal}
+              placeholder={I18n.t('react.card_maker.search_cards')}
             />
-            */}
           </div>
           <UserResources
             resources={resourceResult.resources}

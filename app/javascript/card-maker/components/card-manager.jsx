@@ -30,6 +30,7 @@ const allDecksDeck = { // unused for now
         name: I18n.t('react.card_maker.all_cards'),
       }
     , pollIntervalMillis = 1000
+    , maxDescLength = 540
     ;
 
 
@@ -611,6 +612,7 @@ class CardManager extends React.Component {
           onChange={this.handleDescInputChange}
           key='0'
           ref={node => node && node.focus()}
+          maxLength={maxDescLength}
         ></textarea>
       ),
       (
@@ -821,58 +823,60 @@ class CardManager extends React.Component {
         />
         <div className={styles.lResources}>
           <div className={styles.lDeckMenu}>
-            <div 
-              className={styles.menuWrap}
-              ref={node => this.setMenuNode('deck', node)}
-            >
-              {this.deckMenuAnchor()}
-              {this.state.menus.deck.open &&
-                <ul className={[styles.menu, styles.deckMenu].join(' ')}>
-                  { false && <li>{I18n.t('react.card_maker.rename')}</li> }
-                  <li
-                    onClick={this.makeDeckPdf}
-                    key='print'
-                  >{I18n.t('react.card_maker.print')}</li>
-                  {
-                    this.isUserLib() && [
-                      <li
-                        onClick={this.handleDescBtnClick} 
-                        key='desc'
-                      >
-                        {
-                          this.state.selectedDeck.desc ? 
-                          I18n.t('react.card_maker.edit_desc') :
-                          I18n.t('react.card_maker.add_desc')
-                        }
-                      </li>,
-                      <li 
-                        onClick={() => this.handleDestroyDeck(this.state.selectedDeck.id)}
-                        key='destroy'
-                      >delete deck</li>
-                    ]
-                  }
-                  {
-                    this.props.userRole === 'admin' && this.isUserLib() && [
-                      <li 
-                        onClick={this.toggleDeckPublic}
-                        key='public'
-                      >
-                        {
-                          this.state.selectedDeck.public ? 
-                          I18n.t('react.card_maker.make_deck_private') :
-                          I18n.t('react.card_maker.make_deck_public')
-                        }
-                      </li>,
-                      <li 
-                        onClick={() => {this.setState({ deckUsersOpen: true })}}
-                        key='users'
-                      >{I18n.t('react.card_maker.manage_deck_users')}</li>
-                    ]
-                  }
-                </ul>
-              }
+            <div className={styles.lDeckMenuFlex}>
+              <div 
+                className={styles.menuWrap}
+                ref={node => this.setMenuNode('deck', node)}
+              >
+                {this.deckMenuAnchor()}
+                {this.state.menus.deck.open &&
+                  <ul className={[styles.menu, styles.deckMenu].join(' ')}>
+                    { false && <li>{I18n.t('react.card_maker.rename')}</li> }
+                    <li
+                      onClick={this.makeDeckPdf}
+                      key='print'
+                    >{I18n.t('react.card_maker.print')}</li>
+                    {
+                      this.isUserLib() && [
+                        <li
+                          onClick={this.handleDescBtnClick} 
+                          key='desc'
+                        >
+                          {
+                            this.state.selectedDeck.desc ? 
+                            I18n.t('react.card_maker.edit_desc') :
+                            I18n.t('react.card_maker.add_desc')
+                          }
+                        </li>,
+                        <li 
+                          onClick={() => this.handleDestroyDeck(this.state.selectedDeck.id)}
+                          key='destroy'
+                        >delete deck</li>
+                      ]
+                    }
+                    {
+                      this.props.userRole === 'admin' && this.isUserLib() && [
+                        <li 
+                          onClick={this.toggleDeckPublic}
+                          key='public'
+                        >
+                          {
+                            this.state.selectedDeck.public ? 
+                            I18n.t('react.card_maker.make_deck_private') :
+                            I18n.t('react.card_maker.make_deck_public')
+                          }
+                        </li>,
+                        <li 
+                          onClick={() => {this.setState({ deckUsersOpen: true })}}
+                          key='users'
+                        >{I18n.t('react.card_maker.manage_deck_users')}</li>
+                      ]
+                    }
+                  </ul>
+                }
+              </div>
+              {this.deckDesc()}
             </div>
-            {this.deckDesc()}
           </div>
           {/*
           <div className={[styles.bar, styles.barMenu].join(' ')}>

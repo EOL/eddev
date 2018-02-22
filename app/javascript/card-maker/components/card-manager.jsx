@@ -32,12 +32,77 @@ const allDecksDeck = { // unused for now
       }
     , pollIntervalMillis = 1000
     , maxDescLength = 540
+    , sorts = {
+        commonAsc: {
+          fn: (a, b) => {
+            if (a.commonName <= b.commonName) {
+              return -1;
+            } else {
+              return 1;
+            }
+          },
+          label: "common name (a-z)"
+        },
+        commonDesc: { 
+          fn: (a, b) => {
+            if (a.commonName > b.commonName) {
+              return -1;
+            } else {
+              return 1;
+            }
+          },
+          label: "common name (z-a)"
+        },
+        sciAsc: {
+          fn: (a, b) => {
+            if (a.sciName <= b.sciName) {
+              return -1;
+            } else {
+              return 1;
+            }
+          },
+          label: "scientific name (a-z)"
+        },
+        sciDesc: {
+          fn: (a, b) => {
+            if (a.sciName > b.sciName) {
+              return -1;
+            } else {
+              return 1
+            }
+          },
+          label: "scientific name (z-a)"
+        },
+        recent: {
+          fn: (a, b) => {
+            if (a.updatedAt < b.updatedAt) {
+              return 1;
+            } else {
+              return -1;
+            }
+          },
+          label: "recently edited"
+        }
+      }
+    , userSorts = [
+        'recent',
+        'commonAsc',
+        'commonDesc',
+        'sciAsc',
+        'sciDesc'
+      ]
+    , publicSorts = [
+        'commonAsc',
+        'commonDesc',
+        'sciAsc',
+        'sciDesc'
+      ]
     ;
-
 
 class CardManager extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       cards: [],
       decks: [],
@@ -54,7 +119,8 @@ class CardManager extends React.Component {
       deckUsersOpen: false,
       menus: {
         deck: false,
-      }
+      },
+      sort: sorts[publicSorts[0]]
     }
     this.menuNodes = {
       new: null,
@@ -350,23 +416,7 @@ class CardManager extends React.Component {
           card.sciName.toLowerCase().includes(searchLower);
       });
 
-      if (this.state.library === 'user') {
-        resources = resources.slice(0).sort((a, b) => {
-          if (a.updatedAt < b.updatedAt) {
-            return 1;
-          } else {
-            return -1;
-          }
-        });
-      } else {
-        resources = resources.slice(0).sort((a, b) => {
-          if (a.commonName <= b.commonName) {
-            return -1;
-          } else {
-            return 1;
-          }
-        });
-      }
+      resources = resources.slice(0).sort(this.state.sort.fn);
     }
 
     return {
@@ -726,11 +776,18 @@ class CardManager extends React.Component {
     this.setLibrary(newLib);
   }
 
+  sortsForLib = (lib) => {
+    return lib === 'public' ? publicSorts : userSorts;
+  }
+
   setLibrary = (newLib) => {
     if (this.state.library !== newLib) {
-      this.setState({
-        library: newLib,
-        selectedDeck: allCardsDeck
+      this.setState((prevState) => {
+        return {
+          library: newLib,
+          selectedDeck: allCardsDeck,
+          sort: sorts[this.sortsForLib(newLib)[0]]
+        };
       }, this.reloadResources);
     }
   }
@@ -779,7 +836,23 @@ class CardManager extends React.Component {
     return items;
   }
 
-  // TODO: add cardsHdr icons after building a proper icon font. Last round was a hack job.
+  handleSortClick = (sort) => {
+    this.setState({
+      sort: sort
+    });
+  }
+
+  sortItems = () => {
+    return this.sortsForLib(this.state.library).map((key) => {
+      let sort = sorts[key];
+
+      return {
+        handleClick: () => { this.handleSortClick(sort) },
+        label: sort.label
+      }
+    });
+  }
+
   render() {
     var resourceResult = this.selectedResources();
 
@@ -844,6 +917,17 @@ class CardManager extends React.Component {
               placeholder={I18n.t('react.card_maker.search_cards')}
               extraClass={styles.searchCards}
             />
+            <div className={styles.lSort}>
+              <span className={styles.sortLabel}>Sort: </span>
+              <Menu
+                items={this.sortItems()}
+                anchorText={this.state.sort.label}
+                open={this.state.menus.sort}
+                handleRequestOpen={() => { this.openMenu('sort') }}
+                handleRequestClose={() => { this.closeMenu('sort') }}
+                extraClasses={[styles.menuWrapSort]}
+              />
+            </div>
           </div>
           <UserResources
             resources={resourceResult.resources}

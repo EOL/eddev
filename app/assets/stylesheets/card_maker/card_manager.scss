@@ -14,6 +14,7 @@ $new-row-height: 33px;
 $search-results-width: 320px;
 $deck-select-arw-width: 50px;
 $resources-box-shadow: inset 45px 0px 105px -83px rgba(0,0,0,0.41);
+$search-height: 53px;
 $disabled-gray: #9db2b8;
 $deck-sel-shadow-color: #c6cfd1;
 $light-gray: #ecf2f6;
@@ -88,17 +89,18 @@ $bar-menu-dark-grey: #9db2b8;
 
 .searchContain {
   background: rgba(255, 255, 255, 0.9);
+  height: $search-height;
+  padding-right: 10px;
   width: 100%;
 }
 
 .search {
-  $height: 53px;
   $icon-width: 49px;
 
   border: none;
   display: flex;
-  height: $height;
-  line-height: $height;
+  height: $search-height;
+  line-height: $search-height;
   width: 100%;
 
   & > i {
@@ -106,7 +108,7 @@ $bar-menu-dark-grey: #9db2b8;
     display: inline-block;
     flex: 0 0 auto;
     height: 100%;
-    line-height: $height;
+    line-height: $search-height;
     padding-left: 23px;
     width: $icon-width;
   }
@@ -123,6 +125,7 @@ $bar-menu-dark-grey: #9db2b8;
 }
 
 .searchCards {
+  float: left;
   width: 300px;
 }
 
@@ -275,19 +278,48 @@ $bar-menu-dark-grey: #9db2b8;
 .menuWrap {
   background: $white;
   border-radius: 2px;
+  font-size: 16px;
+  line-height: $menu-anchor-height;
   margin: 0 auto;
   position: relative;
   z-index: 2;
-  width: 176px;
-}
+  min-width: 150px;
+  max-width: 300px;
 
-  .menuAnchor {
-    font-size: 16px;
+  & > div {
     height: $menu-anchor-height; 
-    line-height: $menu-anchor-height;
-    padding: 0 5px;
+    padding: 0 15px;
     text-align: center;
   }
+}
+
+.lSort {
+  $height: 40px;
+  float: right;
+  height: $height;
+  line-height: $height;
+  margin-top: 7px;
+
+  & > div, & > span {
+    height: 100%;
+    line-height: inherit;
+  }
+}
+
+.sortLabel {
+  font-size: 12px;
+  margin-right: 10px;
+}
+
+.menuWrapSort {
+  display: inline-block;
+
+  & > div {
+    font-size: 13px;
+    height: 100%;
+  }
+}
+
 
 .menuCaret {
   display: inline-block;
@@ -301,8 +333,9 @@ $bar-menu-dark-grey: #9db2b8;
   text-overflow: ellipsis;
   vertical-align: middle;
   white-space: nowrap;
-  width: 130px;
+  max-width: 200px;
 }
+
 
 .lDesc {
   align-items: center;

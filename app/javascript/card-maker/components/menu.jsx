@@ -17,25 +17,30 @@ class Menu extends React.Component {
   }
 
   handleDocClick = (e) => {
-    if (!this.node.contains(e.target) && this.props.open) {
+    if (!this.anchorNode.contains(e.target)) {
       this.props.handleRequestClose();
     }
   }
 
-  render() {
-    console.log(this.props.items);
+  handleAnchorClick = () => {
+    if (this.props.items.length) {
+      if (this.props.open) {
+        this.props.handleRequestClose();
+      } else {
+        this.props.handleRequestOpen();
+      }
+    }
+  }
 
+  render() {
     return (
       <div
-        className={styles.menuWrap}
-        ref={node => this.node = node}
+        className={[styles.menuWrap].concat(this.props.extraClasses || []).join(' ')}
       >
         <div 
-          className={[
-            styles.menuAnchor,
-            (this.props.items.length ? styles.isClickable : '')
-          ].join(' ')}
-          onClick={this.props.items.length ? this.props.handleRequestOpen : null}
+          className={this.props.items.length ? styles.isClickable : ''}
+          onClick={this.handleAnchorClick}
+          ref={node => this.anchorNode = node}
         >
           <div className={styles.menuAnchorName}>{this.props.anchorText}</div>
           {this.props.items.length ? <i className={`${styles.menuCaret} fa fa-caret-down`} /> : null}

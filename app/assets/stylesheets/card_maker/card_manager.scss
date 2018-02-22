@@ -122,6 +122,10 @@ $bar-menu-dark-grey: #9db2b8;
   }
 }
 
+.searchCards {
+  width: 300px;
+}
+
 .searchCard {
   background: none;
   width: 300px;
@@ -291,7 +295,7 @@ $bar-menu-dark-grey: #9db2b8;
   vertical-align: middle;
 }
 
-.menuDeckName {
+.menuAnchorName {
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -435,7 +439,7 @@ $bar-menu-dark-grey: #9db2b8;
 .menu {
   background: inherit;
   color: inherit;
-  font-size: 12px;
+  font-size: 14px;
   position: absolute;
   text-align: center;
   width: 100%;
@@ -446,10 +450,6 @@ $bar-menu-dark-grey: #9db2b8;
     height: $height;
     line-height: $height;
   }
-}
-
-.deckMenu {
-  font-size: 14px;
 }
 
 .lightbox {

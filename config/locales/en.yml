@@ -451,6 +451,7 @@ en:
       card_maker_title: 'Card Maker'
       create_card: create card
       create_deck: create deck
+      delete_deck: delete deck
       download_png: Download PNG
       welcome_card_manager_html: >
         <span class='big-letter'>W</span><span>elcome to the </span>

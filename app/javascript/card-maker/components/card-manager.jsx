@@ -11,6 +11,7 @@ import DeckUsersLightbox from './deck-users-lightbox'
 import Search from './search'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
 import LeftRail from './manager-left-rail'
+import Menu from './menu'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
 import eolHdrIcon from 'images/card_maker/icons/eol_logo_sub_hdr.png'
@@ -52,14 +53,7 @@ class CardManager extends React.Component {
       library: 'public',
       deckUsersOpen: false,
       menus: {
-        new: {
-          open: false,
-          node: null
-        }, 
-        deck: {
-          open: false,
-          node: null
-        },
+        deck: false,
       }
     }
     this.menuNodes = {
@@ -106,17 +100,11 @@ class CardManager extends React.Component {
     this.reloadResourcesWithCb(null);
   }
 
-  componentWillMount() {
-    document.addEventListener('click', this.handleDocClick);
-  }
-
   componentWillUnmount() {
     if (this.req) {
       this.req.abort();
       this.req = null;
     }
-
-    document.removeEventListener('click', this.handleDocClick);
   }
 
   componentDidMount() {
@@ -139,38 +127,20 @@ class CardManager extends React.Component {
     this.setState((prevState) => {
       return update(prevState, {
         menus: {
-          [name]: {
-            open: { $set: false }
-          }
+          [name]: { $set: false }
         }
       });
     });
   }
 
-  toggleMenu = (name) => {
+  openMenu = (name) => {
     this.setState((prevState) => {
       return update(prevState, {
         menus: {
-          [name]: { $toggle: ['open'] }
+          [name]: { $set: true }
         }
       });
     });
-  }
-
-  toggleDeckMenu = () => {
-    this.toggleMenu('deck');
-  }
-
-  handleDocClick = e => {
-    for (let [name, menu] of Object.entries(this.state.menus)) {
-      if (
-        this.menuNodes[name] &&
-        !this.menuNodes[name].contains(e.target) &&
-        menu.open
-      ) {
-        this.closeMenu(name);
-      }
-    }
   }
 
   assignCardDeck = (cardId, deckId) => {
@@ -679,27 +649,10 @@ class CardManager extends React.Component {
       I18n.t('react.card_maker.all_public_cards');
   }
 
-  deckMenuAnchor = () => {
-    let isMenu = this.state.selectedDeck !== allCardsDeck
-      ,  name = isMenu ? 
-          this.state.selectedDeck.name :
-          this.allDecksName()
-      ;
-
-
-    return (
-      <div 
-        className={[
-          styles.menuAnchor,
-          (isMenu ? styles.isClickable : '')
-        ].join(' ')}
-        onClick={isMenu ? this.toggleDeckMenu : null}
-      >
-        <div className={styles.menuDeckName}>{name}
-        </div>
-        {isMenu && <i className={`${styles.menuCaret} fa fa-caret-down`} />}
-      </div>
-    );
+  deckMenuAnchorText = () => {
+    return this.state.selectedDeck === allCardsDeck ?
+      this.allDecksName() :
+      this.state.selectedDeck.name;
   }
 
   toggleDeckPublic = () => {
@@ -786,6 +739,46 @@ class CardManager extends React.Component {
     return this.state.library === 'user';
   }
 
+  deckMenuItems = () => {
+    let items = [];
+
+    if (this.state.selectedDeck !== allCardsDeck) {
+      items.push({
+        handleClick: this.makeDeckPdf,
+        label: I18n.t('react.card_maker.print')
+      });
+
+      if (this.isUserLib()) {
+        items.push({
+          handleClick: this.handleDescBtnClick,
+          label: this.state.selectedDeck.desc ? 
+            I18n.t('react.card_maker.edit_desc') :
+            I18n.t('react.card_maker.add_desc')
+        });
+
+        items.push({
+          handleClick: () => this.handleDestroyDeck(this.state.selectedDeck.id),
+          label: I18n.t('react.card_maker.delete_deck')
+        });
+
+        if (this.props.userRole == 'admin') {
+          items.push({
+            handleClick: this.toggleDeckPublic,
+            label: this.state.selectedDeck.public ? 
+              I18n.t('react.card_maker.make_deck_private') :
+              I18n.t('react.card_maker.make_deck_public')
+          });
+          items.push({
+            handleClick: () => this.setState({ deckUsersOpen: true }),
+            label: I18n.t('react.card_maker.manage_deck_users')
+          });
+        }
+      }
+    }
+
+    return items;
+  }
+
   // TODO: add cardsHdr icons after building a proper icon font. Last round was a hack job.
   render() {
     var resourceResult = this.selectedResources();
@@ -824,57 +817,13 @@ class CardManager extends React.Component {
         <div className={styles.lResources}>
           <div className={styles.lDeckMenu}>
             <div className={styles.lDeckMenuFlex}>
-              <div 
-                className={styles.menuWrap}
-                ref={node => this.setMenuNode('deck', node)}
-              >
-                {this.deckMenuAnchor()}
-                {this.state.menus.deck.open &&
-                  <ul className={[styles.menu, styles.deckMenu].join(' ')}>
-                    { false && <li>{I18n.t('react.card_maker.rename')}</li> }
-                    <li
-                      onClick={this.makeDeckPdf}
-                      key='print'
-                    >{I18n.t('react.card_maker.print')}</li>
-                    {
-                      this.isUserLib() && [
-                        <li
-                          onClick={this.handleDescBtnClick} 
-                          key='desc'
-                        >
-                          {
-                            this.state.selectedDeck.desc ? 
-                            I18n.t('react.card_maker.edit_desc') :
-                            I18n.t('react.card_maker.add_desc')
-                          }
-                        </li>,
-                        <li 
-                          onClick={() => this.handleDestroyDeck(this.state.selectedDeck.id)}
-                          key='destroy'
-                        >delete deck</li>
-                      ]
-                    }
-                    {
-                      this.props.userRole === 'admin' && this.isUserLib() && [
-                        <li 
-                          onClick={this.toggleDeckPublic}
-                          key='public'
-                        >
-                          {
-                            this.state.selectedDeck.public ? 
-                            I18n.t('react.card_maker.make_deck_private') :
-                            I18n.t('react.card_maker.make_deck_public')
-                          }
-                        </li>,
-                        <li 
-                          onClick={() => {this.setState({ deckUsersOpen: true })}}
-                          key='users'
-                        >{I18n.t('react.card_maker.manage_deck_users')}</li>
-                      ]
-                    }
-                  </ul>
-                }
-              </div>
+              <Menu
+                items={this.deckMenuItems()}
+                open={this.state.menus.deck}
+                anchorText={this.deckMenuAnchorText()}
+                handleRequestClose={() => this.closeMenu('deck')}
+                handleRequestOpen={() => this.openMenu('deck')}
+              />
               {this.deckDesc()}
             </div>
           </div>
@@ -893,6 +842,7 @@ class CardManager extends React.Component {
               handleChange={(val) => this.setState({ cardSearchVal: val})}
               value={this.state.cardSearchVal}
               placeholder={I18n.t('react.card_maker.search_cards')}
+              extraClass={styles.searchCards}
             />
           </div>
           <UserResources

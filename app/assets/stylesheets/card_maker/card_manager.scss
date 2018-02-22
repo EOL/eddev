@@ -1,4 +1,4 @@
-@import '../shared/layout_vars';
+@import 'layout_vars';
 
 // TODO: standardize font colors!!!
 $manager-height: 762px;
@@ -437,8 +437,8 @@ $bar-menu-dark-grey: #9db2b8;
 }
 
 .menu {
-  background: inherit;
-  color: inherit;
+  background: $white;
+  color: $txt-gray;
   font-size: 14px;
   position: absolute;
   text-align: center;
@@ -449,6 +449,11 @@ $bar-menu-dark-grey: #9db2b8;
     cursor: pointer;
     height: $height;
     line-height: $height;
+  }
+
+  & > li:hover {
+    background: $txt-gray;
+    color: $white;
   }
 }
 

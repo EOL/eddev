@@ -18,7 +18,81 @@ const allDecksDeck = { // unused for now
         id: -2,
         name: I18n.t('react.card_maker.all_cards'),
       }
+    , sorts = {
+        commonAsc: {
+          fn: (a, b) => {
+            if (a.commonName <= b.commonName) {
+              return -1;
+            } else {
+              return 1;
+            }
+          },
+          label: "common name (a-z)"
+        },
+        commonDesc: { 
+          fn: (a, b) => {
+            if (a.commonName > b.commonName) {
+              return -1;
+            } else {
+              return 1;
+            }
+          },
+          label: "common name (z-a)"
+        },
+        sciAsc: {
+          fn: (a, b) => {
+            if (a.sciName <= b.sciName) {
+              return -1;
+            } else {
+              return 1;
+            }
+          },
+          label: "scientific name (a-z)"
+        },
+        sciDesc: {
+          fn: (a, b) => {
+            if (a.sciName > b.sciName) {
+              return -1;
+            } else {
+              return 1
+            }
+          },
+          label: "scientific name (z-a)"
+        },
+        recent: {
+          fn: (a, b) => {
+            if (a.updatedAt < b.updatedAt) {
+              return 1;
+            } else {
+              return -1;
+            }
+          },
+          label: "recently edited"
+        }
+      }
+    , userSorts = buildSorts([
+        'recent',
+        'commonAsc',
+        'commonDesc',
+        'sciAsc',
+        'sciDesc'
+      ])
+    , publicSorts = buildSorts([
+        'commonAsc',
+        'commonDesc',
+        'sciAsc',
+        'sciDesc'
+      ])
     ;
+
+function buildSorts(keys) {
+  return keys.map((key) => {
+    return {
+      key: key,
+      label: sorts[key].label
+    };
+  });
+}
 
 class CardMaker extends React.Component {
   constructor(props) {
@@ -30,6 +104,7 @@ class CardMaker extends React.Component {
       selectedDeck: 'allCardsDeck',
       library: 'public',
       screen: 'manager',
+      sort: sorts[publicSorts[0].key],
       showLoadingOverlay: false,
       userRole: null
     }
@@ -126,10 +201,20 @@ class CardMaker extends React.Component {
         return {
           library: newLib,
           selectedDeck: allCardsDeck,
-          //sort: sorts[this.sortsForLib(newLib)[0]]
+          sort: sorts[this.sortsForLib(newLib)[0].key]
         };
       }, cb);
     }
+  }
+
+  setSort = (key) => {
+    this.setState({
+      sort: sorts[key]
+    });
+  }
+
+  sortsForLib = (lib) => {
+    return lib === 'user' ? userSorts : publicSorts;
   }
 
   screenComponent = () => {
@@ -150,6 +235,9 @@ class CardMaker extends React.Component {
           setLibrary={this.setLibrary}
           selectedDeck={this.state.selectedDeck}
           setSelectedDeck={this.setSelectedDeck}
+          setSort={this.setSort}
+          sort={this.state.sort}
+          sorts={this.sortsForLib(this.state.library)}
           {...commonProps}
         />
       )

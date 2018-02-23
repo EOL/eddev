@@ -24,71 +24,6 @@ import styles from 'stylesheets/card_maker/card_manager'
 
 const pollIntervalMillis = 1000
     , maxDescLength = 540
-    , sorts = {
-        commonAsc: {
-          fn: (a, b) => {
-            if (a.commonName <= b.commonName) {
-              return -1;
-            } else {
-              return 1;
-            }
-          },
-          label: "common name (a-z)"
-        },
-        commonDesc: { 
-          fn: (a, b) => {
-            if (a.commonName > b.commonName) {
-              return -1;
-            } else {
-              return 1;
-            }
-          },
-          label: "common name (z-a)"
-        },
-        sciAsc: {
-          fn: (a, b) => {
-            if (a.sciName <= b.sciName) {
-              return -1;
-            } else {
-              return 1;
-            }
-          },
-          label: "scientific name (a-z)"
-        },
-        sciDesc: {
-          fn: (a, b) => {
-            if (a.sciName > b.sciName) {
-              return -1;
-            } else {
-              return 1
-            }
-          },
-          label: "scientific name (z-a)"
-        },
-        recent: {
-          fn: (a, b) => {
-            if (a.updatedAt < b.updatedAt) {
-              return 1;
-            } else {
-              return -1;
-            }
-          },
-          label: "recently edited"
-        }
-      }
-    , userSorts = [
-        'recent',
-        'commonAsc',
-        'commonDesc',
-        'sciAsc',
-        'sciDesc'
-      ]
-    , publicSorts = [
-        'commonAsc',
-        'commonDesc',
-        'sciAsc',
-        'sciDesc'
-      ]
     ;
 
 class CardManager extends React.Component {
@@ -106,16 +41,11 @@ class CardManager extends React.Component {
       showDescInput: false,
       deckDescVal: null,
       cardSearchVal: '',
-      library: 'public',
       deckUsersOpen: false,
       menus: {
         deck: false,
+        sort: false
       },
-      sort: sorts[publicSorts[0]]
-    }
-    this.menuNodes = {
-      new: null,
-      deck: null,
     }
   }
 
@@ -173,6 +103,7 @@ class CardManager extends React.Component {
     if (this.props.userRole) {
       this.setLibrary('user')
     } 
+
     this.reloadResources();
   }
 
@@ -405,7 +336,7 @@ class CardManager extends React.Component {
         card.sciName.toLowerCase().includes(searchLower);
     });
 
-    resources = resources.slice(0).sort(this.state.sort.fn);
+    resources = resources.slice(0).sort(this.props.sort.fn);
 
     return {
       resources: resources,
@@ -675,10 +606,6 @@ class CardManager extends React.Component {
     return result;
   }
 
-  setMenuNode = (name, node) => {
-    this.menuNodes[name] = node;
-  }
-
   allDecksName = () => {
     return this.props.library === 'user' ? 
       I18n.t('react.card_maker.all_my_cards') :
@@ -763,10 +690,6 @@ class CardManager extends React.Component {
     this.setLibrary(newLib);
   }
 
-  sortsForLib = (lib) => {
-    return lib === 'public' ? publicSorts : userSorts;
-  }
-
   setLibrary = (newLib) => {
     this.props.setLibrary(newLib, this.reloadResources);
   }
@@ -815,18 +738,10 @@ class CardManager extends React.Component {
     return items;
   }
 
-  handleSortClick = (sort) => {
-    this.setState({
-      sort: sort
-    });
-  }
-
   sortItems = () => {
-    return this.sortsForLib(this.props.library).map((key) => {
-      let sort = sorts[key];
-
+    return this.props.sorts.map((sort) => {
       return {
-        handleClick: () => { this.handleSortClick(sort) },
+        handleClick: () => { this.props.setSort(sort.key) },
         label: sort.label
       }
     });
@@ -900,7 +815,7 @@ class CardManager extends React.Component {
               <span className={styles.sortLabel}>Sort: </span>
               <Menu
                 items={this.sortItems()}
-                anchorText={this.state.sort.label}
+                anchorText={this.props.sort.label}
                 open={this.state.menus.sort}
                 handleRequestOpen={() => { this.openMenu('sort') }}
                 handleRequestClose={() => { this.closeMenu('sort') }}

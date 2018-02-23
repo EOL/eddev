@@ -83,10 +83,6 @@ class CardPreview extends React.Component {
   }
 
   render() {
-    console.log(I18n.t('react.card_maker.open_eol_taxon_page_html', {
-      iconClass: 'edu-icon-eol-logo'
-    }))
-
     var eolLinkAttrs = this.eolLinkAttrs();
 
     return (

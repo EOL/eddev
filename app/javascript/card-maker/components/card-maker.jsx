@@ -10,11 +10,25 @@ import styles from 'stylesheets/card_maker/card_maker'
 
 import eolLogoHdr from 'images/card_maker/icons/eol_logo_hdr.png'
 
+const allDecksDeck = { // unused for now
+        id: -1,
+        name: I18n.t('react.card_maker.all_decks'),
+      }
+    , allCardsDeck = {
+        id: -2,
+        name: I18n.t('react.card_maker.all_cards'),
+      }
+    ;
+
 class CardMaker extends React.Component {
   constructor(props) {
     super(props);
     
     this.state = {
+      cards: [],
+      decks: [],
+      selectedDeck: 'allCardsDeck',
+      library: 'public',
       screen: 'manager',
       showLoadingOverlay: false,
       userRole: null
@@ -100,6 +114,24 @@ class CardMaker extends React.Component {
     window.history.back();
   }
 
+  setSelectedDeck = (deck) => {
+    this.setState({
+      selectedDeck: deck
+    });
+  }
+
+  setLibrary = (newLib, cb) => {
+    if (this.state.library !== newLib) {
+      this.setState((prevState) => {
+        return {
+          library: newLib,
+          selectedDeck: allCardsDeck,
+          //sort: sorts[this.sortsForLib(newLib)[0]]
+        };
+      }, cb);
+    }
+  }
+
   screenComponent = () => {
     const commonProps = {
       showLoadingOverlay: this.showLoadingOverlay,
@@ -111,8 +143,13 @@ class CardMaker extends React.Component {
     if (this.state.screen === 'manager') {
       component = (
         <CardManager
+          allCardsDeck={allCardsDeck}
           handleEditCard={this.handleEditCard}
           userRole={this.state.userRole}
+          library={this.state.library}
+          setLibrary={this.setLibrary}
+          selectedDeck={this.state.selectedDeck}
+          setSelectedDeck={this.setSelectedDeck}
           {...commonProps}
         />
       )

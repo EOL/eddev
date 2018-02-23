@@ -27,7 +27,7 @@ const allDecksDeck = { // unused for now
               return 1;
             }
           },
-          label: "common name (a-z)"
+          label: I18n.t('react.card_maker.sorts.common_a_z')
         },
         commonDesc: { 
           fn: (a, b) => {
@@ -37,7 +37,7 @@ const allDecksDeck = { // unused for now
               return 1;
             }
           },
-          label: "common name (z-a)"
+          label: I18n.t('react.card_maker.sorts.common_z_a')
         },
         sciAsc: {
           fn: (a, b) => {
@@ -47,7 +47,7 @@ const allDecksDeck = { // unused for now
               return 1;
             }
           },
-          label: "scientific name (a-z)"
+          label: I18n.t('react.card_maker.sorts.sci_a_z')
         },
         sciDesc: {
           fn: (a, b) => {
@@ -57,7 +57,7 @@ const allDecksDeck = { // unused for now
               return 1
             }
           },
-          label: "scientific name (z-a)"
+          label: I18n.t('react.card_maker.sorts.sci_z_a')
         },
         recent: {
           fn: (a, b) => {
@@ -67,7 +67,7 @@ const allDecksDeck = { // unused for now
               return -1;
             }
           },
-          label: "recently edited"
+          label: I18n.t('react.card_maker.sorts.recent')
         }
       }
     , userSorts = buildSorts([

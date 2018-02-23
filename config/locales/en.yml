@@ -535,6 +535,12 @@ en:
       confirm_make_private: Are you sure you want to make this deck private?
       select_deck: deck (optional)
       press_enter_search: press enter to search
+      sorts: 
+        common_a_z: common name (a-z)
+        common_z_a: common name (z-a)
+        sci_a_z: scientific name (a-z)
+        sci_z_a: scientific name (z-a)
+        recent: recently edited
   activerecord:
     errors:
       template:

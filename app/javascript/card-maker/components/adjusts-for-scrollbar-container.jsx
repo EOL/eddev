@@ -49,6 +49,9 @@ class AdjustsForScrollbarContainer extends React.Component {
     if (node) {
       this.rootNode = node;
     }
+    if (this.props.handleRef) {
+      this.props.handleRef(node);
+    }
   }
 
   componentDidMount() {
@@ -78,9 +81,11 @@ class AdjustsForScrollbarContainer extends React.Component {
         ;
 
     return (
-      <ul className={this.props.className} ref={this.rootRef}>
-        {augmentedChildren}
-      </ul>
+      <ul 
+        onScroll={this.props.handleScroll} 
+        className={this.props.className} 
+        ref={this.rootRef}
+      >{augmentedChildren}</ul>
     )
   }
 }

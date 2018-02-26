@@ -12,12 +12,26 @@ import styles from 'stylesheets/card_maker/card_manager'
 const resourcesPerRow = 4
     , initRows = 3 
     , minResources = resourcesPerRow * initRows
+    , resourceHeight = 218.4 // TODO: these shouldn't just be hard-coded..
+    , containerHeight = 600
+    , resourceMarginTop = 10
     ;
 
 class UserResources extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      containerScrollTop: null,
+      resources: [],
+      resourceSliceIndex: 0
+    };
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.setState({
+      resources: this.buildResources(),
+      resourceSliceIndex: 0, 
+    }, this.updateResourceSliceIndex);
   }
 
   createBtnResource = () => {
@@ -64,21 +78,6 @@ class UserResources extends React.Component {
       )
     }
     
-    /*else if (this.props.resourceType === 'deck') {
-      resourceMapFn = (resource) => {
-        return (
-          <Deck
-            name={resource.name}
-            titleCardId={resource.titleCardId}
-            key={resource.id}
-            handleDestroyClick={() => this.props.handleDestroyDeck(resource.id)}
-            handleOpenClick={() => this.props.handleDeckSelect(resource.id)}
-            handlePdfClick={() => this.props.handleDeckPdf(resource.id)}
-          />
-        )
-      }
-    }*/
-
     resources = resources.concat(
       this.props.resources.map(resourceMapFn)
     );
@@ -107,6 +106,31 @@ class UserResources extends React.Component {
     });
   }
 
+  updateResourceSliceIndex = () => {
+    if (this.containerNode) {
+      let rows = Math.ceil(
+            ($(this.containerNode).scrollTop() + containerHeight) /
+            (resourceMarginTop + resourceHeight)
+          )
+        , sliceIndex = rows * resourcesPerRow
+        ;
+
+      if (sliceIndex > this.state.resourceSliceIndex) {
+        this.setState({
+          resourceSliceIndex: sliceIndex
+        });
+      }
+    }
+  }
+
+  handleContainerRef = (node) => {
+    this.containerNode = node;
+
+    if (node) {
+      this.updateResourceSliceIndex();
+    }  
+  }
+
   render() {
     this.resourceCount = this.props.resources.length;
     
@@ -119,8 +143,10 @@ class UserResources extends React.Component {
         <AdjustsForScrollbarContainer
           className={styles.resources}
           itemsPerRow={resourcesPerRow}
+          handleScroll={this.updateResourceSliceIndex}
+          handleRef={this.handleContainerRef}
         >
-          {this.buildResources()}
+          {this.state.resources.slice(0, this.state.resourceSliceIndex)}
         </AdjustsForScrollbarContainer>
       </div>
     );

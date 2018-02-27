@@ -40,7 +40,7 @@ class Card extends React.Component {
   render() {
     return (
       <div>
-        <LoadingSpinnerImage src={loResCardImageUrl(this.props.data.id)} />
+        <LoadingSpinnerImage src={loResCardImageUrl(this.props.data)} />
         {this.props.showOverlay &&
           <div className={styles.resourceOverlay}>
             {

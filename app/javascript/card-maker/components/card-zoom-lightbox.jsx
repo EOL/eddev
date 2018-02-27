@@ -14,7 +14,7 @@ function handlePngClick(cardId) {
 function CardZoomLightbox(props) {
   return (
     <ReactModal
-      isOpen={props.cardId != null}
+      isOpen={props.card != null}
       contentLabel={I18n.t('react.card_maker.card_preview_lightbox')}
       parentSelector={() => {return document.getElementById('Page')}}
       overlayClassName='fixed-center-wrap disable-overlay'
@@ -22,8 +22,8 @@ function CardZoomLightbox(props) {
       bodyOpenClassName='noscroll'
       onRequestClose={props.handleRequestClose}
     >
-      <img className='image' src={hiResCardImageUrl(props.cardId)} />
-      <button onClick={() => handlePngClick(props.cardId)}>{I18n.t('react.card_maker.download_png')}</button>
+      <img className='image' src={props.card ? hiResCardImageUrl(props.card) : ''} />
+      <button onClick={() => handlePngClick(props.card.id)}>{I18n.t('react.card_maker.download_png')}</button>
     </ReactModal>
   );
 }

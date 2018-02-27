@@ -21,9 +21,6 @@ class CardMakerAjaxController < ApplicationController
     :deck_users 
   ]
 
-  # TODO: add exceptions where appropriate
-  before_action :set_cache_headers
-
   wrap_parameters :post_json, :format => :json
 
   # POST /card_maker_ajax/cards
@@ -66,7 +63,7 @@ class CardMakerAjaxController < ApplicationController
       end
 
       format.svg do 
-        card_id, quality = params[:card_id].split('_')
+        card_id, _, quality = params[:card_id].split('_')
 
         if !card_id || !quality || !(quality == 'hi' || quality == 'lo')
           raise ActionController.routing_error('Invalid card svg path')
@@ -300,6 +297,7 @@ class CardMakerAjaxController < ApplicationController
     end
 
     def json_response_helper(body, code)
+      expires_now
       respond_to do |format|
         format.json do
           render(
@@ -311,6 +309,8 @@ class CardMakerAjaxController < ApplicationController
     end
 
     def data_pass_thru_response(svc_res)
+      expires_in 1.year, :public => true
+
       content_type = svc_res.headers["content-type"]
       opts = {
         :status => svc_res.code,
@@ -320,11 +320,5 @@ class CardMakerAjaxController < ApplicationController
       opts[:disposition] = :inline unless svc_res.code != 200
 
       send_data svc_res.body, opts
-    end
-
-    def set_cache_headers
-      response.headers["Cache-Control"] = "no-cache, no-store"
-      response.headers["Pragma"] = "no-cache"
-      response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
     end
 end

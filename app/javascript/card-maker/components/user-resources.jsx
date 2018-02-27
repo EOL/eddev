@@ -58,7 +58,7 @@ class UserResources extends React.Component {
           handleDeckSelect={this.props.handleCardDeckSelect.bind(null, resource.id)}
           handleEditClick={() => this.props.handleEditCard(resource.id)}
           handleDestroyClick={() => this.props.handleDestroyCard(resource.id)}
-          handleZoomClick={() => this.handleCardZoomClick(resource.id)}
+          handleZoomClick={() => this.handleCardZoomClick(resource)}
           editable={this.props.editable}
         />
       )
@@ -95,15 +95,15 @@ class UserResources extends React.Component {
     return resources;
   }
 
-  handleCardZoomClick = (cardId) => {
+  handleCardZoomClick = (card) => {
     this.setState({
-      cardZoomId: cardId 
+      zoomCard: card 
     });
   }
 
   handleCardZoomRequestClose = () => {
     this.setState({
-      cardZoomId: null
+      zoomCard: null
     });
   }
 
@@ -113,7 +113,7 @@ class UserResources extends React.Component {
     return (
       <div>
         <CardZoomLightbox
-          cardId={this.state.cardZoomId}
+          card={this.state.zoomCard}
           handleRequestClose={this.handleCardZoomRequestClose}
         />
         <AdjustsForScrollbarContainer

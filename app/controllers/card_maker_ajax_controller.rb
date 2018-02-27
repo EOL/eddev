@@ -309,7 +309,7 @@ class CardMakerAjaxController < ApplicationController
     end
 
     def data_pass_thru_response(svc_res)
-      expires_in 1.year, :public => true
+      expires_in 1.hour, :public => true
 
       content_type = svc_res.headers["content-type"]
       opts = {

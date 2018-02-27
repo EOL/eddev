@@ -5,7 +5,7 @@ import {cardMakerUrl} from 'lib/card-maker/url-helper'
 
 import styles from 'stylesheets/card_maker/card_manager'
 
-import {cardImageUrl} from 'lib/card-maker/url-helper'
+import {hiResCardImageUrl} from 'lib/card-maker/url-helper'
 
 function handlePngClick(cardId) {
   window.open(cardMakerUrl(`cards/${cardId}.png`));
@@ -22,7 +22,7 @@ function CardZoomLightbox(props) {
       bodyOpenClassName='noscroll'
       onRequestClose={props.handleRequestClose}
     >
-      <img className='image' src={cardImageUrl(props.cardId)} />
+      <img className='image' src={hiResCardImageUrl(props.cardId)} />
       <button onClick={() => handlePngClick(props.cardId)}>{I18n.t('react.card_maker.download_png')}</button>
     </ReactModal>
   );

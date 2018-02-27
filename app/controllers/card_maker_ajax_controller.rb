@@ -66,7 +66,17 @@ class CardMakerAjaxController < ApplicationController
       end
 
       format.svg do 
-        svc_res = CardServiceCaller.svg(params[:card_id])
+        card_id, quality = params[:card_id].split('_')
+
+        if !card_id || !quality || !(quality == 'hi' || quality == 'lo')
+          raise ActionController.routing_error('Invalid card svg path')
+        end
+
+        svc_res = if quality == 'hi'
+                    CardServiceCaller.svg_hi_res(card_id)
+                  else
+                    CardServiceCaller.svg_lo_res(card_id)
+                  end
         data_pass_thru_response(svc_res)
       end
 

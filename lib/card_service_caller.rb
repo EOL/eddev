@@ -52,9 +52,16 @@ module CardServiceCaller
     )
   end
 
-  def self.svg(card_id)
+  def self.svg_lo_res(card_id)
     HTTParty.get(
-      "#{SERVICE_URL}/cards/#{card_id}/svg",
+      "#{SERVICE_URL}/cards/#{card_id}/svg/lo",
+      :headers => self.add_api_headers({})
+    )
+  end
+
+  def self.svg_hi_res(card_id) 
+    HTTParty.get(
+      "#{SERVICE_URL}/cards/#{card_id}/svg/hi",
       :headers => self.add_api_headers({})
     )
   end

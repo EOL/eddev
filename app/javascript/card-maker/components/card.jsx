@@ -2,7 +2,7 @@ import React from 'react'
 
 import LoadingSpinnerImage from './loading-spinner-image'
 import resourceWrapper from './resource-wrapper'
-import {cardMakerUrl, cardImageUrl} from 'lib/card-maker/url-helper'
+import {cardMakerUrl, loResCardImageUrl} from 'lib/card-maker/url-helper'
 
 import styles from "stylesheets/card_maker/card_manager"
 
@@ -40,7 +40,7 @@ class Card extends React.Component {
   render() {
     return (
       <div>
-        <LoadingSpinnerImage src={cardImageUrl(this.props.data.id)} />
+        <LoadingSpinnerImage src={loResCardImageUrl(this.props.data)} />
         {this.props.showOverlay &&
           <div className={styles.resourceOverlay}>
             {

@@ -50,6 +50,9 @@ $thumb-size: 80px;
 
 .card-generator, .card-manager {
   background-image: image-url("card_maker/editor_bg_tree.jpg");
+}
+
+.card-manager {
   overflow: hidden;
 }
 
@@ -464,7 +467,6 @@ $col-border-width: 5px;
 .col {
   border-radius: 4px;
   min-height: $head-box-height;
-  overflow: hidden;
   padding-bottom: 50px;
   position: relative;
   vertical-align: top;

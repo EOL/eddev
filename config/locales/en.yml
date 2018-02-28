@@ -47,6 +47,7 @@ en:
   welcome:
     nav_item:
       title:
+        card_maker: "Card Maker"
         memory_games: "Memory Games"
         coloring_books: "BHL Coloring Books"
         species_cards: "Species Cards"
@@ -59,6 +60,7 @@ en:
         eol_places: "EOL Places"
         lesson_plans: "Lesson Plans"
       desc:
+        card_maker: "Make EOL species cards as a classroom project, or download and print pre-made cards. Great for teaching about ecosystems and food webs."
         eol_places: "Visit Places to learn about environments and the species that live there. Explore biodiversity through food webs, species cards, statistics, lessons and more."
         memory_games: "Use this classic memory game as a warm-up activity for your students, or just play it yourself!"
         biodiv_articles: "These articles introduce specific topics and provide links to EOL resources to dig deeper."

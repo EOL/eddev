@@ -26,7 +26,7 @@ class LoadingSpinnerImage extends React.Component {
     }
 
     return (
-      <div>
+      <div className={styles.loadingSpinnerImage}>
         {!this.state.loaded &&
           <i className='fa fa-spinner fa-spin fa-2x' />
         }

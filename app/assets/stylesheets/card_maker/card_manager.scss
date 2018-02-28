@@ -698,11 +698,7 @@ $bar-menu-dark-grey: #9db2b8;
 .lLightboxZoom {
   margin: 20px auto 0 auto;
   padding: 0;
-  width: 400px;
-
-  & > img {
-    width: 100%;
-  }
+  width: 402px;
 
   & > button {
     display: block;
@@ -715,6 +711,17 @@ $bar-menu-dark-grey: #9db2b8;
 }
 
 .imageZoom {
+  height: 549px;
+  margin: 0 auto 12px auto;
+  width: 100%;
+}
+
+.loadingSpinnerImage {
+  align-items: center;
+  background: $white;
+  display: flex;
+  justify-content: center;
+  height: 100%;
   width: 100%;
 }
 

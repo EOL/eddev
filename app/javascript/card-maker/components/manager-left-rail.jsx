@@ -115,7 +115,7 @@ class ManagerLeftRail extends React.Component {
         </div>
         <ul className={styles.libs} >
           {this.lib(I18n.t('react.card_maker.my_cards'), 'user', 'user')}
-          {this.lib(I18n.t('react.card_maker.public_cards'), 'users', 'public')}
+          {this.lib(I18n.t('react.card_maker.eol_cards'), 'users', 'public')}
         </ul>
         {
           this.props.decks.length > 0 && 

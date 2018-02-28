@@ -609,7 +609,7 @@ class CardManager extends React.Component {
   allDecksName = () => {
     return this.props.library === 'user' ? 
       I18n.t('react.card_maker.all_my_cards') :
-      I18n.t('react.card_maker.all_public_cards');
+      I18n.t('react.card_maker.all_eol_cards');
   }
 
   deckMenuAnchorText = () => {

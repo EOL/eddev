@@ -447,21 +447,13 @@ en:
     card_maker:
       all_my_cards: all my cards
       all_eol_cards: all EOL cards
-      card_maker_html: card<br/>maker
+      card_maker_html: card<br/>maker (beta)
       card_maker_title: Card Maker
       create_card: create card
       create_deck: create deck
       delete_deck: delete deck
       download_png: Download PNG
       eol_cards: EOL cards
-      welcome_card_manager_html: >
-        <span class='big-letter'>W</span><span>elcome to the </span>
-        <img src=%{eolHdrIconPath} class='eol_logo' />
-        <span> Card Manager.</span>
-      welcome_card_editor_html: >
-        <span class='big-letter'>W</span><span>elcome to the </span>
-        <img src=%{eolHdrIconPath} class='eol_logo' />
-        <span> Card Editor.</span>
       create_a_card: create a card
       create_a_deck: create a deck
       all_cards: all cards

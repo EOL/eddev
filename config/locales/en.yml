@@ -73,18 +73,21 @@ en:
     index:
       slides:
         titles:
+          new: NEW!
           podcast: "Podcast"
           biodiv_article: "Biodiversity Article"
           species_cards: "Species Cards"
           memory_game: "Memory Game"
           lesson_plan: "Lesson Plan"
         subtitles:
+          card_maker: "EOL Species Card Maker"
           right_whale: "The Right Whale"
           what_is_amph: "What is an Amphibian"
           bioblitz_deck: "BioBlitz Deck"
           sea_monsters: "Beautiful Sea Monsters"
           food_chain_rummy: "Energy Flow and Food Chain Rummy"
         descriptions:
+          card_maker: "Make your own EOL species cards or view, download and print cards or decks from EOL's Card Library"
           right_whale: "This 6-minute podcast on animal communication has lesson plans, transcripts, and scientist interviews, too"
           what_is_amph: "Check-out EOL’s introductory article with links to other resources to learn about amphibians"
           bioblitz_deck: "Developed for the 2016 National Park BioBlitz, this deck contains information for common groups of animals"

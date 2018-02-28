@@ -22,16 +22,26 @@ class UserResources extends React.Component {
     super(props);
     this.state = {
       containerScrollTop: null,
-      resources: [],
+      resources: this.buildResources(props),
       resourceSliceIndex: 0
     };
   }
 
-  componentWillReceiveProps(newProps) {
-    this.setState({
-      resources: this.buildResources(),
-      resourceSliceIndex: 0, 
-    }, this.updateResourceSliceIndex);
+  componentWillReceiveProps(nextProps) {
+    let changed = this.props.resources.length !== nextProps.resources.length;
+
+    for (let i = 0; i < this.props.resources.length && !changed; i++) {
+      if (this.props.resources[i].id !== nextProps.resources[i].id) {
+        changed = true;
+      }
+    }
+
+    if (changed) {
+      this.setState({
+        resources: this.buildResources(nextProps),
+        resourceSliceIndex: 0, 
+      }, this.updateResourceSliceIndex);
+    }
   }
 
   createBtnResource = () => {
@@ -56,8 +66,8 @@ class UserResources extends React.Component {
     )];
   }
 
-  buildResources = () => {
-    let resources = this.props.editable ? 
+  buildResources = (props) => {
+    let resources = props.editable ? 
           [this.createBtnResource()] :
           []
       , placeholderKey = 0
@@ -69,20 +79,20 @@ class UserResources extends React.Component {
         <Card
           data={resource}
           key={resource.id}
-          handleDeckSelect={this.props.handleCardDeckSelect.bind(null, resource.id)}
-          handleEditClick={() => this.props.handleEditCard(resource.id)}
-          handleDestroyClick={() => this.props.handleDestroyCard(resource.id)}
+          handleDeckSelect={props.handleCardDeckSelect.bind(null, resource.id)}
+          handleEditClick={() => props.handleEditCard(resource.id)}
+          handleDestroyClick={() => props.handleDestroyCard(resource.id)}
           handleZoomClick={() => this.handleCardZoomClick(resource)}
-          editable={this.props.editable}
+          editable={props.editable}
         />
       )
     }
     
     resources = resources.concat(
-      this.props.resources.map(resourceMapFn)
+      props.resources.map(resourceMapFn)
     );
 
-    if (this.props.editable) {
+    if (props.editable) {
       minPlaceholders = resourcesPerRow + 
         Math.min((resourcesPerRow - (resources.length % resourcesPerRow)), resourcesPerRow - 1);
 

@@ -17,7 +17,7 @@ class Menu extends React.Component {
   }
 
   handleDocClick = (e) => {
-    if (!this.anchorNode.contains(e.target)) {
+    if (!this.anchorNode.contains(e.target) && this.props.open) {
       this.props.handleRequestClose();
     }
   }

@@ -202,8 +202,8 @@ $nav-img-height: 305;
     background-image: nav-img-url("memory_game");
   }
 
-  .card-maker .img {
-    background-image: nav-img-url("card_maker");
+  .ecosystems .img {
+    background-image: nav-img-url("eol_places");
   }
 
   .lesson-plans .img {
@@ -242,7 +242,7 @@ $nav-img-height: 305;
     background-image: nav-img-url("bhl_coloring");
   }
 
-  .card-maker,
+  .ecosystems,
   .species-cards,
   .google-tours,
   .hi-res-images,
@@ -290,8 +290,8 @@ $nav-img-height: 305;
       font-size: 14 / $em * 1em;
     }
 
-    .card-maker .img {
-      background-image: nav-img-url("card_maker_single");
+    .ecosystems .img {
+      background-image: nav-img-url("eol_places_single");
     }
 
     .lesson-plans .img {
@@ -306,7 +306,7 @@ $nav-img-height: 305;
       background-image: nav-img-url("inaturalist_single");
     }
 
-    .card-maker,
+    .ecosystems,
     .species-cards,
     .google-tours,
     .collections,

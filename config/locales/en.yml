@@ -446,14 +446,14 @@ en:
   react:
     card_maker:
       all_my_cards: all my cards
-      all_eol_cards: all EOL cards
+      all_public_cards: all public cards
       card_maker_html: card<br/>maker (beta)
       card_maker_title: Card Maker
       create_card: create card
       create_deck: create deck
       delete_deck: delete deck
       download_png: Download PNG
-      eol_cards: EOL cards
+      public_cards: EOL cards
       create_a_card: create a card
       create_a_deck: create a deck
       all_cards: all cards

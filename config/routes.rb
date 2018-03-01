@@ -45,7 +45,7 @@ Rails.application.routes.draw do
     get    "card_maker_ajax/collectionJob/:id/status" => "card_maker_ajax#collection_job_status"
     post   "card_maker_ajax/deck_pdfs"                => "card_maker_ajax#create_deck_pdf"
     get    "card_maker_ajax/deck_pdfs/:id/status"     => "card_maker_ajax#deck_pdf_status"
-    get    "card_maker_ajax/deck_pdfs/:id/result"     => "card_maker_ajax#deck_pdf_result"
+    get    "card_maker_ajax/deck_pdfs/:id/result.pdf" => "card_maker_ajax#deck_pdf_result"
     post   "card_maker_ajax/decks/:deck_id/desc"      => "card_maker_ajax#set_deck_desc"
     post   "card_maker_ajax/decks/:deck_id/make_public" => "card_maker_ajax#make_deck_public"
     post   "card_maker_ajax/decks/:deck_id/make_private" => "card_maker_ajax#make_deck_private"

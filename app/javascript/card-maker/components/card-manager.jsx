@@ -465,7 +465,7 @@ class CardManager extends React.Component {
     $.getJSON(cardMakerUrl('deck_pdfs/' + id + '/status'), (result) => {
       if (result.status === 'done') {
         that.props.hideLoadingOverlay();
-        window.open(cardMakerUrl('deck_pdfs/' + id + '/result'));
+        window.open(cardMakerUrl('deck_pdfs/' + id + '/result.pdf'));
       } else if (result.status === 'running') {
         setTimeout(() => {
           that.pollPdfJob(id)

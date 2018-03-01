@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   #before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :ensure_admin, :only => [ :list ]
-  before_action :require_user, :only => [:change_password_form, :change_password, :show]
+  before_action :ensure_user, :only => [:change_password_form, :change_password, :show, :account]
   before_action :set_password_reset_vars, :only => [:reset_password_form, :reset_password]
 
   # GET /users/new
@@ -129,11 +129,6 @@ class UsersController < ApplicationController
   private
     def set_user
       @user = User.find(params[:id])
-    end
-
-    def require_user
-      @user = logged_in_user
-      raise NotFoundError if @user.nil?
     end
 
     def set_password_reset_vars

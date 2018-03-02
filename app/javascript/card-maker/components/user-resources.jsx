@@ -28,7 +28,8 @@ class UserResources extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let changed = this.props.resources.length !== nextProps.resources.length;
+    let changed = this.props.editable !== nextProps.editable ||
+      this.props.resources.length !== nextProps.resources.length;
 
     for (let i = 0; i < this.props.resources.length && !changed; i++) {
       if (this.props.resources[i].id !== nextProps.resources[i].id) {

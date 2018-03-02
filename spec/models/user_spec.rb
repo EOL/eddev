@@ -33,7 +33,7 @@ describe User do
         it "should be valid" do
           expect(user).to be_valid
         end
-      end 
+      end
 
       describe "defaults" do
         it "should have the user role" do
@@ -95,25 +95,11 @@ describe User do
     context "user isn't persisted" do
       let(:user) { build(:user, :user_name => user_name, :email => email, :password => nil, :password_confirmation => nil) }
 
-      context "when there is a legacy_password_digest" do
-        before do
-          user.legacy_password_digest = "aasadf$//g"
-        end
-        
-        it "doesn't require a password" do
-          expect(user).to be_valid
-        end
-
-        it_behaves_like "validates password"
+      it "requires a password" do
+        expect(user).to be_invalid
       end
 
-      context "when there isn't a legacy_password_digest" do
-        it "requires a password" do
-          expect(user).to be_invalid
-        end
-
-        it_behaves_like "validates password"
-      end
+      it_behaves_like "validates password"
     end
   end
 
@@ -150,25 +136,25 @@ describe User do
       end
     end
 
-    context "when user has a legacy_password_digest but not a password_digest" do
-      let(:salt) { "fleurde" }
-      let(:legacy_password_digest) { UnixCrypt::MD5.build(valid_pwd, salt)[salt.length + 4..-1] }
-      let(:user) { create(:user, :password => nil, :legacy_password_digest => legacy_password_digest) }
-
-      before do
-        user.legacy_salt = salt
-      end
-
-      it_behaves_like "base functionality"
-      
-      context "when it is called with the valid password" do
-        it "returns itself, creates a password_digest from the password, and deletes the legacy_password_digest" do
-          user.authenticate(valid_pwd)
-          expect(user.legacy_password_digest).to be_nil
-          expect(user.authenticate(valid_pwd)).to eq user
-        end
-      end
-    end
+    # context "when user has a legacy_password_digest but not a password_digest" do
+    #   let(:salt) { "fleurde" }
+    #   let(:legacy_password_digest) { UnixCrypt::MD5.build(valid_pwd, salt)[salt.length + 4..-1] }
+    #   let(:user) { create(:user, :password => nil, :legacy_password_digest => legacy_password_digest) }
+    #
+    #   before do
+    #     user.legacy_salt = salt
+    #   end
+    #
+    #   it_behaves_like "base functionality"
+    #
+    #   context "when it is called with the valid password" do
+    #     it "returns itself, creates a password_digest from the password, and deletes the legacy_password_digest" do
+    #       user.authenticate(valid_pwd)
+    #       expect(user.legacy_password_digest).to be_nil
+    #       expect(user.authenticate(valid_pwd)).to eq user
+    #     end
+    #   end
+    # end
 
     context "when user has a password_digest but not a legacy_password_digest" do
       let(:user) { create(:user, :password => valid_pwd, :password_confirmation => valid_pwd) }
@@ -188,7 +174,7 @@ describe User do
     end
 
     context "when the user doesn't have a saved legacy id" do
-      let(:user) { create(:user, :legacy_id => nil) } 
+      let(:user) { create(:user, :legacy_id => nil) }
 
       it "returns user.id + User.LEGACY_ID_OFFSET" do
         expect(user.legacy_id).to eq (user.id + User::LEGACY_ID_OFFSET)

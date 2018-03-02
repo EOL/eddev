@@ -12,3 +12,4 @@
 //
 //= require util
 //= require global_behaviors
+//= require i18n/translations

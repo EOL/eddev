@@ -1,4 +1,4 @@
-class CreateLessonPlanThemes < ActiveRecord::Migration
+class CreateLessonPlanThemes < ActiveRecord::Migration[4.2]
   def change
     create_table :lesson_plan_themes do |t|
       t.string :name_key

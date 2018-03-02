@@ -1,4 +1,4 @@
-class CreateLessonPlans < ActiveRecord::Migration
+class CreateLessonPlans < ActiveRecord::Migration[4.2]
   def change
     create_table :lesson_plans do |t|
       t.references :theme, :references => :lesson_plan_themes, :index => true

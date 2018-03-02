@@ -1,0 +1,892 @@
+@import 'layout_vars';
+
+// TODO: standardize font colors!!!
+$manager-height: 762px;
+$left-rail-width: 226px;
+$ctrls-height: 106px;
+$cards-hdr-height: 44px;
+$btn-height: 36px;
+$lib-height: 32px;
+$menu-bar-height: 40px;
+$menu-anchor-height: 50px;
+$new-btn-width: 64px;
+$new-row-height: 33px;
+$search-results-width: 320px;
+$deck-select-arw-width: 50px;
+$resources-box-shadow: inset 45px 0px 105px -83px rgba(0,0,0,0.41);
+$search-height: 53px;
+$disabled-gray: #9db2b8;
+$deck-sel-shadow-color: #c6cfd1;
+$light-gray: #ecf2f6;
+$filter-bar-bg: #90b8c5;
+$filter-bar-shadow-color: #48636b;
+$resource-new-msg-bg: #38454e;
+$resource-new-cta-bg: #537698;
+$desc-btn-bg: #d8e2e6;
+$bar-menu-dark-grey: #9db2b8;
+
+/* STATES */
+.isClickable {
+  cursor: pointer;
+}
+
+/* LAYOUTS */
+.lLeftRail {
+  display: inline-block;
+  height: 100%;
+  position: relative;
+  vertical-align: top;
+  width: $left-rail-width;
+}
+
+.lResources {
+  display: inline-flex;
+  flex-direction: column;
+  position: relative;
+  vertical-align: top;
+  width: $main-col-width-px - $left-rail-width;
+} 
+
+.lDeckMenu {
+  height: 192px;
+  padding: 10px 0;
+  position: relative;
+  width: 100%;
+}
+
+.lDeckMenuFlex {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+  z-index: 2;
+}
+
+/* GENERAL STATE */
+.isDisabled {
+  color: $disabled-gray; 
+}
+
+/* MODULES */
+
+/* GENERAL PURPOSE (should probably be moved out of here) */
+.banner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
+.tog {
+  background: $white; 
+  border-radius: 13px;
+  color: $eol-blue;
+  cursor: pointer;
+  padding: 5px 15px;
+}
+
+.searchContain {
+  background: rgba(255, 255, 255, 0.9);
+  height: $search-height;
+  padding-right: 10px;
+  width: 100%;
+}
+
+.search {
+  $icon-width: 49px;
+
+  border: none;
+  display: flex;
+  height: $search-height;
+  line-height: $search-height;
+  width: 100%;
+
+  & > i {
+    color: $eol-blue;
+    display: inline-block;
+    flex: 0 0 auto;
+    height: 100%;
+    line-height: $search-height;
+    padding-left: 23px;
+    width: $icon-width;
+  }
+
+  & > input {
+    background: none;
+    border: none;
+    flex: 1 0 auto;
+    font-size: 12px;
+    height: 100%;
+    outline: none;
+    vertical-align: top;
+  }
+}
+
+.searchCards {
+  float: left;
+  width: 400px;
+}
+
+.searchCard {
+  background: none;
+  width: 300px;
+}
+
+/* END GENERAL PURPOSE */
+.railCtrls {
+  background: $white;
+  height: 120px;
+}
+
+.cardsHdr {
+  background: $white;
+  color: $eol-green;
+  height: 58px;
+  line-height: 61px;
+  text-align: center;
+}
+
+.cardsHdrEolLogo {
+  height: 18px;
+}
+
+.cardsHdrTwoCards {
+  margin: 0 5px;
+}
+
+.cardsHdrTxt {
+  display: inline-block;
+  line-height: .91;
+  font-size: 14px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.libs {
+  height: 81px;
+  padding-top: 9px;
+}
+
+.lib {
+  background: $white;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 13px;
+  height: $lib-height;
+  line-height: $lib-height;
+  margin: 0 auto 1px auto;
+  padding: 0 17px;
+  width: 158px;
+}
+
+  .libIcon {
+    margin-right: 7px;
+  }
+
+  .checkLib {
+    float: right;
+    line-height: $lib-height;
+  }
+
+.isLibActive {
+  color: $eol-blue;
+}
+
+
+/*
+  .libCtrlsActive {
+    margin: 0 0 4px 8px;
+  }
+  */
+
+.decks {
+  background: $white;
+  font-size: 12px;
+  list-style: none;
+  max-height: 500px;
+  overflow: auto;
+  padding: 17px 23px;
+  width: 100%;
+}
+
+
+  .deck {
+    cursor: pointer;
+    overflow: hidden;
+    padding: 5px 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+  }
+
+    .deckNew {
+      color: $eol-green;
+      margin-bottom: 19px;
+    }
+
+    .deckNewPlus {
+      margin-right: 10px;
+    }
+
+    .deckName {
+      display: inline-block;
+      overflow: hidden;
+      max-width: 150px;
+      text-overflow: ellipsis;
+      vertical-align: middle;
+      white-space: nowrap;
+      & > strong {
+        font-weight: bold;
+      }
+    }
+
+    .isDeckActive {
+      color: $eol-blue;
+      padding-left: 12px;
+    }
+
+    .checkDeck {
+      margin-left: 5px;
+    }
+
+.bar {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+.barMenu {
+  background: $light-gray;
+  box-shadow: $resources-box-shadow;
+  /*height: $menu-bar-height;*/
+  height: 0;
+  padding-left: 22px;
+  position: relative;
+}
+
+
+.barMenuCount {
+  display: inline-block;
+  font-size: 11px;
+  height: $menu-bar-height;
+  line-height: $menu-bar-height;
+  padding: 0 15px;
+  vertical-align: top;
+}
+
+.menuWrap {
+  background: $white;
+  border-radius: 2px;
+  font-size: 16px;
+  line-height: $menu-anchor-height;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  min-width: 150px;
+  max-width: 300px;
+
+  & > div {
+    height: $menu-anchor-height; 
+    padding: 0 15px;
+    text-align: center;
+  }
+}
+
+.lSort {
+  $height: 40px;
+  float: right;
+  height: $height;
+  line-height: $height;
+  margin-top: 7px;
+
+  & > div, & > span {
+    height: 100%;
+    line-height: inherit;
+  }
+}
+
+.sortLabel {
+  font-size: 12px;
+  margin-right: 10px;
+}
+
+.menuWrapSort {
+  display: inline-block;
+
+  & > div {
+    font-size: 13px;
+    height: 100%;
+  }
+}
+
+
+.menuCaret {
+  display: inline-block;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+.menuAnchorName {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  white-space: nowrap;
+  max-width: 200px;
+}
+
+
+.lDesc {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  justify-content: center;
+  margin: 5px auto;
+}
+
+.desc {
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 2px;
+  font-size: 12px;
+  max-height: 110px;
+  max-width: 688px;
+  overflow: hidden;
+  padding: 14px 48px;
+}
+
+  .descAdd {
+    cursor: pointer;
+
+    & > i {
+      color: $eol-blue;
+      margin-right: 17px;
+    }
+  }
+
+  .descInput {
+    border: none;
+    height: 60px;
+    width: 591px;
+  }
+
+  .descBtns {
+    margin-top: 3px;
+    text-align: center;
+  }
+
+    .descBtn {
+      background: $light-gray;          
+      border-radius: 2px;
+      cursor: pointer;
+      display: inline-block;
+      margin: 0 5px;
+      padding: 5px 10px;
+    }
+
+.resourceFilterBar {
+  background: rgba(#ffffff, 0.9);
+  padding-left: 10px;
+}
+
+.resources {
+  align-content: flex-start;
+  display: flex;
+  flex-flow: row wrap;
+  height: 600px;
+  overflow: auto;
+  padding: 0 11px 11px 11px;
+  text-align: center;
+  width: 100%;
+}
+
+.resource {
+  $width: 160px;
+
+  align-items: center;
+  cursor: pointer;
+  background: $white;
+  border-radius: 6px;
+  display: inline-flex;
+  height: (3.74 * $width) / 2.74; // cards have aspect ratio of 2.74/3.74 including bleed
+  justify-content: center;
+  margin-top: 10px;
+  overflow: hidden;
+  position: relative;
+  width: $width;
+  vertical-align: top;
+}
+
+.resourceOverlay {
+  align-items: center;
+  background: rgba(.5, .5, .5, .5);
+  bottom: 0; 
+  color: $white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  vertical-align: top;
+}
+
+.resourcePlaceholder {
+  background: #b4c2c9;
+  cursor: default;
+}
+
+// TODO: rename. Too generic.
+.fillParent {
+  height: 100%;
+  vertical-align: top;
+  width: 100%;
+}
+
+.newResource {
+  color: $eol-green;
+  font-size: 14px;
+  padding-top: 85px;
+  text-align: center;
+}
+
+.new {
+  background: $eol-blue;
+  color: $white;
+  display: inline-block;
+  height: 100%;
+  position: relative;
+  vertical-align: top;
+  width: $new-btn-width;
+}
+
+.newBtn {
+  cursor: pointer;
+  font-size: 12px;
+  height: 100%;
+  text-align: center;
+}
+
+.menu {
+  background: $white;
+  color: $txt-gray;
+  font-size: 14px;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+
+  & > li {
+    $height: 30px;
+    cursor: pointer;
+    height: $height;
+    line-height: $height;
+  }
+
+  & > li:hover {
+    background: $txt-gray;
+    color: $white;
+  }
+}
+
+.lightbox {
+  margin: 20px auto;
+  padding: 10px;
+}
+
+/* Deck user lightbox */
+.lightboxDeckUsers {
+  background: $white;
+  min-height: 300px;
+  width: 500px;
+
+  & strong {
+    font-weight: bold; 
+  }
+
+  & > h2 {
+    text-align: center;
+  }
+}
+
+.deckUserMinus {
+  cursor: pointer;
+}
+
+/* species search lightbox */
+.lNewLightbox {
+  background: $white;
+  margin: 0 auto;
+  padding: 66px 0;
+  width: $main-col-width-px;
+}
+
+.lNewCol {
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
+
+  & > div {
+    margin: 0 auto;
+    position: relative;
+    width: $search-results-width;
+  }
+}
+
+.lSpinCountRow {
+  $height: 50px;
+  height: $height;
+  line-height: $height;
+}
+
+.speciesSearchInput {
+  $height: 46px;
+  background-color: #f4f7fa;
+  border-radius: 27px;
+  display: block;
+  font-size: 14px;
+  height: $height;
+  line-height: $height;
+  margin:  0 auto;
+  text-align: center;
+  width: 532px;
+}
+
+.speciesResultCount {
+  font-size: 14px;
+  text-align: center;
+}
+
+.speciesSearchSpin {
+  text-align: center;
+}
+
+.speciesSearchResults {
+  font-size: 12px;
+  max-height: 400px;
+  overflow: auto;
+  width: 100%;
+}
+
+  .speciesSearchResult {
+    $height: 66px;
+
+    cursor: pointer;
+    display: block;
+    height: $height;
+    margin: 5px 0;
+    overflow: hidden;
+    width: 100%;
+
+    $imgSize: percentage($height / $search-results-width);
+
+    & > img {
+      display: inline-block;
+      height: 100%;
+      width: $imgSize;
+    }
+
+    & > div {
+      display: inline-block;
+      padding-left: 10px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: top;
+      width: 100% - $imgSize;
+    }
+  }
+
+  .isSpeciesSearchResultSelected {
+    background: $section-border-gray;
+    color: $white;
+  }
+
+  .resultTxt {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .resultTxtSciName {
+    font-style: italic;
+  }
+
+.createBtn {
+  background: $eol-blue;
+  border-radius: 2px;
+  color: $white;
+  cursor: pointer;
+  font-size: 16px;
+  height: 55px;
+  line-height: 40px;
+  text-align: center;
+  width: 100%;
+}
+
+.deckSelectLabel {
+  font-size: 14px;
+  text-align: center;
+}
+
+.newInput {
+  border: 1px solid $section-border-gray;
+  height: 40px;
+  line-height: 40px;
+  position: relative;
+}
+
+.isNewInputError {
+  border-color: $red;
+}
+
+.newInputTxt {
+  padding: 0 15px;
+}
+
+.newInputColId {
+  margin-top: 20px;
+}
+
+.deckSelect {
+  cursor: pointer;
+  font-size: 14px;
+  position: relative;
+  margin: 8px auto 15px auto;
+}
+
+  .deckSelectName {
+    text-align: center;
+  }
+
+  .deckSelectArw {
+    height: 100%;
+    position: absolute; 
+    right: 5px;
+    text-align: center;
+    top: 10px;
+    width: $deck-select-arw-width;
+  }
+
+  .deckSelectItems {
+    $border: 1px solid $section-border-gray;
+    background: $white;
+    border-bottom: $border;
+    border-left: $border;
+    border-right: $border;
+    position: absolute;
+    width: 100%;
+
+    & > li {
+      $height: 30px;
+      height: $height;
+      line-height: $height;
+      padding: 0 10px;
+
+      &:hover {
+        background: $section-border-gray;
+        color: $white;
+      }
+    }
+  }
+
+
+.newInput {
+  width: 100%;
+}
+
+/* Card zoom/png download lightbox */
+.lLightboxZoom {
+  margin: 20px auto 0 auto;
+  padding: 0;
+  width: 402px;
+
+  & > button {
+    display: block;
+    margin: 0 auto;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.imageZoom {
+  height: 549px;
+  margin: 0 auto 12px auto;
+  width: 100%;
+}
+
+.loadingSpinnerImage {
+  align-items: center;
+  background: $white;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+/*
+.user-resources {
+  background-image: linear-gradient(to bottom, #3f5673, #3a5b71);
+  box-shadow: inset -8px -33px 53px -23px rgba(0,0,0,0.34);
+  display: flex;
+  flex-flow: row wrap;
+  max-height: 660px;
+  overflow: auto;
+  overflow-x: hidden;
+  padding: 37px 39px 47px 39px;
+  position: relative;
+
+  .user-resources-overlay {
+    background-color: #fff;
+    height: 400px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+  }
+
+
+  .deck-assign-select {
+    position: relative;
+    width: 205px;
+    z-index: 2;
+
+    .deck-name {
+      color: $white;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .open-msg {
+      color: #72baff;
+      cursor: pointer;
+      font-size: 12px;
+      font-style: italic;
+      text-align: center;
+    }
+
+    .deck-assign-choices {
+      background-color: $white;
+      border-radius: 0 0 2px 2px;
+      box-shadow: inset 0 1px 3px 0 rgba(167, 193, 205, 0.5);
+      position: absolute;
+      width: 100%;
+    }
+
+    .deck-assign-choice {
+      border-top: solid 1px #cbcfd4;
+      height: 35px;
+      line-height: 35px;
+      padding-left: 16px;
+    }
+
+    .deck-assign-top {
+      background-color: #445f7f;
+      padding: 7px 0;
+    }
+  }
+
+
+  .title-card-placeholder {
+    text-align: center;
+  }
+
+  .resource-frame {
+    $height: 287px;
+    $width: 205px;
+
+    background-color: #fff;
+    position: relative;
+    height: $height;
+    line-height: $height;
+    text-align: center;
+
+    .resource-overlay {
+      background: rgba(63, 87, 115, 0.89);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+      .btn {
+        color: #fff;
+        text-align: center;
+      }
+
+      .edit-btn.active {
+        color: #f00;
+      }
+    }
+  }
+
+  .deck-resource {
+    $name-height: 60px;
+
+    .deck-name {
+      background: rgba(63, 87, 115, 0.89);
+      color: $white;
+      height: $name-height;
+      line-height: $name-height;
+      position: absolute;
+      text-align: center;
+      width: 100%;
+      z-index: 2;
+    }
+
+    .icon-deck {
+      font-size: 26px;
+      vertical-align: middle
+    }
+
+    .resource-overlay {
+      top: $name-height;
+    }
+  }
+
+  .img-placeholder {
+    display: inline-block;
+    width: 32px;
+  }
+
+  .new-resource-icon {
+    display: block;
+    margin: 116px auto 0 auto;
+    width: 38px
+  }
+
+  .user-resource {
+    vertical-align: top;
+    width: 100%;
+  }
+
+  .empty-new-item {
+    .new-btn {
+      background-color: #537698;
+      color: $white;
+      cursor: pointer;
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
+    }
+  }
+
+  .no-items-msg {
+    align-items: center;
+    background-color: #38454e;
+    color: $white;
+    display: flex;
+    justify-content: center;
+    width: 206px;
+    height: 186px;
+    font-size: 14px;
+    padding: 0 36px;
+    text-align: center;
+  }
+}
+*/

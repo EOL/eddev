@@ -1,4 +1,4 @@
-class AddGalleryToGalleryPhotos < ActiveRecord::Migration
+class AddGalleryToGalleryPhotos < ActiveRecord::Migration[4.2]
   def change
     add_reference :gallery_photos, :gallery, index: true, foreign_key: true
   end

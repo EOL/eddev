@@ -1,4 +1,4 @@
-class CreateHabitats < ActiveRecord::Migration
+class CreateHabitats < ActiveRecord::Migration[4.2]
   def change
     create_table :habitats do |t|
       t.string :name

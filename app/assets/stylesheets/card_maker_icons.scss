@@ -1,0 +1,41 @@
+@font-face {
+  font-family: 'card_maker_icons';
+  src:  font-url('card_maker_icons.eot?hmcdlu');
+  src:  font-url('card_maker_icons.eot?hmcdlu#iefix') format('embedded-opentype'),
+    font-url('card_maker_icons.ttf?hmcdlu') format('truetype'),
+    font-url('card_maker_icons.woff?hmcdlu') format('woff'),
+    font-url('card_maker_icons.svg?hmcdlu#card_maker_icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="cm-icon"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'card_maker_icons' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.cm-icon-two-cards:before {
+  content: "\65";
+}
+.cm-icon-cancel:before {
+  content: "\61";
+}
+.cm-icon-save-quick:before {
+  content: "\62";
+}
+.cm-icon-save-exit:before {
+  content: "\63";
+}
+.cm-icon-sug-arrow-down:before {
+  content: "\64";
+}

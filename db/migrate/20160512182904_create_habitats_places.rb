@@ -1,4 +1,4 @@
-class CreateHabitatsPlaces < ActiveRecord::Migration
+class CreateHabitatsPlaces < ActiveRecord::Migration[4.2]
   def change
     create_table :habitats_places do |t|
       t.references :habitat, index: true, foreign_key: true

@@ -1,0 +1,24 @@
+/Users/mvitale/.rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/activesupport-5.0.0/lib/active_support/xml_mini.rb:51: warning: constant ::Fixnum is deprecated
+/Users/mvitale/.rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/activesupport-5.0.0/lib/active_support/xml_mini.rb:52: warning: constant ::Bignum is deprecated
+/Users/mvitale/.rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/activesupport-5.0.0/lib/active_support/core_ext/numeric/conversions.rb:138: warning: constant ::Fixnum is deprecated
+/Users/mvitale/.rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/activejob-5.0.0/lib/active_job/arguments.rb:38: warning: constant ::Fixnum is deprecated
+/Users/mvitale/.rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/activejob-5.0.0/lib/active_job/arguments.rb:38: warning: constant ::Bignum is deprecated
+DEPRECATION WARNING: [paperclip] [deprecation] AWS SDK v1 has been deprecated in paperclip 5. Please consider upgrading to AWS 2 before upgrading paperclip. (called from <class:GalleryPhoto> at /Users/mvitale/projects/eol/eddev/app/models/gallery_photo.rb:2)
+..........................................................................F................................
+
+Failures:
+
+  1) PasswordResetToken#mark_used sets used_at to DateTime.now and persists itself
+     Failure/Error: expect(token.used_at > before_time).to be true
+
+       expected true
+            got false
+     # ./spec/models/password_reset_token_spec.rb:33:in `block (3 levels) in <top (required)>'
+
+Finished in 1.25 seconds (files took 1.97 seconds to load)
+107 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/models/password_reset_token_spec.rb:25 # PasswordResetToken#mark_used sets used_at to DateTime.now and persists itself
+

@@ -1,4 +1,4 @@
-class LessonPlanGradeLevel < ActiveRecord::Base
+class LessonPlanGradeLevel < ApplicationRecord
   include HasNameKey
 
   validates_presence_of :name_key

@@ -10,6 +10,7 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require edu_icons
  *= require lesson_plan_icons
  *= require_self
  */
@@ -17,6 +18,8 @@
 
 $slide-menu-bg-color: #2e303d;
 $section-v-margin: 54px;
+$nav-menu-width: 120px;
+$dark-gray: #2e303d;
 
 @mixin hero-fluid($width, $height) {
   margin: 0 auto;
@@ -40,23 +43,57 @@ body, p {
   font: normal 100% $open-sans;
 }
 
-p a, .std-link { 
+main {
+  padding-bottom: percentage(50 / $page-width-px);
+}
+
+
+p a, .std-link {
   @include standard-link;
+}
+
+textarea {
+  resize: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+.is-nopad-bot {
+  padding-bottom: 0;
+}
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #Page {
   max-width: $page-width;
   margin: 0 auto;
   overflow: hidden;
+  position: relative;
+}
+
+.noscroll {
+  overflow: hidden;
 }
 
 /* FOOTER */
-.footer { 
+.footer {
   $footer-v-spacing: 23 / $em * 1em;
 
   background-color: #f0f0f0;
-  margin-top: percentage(50 / $page-width-px); 
-  padding: percentage(23 / $page-width-px) 0 percentage(37 / $page-width-px) 0; 
+  padding: percentage(23 / $page-width-px) 0 percentage(37 / $page-width-px) 0;
 
   a {
     color: #50558d;
@@ -110,15 +147,46 @@ p a, .std-link {
   display: none;
 }
 
-.eol-nav {
-  left: 0;
-  top: 0;
+.nav-menu {
+  background: $dark-gray;
+  cursor: pointer;
   height: $topbar-height;
+  line-height: $topbar-height;
+  position: absolute;
+  text-align: center;
+  text-decoration: none;
+  width: $nav-menu-width;
 
-  &:hover .eol-dropdown, &.hover .eol-dropdown {
+  & > ul {
+    display: none;
+    font-size: 14px;
+    font-weight: $semibold;
+    position: absolute;
+    z-index: 2;
+  }
+
+  &:hover > ul, &.hover > ul {
     display: block;
   }
 }
+
+.nav-menu-eol {
+  left: 0;
+  top: 0;
+}
+
+.nav-menu-user {
+  right: 0;
+  top: 0;
+
+  & a {
+    color: $white;
+    height: 100%;
+    text-decoration: none;
+    width: 100%;
+  }
+}
+
 
 .eol-nav-a {
   display: block;
@@ -130,14 +198,10 @@ p a, .std-link {
   $eol-link-padding-px: 13;
   $font-size-px: 14;
 
-  display: none;
-  position: absolute;
-  font-size: 14px;
-  font-weight: $semibold;
   width: 170px;
+  text-align: left;
   top: $topbar-height-px * 1px;
   left: 0;
-  z-index: 2;
 
   .eol-link {
     $height-em: 37 / $em;
@@ -153,6 +217,14 @@ p a, .std-link {
   }
 }
 
+.user-dropdown {
+  background: $dark-gray;
+  color: $white;
+  min-width: 100%;
+  padding: 5px 10px;
+
+}
+
 .eol-link.selected {
   background: $eol-link-selected-bg-color;
 
@@ -163,7 +235,7 @@ p a, .std-link {
 
 .eol-logo {
   $height-em: 19 / $em;
-  position: absolute; 
+  position: absolute;
   height: $height-em * 1em;
   line-height: $height-em;
   left: 38 / $em * 1em;
@@ -183,7 +255,7 @@ p a, .std-link {
 
 .title {
   $font-size-px: 20;
-  margin: 0;   
+  margin: 0;
   font-size: $font-size-px / $em * 1em;
   font-weight: $semibold;
   line-height: $topbar-height-px / $font-size-px * 1em;
@@ -192,15 +264,6 @@ p a, .std-link {
 
 .title-plus {
   color: $eol-green;
-}
-
-.nav-link {
-  $bg-gray: #2e303d;
-  background: $bg-gray;
-  cursor: pointer;
-  position: absolute;
-  text-decoration: none;
-  width: 120px;
 }
 
 .slide-menu {
@@ -263,6 +326,10 @@ $hero-transition-width: 525;
 
   .nav-link {
     background: transparent;
+  }
+
+  .nav-menu-user {
+    display: none;
   }
 
   .slide-menu {
@@ -334,8 +401,9 @@ $hero-transition-width: 525;
     top: 18px;
   }
 
-  .eol-nav {
+  .nav-menu-eol {
     display: inline-block;
+    line-height: normal;
     padding-top: 9 / $em * 1em;
     position: relative;
     height: auto;
@@ -382,7 +450,7 @@ $hero-transition-width: 525;
   text-align: center;
   width: 100%;
   margin-top: percentage(37 / $main-col-width);
-} 
+}
 
 .intro-content {
   padding-top: 11 / $em * 1em;
@@ -397,7 +465,7 @@ $hero-transition-width: 525;
 
 .intro-p {
   $font-size: 14;
-  font-size: $font-size / $em * 1em; 
+  font-size: $font-size / $em * 1em;
   line-height: 1.7;
   margin-bottom: percentage(22 / $main-col-width);
   padding: 0 percentage(85 / $main-col-width);
@@ -463,7 +531,7 @@ $hero-transition-width: 525;
 
 .section-head {
   border-bottom: 1px solid $section-border-gray;
-  margin: $section-v-margin 0 0 0; 
+  margin: $section-v-margin 0 0 0;
 }
 
 .section-head-top {
@@ -472,7 +540,7 @@ $hero-transition-width: 525;
 
 .section-title {
   font-size: 20px;
-  font-weight: $semibold;  
+  font-weight: $semibold;
   margin-bottom: 5px;
 }
 
@@ -525,4 +593,3 @@ $hero-transition-width: 525;
     font-size: 10px;
   }
 }
-

@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   #before_action :set_user, only: [:show, :edit, :update, :destroy]
-  #before_filter :ensure_admin
-  before_action :require_user, :only => [:change_password_form, :change_password]
+  before_action :ensure_admin, :only => [ :list ]
+  before_action :ensure_user, :only => [:change_password_form, :change_password, :show, :account]
   before_action :set_password_reset_vars, :only => [:reset_password_form, :reset_password]
 
   # GET /users/new
@@ -18,7 +18,7 @@ class UsersController < ApplicationController
       if @user.save
         SignupConfirmationMailer.confirmation_email(@user).deliver_now
         format.html { render :confirmation_pending }
-        format.json do 
+        format.json do
           render :json => {
             :success => true,
             :msg => t("welcome.index.accounts.signup_success_msg")
@@ -38,13 +38,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def account
+  end
+
   def confirm
     @user = User.find_by_confirm_token!(params[:token])
 
     if !@user.confirmed?
       @user.confirm!
-      flash[:account_notice] = t(".success", :user_name => @user.user_name)
-      redirect_to root_path
+      flash[:notice] = t(".success", :user_name => @user.user_name)
+      redirect_to login_path
     else
       raise NotFoundError
     end
@@ -70,13 +73,20 @@ class UsersController < ApplicationController
 
   def change_password
     auth_success = @user.authenticate(params[:user][:current_password])
+
     if !auth_success
-      @user.errors.add(:current_password, :invalid, :message => "Current password is invalid")
-    elsif @user.update(change_password_params.merge(:force_password_validation => true))
-      @msg = t(".success")
+      @user.errors.add(:current_password, :invalid)
     end
 
-    render :change_password_form
+    success = auth_success && 
+      @user.update(change_password_params.merge(:force_password_validation => true))
+
+    if success
+      flash[:notice] = t(".success")
+      redirect_to account_path
+    else
+      render :change_password_form
+    end
   end
 
   def reset_password_form
@@ -89,33 +99,48 @@ class UsersController < ApplicationController
   def reset_password
     if @user.update(change_password_params.merge(:force_password_validation => true))
       @reset_token.mark_used if @reset_token
-      flash[:account_notice] = t(".success")
-      redirect_to root_path
+      flash[:notice] = t(".success")
+      redirect_to login_path
     else
       render :reset_password_form
     end
   end
 
+  def email_test
+    @user = User.first
+    render :confirmation_pending
+  end
+
+  def list
+    respond_to do |format|
+      format.json do
+        @user_data = User.order(:user_name).map do |u|
+          { 
+            :userName => u.user_name, 
+            :id => u.id 
+          } 
+        end
+
+        render :json => @user_data
+      end
+    end
+  end
+
   private
-  def set_user
-    @user = User.find(params[:id])
-  end
+    def set_user
+      @user = User.find(params[:id])
+    end
 
-  def require_user
-    @user = logged_in_user
-    raise NotFoundError if @user.nil?
-  end
+    def set_password_reset_vars
+      @reset_token = PasswordResetToken.find_valid_by_token(params[:token])
+      @user = @reset_token.user
+    end
 
-  def set_password_reset_vars
-    @reset_token = PasswordResetToken.find_valid_by_token(params[:token])
-    @user = @reset_token.user
-  end
+    def user_params
+      params.fetch(:user, {}).permit(:email, :user_name, :full_name, :password, :password_confirmation)
+    end
 
-  def user_params
-    params.fetch(:user, {}).permit(:email, :user_name, :full_name, :password, :password_confirmation)
-  end
-
-  def change_password_params
-    params.fetch(:user, {}).permit(:password, :password_confirmation)
-  end
+    def change_password_params
+      params.fetch(:user, {}).permit(:password, :password_confirmation)
+    end
 end

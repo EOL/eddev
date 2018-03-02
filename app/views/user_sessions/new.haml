@@ -1,22 +1,22 @@
-- if notice
-  #Notice= notice
+.l-form-box
+  %h1= t(".sign_in")
 
-%h1= t(".sign_in")
+  - if notice
+    .txt.form-notice= notice
 
-- if @error_msg
-  #error_explanation= @error_msg
+  .txt.txt-block= @error_msg
 
-= form_for(:user_session) do |f|
-  .field
-    = f.label :user_name, t(".user_name")
-    = f.text_field :user_name
-  
+  = form_for(:user_session, :html => { :class => "form" }) do |f|
+    = f.text_field :user_name, :class => "block input", :placeholder => t(".user_name")
+    = f.password_field :password, :class => "block input", :placeholder => t(".password")
+    -#
+      .links
+        .link-wrap
+        .link-wrap
+          = link_to t(".sign_up"), new_user_path, :class => "link"
 
-  .field
-    = f.label :password, t(".password")
-    = f.password_field :password
+    = f.submit t(".sign_in"), :class => "block submit"
 
-  .field
-    = link_to t(".forgot_password"), forgot_password_path
+  = link_to t(".forgot_password"), forgot_password_path, :class => "txt txt-block"
 
-  = f.submit t(".sign_in")
+.txt.txt-block= t(".dont_have_account_html", :sign_up_path => new_user_path)

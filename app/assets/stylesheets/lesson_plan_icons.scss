@@ -9,7 +9,7 @@
     font-weight: normal;
     font-style: normal;
 }
-[class*='icon-']:before{
+[class^='icon-']:before{
 	display: inline-block;
    font-family: 'LessonPlanIcons';
    font-style: normal;

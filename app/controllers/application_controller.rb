@@ -1,8 +1,6 @@
 class ApplicationController < ActionController::Base
-#  before_filter :set_locale
-#  before_filter :ensure_user
-  before_filter :init_content_editor_state
-  before_filter :set_default_hero_image_partial
+  before_action :set_locale
+  before_action :store_user_sessions_referrer
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -24,13 +22,13 @@ class ApplicationController < ActionController::Base
     nil
 
     if session[:user_id]
-      @logged_in_user ||= User.find(session[:user_id])
+      @logged_in_user ||= User.find_by(:id => session[:user_id])
     end
   end
   helper_method :logged_in_user
 
   def ensure_user
-    redirect_to login_url unless logged_in_user
+    redirect_to login_path unless logged_in_user
   end
 
   def ensure_admin
@@ -43,7 +41,8 @@ class ApplicationController < ActionController::Base
       @logged_in_user = User.find_by(user_name: user_name).try(:authenticate, password)
 
       if @logged_in_user && @logged_in_user.confirmed?
-        session[:user_id]         = @logged_in_user.id 
+        session[:user_id]         = @logged_in_user.id
+        # for legacy site
         cookies["logged_in"]      = @logged_in_user.legacy_id
         cookies["logged_in_user"] = @logged_in_user.user_name
 
@@ -62,37 +61,31 @@ class ApplicationController < ActionController::Base
       raise ApplicationController::ForbiddenError unless condition
     end
 
-    # This method should be called in every controller action that results in a ContentModel draft page. 
-    def set_draft_page(draft_model)
-      @draft_page = true
-      @draft_model = draft_model
-      set_content_editor_state(draft_model.state_for_cur_locale)
+    def disable_main_col
+      @disable_main_col = true
     end
 
-    # This method should be called in every controller action that results in a published ContentModel page for which there exists a draft view. 
-    def set_draftable_page(draft_model)
-      @draftable_page = true
-      @draft_model = draft_model
+    def js_packs
+      @js_packs || []
+    end
+    helper_method :js_packs
+
+    def js_packs=(packs)
+      @js_packs = packs
     end
 
-    # True if the current page is a draft view of a ContentModel and the current user has edit privileges, false o/w.
-    def draft_page?
-      logged_in_user && @draft_page && @draft_model.can_be_edited_by?(logged_in_user)
+    def set_js_translations_root(rootKey)
+      @js_translations = I18n.t(rootKey).to_json.html_safe
     end
-    helper_method :draft_page?
 
-    # True if the current page is a published view of a ContentModel for which there exists a draft view and the current user would be able to edit it.
-    def draftable_page?
-      logged_in_user && @draftable_page && @draft_model.can_be_edited_by?(logged_in_user)
+    def main_nopad_bot
+      @main_nopad_bot = true
     end
-    helper_method :draftable_page?
 
-    # Used to populate the window.ContentEditorState JS variable in the footer, which is used by the content editor JS.
-    def content_editor_state
-      @content_editor_state
+    def main_nopad_bot?
+      @main_nopad_bot || false    
     end
-    helper_method :content_editor_state
-
+    helper_method :main_nopad_bot?
   private
   def set_locale
     locale = params[:locale]
@@ -100,14 +93,12 @@ class ApplicationController < ActionController::Base
     # If we have a locale from the URL, set it for the duration of the request
     if !locale.nil?
       I18n.locale = locale
-    # Always redirect to a url with an explicit locale.
     # If there is a user, redirect to the url from the request with the locale added
-    elsif logged_in_user
+    elsif logged_in_user && logged_in_user.locale != I18n.default_locale
       redirect_to url_for request.params.merge({locale: logged_in_user.locale})
-    else
-    # Redirect to the url from the request with the default locale added
-      redirect_to url_for request.params.merge({locale: I18n.default_locale})
     end
+    # Otherwise, we are on the / version of the site, and I18n will correctly
+    # use the default locale
   end
 
   def init_content_editor_state
@@ -119,7 +110,7 @@ class ApplicationController < ActionController::Base
   def set_content_editor_state(state)
     @content_editor_state[:locale]     = state.locale
     @content_editor_state[:model_type] = state.content_model.class.name
-    @content_editor_state[:model_id]   = state.content_model.id 
+    @content_editor_state[:model_id]   = state.content_model.id
     @content_editor_state[:enable_publish] = state.has_unpublished_content?
   end
 
@@ -128,7 +119,15 @@ class ApplicationController < ActionController::Base
     render(:file => File.join(Rails.root, 'public/404'), :status => 404, :layout => false)
   end
 
-  def set_default_hero_image_partial
-    @hero_image_partial = "shared/hero_placeholder"
+  def store_user_sessions_referrer
+    if (
+      request.get? && 
+      request.format.html? &&
+      request.controller_class != UserSessionsController &&
+      request.controller_class != UsersController &&
+      !request.xhr?
+    )
+      session[:user_sessions_referrer] = request.fullpath
+    end
   end
 end

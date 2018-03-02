@@ -1,3 +1,36 @@
-// Place all the styles related to the Users controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+/*
+*= require shared/basic_form
+*= require_self
+*/
+@import 'shared/layout_vars';
+
+.l-account {
+  background: #e7ecef;
+  padding: 130px 0;
+}
+
+.user-card {
+  background: $white;
+  margin: 0 auto;
+  padding: 18px;
+  width: 409px;
+}
+
+.user-card-notice {
+  margin-bottom: 50px;
+  font-size: 14px; 
+  text-align: center;
+}
+
+.user-card-bottom {
+  font-size: 12px;
+  margin-top: 30px;
+}
+
+.user-card-user-name {
+  font-size: 18px;
+}
+
+.user-card-full-name {
+  font-size: 14px;
+}

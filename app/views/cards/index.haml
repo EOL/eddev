@@ -1,6 +1,6 @@
 = render "shared/intro_section", :header => "cards.index.cards_hdr",
-  :paragraphs => [{ :key => "cards.index.compare_and_learn_html", 
-  :vars => { :how_to_use_id => "HowToUseIntro", 
+  :paragraphs => [{ :key => "cards.index.compare_and_learn_html",
+  :vars => { :how_to_use_id => "HowToUseIntro",
   :lesson_plans_path => lesson_plans_path,
   :contact_url => "http://eol.org/contact_us?subject=learning"}}],
   :hideable => false
@@ -63,7 +63,7 @@
       .caption= t ".species_card_key"
   .cards-idea-contact= t ".have_a_great_idea_html", :contact_url => "http://eol.org/contact_us?subject=learning"
 
-= render  "shared/image_credits", 
+= render  "shared/image_credits",
   :images => [{ :title => "Delta WSR",
   :author => "Bob Wick, Bureau of Land Management",
   :source => "Flickr",

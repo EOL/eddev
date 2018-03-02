@@ -1,4 +1,4 @@
-class CreateEditorContents < ActiveRecord::Migration
+class CreateEditorContents < ActiveRecord::Migration[4.2]
   def change
     create_table :editor_contents do |t|
       t.string :key

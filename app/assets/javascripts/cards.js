@@ -15,8 +15,8 @@
   }
 
   $(function() {
-    // Wrapping in setTimout is a hack for browsers like Chrome that try to 
+    // Wrapping in setTimout is a hack for browsers like Chrome that try to
     // restore your scroll position
-    setTimeout(scrollIfNecessary, 100); 
+    setTimeout(scrollIfNecessary, 100);
   });
 })();

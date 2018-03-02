@@ -22,11 +22,8 @@
 # byebug history file
 .byebug_history
 
-#/vendor/*
-/vendor/bundle
-/public/system/*
-/public/assets/*
-
+/public/packs
+/public/javascripts
 
 # application configuration
 /config/application.yml
@@ -36,3 +33,9 @@
 
 # CTags
 tags
+# ctags
+tags
+/node_modules
+
+# vim session
+Session.vim

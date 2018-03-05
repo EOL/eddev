@@ -9,14 +9,14 @@
     font-weight: normal;
     font-style: normal;
 }
-[class^='icon']:before{
-  display: inline-block;
-  font-family: 'LessonPlanIcons';
-  font-style: normal;
-  font-weight: normal;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale
+[class^='icon-']:before{
+	display: inline-block;
+   font-family: 'LessonPlanIcons';
+   font-style: normal;
+   font-weight: normal;
+   line-height: 1;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale
 }
 .icon-card:before{content:'\0041';}
 .icon-stats:before{content:'\0042';}

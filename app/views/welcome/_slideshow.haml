@@ -1,24 +1,23 @@
 #Slideshow.slideshow
-  = render "slide", :img => "right_whale",
+  = render "slide", :img => "card_maker",
+    :title_key => "new",
+    :content_key => "card_maker",
+    :url => card_maker_path
+  = render "slide", :img => "sea_slugs",
     :title_key => "podcast",
-    :content_key => "right_whale",
-    :url => "http://eol.org/info/podcasts_behavior#rightwhale"
-  = render "slide", :img => "amphibians",
+    :content_key => "sea_slugs",
+    :url => "http://eol.org/info/podcasts_invertebrates"
+  = render "slide", :img => "flowering_plants",
     :title_key => "biodiv_article",
-    :content_key => "what_is_amph",
-    :url => "http://eol.org/info/amphibians"
-  - if @slide_deck
-    = render "slide", :img => "bioblitz_deck",
-      :title_key => "species_cards",
-      :content_key => "bioblitz_deck",
-      :url => scroll_to_deck_path(@slide_deck)
-  = render "slide", :img => "sea_monsters",
+    :content_key => "flowering_plants",
+    :url => "http://eol.org/info/flowering_plants"
+  = render "slide", :img => "trees_na",
     :title_key => "memory_game",
-    :content_key => "sea_monsters",
-    :url => "/memory/play.php?xmgp=3230342a42656175746966756c2532305365612532304d6f6e73746572732a687474702533412532462532466d656469612e656f6c2e6f7267253246636f6e74656e742532463230313325324631302532463138253246313025324632363134335f38385f38382e6a70672a31"
+    :content_key => "trees_na",
+    :url => "/memory/play.php?xmgp=342a54726565732532306f662532304e6f727468253230416d65726963612a687474702533412532462532466d656469612e656f6c2e6f7267253246636f6e74656e742532463230313325324630332532463132253246313525324633333533395f38385f38382e6a70672a31"
   - if @slide_lesson_plan
-    = render "slide", :img => "food_chain",
-      :title_key => "Lesson Plan",
-      :content_key => "food_chain_rummy",
+    = render "slide", :img => "go_adapt",
+      :title_key => "lesson_plan",
+      :content_key => "go_adapt",
       :url => scroll_to_lesson_plan_path(@slide_lesson_plan)
 

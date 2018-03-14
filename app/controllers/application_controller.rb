@@ -41,11 +41,7 @@ class ApplicationController < ActionController::Base
       @logged_in_user = User.find_by(user_name: user_name).try(:authenticate, password)
 
       if @logged_in_user && @logged_in_user.confirmed?
-        session[:user_id]         = @logged_in_user.id
-        # for legacy site
-        cookies["logged_in"]      = @logged_in_user.legacy_id
-        cookies["logged_in_user"] = @logged_in_user.user_name
-
+        session[:user_id] = @logged_in_user.id
         @logged_in_user
       else
         nil

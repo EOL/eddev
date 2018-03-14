@@ -8,7 +8,7 @@ default: &default
   adapter: mysql2
   encoding: utf8 
   database: eddev
-  username: root
+  username: <%= ENV['MYSQL_USER'] %>
   password: <%= ENV['MYSQL_PASSWORD'] %>
 
 development:

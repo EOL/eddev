@@ -445,7 +445,7 @@ class CardManager extends React.Component {
   makeDeckPdf = () => {
     const that = this;
 
-    that.props.showLoadingOverlay();
+    that.props.showLoadingOverlay(I18n.t('react.card_maker.print_loading_msg'));
 
     $.ajax({
       url: cardMakerUrl('deck_pdfs'),

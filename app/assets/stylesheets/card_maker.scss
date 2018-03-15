@@ -30,6 +30,10 @@ $thumb-size: 80px;
   color: $white;
   margin-top: 200px;
   text-align: center;
+
+  & > div {
+    padding: 15px 20px;
+  }
 }
 
 .screen-hdr-logo {

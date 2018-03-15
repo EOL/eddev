@@ -255,15 +255,17 @@ class CardMaker extends React.Component {
     return component;
   }
 
-  showLoadingOverlay = () => {
+  showLoadingOverlay = (text) => {
     this.setState({
       showLoadingOverlay: true,
+      loadingOverlayText: text
     });
   }
 
   hideLoadingOverlay = () => {
     this.setState({
       showLoadingOverlay: false,
+      loadingOverlayText: null
     });
   }
 
@@ -279,6 +281,10 @@ class CardMaker extends React.Component {
           bodyOpenClassName='noscroll'
         >
           <i className='fa fa-spin fa-spinner fa-4x' />
+          {
+            this.state.loadingOverlayText &&
+            <div>{this.state.loadingOverlayText}</div>
+          }
         </ReactModal>
 
         <div className={styles.lPage}>

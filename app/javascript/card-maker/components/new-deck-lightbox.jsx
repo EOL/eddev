@@ -8,30 +8,40 @@ class NewDeckLightbox extends React.Component {
     super(props);
     this.state = {
       deckName: '',
-      colId: '',
+      colId: ''
     }
   }
 
   handleDeckNameInput = (e) => {
-    var deckName = e.target.value
-      , highlightDeckName = this.state.highlightDeckName && !deckName.length
+    let deckName = e.target.value
+      , taken = deckName.length ? this.props.deckNames.has(deckName) : false
+      , errMsg
       ;
+
+    if (taken) {
+      errMsg = I18n.t('react.card_maker.name_taken');
+    }
 
     this.setState({
       deckName: deckName,
-      highlightDeckName: highlightDeckName,
+      errMsg: errMsg
     });
   }
 
   handleCreate = () => {
-    if (this.state.deckName.length) {
+    let blank = !this.state.deckName.length;
+  
+    if (this.state.errMsg || blank) {
+      if (blank) {
+        this.setState({
+          errMsg: I18n.t('react.card_maker.name_cant_be_blank')
+        });
+      }
+
+      $(this.rootNode).effect('shake');
+    } else {
       this.handleRequestClose();
       this.props.handleCreate(this.state.deckName, this.state.colId);
-    } else {
-      $(this.rootNode).effect('shake');
-      this.setState({
-        highlightDeckName: true
-      });
     }
   }
 
@@ -59,17 +69,23 @@ class NewDeckLightbox extends React.Component {
         <div ref={(node) => this.rootNode = node}>
           <div className={styles.lNewCol}> 
             <div>
-              <input 
-                type="text"
-                value={this.state.deckName}
-                onInput={this.handleDeckNameInput}
-                placeholder={I18n.t('react.card_maker.enter_deck_name')}
-                className={[
-                  styles.newInput, 
-                  styles.newInputTxt, 
-                  (this.state.highlightDeckName ? styles.isNewInputError : '')
-                ].join(' ')}
-              />
+              <div className={styles.lInputWithError}>
+                {
+                  this.state.errMsg != null &&
+                  <div>{this.state.errMsg}</div>
+                }
+                <input 
+                  type="text"
+                  value={this.state.deckName}
+                  onInput={this.handleDeckNameInput}
+                  placeholder={I18n.t('react.card_maker.enter_deck_name')}
+                  className={[
+                    styles.newInput, 
+                    styles.newInputTxt, 
+                    (this.state.errMsg ? styles.isNewInputError : '')
+                  ].join(' ')}
+                />
+              </div>
               <input
                 type="text"
                 value={this.state.colId}

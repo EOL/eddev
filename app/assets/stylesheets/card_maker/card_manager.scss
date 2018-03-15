@@ -628,11 +628,29 @@ $bar-menu-dark-grey: #9db2b8;
   text-align: center;
 }
 
+.lInputWithError {
+  position: relative;
+
+  & > div {
+    color: $red;
+    font-size: 10px; 
+    position: absolute;
+    top: -18px;
+  }
+}
+
 .newInput {
   border: 1px solid $section-border-gray;
   height: 40px;
   line-height: 40px;
   position: relative;
+}
+
+.newInputError {
+  color: $red;
+  font-size: 10px;
+  position: absolute;
+  top: 12px;
 }
 
 .isNewInputError {

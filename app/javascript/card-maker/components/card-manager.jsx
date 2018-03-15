@@ -400,7 +400,6 @@ class CardManager extends React.Component {
       success: (data) => {
         const cb = (err) => { 
           if (err) {
-            console.log(err);
             that.props.hideLoadingOverlay();
             alert(I18n.t('react.card_maker.unexpected_error_msg'));
           } else {
@@ -761,6 +760,9 @@ class CardManager extends React.Component {
           isOpen={this.state.newDeckOpen}
           handleCreate={this.handleCreateDeck}
           handleRequestClose={this.handleCloseNewDeckLightbox}
+          deckNames={new Set(this.state.decks.map((deck) => { 
+            return deck.name;
+          }))}
         />
         <SpeciesSearchLightbox
           isOpen={this.state.speciesSearchOpen}

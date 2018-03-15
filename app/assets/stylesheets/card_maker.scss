@@ -492,7 +492,6 @@ $col-border-width: 5px;
     background-color: $outer-color;
     color: $white;
     font-size: 14px;
-    font-weight: $light;
     height: $head-height;
     line-height: $head-height;
     text-align: center;
@@ -533,7 +532,6 @@ $col-border-width: 5px;
 
   color: $white;
   font-size: 18px;
-  font-weight: $light;
   height: $height;
   left: 0;
   overflow: hidden;
@@ -553,7 +551,6 @@ $col-border-width: 5px;
 }
 
 .col-head-sub-txt {
-  font-weight: $light;
   font-size: 12px;
   font-style: italic;
   margin-top: 6px;
@@ -925,7 +922,6 @@ $col-border-width: 5px;
     border-radius: 1.4px;
     color: #242424;
     font-size: 13px;
-    font-weight: $light;
     outline: none;
   }
 
@@ -1021,7 +1017,7 @@ $col-border-width: 5px;
     }
 
     .font-size-label {
-      font-weight: $light;
+
     }
   }
 
@@ -1117,7 +1113,6 @@ $col-border-width: 5px;
     color: #242424;
     cursor: pointer;
     font-size: 13px;
-    font-weight: $light;
     $height: 34px;
     height: $height;
     line-height: $height;
@@ -1207,7 +1202,6 @@ $col-border-width: 5px;
   .img-upload-btn-txt {
     color: #242424;
     font-size: 13px;
-    font-weight: $light;
     padding-left: 4px;
   }
 
@@ -1269,7 +1263,6 @@ $col-border-width: 5px;
     cursor: pointer;
     display: block;
     font-size: 13px;
-    font-weight: $light;
     height: $height;
     line-height: $height;
     margin: 22px auto;

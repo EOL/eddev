@@ -393,10 +393,7 @@ class CardManager extends React.Component {
       url: cardMakerUrl(`decks/${this.props.selectedDeck.id}/name`),
       method: 'POST',
       data: name,
-      success: () => {
-        console.log('successsss');
-        that.reloadResources();
-      }
+      success: that.reloadResources
     });
   }
 

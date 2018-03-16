@@ -291,6 +291,15 @@ class CardMakerAjaxController < ApplicationController
     }, :ok) 
   end
 
+  # POST /card_maker_ajax/decks/:deck_id/name
+  def rename_deck
+    json_response(CardServiceCaller.rename_deck(
+      logged_in_user.id, 
+      params[:deck_id],
+      request.raw_post
+    ))
+  end
+
   private
     def json_response(httpartyResponse)
       json_response_helper(httpartyResponse.body, httpartyResponse.code)

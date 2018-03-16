@@ -8,6 +8,7 @@ import Card from './card'
 import SpeciesSearchLightbox from './species-search-lightbox'
 import NewDeckLightbox from './new-deck-lightbox'
 import DeckUsersLightbox from './deck-users-lightbox'
+import DeckNameLightbox from './deck-name-lightbox'
 import Search from './search'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
 import LeftRail from './manager-left-rail'
@@ -385,10 +386,22 @@ class CardManager extends React.Component {
     });
   }
 
+  handleRenameDeck = (name) => {
+    const that = this;
+
+    $.ajax({
+      url: cardMakerUrl(`decks/${this.props.selectedDeck.id}/name`),
+      method: 'POST',
+      data: name,
+      success: () => {
+        console.log('successsss');
+        that.reloadResources();
+      }
+    });
+  }
+
   handleCreateDeck = (deckName, colId) => {
     const that = this
-        , doneFn = (deckId) => {
-          }
         ;
 
     that.props.showLoadingOverlay();
@@ -697,6 +710,12 @@ class CardManager extends React.Component {
     return this.props.library === 'user';
   }
 
+  handleOpenDeckName = () => {
+    this.setState({
+      deckNameOpen: true
+    });
+  }
+
   deckMenuItems = () => {
     let items = [];
 
@@ -712,6 +731,11 @@ class CardManager extends React.Component {
           label: this.props.selectedDeck.desc ? 
             I18n.t('react.card_maker.edit_desc') :
             I18n.t('react.card_maker.add_desc')
+        });
+
+        items.push({
+          handleClick: this.handleOpenDeckName,
+          label: I18n.t('react.card_maker.rename_deck')
         });
 
         items.push({
@@ -746,6 +770,7 @@ class CardManager extends React.Component {
     });
   }
 
+
   render() {
     var resourceResult = this.selectedResources();
 
@@ -755,6 +780,19 @@ class CardManager extends React.Component {
           isOpen={this.state.deckUsersOpen}
           handleRequestClose={() => this.setState({ deckUsersOpen: false })}
           deck={this.props.selectedDeck}
+        />
+        <DeckNameLightbox
+          isOpen={this.state.deckNameOpen}
+          handleRequestClose={() => this.setState({ deckNameOpen: false })}
+          handleRename={this.handleRenameDeck}
+          startingName={this.props.selectedDeck.name}
+          deckNames={
+            new Set(this.state.decks.filter((deck) => {
+              return deck !== this.props.selectedDeck 
+            }).map((deck) => {
+              return deck.name;
+            }))
+          }
         />
         <NewDeckLightbox
           isOpen={this.state.newDeckOpen}

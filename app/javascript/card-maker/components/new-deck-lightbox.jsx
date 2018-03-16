@@ -1,151 +1,47 @@
 import React from 'react'
 import ReactModal from 'react-modal'
 
+import deckLightboxWrapper from './deck-lightbox-wrapper'
+
 import styles from 'stylesheets/card_maker/card_manager'
 
 class NewDeckLightbox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      deckName: '',
       colId: ''
     }
   }
 
-  handleDeckNameInput = (e) => {
-    let deckName = e.target.value
-      , taken = deckName.length ? this.props.deckNames.has(deckName) : false
-      , errMsg
-      ;
-
-    if (taken) {
-      errMsg = I18n.t('react.card_maker.name_taken');
+  componentWillReceiveProps(newProps) {
+    if (this.props.isOpen && !newProps.isOpen) {
+      this.setState({
+        colId: ''
+      });
     }
 
-    this.setState({
-      deckName: deckName,
-      errMsg: errMsg
-    });
-  }
-
-  handleCreate = () => {
-    let blank = !this.state.deckName.length;
-  
-    if (this.state.errMsg || blank) {
-      if (blank) {
-        this.setState({
-          errMsg: I18n.t('react.card_maker.name_cant_be_blank')
-        });
-      }
-
-      $(this.rootNode).effect('shake');
-    } else {
-      this.handleRequestClose();
-      this.props.handleCreate(this.state.deckName, this.state.colId);
+    if (!this.props.shouldSubmit && newProps.shouldSubmit) {
+      this.props.handleCreate(this.props.name, this.state.colId);
+      this.props.handleSubmitted();
     }
-  }
-
-  handleRequestClose = () => {
-    this.setState(() => {
-      return {
-        deckName: '',
-        colId: '',
-      }
-    });
-    this.props.handleRequestClose();
   }
 
   render() {
     return (
-      <ReactModal
-        isOpen={this.props.isOpen}
-        contentLabel={I18n.t('react.card_maker.new_deck')}
-        parentSelector={() => {return document.getElementById('Page')}}
-        overlayClassName='fixed-center-wrap disable-overlay'
-        className={styles.lNewLightbox}
-        bodyOpenClassName='noscroll'
-        onRequestClose={this.handleRequestClose}
-      >
-        <div ref={(node) => this.rootNode = node}>
-          <div className={styles.lNewCol}> 
-            <div>
-              <div className={styles.lInputWithError}>
-                {
-                  this.state.errMsg != null &&
-                  <div>{this.state.errMsg}</div>
-                }
-                <input 
-                  type="text"
-                  value={this.state.deckName}
-                  onInput={this.handleDeckNameInput}
-                  placeholder={I18n.t('react.card_maker.enter_deck_name')}
-                  className={[
-                    styles.newInput, 
-                    styles.newInputTxt, 
-                    (this.state.errMsg ? styles.isNewInputError : '')
-                  ].join(' ')}
-                />
-              </div>
-              <input
-                type="text"
-                value={this.state.colId}
-                onInput={(e) => this.setState({ colId: e.target.value})}
-                placeholder={I18n.t('react.card_maker.enter_collection_id')}
-                className={[styles.newInput, styles.newInputTxt, styles.newInputColId].join(' ')}
-              />
-            </div>
-          </div>
-          <div className={styles.lNewCol}>
-            <div>
-              <button className={styles.createBtn} onClick={this.handleCreate}>
-                {I18n.t('react.card_maker.create_deck')}
-              </button>
-            </div>
-          </div>
-        </div>
-        {/*
-        <ReactModal
-          isOpen={this.props.isOpen}
-          contentLabel={I18n.t('react.card_maker.new_deck')}
-          parentSelector={() => {return document.getElementById('Page')}}
-          overlayClassName='fixed-center-wrap disable-overlay'
-          className='new-deck lightbox'
-          onRequestClose={this.handleRequestClose}
-        >
-          <div ref={(node) => this.rootNode = node}>
-            <div className='deck-name-wrap wrap'>
-              <input
-                className='deck-name input'
-                type='text'
-                placeholder={I18n.t('react.card_maker.enter_deck_name')}
-                value={this.state.deckName}
-                onChange={this.handleDeckNameChange}
-              />
-              <div
-                className='create-deck-btn'
-                onClick={this.handleCreate}
-              >
-                <div className='create-deck-txt'>{I18n.t('react.card_maker.create_deck')}</div>
-                <i className='icon-new-deck' />
-              </div>
-            </div>
-            <div className='col-id-wrap wrap'>
-              <input
-                className='col-id input'
-                type='text'
-                placeholder={I18n.t('react.card_maker.enter_collection_id')}
-                value={this.state.colId}
-                onChange={this.handleColIdChange}
-              />
-            </div>
-          </div>
-        </ReactModal>
-        */}
-        <div />
-      </ReactModal>
-
-    )
+      <div>
+        <input
+          type="text"
+          value={this.state.colId}
+          onInput={(e) => this.setState({ colId: e.target.value})}
+          placeholder={I18n.t('react.card_maker.enter_collection_id')}
+          className={[styles.newInput, styles.newInputTxt, styles.newInputColId].join(' ')}
+        />
+      </div>
+    );
   }
 }
 
-export default NewDeckLightbox
+export default deckLightboxWrapper(NewDeckLightbox, { 
+  contentLabel: I18n.t('react.card_maker.new_deck'),
+  submitLabel: I18n.t('react.card_maker.create_deck'),
+});

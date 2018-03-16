@@ -251,7 +251,6 @@ module CardServiceCaller
     ) 
   end
 
-
   def self.deck_users(user_id, deck_id)
     HTTParty.get(
       "#{self.user_prefix(user_id)}/decks/#{deck_id}/users",
@@ -259,8 +258,15 @@ module CardServiceCaller
     )
   end
 
-  private
+  def self.rename_deck(user_id, deck_id, name) 
+    HTTParty.post(
+      "#{self.user_prefix(user_id)}/decks/#{deck_id}/name",
+      :body => name,
+      :headers => self.add_api_headers(TEXT_PLAIN_HEADERS)
+    )
+  end
 
+  private
     def self.user_prefix(user_id)
       "#{SERVICE_URL}/users/#{user_id}"
     end

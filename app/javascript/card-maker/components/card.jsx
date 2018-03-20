@@ -40,7 +40,7 @@ class Card extends React.Component {
   render() {
     var overlayStyles = [styles.resourceOverlay];
 
-    if (this.props.editable) {
+    if (this.props.editable && this.props.showCopy) {
       overlayStyles.push(styles.resourceOverlayTwoCol);
     }
 
@@ -60,10 +60,13 @@ class Card extends React.Component {
               className='fa fa-expand fa-3x'
               onClick={this.props.handleZoomClick}
             />
-            <i
-              className='fa fa-copy fa-3x'
-              onClick={this.props.handleCopyClick}
-            />
+            {
+              this.props.showCopy && 
+              <i
+                className='fa fa-copy fa-3x'
+                onClick={this.props.handleCopyClick}
+              />
+            }
             {
               this.props.editable && 
               <i

@@ -90,16 +90,16 @@ class UserResourceFilter extends React.Component {
 
   render() {
     return (
-      <div className={styles.deckSelect} onClick={this.toggleOpen} ref={this.setRef}>
+      <div className={styles.newInputSelect} onClick={this.toggleOpen} ref={this.setRef}>
         <div className={styles.newInput}>
-          <div className={styles.deckSelectName}>{this.selectedItemName()}</div>
+          <div className={styles.newInputSelectName}>{this.selectedItemName()}</div>
           {
             this.hasDropdown() && 
-            <i className={`${styles.deckSelectArw} fa fa-caret-down`} />
+            <i className={`${styles.newInputSelectArw} fa fa-caret-down`} />
           }
         </div>
         {this.hasDropdown() && this.state.menuOpen && 
-          <ul className={styles.deckSelectItems}>
+          <ul className={styles.newInputSelectItems}>
             {this.props.filterItems.map((item) => {
               return (<FilterItem
                 handleClick={() => this.handleItemClick(item.id)}

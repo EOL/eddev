@@ -9,6 +9,7 @@ import SpeciesSearchLightbox from './species-search-lightbox'
 import NewDeckLightbox from './new-deck-lightbox'
 import DeckUsersLightbox from './deck-users-lightbox'
 import RenameDeckLightbox from './rename-deck-lightbox'
+import CopyCardLightbox from './copy-card-lightbox'
 import Search from './search'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
 import LeftRail from './manager-left-rail'
@@ -32,13 +33,16 @@ class CardManager extends React.Component {
     super(props);
 
     this.state = {
-      cards: [],
-      decks: [],
+      userCards: [],
+      userDecks: [],
+      publicCards: [],
+      publicDecks: [],
       selectedFilter: 'cards',
       speciesSearchDeckId: this.props.allCardsDeck.id,
       speciesSearchOpen: false,
       newDeckOpen: false,
       newMenuOpen: false,
+      copyCardOpen: false,
       showDescInput: false,
       deckDescVal: null,
       cardSearchVal: '',
@@ -51,10 +55,33 @@ class CardManager extends React.Component {
   }
 
   reloadResourcesWithCb = (cb) => {
-    var that = this
-      , decksUrl = this.props.library === 'user' ? 'decks'          : 'public/decks'
-      , cardsUrl = this.props.library === 'user' ? 'card_summaries' : 'public/cards'
+    this.reloadResourcesHelper(this.props.library, cb);
+  }
+
+  reloadResources = () => {
+    this.reloadResourcesWithCb(null);
+  }
+
+  reloadResourcesHelper = (lib, cb) => {
+    let that = this
+      , decksUrl
+      , cardsUrl
+      , cardsKey
+      , decksKey
       ;
+
+    if (lib === 'user') {
+      decksUrl = 'decks';
+      cardsUrl = 'card_summaries';
+      cardsKey = 'userCards';
+      decksKey = 'userDecks';
+    } else {
+      decksUrl = 'public/decks';
+      cardsUrl = 'public/cards';
+      cardsKey = 'publicCards';
+      decksKey = 'publicDecks';
+    }
+
 
     this.req = $.ajax({
       url: cardMakerUrl(decksUrl),
@@ -73,8 +100,8 @@ class CardManager extends React.Component {
             }
 
             that.setState({
-              cards: cards,
-              decks: decks,
+              [cardsKey]: cards,
+              [decksKey]: decks,
               showDescInput: false
             }, () => {
               this.props.setSelectedDeck(selectedDeck);  
@@ -89,8 +116,9 @@ class CardManager extends React.Component {
     });
   }
 
-  reloadResources = () => {
-    this.reloadResourcesWithCb(null);
+  reloadAllResources = () => {
+    this.reloadResourcesHelper('user', null);
+    this.reloadResourcesHelper('public', null);
   }
 
   componentWillUnmount() {
@@ -105,13 +133,21 @@ class CardManager extends React.Component {
       this.setLibrary('user')
     } 
 
-    this.reloadResources();
+    this.reloadAllResources();
   }
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.userRole && nextProps.userRole) {
       this.setLibrary('user');
     }
+  }
+
+  curLibDecks = () => {
+    return this.props.library === 'user' ? this.state.userDecks : this.state.publicDecks;
+  }
+
+  curLibCards = () => {
+    return this.props.library === 'user' ? this.state.userCards : this.state.publicCards;
   }
 
   closeMenu = (name) => {
@@ -204,37 +240,37 @@ class CardManager extends React.Component {
     })
   }
 
-  handleCopyCard = () => {
-    console.log('wiring complete');
+  createCardUrl = (deckId) => {
+    return (deckId !== this.props.allCardsDeck.id && deckId != null) ?
+      cardMakerUrl('decks/' + deckId + '/cards') :
+      cardMakerUrl('cards');
   }
 
-  handleCreateCard = (id) => {
+  createCardHelper = (speciesId, cardId, deckId) => {
     const that = this
-        , deckId = that.state.speciesSearchDeckId
-        , url = deckId !== this.props.allCardsDeck.id ?
-          cardMakerUrl('decks/' + deckId + '/cards') :
-          cardMakerUrl('cards')
+        , url = that.createCardUrl(deckId)
         ;
 
-    if (!id) {
-      return;
+    let data;
+
+    if (speciesId) {
+      data = {
+        templateName: 'trait',
+        templateParams: {
+          speciesId: speciesId
+        },
+      };
+    } else if (cardId) {
+      data = {
+        copyFrom: cardId,
+      }
     }
 
     that.props.showLoadingOverlay();
-    this.setState(() => {
-      return {
-        speciesSearchOpen: false,
-      }
-    });
 
     $.ajax({
       url: url,
-      data: JSON.stringify({
-        templateName: 'trait',
-        templateParams: {
-          speciesId: id
-        }
-      }),
+      data: JSON.stringify(data),
       contentType: 'application/json',
       method: 'POST',
       success: () => {
@@ -244,7 +280,19 @@ class CardManager extends React.Component {
         alert(I18n.t('react.card_maker.unexpected_error_msg'));
         that.props.hideLoadingOverlay();
       }
-    })
+    });
+  }
+
+  handleCreateCard = (id) => {
+    this.setState({
+      speciesSearchOpen: false,
+    });
+    this.createCardHelper(id, null, this.state.speciesSearchDeckId);
+  }
+
+  handleCopyCard = (deckId) => {
+    this.createCardHelper(null, this.state.copyCardId, deckId);
+    this.closeCopyCard();
   }
 
   openNewDeckLightbox = () => {
@@ -264,7 +312,7 @@ class CardManager extends React.Component {
   }
 
   deckFilterItemsHelper = (noSelectionText, includeCount) => {
-    const items = this.state.decks.map((deck) => {
+    const items = this.curLibDecks().map((deck) => {
       return {
         id: deck.id,
         name: deck.name,
@@ -274,7 +322,7 @@ class CardManager extends React.Component {
     items.unshift({
       id: this.props.allCardsDeck.id,
       name: noSelectionText,
-      count: (includeCount ? this.state.decks.length : null),
+      count: (includeCount ? this.curLibDecks().length : null),
     });
     return items;
   }
@@ -320,18 +368,15 @@ class CardManager extends React.Component {
     const that = this;
 
     let resources
-      , resourceType
-      ;
-
-    resourceType = 'card';
-    let unfilteredCards
+      , resourceType = 'card'
+      , unfilteredCards
       , searchLower = this.state.cardSearchVal.toLowerCase()
       ;
     
     if (that.props.selectedDeck === this.props.allCardsDeck) {
-      unfilteredCards = that.state.cards;
+      unfilteredCards = that.curLibCards();
     } else {
-      unfilteredCards = that.state.cards.filter((card) => {
+      unfilteredCards = that.curLibCards().filter((card) => {
         return card.deck && card.deck.id === that.props.selectedDeck.id
       });
     }
@@ -350,7 +395,7 @@ class CardManager extends React.Component {
   }
 
   showDeck = (id) => {
-    var deck = this.state.decks.find((deck) => {
+    var deck = this.curLibDecks().find((deck) => {
       return deck.id === id;
     });
 
@@ -539,7 +584,7 @@ class CardManager extends React.Component {
   handleDescInputChange = e => {
     this.setState({
       deckDescVal: e.target.value
-    })
+    });
   }
 
   closeAndClearDescInput = () => {
@@ -771,6 +816,19 @@ class CardManager extends React.Component {
     });
   }
 
+  openCopyCard = (id) => {
+    this.setState({
+      copyCardId: id,
+      copyCardOpen: true,
+    });
+  }
+
+  closeCopyCard = () => {
+    this.setState({
+      copyCardId: null,
+      copyCardOpen: false,
+    });
+  }
 
   render() {
     var resourceResult = this.selectedResources();
@@ -788,7 +846,7 @@ class CardManager extends React.Component {
           handleRename={this.handleRenameDeck}
           name={this.props.selectedDeck.name}
           deckNames={
-            new Set(this.state.decks.filter((deck) => {
+            new Set(this.curLibDecks().filter((deck) => {
               return deck !== this.props.selectedDeck 
             }).map((deck) => {
               return deck.name;
@@ -799,7 +857,7 @@ class CardManager extends React.Component {
           isOpen={this.state.newDeckOpen}
           handleCreate={this.handleCreateDeck}
           handleRequestClose={this.handleCloseNewDeckLightbox}
-          deckNames={new Set(this.state.decks.map((deck) => { 
+          deckNames={new Set(this.curLibDecks().map((deck) => { 
             return deck.name;
           }))}
         />
@@ -812,6 +870,12 @@ class CardManager extends React.Component {
           selectedDeckId={this.state.speciesSearchDeckId}
           handleCreateCard={this.handleCreateCard}
         />
+        <CopyCardLightbox
+          isOpen={this.state.copyCardOpen}
+          handleRequestClose={this.closeCopyCard}
+          handleCopy={this.handleCopyCard}
+          decks={this.state.userDecks} 
+        />
         <img src={iguanaBanner} className={styles.banner} />
         <LeftRail
           library={this.props.library}
@@ -819,7 +883,7 @@ class CardManager extends React.Component {
           handleDeckSelect={this.handleDeckSelect}
           handleNewDeck={this.openNewDeckLightbox}
           selectedDeck={this.props.selectedDeck}
-          decks={this.state.decks}
+          decks={this.curLibDecks()}
           allCardsDeck={this.props.allCardsDeck}
         />
         <div className={styles.lResources}>
@@ -873,7 +937,8 @@ class CardManager extends React.Component {
             handleDestroyCard={this.handleDestroyCard}
             handleDestroyDeck={this.handleDestroyDeck}
             handleNewCard={this.handleSpeciesSearchOpen}
-            handleCopyCard={this.handleCopyCard}
+            handleCopyCard={this.openCopyCard}
+            showCopyCard={this.isUserLib() || this.props.userRole}
             handleNewDeck={this.openNewDeckLightbox}
             makeDeckPdf={this.makeDeckPdf}
             editable={this.props.library === 'user'}

@@ -86,6 +86,7 @@ class UserResources extends React.Component {
           handleDestroyClick={() => props.handleDestroyCard(resource.id)}
           handleZoomClick={() => this.handleCardZoomClick(resource)}
           editable={props.editable}
+          showCopy={this.props.showCopyCard}
         />
       )
     }

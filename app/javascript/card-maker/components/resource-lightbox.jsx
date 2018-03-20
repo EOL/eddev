@@ -1,5 +1,8 @@
 import React from 'react'
 import ReactModal from 'react-modal'
+
+import UserResourceFilter from './user-resource-filter'
+
 import styles from 'stylesheets/card_maker/card_manager'
 
 class ResourceLightbox extends React.Component {
@@ -15,10 +18,10 @@ class ResourceLightbox extends React.Component {
 
   buildFields = () => {
     return this.props.fields.map((field, i) => {
-      var field;
+      var jsx;
 
       if (field.type === "text") {
-        field = (
+        jsx = (
           <div className={styles.lInputWithError} key={i}>
             {
               field.errMsg != null &&
@@ -38,13 +41,19 @@ class ResourceLightbox extends React.Component {
           </div>
         );
       } else if (field.type === "select") {
-        field = null;
-        console.log('create select field', field.options);
+        jsx = (
+          <UserResourceFilter
+            filterItems={field.options}
+            handleSelect={field.handleSelect}
+            selectedId={field.selectedId}
+            key={i}
+          />
+        );
       } else {
         throw new TypeError('unknown field type ' + field.type);
       }
 
-      return field;
+      return jsx;
     });
   }
 

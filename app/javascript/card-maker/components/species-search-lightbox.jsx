@@ -160,7 +160,7 @@ class SpeciesSearchLightbox extends React.Component {
               <div>
                 {this.props.deckFilterItems && this.props.deckFilterItems.length > 1 &&
                   <div className='deck-select-wrap'>
-                    <div className={styles.deckSelectLabel}>{I18n.t('react.card_maker.select_deck')}</div>
+                    <div className={styles.newInputLabel}>{I18n.t('react.card_maker.select_deck')}</div>
                     <UserResourceFilter
                       selected={true}
                       count={this.props.deckFilterItems.length - 1}

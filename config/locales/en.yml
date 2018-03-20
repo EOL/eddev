@@ -521,6 +521,7 @@ en:
       all_public_cards: all public cards
       card_maker_html: card<br/>maker (beta)
       card_maker_title: Card Maker
+      copy_card: copy card
       create_card: create card
       create_deck: create deck
       delete_deck: delete deck

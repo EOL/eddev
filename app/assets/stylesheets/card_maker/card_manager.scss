@@ -639,7 +639,7 @@ $bar-menu-dark-grey: #9db2b8;
   width: 100%;
 }
 
-.deckSelectLabel {
+.newInputLabel {
   font-size: 14px;
   text-align: center;
 }
@@ -681,18 +681,18 @@ $bar-menu-dark-grey: #9db2b8;
   margin-top: 20px;
 }
 
-.deckSelect {
+.newInputSelect {
   cursor: pointer;
   font-size: 14px;
   position: relative;
   margin: 8px auto 15px auto;
 }
 
-  .deckSelectName {
+  .newInputSelectName {
     text-align: center;
   }
 
-  .deckSelectArw {
+  .newInputSelectArw {
     height: 100%;
     position: absolute; 
     right: 5px;
@@ -701,7 +701,7 @@ $bar-menu-dark-grey: #9db2b8;
     width: $deck-select-arw-width;
   }
 
-  .deckSelectItems {
+  .newInputSelectItems {
     $border: 1px solid $section-border-gray;
     background: $white;
     border-bottom: $border;
@@ -722,7 +722,6 @@ $bar-menu-dark-grey: #9db2b8;
       }
     }
   }
-
 
 .newInput {
   width: 100%;

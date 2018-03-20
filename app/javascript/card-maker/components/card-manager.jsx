@@ -8,7 +8,7 @@ import Card from './card'
 import SpeciesSearchLightbox from './species-search-lightbox'
 import NewDeckLightbox from './new-deck-lightbox'
 import DeckUsersLightbox from './deck-users-lightbox'
-import DeckNameLightbox from './deck-name-lightbox'
+import RenameDeckLightbox from './rename-deck-lightbox'
 import Search from './search'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
 import LeftRail from './manager-left-rail'
@@ -202,6 +202,10 @@ class CardManager extends React.Component {
         speciesSearchDeckId: this.props.selectedDeck.id
       }
     })
+  }
+
+  handleCopyCard = () => {
+    console.log('wiring complete');
   }
 
   handleCreateCard = (id) => {
@@ -778,11 +782,11 @@ class CardManager extends React.Component {
           handleRequestClose={() => this.setState({ deckUsersOpen: false })}
           deck={this.props.selectedDeck}
         />
-        <DeckNameLightbox
+        <RenameDeckLightbox
           isOpen={this.state.deckNameOpen}
           handleRequestClose={() => this.setState({ deckNameOpen: false })}
           handleRename={this.handleRenameDeck}
-          startingName={this.props.selectedDeck.name}
+          name={this.props.selectedDeck.name}
           deckNames={
             new Set(this.state.decks.filter((deck) => {
               return deck !== this.props.selectedDeck 
@@ -869,6 +873,7 @@ class CardManager extends React.Component {
             handleDestroyCard={this.handleDestroyCard}
             handleDestroyDeck={this.handleDestroyDeck}
             handleNewCard={this.handleSpeciesSearchOpen}
+            handleCopyCard={this.handleCopyCard}
             handleNewDeck={this.openNewDeckLightbox}
             makeDeckPdf={this.makeDeckPdf}
             editable={this.props.library === 'user'}

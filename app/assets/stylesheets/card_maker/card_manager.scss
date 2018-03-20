@@ -424,13 +424,25 @@ $bar-menu-dark-grey: #9db2b8;
   bottom: 0; 
   color: $white;
   display: flex;
-  flex-direction: column;
+  //flex-direction: column;
+  flex-wrap: wrap;
   justify-content: space-evenly;
   left: 0;
   position: absolute;
   right: 0;
   top: 0;
   vertical-align: top;
+
+  & > i {
+    text-align: center;
+    width: 100%;
+  }
+}
+
+.resourceOverlayTwoCol {
+  & > i {
+    width: 50%;
+  }
 }
 
 .resourcePlaceholder {
@@ -528,9 +540,13 @@ $bar-menu-dark-grey: #9db2b8;
   width: 50%;
 
   & > div {
-    margin: 0 auto;
+    margin: 0 auto 20px auto;
     position: relative;
     width: $search-results-width;
+  }
+
+  & > div:last-of-type {
+    margin-bottom: 0;
   }
 }
 

@@ -550,7 +550,7 @@ en:
       new_deck_lc: new deck
       enter_deck_name: enter deck name
       create_deck: create deck
-      enter_collection_id: enter EOL collection id (optional)
+      collection_id_optional: EOL collection id (optional)
       unexpected_error_msg: An unexpected error occurred
       go_back_to: go back to
       card_manager: Card Manager

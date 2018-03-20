@@ -82,6 +82,7 @@ class UserResources extends React.Component {
           key={resource.id}
           handleDeckSelect={props.handleCardDeckSelect.bind(null, resource.id)}
           handleEditClick={() => props.handleEditCard(resource.id)}
+          handleCopyClick={() => props.handleCopyCard(resource.id)}
           handleDestroyClick={() => props.handleDestroyCard(resource.id)}
           handleZoomClick={() => this.handleCardZoomClick(resource)}
           editable={props.editable}

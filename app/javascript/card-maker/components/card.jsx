@@ -38,26 +38,36 @@ class Card extends React.Component {
   }
 
   render() {
+    var overlayStyles = [styles.resourceOverlay];
+
+    if (this.props.editable) {
+      overlayStyles.push(styles.resourceOverlayTwoCol);
+    }
+
     return (
       <div>
         <LoadingSpinnerImage src={loResCardImageUrl(this.props.data)} />
         {this.props.showOverlay &&
-          <div className={styles.resourceOverlay}>
+          <div className={overlayStyles.join(' ')}>
             {
               this.props.editable && 
               <i
-                className='i fa fa-edit fa-3x edit-btn btn'
+                className='fa fa-edit fa-3x edit-btn'
                 onClick={this.props.handleEditClick}
               />
             }
             <i
-              className="i fa fa-expand fa-3x btn"
+              className='fa fa-expand fa-3x'
               onClick={this.props.handleZoomClick}
+            />
+            <i
+              className='fa fa-copy fa-3x'
+              onClick={this.props.handleCopyClick}
             />
             {
               this.props.editable && 
               <i
-                className='i fa fa-trash-o fa-3x trash-btn btn'
+                className='fa fa-trash-o fa-3x'
                 onClick={this.props.handleDestroyClick}
               />
             }

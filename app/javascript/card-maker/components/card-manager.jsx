@@ -10,6 +10,7 @@ import NewDeckLightbox from './new-deck-lightbox'
 import DeckUsersLightbox from './deck-users-lightbox'
 import RenameDeckLightbox from './rename-deck-lightbox'
 import CopyCardLightbox from './copy-card-lightbox'
+import CopyDeckLightbox from './copy-deck-lightbox'
 import Search from './search'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
 import LeftRail from './manager-left-rail'
@@ -43,6 +44,7 @@ class CardManager extends React.Component {
       newDeckOpen: false,
       newMenuOpen: false,
       copyCardOpen: false,
+      copyDeckOpen: false,
       showDescInput: false,
       deckDescVal: null,
       cardSearchVal: '',
@@ -446,8 +448,20 @@ class CardManager extends React.Component {
     });
   }
 
+  handleCopyDeck = (deckName) => {
+    this.createDeckHelper(deckName, null, this.props.selectedDeck.id); 
+  }
+
   handleCreateDeck = (deckName, colId) => {
+    this.createDeckHelper(deckName, colId, null);
+  }
+
+  createDeckHelper = (deckName, colId, copyFrom) => {
     const that = this
+        , data = {
+            name: deckName,
+            copyFrom: copyFrom
+          }
         ;
 
     that.props.showLoadingOverlay();
@@ -455,16 +469,18 @@ class CardManager extends React.Component {
     $.ajax({
       url: cardMakerUrl('decks'),
       method: 'POST',
-      data: JSON.stringify({ name: deckName }),
+      data: JSON.stringify(data),
       success: (data) => {
         const cb = (err) => { 
           if (err) {
             that.props.hideLoadingOverlay();
             alert(I18n.t('react.card_maker.unexpected_error_msg'));
           } else {
-            that.reloadResourcesWithCb(() => {
-              that.showDeck(data.id);
-              that.props.hideLoadingOverlay();
+            that.props.setLibrary('user', () => {
+              that.reloadResourcesWithCb(() => {
+                that.showDeck(data.id);
+                that.props.hideLoadingOverlay();
+              })
             })
           }
         }
@@ -771,6 +787,13 @@ class CardManager extends React.Component {
         label: I18n.t('react.card_maker.print')
       });
 
+      if (this.props.userRole) {
+        items.push({
+          handleClick: () => this.setState({ copyDeckOpen: true }),
+          label: I18n.t('react.card_maker.copy_deck')
+        });
+      }
+
       if (this.isUserLib()) {
         items.push({
           handleClick: this.handleDescBtnClick,
@@ -830,8 +853,35 @@ class CardManager extends React.Component {
     });
   }
 
+  userDeckNames = () => {
+    return new Set(this.state.userDecks.map((deck) => { 
+      return deck.name;
+    }))
+  }
+
+  deckCopyName = (deckNames) => {
+    let num = 2
+      , baseName = I18n.t('react.card_maker.copy_of_name', { 
+          name: this.props.selectedDeck.name 
+        })
+      , name = baseName
+      ;
+  
+    while (deckNames.has(name) && num < 10) {
+      name = `${baseName} (${num++})`;
+    }
+
+    if (deckNames.has(name)) {
+      name = null;
+    }
+
+    return name;
+  }
+
   render() {
-    var resourceResult = this.selectedResources();
+    var resourceResult = this.selectedResources()
+      , userDeckNames = this.userDeckNames()
+      ;
 
     return (
       <div className={styles.lManager}>
@@ -845,21 +895,17 @@ class CardManager extends React.Component {
           handleRequestClose={() => this.setState({ deckNameOpen: false })}
           handleRename={this.handleRenameDeck}
           name={this.props.selectedDeck.name}
-          deckNames={
-            new Set(this.curLibDecks().filter((deck) => {
-              return deck !== this.props.selectedDeck 
-            }).map((deck) => {
-              return deck.name;
-            }))
-          }
+          deckNames={new Set(this.state.userDecks.filter((deck) => {
+            return deck !== this.props.selectedDeck;
+          }).map((deck) => {
+            return deck.name; 
+          }))}
         />
         <NewDeckLightbox
           isOpen={this.state.newDeckOpen}
           handleCreate={this.handleCreateDeck}
           handleRequestClose={this.handleCloseNewDeckLightbox}
-          deckNames={new Set(this.curLibDecks().map((deck) => { 
-            return deck.name;
-          }))}
+          deckNames={userDeckNames}
         />
         <SpeciesSearchLightbox
           isOpen={this.state.speciesSearchOpen}
@@ -875,6 +921,13 @@ class CardManager extends React.Component {
           handleRequestClose={this.closeCopyCard}
           handleCopy={this.handleCopyCard}
           decks={this.state.userDecks} 
+        />
+        <CopyDeckLightbox
+          isOpen={this.state.copyDeckOpen}
+          handleRequestClose={() => this.setState({ copyDeckOpen: false })}
+          handleCopy={this.handleCopyDeck}
+          deckNames={userDeckNames}
+          name={this.deckCopyName(userDeckNames)}
         />
         <img src={iguanaBanner} className={styles.banner} />
         <LeftRail

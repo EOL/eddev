@@ -523,6 +523,8 @@ en:
       card_maker_title: Card Maker
       copy_card: copy card
       create_card: create card
+      copy_deck: copy deck
+      copy_of_name: "copy of %{name}"
       create_deck: create deck
       delete_deck: delete deck
       download_png: Download PNG

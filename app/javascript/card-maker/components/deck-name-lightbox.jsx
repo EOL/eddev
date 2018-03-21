@@ -15,13 +15,10 @@ class DeckNameLightbox extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (this.props.isOpen && !newProps.isOpen) {
+    if (!this.props.isOpen && newProps.isOpen) {
       this.setState({
-        name: ''
-      });
-    } else if (newProps.name !== this.props.name) {
-      this.setState({
-        name: newProps.name || ''
+        nameErr: null,
+        name: newProps.name || '',
       });
     }
   }

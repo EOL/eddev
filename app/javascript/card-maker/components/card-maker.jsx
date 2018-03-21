@@ -204,6 +204,8 @@ class CardMaker extends React.Component {
           sort: sorts[this.sortsForLib(newLib)[0].key]
         };
       }, cb);
+    } else {
+      cb();
     }
   }
 

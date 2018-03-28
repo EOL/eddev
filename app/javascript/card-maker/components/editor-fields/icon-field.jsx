@@ -8,7 +8,6 @@ class IconField extends React.Component {
 
     this.state = {
       open: false,
-      selected: null
     }
   }
 
@@ -32,8 +31,8 @@ class IconField extends React.Component {
   }
 
   textSelection = () => {
-    return this.state.selected ? 
-      this.state.selected.label :
+    return this.props.value.label ? 
+      this.props.value.label :
       "Select a biome"
   }
 
@@ -50,8 +49,8 @@ class IconField extends React.Component {
           <div className={styles.iconSelection}
             onClick={this.handleMenuClick}>
             {
-              this.state.selected !== null &&
-              <img src={this.state.selected.url} />
+              this.props.value.url != null &&
+              <img src={this.props.value.url} />
             }
 
             <i className='cm-icon-sug-arrow-down' /> 
@@ -62,16 +61,16 @@ class IconField extends React.Component {
               <li
                 className={[
                   styles.iconChoice,
-                  (this.state.selected ? '' : styles.isIconChoiceSelected)
+                  (this.props.value.url ? '' : styles.isIconChoiceSelected)
                 ].join(' ')}
-                onClick={() => this.setState({ selected: null })}
+                onClick={() => this.props.setChoiceKey(null)}
               >
                 <div>---</div>
               </li>
               {this.props.choices.map((choice, i) => {
                 let classes = [styles.iconChoice];
 
-                if (this.state.selected === choice) {
+                if (this.props.value.url === choice.url) {
                   classes.push(styles.isIconChoiceSelected);
                 }
 
@@ -79,7 +78,7 @@ class IconField extends React.Component {
                   <li 
                     className={classes.join(' ')} 
                     key={i} 
-                    onClick={() => this.setState({ selected: choice })}
+                    onClick={() => this.props.setChoiceKey(choice.choiceKey)}
                   > 
                     <div>{choice.label}</div>
                     <img src={choice.url} />

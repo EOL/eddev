@@ -1,0 +1,74 @@
+@import 'layout_vars';
+
+.lIconField {
+  margin: 0 auto;
+  padding: 22px 0;
+  position: relative;
+  width: 300px;
+}
+
+.iconSelect {
+  background: $white;
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+}
+
+  .iconChoices {
+    background: inherit;
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;  
+    width: 100%;
+  }
+
+  .iconChoice {
+    flex: 1 0 auto;
+    padding: 10px 5px 0 5px;
+    text-align: center;
+    width: 50%;
+
+    & > img {
+      margin-top: 3px;
+      max-width: 140px;
+    }
+  }
+
+    .isIconChoiceSelected {
+      background-color: #efefef;
+      box-shadow: inset 0 1px 3px 0 rgba(100, 100, 100, 0.5);
+    }
+
+  .iconSelection {
+    height: 50px;
+    padding-top: 10px;
+    position: relative;
+    text-align: center;
+    width: 100%;
+
+    & > i {
+      font-size: 18px;
+      position: absolute;
+      right: 28px;
+      top: 16px;
+    }
+
+    & > img {
+      height: 32px;
+    }
+  }
+
+  .iconText {
+    background: $card-field-blue;
+    font-size: 16px;
+    height: 35px;
+    line-height: 35px;
+    margin-bottom: 5px;
+    position: relative;
+    text-align: center;
+    width: 100%;
+  }
+
+.isDisableExempt {
+  z-index: 100 !important;
+}

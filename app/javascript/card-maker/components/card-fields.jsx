@@ -6,12 +6,14 @@ import LabeledChoiceImageField from './editor-fields/labeled-choice-image-field'
 import ImageField from './editor-fields/image-field'
 import KeyValListField from './editor-fields/key-val-list-field'
 import MultilineTextField from './editor-fields/multiline-text-field'
+import IconField from './editor-fields/icon-field'
 
 const fieldTypesToComponents = {
   'text': TextField,
   'color-scheme': ColorSchemeField,
   'labeled-choice-image': LabeledChoiceImageField,
   'text-icon': LabeledChoiceImageField,
+  'icon': IconField,
   'image': ImageField,
   'key-val-list': KeyValListField,
   'multiline-text': MultilineTextField,

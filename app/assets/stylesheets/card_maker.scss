@@ -880,7 +880,7 @@ $col-border-width: 5px;
   border-left: $border;
   border-right: $border;
   border-top: 1px solid $border-color;
-  background-color: #71baff;
+  background-color: $card-field-blue;
   position: relative;
 
   &.no-border {

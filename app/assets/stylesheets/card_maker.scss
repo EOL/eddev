@@ -888,22 +888,6 @@ $col-border-width: 5px;
   }
 }
 
-.field-label {
-  $height: 34px;
-  background-color: $white;
-  border-radius: 2px 2px 0 0;
-  box-shadow: 0 1px 0 0 rgba(7, 83, 198, 0.33);
-  font-family: Merriweather;
-  font-size: 14px;
-  height: $height;
-  line-height: $height;
-  padding-left: 21px;
-  position: relative;
-
-  .txt {
-    color: #3f3f3f;
-  }
-}
 
 .card-fields-wrap {
   position: relative;

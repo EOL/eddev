@@ -93,4 +93,4 @@ class IconField extends React.Component {
   }
 }
 
-export default fieldWrapper(IconField);
+export default fieldWrapper(IconField, { customTab: true });

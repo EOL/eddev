@@ -227,4 +227,4 @@ class TextField extends React.Component {
   }
 }
 
-export default fieldWrapper(TextField, false);
+export default fieldWrapper(TextField);

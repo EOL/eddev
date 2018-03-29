@@ -61,7 +61,8 @@ class CardManager extends React.Component {
   }
 
   reloadResources = () => {
-    this.reloadResourcesWithCb(null);
+    this.props.showLoadingOverlay();
+    this.reloadResourcesWithCb(this.props.hideLoadingOverlay);
   }
 
   reloadResourcesHelper = (lib, cb) => {
@@ -84,7 +85,6 @@ class CardManager extends React.Component {
       decksKey = 'publicDecks';
     }
 
-
     this.req = $.ajax({
       url: cardMakerUrl(decksUrl),
       method: 'GET',
@@ -106,7 +106,7 @@ class CardManager extends React.Component {
               [decksKey]: decks,
               showDescInput: false
             }, () => {
-              this.props.setSelectedDeck(selectedDeck);  
+              that.props.setSelectedDeck(selectedDeck);  
 
               if (cb) {
                 cb();
@@ -119,8 +119,10 @@ class CardManager extends React.Component {
   }
 
   reloadAllResources = () => {
-    this.reloadResourcesHelper('user', null);
-    this.reloadResourcesHelper('public', null);
+    this.props.showLoadingOverlay();
+    this.reloadResourcesHelper('user', () => {
+      this.reloadResourcesHelper('public', this.props.hideLoadingOverlay);
+    });
   }
 
   componentWillUnmount() {

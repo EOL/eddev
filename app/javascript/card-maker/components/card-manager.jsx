@@ -119,9 +119,15 @@ class CardManager extends React.Component {
   }
 
   reloadAllResources = () => {
-    this.props.showLoadingOverlay();
-    this.reloadResourcesHelper('user', () => {
-      this.reloadResourcesHelper('public', this.props.hideLoadingOverlay);
+    var that = this;
+
+    that.props.showLoadingOverlay();
+    that.reloadResourcesHelper('public', () => {
+      if (that.props.userRole) {
+        that.reloadResourcesHelper('user', that.props.hideLoadingOverlay);
+      } else {
+        that.props.hideLoadingOverlay();
+      }
     });
   }
 

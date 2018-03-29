@@ -8,6 +8,63 @@ class IconField extends React.Component {
 
     this.state = {
       open: false,
+      choiceIndex: 0,
+    }
+  }
+
+  componentDidMount() {
+    let choiceIndex = null
+      , labelMatch = false
+      , choices = this.choices()
+      ;
+
+    // determine tab
+    for (let i = 0; i < choices.length && choiceIndex === null; i++) {
+      let choice = choices[i];
+
+      if (this.props.value.url === choice.url) {
+        choiceIndex = i;
+
+        if (this.props.value.label === choice.label) {
+          labelMatch = true;
+        }
+      }
+    }
+
+    if (!labelMatch) {
+      this.props.requestFieldTab('custom'); 
+    }
+
+    if (choiceIndex !== null) {
+      this.setState({ choiceIndex: choiceIndex });
+    }
+  }
+
+  componentWillReceiveProps(newProps) {
+    let sameChoices = this.props.choices.length === newProps.choices.length
+      , choiceIndex = this.state.choiceIndex
+      ;
+
+    if (sameChoices) {
+      for (let i = 0; i < this.props.choices.length && sameChoices; i++) {
+        let curChoice = this.props.choices[i]
+          , newChoice = newProps.choices[i]
+          ;
+        
+        sameChoices = curChoice.url === newChoice.url && curChoice.label === newChoice.label;
+      }
+    }
+
+    if (!sameChoices) {
+      choiceIndex = 0;
+      this.setState({
+        choiceIndex: choiceIndex
+      });
+    }
+
+    if (this.props.fieldTab === 'custom' && newProps.fieldTab === 'default') {
+      let choice = this.choices()[choiceIndex];
+      this.props.setChoiceKey(this.choices()[choiceIndex].choiceKey)
     }
   }
 
@@ -30,10 +87,78 @@ class IconField extends React.Component {
     }
   }
 
-  textSelection = () => {
-    return this.props.value.label ? 
-      this.props.value.label :
-      "Select a biome"
+  handleLabelChange = (e) => {
+    this.props.setDataAttr('label', e.target.value);
+  }
+
+  label = () => {
+    let result
+      ;
+
+    if (this.props.fieldTab === 'custom') {
+      result = (
+        <input 
+          type='text' 
+          className={[styles.iconText].join(' ')} 
+          value={this.props.value.label || ''}
+          onChange={this.handleLabelChange}
+          placeholder="enter text"
+        />
+      );
+    } else {
+      let text = this.props.value.label ? 
+        this.props.value.label :
+        "select an icon";
+
+      result = <div className={[styles.iconText, styles.iconTextStatic].join(' ')}>{text}</div>
+    }
+
+    return result;
+  }
+
+  setIcon = (index, item) => {
+    this.setState({ choiceIndex: index });
+
+    if (this.props.fieldTab === 'custom') {
+      this.props.setDataAttr('url', item.url); 
+    } else {
+      this.props.setChoiceKey(item.choiceKey);
+    }
+  }
+
+  choices = () => {
+    return [{
+      url: null,
+      label: null,
+    }].concat(this.props.choices);
+  }
+
+  iconSelect = () => {
+    return (
+      <ul className={[styles.iconChoices].join(' ')}>
+        {this.choices().map((choice, index) => {
+          return (
+            <li
+              className={[
+                styles.iconChoice,
+                (this.state.choiceIndex === index ? styles.isIconChoiceSelected : null),
+              ].join(' ')}
+              onClick={() => this.setIcon(index, choice)}
+              key={index}
+            >
+              {
+                this.props.fieldTab !== 'custom' &&
+                <div>{choice.label === null ? '---' : choice.label}</div>
+              }
+              {
+                choice.url != null &&
+                <img src={choice.url} />
+              }
+            </li>
+          )
+        })}
+      </ul>
+    );
   }
 
   render() {
@@ -44,7 +169,7 @@ class IconField extends React.Component {
           (this.state.open ? styles.isDisableExempt : '')
         ].join(' ')}
       >
-        <div className={styles.iconText}>{this.textSelection()}</div>
+        {this.label()}
         <div className={styles.iconSelect}>
           <div className={styles.iconSelection}
             onClick={this.handleMenuClick}>
@@ -56,36 +181,7 @@ class IconField extends React.Component {
             <i className='cm-icon-sug-arrow-down' /> 
           </div>
           {
-            this.state.open && 
-            <ul className={[styles.iconChoices].join(' ')}>
-              <li
-                className={[
-                  styles.iconChoice,
-                  (this.props.value.url ? '' : styles.isIconChoiceSelected)
-                ].join(' ')}
-                onClick={() => this.props.setChoiceKey(null)}
-              >
-                <div>---</div>
-              </li>
-              {this.props.choices.map((choice, i) => {
-                let classes = [styles.iconChoice];
-
-                if (this.props.value.url === choice.url) {
-                  classes.push(styles.isIconChoiceSelected);
-                }
-
-                return (
-                  <li 
-                    className={classes.join(' ')} 
-                    key={i} 
-                    onClick={() => this.props.setChoiceKey(choice.choiceKey)}
-                  > 
-                    <div>{choice.label}</div>
-                    <img src={choice.url} />
-                  </li>
-                );
-              })}
-            </ul>
+            this.state.open && this.iconSelect()
           }
         </div>
       </div>

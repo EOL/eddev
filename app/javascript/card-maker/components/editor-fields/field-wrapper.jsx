@@ -64,6 +64,7 @@ function fieldWrapper(WrappedElmt, options) {
           <div className={innerClassName}>
             <WrappedElmt 
               fieldTab={this.state.tab}
+              requestFieldTab={(tab) => this.setState({ tab: tab })}
               {...this.props} 
             />
           </div>

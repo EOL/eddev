@@ -102,13 +102,13 @@ class IconField extends React.Component {
           className={[styles.iconText].join(' ')} 
           value={this.props.value.label || ''}
           onChange={this.handleLabelChange}
-          placeholder="enter text"
+          placeholder={I18n.t('react.card_maker.enter_text')}
         />
       );
     } else {
       let text = this.props.value.label ? 
         this.props.value.label :
-        "select an icon";
+        I18n.t('react.card_maker.select_an_icon');
 
       result = <div className={[styles.iconText, styles.iconTextStatic].join(' ')}>{text}</div>
     }
@@ -147,8 +147,8 @@ class IconField extends React.Component {
               key={index}
             >
               {
-                this.props.fieldTab !== 'custom' &&
-                <div>{choice.label === null ? '---' : choice.label}</div>
+                this.props.fieldTab !== 'custom' && choice.label &&
+                <div>{choice.label}</div>
               }
               {
                 choice.url != null &&

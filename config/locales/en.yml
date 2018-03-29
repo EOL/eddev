@@ -528,6 +528,7 @@ en:
       create_deck: create deck
       delete_deck: delete deck
       download_png: Download PNG
+      enter_text: enter text
       print_loading_msg: "It may take a few minutes to generate this print-quality PDF. Please check your popup blocker if you don't see a result after this screen disappears."
       public_cards: public cards
       create_a_card: create a card
@@ -540,6 +541,7 @@ en:
       assign_to_deck: Assign to deck
       are_you_sure_delete_card: Are you sure you want to delete this card?
       are_you_sure_delete_deck: Are you sure you want to delete this deck and all its cards?
+      select_an_icon: select an icon
       species_search: Species search
       search_species_taxon: search for a species or taxon
       search: Search

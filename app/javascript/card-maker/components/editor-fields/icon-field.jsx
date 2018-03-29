@@ -22,10 +22,10 @@ class IconField extends React.Component {
     for (let i = 0; i < choices.length && choiceIndex === null; i++) {
       let choice = choices[i];
 
-      if (this.props.value.url === choice.url) {
+      if (this.props.value.url == choice.url) {
         choiceIndex = i;
 
-        if (this.props.value.label === choice.label) {
+        if (this.props.value.label == choice.label) {
           labelMatch = true;
         }
       }

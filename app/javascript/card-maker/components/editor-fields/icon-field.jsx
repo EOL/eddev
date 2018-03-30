@@ -108,7 +108,7 @@ class IconField extends React.Component {
     } else {
       let text = this.props.value.label ? 
         this.props.value.label :
-        I18n.t('react.card_maker.select_an_icon');
+        this.props.field.cta
 
       result = <div className={[styles.iconText, styles.iconTextStatic].join(' ')}>{text}</div>
     }

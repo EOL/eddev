@@ -106,7 +106,9 @@ class CardManager extends React.Component {
               [decksKey]: decks,
               showDescInput: false
             }, () => {
-              that.props.setSelectedDeck(selectedDeck);  
+              if (lib === this.props.library) {
+                that.props.setSelectedDeck(selectedDeck);  
+              }
 
               if (cb) {
                 cb();

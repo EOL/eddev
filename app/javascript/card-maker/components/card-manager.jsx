@@ -136,6 +136,8 @@ class CardManager extends React.Component {
       this.req.abort();
       this.req = null;
     }
+
+    this.props.hideLoadingOverlay();
   }
 
   componentDidMount() {

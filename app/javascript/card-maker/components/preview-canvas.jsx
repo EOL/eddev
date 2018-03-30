@@ -66,7 +66,10 @@ class PreviewCanvas extends React.Component {
       }
     }
 
-    this.renderer = new TemplateRenderer(canvasSupplier, imageFetcher)
+    this.renderer = new TemplateRenderer({
+      canvasSupplier: canvasSupplier, 
+      imageFetcher: imageFetcher,
+    });
   }
 
   draw = () => {

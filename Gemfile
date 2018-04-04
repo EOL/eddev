@@ -91,4 +91,5 @@ group :development do
   gem 'capistrano-git-with-submodules', '~> 2.0'
 
   gem 'better_errors'
+  gem 'i18n_yaml_sorter'
 end

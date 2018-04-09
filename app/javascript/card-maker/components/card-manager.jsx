@@ -383,16 +383,20 @@ class CardManager extends React.Component {
 
     let resources
       , resourceType = 'card'
-      , unfilteredCards
+      , unfilteredCards = that.curLibCards()
       , searchLower = this.state.cardSearchVal.toLowerCase()
       ;
     
-    if (that.props.selectedDeck === this.props.allCardsDeck) {
-      unfilteredCards = that.curLibCards();
-    } else {
-      unfilteredCards = that.curLibCards().filter((card) => {
-        return card.deck && card.deck.id === that.props.selectedDeck.id
-      });
+    if (that.props.selectedDeck !== that.props.allCardsDeck) {
+      if (that.props.selectedDeck === that.props.unassignedCardsDeck) {
+        unfilteredCards = unfilteredCards.filter((card) => {
+          return !card.deck;
+        });
+      } else {
+        unfilteredCards = unfilteredCards.filter((card) => {
+          return card.deck && card.deck.id === that.props.selectedDeck.id
+        });
+      }
     }
 
     resources = unfilteredCards.filter((card) => {
@@ -950,6 +954,7 @@ class CardManager extends React.Component {
           selectedDeck={this.props.selectedDeck}
           decks={this.curLibDecks()}
           allCardsDeck={this.props.allCardsDeck}
+          unassignedCardsDeck={this.props.unassignedCardsDeck}
         />
         <div className={styles.lResources}>
           <div className={styles.lDeckMenu}>

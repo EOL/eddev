@@ -73,7 +73,8 @@ class ManagerLeftRail extends React.Component {
           <span>{I18n.t('react.card_maker.new_deck_lc')}</span>
         </li>
       ),
-      this.deckItem(this.props.allCardsDeck, '')
+      this.deckItem(this.props.allCardsDeck, ''),
+      this.deckItem(this.props.unassignedCardsDeck, ''),
     ].concat(
       this.props.decks.filter((deck) => {
         return deck.name.toLowerCase().includes(searchVal.toLowerCase());

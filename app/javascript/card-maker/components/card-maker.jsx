@@ -18,6 +18,10 @@ const allDecksDeck = { // unused for now
         id: -2,
         name: I18n.t('react.card_maker.all_cards'),
       }
+    , unassignedCardsDeck = {
+        id: -3,
+        name: I18n.t('react.card_maker.unassigned'),
+      }
     , sorts = {
         commonAsc: {
           fn: (a, b) => {
@@ -231,6 +235,7 @@ class CardMaker extends React.Component {
       component = (
         <CardManager
           allCardsDeck={allCardsDeck}
+          unassignedCardsDeck={unassignedCardsDeck}
           handleEditCard={this.handleEditCard}
           userRole={this.state.userRole}
           library={this.state.library}

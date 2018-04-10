@@ -30,7 +30,7 @@ class CardPreview extends React.Component {
           className='img-wrap'
           onClick={() => this.props.setSelectedImgId(field.id)}
         >
-          <div className='img-title'>{field.label}</div>
+          <div className='img-title'>{field.uiLabel}</div>
           <img className={thumbClass} src={url} />
         </div>
       ))

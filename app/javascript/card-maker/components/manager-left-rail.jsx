@@ -59,23 +59,28 @@ class ManagerLeftRail extends React.Component {
   }
 
   deckItems = () => {
-    let searchVal = this.state.deckSearchVal;
+    let searchVal = this.state.deckSearchVal
+      , baseItems = [
+          ( 
+            this.props.library === 'user' &&
+            <li 
+              key='newdeck_btn' 
+              className={[styles.deck, styles.deckNew].join(' ')} 
+              onClick={this.props.handleNewDeck}
+            >
+              <i className={`${styles.deckNewPlus} fa fa-plus`} />
+              <span>{I18n.t('react.card_maker.new_deck_lc')}</span>
+            </li>
+          ),
+          this.deckItem(this.props.allCardsDeck, ''),
+        ]
+      ;
 
-    return [
-      ( 
-        this.props.library === 'user' &&
-        <li 
-          key='newdeck_btn' 
-          className={[styles.deck, styles.deckNew].join(' ')} 
-          onClick={this.props.handleNewDeck}
-        >
-          <i className={`${styles.deckNewPlus} fa fa-plus`} />
-          <span>{I18n.t('react.card_maker.new_deck_lc')}</span>
-        </li>
-      ),
-      this.deckItem(this.props.allCardsDeck, ''),
-      this.deckItem(this.props.unassignedCardsDeck, ''),
-    ].concat(
+    if (this.props.library === 'user') {
+      baseItems.push(this.deckItem(this.props.unassignedCardsDeck, ''));
+    }
+
+    return baseItems.concat(
       this.props.decks.filter((deck) => {
         return deck.name.toLowerCase().includes(searchVal.toLowerCase());
       }).sort((a, b) => {

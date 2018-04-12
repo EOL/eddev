@@ -99,7 +99,7 @@ class IconField extends React.Component {
       result = (
         <input 
           type='text' 
-          className={[styles.iconText].join(' ')} 
+          className={[styles.labelText].join(' ')} 
           value={this.props.value.label || ''}
           onChange={this.handleLabelChange}
           placeholder={I18n.t('react.card_maker.enter_text')}
@@ -107,10 +107,11 @@ class IconField extends React.Component {
       );
     } else {
       let text = this.props.value.label ? 
-        this.props.value.label :
-        this.props.field.cta
+          this.props.value.label :
+          this.props.field.cta
+        ;
 
-      result = <div className={[styles.iconText, styles.iconTextStatic].join(' ')}>{text}</div>
+      result = <div className={[styles.labelText, styles.labelTextStatic].join(' ')}>{text}</div>
     }
 
     return result;
@@ -165,7 +166,7 @@ class IconField extends React.Component {
     return (
       <div 
         className={[
-          styles.lIconField,
+          styles.lField,
           (this.state.open ? styles.isDisableExempt : '')
         ].join(' ')}
       >
@@ -189,4 +190,4 @@ class IconField extends React.Component {
   }
 }
 
-export default fieldWrapper(IconField, { customTab: true });
+export default fieldWrapper(IconField, {});

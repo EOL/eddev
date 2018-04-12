@@ -2,12 +2,51 @@
 
 $field-label-padding-left: 21px;
 
-.lIconField {
+.lField {
   margin: 0 auto;
   padding: 22px 0;
   position: relative;
   width: 300px;
 }
+
+.lTextField {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 77px;
+  overflow: hidden;
+}
+
+.lTextInput {
+  display: flex;
+  flex: 0 0 auto;
+  margin: 0 13px;
+  overflow: hidden;
+  width: 294px;
+}
+
+.lTextInputCustom {
+  margin: 0;
+  width: 100%;
+}
+
+.textEntry {
+  border: none;
+  border-radius: 1.4px;
+  color: #242424;
+  font-size: 13px;
+  outline: none;
+}
+
+.textInput {
+  height: 34px;
+  padding: 0 13px;
+}
+
+  .textInputTextField {
+    width: 100%;
+  }
 
 .iconSelect {
   background: $white;
@@ -60,19 +99,19 @@ $field-label-padding-left: 21px;
     }
   }
 
-  .iconText {
-    font-size: 16px;
-    height: 35px;
-    line-height: 35px;
-    margin-bottom: 5px;
-    position: relative;
-    text-align: center;
-    width: 100%;
-  }
+.labelText {
+  font-size: 16px;
+  height: 35px;
+  line-height: 35px;
+  margin-bottom: 5px;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
 
-    .iconTextStatic {
-      background: $card-field-blue;
-    }
+  .labelTextStatic {
+    background: $card-field-blue;
+  }
 
 .fieldLabel {
   $height: 34px;

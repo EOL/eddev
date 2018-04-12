@@ -2,6 +2,7 @@ import React from 'react';
 
 import SuggestionsMenu from './suggestions-menu'
 import fieldWrapper from './field-wrapper'
+import styles from 'stylesheets/card_maker/card_editor'
 
 class TextField extends React.Component {
   constructor(props) {
@@ -165,14 +166,14 @@ class TextField extends React.Component {
     this.props.setDataAttr('text', value);
   }
 
-  buildInput = () => {
+  buildInput = (extraClass) => {
     const elmts = [];
 
     elmts.push((
       <input
         key='input'
         onChange={this.handleChange}
-        className='text-input text-field-input text-entry'
+        className={`${styles.textInput} ${styles.textInputTextField} ${styles.textEntry}`}
         type='text'
         value={this.props.value.text || ''}
       />
@@ -210,20 +211,44 @@ class TextField extends React.Component {
   }
 
   render() {
-    let textInputClass = 'text-input-wrap flex-wrap';
+    let textInputClasses = [styles.lTextInput]
+      , result
+      ;
 
     if (this.state.suggestionsOpen) {
-      textInputClass += ' disable-exempt';
+      textInputClasses.push(styles.isDisableExempt);
     }
 
-    return (
-      <div className='text-field-wrap'>
-        <div className={textInputClass}>
-          {this.buildInput()}
+    if (this.props.fieldTab === 'custom') {
+      textInputClasses.push(styles.lTextInputCustom);
+
+      result = (
+        <div className={styles.lField}>
+          <input 
+            type="text" 
+            className={styles.labelText} 
+            value={this.props.value.label || ''}
+            onChange={(e) => this.props.setDataAttr('label', e.target.value)}
+            placeholder={I18n.t('react.card_maker.enter_text')}
+          />
+          <div className={textInputClasses.join(' ')}>
+            {this.buildInput(styles.lTextInputCustom)}
+          </div>
+          {this.fontSizePart()}
         </div>
-        {this.fontSizePart()}
-      </div>
-    )
+      );
+    } else {
+      result = (
+        <div className={styles.lTextField}>
+          <div className={textInputClasses.join(' ')}>
+            {this.buildInput()}
+          </div>
+          {this.fontSizePart()}
+        </div>
+      );
+    }
+
+    return result;
   }
 }
 

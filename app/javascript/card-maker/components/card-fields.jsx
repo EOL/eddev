@@ -63,6 +63,7 @@ class CardFields extends React.Component {
               forceCardDirty={this.props.forceCardDirty}
               disableCol={this.props.disableCol}
               enableCol={this.props.enableCol}
+              customTab={field.allowCustom}
             />
           );
 

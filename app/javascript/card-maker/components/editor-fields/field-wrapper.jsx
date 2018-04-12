@@ -15,7 +15,7 @@ function fieldWrapper(WrappedElmt, options) {
     label = () => {
       var result;
 
-      if (options.customTab) {
+      if (this.props.customTab) {
         result = (
           <div className={[styles.fieldLabel, styles.fieldLabelTabs].join(' ')}>
             <div 

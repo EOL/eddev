@@ -77,11 +77,11 @@ class SuggestionsMenu extends React.Component {
               return (
                 <li
                   className='item'
-                  key={item}
+                  key={item.key}
                   onClick={() => this.props.handleSelect(item)}
                   onMouseDown={this.handleItemMouseDown}
                 >
-                  {item}
+                  {item.value}
                 </li>
               )
             })

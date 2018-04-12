@@ -162,8 +162,8 @@ class TextField extends React.Component {
     }
   }
 
-  handleSuggestionSelect = (value) => {
-    this.props.setDataAttr('text', value);
+  handleSuggestionSelect = (item) => {
+    this.props.setChoiceKey(item.key);
   }
 
   buildInput = (extraClass) => {
@@ -197,7 +197,10 @@ class TextField extends React.Component {
             key='suggestMenu'
             items={
               this.props.choices.map((choice) => {
-                return choice.text
+                return {
+                  value: choice.text,
+                  key: choice.choiceKey,
+                };
               })
             }
             anchor={this.state.suggestBtnNode}

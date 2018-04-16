@@ -11,7 +11,12 @@ class TextField extends React.Component {
       fontSizeOpen: false,
       suggestBtnNode: null,
       suggestionsOpen: false,
+      colorsOpen: false,
     }
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.closeColors);
   }
 
   setFontSizeNode = (node) => {
@@ -166,7 +171,7 @@ class TextField extends React.Component {
     this.props.setChoiceKey(item.key);
   }
 
-  buildInput = (extraClass) => {
+  buildInput = () => {
     const elmts = [];
 
     elmts.push((
@@ -190,27 +195,118 @@ class TextField extends React.Component {
           <i className='cm-icon-sug-arrow-down suggestion-icon'></i>
         </div>
       ))
-
-      if (this.state.suggestionsOpen) {
-        elmts.push((
-          <SuggestionsMenu
-            key='suggestMenu'
-            items={
-              this.props.choices.map((choice) => {
-                return {
-                  value: choice.text,
-                  key: choice.choiceKey,
-                };
-              })
-            }
-            anchor={this.state.suggestBtnNode}
-            handleSelect={this.handleSuggestionSelect}
-          />
-        ))
-      }
     }
 
     return elmts;
+  }
+
+  closeColors =  () => {
+    this.setState({
+      colorsOpen: false
+    }, this.props.enableCol);
+
+    document.removeEventListener('click', this.closeColors)
+  }
+
+  openColors = () => {
+    this.setState({
+      colorsOpen: true
+    }, this.props.disableCol);
+
+    document.addEventListener('click', this.closeColors);
+  }
+
+  toggleColors = () => {
+    if (this.state.colorsOpen) {
+      this.closeColors();
+    } else {
+      this.openColors();
+    }
+  }
+
+  buildCustomInput = (textInputClasses) => {
+    const elmts = [
+            (
+              <input
+                type='text'
+                key='customInput'
+                onChange={this.handleChange}
+                className={`${styles.textInput} ${styles.textInputTextField} ${styles.textEntry}`}
+                value={this.props.value.text || ''}
+              />
+            )
+          ]
+        , bgColorChoices = this.props.choices ? 
+            [ 
+              ...new Set(this.props.choices.map((choice) => {
+                return choice.bgColor.toLowerCase()
+              }))
+            ].sort((a, b) => {
+              if (a < b) {
+                return 1;
+              }
+
+              if (a > b) {
+                return -1;
+              }
+
+              return 0;
+            }) :
+            []
+        , colorBtnClasses = [styles.textInputColorBtn]
+        ;
+
+    if (this.state.colorsOpen) {
+      colorBtnClasses.push(styles.isDisableExempt);
+    }
+
+    if (bgColorChoices.length) {
+      elmts.push((
+        <div
+          className={colorBtnClasses.join(' ')}
+          key='colorSuggestBtn'
+          style={{
+            backgroundColor: (this.props.value.bgColor || '#fff'),
+          }}
+          onClick={this.toggleColors}
+        >
+          <i 
+            className='cm-icon-sug-arrow-down' 
+            style={{ 
+              color: this.props.fieldColor, 
+            }}
+          />
+        </div>
+      ));
+    }
+
+    return (
+      <div className={styles.textInputWColors}>
+        <div className={textInputClasses.join(' ')}>
+          {elmts}
+          {this.fontSizePart()}
+        </div>
+        {
+          this.state.colorsOpen &&
+          <ul 
+            key='colorChoices'
+            className={`${styles.colorChoices} ${styles.isDisableExempt}`}
+          >
+            {
+              bgColorChoices.map((color) => {
+                return (
+                  <li
+                    key={color}
+                    onClick={() => this.props.setDataAttr('bgColor', color)}
+                    style={{ backgroundColor: color }}
+                  />
+                );
+              })
+            }
+          </ul>
+        }
+      </div>
+    );
   }
 
   render() {
@@ -234,19 +330,35 @@ class TextField extends React.Component {
             onChange={(e) => this.props.setDataAttr('label', e.target.value)}
             placeholder={I18n.t('react.card_maker.enter_text')}
           />
-          <div className={textInputClasses.join(' ')}>
-            {this.buildInput(styles.lTextInputCustom)}
-          </div>
-          {this.fontSizePart()}
+          {this.buildCustomInput(textInputClasses)}
         </div>
       );
     } else {
       result = (
-        <div className={styles.lTextField}>
-          <div className={textInputClasses.join(' ')}>
-            {this.buildInput()}
+        <div className={styles.lInputMenu}>
+          <div className={styles.lTextField}>
+            <div className={textInputClasses.join(' ')}>
+              {this.buildInput()}
+            </div>
+            {this.fontSizePart()}
           </div>
-          {this.fontSizePart()}
+          {
+            this.state.suggestionsOpen && (
+              <SuggestionsMenu
+                key='suggestMenu'
+                items={
+                  this.props.choices.map((choice) => {
+                    return {
+                      value: choice.text,
+                      key: choice.choiceKey,
+                    };
+                  })
+                }
+                anchor={this.state.suggestBtnNode}
+                handleSelect={this.handleSuggestionSelect}
+              />
+            )
+          }
         </div>
       );
     }

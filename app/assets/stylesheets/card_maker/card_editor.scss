@@ -1,6 +1,8 @@
 @import 'layout_vars';
 
 $field-label-padding-left: 21px;
+$text-input-height: 34px;
+$color-btn-width: 70px;
 
 .lField {
   margin: 0 auto;
@@ -21,6 +23,7 @@ $field-label-padding-left: 21px;
 .lTextInput {
   display: flex;
   flex: 0 0 auto;
+  height: $text-input-height;
   margin: 0 13px;
   overflow: hidden;
   width: 294px;
@@ -40,13 +43,27 @@ $field-label-padding-left: 21px;
 }
 
 .textInput {
-  height: 34px;
+  height: 100%;
   padding: 0 13px;
 }
 
   .textInputTextField {
     width: 100%;
   }
+
+.textInputColorBtn {
+  cursor: pointer;
+  height: $text-input-height;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  width: $color-btn-width;
+
+  & > i {
+    font-weight: bold;
+    vertical-align: middle;
+  }
+}
 
 .iconSelect {
   background: $white;
@@ -156,6 +173,18 @@ $field-label-padding-left: 21px;
       color: #979797;
       cursor: pointer;
     }
+
+.colorChoices {
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  width: $color-btn-width;
+
+  & > li {
+    height: 30px;
+    width: 100%;
+  }
+}
 
 .isDisableExempt {
   z-index: 100 !important;

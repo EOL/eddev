@@ -39,6 +39,9 @@ class CardFields extends React.Component {
           , setKeyValText = this.props.setCardKeyValText.bind(null, field.id)
           , getDataAttr = this.props.card.getDataAttr.bind(null, field.id)
           , getUserDataAttr = this.props.card.getUserDataAttr.bind(null, field.id)
+          , fieldColor = field.color ? 
+              this.props.card.fieldColor(field) :
+              null
           , FieldComponent = fieldTypesToComponents[field.type]
           , elmt
           ;
@@ -64,6 +67,7 @@ class CardFields extends React.Component {
               disableCol={this.props.disableCol}
               enableCol={this.props.enableCol}
               customTab={field.allowCustom}
+              fieldColor={fieldColor}
             />
           );
 

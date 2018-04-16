@@ -125,6 +125,10 @@ class ImmutableCard {
       });
     });
   }
+
+  fieldColor = (field) => {
+    return this.delegate.fieldColor(field);
+  }
 }
 
 function newInstance(data, cb) {

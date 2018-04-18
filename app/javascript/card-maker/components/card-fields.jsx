@@ -41,6 +41,7 @@ class CardFields extends React.Component {
           , setKeyValText = this.props.setCardKeyValText.bind(null, field.id)
           , getDataAttr = this.props.card.getDataAttr.bind(null, field.id)
           , getUserDataAttr = this.props.card.getUserDataAttr.bind(null, field.id)
+          , choiceKey = this.props.card.getChoiceKey(field.id, null)
           , fieldColor = field.color ? 
               this.props.card.fieldColor(field) :
               null
@@ -60,6 +61,7 @@ class CardFields extends React.Component {
               setDataAttrNotDirty={setDataAttrNotDirty}
               getDataAttr={getDataAttr}
               setChoiceKey={setChoiceKey}
+              choiceKey={choiceKey}
               setUserDataAttr={setUserDataAttr}
               setUserDataRef={setUserDataRef}
               setKeyValText={setKeyValText}

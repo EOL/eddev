@@ -28,8 +28,8 @@ class ImmutableCard {
     return this.delegate.getUserDataAttr(fieldName, bucket, key);
   }
 
-  getChoiceIndex = (fieldName, defaultVal) => {
-    return this.delegate.getChoiceIndex(fieldName, defaultVal);
+  getChoiceKey = (fieldName, defaultVal) => {
+    return this.delegate.getChoiceKey(fieldName, defaultVal);
   }
 
   getDataAttr = (fieldName, attr, defaultVal) => {

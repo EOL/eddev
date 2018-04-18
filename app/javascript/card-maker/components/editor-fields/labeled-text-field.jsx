@@ -10,6 +10,7 @@ class LabeledTextField extends React.Component {
     this.state = {
       suggestionsOpen: false,
       colorsOpen: false,
+      bgColorChoices: []
     }
   }
 
@@ -17,10 +18,40 @@ class LabeledTextField extends React.Component {
     document.removeEventListener('click', this.closeColors);
   }
 
+  componentWillReceiveProps(nextProps) {
+    let bgColorChoices = nextProps.choices ? 
+              [ 
+                ...new Set(nextProps.choices.map((choice) => {
+                  return choice.bgColor.toLowerCase()
+                }))
+              ].sort((a, b) => {
+                if (a < b) {
+                  return 1;
+                }
+
+                if (a > b) {
+                  return -1;
+                }
+
+                return 0;
+              }) :
+            []
+      ;
+
+    this.setState({
+      bgColorChoices: bgColorChoices
+    });
+  
+    if (nextProps.fieldTab === 'custom' && !nextProps.value.bgColor && bgColorChoices.length) {
+      this.props.setDataAttr('bgColor', bgColorChoices[0]);
+    } else if (this.props.fieldTab === 'custom' && nextProps.fieldTab !== 'custom') {
+      this.props.setChoiceKey(this.props.choiceKey);
+    }
+  }
+
   handleChange = (event) => {
     this.props.setDataAttr('text', event.target.value);
   }
-
 
   closeColors =  () => {
     this.setState({
@@ -58,23 +89,6 @@ class LabeledTextField extends React.Component {
               />
             )
           ]
-        , bgColorChoices = this.props.choices ? 
-            [ 
-              ...new Set(this.props.choices.map((choice) => {
-                return choice.bgColor.toLowerCase()
-              }))
-            ].sort((a, b) => {
-              if (a < b) {
-                return 1;
-              }
-
-              if (a > b) {
-                return -1;
-              }
-
-              return 0;
-            }) :
-            []
         , colorBtnClasses = [styles.textInputColorBtn]
         ;
 
@@ -82,7 +96,7 @@ class LabeledTextField extends React.Component {
       colorBtnClasses.push(styles.isDisableExempt);
     }
 
-    if (bgColorChoices.length) {
+    if (this.state.bgColorChoices.length) {
       elmts.push((
         <div
           className={colorBtnClasses.join(' ')}
@@ -114,7 +128,7 @@ class LabeledTextField extends React.Component {
             className={`${styles.colorChoices} ${styles.isDisableExempt}`}
           >
             {
-              bgColorChoices.map((color) => {
+              this.state.bgColorChoices.map((color) => {
                 return (
                   <li
                     key={color}

@@ -14,6 +14,37 @@ class LabeledTextField extends React.Component {
     }
   }
 
+  componentDidMount() {
+    /* determine if there is a custom value and set the tab if so */
+    let found = false;
+
+    if (
+      !this.props.field.allowCustom || 
+      (
+        !(this.props.value.text && this.props.value.text.length) && 
+        !(this.props.value.label && this.props.value.label.length)
+      )
+    ) {
+      return;
+    }
+
+    for (let i = 0; i < this.props.choices.length && !found; i++) {
+      let choice = this.props.choices[i];
+
+      if (
+        this.props.value.text === choice.text && 
+        this.props.value.bgColor === choice.bgColor &&
+        this.props.value.label === choice.label
+      ) {
+        found = true;
+      }
+    }
+
+    if (!found) {
+      this.props.requestFieldTab('custom');
+    }
+  }
+
   componentWillUnmount() {
     document.removeEventListener('click', this.closeColors);
   }

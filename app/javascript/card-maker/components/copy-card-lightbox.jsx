@@ -29,12 +29,28 @@ class CopyCardLightbox extends React.Component {
     return [{
       name: I18n.t('react.card_maker.select_deck'),
       id: null
-    }].concat(this.props.decks.map((deck) => {
-      return {
-        name: deck.name,
-        id: deck.id
-      }
-    }));
+    }].concat(
+      this.props.decks.map((deck) => {
+        return {
+          name: deck.name,
+          id: deck.id
+        }
+      }).sort((a, b) => {
+        let aName = a.name.toLowerCase()
+          , bName = b.name.toLowerCase()
+          ;
+
+        if (aName < bName) {
+          return -1;
+        }
+         
+        if (aName > bName) {
+          return 1;
+        }
+
+        return 0;
+      })
+    );
   }
 
   fields = () => {

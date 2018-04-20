@@ -689,7 +689,11 @@ $bar-menu-dark-grey: #9db2b8;
 }
 
   .newInputSelectName {
+    overflow: hidden;
+    padding: 0 38px 0 10px;
     text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .newInputSelectArw {
@@ -714,7 +718,10 @@ $bar-menu-dark-grey: #9db2b8;
       $height: 30px;
       height: $height;
       line-height: $height;
+      overflow: hidden;
       padding: 0 10px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
 
       &:hover {
         background: $section-border-gray;

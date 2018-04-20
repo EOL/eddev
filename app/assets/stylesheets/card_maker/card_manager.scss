@@ -711,6 +711,8 @@ $bar-menu-dark-grey: #9db2b8;
     border-bottom: $border;
     border-left: $border;
     border-right: $border;
+    max-height: 500px;
+    overflow: auto;
     position: absolute;
     width: 100%;
 

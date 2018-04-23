@@ -60,5 +60,8 @@ module Eddev
 
     # build i18n-js translation files (configured in i18n-js.yml)
     config.middleware.use I18n::JS::Middleware
+
+    config.action_controller.perform_caching = true
+    config.cache_store = :mem_cache_store
   end
 end

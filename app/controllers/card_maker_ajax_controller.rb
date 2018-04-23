@@ -63,17 +63,22 @@ class CardMakerAjaxController < ApplicationController
       end
 
       format.svg do 
-        card_id, _, quality = params[:card_id].split('_')
+        card_id, version, quality = params[:card_id].split('_')
 
-        if !card_id || !quality || !(quality == 'hi' || quality == 'lo')
+        if !card_id || !version || !quality || !(quality == 'hi' || quality == 'lo')
           raise ActionController.routing_error('Invalid card svg path')
         end
 
-        svc_res = if quality == 'hi'
-                    CardServiceCaller.svg_hi_res(card_id)
-                  else
-                    CardServiceCaller.svg_lo_res(card_id)
-                  end
+        cache_key = "card_maker_ajax.card_svg.#{card_id}.#{version}.#{quality}"
+
+        svc_res = Rails.cache.fetch(cache_key) do
+          if quality == 'hi'
+            CardServiceCaller.svg_hi_res(card_id)
+          else
+            CardServiceCaller.svg_lo_res(card_id)
+          end
+        end
+
         data_pass_thru_response(svc_res)
       end
 
@@ -320,7 +325,6 @@ class CardMakerAjaxController < ApplicationController
     def data_pass_thru_response(svc_res)
       expires_in 1.hour, :public => true
 
-      content_type = svc_res.headers["content-type"]
       opts = {
         :status => svc_res.code,
         :type => svc_res.headers["content-type"]

@@ -59,6 +59,9 @@ gem "i18n-js"
 # Error reporting
 gem "bugsnag"
 
+# For memcached 
+gem "dalli"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

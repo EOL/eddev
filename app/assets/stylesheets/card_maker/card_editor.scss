@@ -1,12 +1,68 @@
 @import 'layout_vars';
 
 $field-label-padding-left: 21px;
+$text-input-height: 34px;
+$color-btn-width: 70px;
 
-.lIconField {
+.lField {
   margin: 0 auto;
   padding: 22px 0;
   position: relative;
   width: 300px;
+}
+
+.lTextField {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 77px;
+  overflow: hidden;
+}
+
+.lTextInput {
+  display: flex;
+  flex: 0 0 auto;
+  height: $text-input-height;
+  margin: 0 13px;
+  overflow: hidden;
+  width: 294px;
+}
+
+.lTextInputCustom {
+  margin: 0;
+  width: 100%;
+}
+
+.textEntry {
+  border: none;
+  border-radius: 1.4px;
+  color: #242424;
+  font-size: 13px;
+  outline: none;
+}
+
+.textInput {
+  height: 100%;
+  padding: 0 13px;
+}
+
+  .textInputTextField {
+    width: 100%;
+  }
+
+.textInputColorBtn {
+  cursor: pointer;
+  height: $text-input-height;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  width: $color-btn-width;
+
+  & > i {
+    font-weight: bold;
+    vertical-align: middle;
+  }
 }
 
 .iconSelect {
@@ -60,19 +116,19 @@ $field-label-padding-left: 21px;
     }
   }
 
-  .iconText {
-    font-size: 16px;
-    height: 35px;
-    line-height: 35px;
-    margin-bottom: 5px;
-    position: relative;
-    text-align: center;
-    width: 100%;
-  }
+.labelText {
+  font-size: 16px;
+  height: 35px;
+  line-height: 35px;
+  margin-bottom: 5px;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
 
-    .iconTextStatic {
-      background: $card-field-blue;
-    }
+  .labelTextStatic {
+    background: $card-field-blue;
+  }
 
 .fieldLabel {
   $height: 34px;
@@ -117,6 +173,18 @@ $field-label-padding-left: 21px;
       color: #979797;
       cursor: pointer;
     }
+
+.colorChoices {
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  width: $color-btn-width;
+
+  & > li {
+    height: 30px;
+    width: 100%;
+  }
+}
 
 .isDisableExempt {
   z-index: 100 !important;

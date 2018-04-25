@@ -15,7 +15,7 @@ function fieldWrapper(WrappedElmt, options) {
     label = () => {
       var result;
 
-      if (options.customTab) {
+      if (this.props.customTab) {
         result = (
           <div className={[styles.fieldLabel, styles.fieldLabelTabs].join(' ')}>
             <div 
@@ -26,7 +26,7 @@ function fieldWrapper(WrappedElmt, options) {
               ].join(' ')}
               onClick={() => this.setState({ tab: 'default' })}
             >
-              <div>{this.props.field.label}</div>
+              <div>{this.props.field.uiLabel}</div>
             </div>
             <div 
               className={[
@@ -43,7 +43,7 @@ function fieldWrapper(WrappedElmt, options) {
       } else {
         result = (
           <div className={styles.fieldLabel}>
-            <div>{this.props.field.label}</div>
+            <div>{this.props.field.uiLabel}</div>
           </div>
         );
       }

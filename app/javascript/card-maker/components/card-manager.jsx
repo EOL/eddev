@@ -384,7 +384,6 @@ class CardManager extends React.Component {
     let resources
       , resourceType = 'card'
       , unfilteredCards = that.curLibCards()
-      , searchLower = this.state.cardSearchVal.toLowerCase()
       ;
     
     if (that.props.selectedDeck !== that.props.allCardsDeck) {
@@ -399,17 +398,21 @@ class CardManager extends React.Component {
       }
     }
 
-    resources = unfilteredCards.filter((card) => {
-      return card.commonName.toLowerCase().includes(searchLower) ||
-        card.sciName.toLowerCase().includes(searchLower);
-    });
-
-    resources = resources.slice(0).sort(this.props.sort.fn);
+    resources = unfilteredCards.slice(0).sort(this.props.sort.fn);
 
     return {
       resources: resources,
       resourceType: resourceType,
     };
+  }
+
+  searchFilterResources = (resources) => {
+    let searchLower = this.state.cardSearchVal.toLowerCase();
+
+    return resources.filter((card) => {
+      return card.commonName.toLowerCase().includes(searchLower) ||
+        card.sciName.toLowerCase().includes(searchLower);
+    });
   }
 
   showDeck = (id) => {
@@ -794,14 +797,16 @@ class CardManager extends React.Component {
     });
   }
 
-  deckMenuItems = () => {
+  deckMenuItems = (resourceCount) => {
     let items = [];
 
     if (this.props.selectedDeck !== this.props.allCardsDeck) {
-      items.push({
-        handleClick: this.makeDeckPdf,
-        label: I18n.t('react.card_maker.print')
-      });
+      if (resourceCount > 0) {
+        items.push({
+          handleClick: this.makeDeckPdf,
+          label: I18n.t('react.card_maker.print')
+        });
+      }
 
       if (this.props.userRole) {
         items.push({
@@ -896,6 +901,7 @@ class CardManager extends React.Component {
 
   render() {
     var resourceResult = this.selectedResources()
+      , searchFilteredResources = this.searchFilterResources(resourceResult.resources)
       , userDeckNames = this.userDeckNames()
       ;
 
@@ -960,7 +966,7 @@ class CardManager extends React.Component {
           <div className={styles.lDeckMenu}>
             <div className={styles.lDeckMenuFlex}>
               <Menu
-                items={this.deckMenuItems()}
+                items={this.deckMenuItems(resourceResult.resources.length)}
                 open={this.state.menus.deck}
                 anchorText={this.deckMenuAnchorText()}
                 handleRequestClose={() => this.closeMenu('deck')}
@@ -992,14 +998,13 @@ class CardManager extends React.Component {
                 items={this.sortItems()}
                 anchorText={this.props.sort.label}
                 open={this.state.menus.sort}
-                handleRequestOpen={() => { this.openMenu('sort') }}
                 handleRequestClose={() => { this.closeMenu('sort') }}
                 extraClasses={[styles.menuWrapSort]}
               />
             </div>
           </div>
           <UserResources
-            resources={resourceResult.resources}
+            resources={searchFilteredResources}
             resourceType={resourceResult.resourceType}
             handleCardDeckSelect={this.assignCardDeck}
             handleEditCard={this.props.handleEditCard}

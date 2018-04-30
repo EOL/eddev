@@ -7,6 +7,7 @@ import ImageField from './editor-fields/image-field'
 import KeyValListField from './editor-fields/key-val-list-field'
 import MultilineTextField from './editor-fields/multiline-text-field'
 import IconField from './editor-fields/icon-field'
+import LabeledTextField from './editor-fields/labeled-text-field'
 
 const fieldTypesToComponents = {
   'text': TextField,
@@ -17,6 +18,7 @@ const fieldTypesToComponents = {
   'image': ImageField,
   'key-val-list': KeyValListField,
   'multiline-text': MultilineTextField,
+  'labeled-text': LabeledTextField
 }
 
 class CardFields extends React.Component {
@@ -39,6 +41,10 @@ class CardFields extends React.Component {
           , setKeyValText = this.props.setCardKeyValText.bind(null, field.id)
           , getDataAttr = this.props.card.getDataAttr.bind(null, field.id)
           , getUserDataAttr = this.props.card.getUserDataAttr.bind(null, field.id)
+          , choiceKey = this.props.card.getChoiceKey(field.id, null)
+          , fieldColor = field.color ? 
+              this.props.card.fieldColor(field) :
+              null
           , FieldComponent = fieldTypesToComponents[field.type]
           , elmt
           ;
@@ -55,6 +61,7 @@ class CardFields extends React.Component {
               setDataAttrNotDirty={setDataAttrNotDirty}
               getDataAttr={getDataAttr}
               setChoiceKey={setChoiceKey}
+              choiceKey={choiceKey}
               setUserDataAttr={setUserDataAttr}
               setUserDataRef={setUserDataRef}
               setKeyValText={setKeyValText}
@@ -63,6 +70,8 @@ class CardFields extends React.Component {
               forceCardDirty={this.props.forceCardDirty}
               disableCol={this.props.disableCol}
               enableCol={this.props.enableCol}
+              customTab={field.allowCustom}
+              fieldColor={fieldColor}
             />
           );
 

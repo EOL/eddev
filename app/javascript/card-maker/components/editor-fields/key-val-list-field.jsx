@@ -39,8 +39,8 @@ class KeyValListField extends React.Component {
     })
   }
 
-  handleSuggestionsSelect = (text) => {
-    this.props.setKeyValText('key', this.state.focusIndex, text);
+  handleSuggestionsSelect = (item) => {
+    this.props.setKeyValText('key', this.state.focusIndex, item.value);
     this.state.focusTarget.blur();
   }
 
@@ -76,7 +76,14 @@ class KeyValListField extends React.Component {
           {i === this.state.focusIndex &&
             <SuggestionsMenu
               anchor={this.state.focusTarget}
-              items={this.props.choices.map((choice) => {return choice.text})}
+              items={
+                this.props.choices.map((choice) => {
+                  return {
+                    value: choice.text,
+                    key: choice.choiceKey
+                  };
+                })
+              }
               handleSelect={this.handleSuggestionsSelect}
             />
           }

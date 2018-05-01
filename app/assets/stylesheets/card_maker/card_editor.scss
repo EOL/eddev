@@ -181,6 +181,14 @@ $color-btn-width: 70px;
   margin-left: 18px;
 }
 
+.fieldInfo {
+  background: $white;
+  font-size: 12px;
+  padding: 10px;
+  position: absolute; 
+  width: 100%;
+}
+
 .colorChoices {
   cursor: pointer;
   position: absolute;

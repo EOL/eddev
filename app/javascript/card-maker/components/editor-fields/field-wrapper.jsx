@@ -8,8 +8,13 @@ function fieldWrapper(WrappedElmt, options) {
     constructor(props) {
       super(props);
       this.state = {
-        tab: 'default'
+        tab: 'default',
+        infoOpen: false
       }
+    }
+
+    componentWillUnmount() {
+      document.removeEventListener('click', this.closeInfo);
     }
 
     label = () => {
@@ -49,6 +54,7 @@ function fieldWrapper(WrappedElmt, options) {
             <span 
               key='info'
               className={styles.fieldInfoLink}
+              onClick={() => this.openInfo()}
             >{I18n.t('react.card_maker.whats_this')}</span>
           ));
         }
@@ -63,6 +69,18 @@ function fieldWrapper(WrappedElmt, options) {
       return result;
     }
 
+    openInfo = () => {
+      this.props.disableCol();
+      this.setState({ infoOpen: true });
+      document.addEventListener('click', this.closeInfo);
+    }
+
+    closeInfo = () => {
+      this.props.enableCol();
+      this.setState({ infoOpen: false });
+      document.removeEventListener('click', this.closeInfo);
+    }
+
     render() {
       var innerClassName = 'field';
 
@@ -73,6 +91,9 @@ function fieldWrapper(WrappedElmt, options) {
       return (
         <div className='field-wrap'>
           {this.label()}
+          {this.state.infoOpen && (
+            <div className={[styles.fieldInfo, styles.isDisableExempt].join(' ')}>{this.props.field.uiInfo}</div>
+          )}
           <div className={innerClassName}>
             <WrappedElmt 
               fieldTab={this.state.tab}

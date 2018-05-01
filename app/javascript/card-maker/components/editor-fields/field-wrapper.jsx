@@ -13,7 +13,8 @@ function fieldWrapper(WrappedElmt, options) {
     }
 
     label = () => {
-      var result;
+      var result
+        ;
 
       if (this.props.customTab) {
         result = (
@@ -41,9 +42,20 @@ function fieldWrapper(WrappedElmt, options) {
           </div>
         );
       } else {
+        let labelParts = [<span key='label'>{this.props.field.uiLabel}</span>];
+
+        if (this.props.field.uiInfo) {
+          labelParts.push((
+            <span 
+              key='info'
+              className={styles.fieldInfoLink}
+            >{I18n.t('react.card_maker.whats_this')}</span>
+          ));
+        }
+
         result = (
           <div className={styles.fieldLabel}>
-            <div>{this.props.field.uiLabel}</div>
+            <div>{labelParts}</div>
           </div>
         );
       }

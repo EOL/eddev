@@ -393,7 +393,7 @@ class CardManager extends React.Component {
         });
       } else {
         unfilteredCards = unfilteredCards.filter((card) => {
-          return card.deck && card.deck.id === that.props.selectedDeck.id
+          return card.deck === that.props.selectedDeck.id
         });
       }
     }

@@ -12,7 +12,6 @@ var noUserId = -1
     }
   ;
 
-
 class DeckUsersLightbox extends React.Component {
   constructor(props) {
     super(props);
@@ -89,12 +88,11 @@ class DeckUsersLightbox extends React.Component {
     return (
       <ReactModal
         isOpen={this.props.isOpen}
-        onAfterOpen={this.handleAfterOpen}
         onRequestClose={this.handleRequestClose}
         contentLabel={I18n.t('react.card_maker.manage_deck_users')}
         parentSelector={() => {return document.getElementById('Page')}}
         bodyOpenClassName='noscroll'
-        className={`${styles.lightbox} ${styles.lightboxDeckUsers}`}
+        className={styles.lNewLightbox}
         overlayClassName={`fixed-center-wrap disable-overlay`}
       >
         <h2>Manage users for deck <strong>{this.props.deck.name}</strong></h2>

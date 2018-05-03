@@ -32,9 +32,6 @@ gem "figaro"
 
 gem "tinymce-rails"
 
-# file attachment
-gem "paperclip", "~> 4.3.5"
-
 # s3 integration
 gem "aws-sdk", "< 2.0"
 

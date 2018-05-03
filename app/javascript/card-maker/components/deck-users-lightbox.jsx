@@ -1,14 +1,17 @@
 import React from 'react'
 import ReactModal from 'react-modal'
+import ReactAutocomplete from 'react-autocomplete'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
 import styles from 'stylesheets/card_maker/card_manager'
 
 var noUserId = -1
   , cleanState = {
-      userOptions: [],
       owner: {},
       users: [],
-      selectedUserId: noUserId
+      selectedUserId: noUserId,
+      typeaheadLoading: false,
+      typeaheadOptions: [],
+      typeaheadValue: ''
     }
   ;
 
@@ -23,12 +26,6 @@ class DeckUsersLightbox extends React.Component {
   }
 
   reload = () => {
-    $.getJSON('/users/list', (userOptions) => {
-      this.setState({
-        userOptions: userOptions
-      });
-    });
-
     $.getJSON(cardMakerUrl(`decks/${this.props.deck.id}/users`), (res) => {
       this.setState({
         owner: res.owner,
@@ -49,10 +46,11 @@ class DeckUsersLightbox extends React.Component {
   }
 
   addSelectedUser = () => {
+    console.log('user id', this.state.selectedUserId);
     if (this.state.selectedUserId > 0) {
       $.post({
         url: cardMakerUrl(`decks/${this.props.deck.id}/users`),
-        data: this.state.selectedUserId,
+        data: this.state.selectedUserId.toString(),
         dataType: 'text',
         success: this.reload
       });
@@ -69,30 +67,16 @@ class DeckUsersLightbox extends React.Component {
     }
   }
 
-  userOptions = () => {
-    return [<option key={noUserId} value={noUserId}>-----</option>].concat(
-      this.state.userOptions.map((option) => {
-        var elmt;
-
-        if (option.id !== this.props.deck.userId) {
-          elmt = (
-            <option key={option.id} value={option.id}>{option.userName}</option>
-          );
-        }
-        return elmt;
-      })
-    );
-  }
-
   render() {
     return (
       <ReactModal
         isOpen={this.props.isOpen}
+        onAfterOpen={this.handleAfterOpen}
         onRequestClose={this.handleRequestClose}
         contentLabel={I18n.t('react.card_maker.manage_deck_users')}
         parentSelector={() => {return document.getElementById('Page')}}
         bodyOpenClassName='noscroll'
-        className={styles.lNewLightbox}
+        className={`${styles.lightbox} ${styles.lightboxDeckUsers}`}
         overlayClassName={`fixed-center-wrap disable-overlay`}
       >
         <h2>Manage users for deck <strong>{this.props.deck.name}</strong></h2>
@@ -112,13 +96,36 @@ class DeckUsersLightbox extends React.Component {
             })}
           </ul>
         </div>
-        <select 
-          name='user_id'
-          onChange={this.handleSelectChange}
-          value={this.state.selectedUserId}
-        >
-          {this.userOptions()}
-        </select>
+        <ReactAutocomplete
+          items={this.state.typeaheadOptions}
+          getItemValue={item => item.label}
+          onChange={e => {
+            let query = e.target.value;
+            this.setState({
+              typeaheadValue: query
+            });
+
+            if (query.length) {
+              $.getJSON('/users/typeahead/' + query, (data) => {
+                this.setState({
+                  typeaheadOptions: data
+                });
+              });
+            }
+          }}
+          onSelect={(val, item) => {
+            this.setState({
+              typeaheadValue: val,
+              selectedUserId: item.id
+            });
+          }}
+          renderItem={(item, isHighlighted) =>
+            <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+              {item.label}
+            </div>
+          }
+          value={this.state.typeaheadValue}
+        />
         <input onClick={this.addSelectedUser} type="submit" value="add user"/>
       </ReactModal>
     );

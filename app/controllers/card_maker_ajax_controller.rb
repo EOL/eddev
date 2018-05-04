@@ -16,9 +16,6 @@ class CardMakerAjaxController < ApplicationController
   before_action :ensure_admin, :only => [ 
     :make_deck_public, 
     :make_deck_private, 
-    :add_deck_user, 
-    :remove_deck_user,
-    :deck_users 
   ]
 
   wrap_parameters :post_json, :format => :json

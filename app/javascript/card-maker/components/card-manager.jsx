@@ -831,10 +831,12 @@ class CardManager extends React.Component {
           label: I18n.t('react.card_maker.rename_deck')
         });
 
-        items.push({
-          handleClick: () => this.handleDestroyDeck(this.props.selectedDeck.id),
-          label: I18n.t('react.card_maker.delete_deck')
-        });
+        if (this.props.selectedDeck.isOwner) {
+          items.push({
+            handleClick: () => this.handleDestroyDeck(this.props.selectedDeck.id),
+            label: I18n.t('react.card_maker.delete_deck')
+          });
+        }
 
         if (this.props.userRole == 'admin') {
           items.push({

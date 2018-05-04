@@ -838,17 +838,17 @@ class CardManager extends React.Component {
           });
         }
 
+        items.push({
+          handleClick: () => this.setState({ deckUsersOpen: true }),
+          label: I18n.t('react.card_maker.manage_deck_users')
+        });
+
         if (this.props.userRole == 'admin') {
           items.push({
             handleClick: this.toggleDeckPublic,
             label: this.props.selectedDeck.public ? 
               I18n.t('react.card_maker.make_deck_private') :
               I18n.t('react.card_maker.make_deck_public')
-          });
-
-          items.push({
-            handleClick: () => this.setState({ deckUsersOpen: true }),
-            label: I18n.t('react.card_maker.manage_deck_users')
           });
         }
       }

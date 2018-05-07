@@ -444,6 +444,7 @@ en:
       search_decks: search decks
       search_species_taxon: search for a species or taxon
       select_deck: deck (optional)
+      select_a_deck_for_card: select a deck for your card (optional)
       sorts: 
         common_a_z: common name (a-z)
         common_z_a: common name (z-a)

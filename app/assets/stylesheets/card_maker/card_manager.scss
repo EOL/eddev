@@ -25,6 +25,7 @@ $resource-new-msg-bg: #38454e;
 $resource-new-cta-bg: #537698;
 $desc-btn-bg: #d8e2e6;
 $bar-menu-dark-grey: #9db2b8;
+$deck-bar-blue: #5893b0;
 
 /* STATES */
 .isClickable {
@@ -539,6 +540,26 @@ $bar-menu-dark-grey: #9db2b8;
   padding: 0 0 66px 0;
 }
 
+.lNewLightboxNewCard {
+  padding: 0;
+}
+
+.newCardDeckBar {
+  $height: 60px;
+  background: $deck-bar-blue;
+  height: $height;
+  line-height: $height;
+  position: relative;
+  text-align: center;
+}
+
+.newCardDeckLabel {
+  color: $white;
+  font-size: 13px;
+  left: 30px;
+  position: absolute;
+}
+
 .deckUsersHead {
   padding: 20px 0 30px 0;
 
@@ -703,6 +724,17 @@ $bar-menu-dark-grey: #9db2b8;
   position: relative;
 }
 
+.newInputAnchorCard {
+  border: none;
+  height: 48px;
+  line-height: 48px;
+
+  & > i {
+    color: $eol-blue;
+    top: 17px;
+  }
+}
+
 .newInputError {
   color: $red;
   font-size: 10px;
@@ -772,6 +804,19 @@ $bar-menu-dark-grey: #9db2b8;
       }
     }
   }
+
+  .newInputSelectItemsCard {
+    border: none;
+  }
+
+.newInputSelectCard {
+  background: $white;
+  border-radius: 2px;
+  display: inline-block;
+  margin: 0;
+  vertical-align: middle;
+  width: 300px;
+}
 
 .newInput {
   width: 100%;

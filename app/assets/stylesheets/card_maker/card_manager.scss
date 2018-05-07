@@ -26,6 +26,8 @@ $resource-new-cta-bg: #537698;
 $desc-btn-bg: #d8e2e6;
 $bar-menu-dark-grey: #9db2b8;
 $deck-bar-blue: #5893b0;
+$species-search-pad-horiz: 30px;
+$species-search-card-width: 170px;
 
 /* STATES */
 .isClickable {
@@ -541,6 +543,7 @@ $deck-bar-blue: #5893b0;
 }
 
 .lNewLightboxNewCard {
+  background: $light-gray;
   padding: 0;
 }
 
@@ -618,17 +621,44 @@ $deck-bar-blue: #5893b0;
   line-height: $height;
 }
 
+.speciesSearch {
+  padding: 25px $species-search-pad-horiz; 
+}
+
+.speciesSearchCard {
+  display: inline-block;
+  width: $species-search-card-width;
+
+  & > img {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  & > div {
+    font-size: 14px;
+    text-align: center;
+  }
+}
+
+.speciesSearchForm {
+  display: inline-block;
+  padding: 0 0 0 $species-search-pad-horiz;
+  text-align: center;
+  vertical-align: top;
+  width: $main-col-width-px - 2 * $species-search-pad-horiz - $species-search-card-width;
+}
+
 .speciesSearchInput {
-  $height: 46px;
-  background-color: #f4f7fa;
-  border-radius: 27px;
+  $height: 59px;
+  background-color: $white;
+  border: none;
+  border-radius: 3px;
   display: block;
   font-size: 14px;
   height: $height;
   line-height: $height;
-  margin:  0 auto;
   text-align: center;
-  width: 532px;
+  width: 100%;
 }
 
 .speciesResultCount {
@@ -650,28 +680,25 @@ $deck-bar-blue: #5893b0;
   .speciesSearchResult {
     $height: 66px;
 
+    background: $white;
     cursor: pointer;
     display: block;
     height: $height;
     margin: 5px 0;
     overflow: hidden;
+    text-align: left;
     width: 100%;
-
-    $imgSize: percentage($height / $search-results-width);
 
     & > img {
       display: inline-block;
-      height: 100%;
-      width: $imgSize;
+      height: $height;
+      width: $height;
     }
 
     & > div {
       display: inline-block;
-      padding-left: 10px;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      padding: 10px 0 0 20px;
       vertical-align: top;
-      width: 100% - $imgSize;
     }
   }
 
@@ -700,6 +727,16 @@ $deck-bar-blue: #5893b0;
   text-align: center;
   width: 100%;
 }
+
+.createBtnSearch {
+  border: none;
+  border-radius: 0;
+  float: right;
+  height: 100%;
+  padding: 0 15px;
+  width: auto;
+}
+
 
 .newInputLabel {
   font-size: 14px;

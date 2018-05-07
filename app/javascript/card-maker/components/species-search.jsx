@@ -5,6 +5,8 @@ import SpeciesSearchResult from './species-search-result'
 import UserResourceFilter from './user-resource-filter'
 import AdjustsForScrollbarContainer from './adjusts-for-scrollbar-container'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
+
+import bioCard from 'images/card_maker/sample_cards/biodiversity.png'
 import styles from 'stylesheets/card_maker/card_manager'
 
 const cleanState = {
@@ -88,42 +90,63 @@ class SpeciesSearch extends React.Component {
           <i className={'fa fa-spinner fa-spin fa-lg'} />
         </div>
       );
-    } else {
-      let text;
-
-      if (this.state.results) {
-        text = I18n.t('react.card_maker.n_results', { count: this.state.results.length });
-      } else {
-        text = I18n.t('react.card_maker.press_enter_search');
-      }
-
+    } else if (!this.state.results) {
       result = (
         <div className={styles.speciesResultCount}>
-           {text}
+          {I18n.t('react.card_maker.press_enter_search')}
         </div>
       );
     }
 
-    return result;
+    return result ? (
+      <div className={styles.lSpinCountRow}>{result}</div>
+    ) : null;
   }
 
   render() {
     return (
-      <div>
-        <form action="#" onSubmit={this.handleQuerySubmit}>
-          <input
-            className={styles.speciesSearchInput}
-            ref={(node) => this.inputNode = node}
-            onInput={(e) => this.setState({ query: e.target.value })}
-            name='query'
-            type='text'
-            placeholder={I18n.t('react.card_maker.search_species_taxon')}
-          />
-        </form>
-        <div className={styles.lSpinCountRow}>
-          {this.spinCountContent()}
+      <div className={styles.speciesSearch}>
+        <div className={styles.speciesSearchCard}>
+          <img src={bioCard} />
+          <div>{I18n.t('react.card_maker.bio_card')}</div>
         </div>
-        {this.state.results != null && this.state.results.length > 0 && (
+        <div className={styles.speciesSearchForm}>
+          <form 
+            action="#" 
+            onSubmit={this.handleQuerySubmit} 
+          >
+            <input
+              className={styles.speciesSearchInput}
+              ref={(node) => this.inputNode = node}
+              onInput={(e) => this.setState({ query: e.target.value })}
+              name='query'
+              type='text'
+              placeholder={I18n.t('react.card_maker.search_species_taxon')}
+            />
+            {this.spinCountContent()}
+            {this.state.results != null && (
+              <ul className={styles.speciesSearchResults}>
+                {
+                  this.state.results.map((result, i) => {
+                    return (
+                      <SpeciesSearchResult
+                        key={i}
+                        sciName={result.title}
+                        id={result.id}
+                        commonName={result.commonName}
+                        thumbUrl={result.thumbUrl}
+                        selected={this.state.selectedId === result.id}
+                        handleClick={() => this.handleResultSelect(result.id)}
+                        handleCreate={this.handleCreateCard}
+                      />
+                    );
+                  })
+                }
+              </ul>
+            )}
+          </form>
+        </div>
+        {false && this.state.results != null && this.state.results.length > 0 && (
           <div>
             <div className={styles.lNewCol}>
               <div>
@@ -140,6 +163,7 @@ class SpeciesSearch extends React.Component {
                             thumbUrl={result.thumbUrl}
                             selected={this.state.selectedId === result.id}
                             handleClick={() => this.handleResultSelect(result.id)}
+                            handleCreate={this.handleCreateCard}
                           />
                         );
                       })

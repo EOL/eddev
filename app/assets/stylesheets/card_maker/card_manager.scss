@@ -728,6 +728,12 @@ $species-search-card-width: 170px;
   width: 100%;
 }
 
+.createBtnTempl {
+  height: 40px;
+  line-height: 30px;
+  margin-top: 5px;
+}
+
 .createBtnSearch {
   border: none;
   border-radius: 0;
@@ -737,6 +743,30 @@ $species-search-card-width: 170px;
   width: auto;
 }
 
+.selectTemplateBtn {
+  background-color: #e4ebef;
+  border: none;
+  cursor: pointer;
+  height: 60px;
+  font-size: 14px;
+  text-align: center;
+  width: 100%;
+}
+
+.cardTemplates {
+  display: flex;
+  justify-content: center;
+  padding: 25px 0;
+}
+
+.cardTemplate {
+  text-align: center;
+  width: 170px;
+
+  & > img {
+    width: 100%;
+  }
+}
 
 .newInputLabel {
   font-size: 14px;

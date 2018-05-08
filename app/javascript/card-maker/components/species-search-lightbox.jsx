@@ -2,17 +2,35 @@ import React from 'react'
 import ReactModal from 'react-modal'
 
 import SpeciesSearch from './species-search'
+import TemplateSelect from './template-select'
 import UserResourceFilter from './user-resource-filter'
 
 import styles from 'stylesheets/card_maker/card_manager'
 
+var cleanState = {
+  screen: 'search'
+};
+
 class SpeciesSearchLightbox extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = cleanState;
   }
 
   handleRequestClose = () => {
     this.props.handleClose();
+    this.setState(cleanState);
+  }
+
+  screenComponent = () => {
+    if (this.state.screen === 'search') {
+      return <SpeciesSearch {...this.props} />
+    } else if (this.state.screen = 'template') {
+      return <TemplateSelect />
+    } else {
+      throw new TypeError('unsupported "screen" state value: ' + this.state.screen);
+    }
   }
 
   render() {
@@ -41,7 +59,14 @@ class SpeciesSearchLightbox extends React.Component {
             handleSelect={this.props.handleDeckSelect}
           />
         </div>
-        <SpeciesSearch {...this.props} />
+        {this.screenComponent()}
+        {this.state.screen === 'search' && (
+          <button 
+            className={styles.selectTemplateBtn} 
+            type='button'
+            onClick={() => this.setState({ screen: 'template' })}
+          >{I18n.t('react.card_maker.click_choose_card_type')}</button>
+        )}
       </ReactModal>
     )
   }

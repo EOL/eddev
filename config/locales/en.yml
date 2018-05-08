@@ -379,19 +379,19 @@ en:
       card_preview: Card Preview
       card_preview_lightbox: Card preview lightbox
       card_preview_parens: (Live Preview, Image Controls, Save + Exit Options)
+      click_choose_card_type: click to choose a different card type
       close: close
-      save_+_exit: save + exit
       collection_id_optional: EOL collection id (optional)
       confirm_make_private: Are you sure you want to make this deck private?
       confirm_make_public: Are you sure you want to make this deck public?
       copy_card: copy card
       copy_deck: copy deck
       copy_of_name: "copy of %{name}"
+      create: create
       create_a_card: create a card
       create_a_deck: create a deck
       create_card: create card
       create_card_from_selection: Create a card from selection
-      create_deck: create deck
       create_deck: create deck
       deck: deck
       delete_deck: delete deck
@@ -438,6 +438,7 @@ en:
       rename: rename
       rename_deck: rename deck
       rotate_90: Rotate 90°
+      save_+_exit: save + exit
       save_card_to_deck: "Save card to a deck:"
       save_desc: save description
       search: Search

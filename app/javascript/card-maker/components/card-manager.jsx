@@ -1005,6 +1005,7 @@ class CardManager extends React.Component {
                 anchorText={this.props.sort.label}
                 open={this.state.menus.sort}
                 handleRequestClose={() => { this.closeMenu('sort') }}
+                handleRequestOpen={() => { this.openMenu('sort') }}
                 extraClasses={[styles.menuWrapSort]}
               />
             </div>

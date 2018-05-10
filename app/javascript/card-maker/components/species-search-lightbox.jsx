@@ -1,6 +1,5 @@
 import React from 'react'
-import ReactModal from 'react-modal'
-
+import CloseButtonModal from './close-button-modal'
 import SpeciesSearchResult from './species-search-result'
 import UserResourceFilter from './user-resource-filter'
 import AdjustsForScrollbarContainer from './adjusts-for-scrollbar-container'
@@ -109,7 +108,7 @@ class SpeciesSearchLightbox extends React.Component {
 
   render() {
     return (
-      <ReactModal
+      <CloseButtonModal
         isOpen={this.props.isOpen}
         contentLabel={I18n.t('react.card_maker.species_search')}
         parentSelector={() => {return document.getElementById('Page')}}
@@ -177,7 +176,7 @@ class SpeciesSearchLightbox extends React.Component {
             </div>
           </div>
         )}
-      </ReactModal>
+      </CloseButtonModal>
     )
   }
 }

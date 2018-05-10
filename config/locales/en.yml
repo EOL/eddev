@@ -358,12 +358,15 @@ en:
   react:
     card_maker:
       add_desc: add description
+      add_user: add user
+      added_user: "successfully added user %{userName}"
       all_cards: all cards
       all_decks: all decks
       all_my_cards: all my cards
       all_public_cards: all public cards
       are_you_sure_delete_card: Are you sure you want to delete this card?
       are_you_sure_delete_deck: Are you sure you want to delete this deck and all its cards?
+      are_you_sure_remove_user: "Are you sure you want to remove access for user %{userName}?"
       are_you_sure_unsaved: Are you sure you want to leave this page? All unsaved work will be lost.
       assign_to_deck: Assign to deck
       cancel: cancel
@@ -426,11 +429,13 @@ en:
         <i class='%{iconClass}'></i>
         <span> taxon page</span>
       or: or
+      owner_user: "Owner: %{userName}"
       press_enter_search: press enter to search
       print: print
       print_loading_msg: "It may take a few minutes to generate this print-quality PDF. Please check your popup blocker if you don't see a result after this screen disappears."
       public_cards: public cards
       quick_save: quick save
+      removed_user: "Successfully removed user %{userName}"
       rename: rename
       rename_deck: rename deck
       rotate_90: Rotate 90°
@@ -448,12 +453,14 @@ en:
         sci_a_z: scientific name (a-z)
         sci_z_a: scientific name (z-a)
       species_search: Species search
+      start_typing_user_name: start typing user name to search
       suggestions: Suggestions
       type_paste_url: Type/paste URL
       unassigned: unassigned
       unexpected_error_msg: An unexpected error occurred
       unexpected_error_msg: An unexpected error occurred
       upload_an_image: Upload an image
+      users: Users
   shared:
     footer:
       address_and_contact_html: "<a href='//www.harvard.edu'>Harvard University</a> 26 Oxford Street, Cambridge, MA 02138 USA | 617-496-6764 | education [at] eol.org"

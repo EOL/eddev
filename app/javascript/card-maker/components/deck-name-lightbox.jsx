@@ -1,6 +1,4 @@
 import React from 'react'
-import ReactModal from 'react-modal'
-
 import ResourceLightbox from './resource-lightbox'
 
 import styles from 'stylesheets/card_maker/card_manager'

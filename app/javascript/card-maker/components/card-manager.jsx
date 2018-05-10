@@ -670,7 +670,10 @@ class CardManager extends React.Component {
 
     if (this.state.showDescInput) {
       inner = this.descInput();
-    } else if (this.props.selectedDeck !== this.props.allCardsDeck) {
+    } else if (
+      this.props.selectedDeck !== this.props.allCardsDeck && 
+      this.props.selectedDeck !== this.props.unassignedCardsDeck
+    ) {
       if (this.props.selectedDeck.desc) {
         inner = this.props.selectedDeck.desc;
       } else if (this.props.library === 'user') {
@@ -800,7 +803,7 @@ class CardManager extends React.Component {
   deckMenuItems = (resourceCount) => {
     let items = [];
 
-    if (this.props.selectedDeck !== this.props.allCardsDeck) {
+    if (this.props.selectedDeck !== this.props.allCardsDeck && this.props.selectedDeck !== this.props.unassignedCardsDeck) {
       if (resourceCount > 0) {
         items.push({
           handleClick: this.makeDeckPdf,
@@ -828,9 +831,16 @@ class CardManager extends React.Component {
           label: I18n.t('react.card_maker.rename_deck')
         });
 
+        if (this.props.selectedDeck.isOwner) {
+          items.push({
+            handleClick: () => this.handleDestroyDeck(this.props.selectedDeck.id),
+            label: I18n.t('react.card_maker.delete_deck')
+          });
+        }
+
         items.push({
-          handleClick: () => this.handleDestroyDeck(this.props.selectedDeck.id),
-          label: I18n.t('react.card_maker.delete_deck')
+          handleClick: () => this.setState({ deckUsersOpen: true }),
+          label: I18n.t('react.card_maker.manage_deck_users')
         });
 
         if (this.props.userRole == 'admin') {
@@ -839,10 +849,6 @@ class CardManager extends React.Component {
             label: this.props.selectedDeck.public ? 
               I18n.t('react.card_maker.make_deck_private') :
               I18n.t('react.card_maker.make_deck_public')
-          });
-          items.push({
-            handleClick: () => this.setState({ deckUsersOpen: true }),
-            label: I18n.t('react.card_maker.manage_deck_users')
           });
         }
       }

@@ -1,6 +1,4 @@
 import React from 'react'
-import ReactModal from 'react-modal'
-
 import DeckNameLightbox from './deck-name-lightbox'
 
 function CopyDeckLightbox(props) {

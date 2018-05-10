@@ -5,6 +5,7 @@
     "immutability-helper": "^2.4.0",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
+    "react-autocomplete": "^1.8.1",
     "react-dom": "^15.6.1",
     "react-modal": "^2.3.2",
     "webpack-merge": "^4.1.1"

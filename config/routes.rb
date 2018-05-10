@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     patch "users/change_password"       => "users#change_password"
     get "users/list"                    => "users#list"
     get "users/account"                 => "users#account", :as => :account
+    get "users/typeahead/:q"            => "users#typeahead"
     get  "login"                        => "user_sessions#new"
     post "login"                        => "user_sessions#create"
     get  "logout"                       => "user_sessions#destroy"

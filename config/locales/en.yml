@@ -453,6 +453,7 @@ en:
         sci_a_z: scientific name (a-z)
         sci_z_a: scientific name (z-a)
       species_search: Species search
+      start_typing_user_name: start typing user name to search
       suggestions: Suggestions
       type_paste_url: Type/paste URL
       unassigned: unassigned

@@ -5,6 +5,7 @@ import {cardMakerUrl} from 'lib/card-maker/url-helper'
 import styles from 'stylesheets/card_maker/card_manager'
 
 var noUserId = -1
+  , minQueryLen = 3
   , cleanState = {
       flashMsg: '',
       owner: {},
@@ -154,11 +155,15 @@ class DeckUsersLightbox extends React.Component {
                 typeaheadValue: query
               });
 
-              if (query.length) {
+              if (query.length >= minQueryLen) {
                 $.getJSON('/users/typeahead/' + query, (data) => {
                   this.setState({
                     typeaheadOptions: data
                   });
+                });
+              } else {
+                this.setState({
+                  typeaheadOptions: []
                 });
               }
             }}
@@ -175,7 +180,11 @@ class DeckUsersLightbox extends React.Component {
               </div>
             }
             renderInput={(props) =>
-              <input type='text' className={[styles.newInput, styles.newInputTxt].join(' ')} {...props} />
+              <input 
+                type='text' 
+                className={[styles.newInput, styles.newInputTxt].join(' ')} {...props}
+                placeholder={I18n.t('react.card_maker.start_typing_user_name')}
+              />
             }
             renderMenu={function(items, value, style)  {
               return <div style={{ ...style, ...this.menuStyle, zIndex: 10 }} children={items}/>

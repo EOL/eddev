@@ -6,12 +6,15 @@ import styles from 'stylesheets/card_maker/card_manager'
 
 var noUserId = -1
   , cleanState = {
+      flashMsg: '',
       owner: {},
       users: [],
       selectedUserId: noUserId,
+      selectedUserName: '',
+      showFlash: false,
       typeaheadLoading: false,
       typeaheadOptions: [],
-      typeaheadValue: ''
+      typeaheadValue: '',
     }
   ;
 
@@ -19,6 +22,12 @@ class DeckUsersLightbox extends React.Component {
   constructor(props) {
     super(props);
     this.state = cleanState
+  }
+
+  componentWillUnmount() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
   }
 
   handleAfterOpen = () => {
@@ -39,20 +48,17 @@ class DeckUsersLightbox extends React.Component {
     this.props.handleRequestClose();
   }
 
-  handleSelectChange = (e) => {
-    this.setState({
-      selectedUserId: e.target.value
-    });
-  }
-
   addSelectedUser = () => {
-    console.log('user id', this.state.selectedUserId);
     if (this.state.selectedUserId > 0) {
       $.post({
         url: cardMakerUrl(`decks/${this.props.deck.id}/users`),
         data: this.state.selectedUserId.toString(),
         dataType: 'text',
-        success: this.reload
+        success: () => {
+          let msg = I18n.t('react.card_maker.added_user', { userName: this.state.selectedUserName })
+          this.showFlash(msg);
+          this.reload();
+        }
       });
     }
   }
@@ -67,13 +73,42 @@ class DeckUsersLightbox extends React.Component {
         $.ajax({
           url: cardMakerUrl(`decks/${this.props.deck.id}/users/${id}`),
           type: 'DELETE',
-          success: this.reload
+          success: () => {
+            let msg = I18n.t('react.card_maker.removed_user', { userName: name });
+            this.showFlash(msg);
+            this.reload(); 
+          }
         });
       }
     }
   }
 
+  showFlash = (msg) => {
+    let that = this;
+
+    if (that.timeout) {
+      clearTimeout(that.timeout);
+    }
+
+    that.setState({
+      showFlash: true,
+      flashMsg: msg,
+    }, () => {
+      that.timeout = setTimeout(() => {
+        that.setState({
+          showFlash: false
+        });
+      }, 1000);
+    })
+  }
+
   render() {
+    let flashClasses = [styles.lightboxFlash];
+
+    if (!this.state.showFlash) {
+      flashClasses.push(styles.isLightboxFlashHidden);
+    }
+
     return (
       <CloseButtonModal
         isOpen={this.props.isOpen}
@@ -91,6 +126,7 @@ class DeckUsersLightbox extends React.Component {
             userName: this.state.owner.userName 
           })}</h2>
         </div>
+        <div className={flashClasses.join(' ')}>{this.state.flashMsg}</div>
         <div className={styles.lNewCol}>
           <div className={styles.lightboxDeckUsersList}>
             <h3 className={styles.deckUsersTitle}>{I18n.t('react.card_maker.users')}</h3>
@@ -129,7 +165,8 @@ class DeckUsersLightbox extends React.Component {
             onSelect={(val, item) => {
               this.setState({
                 typeaheadValue: val,
-                selectedUserId: item.id
+                selectedUserId: item.id,
+                selectedUserName: val,
               });
             }}
             renderItem={(item, isHighlighted) =>

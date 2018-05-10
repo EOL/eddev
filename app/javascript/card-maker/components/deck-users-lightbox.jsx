@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactModal from 'react-modal'
+import CloseButtonModal from './close-button-modal'
 import ReactAutocomplete from 'react-autocomplete'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
 import styles from 'stylesheets/card_maker/card_manager'
@@ -75,7 +75,7 @@ class DeckUsersLightbox extends React.Component {
 
   render() {
     return (
-      <ReactModal
+      <CloseButtonModal
         isOpen={this.props.isOpen}
         onAfterOpen={this.handleAfterOpen}
         onRequestClose={this.handleRequestClose}
@@ -152,7 +152,7 @@ class DeckUsersLightbox extends React.Component {
             </button>
           </div>
         </div>
-      </ReactModal>
+      </CloseButtonModal>
     );
   }
 }

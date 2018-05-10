@@ -532,6 +532,7 @@ $bar-menu-dark-grey: #9db2b8;
   background: $white;
   margin: 0 auto;
   padding: 66px 0;
+  position: relative;
   width: $main-col-width-px;
 }
 
@@ -806,6 +807,13 @@ $bar-menu-dark-grey: #9db2b8;
   justify-content: center;
   height: 100%;
   width: 100%;
+}
+
+.modalX {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
 /*

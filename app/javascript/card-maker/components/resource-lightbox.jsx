@@ -1,6 +1,5 @@
 import React from 'react'
-import ReactModal from 'react-modal'
-
+import CloseButtonModal from './close-button-modal'
 import UserResourceFilter from './user-resource-filter'
 
 import styles from 'stylesheets/card_maker/card_manager'
@@ -59,7 +58,7 @@ class ResourceLightbox extends React.Component {
 
   render() {
     return (
-      <ReactModal
+      <CloseButtonModal
         isOpen={this.props.isOpen}
         contentLabel={this.props.contentLabel}
         parentSelector={() => {return document.getElementById('Page')}}
@@ -80,7 +79,7 @@ class ResourceLightbox extends React.Component {
             </div>
           </div>
         </div>
-      </ReactModal>
+      </CloseButtonModal>
     );
   }
 }

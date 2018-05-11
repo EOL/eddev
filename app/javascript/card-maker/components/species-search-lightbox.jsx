@@ -27,9 +27,17 @@ class SpeciesSearchLightbox extends React.Component {
     if (this.state.screen === 'search') {
       return <SpeciesSearch {...this.props} />
     } else if (this.state.screen = 'template') {
-      return <TemplateSelect />
+      return <TemplateSelect handleSelect={this.handleTemplSelect} />
     } else {
       throw new TypeError('unsupported "screen" state value: ' + this.state.screen);
+    }
+  }
+
+  handleTemplSelect = (templName) => {
+    if (templName === 'trait') {
+      this.setState({
+        screen: 'search'
+      });
     }
   }
 

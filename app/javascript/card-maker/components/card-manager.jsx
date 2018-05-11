@@ -260,30 +260,13 @@ class CardManager extends React.Component {
       cardMakerUrl('cards');
   }
 
-  createCardHelper = (speciesId, cardId, deckId) => {
-    const that = this
-        , url = that.createCardUrl(deckId)
-        ;
-
-    let data;
-
-    if (speciesId) {
-      data = {
-        templateName: 'trait',
-        templateParams: {
-          speciesId: speciesId
-        },
-      };
-    } else if (cardId) {
-      data = {
-        copyFrom: cardId,
-      }
-    }
+  createOrCopyCard = (data, deckId) => {
+    let that = this;
 
     that.props.showLoadingOverlay();
 
     $.ajax({
-      url: url,
+      url: this.createCardUrl(deckId),
       data: JSON.stringify(data),
       contentType: 'application/json',
       method: 'POST',
@@ -297,16 +280,24 @@ class CardManager extends React.Component {
     });
   }
 
-  handleCreateCard = (id) => {
+  handleCreateCard = (template, params) => {
+    const data = {
+            templateName: template,
+            templateParams: params,
+          }
+        ;
+
     this.setState({
       speciesSearchOpen: false,
     });
-    this.createCardHelper(id, null, this.state.speciesSearchDeckId);
+    this.createOrCopyCard(data, this.state.speciesSearchDeckId);
   }
 
   handleCopyCard = (deckId) => {
-    this.createCardHelper(null, this.state.copyCardId, deckId);
     this.closeCopyCard();
+    this.createOrCopyCard({ 
+      copyFrom: this.state.copyCardId 
+    }, deckId);
   }
 
   openNewDeckLightbox = () => {

@@ -16,6 +16,15 @@ class TemplateSelect extends React.Component {
             onClick={() => this.props.handleSelect('trait')}
           >{I18n.t('react.card_maker.create')}</button>
         </li>
+        <li className={styles.cardTemplate}>
+          <img src="broken" />
+          <div>{I18n.t('react.card_maker.title_card')}</div>
+          <button
+            className={[styles.createBtn, styles.createBtnTempl].join(' ')}
+            type='button'
+            onClick={() => this.props.handleSelect('title')}
+          >{I18n.t('react.card_maker.create')}</button>
+        </li>
       </ul>
     );
   }

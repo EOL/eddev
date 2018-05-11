@@ -38,6 +38,8 @@ class SpeciesSearchLightbox extends React.Component {
       this.setState({
         screen: 'search'
       });
+    } else {
+      this.props.handleCreate(templName, {});
     }
   }
 

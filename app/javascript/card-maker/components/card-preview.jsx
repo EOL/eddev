@@ -83,7 +83,9 @@ class CardPreview extends React.Component {
   }
 
   render() {
-    var eolLinkAttrs = this.eolLinkAttrs();
+    const eolLinkAttrs = this.props.card && this.props.card.templateName === 'trait' ?
+      this.eolLinkAttrs() : null;
+
 
     return (
       <div className='preview' ref={this.props.setRootNode} style={this.props.rootStyle}>
@@ -104,15 +106,18 @@ class CardPreview extends React.Component {
               selectedImgId={this.props.selectedImgId}
               {...this.imageDataFns()}
             />
-            <a
-              href={eolLinkAttrs.href} target={eolLinkAttrs.target}
-              className='eol-link'
-              dangerouslySetInnerHTML={{
-                __html: I18n.t('react.card_maker.open_eol_taxon_page_html', {
-                  iconClass: 'edu-icon-eol-logo'
-                })
-              }}
-            />
+            {
+              eolLinkAttrs != null &&
+              <a
+                href={eolLinkAttrs.href} target={eolLinkAttrs.target}
+                className='eol-link'
+                dangerouslySetInnerHTML={{
+                  __html: I18n.t('react.card_maker.open_eol_taxon_page_html', {
+                    iconClass: 'edu-icon-eol-logo'
+                  })
+                }}
+              />
+            }
           </div>
           <SaveExitBtns
             dirty={this.props.card && this.props.card.isDirty()}

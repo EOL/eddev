@@ -2,6 +2,7 @@ import React from 'react'
 
 import styles from 'stylesheets/card_maker/card_manager'
 import bioCard from 'images/card_maker/sample_cards/biodiversity.png'
+import titleCard from 'images/card_maker/sample_cards/title.png'
 
 class TemplateSelect extends React.Component {
   render() {
@@ -17,7 +18,7 @@ class TemplateSelect extends React.Component {
           >{I18n.t('react.card_maker.create')}</button>
         </li>
         <li className={styles.cardTemplate}>
-          <img src="broken" />
+          <img src={titleCard} />
           <div>{I18n.t('react.card_maker.title_card')}</div>
           <button
             className={[styles.createBtn, styles.createBtnTempl].join(' ')}

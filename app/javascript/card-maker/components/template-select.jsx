@@ -5,27 +5,44 @@ import bioCard from 'images/card_maker/sample_cards/biodiversity.png'
 import titleCard from 'images/card_maker/sample_cards/title.png'
 
 class TemplateSelect extends React.Component {
+  item = (options) => {
+    return (
+      <li className={styles.cardTemplate}>
+        <img src={options.img} />
+        <div>{I18n.t('react.card_maker.' + options.nameKey)}</div>
+        <button
+          className={[styles.createBtn, styles.createBtnTempl].join(' ')}
+          type='button'
+          onClick={() => this.props.handleSelect(options.template)}
+        >{I18n.t('react.card_maker.create')}</button>
+      </li>
+    );
+  }
+
   render() {
     return (
       <ul className={styles.cardTemplates}>
-        <li className={styles.cardTemplate}>
-          <img src={bioCard} />
-          <div>{I18n.t('react.card_maker.bio_card')}</div>
-          <button
-            className={[styles.createBtn, styles.createBtnTempl].join(' ')}
-            type='button'
-            onClick={() => this.props.handleSelect('trait')}
-          >{I18n.t('react.card_maker.create')}</button>
-        </li>
-        <li className={styles.cardTemplate}>
-          <img src={titleCard} />
-          <div>{I18n.t('react.card_maker.title_card')}</div>
-          <button
-            className={[styles.createBtn, styles.createBtnTempl].join(' ')}
-            type='button'
-            onClick={() => this.props.handleSelect('title')}
-          >{I18n.t('react.card_maker.create')}</button>
-        </li>
+        {
+          this.item({ 
+            img: bioCard,
+            nameKey: 'bio_card',
+            template: 'trait'
+          })
+        }
+        {
+          this.item({
+            img: titleCard,
+            nameKey: 'title_card',
+            template: 'title'
+          })
+        }
+        {
+          this.item({
+            img: 'foo',
+            nameKey: 'key_card',
+            template: 'key'
+          })
+        }
       </ul>
     );
   }

@@ -42,11 +42,9 @@ class SpeciesSearchLightbox extends React.Component {
       this.setState({
         screen: 'search'
       });
-    } else if (templName === 'title') {
-      this.props.handleCreate(templName, {});
     } else {
-      throw new TypeError('unrecognized template name: ' + templName);
-    }
+      this.props.handleCreate(templName, {});
+    }  
   }
 
   render() {

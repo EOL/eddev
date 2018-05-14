@@ -933,7 +933,6 @@ class CardManager extends React.Component {
           deckFilterItems={this.deckFilterItemsForNewCard()}
           handleDeckSelect={this.handleSpeciesSearchDeckSelect}
           selectedDeckId={this.state.speciesSearchDeckId}
-          handleCreateCard={this.handleCreateCard}
         />
         <CopyCardLightbox
           isOpen={this.state.copyCardOpen}

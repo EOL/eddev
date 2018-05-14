@@ -42,7 +42,7 @@ class SpeciesSearch extends React.Component {
   }
 
   handleCreateCard = () => {
-    this.props.handleCreateCard(this.state.selectedId);
+    this.props.handleCreate(this.state.selectedId);
     this.resetState();
   }
 

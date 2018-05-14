@@ -25,7 +25,11 @@ class SpeciesSearchLightbox extends React.Component {
 
   screenComponent = () => {
     if (this.state.screen === 'search') {
-      return <SpeciesSearch {...this.props} />
+      return <SpeciesSearch 
+        handleClose={this.props.handleClose}
+        handleCreate={ (id) => this.props.handleCreate('trait', { speciesId: id }) }
+        deckFilterItems={this.props.deckFilterItems}
+      />
     } else if (this.state.screen = 'template') {
       return <TemplateSelect handleSelect={this.handleTemplSelect} />
     } else {
@@ -38,8 +42,10 @@ class SpeciesSearchLightbox extends React.Component {
       this.setState({
         screen: 'search'
       });
-    } else {
+    } else if (templName === 'title') {
       this.props.handleCreate(templName, {});
+    } else {
+      throw new TypeError('unrecognized template name: ' + templName);
     }
   }
 

@@ -359,6 +359,7 @@ en:
     card_maker:
       add_desc: add description
       add_user: add user
+      added_user: "successfully added user %{userName}"
       all_cards: all cards
       all_decks: all decks
       all_my_cards: all my cards
@@ -435,6 +436,7 @@ en:
       print_loading_msg: "It may take a few minutes to generate this print-quality PDF. Please check your popup blocker if you don't see a result after this screen disappears."
       public_cards: public cards
       quick_save: quick save
+      removed_user: "Successfully removed user %{userName}"
       rename: rename
       rename_deck: rename deck
       rotate_90: Rotate 90°
@@ -454,6 +456,7 @@ en:
         sci_a_z: scientific name (a-z)
         sci_z_a: scientific name (z-a)
       species_search: Species search
+      start_typing_user_name: start typing user name to search
       suggestions: Suggestions
       title_card: Title Card
       type_paste_url: Type/paste URL

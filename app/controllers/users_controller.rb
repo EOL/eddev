@@ -4,6 +4,8 @@ class UsersController < ApplicationController
   before_action :ensure_user, :only => [:change_password_form, :change_password, :show, :account, :typeahead]
   before_action :set_password_reset_vars, :only => [:reset_password_form, :reset_password]
 
+  MIN_TYPEAHEAD_LEN = 3
+
   # GET /users/new
   def new
     @user = User.new
@@ -127,9 +129,14 @@ class UsersController < ApplicationController
   end
 
   def typeahead
-    render :json => User.where("UPPER(user_name) LIKE ?", "%#{params[:q].upcase}%")
+    json = if params[:q].length >= MIN_TYPEAHEAD_LEN
+      User.where("UPPER(user_name) LIKE ?", "#{params[:q].upcase}%")
       .pluck(:id, :user_name)
       .map { |pair| { :id => pair[0], :label => pair[1] } }
+    else
+      []
+    end
+    render :json => json
   end
 
   private

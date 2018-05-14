@@ -511,6 +511,23 @@ $species-search-card-width: 170px;
   padding: 10px;
 }
 
+.lightboxFlash {
+  $height: 25px;
+  background-color: #bcffba;
+  color: #2b5929;
+  height: $height;
+  line-height: $height;
+  margin: 10px 0;
+  opacity: 1;
+  text-align: center;
+  transition: none;
+}
+
+.isLightboxFlashHidden {
+  opacity: 0;
+  transition: opacity 2s ease 2s;
+}
+
 /* Deck user lightbox */
 .lightboxDeckUsers {
   background: $white;
@@ -535,6 +552,7 @@ $species-search-card-width: 170px;
   background: $white;
   margin: 0 auto;
   padding: 66px 0;
+  position: relative;
   width: $main-col-width-px;
 }
 
@@ -564,7 +582,7 @@ $species-search-card-width: 170px;
 }
 
 .deckUsersHead {
-  padding: 20px 0 30px 0;
+  padding: 20px 0 5px 0;
 
   & > h2 {
     text-align: center;
@@ -918,6 +936,13 @@ $species-search-card-width: 170px;
   justify-content: center;
   height: 100%;
   width: 100%;
+}
+
+.modalX {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
 /*

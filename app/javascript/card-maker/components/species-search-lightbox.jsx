@@ -1,8 +1,8 @@
 import React from 'react'
-import ReactModal from 'react-modal'
 
 import SpeciesSearch from './species-search'
 import TemplateSelect from './template-select'
+import CloseButtonModal from './close-button-modal'
 import UserResourceFilter from './user-resource-filter'
 
 import styles from 'stylesheets/card_maker/card_manager'
@@ -45,7 +45,7 @@ class SpeciesSearchLightbox extends React.Component {
 
   render() {
     return (
-      <ReactModal
+      <CloseButtonModal
         isOpen={this.props.isOpen}
         contentLabel={I18n.t('react.card_maker.species_search')}
         parentSelector={() => {return document.getElementById('Page')}}
@@ -77,7 +77,7 @@ class SpeciesSearchLightbox extends React.Component {
             onClick={() => this.setState({ screen: 'template' })}
           >{I18n.t('react.card_maker.click_choose_card_type')}</button>
         )}
-      </ReactModal>
+      </CloseButtonModal>
     )
   }
 }

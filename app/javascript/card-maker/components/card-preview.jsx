@@ -89,7 +89,7 @@ class CardPreview extends React.Component {
 
     return (
       <div className='preview' ref={this.props.setRootNode} style={this.props.rootStyle}>
-        <div className='img-select'>{this.imageSelectItems()}</div>
+        { /* <div className='img-select'>{this.imageSelectItems()}</div> */ }
         <div className='controls-card-wrap'>
           <div className='img-controls'>
             <ImageControlButtons

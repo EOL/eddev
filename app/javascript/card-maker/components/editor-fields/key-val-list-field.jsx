@@ -18,25 +18,29 @@ class KeyValListField extends React.Component {
   }
 
   handleInputBlur = (index) => {
-    this.props.enableCol();
-    this.setState(() => {
-      return {
-        focusIndex: null,
-        focusTarget: null,
-      }
-    })
+    if (this.state.focusTarget) {
+      this.props.enableCol();
+      this.setState(() => {
+        return {
+          focusIndex: null,
+          focusTarget: null,
+        }
+      })
+    }
   }
 
   handleInputFocus = (index, event) => {
-    const target = event.target;
+    if (this.props.choices && this.props.choices.length) {
+      const target = event.target;
 
-    this.props.disableCol();
-    this.setState(() => {
-      return {
-        focusIndex: index,
-        focusTarget: target,
-      }
-    })
+      this.props.disableCol();
+      this.setState(() => {
+        return {
+          focusIndex: index,
+          focusTarget: target,
+        }
+      });
+    }
   }
 
   handleSuggestionsSelect = (item) => {
@@ -73,7 +77,8 @@ class KeyValListField extends React.Component {
             onFocus={(event) => this.handleInputFocus(i, event)}
             onBlur={() => this.handleInputBlur(i)}
           />
-          {i === this.state.focusIndex &&
+          {i === this.state.focusIndex && this.state.choices != null && 
+            this.state.choices.length &&
             <SuggestionsMenu
               anchor={this.state.focusTarget}
               items={

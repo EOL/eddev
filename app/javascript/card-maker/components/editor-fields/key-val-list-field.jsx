@@ -24,7 +24,7 @@ class KeyValListField extends React.Component {
     this.props.setKeyValData(keyOrVal, index, 'text', event.target.value);
   }
 
-  handleInputBlur = (index) => {
+  handleInputBlur = () => {
     if (this.state.focusTarget) {
       this.props.enableCol();
       this.setState(() => {
@@ -39,7 +39,7 @@ class KeyValListField extends React.Component {
   handleInputFocus = (index, event) => {
     if (this.props.choices && this.props.choices.length) {
       const target = event.target;
-
+      
       this.props.disableCol();
       this.setState(() => {
         return {
@@ -163,11 +163,11 @@ class KeyValListField extends React.Component {
   }
 
   render() {
-    const keyChoices = []
-        , valChoices = []
-        , keyColors = []
-        , valColors =[]
-        ;
+    var keyChoices = []
+      , valChoices = []
+      , keyColors = []
+      , valColors =[]
+      ;
 
     if (this.props.choices) {
       this.props.choices.forEach((choice) => {
@@ -192,6 +192,22 @@ class KeyValListField extends React.Component {
         }
       })
     }
+
+    keyColors = keyColors.map((color) => {
+      return color.toLowerCase();
+    });
+    keyColors = [...new Set(keyColors)];
+    keyColors = keyColors.sort((a, b) => {
+      if (a < b) {
+        return -1;
+      } 
+
+      if (a > b) {
+        return 1;
+      }
+
+      return 0;
+    });
 
     return (
       <ul className={styles.keyValFields}>

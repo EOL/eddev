@@ -202,6 +202,7 @@ $key-val-field-spacing: 2px;
 .keyValRow {
   height: $key-val-field-height;
   margin-top: $key-val-field-spacing;
+  position: relative;
   width: 100%;
 }
 

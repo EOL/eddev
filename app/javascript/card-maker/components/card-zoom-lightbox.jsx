@@ -1,10 +1,8 @@
 import React from 'react' // Actually necessary to fix transpiled code :(
 import ReactModal from 'react-modal'
 import LoadingSpinnerImage from './loading-spinner-image'
-
-import styles from 'stylesheets/card_maker/card_manager'
-
 import {cardMakerUrl, hiResCardImageUrl} from 'lib/card-maker/url-helper'
+import styles from 'stylesheets/card_maker/card_manager'
 
 function handlePngClick(cardId) {
   window.open(cardMakerUrl(`cards/${cardId}.png`));

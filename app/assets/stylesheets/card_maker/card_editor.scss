@@ -4,6 +4,10 @@ $field-label-padding-left: 21px;
 $text-input-height: 34px;
 $color-btn-width: 70px;
 
+$key-val-field-height: 34px;
+$key-val-field-width: 174px;
+$key-val-field-spacing: 2px;
+
 .lField {
   margin: 0 auto;
   padding: 22px 0;
@@ -183,6 +187,61 @@ $color-btn-width: 70px;
     height: 30px;
     width: 100%;
   }
+}
+
+  .colorChoicesKeyVal {
+    width: 20%;
+  }
+
+.keyValFields {
+  margin: (22px - $key-val-field-spacing) auto 22px auto;
+  position: relative;
+  width: $key-val-field-width * 2 + $key-val-field-spacing;
+}
+
+.keyValRow {
+  height: $key-val-field-height;
+  margin-top: $key-val-field-spacing;
+  width: 100%;
+}
+
+.lKeyVal { 
+  position: relative;
+  width: $key-val-field-width; 
+  height: 100%;
+}
+
+.keyValField {
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+}
+
+.keyValFieldWColor {
+  border-radius: 2px 0 0 2px;
+  width: 80%;
+}
+
+.keyValColorAnchor {
+  background-color: #000;
+  cursor: pointer;
+  border-radius: 0 2px 2px 0;
+  display: inline-block;
+  flex: 0 0 auto;
+  height: 100%;
+  padding-top: 5px;
+  position: relative;
+  text-align: center;
+  vertical-align: top;
+  width: 20%;
+}
+
+.lFl {
+  float: left;
+}
+
+.lFr {
+  float: right;
 }
 
 .isDisableExempt {

@@ -1295,35 +1295,6 @@ $col-border-width: 5px;
     }
   }
 
-  .key-val-fields {
-    $field-height: 34px;
-    $field-width: 174px;
-    $field-spacing: 2px;
-
-    margin: (22px - $field-spacing) auto 22px auto;
-    position: relative;
-    width: $field-width * 2 + $field-spacing;
-
-    .key-val-row {
-      height: $field-height;
-      margin-top: $field-spacing;
-      width: 100%;
-    }
-
-    .key-val-field {
-      position: relative;
-      width: $field-width;
-    }
-
-    .key {
-      float: left;
-    }
-
-    .val {
-      float: right;
-    }
-  }
-
   .field-sep {
     border: solid 1px #34353b;
     box-shadow: 0 1px 1px 0 #667683;

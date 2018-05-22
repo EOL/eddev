@@ -105,9 +105,15 @@ class ImmutableCard {
     });
   }
 
-  setKeyValText = (fieldName, keyOrVal, index, value) => {
+  setKeyValData = (fieldName, keyOrVal, index, attr, value) => {
     return this.copyAndApply((copy) => {
-      copy.setKeyValText(fieldName, keyOrVal, index, value);
+      copy.setKeyValData(fieldName, keyOrVal, index, attr, value);
+    });
+  }
+
+  setKeyValChoiceKey = (fieldName, keyValIndex, choiceKey) => {
+    return this.copyAndApply((copy) => {
+      copy.setKeyValChoiceKey(fieldName, keyValIndex, choiceKey);
     });
   }
 

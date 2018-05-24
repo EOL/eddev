@@ -802,35 +802,10 @@ $col-border-width: 5px;
     }
   }
 
-  .card-box {
-    display: inline-block;
-    width: 287px;
-
-    .eol-link {
-      background: $white;
-      color: #0353bc;
-      display: block;
-      font-size: 14px;
-      height: 30px;
-      line-height: 30px;
-      margin: 12px auto 0 auto;
-      text-align: center;
-      text-decoration: none;
-      width: 240px;
-
-      .icon-eol-logo {
-        font-size: 24px;
-        position: relative;
-        top: 2px;
-        vertical-align: middle;
-      }
-    }
-  }
-
   .card-canvas {
     box-shadow: 0 2px 4px #43525f;
     display: block;
-    margin: 33px auto 0 auto;
+    margin: 0 auto;
     position: relative;
   }
 }

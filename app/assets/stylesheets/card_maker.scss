@@ -664,12 +664,11 @@ $col-border-width: 5px;
 
   .controls-card-wrap {
     background-color: #667683;
-    margin-top: 2px;
   }
 
   .img-controls {
     display: inline-block;
-    margin-right: 2px;
+    margin: 0 2px 2px 0;
     position: relative;
     vertical-align: top;
     width: $preview-left-width;

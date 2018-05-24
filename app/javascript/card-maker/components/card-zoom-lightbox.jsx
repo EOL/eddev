@@ -16,7 +16,7 @@ function CardZoomLightbox(props) {
       isOpen={props.card != null}
       contentLabel={I18n.t('react.card_maker.card_preview_lightbox')}
       parentSelector={() => {return document.getElementById('Page')}}
-      overlayClassName='fixed-center-wrap disable-overlay'
+      overlayClassName={[styles.lOverlay, styles.lOverlayManager].join(' ')}
       className={[styles.lightbox, styles.lLightboxZoom].join(' ')}
       bodyOpenClassName='noscroll'
       onRequestClose={props.handleRequestClose}
@@ -32,3 +32,4 @@ function CardZoomLightbox(props) {
 }
 
 export default CardZoomLightbox;
+

@@ -88,7 +88,7 @@ class KeyValListField extends React.Component {
         keyClasses.push(styles.isDisableExempt)
       }
 
-      if (true) {
+      if (keyColorChoices.length) {
         keyClasses.push(styles.keyValFieldWColor)
       }
 
@@ -97,8 +97,8 @@ class KeyValListField extends React.Component {
       }
 
       if (i < this.props.value.length) {
-        curKey = this.props.value[i].key.text;
-        curVal = this.props.value[i].val.text;
+        curKey = this.props.value[i].key.text || ''
+        curVal = this.props.value[i].val.text || '';
 
         if (keyColorChoices.length) {
           keyBgColor = this.props.value[i].key.bgColor;
@@ -117,20 +117,24 @@ class KeyValListField extends React.Component {
               onFocus={(event) => this.handleInputFocus(i, event)}
               onBlur={() => this.handleInputBlur(i)}
             />
-            <div 
-              className={colorAnchorClasses.join(' ')}
-              style={{
-                backgroundColor: keyBgColor,
-              }} 
-              onClick={() => this.openColorMenu(i)}
-            >
-              <i 
-                className='fa fa-caret-down fa-lg' 
-                style={{
-                  color: keyTextColor
-                }}
-              />
-            </div>
+            {
+              keyColorChoices.length > 0 && (
+                <div 
+                  className={colorAnchorClasses.join(' ')}
+                  style={{
+                    backgroundColor: keyBgColor,
+                  }} 
+                  onClick={() => this.openColorMenu(i)}
+                >
+                  <i 
+                    className='fa fa-caret-down fa-lg' 
+                    style={{
+                      color: keyTextColor
+                    }}
+                  />
+                </div>
+              )
+            }
             {
               this.state.colorMenuIndex === i && 
               <ColorMenu 
@@ -190,7 +194,7 @@ class KeyValListField extends React.Component {
             valColors.push(choice.val.bgColor);
           }
         }
-      })
+      });
     }
 
     keyColors = keyColors.map((color) => {

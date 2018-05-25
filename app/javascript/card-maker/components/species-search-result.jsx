@@ -29,15 +29,6 @@ class SpeciesSearchResult extends React.Component {
             className={[styles.resultTxt, styles.resultTxtSciName].join(' ')}
           >{this.props.sciName}</div>
         </div>
-        {this.props.selected && (
-          <button 
-            className={[styles.createBtn, styles.createBtnSearch].join(' ')} 
-            onClick={this.props.handleCreate}
-            type="button"
-          >
-            {I18n.t('react.card_maker.create_card')}
-          </button>
-        )}
       </li>
     )
   }

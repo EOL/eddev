@@ -369,7 +369,6 @@ en:
       are_you_sure_remove_user: "Are you sure you want to remove access for user %{userName}?"
       are_you_sure_unsaved: Are you sure you want to leave this page? All unsaved work will be lost.
       assign_to_deck: Assign to deck
-      bio_card: Biodiversity Card
       cancel: cancel
       card: card
       card_form: Card Form
@@ -419,6 +418,7 @@ en:
         one: "1 deck"
         other: "%{count} decks"
       n_results: "%{count} results"
+      no_results_found: no results found
       name_cant_be_blank: "name can't be blank"
       name_taken: "name taken"
       new_card_lc: new card
@@ -431,6 +431,7 @@ en:
         <i class='%{iconClass}'></i>
         <span> taxon page</span>
       or: or
+      or_select_different_card: or select a different card below
       owner_user: "Owner: %{userName}"
       press_enter_search: press enter to search
       print: print
@@ -448,9 +449,10 @@ en:
       search_cards: search cards
       search_decks: search decks
       search_species_taxon: search for a species or taxon
+      select: select
       select_deck: deck (optional)
       select_a_deck_for_card: select a deck for your card (optional)
-      sorts: 
+      sorts:
         common_a_z: common name (a-z)
         common_z_a: common name (z-a)
         recent: recently edited
@@ -460,6 +462,7 @@ en:
       start_typing_user_name: start typing user name to search
       suggestions: Suggestions
       title_card: Title Card
+      trait_card: Trait Card
       type_paste_url: Type/paste URL
       unassigned: unassigned
       unexpected_error_msg: An unexpected error occurred

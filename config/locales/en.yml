@@ -436,6 +436,7 @@ en:
       press_enter_search: press enter to search
       print: print
       print_loading_msg: "It may take a few minutes to generate this print-quality PDF. Please check your popup blocker if you don't see a result after this screen disappears."
+      proj_desc_card: Project Description Card
       public_cards: public cards
       quick_save: quick save
       removed_user: "Successfully removed user %{userName}"

@@ -6,9 +6,9 @@ import UserResourceFilter from './user-resource-filter'
 import SpeciesSearchResult from './species-search-result'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
 
-import traitCard from 'images/card_maker/sample_cards/trait.png'
-import titleCard from 'images/card_maker/sample_cards/title.png'
-import keyCard from 'images/card_maker/sample_cards/key.png'
+import traitCardImg from 'images/card_maker/sample_cards/trait.png'
+import titleCardImg from 'images/card_maker/sample_cards/title.png'
+import keyCardImg from 'images/card_maker/sample_cards/key.png'
 
 import styles from 'stylesheets/card_maker/card_manager'
 
@@ -18,6 +18,32 @@ var cleanState = {
   selectedResultId: null,
   screen: 'start'
 };
+
+var cardTypes = {};
+[
+  {
+    img: traitCardImg,
+    nameKey: 'trait_card',
+    template: 'trait'
+  },
+  {
+    img: titleCardImg,
+    nameKey: 'title_card',
+    template: 'title',
+  },
+  {
+    img: keyCardImg,
+    nameKey: 'key_card',
+    template: 'key'
+  },
+  {
+    img: keyCardImg,
+    nameKey: 'proj_desc_card',
+    template: 'desc'
+  }
+].forEach((type) => {
+  cardTypes[type.template] = type;
+});
 
 class SpeciesSearchLightbox extends React.Component {
   constructor(props) {
@@ -50,7 +76,7 @@ class SpeciesSearchLightbox extends React.Component {
   }
 
   handleCreate = () => {
-    var params = this.state.cardType === 'trait' ? 
+    var params = this.state.cardType.template === 'trait' ? 
           { speciesId: this.state.selectedResultId } :
           null
       ;
@@ -124,48 +150,25 @@ class SpeciesSearchLightbox extends React.Component {
     ) : null;
   }
 
-  templateItem = (options) => {
+  templateItem = (key) => {
+    var type = cardTypes[key];
+
     return (
       <li className={styles.cardTemplate}>
-        <img src={options.img} />
-        <div>{I18n.t('react.card_maker.' + options.nameKey)}</div>
+        <img src={type.img} />
+        <div>{I18n.t('react.card_maker.' + type.nameKey)}</div>
         <button
           className={[styles.createBtn, styles.createBtnTempl].join(' ')}
           type='button'
-          onClick={() => this.setState({ screen: 'create', cardType: options.template })}
+          onClick={() => this.setState({ screen: 'create', cardType: type.template })}
         >{I18n.t('react.card_maker.select')}</button>
       </li>
     );
   }
 
-  getExampleCard = () => {
-    var img = ''
-      , txtKey = null
-      ;
-
-    if (
-      this.state.screen === 'start' || 
-      this.state.screen === 'inFlight' || 
-      this.state.cardType === 'trait'
-    ) {
-      img = traitCard;  
-      txtKey = 'trait_card';
-    } else if (this.state.cardType === 'title') {
-      img = titleCard;
-      txtKey = 'title_card';
-    } else if (this.state.cardType === 'key') {
-      img = keyCard;
-      txtKey = 'key_card';
-    }
-
-    return {
-      img: img,
-      txtKey: txtKey
-    };
-  }
-
   render() {
-    var exampleCard = this.getExampleCard();
+    var curType = cardTypes[this.state.cardType];
+
     return (
       <CloseButtonModal
         isOpen={this.props.isOpen}
@@ -178,8 +181,8 @@ class SpeciesSearchLightbox extends React.Component {
       >
         <div className={styles.speciesSearch}>
           <div className={styles.lSpeciesSearchLeft}>
-            <img className={styles.speciesSearchCardImg} src={exampleCard.img} />
-            <div className={styles.speciesSearchCardLabel}>{I18n.t('react.card_maker.' + exampleCard.txtKey)}</div>
+            <img className={styles.speciesSearchCardImg} src={curType.img} />
+            <div className={styles.speciesSearchCardLabel}>{I18n.t('react.card_maker.' + curType.nameKey)}</div>
             {
               this.state.screen !== 'start' && 
               <button 
@@ -255,20 +258,9 @@ class SpeciesSearchLightbox extends React.Component {
             {
               this.state.screen === 'start' && (
                 <ul className={styles.cardTemplates}>
-                  {
-                    this.templateItem({
-                      img: titleCard,
-                      nameKey: 'title_card',
-                      template: 'title',
-                    })
-                  }
-                  {
-                    this.templateItem({
-                      img: keyCard,
-                      nameKey: 'key_card',
-                      template: 'key'
-                    })
-                  }
+                  { this.templateItem('title') }
+                  { this.templateItem('key')   }
+                  { this.templateItem('desc')  }
                 </ul>
               )
             }

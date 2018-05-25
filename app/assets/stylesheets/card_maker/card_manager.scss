@@ -70,12 +70,33 @@ $species-search-input-height: 45px;
   z-index: 2;
 }
 
+.lOverlay {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(67, 82, 95, 0.79);
+  //overflow: auto;
+  position: absolute;
+  z-index: 50;
+}
+
+.lOverlayManager {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  overflow: auto;
+  z-index: 10;
+}
+
 /* GENERAL STATE */
 .isDisabled {
   color: $disabled-gray; 
 }
 
 /* MODULES */
+
 
 /* GENERAL PURPOSE (should probably be moved out of here) */
 .banner {
@@ -970,7 +991,7 @@ $species-search-input-height: 45px;
 
   & > button {
     display: block;
-    margin: 0 auto;
+    margin: 0 auto 10px auto;
   }
 
   &:focus {

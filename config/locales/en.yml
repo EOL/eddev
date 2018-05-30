@@ -431,7 +431,7 @@ en:
         <i class='%{iconClass}'></i>
         <span> taxon page</span>
       or: or
-      or_select_different_card: or select a different card below
+      or_select_different_card: or select a different card type below
       owner_user: "Owner: %{userName}"
       press_enter_search: press enter to search
       print: print

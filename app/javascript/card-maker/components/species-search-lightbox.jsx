@@ -76,7 +76,7 @@ class SpeciesSearchLightbox extends React.Component {
   }
 
   handleCreate = () => {
-    var params = this.state.cardType.template === 'trait' ? 
+    var params = this.state.cardType === 'trait' ? 
           { speciesId: this.state.selectedResultId } :
           null
       ;

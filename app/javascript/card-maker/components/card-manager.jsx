@@ -270,8 +270,12 @@ class CardManager extends React.Component {
       data: JSON.stringify(data),
       contentType: 'application/json',
       method: 'POST',
-      success: () => {
-        that.reloadResourcesWithCb(that.props.hideLoadingOverlay);
+      success: (card) => {
+        if (data.copyFrom) {
+          that.reloadResourcesWithCb(that.props.hideLoadingOverlay);
+        } else {
+          that.props.handleEditCard(card.id)
+        }
       },
       error: () => {
         alert(I18n.t('react.card_maker.unexpected_error_msg'));

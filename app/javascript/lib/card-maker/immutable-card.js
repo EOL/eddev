@@ -117,9 +117,9 @@ class ImmutableCard {
     });
   }
 
-  setDefinitionText = (fieldName, i, text) => {
+  setTextListData = (fieldName, i, text) => {
     return this.copyAndApply((copy) => {
-      copy.setDefinitionText(fieldName, i, text);
+      copy.setTextListData(fieldName, i, text);
     });
   }
 

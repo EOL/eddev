@@ -470,6 +470,7 @@ en:
       unexpected_error_msg: An unexpected error occurred
       upload_an_image: Upload an image
       users: Users
+      vocab_card: Vocabulary
   shared:
     footer:
       address_and_contact_html: "<a href='//www.harvard.edu'>Harvard University</a> 26 Oxford Street, Cambridge, MA 02138 USA | 617-496-6764 | education [at] eol.org"

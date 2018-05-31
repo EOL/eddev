@@ -8,6 +8,7 @@ import KeyValListField from './editor-fields/key-val-list-field'
 import MultilineTextField from './editor-fields/multiline-text-field'
 import IconField from './editor-fields/icon-field'
 import LabeledTextField from './editor-fields/labeled-text-field'
+import DefinitionField from './editor-fields/definition-field'
 
 const fieldTypesToComponents = {
   'text': TextField,
@@ -18,7 +19,8 @@ const fieldTypesToComponents = {
   'image': ImageField,
   'key-val-list': KeyValListField,
   'multiline-text': MultilineTextField,
-  'labeled-text': LabeledTextField
+  'labeled-text': LabeledTextField,
+  'definition-list': DefinitionField
 }
 
 class CardFields extends React.Component {
@@ -40,6 +42,7 @@ class CardFields extends React.Component {
           , setUserDataRef = this.props.setCardUserDataRef.bind(null, field.id)
           , setKeyValData = this.props.setCardKeyValData.bind(null, field.id)
           , setKeyValChoiceKey = this.props.setCardKeyValChoiceKey.bind(null, field.id)
+          , setDefinitionText = this.props.setCardDefinitionText.bind(null, field.id)
           , getDataAttr = this.props.card.getDataAttr.bind(null, field.id)
           , getUserDataAttr = this.props.card.getUserDataAttr.bind(null, field.id)
           , choiceKey = this.props.card.getChoiceKey(field.id, null)
@@ -67,6 +70,7 @@ class CardFields extends React.Component {
               setUserDataRef={setUserDataRef}
               setKeyValData={setKeyValData}
               setKeyValChoiceKey={setKeyValChoiceKey}
+              setDefinitionText={setDefinitionText}
               getUserDataAttr={getUserDataAttr}
               userDataRef={this.props.card.getUserDataRef(field.id)}
               forceCardDirty={this.props.forceCardDirty}

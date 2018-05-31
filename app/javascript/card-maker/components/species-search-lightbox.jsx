@@ -40,7 +40,13 @@ var cardTypes = {};
     img: keyCardImg,
     nameKey: 'proj_desc_card',
     template: 'desc'
+  },
+  {
+    img: keyCardImg,
+    nameKey: 'vocab_card',
+    template: 'vocab'
   }
+
 ].forEach((type) => {
   cardTypes[type.template] = type;
 });
@@ -261,6 +267,7 @@ class SpeciesSearchLightbox extends React.Component {
                   { this.templateItem('title') }
                   { this.templateItem('key')   }
                   { this.templateItem('desc')  }
+                  { this.templateItem('vocab')  }
                 </ul>
               )
             }

@@ -194,7 +194,7 @@ class SpeciesSearchLightbox extends React.Component {
               <button 
                 type='button' 
                 className={[styles.btn, styles.btnBack].join(' ')}
-                onClick={() => this.setState({ screen: 'start' })}
+                onClick={() => this.setState({ screen: 'start', cardType: 'trait' })}
               ><i className='fa fa-2x fa-arrow-left' /></button>
             }
           </div>

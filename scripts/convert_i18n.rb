@@ -81,7 +81,7 @@ File.open(options[:fname]) do |raw|
 
     puts csv
   else
-    rows = CSV.parse(raw_str, :col_sep => "\t")
+    rows = CSV.parse(raw_str, :col_sep => "\t", :liberal_parsing => true)
     flat = rows.to_h
     expanded = expand(flat)
 

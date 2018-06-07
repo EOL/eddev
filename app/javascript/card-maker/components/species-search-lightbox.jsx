@@ -8,7 +8,9 @@ import {cardMakerUrl} from 'lib/card-maker/url-helper'
 
 import traitCardImg from 'images/card_maker/sample_cards/trait.png'
 import titleCardImg from 'images/card_maker/sample_cards/title.png'
-import keyCardImg from 'images/card_maker/sample_cards/key.png'
+import keyCardImg   from 'images/card_maker/sample_cards/key.png'
+import vocabCardImg from 'images/card_maker/sample_cards/vocab.png'
+import descCardImg  from 'images/card_maker/sample_cards/desc.png'
 
 import styles from 'stylesheets/card_maker/card_manager'
 
@@ -37,12 +39,12 @@ var cardTypes = {};
     template: 'key'
   },
   {
-    img: keyCardImg,
+    img: descCardImg,
     nameKey: 'proj_desc_card',
     template: 'desc'
   },
   {
-    img: keyCardImg,
+    img: vocabCardImg,
     nameKey: 'vocab_card',
     template: 'vocab'
   }

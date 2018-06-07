@@ -71,9 +71,11 @@ class UsersController < ApplicationController
   end
 
   def change_password_form
+    @user = logged_in_user
   end
 
   def change_password
+    @user = logged_in_user
     auth_success = @user.authenticate(params[:user][:current_password])
 
     if !auth_success

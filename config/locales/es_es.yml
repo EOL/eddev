@@ -1,4 +1,29 @@
 es_es:
+  activerecord:
+    attributes:
+      user:
+        email: Correo electrónico
+        full_name: Nombre completo
+        password: Contraseña
+        password_confirmation: Confirmación de contraseña
+        user_name: Nombre de usuario
+    errors:
+      messages:
+        blank: Este espacio no se puede dejar en blanco
+        taken: Ya está en uso
+      models:
+        user:
+          attributes:
+            password:
+              too_short: Muy corto  (mínim %{count} caracteres)
+            password_confirmation:
+              confirmation: La contraseña no coincide
+            user_name:
+              invalid: Debe contener letras, números y los caracteres "@", "." y  "_"
+      template:
+        header:
+          one: Un error impidió guardar el (la) [modelo]
+          other: "%{count} errores impidieron guardar el (la) %{model}"
   user_sessions:
     create:
       invalid_creds: Nombre de usuario invalido o contraseña
@@ -41,127 +66,104 @@ es_es:
         que se encuentra debajo
     reset_password_form:
       header: Cambio de contraseña
-  attributes:
-    user:
-      email: Correo electrónico
-      full_name: Nombre completo
-      password: Contraseña
-      password_confirmation: Confirmación de contraseña
-      user_name: Nombre de usuario
-  errors:
-    messages:
-      blank: Este espacio no se puede dejar en blanco
-      taken: Ya está en uso
-    models:
-      user:
-        attributes:
-          password:
-            too_short: Muy corto  (mínim %{count} caracteres)
-          password_confirmation:
-            confirmation: La contraseña no coincide
-          user_name:
-            invalid: Debe contener letras, números y los caracteres "@", "." y  "_"
-    template:
-      header:
-        one: Un error impidió guardar el (la) [modelo]
-        other: "%{count} errores impidieron guardar el (la) %{model}"
   models:
     user: Usuario
-  card_maker:
-    add_desc: Añada una descipción
-    all_cards: Todas las fichas
-    all_decks: Total de colecciones
-    all_my_cards: Todas mis fichas
-    all_public_cards: Todas las fichas públicas
-    are_you_sure_delete_card: "¿Está usted seguro de borrar esta ficha?"
-    are_you_sure_delete_deck: "¿Está usted seguro de borrar esta colección y todas
-      sus fichas?"
-    are_you_sure_unsaved: "¿Está usted seguro de querer abandonar esta página?, todo
-      su trabajo no salvado se perderá"
-    assign_to_deck: Asignada a una colección
-    cancel: Cancelar
-    card: Ficha
-    card_form_parens: "(Ingresa la información que aparecerá en la ficha)"
-    card_maker_html: Constructor <br/>de fichas (beta)
-    card_maker_title: Constructor de fichas
-    card_manager: Gestor de fichas
-    card_preview: Ficha previsualizada
-    card_preview_lightbox: Previsualizador de fichas
-    card_preview_parens: "(Opción de previsualización en vivo, controlde imagen, control
-      de salvar y salir)"
-    close: Cerrar
-    save_+_exit: Salvar + salir
-    collection_id_optional: ID de la Colección EOL (opcional)
-    confirm_make_private: "¿Está Ud. seguro de querer hacer privada esta colección?"
-    confirm_make_public: "¿Está Ud. seguro de querer hacer público este mazo?"
-    copy_card: Copia una ficha
-    copy_deck: Copia una colección
-    copy_of_name: Copia de %{name}
-    create_a_card: Crear una ficha
-    create_a_deck: Crear una colección
-    create_card: Crear ficha
-    create_card_from_selection: Crear una ficha de la selección
-    create_deck: Crear una colección
-    deck: Colección
-    delete_deck: Borrar una colección
-    download_png: Descargar PNG
-    edit_desc: Editar la descripción
-    enter_deck_name: Ingrese el nombre de la colección
-    enter_text: Ingrese el texto
-    failed_to_load_image_url: Error al cargar la imagen de una URL
-    flip_horiz: Girar horizontalmente
-    flip_vert: Girar verticalmente
-    font_size: Tamaño de fuente
-    go_back_to: Volver a
-    image_credit: Créditos de la imagen
-    image_library: Biblioteca de imágenes
-    make_deck_private: Hacer el deck privado
-    make_deck_public: Hacer la colección pública
-    manage_deck_users: Administrar los usuarios de la colección
-    my_cards: Mis fichas
-    n_cards:
-      one: 1 ficha
-      other: "%{count} de fichas"
-    n_decks:
-      one: 1 colección
-      other: "%{count} colecciones"
-    n_results: "%{count} de resultados"
-    name_cant_be_blank: El nombre no puede quedar en blanco
-    name_taken: Nombre en uso
-    new_card_lc: Nueva ficha
-    new_deck: Nueva colección
-    new_deck_lc: Nueva colección
-    new_upper: 'NUEVO  '
-    no_deck_assigned: No se ha asignado una colección
-    open_eol_taxon_page_html: "<span>Abrir </span> <i class='%{iconClass}'></i> <span>
-      la página del taxón </span>"
-    or: o
-    press_enter_search: oprima enter para buscar
-    print: Imprimir
-    print_loading_msg: La generación de un PDF de calidad de impresión tomará unos
-      minutos. Por favor, verifique su control de pantallas emergentes si no aparece
-      ninguna información una vez desaparezca este mensaje
-    public_cards: Fichas públicas
-    quick_save: Guardar rápido
-    rename: Renombrar
-    rename_deck: Renombrar colección
-    rotate_90: Girar 90º
-    save_card_to_deck: 'Salva la ficha en la colección:'
-    save_desc: Salvar descripción
-    search: Buscar
-    search_cards: Buscar fichas
-    search_decks: Buscar colecciones
-    search_species_taxon: Buscar especies y taxones
-    select_deck: Colecciones (opcional)
-    sorts:
-      common_a_z: Nombre común (a-z)
-      common_z_a: Nombre común (z-a)
-      recent: Editado recientemente
-      sci_a_z: Nombre científico (a-z)
-      sci_z_a: Nombre científico (z-a)
-    species_search: Búsqueda de especies
-    suggestions: Sugerencias
-    type_paste_url: Copie/pegue URL
-    unassigned: No asignado
-    unexpected_error_msg: Ha ocurrido un error inesperado
-    upload_an_image: Cargue una imagen
+  react:
+    card_maker:
+      add_desc: Añada una descipción
+      all_cards: Todas las fichas
+      all_decks: Total de colecciones
+      all_my_cards: Todas mis fichas
+      all_public_cards: Todas las fichas públicas
+      are_you_sure_delete_card: "¿Está usted seguro de borrar esta ficha?"
+      are_you_sure_delete_deck: "¿Está usted seguro de borrar esta colección y todas
+        sus fichas?"
+      are_you_sure_unsaved: "¿Está usted seguro de querer abandonar esta página?, todo
+        su trabajo no salvado se perderá"
+      assign_to_deck: Asignada a una colección
+      cancel: Cancelar
+      card: Ficha
+      card_form_parens: "(Ingresa la información que aparecerá en la ficha)"
+      card_maker_html: Constructor <br/>de fichas (beta)
+      card_maker_title: Constructor de fichas
+      card_manager: Gestor de fichas
+      card_preview: Ficha previsualizada
+      card_preview_lightbox: Previsualizador de fichas
+      card_preview_parens: "(Opción de previsualización en vivo, controlde imagen, control
+        de salvar y salir)"
+      close: Cerrar
+      save_+_exit: Salvar + salir
+      collection_id_optional: ID de la Colección EOL (opcional)
+      confirm_make_private: "¿Está Ud. seguro de querer hacer privada esta colección?"
+      confirm_make_public: "¿Está Ud. seguro de querer hacer público este mazo?"
+      copy_card: Copia una ficha
+      copy_deck: Copia una colección
+      copy_of_name: Copia de %{name}
+      create_a_card: Crear una ficha
+      create_a_deck: Crear una colección
+      create_card: Crear ficha
+      create_card_from_selection: Crear una ficha de la selección
+      create_deck: Crear una colección
+      deck: Colección
+      delete_deck: Borrar una colección
+      download_png: Descargar PNG
+      edit_desc: Editar la descripción
+      enter_deck_name: Ingrese el nombre de la colección
+      enter_text: Ingrese el texto
+      failed_to_load_image_url: Error al cargar la imagen de una URL
+      flip_horiz: Girar horizontalmente
+      flip_vert: Girar verticalmente
+      font_size: Tamaño de fuente
+      go_back_to: Volver a
+      image_credit: Créditos de la imagen
+      image_library: Biblioteca de imágenes
+      make_deck_private: Hacer el deck privado
+      make_deck_public: Hacer la colección pública
+      manage_deck_users: Administrar los usuarios de la colección
+      my_cards: Mis fichas
+      n_cards:
+        one: 1 ficha
+        other: "%{count} de fichas"
+      n_decks:
+        one: 1 colección
+        other: "%{count} colecciones"
+      n_results: "%{count} de resultados"
+      name_cant_be_blank: El nombre no puede quedar en blanco
+      name_taken: Nombre en uso
+      new_card_lc: Nueva ficha
+      new_deck: Nueva colección
+      new_deck_lc: Nueva colección
+      new_upper: 'NUEVO  '
+      no_deck_assigned: No se ha asignado una colección
+      open_eol_taxon_page_html: "<span>Abrir </span> <i class='%{iconClass}'></i> <span>
+        la página del taxón </span>"
+      or: o
+      press_enter_search: oprima enter para buscar
+      print: Imprimir
+      print_loading_msg: La generación de un PDF de calidad de impresión tomará unos
+        minutos. Por favor, verifique su control de pantallas emergentes si no aparece
+        ninguna información una vez desaparezca este mensaje
+      public_cards: Fichas públicas
+      quick_save: Guardar rápido
+      rename: Renombrar
+      rename_deck: Renombrar colección
+      rotate_90: Girar 90º
+      save_card_to_deck: 'Salva la ficha en la colección:'
+      save_desc: Salvar descripción
+      search: Buscar
+      search_cards: Buscar fichas
+      search_decks: Buscar colecciones
+      search_species_taxon: Buscar especies y taxones
+      select_deck: Colecciones (opcional)
+      sorts:
+        common_a_z: Nombre común (a-z)
+        common_z_a: Nombre común (z-a)
+        recent: Editado recientemente
+        sci_a_z: Nombre científico (a-z)
+        sci_z_a: Nombre científico (z-a)
+      species_search: Búsqueda de especies
+      suggestions: Sugerencias
+      type_paste_url: Copie/pegue URL
+      unassigned: No asignado
+      unexpected_error_msg: Ha ocurrido un error inesperado
+      upload_an_image: Cargue una imagen

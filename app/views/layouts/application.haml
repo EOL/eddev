@@ -28,6 +28,10 @@
       = javascript_pack_tag pack_name
       = stylesheet_pack_tag pack_name
 
+    :javascript
+      I18n.defaultLocale = "#{I18n.default_locale}";
+      I18n.locale = "#{I18n.locale}";
+    
     = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"
     :javascript
       WebFont.load({

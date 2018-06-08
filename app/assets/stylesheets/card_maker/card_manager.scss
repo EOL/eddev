@@ -511,15 +511,20 @@ $species-search-input-height: 45px;
   background: $white;
   color: $txt-gray;
   font-size: 14px;
+  left: 50%;
+  min-width: 100%;
   position: absolute;
   text-align: center;
-  width: 100%;
+  transform: translateX(-50%);
 
   & > li {
     $height: 30px;
     cursor: pointer;
     height: $height;
     line-height: $height;
+    overflow: hidden;
+    padding: 0 8px;
+    white-space: nowrap;
   }
 
   & > li:hover {

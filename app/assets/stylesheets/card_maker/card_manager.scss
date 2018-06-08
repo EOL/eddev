@@ -193,7 +193,7 @@ $species-search-input-height: 45px;
 
 .libs {
   height: 81px;
-  padding-top: 9px;
+  padding: 9px 18px;
 }
 
 .lib {
@@ -205,7 +205,7 @@ $species-search-input-height: 45px;
   line-height: $lib-height;
   margin: 0 auto 1px auto;
   padding: 0 17px;
-  width: 158px;
+  /*width: 158px;*/
 }
 
   .libIcon {
@@ -220,7 +220,6 @@ $species-search-input-height: 45px;
 .isLibActive {
   color: $eol-blue;
 }
-
 
 /*
   .libCtrlsActive {

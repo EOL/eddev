@@ -88,7 +88,7 @@ File.open(options[:fname]) do |raw|
     dest_type = options[:from_tsv_to]
 
     result = if (dest_type == "json")
-      expanded.to_json 
+      JSON.pretty_generate(expanded)
     elsif (dest_type == "yml")
       YAML.dump(expanded)
     else

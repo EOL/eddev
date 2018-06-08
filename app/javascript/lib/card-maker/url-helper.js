@@ -1,5 +1,5 @@
 export function cardMakerUrl(path) {
-  return '/card_maker_ajax/' + path;
+  return '/' + I18n.locale + '/card_maker_ajax/' + path;
 }
 
 export function loResCardImageUrl(card) {

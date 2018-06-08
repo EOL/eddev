@@ -379,19 +379,19 @@ en:
       card_preview: Card Preview
       card_preview_lightbox: Card preview lightbox
       card_preview_parens: (Live Preview, Image Controls, Save + Exit Options)
+      click_choose_card_type: click to choose a different card type
       close: close
-      save_+_exit: save + exit
       collection_id_optional: EOL collection id (optional)
       confirm_make_private: Are you sure you want to make this deck private?
       confirm_make_public: Are you sure you want to make this deck public?
       copy_card: copy card
       copy_deck: copy deck
       copy_of_name: "copy of %{name}"
+      create: create
       create_a_card: create a card
       create_a_deck: create a deck
       create_card: create card
       create_card_from_selection: Create a card from selection
-      create_deck: create deck
       create_deck: create deck
       deck: deck
       delete_deck: delete deck
@@ -406,6 +406,7 @@ en:
       go_back_to: go back to
       image_credit: Image credit
       image_library: Image Library
+      key_card: Key Card
       make_deck_private: make deck private
       make_deck_public: make deck public
       manage_deck_users: manage deck users
@@ -417,6 +418,7 @@ en:
         one: "1 deck"
         other: "%{count} decks"
       n_results: "%{count} results"
+      no_results_found: no results found
       name_cant_be_blank: "name can't be blank"
       name_taken: "name taken"
       new_card_lc: new card
@@ -429,24 +431,29 @@ en:
         <i class='%{iconClass}'></i>
         <span> taxon page</span>
       or: or
+      or_select_different_card: or select a different card type below
       owner_user: "Owner: %{userName}"
       press_enter_search: press enter to search
       print: print
       print_loading_msg: "It may take a few minutes to generate this print-quality PDF. Please check your popup blocker if you don't see a result after this screen disappears."
+      proj_desc_card: Project Description
       public_cards: public cards
       quick_save: quick save
       removed_user: "Successfully removed user %{userName}"
       rename: rename
       rename_deck: rename deck
       rotate_90: Rotate 90°
+      save_+_exit: save + exit
       save_card_to_deck: "Save card to a deck:"
       save_desc: save description
       search: Search
       search_cards: search cards
       search_decks: search decks
       search_species_taxon: search for a species or taxon
+      select: select
       select_deck: deck (optional)
-      sorts: 
+      select_a_deck_for_card: select a deck for your card (optional)
+      sorts:
         common_a_z: common name (a-z)
         common_z_a: common name (z-a)
         recent: recently edited
@@ -455,12 +462,15 @@ en:
       species_search: Species search
       start_typing_user_name: start typing user name to search
       suggestions: Suggestions
+      title_card: Title Card
+      trait_card: Trait Card
       type_paste_url: Type/paste URL
       unassigned: unassigned
       unexpected_error_msg: An unexpected error occurred
       unexpected_error_msg: An unexpected error occurred
       upload_an_image: Upload an image
       users: Users
+      vocab_card: Vocabulary
   shared:
     footer:
       address_and_contact_html: "<a href='//www.harvard.edu'>Harvard University</a> 26 Oxford Street, Cambridge, MA 02138 USA | 617-496-6764 | education [at] eol.org"

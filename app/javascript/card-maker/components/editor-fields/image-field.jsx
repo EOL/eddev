@@ -170,7 +170,10 @@ class ImageField extends React.Component {
   }
 
   render() {
-    const uploadThumbUrl = this.props.getUserDataAttr('upload', 'thumbUrl');
+    const uploadThumbUrl = this.props.getUserDataAttr('upload', 'thumbUrl')
+        , showThumbs = this.props.choices != null && this.props.choices.length
+        ;
+
     let uploadThumbClassName = 'upload-img-preview thumb';
 
     if (this.props.userDataRef === 'upload') {
@@ -181,15 +184,29 @@ class ImageField extends React.Component {
       <div>
       {!this.state.libOpen &&
         (<div className='img-field-main'>
-          <div className='img-lib-link img-field-sec' onClick={this.handleLibOpenClick}>
-            <div className='img-lib-hdr img-lib-btn'>{I18n.t('react.card_maker.image_library')}</div>
-            <div className='img-lib-thumbs'>
-              {this.buildImgLibPreviewThumbs()}
+          {
+            showThumbs && 
+            <div className='img-lib-link img-field-sec' onClick={this.handleLibOpenClick}>
+              <div className='img-lib-hdr img-lib-btn'>{I18n.t('react.card_maker.image_library')}</div>
+              <div className='img-lib-thumbs'>
+                {this.buildImgLibPreviewThumbs()}
+              </div>
             </div>
-          </div>
-          <div className='img-field-sep'></div>
+          }
+          {
+            showThumbs &&
+            <div className='img-field-sep'></div>
+          }
           <div className='img-url img-field-sec'>
-            <div className='img-or'>{I18n.t('react.card_maker.or')}</div>
+            {
+              showThumbs ? (
+                <div className='img-or'>
+                  {I18n.t('react.card_maker.or')}
+                </div>
+              ) : (
+                <div className='img-or'>&nbsp;</div>
+              )
+            }
             <div className='img-url-wrap flex-wrap'>
               <input
                 className='img-url-input text-input text-entry'

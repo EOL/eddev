@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ColorMenu from './color-menu'
 import SuggestionsMenu from './suggestions-menu'
 import fieldWrapper from './field-wrapper'
 import styles from 'stylesheets/card_maker/card_editor'
@@ -288,22 +289,10 @@ class TextField extends React.Component {
         </div>
         {
           this.state.colorsOpen &&
-          <ul 
-            key='colorChoices'
-            className={`${styles.colorChoices} ${styles.isDisableExempt}`}
-          >
-            {
-              bgColorChoices.map((color) => {
-                return (
-                  <li
-                    key={color}
-                    onClick={() => this.props.setDataAttr('bgColor', color)}
-                    style={{ backgroundColor: color }}
-                  />
-                );
-              })
-            }
-          </ul>
+          <ColorMenu
+            colors={bgColorChoices}
+            handleSelect={(color) => this.props.setDataAttr('bgColor', color)}
+          />
         }
       </div>
     );

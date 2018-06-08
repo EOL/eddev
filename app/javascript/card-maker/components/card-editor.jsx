@@ -82,9 +82,21 @@ class CardEditor extends React.Component {
     });
   }
 
-  setCardKeyValText = (fieldName, keyOrVal, index, value) => {
+  setCardKeyValData = (fieldName, keyOrVal, index, attr, value) => {
     this.props.updateCard((card) => {
-      return card.setKeyValText(fieldName, keyOrVal, index, value);
+      return card.setKeyValData(fieldName, keyOrVal, index, attr, value);
+    });
+  }
+
+  setCardKeyValChoiceKey = (fieldName, keyValIndex, choiceKey) => {
+    this.props.updateCard((card) => {
+      return card.setKeyValChoiceKey(fieldName, keyValIndex, choiceKey);
+    });
+  }
+
+  setCardTextListData = (fieldName, i, text) => {
+    this.props.updateCard((card) => {
+      return card.setTextListData(fieldName, i, text);
     });
   }
 
@@ -250,7 +262,9 @@ class CardEditor extends React.Component {
                       setCardChoiceKey={this.setCardChoiceKey}
                       setCardUserDataAttr={this.setCardUserDataAttr}
                       setCardUserDataRef={this.setCardUserDataRef}
-                      setCardKeyValText={this.setCardKeyValText}
+                      setCardKeyValData={this.setCardKeyValData}
+                      setCardKeyValChoiceKey={this.setCardKeyValChoiceKey}
+                      setCardTextListData={this.setCardTextListData}
                       forceCardDirty={this.forceDirty}
                       disableCol={this.disableRightCol}
                       enableCol={this.enableRightCol}

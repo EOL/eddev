@@ -5,6 +5,8 @@ import ImageZoomControls from './image-zoom-controls'
 import PreviewCanvas from './preview-canvas'
 import SaveExitBtns from './save-exit-btns'
 
+import styles from 'stylesheets/card_maker/card_editor'
+
 class CardPreview extends React.Component {
   imageSelectItems = () => {
     if (!this.props.card) {
@@ -83,36 +85,52 @@ class CardPreview extends React.Component {
   }
 
   render() {
-    var eolLinkAttrs = this.eolLinkAttrs();
+    const eolLinkAttrs = this.props.card && this.props.card.templateName === 'trait' ?
+            this.eolLinkAttrs() : 
+            null
+        , hasImg = this.props.card.imageFields().length > 0
+        , cardBoxClasses = [styles.cardBox]
+        ;
+
+    if (!hasImg) {
+      cardBoxClasses.push(styles.cardBoxNoImg);
+    }
 
     return (
       <div className='preview' ref={this.props.setRootNode} style={this.props.rootStyle}>
-        {/* <div className='img-select'>{this.imageSelectItems()}</div> */}
+        { /* <div className='img-select'>{this.imageSelectItems()}</div> */ }
         <div className='controls-card-wrap'>
-          <div className='img-controls'>
-            <ImageControlButtons
-              {...this.imageDataFns()}
-            />
-            <div className='sep'></div>
-            <ImageZoomControls
-              {...this.imageDataFns()}
-            />
-          </div>
-          <div className='card-box'>
+          {
+            hasImg && (
+              <div className='img-controls'>
+                <ImageControlButtons
+                  {...this.imageDataFns()}
+                />
+                <div className='sep'></div>
+                <ImageZoomControls
+                  {...this.imageDataFns()}
+                />
+              </div>
+            )
+          }
+          <div className={cardBoxClasses.join(' ')}>
             <PreviewCanvas
               card={this.props.card}
               selectedImgId={this.props.selectedImgId}
               {...this.imageDataFns()}
             />
-            <a
-              href={eolLinkAttrs.href} target={eolLinkAttrs.target}
-              className='eol-link'
-              dangerouslySetInnerHTML={{
-                __html: I18n.t('react.card_maker.open_eol_taxon_page_html', {
-                  iconClass: 'edu-icon-eol-logo'
-                })
-              }}
-            />
+            {
+              eolLinkAttrs != null &&
+              <a
+                href={eolLinkAttrs.href} target={eolLinkAttrs.target}
+                className={styles.cardEolLink}
+                dangerouslySetInnerHTML={{
+                  __html: I18n.t('react.card_maker.open_eol_taxon_page_html', {
+                    iconClass: 'edu-icon-eol-logo'
+                  })
+                }}
+              />
+            }
           </div>
           <SaveExitBtns
             dirty={this.props.card && this.props.card.isDirty()}

@@ -260,35 +260,22 @@ class CardManager extends React.Component {
       cardMakerUrl('cards');
   }
 
-  createCardHelper = (speciesId, cardId, deckId) => {
-    const that = this
-        , url = that.createCardUrl(deckId)
-        ;
-
-    let data;
-
-    if (speciesId) {
-      data = {
-        templateName: 'trait',
-        templateParams: {
-          speciesId: speciesId
-        },
-      };
-    } else if (cardId) {
-      data = {
-        copyFrom: cardId,
-      }
-    }
+  createOrCopyCard = (data, deckId) => {
+    let that = this;
 
     that.props.showLoadingOverlay();
 
     $.ajax({
-      url: url,
+      url: this.createCardUrl(deckId),
       data: JSON.stringify(data),
       contentType: 'application/json',
       method: 'POST',
-      success: () => {
-        that.reloadResourcesWithCb(that.props.hideLoadingOverlay);
+      success: (card) => {
+        if (data.copyFrom) {
+          that.reloadResourcesWithCb(that.props.hideLoadingOverlay);
+        } else {
+          that.props.handleEditCard(card.id)
+        }
       },
       error: () => {
         alert(I18n.t('react.card_maker.unexpected_error_msg'));
@@ -297,16 +284,24 @@ class CardManager extends React.Component {
     });
   }
 
-  handleCreateCard = (id) => {
+  handleCreateCard = (template, params) => {
+    const data = {
+            templateName: template,
+            templateParams: params,
+          }
+        ;
+
     this.setState({
       speciesSearchOpen: false,
     });
-    this.createCardHelper(id, null, this.state.speciesSearchDeckId);
+    this.createOrCopyCard(data, this.state.speciesSearchDeckId);
   }
 
   handleCopyCard = (deckId) => {
-    this.createCardHelper(null, this.state.copyCardId, deckId);
     this.closeCopyCard();
+    this.createOrCopyCard({ 
+      copyFrom: this.state.copyCardId 
+    }, deckId);
   }
 
   openNewDeckLightbox = () => {
@@ -942,7 +937,6 @@ class CardManager extends React.Component {
           deckFilterItems={this.deckFilterItemsForNewCard()}
           handleDeckSelect={this.handleSpeciesSearchDeckSelect}
           selectedDeckId={this.state.speciesSearchDeckId}
-          handleCreateCard={this.handleCreateCard}
         />
         <CopyCardLightbox
           isOpen={this.state.copyCardOpen}

@@ -4,6 +4,10 @@ $field-label-padding-left: 21px;
 $text-input-height: 34px;
 $color-btn-width: 70px;
 
+$key-val-field-height: 34px;
+$key-val-field-width: 174px;
+$key-val-field-spacing: 2px;
+
 .lField {
   margin: 0 auto;
   padding: 22px 0;
@@ -39,6 +43,12 @@ $color-btn-width: 70px;
   color: #242424;
   font-size: 13px;
   outline: none;
+}
+
+.textEntryTextList {
+  height: 40px;
+  padding: 5px;
+  width: 100%;
 }
 
 .textInput {
@@ -185,6 +195,95 @@ $color-btn-width: 70px;
   }
 }
 
+  .colorChoicesKeyVal {
+    width: 20%;
+  }
+
+.keyValFields {
+  margin: (22px - $key-val-field-spacing) auto 22px auto;
+  position: relative;
+  width: $key-val-field-width * 2 + $key-val-field-spacing;
+}
+
+.keyValRow {
+  height: $key-val-field-height;
+  margin-top: $key-val-field-spacing;
+  position: relative;
+  width: 100%;
+}
+
+.lKeyVal { 
+  position: relative;
+  width: $key-val-field-width; 
+  height: 100%;
+}
+
+.keyValField {
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+}
+
+.keyValFieldWColor {
+  border-radius: 2px 0 0 2px;
+  width: 80%;
+}
+
+.keyValColorAnchor {
+  background-color: #000;
+  cursor: pointer;
+  border-radius: 0 2px 2px 0;
+  display: inline-block;
+  flex: 0 0 auto;
+  height: 100%;
+  padding-top: 5px;
+  position: relative;
+  text-align: center;
+  vertical-align: top;
+  width: 20%;
+}
+
+.cardBox {
+  display: inline-block;
+  margin: 0;
+  padding-top: 33px;
+  width: 287px;
+}
+
+.cardBoxNoImg {
+  display: block;
+  margin: 0 auto;
+}
+
+.cardEolLink {
+  background: $white;
+  color: #0353bc;
+  display: block;
+  font-size: 14px;
+  height: 30px;
+  line-height: 30px;
+  margin: 12px auto 0 auto;
+  text-align: center;
+  text-decoration: none;
+  width: 240px;
+
+  & > i {
+    font-size: 24px;
+    position: relative;
+    top: 2px;
+    vertical-align: middle;
+  }
+}
+
+.lFl {
+  float: left;
+}
+
+.lFr {
+  float: right;
+}
+
 .isDisableExempt {
   z-index: 100 !important;
 }
+

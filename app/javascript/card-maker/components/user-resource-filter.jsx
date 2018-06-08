@@ -89,9 +89,22 @@ class UserResourceFilter extends React.Component {
   }
 
   render() {
+    let topClasses = [styles.newInputSelect].concat(
+          this.props.topClass || []
+        )
+      , anchorClasses = [styles.newInput].concat(
+          this.props.anchorClass || []
+        )
+      , itemsClasses = [styles.newInputSelectItems].concat(
+          this.props.itemsClass || []
+        )
+      ;
+
+
+
     return (
-      <div className={styles.newInputSelect} onClick={this.toggleOpen} ref={this.setRef}>
-        <div className={styles.newInput}>
+      <div className={topClasses.join(' ')} onClick={this.toggleOpen} ref={this.setRef}>
+        <div className={anchorClasses.join(' ')}>
           <div className={styles.newInputSelectName}>{this.selectedItemName()}</div>
           {
             this.hasDropdown() && 
@@ -99,7 +112,7 @@ class UserResourceFilter extends React.Component {
           }
         </div>
         {this.hasDropdown() && this.state.menuOpen && 
-          <ul className={styles.newInputSelectItems}>
+          <ul className={itemsClasses.join(' ')}>
             {this.props.filterItems.map((item) => {
               return (<FilterItem
                 handleClick={() => this.handleItemClick(item.id)}

@@ -644,6 +644,7 @@ $col-border-width: 5px;
     background-color: #586475;
     height: 114px;
     overflow: hidden;
+    margin-bottom: 2px;
     position: relative;
   }
 
@@ -801,35 +802,10 @@ $col-border-width: 5px;
     }
   }
 
-  .card-box {
-    display: inline-block;
-    width: 287px;
-
-    .eol-link {
-      background: $white;
-      color: #0353bc;
-      display: block;
-      font-size: 14px;
-      height: 30px;
-      line-height: 30px;
-      margin: 12px auto 0 auto;
-      text-align: center;
-      text-decoration: none;
-      width: 240px;
-
-      .icon-eol-logo {
-        font-size: 24px;
-        position: relative;
-        top: 2px;
-        vertical-align: middle;
-      }
-    }
-  }
-
   .card-canvas {
     box-shadow: 0 2px 4px #43525f;
     display: block;
-    margin: 33px auto 0 auto;
+    margin: 0 auto;
     position: relative;
   }
 }
@@ -1291,35 +1267,6 @@ $col-border-width: 5px;
         background-color: $border-color;
         color: $black;
       }
-    }
-  }
-
-  .key-val-fields {
-    $field-height: 34px;
-    $field-width: 174px;
-    $field-spacing: 2px;
-
-    margin: (22px - $field-spacing) auto 22px auto;
-    position: relative;
-    width: $field-width * 2 + $field-spacing;
-
-    .key-val-row {
-      height: $field-height;
-      margin-top: $field-spacing;
-      width: 100%;
-    }
-
-    .key-val-field {
-      position: relative;
-      width: $field-width;
-    }
-
-    .key {
-      float: left;
-    }
-
-    .val {
-      float: right;
     }
   }
 

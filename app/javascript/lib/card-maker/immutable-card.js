@@ -141,6 +141,10 @@ class ImmutableCard {
   fieldColor = (field) => {
     return this.delegate.fieldColor(field);
   }
+
+  templateName = () => {
+    return this.delegate.templateName();
+  }
 }
 
 function newInstance(data, cb) {

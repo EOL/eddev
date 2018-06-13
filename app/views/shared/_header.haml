@@ -1,37 +1,35 @@
-#Topbar.topbar<
-  .topbar-inner
-    #TitleContainer.title-container>
-      #EolNav.nav-menu.nav-menu-eol.nav-link
-        = link_to root_path, :class => "eol-nav-a" do
+.navbar-outer
+  .navbar<
+    .navbar-inner
+      .eol-menu
+        = link_to root_path, :class => "home-lnk" do
           = image_tag "welcome/eol_logo.png", :class => "eol-logo"
-        %ul#EolDropdown.eol-dropdown
+          %i.fa.fa-caret-down.eol-menu-caret
+        %ul.eol-dropdown
           %li.eol-link.selected
             = link_to t(".eol_nav.l_and_e"), root_path
           %li.eol-link
             = link_to t(".eol_nav.eol"), "http://www.eol.org"
-      .nav-menu.nav-menu-user
+      .user-menu
         -if logged_in_user
-          %div= logged_in_user.user_name
-          %ul.user-dropdown
-            %li= link_to t("shared.header.settings"), account_path
-            %li= link_to t("shared.header.sign_out"), logout_path
+          = link_to(logged_in_user.user_name, account_path, :class => "nav-link nav-link-account")
+          = link_to(t(".sign_out"), logout_path, :class => "nav-link nav-link-sign-out")
         -else
-          = link_to t("shared.header.sign_in"), login_path, :class => "about nav-link"
-      #BarsIcon.bars.fa.fa-bars
+          = link_to t("shared.header.sign_in"), login_path, :class => "nav-link nav-link-account"
       %h1#Title.title 
-        = t ".main_title_html"
-    #SlideMenu.slide-menu>
-      .section<
-        .color-bar.green
-        - if logged_in_user
-          = link_to t("shared.header.settings"), account_path, :class => :link
-        - else
-          = link_to "EOL.org", "http://www.eol.org/", :class => :link
-      .divider
-      .section<
-        .color-bar.blue
-        -if logged_in_user
-          = link_to t("shared.header.sign_out"), logout_path, :class => :link
-        -else
-          = link_to t("shared.header.sign_in"), login_path, :class  => :link
+        = t ".main_title"
+      #SlideMenu.slide-menu>
+        .section<
+          .color-bar.green
+          - if logged_in_user
+            = link_to t("shared.header.settings"), account_path, :class => :link
+          - else
+            = link_to "EOL.org", "http://www.eol.org/", :class => :link
+        .divider
+        .section<
+          .color-bar.blue
+          -if logged_in_user
+            = link_to t("shared.header.sign_out"), logout_path, :class => :link
+          -else
+            = link_to t("shared.header.sign_in"), login_path, :class  => :link
 

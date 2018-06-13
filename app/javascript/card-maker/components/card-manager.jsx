@@ -993,7 +993,7 @@ class CardManager extends React.Component {
               extraClass={styles.searchCards}
             />
             <div className={styles.lSort}>
-              <span className={styles.sortLabel}>Sort: </span>
+              <span className={styles.sortLabel}>{I18n.t('react.card_maker.sort_label') + ' '}</span>
               <Menu
                 items={this.sortItems()}
                 anchorText={this.props.sort.label}

@@ -19,7 +19,9 @@
 $slide-menu-bg-color: #2e303d;
 $section-v-margin: 54px;
 $nav-menu-width: 120px;
-$dark-gray: #2e303d;
+$navbar-gray: #f7f7f7;
+$nav-link-gray: #b3b3b3;
+$nav-link-blue: #54a3ff;
 
 @mixin hero-fluid($width, $height) {
   margin: 0 auto;
@@ -37,7 +39,10 @@ html {
   -webkit-text-size-adjust: 100%; // Prevent Safari on iOS from resizing text
 }
 
-body { margin: 0; padding: 0; }
+body { 
+  margin: 0; 
+  padding: $topbar-height 0 0 0; 
+}
 
 body, p {
   font: normal 100% $open-sans;
@@ -129,46 +134,90 @@ textarea {
 }
 
 //HEADER
-.topbar {
-  background: $black;
-  color: $white;
-  height: $topbar-height-px * 1px;
-  position: relative;
+.navbar-outer {
+  left: 0;
+  position: fixed;
+  top: 0;
   width: 100%;
+  z-index: 100;
 }
 
-.topbar-inner {
+.navbar {
+  background: $navbar-gray;
+  height: $topbar-height;
+  line-height: $topbar-height;
+  margin: 0 auto;
+  max-width: $page-width-px * 1px; 
+}
+
+.navbar-inner {
+  height: 100%;
   max-width: $main-col-width * 1px;
   margin: 0 auto;
   position: relative;
 }
 
-.bars {
-  display: none;
+.title {
+  $font-size-px: 12;
+  color: $eol-green;
+  margin: 0;
+  font-size: $font-size-px / $em * 1em;
+  font-weight: $semibold;
+  line-height: $topbar-height-px / $font-size-px * 1em;
+  text-align: center;
 }
 
-.nav-menu {
-  background: $dark-gray;
-  cursor: pointer;
-  height: $topbar-height;
-  line-height: $topbar-height;
-  position: absolute;
-  text-align: center;
-  text-decoration: none;
-  width: $nav-menu-width;
+.eol-menu {
+  background: $white;
+  box-shadow: 0 1px 1px 0 #d0d0d0;
+  border-radius: 1px;
+  color: $eol-green;
+  float: left;
+  height: 102%;
+  padding: 0 11px;
+  position: relative;
+  width: 85px;
 
-  & > ul {
-    display: none;
-    font-size: 14px;
-    font-weight: $semibold;
-    position: absolute;
-    z-index: 2;
+  & > a {
+    color: $eol-green;
   }
 
-  &:hover > ul, &.hover > ul {
+  &:hover > ul {
     display: block;
   }
 }
+
+.eol-logo {
+  height: 50%;   
+  margin-right: 5%;
+  vertical-align: middle;
+}
+
+.eol-menu-caret {
+  color: inherit;
+  vertical-align: middle;
+}
+
+.user-menu {
+  float: right;
+}
+
+.nav-link {
+  text-decoration: none;
+}
+
+.nav-link-account {
+  color: $nav-link-blue;
+  font-size: 13px;
+  font-weight: $semibold;
+}
+
+.nav-link-sign-out {
+  color: $nav-link-gray;
+  font-size: 12px;
+  margin-left: 8px;
+}
+
 
 .nav-menu-eol {
   left: 0;
@@ -187,21 +236,16 @@ textarea {
   }
 }
 
-
-.eol-nav-a {
-  display: block;
-  height: 100%;
-  width: 100%;
-}
-
 .eol-dropdown {
   $eol-link-padding-px: 13;
   $font-size-px: 14;
 
-  width: 170px;
+  display: none;
+  width: 220%;
   text-align: left;
   top: $topbar-height-px * 1px;
   left: 0;
+  position: absolute;
 
   .eol-link {
     $height-em: 37 / $em;
@@ -217,29 +261,12 @@ textarea {
   }
 }
 
-.user-dropdown {
-  background: $dark-gray;
-  color: $white;
-  min-width: 100%;
-  padding: 5px 10px;
-
-}
-
 .eol-link.selected {
   background: $eol-link-selected-bg-color;
 
   a {
     color: $white;
   }
-}
-
-.eol-logo {
-  $height-em: 19 / $em;
-  position: absolute;
-  height: $height-em * 1em;
-  line-height: $height-em;
-  left: 38 / $em * 1em;
-  top: 8 / $em * 1em;
 }
 
 .about {
@@ -253,18 +280,6 @@ textarea {
   text-align: center;
 }
 
-.title {
-  $font-size-px: 20;
-  margin: 0;
-  font-size: $font-size-px / $em * 1em;
-  font-weight: $semibold;
-  line-height: $topbar-height-px / $font-size-px * 1em;
-  text-align: center;
-}
-
-.title-plus {
-  color: $eol-green;
-}
 
 .slide-menu {
   display: none;
@@ -332,6 +347,7 @@ $hero-transition-width: 525;
     display: none;
   }
 
+  /*
   .slide-menu {
     $color-bar-width-px: 3;
     $width-px: 205;
@@ -340,7 +356,7 @@ $hero-transition-width: 525;
 
     background: $slide-menu-bg-color;
     display: inline-block;
-    height: $mobile-topbar-height;
+    height: $mobile-navbar-height;
     padding: 1px 0;
     width: percentage($width-px / $hero-transition-width);
 
@@ -413,6 +429,7 @@ $hero-transition-width: 525;
       display: none;
     }
   }
+  */
 
   .eol-logo {
     height: 24 / $em * 1em;
@@ -427,11 +444,13 @@ $hero-transition-width: 525;
     text-align: left;
   }
 
-  .topbar {
-    height: $mobile-topbar-height;
+  /*
+  .navbar {
+    height: $mobile-navbar-height;
     overflow: hidden;
     white-space: nowrap;
   }
+  */
 
   .title-container {
     $lpad-px: 8;

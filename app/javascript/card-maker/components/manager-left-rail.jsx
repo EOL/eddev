@@ -114,7 +114,6 @@ class ManagerLeftRail extends React.Component {
     return (
       <div className={styles.lLeftRail}>
         <div className={styles.cardsHdr}>
-          <i className='edu-icon-eol-logo' />
           {/* <img src={eolLogo} className={styles.cardsHdrEolLogo}/> */}
           <i className={`cm-icon-two-cards ${styles.cardsHdrTwoCards}`} />
           <div className={styles.cardsHdrTxt} dangerouslySetInnerHTML={{__html: I18n.t('react.card_maker.card_maker_html')}} />

@@ -1,4 +1,5 @@
 es_es:
+  language: español castellano
   activerecord:
     attributes:
       user:

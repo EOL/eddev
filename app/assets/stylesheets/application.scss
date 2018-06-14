@@ -133,6 +133,18 @@ textarea {
   }
 }
 
+.l-abs-l {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.l-abs-r {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 //HEADER
 .navbar-outer {
   left: 0;
@@ -167,12 +179,16 @@ textarea {
   text-align: center;
 }
 
-.eol-menu {
+.nav-menu {
+  cursor: pointer;
+  float: left;
+}
+
+.nav-menu-eol {
   background: $white;
   box-shadow: 0 1px 1px 0 #d0d0d0;
   border-radius: 1px;
   color: $eol-green;
-  float: left;
   height: 102%;
   padding: 0 11px;
   position: relative;
@@ -188,14 +204,57 @@ textarea {
 }
 
 .eol-logo {
-  height: 50%;   
-  margin-right: 5%;
+  height: 20px;   
+  margin-right: 5px;
   vertical-align: middle;
 }
 
-.eol-menu-caret {
+.nav-menu-caret {
   color: inherit;
   vertical-align: middle;
+}
+
+.nav-menu-caret-lang {
+  position: absolute;
+  right: 13px;
+  top: 8px;
+}
+
+.nav-menu-lang {
+  $height: 29px;
+  background: $white;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px 0 rgba(186, 186, 186, 0.5);
+  font-size: 14px;
+  line-height: $height;
+  margin-left: 7px;
+  position: relative;
+  top: 5px;
+  width: 160px;
+
+  & > .lang-item-choice {
+    display: none;
+  }
+
+  &:hover > .lang-item-choice {
+    display: block;
+  }
+
+  a {
+    color: inherit;
+    display: block;
+    text-decoration: none;
+    width: 100%;
+  }
+}
+
+.lang-item {
+  padding: 0 13px;
+}
+
+.lang-item-choice:hover {
+  background: $txt-gray; 
+  color: $white;
 }
 
 .user-menu {

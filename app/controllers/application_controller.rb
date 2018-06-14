@@ -7,7 +7,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery :with => :exception
 
   def default_url_options(options = {})
-    { locale: I18n.locale }.merge options
+    locale = I18n.locale
+    locale = nil if locale == I18n.default_locale
+    { locale: locale }.merge options
   end
 
   # Raise ApplicationController::ForbiddenError to trigger default 404 response. We use 404 instead of 403 to avoid exposing the existence of forbidden resources to unauthorized users.
@@ -85,17 +87,7 @@ class ApplicationController < ActionController::Base
 
   private
     def set_locale
-      locale = params[:locale]
-
-      # If we have a locale from the URL, set it for the duration of the request
-      if !locale.nil?
-        I18n.locale = locale
-      # If there is a user, redirect to the url from the request with the locale added
-      elsif logged_in_user && logged_in_user.locale != I18n.default_locale
-        redirect_to url_for request.params.merge({locale: logged_in_user.locale})
-      end
-      # Otherwise, we are on the / version of the site, and I18n will correctly
-      # use the default locale
+      I18n.locale = params[:locale] || I18n.default_locale
     end
 
     # Render standard 404 page

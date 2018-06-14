@@ -1,4 +1,4 @@
-es_es:
+es-ES:
   language: español castellano
   activerecord:
     attributes:

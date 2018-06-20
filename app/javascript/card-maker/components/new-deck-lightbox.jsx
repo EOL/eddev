@@ -5,8 +5,15 @@ class NewDeckLightbox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      colId: ''
+      colId: '',
+      locale: I18n.locale
     }
+  }
+
+  componentDidMount() {
+    this.setState({
+      locale: I18n.locale
+    });
   }
 
   componentWillReceiveProps(newProps) {
@@ -18,16 +25,27 @@ class NewDeckLightbox extends React.Component {
   }
 
   fields = () => {
-    return [{
-      type: 'text',
-      value: this.state.colId,
-      handleChange: (e) => this.setState({ colId: e.target.value }),
-      placeholder: I18n.t('react.card_maker.collection_id_optional')
-    }];
+    return [
+      {
+        type: 'text',
+        value: this.state.colId,
+        handleChange: (e) => this.setState({ colId: e.target.value }),
+        placeholder: I18n.t('react.card_maker.collection_id_optional')
+      },
+      {
+        type: 'select',
+        options: I18n.availableLocales.map((locale) => { 
+          return { id: locale.locale, name: locale.displayName } 
+        }),
+        selectedId: this.state.locale,
+        handleSelect: (locale) => this.setState({ locale: locale })
+      }
+    ];
+
   }
 
   handleSubmit = (name) => {
-    this.props.handleCreate(name, this.state.colId)
+    this.props.handleCreate(name, this.state.colId, this.state.locale)
   }
 
   render() {

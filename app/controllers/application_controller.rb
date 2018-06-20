@@ -88,6 +88,17 @@ class ApplicationController < ActionController::Base
   private
     def set_locale
       I18n.locale = params[:locale] || I18n.default_locale
+
+      if logged_in_user
+        user_locale = logged_in_user.locale.to_sym
+        if user_locale != I18n.locale
+          redirect_to(url_for(
+            :locale => user_locale == I18n.default_locale ? 
+              nil : 
+              logged_in_user.locale
+          ))
+        end
+      end
     end
 
     # Render standard 404 page

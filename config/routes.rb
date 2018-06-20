@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root 'welcome#index'
+  get  "set_locale"                   => "locales#set_locale"
 
   scope '(:locale)', locale: /#{I18n.available_locales.reject { |l| l == I18n.default_locale}.join('|')}/ do
     get  ''            => 'welcome#index', :as => :home

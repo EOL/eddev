@@ -18,7 +18,7 @@
           - I18n.available_locales.each do |locale|
             %li.lang-item.lang-item-choice
               - if I18n.locale != locale
-                = link_to(I18n.t("language", :locale => locale), url_for(:locale => (locale == I18n.default_locale ? nil : locale)))
+                = link_to(I18n.t("language", :locale => locale), set_locale_path(:params => { :set_locale => locale }))
       .l-abs-r
         .user-menu
           -if logged_in_user

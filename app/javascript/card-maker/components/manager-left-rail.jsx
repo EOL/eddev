@@ -83,6 +83,28 @@ class ManagerLeftRail extends React.Component {
     return baseItems.concat(
       this.props.decks.filter((deck) => {
         return deck.name.toLowerCase().includes(searchVal.toLowerCase());
+      }).sort((a, b) => {
+        var aName = a.name.toLowerCase()
+          , bName = b.name.toLowerCase()
+          ;
+
+        if (a.locale === I18n.locale && b.locale !== I18n.locale) {
+          return -1;
+        }
+
+        if (a.locale !== I18n.locale && b.locale === I18n.locale) {
+          return 1;
+        }
+
+        if (aName < bName) {
+          return -1;
+        }
+
+        if (aName > bName) {
+          return 1;
+        }
+
+        return 0;
       }).map((deck) => {
         return this.deckItem(deck, searchVal);
       })

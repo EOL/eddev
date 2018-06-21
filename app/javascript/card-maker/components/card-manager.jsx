@@ -393,7 +393,17 @@ class CardManager extends React.Component {
       }
     }
 
-    resources = unfilteredCards.slice(0).sort(this.props.sort.fn);
+    resources = unfilteredCards.slice(0).sort((a, b) => {
+      if (a.locale === I18n.locale && b.locale !== I18n.locale) {
+        return -1;
+      }
+
+      if (a.locale !== I18n.locale && b.locale === I18n.locale) {
+        return 1;
+      }
+
+      return this.props.sort.fn(a, b)
+    });
 
     return {
       resources: resources,

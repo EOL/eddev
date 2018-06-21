@@ -185,22 +185,23 @@ class CardEditor extends React.Component {
     let scrollTop = $(document).scrollTop()
       , $preview = $(this.previewNode)
       , $col = $(this.leftColNode)
+      , $header = $('.js-navbar') // This is a no-no, but the nav bar isn't part of this React app, so...
+      , headHeight = $header.outerHeight()
       , colOffsetTop = $col.offset().top
-      , colViewOffset = colOffsetTop - scrollTop
+      , colViewOffset = colOffsetTop - scrollTop - headHeight
       , colHeight = $col.outerHeight()
-      , innerColViewOffset = colViewOffset 
       , previewHeight = $preview.outerHeight()
       , top
       , position
       ;
 
-    if (innerColViewOffset < 0) {
+    if (colViewOffset < 0) {
       if (colHeight - previewHeight < -colViewOffset) {
         position = 'absolute';
         top = colHeight - previewHeight;
       } else {
         position = 'fixed';
-        top = 0;
+        top = headHeight;
       }
     } else {
       position = 'absolute';

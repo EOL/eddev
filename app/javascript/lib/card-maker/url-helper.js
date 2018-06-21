@@ -1,10 +1,8 @@
-export function cardMakerUrl(path, locale) {
-  var parts = []
-    , locale = locale || I18n.locale
-    ;
+export function cardMakerUrl(path) {
+  var parts = [];
   
-  if (locale !== I18n.defaultLocale) {
-    parts.push(locale);
+  if (I18n.locale !== I18n.defaultLocale) {
+    parts.push(I18n.locale);
   }
 
   parts.push('card_maker_ajax');

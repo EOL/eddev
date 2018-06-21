@@ -463,25 +463,25 @@ class CardManager extends React.Component {
   }
 
   handleCopyDeck = (deckName) => {
-    this.createDeckHelper(deckName, null, null, this.props.selectedDeck.id); 
+    this.createDeckHelper(deckName, null, this.props.selectedDeck.id); 
   }
 
-  handleCreateDeck = (deckName, colId, locale) => {
-    this.createDeckHelper(deckName, colId, locale, null);
+  handleCreateDeck = (deckName, colId) => {
+    this.createDeckHelper(deckName, colId, null);
   }
 
-  createDeckHelper = (deckName, colId, locale, copyFrom) => {
+  createDeckHelper = (deckName, colId, copyFrom) => {
     const that = this
         , data = {
             name: deckName,
-            copyFrom: copyFrom,
+            copyFrom: copyFrom
           }
         ;
 
     that.props.showLoadingOverlay();
 
     $.ajax({
-      url: cardMakerUrl('decks', locale),
+      url: cardMakerUrl('decks'),
       method: 'POST',
       data: JSON.stringify(data),
       success: (data) => {

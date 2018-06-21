@@ -63,6 +63,8 @@
         ga('send', 'pageview');
 
     #Page
+      - if flash[:global_notice]
+        .notice.js-notice= flash[:global_notice]
       = render "shared/header"
 
       -if @hero_image_partial

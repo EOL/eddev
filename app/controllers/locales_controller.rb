@@ -21,6 +21,10 @@ class LocalesController < ApplicationController
                       root_path :locale => locale
                     end
 
+    if locale.to_sym != I18n.default_locale && !session[:i18n_notice_shown]
+      session[:i18n_notice_shown] = true
+      flash[:global_notice] = "We are in the process of translating our entire site, but right now only the Card Maker is available in your language. Thank you for your patience!"
+    end
     redirect_to redirect_path
   end
 end

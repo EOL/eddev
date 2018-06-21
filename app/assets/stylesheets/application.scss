@@ -93,6 +93,20 @@ textarea {
   overflow: hidden;
 }
 
+/* FLASH NOTICE */
+.notice {
+  background: #57657c;
+  color: $white;
+  left: 50%;
+  margin: 0 auto;
+  max-width: 350px;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
 /* FOOTER */
 .footer {
   $footer-v-spacing: 23 / $em * 1em;

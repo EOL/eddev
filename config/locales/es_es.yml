@@ -23,7 +23,7 @@ es-ES:
               invalid: Debe contener letras, números y los caracteres "@", "." y  "_"
       template:
         header:
-          one: Un error impidió guardar el (la) [modelo]
+          one: Un error impidió guardar el (la) %{modelo}
           other: "%{count} errores impidieron guardar el (la) %{model}"
   user_sessions:
     create:
@@ -36,16 +36,16 @@ es-ES:
       password: Contraseña
       sign_in: Ingresar
       sign_up: Registrarse
-      user_name: 'Nombre de usuario   '
+      user_name: 'Nombre de usuario'
   users:
     account:
       change_password: Cambiar contraseña
     change_password:
-      success: 'Cambio de contraseña con éxito '
+      success: 'Cambio de contraseña con éxito'
     change_password_form:
       change_password: Cambiar contraseña
       current_password: Contraseña actual
-      success: 'Cambio de contraseña con éxito '
+      success: 'Cambio de contraseña con éxito'
     confirm:
       success: Usted ha completado con éxito su registro  %{user_name}!  Ingrese aquí
     confirmation_pending:
@@ -71,6 +71,25 @@ es-ES:
     user: Usuario
   react:
     card_maker:
+      add_user: Adicionar usuario
+      added_user: Usuario exitósamente adicionado  %{userName}
+      are_you_sure_remove_user: Está Usted seguro de remover el usuario  %{userName}?
+      click_choose_card_type: De click para elegir un tipo de carta diferente
+      create: Crear
+      key_card: Carta Clave
+      no_results_found: No se encontraron resultados
+      or_select_different_card: o elija un tipo de carta diferente de la pila inferior
+      owner_user: 'Dueño: %{userName}'
+      proj_desc_card: Descripción del Proyecto
+      removed_user: Usuario exitosamente removido %{userName}
+      select: Seleccionar
+      select_a_deck_for_card: Seleccione un mazo para su carta (opcional)
+      sort_label: 'Escoja:'
+      start_typing_user_name: Comience a digitar el nombre para buscar
+      title_card: Título de la carta
+      trait_card: Carta del rasgo
+      users: Usuario
+      vocab_card: Vocabulario
       add_desc: Añada una descipción
       all_cards: Todas las fichas
       all_decks: Total de colecciones
@@ -168,3 +187,13 @@ es-ES:
       unassigned: No asignado
       unexpected_error_msg: Ha ocurrido un error inesperado
       upload_an_image: Cargue una imagen
+  shared:
+    header:
+      settings: Ajustes
+      sign_in: Iniciar sesión
+      sign_out: Cerrar sesión
+  signup_confirmation_mailer:
+    confirmation_email:
+      body_html: 'Hola, %{user_name}, gracias por inscribirte en EOL  L&amp;E site.
+        Porfavor dar click en el siguiente link tpara confirmar el registro: <a href="%{url}">%{url}</a>'
+      subject: Completar you registro EOL L&E

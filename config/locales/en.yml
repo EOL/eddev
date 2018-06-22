@@ -81,6 +81,10 @@ en:
       body_html: "Hi, %{user_name}. Please click the following link to change your password: <a href=\"%{url}\">%{url}</a>"
       subject: "Reset your EOL L&E password"
   language: English
+  earth_tours:
+    index:
+      intro_hdr: Google Earth Tours
+      intro_p: EOL's Google Earth Tours give you a geographical view of the world's biodiversity. Using Google Earth's satellite imagery, these narrated video tours explore a range of topics such as migration and global research initiatives.
   lesson_plans:
     descriptions:
     index:

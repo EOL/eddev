@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     get  'about'        => 'welcome#about',      :as => :about
     get  'species_cards'        => 'cards#index',        :as => :cards
     get  'lesson_plans' => 'lesson_plans#index', :as => :lesson_plans
+    get  'earth_tours' => 'earth_tours#index', :as => :earth_tours
 
     resources :users, :only => [:new, :create]
 

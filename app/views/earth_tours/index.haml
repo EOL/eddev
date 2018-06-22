@@ -1,3 +1,9 @@
 = render "shared/intro_section", :header => "earth_tours.index.intro_hdr",
   :paragraphs => [{:key => "earth_tours.index.intro_p", :vars => {:cards_path => cards_path}}],
   :hideable => false
+.tours
+  .tour
+    %h2 Monarch Butterfly Migration
+    %p A story about the migration of the monarch butterflies (Danaus plexippus), and all the people that help them out along the way.
+    .l-fluid-iframe
+      %iframe{:width => 560, :height => 315, :src => "https://www.youtube.com/embed/uqDwvuleRYc", :frameborder => 0, :allow => "autoplay; encrypted-media", :allowfullscreen => true}

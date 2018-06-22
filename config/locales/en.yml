@@ -457,6 +457,7 @@ en:
       select: select
       select_deck: deck (optional)
       select_a_deck_for_card: select a deck for your card (optional)
+      sort_label: "Sort:"
       sorts:
         common_a_z: common name (a-z)
         common_z_a: common name (z-a)
@@ -487,7 +488,7 @@ en:
       eol_nav:
         eol: "Encyclopedia of Life"
         l_and_e: "Learning + Education"
-      main_title_html: "Learning <span class='title-plus'>+</span> Education"
+      main_title: "Learning + Education"
       settings: "settings"
       sign_in: "sign in"
       sign_out: "sign out"

@@ -1,7 +1,5 @@
 # Card service pass-through endpoints
 
-require "card_service_caller"
-
 class CardMakerAjaxController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :ensure_user, :except => [
@@ -317,7 +315,6 @@ class CardMakerAjaxController < ApplicationController
     def data_pass_thru_response(svc_res)
       expires_in 1.hour, :public => true
 
-      content_type = svc_res.headers["content-type"]
       opts = {
         :status => svc_res.code,
         :type => svc_res.headers["content-type"]

@@ -1,5 +1,14 @@
 export function cardMakerUrl(path) {
-  return '/card_maker_ajax/' + path;
+  var parts = [];
+  
+  if (I18n.locale !== I18n.defaultLocale) {
+    parts.push(I18n.locale);
+  }
+
+  parts.push('card_maker_ajax');
+  parts.push(path);
+
+  return '/' + parts.join('/');
 }
 
 export function loResCardImageUrl(card) {

@@ -276,7 +276,7 @@ module CardServiceCaller
     end
 
     def self.add_api_headers(headers)
-      { :'x-api-key' => SERVICE_KEY }.merge(headers)
+      { :'x-api-key' => SERVICE_KEY, :'x-locale' => I18n.locale.to_s }.merge(headers)
     end
 
     def self.build_service_url(use_https, host, port)

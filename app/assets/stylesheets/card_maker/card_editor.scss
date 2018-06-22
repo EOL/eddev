@@ -167,14 +167,14 @@ $key-val-field-spacing: 2px;
       clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
       left: 0;
       padding-left: $field-label-padding-left;
-      width: 50%;
+      width: 56%;
     }
 
     .fieldTabRight {
-      clip-path: polygon(10% 0, 100% 0%, 100% 100%, 0 100%);
+      clip-path: polygon(11% 0, 100% 0%, 100% 100%, 0 100%);
       right: 0;
       text-align: center;
-      width: 60%;
+      width: 50%;
     }
 
     .isFieldTabInactive {

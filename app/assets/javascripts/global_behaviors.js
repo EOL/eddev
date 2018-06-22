@@ -47,6 +47,9 @@
   $(function() {
     $('#BarsIcon').click(slideMenuOpen);
     $(window).resize(closeMenuIfNecessary);
+    setTimeout(function() {
+      $('.js-notice').fadeOut();
+    }, 6000);
 
     // Double-touch experience for hover elements
     $('.hoverable').on('touchstart', function(event) {

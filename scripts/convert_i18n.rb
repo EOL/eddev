@@ -81,14 +81,14 @@ File.open(options[:fname]) do |raw|
 
     puts csv
   else
-    rows = CSV.parse(raw_str, :col_sep => "\t")
+    rows = CSV.parse(raw_str, :col_sep => "\t", :liberal_parsing => true)
     flat = rows.to_h
     expanded = expand(flat)
 
     dest_type = options[:from_tsv_to]
 
     result = if (dest_type == "json")
-      expanded.to_json 
+      JSON.pretty_generate(expanded)
     elsif (dest_type == "yml")
       YAML.dump(expanded)
     else

@@ -1,37 +1,45 @@
-#Topbar.topbar<
-  .topbar-inner
-    #TitleContainer.title-container>
-      #EolNav.nav-menu.nav-menu-eol.nav-link
-        = link_to root_path, :class => "eol-nav-a" do
-          = image_tag "welcome/eol_logo.png", :class => "eol-logo"
-        %ul#EolDropdown.eol-dropdown
-          %li.eol-link.selected
-            = link_to t(".eol_nav.l_and_e"), root_path
-          %li.eol-link
-            = link_to t(".eol_nav.eol"), "http://www.eol.org"
-      .nav-menu.nav-menu-user
-        -if logged_in_user
-          %div= logged_in_user.user_name
-          %ul.user-dropdown
-            %li= link_to t("shared.header.settings"), account_path
-            %li= link_to t("shared.header.sign_out"), logout_path
-        -else
-          = link_to t("shared.header.sign_in"), login_path, :class => "about nav-link"
-      #BarsIcon.bars.fa.fa-bars
+.navbar-outer.js-navbar
+  .navbar<
+    .navbar-inner
+      .l-abs-l
+        .nav-menu.nav-menu-eol
+          = link_to home_path, :class => "home-lnk" do
+            = image_tag "welcome/eol_logo.png", :class => "eol-logo"
+            %i.fa.fa-caret-down.nav-menu-caret
+          %ul.eol-dropdown
+            %li.eol-link.selected
+              = link_to t(".eol_nav.l_and_e"), home_path
+            %li.eol-link
+              = link_to t(".eol_nav.eol"), "http://www.eol.org"
+        %ul.nav-menu.nav-menu-lang
+          %li.lang-item
+            %span= t("language")
+            %i.fa.fa-caret-down.nav-menu-caret.nav-menu-caret-lang
+          - I18n.available_locales.each do |locale|
+            %li.lang-item.lang-item-choice
+              - if I18n.locale != locale
+                = link_to(I18n.t("language", :locale => locale), set_locale_path(:params => { :set_locale => locale }))
+      .l-abs-r
+        .user-menu
+          -if logged_in_user
+            = link_to(logged_in_user.user_name, account_path, :class => "nav-link nav-link-account")
+            = link_to(t(".sign_out"), logout_path, :class => "nav-link nav-link-sign-out")
+          -else
+            = link_to t("shared.header.sign_in"), login_path, :class => "nav-link nav-link-account"
       %h1#Title.title 
-        = t ".main_title_html"
-    #SlideMenu.slide-menu>
-      .section<
-        .color-bar.green
-        - if logged_in_user
-          = link_to t("shared.header.settings"), account_path, :class => :link
-        - else
-          = link_to "EOL.org", "http://www.eol.org/", :class => :link
-      .divider
-      .section<
-        .color-bar.blue
-        -if logged_in_user
-          = link_to t("shared.header.sign_out"), logout_path, :class => :link
-        -else
-          = link_to t("shared.header.sign_in"), login_path, :class  => :link
+        = t ".main_title"
+      #SlideMenu.slide-menu>
+        .section<
+          .color-bar.green
+          - if logged_in_user
+            = link_to t("shared.header.settings"), account_path, :class => :link
+          - else
+            = link_to "EOL.org", "http://www.eol.org/", :class => :link
+        .divider
+        .section<
+          .color-bar.blue
+          -if logged_in_user
+            = link_to t("shared.header.sign_out"), logout_path, :class => :link
+          -else
+            = link_to t("shared.header.sign_in"), login_path, :class  => :link
 

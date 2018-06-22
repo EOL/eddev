@@ -21,13 +21,18 @@
     = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.js"
     = javascript_include_tag "application"
 
+    -# Order is important! Set the locale before including js_packs
+    :javascript
+      I18n.defaultLocale = "#{I18n.default_locale}";
+      I18n.locale = "#{I18n.locale}";
+
     -if asset_exists? "#{params[:controller]}.js"
       = javascript_include_tag params[:controller]
 
     - js_packs.each do |pack_name|
       = javascript_pack_tag pack_name
       = stylesheet_pack_tag pack_name
-
+    
     = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"
     :javascript
       WebFont.load({
@@ -58,6 +63,8 @@
         ga('send', 'pageview');
 
     #Page
+      - if flash[:global_notice]
+        .notice.js-notice= flash[:global_notice]
       = render "shared/header"
 
       -if @hero_image_partial

@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   root 'welcome#index'
+  get  "set_locale"                   => "locales#set_locale"
 
-  scope '(:locale)', locale: /#{I18n.available_locales.join('|')}/ do
+  scope '(:locale)', locale: /#{I18n.available_locales.reject { |l| l == I18n.default_locale}.join('|')}/ do
+    get  ''            => 'welcome#index', :as => :home
     get  'about'        => 'welcome#about',      :as => :about
     get  'species_cards'        => 'cards#index',        :as => :cards
     get  'lesson_plans' => 'lesson_plans#index', :as => :lesson_plans

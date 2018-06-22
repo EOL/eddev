@@ -393,7 +393,17 @@ class CardManager extends React.Component {
       }
     }
 
-    resources = unfilteredCards.slice(0).sort(this.props.sort.fn);
+    resources = unfilteredCards.slice(0).sort((a, b) => {
+      if (a.locale === I18n.locale && b.locale !== I18n.locale) {
+        return -1;
+      }
+
+      if (a.locale !== I18n.locale && b.locale === I18n.locale) {
+        return 1;
+      }
+
+      return this.props.sort.fn(a, b)
+    });
 
     return {
       resources: resources,
@@ -993,7 +1003,7 @@ class CardManager extends React.Component {
               extraClass={styles.searchCards}
             />
             <div className={styles.lSort}>
-              <span className={styles.sortLabel}>Sort: </span>
+              <span className={styles.sortLabel}>{I18n.t('react.card_maker.sort_label') + ' '}</span>
               <Menu
                 items={this.sortItems()}
                 anchorText={this.props.sort.label}

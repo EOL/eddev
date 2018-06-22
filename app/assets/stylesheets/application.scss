@@ -555,16 +555,19 @@ $hero-transition-width: 525;
   padding: 0 0 (7 / $em * 1em) 0;
 }
 
-.intro-p {
+.resp-p {
   $font-size: 14;
   font-size: $font-size / $em * 1em;
   line-height: 1.7;
-  margin-bottom: percentage(22 / $main-col-width);
-  padding: 0 percentage(85 / $main-col-width);
 
   &.hidden {
     display: none;
   }
+}
+
+.resp-p-intro {
+  margin-bottom: percentage(22 / $main-col-width);
+  padding: 0 percentage(85 / $main-col-width);
 }
 
 .welcome-more-bar {
@@ -654,12 +657,12 @@ $hero-transition-width: 525;
   }
 }
 
-@media screen and (max-width: 525px) {
+@media screen and (max-width: $head-trans-width * 1px) {
   .intro-hdr {
     font-size: 14px;
   }
 
-  .intro-p {
+  .resp-p {
     font-size: 12px;
   }
 

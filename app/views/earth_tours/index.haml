@@ -1,9 +1,13 @@
 = render "shared/intro_section", :header => "earth_tours.index.intro_hdr",
-  :paragraphs => [{:key => "earth_tours.index.intro_p", :vars => {:cards_path => cards_path}}],
+  :paragraphs => ["earth_tours.index.intro_p", {:key => "earth_tours.index.download_link_html", :vars => { :url => "https://drive.google.com/open?id=0BwhfjK8RzkUZQ2FzOG1wQ0VuRjA"}}],
   :hideable => false
 .tours
-  .tour
-    %h2 Monarch Butterfly Migration
-    %p A story about the migration of the monarch butterflies (Danaus plexippus), and all the people that help them out along the way.
-    .l-fluid-iframe
-      %iframe{:width => 560, :height => 315, :src => "https://www.youtube.com/embed/uqDwvuleRYc", :frameborder => 0, :allow => "autoplay; encrypted-media", :allowfullscreen => true}
+  - @tours.each do |tour|
+    .tour
+      %h2.tour-hdr= t("earth_tours.titles.#{tour.title_key}")
+      %p.resp-p= t("earth_tours.descriptions.#{tour.desc_key}") 
+      - if tour.extra_link_key
+        %p.resp-p
+          = link_to t("earth_tours.links.#{tour.extra_link_key}"), tour.extra_link_url
+      .l-fluid-iframe
+        %iframe{:width => 560, :height => 315, :src => tour.embed_url, :frameborder => 0, :allow => "autoplay; encrypted-media", :allowfullscreen => true}

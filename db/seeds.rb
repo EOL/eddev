@@ -753,3 +753,36 @@ Deck.create!([
     :file_name => "sea_turtles"
   }
 ])
+
+EarthTour.delete_all
+EarthTour.create!([
+  {
+    :title_key => "monarch_migration",
+    :desc_key => "monarch_migration_html",
+    :embed_url => "https://www.youtube.com/embed/uqDwvuleRYc",
+    :extra_link_key => "monarch_spanish",
+    :extra_link_url => "http://www.youtube.com/watch?v=zr5nQ7uOxR4"
+  },
+  {
+    :title_key => "tern_migration",
+    :desc_key => "tern_migration_html",
+    :embed_url => "https://www.youtube.com/embed/bte7MCSBZvo",
+    :extra_link_key => "tern_discussion",
+    :extra_link_url => "https://drive.google.com/file/d/0B6YygMcm7lznNXB3SGZXZ21Ed0U/view?usp=sharing"
+  },
+  {
+    :title_key => "invasive_species",
+    :desc_key => "invasive_species_html",
+    :embed_url => "https://www.youtube.com/embed/1aSSKDrxkbg"
+  },
+  {
+    :title_key => "sea_cucumber",
+    :desc_key => "sea_cucumber_html",
+    :embed_url => "https://www.youtube.com/embed/wsfLG23SqCU"
+  },
+  {
+    :title_key => "bluefin_tuna",
+    :desc_key => "bluefin_tuna_html",
+    :embed_url => "https://www.youtube.com/embed/KWxGuLLEywg"
+  }
+])

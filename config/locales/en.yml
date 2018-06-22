@@ -85,6 +85,22 @@ en:
     index:
       intro_hdr: Google Earth Tours
       intro_p: EOL's Google Earth Tours give you a geographical view of the world's biodiversity. Using Google Earth's satellite imagery, these narrated video tours explore a range of topics such as migration and global research initiatives.
+      download_link_html: "<a href='%{url}'>Download the KMZ files for EOL Google Earth Tours</a>"
+    titles:
+      monarch_migration: Monarch Butterfly Migration
+      tern_migration: Arctic Tern Migration 
+      invasive_species: Invasive Species
+      sea_cucumber: Sea Cucumbers
+      bluefin_tuna: Atlantic Bluefin Tuna
+    descriptions:
+      monarch_migration_html: "A story about the migration of the monarch butterflies (<a href='http://eol.org/pages/2682739/overview'>Danaus plexippus</a>), and all the people that help them out along the way."
+      tern_migration_html: "The arctic tern (<a href='http://eol.org/pages/1049640/overview'>Sterna paradisaea</a>) makes an incredible migration of 50,000 miles each year traveling from pole to pole. Join them on their journey."
+      invasive_species_html: "Sea grapes may sound tasty but in reality <a href='http://eol.org/pages/967079/overview'>Caulerpa racemosa</a> is a killer algae taking over the oceans and squeezing out native species of marine life."
+      sea_cucumber_html: "The <a href='http://eol.org/pages/2012/overview'>sea cucumber</a>, a prized as a gastronomic delight by some cultures is beginning to yield some of its secrets to scientists."
+      bluefin_tuna_html: "Learn about the process of tagging <a href='http://eol.org/pages/223943/overview'>tuna</a> and how those tags are revealing surprises to scientists."
+    links:
+      tern_discussion: Discussion Questions (Grades 6-12)
+      monarch_spanish: También puede ver este vídeo con subtítulos en español aquí
   lesson_plans:
     descriptions:
     index:

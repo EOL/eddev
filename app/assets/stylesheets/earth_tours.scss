@@ -1,0 +1,44 @@
+@import "shared/layout_vars";
+
+iframe {
+  display: block;
+  margin: 0 auto;
+}
+
+.tour-hdr {
+  font-weight: $semibold;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+p {
+  margin: 8px 0 20px 0;
+  text-align: center;
+}
+
+.l-fluid-iframe {
+  position: relative;
+  padding-bottom: 56.25%; /* proportion value to aspect ratio 16:9 (9 / 16 = 0.5625 or 56.25%) */
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
+
+  & > iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.tour {
+  margin-top: 70px;
+}
+
+@media screen and (max-width: $head-trans-width * 1px) {
+  .tour-hdr {
+    font-size: 14px;
+  }  
+}

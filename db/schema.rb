@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180622172120) do
+ActiveRecord::Schema.define(version: 20180622185836) do
 
   create_table "decks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "human_name"
@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(version: 20180622172120) do
     t.string "embed_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "extra_link_key"
+    t.string "extra_link_url"
   end
 
   create_table "lesson_plan_grade_levels", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

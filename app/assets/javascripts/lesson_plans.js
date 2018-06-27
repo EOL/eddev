@@ -93,8 +93,11 @@
   function updateHeadersOnScroll() {
     var windowScroll = $(window).scrollTop(),
         $bars = $('.grade-level-bar.open').filter(function(i, bar) {
-          return !$(bar).hasClass('fixed'); 
-        });
+            return !$(bar).hasClass('fixed'); 
+          }),
+        $navbar = $('.navbar'),
+        navHeight = $navbar.outerHeight()
+      ;
 
     // Add new fixed bar if necessary
     $bars.sort(function(a, b) {
@@ -107,13 +110,14 @@
           lastLpTop = $lastLp.offset().top,
           barHeight = $bar.height(),
           fixedBarTop = lastLpTop - windowScroll - barHeight,
-          $fixedBar = $('.grade-level-' + $bar.data('grade-id') + '.fixed');
+          $fixedBar = $('.grade-level-' + $bar.data('grade-id') + '.fixed')
+        ;
 
-      if (fixedBarTop > 0) {
-        fixedBarTop = 0
+      if (fixedBarTop > navHeight) {
+        fixedBarTop = navHeight 
       }
 
-      if ($bar.offset().top <= windowScroll && fixedBarTop + barHeight >= 0) {
+      if ($bar.offset().top <= windowScroll + navHeight && fixedBarTop + barHeight >= navHeight) {
         if (!$fixedBar.length) {
           $fixedBar = $bar.clone();
           $fixedBar.addClass('fixed');

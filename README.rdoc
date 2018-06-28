@@ -4,5 +4,8 @@
 2) $ gem install bundler
 3) Install mysql ( $ brew install mysql, then configure )
 4) $ bundle install
-5) $ rake db:setup
+5) Create config/application.yml (see config/application_sample.yml)
+6) $ rake db:setup
+7) $ git submodule init && git submodule update
 
+8*) install and run the card-svc

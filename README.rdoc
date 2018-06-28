@@ -1,1 +1,8 @@
 == README
+
+1) Install ruby (I recommend rbenv - this project contains a .ruby_version file)
+2) $ gem install bundler
+3) Install mysql ( $ brew install mysql, then configure )
+4) $ bundle install
+5) $ rake db:setup
+

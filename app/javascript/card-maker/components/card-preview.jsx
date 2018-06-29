@@ -85,7 +85,7 @@ class CardPreview extends React.Component {
   }
 
   render() {
-    const eolLinkAttrs = this.props.card && this.props.card.templateName === 'trait' ?
+    const eolLinkAttrs = this.props.card && this.props.card.templateName() === 'trait' ?
             this.eolLinkAttrs() : 
             null
         , hasImg = this.props.card.imageFields().length > 0

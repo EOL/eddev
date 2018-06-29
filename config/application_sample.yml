@@ -1,0 +1,9 @@
+secret_key_base: 1234
+MYSQL_USER: mysql_user
+MYSQL_PASSWORD: mysql_password
+rails_host: localhost
+email_user_name: email_user_name
+email_password: asdf1234
+card_service_host: card-service-host
+card_service_port: 1234
+card_service_key: cardservicekey

@@ -46,6 +46,8 @@ en:
           other: "%{count} errors prevented this %{model} from being saved"
     models:
       user: "User"
+  locales:
+    disclaimer: "We are in the process of translating our entire site, but right now only the Card Maker is available in your language. Thank you for your patience!"
   cards:
     deck_descriptions:
     featured_descriptions:

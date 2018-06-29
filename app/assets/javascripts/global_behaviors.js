@@ -44,12 +44,66 @@
     }
   }
 
+  function closeNavMenu() {
+
+  }
+
+  function setupNavMenu() {
+    var $navUserMenu = $('.js-nav-user-menu')
+      , $navUserMenuToggle = $('.js-nav-user-menu-toggle')
+      , closeNavMenu = function(e) {
+          $navUserMenu.addClass('is-hidden');
+          $(document).off('click', handleDocClick)
+        }
+      , handleDocClick = function(e) {
+          if (
+            !$navUserMenu.has(e.target).length &&
+            !$navUserMenuToggle.has(e.target).length
+          ) {
+            closeNavMenu();
+          }
+        }
+      ;
+
+    $navUserMenuToggle.click(function() {
+      if ($navUserMenu.hasClass('is-hidden')) {
+        $navUserMenu.removeClass('is-hidden');
+        $(document).click(handleDocClick);
+      } else {
+        closeNavMenu();
+      }
+    });
+  }
+
+  function setupNavLangMenu() {
+    var $menuToggle = $('.js-nav-user-menu-lang')
+      , $menu = $('.js-nav-user-menu-lang-menu')
+      , animateMillis
+      ;
+
+    $menuToggle.click(function() {
+      if (!$menuToggle.hasClass('is-lang-menu-open')) {
+        $menuToggle.addClass('is-lang-menu-open');
+        $menu.animate({
+          height: $menu.get(0).scrollHeight
+        }, animateMillis);
+      } else {
+        $menuToggle.removeClass('is-lang-menu-open');
+        $menu.animate({
+          height: 0
+        }, animateMillis);
+      }
+    });
+  }
+
   $(function() {
     $('#BarsIcon').click(slideMenuOpen);
     $(window).resize(closeMenuIfNecessary);
     setTimeout(function() {
       $('.js-notice').fadeOut();
     }, 6000);
+    setupNavMenu();
+    setupNavLangMenu();
 
     // Double-touch experience for hover elements
     $('.hoverable').on('touchstart', function(event) {

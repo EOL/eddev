@@ -1,4 +1,4 @@
-.navbar-outer.js-navbar
+.navbar-outer
   .navbar<
     .navbar-inner
       .l-abs-l
@@ -20,26 +20,34 @@
               - if I18n.locale != locale
                 = link_to(I18n.t("language", :locale => locale), set_locale_path(:params => { :set_locale => locale }))
       .l-abs-r
-        .user-menu
-          -if logged_in_user
-            = link_to(logged_in_user.user_name, account_path, :class => "nav-link nav-link-account")
-            = link_to(t(".sign_out"), logout_path, :class => "nav-link nav-link-sign-out")
-          -else
-            = link_to t("shared.header.sign_in"), login_path, :class => "nav-link nav-link-account"
+        .nav-user
+          .nav-user-links
+            -if logged_in_user
+              = link_to(logged_in_user.user_name, account_path, :class => "nav-link nav-link-account")
+              = link_to(t(".sign_out"), logout_path, :class => "nav-link nav-link-sign-out")
+            -else
+              = link_to t("shared.header.sign_in"), login_path, :class => "nav-link nav-link-account"
+          .nav-user-menu-toggle.js-nav-user-menu-toggle
+            %i.fa.fa-chevron-down.fa-lg
+            %i.fa.fa-chevron-up.fa-lg
+          %ul.nav-user-menu.is-hidden.js-nav-user-menu
+            %li.nav-user-menu-lang.js-nav-user-menu-lang
+              %span= t("language")
+              %i.fa.fa-caret-down
+              %i.fa.fa-caret-up
+            %ul.nav-user-menu-lang-menu.js-nav-user-menu-lang-menu
+              - I18n.available_locales.each do |locale|
+                - if I18n.locale != locale
+                  %li
+                    = link_to(I18n.t("language", :locale => locale), set_locale_path(:params => { :set_locale => locale }))
+              
+            -if logged_in_user
+              %li
+                = link_to(logged_in_user.user_name, account_path)
+              %li
+                = link_to(t(".sign_out"), logout_path)
+            -else
+              %li
+                = link_to(t("shared.header.sign_in"), login_path)
       %h1#Title.title 
         = t ".main_title"
-      #SlideMenu.slide-menu>
-        .section<
-          .color-bar.green
-          - if logged_in_user
-            = link_to t("shared.header.settings"), account_path, :class => :link
-          - else
-            = link_to "EOL.org", "http://www.eol.org/", :class => :link
-        .divider
-        .section<
-          .color-bar.blue
-          -if logged_in_user
-            = link_to t("shared.header.sign_out"), logout_path, :class => :link
-          -else
-            = link_to t("shared.header.sign_in"), login_path, :class  => :link
-

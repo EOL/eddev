@@ -1,4 +1,4 @@
-@import "layout_vars.scss";
+@import "shared/layout_vars.scss";
 
 $single-width-px: 305;
 $double-width-px: 622;
@@ -207,7 +207,7 @@ $nav-img-height: 305;
   }
 
   .lesson-plans .img {
-    background-image: nav-img-url("lesson_plans");
+    background-image: nav-img-url("lesson_plans_single");
   }
 
   .species-cards .img {
@@ -242,7 +242,7 @@ $nav-img-height: 305;
     background-image: nav-img-url("bhl_coloring");
   }
 
-  .lesson-plans,
+  .collections,
   .species-cards,
   .google-tours,
   .hi-res-images,
@@ -294,10 +294,6 @@ $nav-img-height: 305;
       background-image: nav-img-url("card_maker_single");
     }
 
-    .lesson-plans .img {
-      background-image: nav-img-url("lesson_plans_single");
-    }
-
     .google-tours .img {
       background-image: nav-img-url("google_tours_single");
     }
@@ -306,10 +302,10 @@ $nav-img-height: 305;
       background-image: nav-img-url("inaturalist_single");
     }
 
+    .hi-res-images,
+    .podcasts,
     .lesson-plans,
     .species-cards,
-    .google-tours,
-    .collections,
     .coloring-books {
       margin-right: 0;
     }

@@ -776,11 +776,6 @@ EarthTour.create!([
     :embed_url => "https://www.youtube.com/embed/1aSSKDrxkbg"
   },
   {
-    :title_key => "sea_cucumber",
-    :desc_key => "sea_cucumber_html",
-    :embed_url => "https://www.youtube.com/embed/wsfLG23SqCU"
-  },
-  {
     :title_key => "bluefin_tuna",
     :desc_key => "bluefin_tuna_html",
     :embed_url => "https://www.youtube.com/embed/KWxGuLLEywg"

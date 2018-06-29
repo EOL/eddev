@@ -24,11 +24,17 @@
     :text_key => "memory_games",
     :klazz => "memory-games"
   = render "nav_item",
-    :width => "double",
+    :width => "single",
     :href => lesson_plans_path,
     :image_name => "lesson_plans",
     :text_key => "lesson_plans",
     :klazz => "lesson-plans"
+  = render "nav_item",
+    :width => "single",
+    :href => earth_tours_path,
+    :image_name => "google_tours",
+    :text_key => "google_tours",
+    :klazz => "google-tours"
 = render "shared/section_head", :title_key => "welcome.index.sections.eol_resources_title"
 %ul.nav-items<
   = render "nav_item",
@@ -37,12 +43,6 @@
     :image_name => "biodiversity_articles",
     :text_key => "biodiv_articles",
     :klazz => "biodiv-articles border"
-  = render "nav_item",
-    :width => "double",
-    :href => "http://eol.org/info/disc_google_earth",
-    :image_name => "google_tours",
-    :text_key => "google_tours",
-    :klazz => "google-tours"
   = render "nav_item",
     :width => "single",
     :href => "http://eol.org/info/podcasts",

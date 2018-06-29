@@ -187,6 +187,7 @@ $nav-mobile-width: 648px;
 }
 
 .nav-user-menu-toggle {
+  cursor: pointer;
   display: none;
 
   & > .fa-chevron-up {
@@ -205,12 +206,16 @@ $nav-mobile-width: 648px;
 .nav-user-menu, .nav-user-menu-lang-menu {
   & > li {
     border-top: 1px solid $black;
+    cursor: pointer;
     overflow: hidden;
     padding: 0 5px 0 10px;
     white-space: nowrap;
 
     & > a {
+      display: block;
+      height: 100%;
       text-decoration: none;
+      width: 100%;
     }
   }
 }

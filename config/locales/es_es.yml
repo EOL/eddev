@@ -1,5 +1,5 @@
 es-ES:
-  language: español castellano
+  language: español
   activerecord:
     attributes:
       user:
@@ -25,6 +25,8 @@ es-ES:
         header:
           one: Un error impidió guardar el (la) %{modelo}
           other: "%{count} errores impidieron guardar el (la) %{model}"
+  locales:
+    disclaimer: "Estamos traduciendo la página web. Por ahora, el Card Maker es el único recurso disponible en español. Gracias por vuestra paciencia."
   user_sessions:
     create:
       invalid_creds: Nombre de usuario invalido o contraseña

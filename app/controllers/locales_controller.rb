@@ -10,7 +10,7 @@ class LocalesController < ApplicationController
 
     url_options = Rails.application.routes.recognize_path(request.referrer)
 
-    redirect_path = if (url_options) 
+    redirect_path = if url_options 
                       url_options[:locale] = locale.to_sym == I18n.default_locale ?
                         nil :
                         locale
@@ -23,7 +23,7 @@ class LocalesController < ApplicationController
 
     if locale.to_sym != I18n.default_locale && !session[:i18n_notice_shown]
       session[:i18n_notice_shown] = true
-      flash[:global_notice] = "We are in the process of translating our entire site, but right now only the Card Maker is available in your language. Thank you for your patience!"
+      flash[:global_notice] = I18n.t('locales.disclaimer', :locale => locale)
     end
     redirect_to redirect_path
   end

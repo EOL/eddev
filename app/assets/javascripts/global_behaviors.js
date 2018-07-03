@@ -119,14 +119,15 @@
       , $navbar = $('.js-navbar')
       , $menu = $('.js-slide-menu')
       , menuWidth = $menu.outerWidth()
+      , menuRight = -1 * menuWidth
       , slideMenuOpen = function() {
           $toggle.off('click', slideMenuOpen);
           $toggle.click(slideMenuClose);
           $page.animate({
-            left: -1 * menuWidth
+            left: menuRight
           }, { queue: false });
           $navbar.animate({
-            left: -1 * menuWidth
+            left: menuRight
           }, { queue: false });
           $menu.animate({
             right: 0
@@ -142,7 +143,7 @@
             left: 0
           }, { queue: false });
           $menu.animate({
-            right: -1 * menuWidth 
+            right: menuRight
           }, { queue: false });
         }
       ;
@@ -152,7 +153,7 @@
       if ($(window).width() > navMobileWidth) {
         $page.css({ left: 0 });
         $navbar.css({ left: 0 });
-        $menu.css({ right: menuWidth });
+        $menu.css({ right: menuRight });
         $toggle.off('click', slideMenuClose);
         $toggle.click(slideMenuOpen);
       }

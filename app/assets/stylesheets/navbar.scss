@@ -10,11 +10,6 @@ $nav-mobile-width: 648px;
   z-index: 5;
 }
 
-.is-page-slide-active .navbar-outer {
-  position: absolute;
-  top: -1px * $topbar-height-px;
-}
-
 .navbar {
   background: $navbar-gray;
   height: $topbar-height;
@@ -286,11 +281,11 @@ $nav-mobile-width: 648px;
     display: block;
   }
 
-  .nav-user-links {
+  .user-links-nav {
     display: none;
   } 
 
-  .nav-menu-lang {
+  .lang-menu-nav {
     display: none;
   }
 

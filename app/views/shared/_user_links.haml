@@ -1,0 +1,6 @@
+%div{:class => top_class}
+  -if logged_in_user
+    = link_to(logged_in_user.user_name, account_path, :class => "nav-link nav-link-account")
+    = link_to(t(".sign_out"), logout_path, :class => "nav-link nav-link-sign-out")
+  -else
+    = link_to t("shared.header.sign_in"), login_path, :class => "nav-link nav-link-account"

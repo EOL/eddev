@@ -1,15 +1,3 @@
 .js-slide-menu.slide-menu
-  .user-links.user-links-slide
-    -if logged_in_user
-      = link_to(logged_in_user.user_name, account_path, :class => "nav-link nav-link-account")
-      = link_to(t(".sign_out"), logout_path, :class => "nav-link nav-link-sign-out")
-    -else
-      = link_to t("shared.header.sign_in"), login_path, :class => "nav-link nav-link-account"
-  %ul.nav-menu.lang-menu.lang-menu-slide
-    %li.lang-item
-      %span= t("language")
-      %i.fa.fa-caret-down.nav-menu-caret.nav-menu-caret-lang
-    - I18n.available_locales.each do |locale|
-      %li.lang-item.lang-item-choice
-        - if I18n.locale != locale
-          = link_to(I18n.t("language", :locale => locale), set_locale_path(:params => { :set_locale => locale }))
+  = render :partial => "shared/user_links", :locals => { :top_class => "user-links-slide" }
+  = render :partial => "shared/lang_select", :locals => { :extra_class => "lang-menu-slide" }

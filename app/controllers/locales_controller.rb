@@ -8,7 +8,10 @@ class LocalesController < ApplicationController
       end
     end
 
-    url_options = Rails.application.routes.recognize_path(request.referrer)
+    referrer = request.referrer
+    url_options = referrer ? 
+      Rails.application.routes.recognize_path(referrer) :
+      nil
 
     redirect_path = if url_options 
                       url_options[:locale] = locale.to_sym == I18n.default_locale ?
@@ -18,7 +21,7 @@ class LocalesController < ApplicationController
                       url_options[:only_path] = true
                       url_for(url_options)
                     else
-                      root_path :locale => locale
+                      home_path :locale => locale
                     end
 
     if locale.to_sym != I18n.default_locale && !session[:i18n_notice_shown]

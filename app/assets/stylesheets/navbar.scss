@@ -10,6 +10,11 @@ $nav-mobile-width: 648px;
   z-index: 5;
 }
 
+.is-page-slide-active .navbar-outer {
+  position: absolute;
+  top: -1px * $topbar-height-px;
+}
+
 .navbar {
   background: $navbar-gray;
   height: $topbar-height;
@@ -76,17 +81,14 @@ $nav-mobile-width: 648px;
   top: 8px;
 }
 
-.nav-menu-lang {
+.lang-menu {
   $height: 29px;
   background: $white;
   border-radius: 3px;
   box-shadow: 0 1px 3px 0 rgba(186, 186, 186, 0.5);
   font-size: 14px;
   line-height: $height;
-  margin-left: 7px;
   position: relative;
-  top: 5px;
-  width: 160px;
 
   & > .lang-item-choice {
     display: none;
@@ -102,6 +104,12 @@ $nav-mobile-width: 648px;
     text-decoration: none;
     width: 100%;
   }
+}
+
+.lang-menu-nav {
+  margin-left: 7px;
+  top: 5px;
+  width: 160px;
 }
 
 .lang-item {

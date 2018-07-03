@@ -11,7 +11,7 @@
               = link_to t(".eol_nav.l_and_e"), home_path
             %li.eol-link
               = link_to t(".eol_nav.eol"), "http://www.eol.org"
-        %ul.nav-menu.nav-menu-lang
+        %ul.nav-menu.lang-menu.lang-menu-nav
           %li.lang-item
             %span= t("language")
             %i.fa.fa-caret-down.nav-menu-caret.nav-menu-caret-lang
@@ -21,15 +21,14 @@
                 = link_to(I18n.t("language", :locale => locale), set_locale_path(:params => { :set_locale => locale }))
       .l-abs-r
         .nav-user
-          .nav-user-links
+          .user-links-nav
             -if logged_in_user
               = link_to(logged_in_user.user_name, account_path, :class => "nav-link nav-link-account")
               = link_to(t(".sign_out"), logout_path, :class => "nav-link nav-link-sign-out")
             -else
               = link_to t("shared.header.sign_in"), login_path, :class => "nav-link nav-link-account"
-          .nav-user-menu-toggle.js-nav-user-menu-toggle
-            %i.fa.fa-chevron-down.fa-lg
-            %i.fa.fa-chevron-up.fa-lg
+          .nav-user-menu-toggle.js-slide-menu-toggle
+            %i.fa.fa-bars.fa-lg
           %ul.nav-user-menu.is-hidden.js-nav-user-menu
             %li.nav-user-menu-lang.js-nav-user-menu-lang
               %span= t("language")

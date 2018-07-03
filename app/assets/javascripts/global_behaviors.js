@@ -1,4 +1,6 @@
 (function() {
+  var navMobileWidth = 648; // XXX: duplicated in CSS
+
   function slideMenuOpen() {
     var $bars = $('#BarsIcon'),
         $titleContainer = $('#TitleContainer'),
@@ -96,14 +98,76 @@
     });
   }
 
+  function slideMenuOpen($page, $menuToggle) {
+    $page.animate({
+      left: -200
+    });
+
+    $page.off('click', slideMenuOpen);
+    $menuToggle.click(slideMenuClose);
+  }
+
+  function slideMenuClose($page, $menuToggle) {
+    $page.animate({
+      left: 0
+    });
+  }
+
+  function setupSlideMenu() {
+    var $page = $('#Page')
+      , $toggle = $('.js-slide-menu-toggle')
+      , $navbar = $('.js-navbar')
+      , $menu = $('.js-slide-menu')
+      , menuWidth = $menu.outerWidth()
+      , slideMenuOpen = function() {
+          $toggle.off('click', slideMenuOpen);
+          $toggle.click(slideMenuClose);
+          $page.animate({
+            left: -1 * menuWidth
+          }, { queue: false });
+          $navbar.animate({
+            left: -1 * menuWidth
+          }, { queue: false });
+          $menu.animate({
+            right: 0
+          }, { queue: false });
+        }
+      , slideMenuClose = function() {
+          $toggle.off('click', slideMenuClose);
+          $toggle.click(slideMenuOpen);
+          $page.animate({
+            left: 0
+          }, { queue: false });
+          $navbar.animate({
+            left: 0
+          }, { queue: false });
+          $menu.animate({
+            right: -1 * menuWidth 
+          }, { queue: false });
+        }
+      ;
+
+    $toggle.click(slideMenuOpen);
+    $(window).resize(function() {
+      if ($(window).width() > navMobileWidth) {
+        $page.css({ left: 0 });
+        $navbar.css({ left: 0 });
+        $menu.css({ right: menuWidth });
+        $toggle.off('click', slideMenuClose);
+        $toggle.click(slideMenuOpen);
+      }
+    });
+  }
+
   $(function() {
     $('#BarsIcon').click(slideMenuOpen);
     $(window).resize(closeMenuIfNecessary);
     setTimeout(function() {
       $('.js-notice').fadeOut();
     }, 6000);
-    setupNavMenu();
-    setupNavLangMenu();
+    //    setupNavMenu();
+    //     setupNavLangMenu();
+    setupSlideMenu();
 
     // Double-touch experience for hover elements
     $('.hoverable').on('touchstart', function(event) {

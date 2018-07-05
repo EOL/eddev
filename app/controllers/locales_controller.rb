@@ -9,9 +9,15 @@ class LocalesController < ApplicationController
     end
 
     referrer = request.referrer
-    url_options = referrer ? 
-      Rails.application.routes.recognize_path(referrer) :
-      nil
+    if referrer
+      begin
+        url_options = Rails.application.routes.recognize_path(referrer)
+      rescue ActionController::RoutingError
+        url_options = nil  
+      end
+    else
+      url_options = nil
+    end
 
     redirect_path = if url_options 
                       url_options[:locale] = locale.to_sym == I18n.default_locale ?

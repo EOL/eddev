@@ -103,9 +103,11 @@ class CardMaker extends React.Component {
     super(props);
     
     this.state = {
-      cards: [],
-      decks: [],
-      selectedDeck: 'allCardsDeck',
+      userCards: [],
+      userDecks: [],
+      publicCards: [],
+      publicDecks: [],
+      selectedDeck: allCardsDeck,
       library: 'public',
       screen: 'manager',
       sort: sorts[publicSorts[0].key],
@@ -115,16 +117,107 @@ class CardMaker extends React.Component {
   }
 
   componentDidMount() {
+    var hashParams = EolUtil.parseHashParams();
+
     window.addEventListener('popstate', (event) => {
       this.handleHistoryStateChange(event.state);
     });
-    // If this is a page refresh, and the editor was previously open,
-    // open it now.
-    this.handleHistoryStateChange(history.state); 
+
     $.getJSON('/user_sessions/user_info', (userInfo) => {
       this.setState({
         userRole: userInfo.role
+      }, () => {
+        if (hashParams.deck_id) {
+          this.reloadAllResources(hashParams.deck_id);
+        } else {
+          // If this is a page refresh, and the editor was previously open,
+          // open it now.
+          this.handleHistoryStateChange(history.state); 
+
+          if (this.state.userRole) {
+            this.setLibrary('user')
+          } 
+
+          this.reloadAllResources(null);
+        }
       });
+    });
+  }
+
+  reloadResourcesWithCb = (cb) => {
+    this.reloadResourcesHelper(this.props.library, null, cb);
+  }
+
+  reloadResources = () => {
+    this.props.showLoadingOverlay();
+    this.reloadResourcesWithCb(this.props.hideLoadingOverlay);
+  }
+
+  reloadResourcesHelper = (lib, deckIdOverride, cb) => {
+    let that = this
+      , decksUrl
+      , cardsUrl
+      , cardsKey
+      , decksKey
+      ;
+
+    if (lib === 'user') {
+      decksUrl = 'decks';
+      cardsUrl = 'card_summaries';
+      cardsKey = 'userCards';
+      decksKey = 'userDecks';
+    } else {
+      decksUrl = 'public/decks';
+      cardsUrl = 'public/cards';
+      cardsKey = 'publicCards';
+      decksKey = 'publicDecks';
+    }
+
+    this.req = $.ajax({
+      url: cardMakerUrl(decksUrl),
+      method: 'GET',
+      success: (decks) => {
+        this.req = $.ajax({
+          url: cardMakerUrl(cardsUrl),
+          method: 'GET',
+          success: (cards) => {
+            let selectedDeck = decks.find((deck) => {
+              return deck.id === (deckIdOverride || this.state.selectedDeck.id);
+            });
+
+            if (!selectedDeck) {
+              selectedDeck = allCardsDeck;
+            }
+
+            that.setState({
+              [cardsKey]: cards,
+              [decksKey]: decks,
+              showDescInput: false
+            }, () => {
+              if (lib === this.state.library) {
+                that.setSelectedDeck(selectedDeck);  
+              }
+
+              if (cb) {
+                cb();
+              }
+            });
+          }
+        });
+      }
+    });
+  }
+
+  reloadAllResources = (deckIdOverride) => {
+    var that = this;
+
+    that.showLoadingOverlay();
+    that.reloadResourcesHelper('public', deckIdOverride, () => {
+      if (that.state.userRole) {
+        that.reloadResourcesHelper('user', deckIdOverride, that.hideLoadingOverlay);
+      } else {
+        that.hideLoadingOverlay();
+      }
     });
   }
 
@@ -235,6 +328,9 @@ class CardMaker extends React.Component {
       component = (
         <CardManager
           allCardsDeck={allCardsDeck}
+          cards={this.state.library === 'user' ? this.state.userCards : this.state.publicCards}
+          decks={this.state.library === 'user' ? this.state.userDecks : this.state.publicDecks}
+          userDecks={this.state.userDecks}
           unassignedCardsDeck={unassignedCardsDeck}
           handleEditCard={this.handleEditCard}
           userRole={this.state.userRole}

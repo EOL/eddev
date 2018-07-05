@@ -1,4 +1,6 @@
 (function() {
+  var navMobileWidth = 648; // XXX: duplicated in CSS
+
   function slideMenuOpen() {
     var $bars = $('#BarsIcon'),
         $titleContainer = $('#TitleContainer'),
@@ -44,66 +46,92 @@
     }
   }
 
-  function closeNavMenu() {
+  function slideMenuOpen($page, $menuToggle) {
+    $page.animate({
+      left: -200
+    });
 
+    $page.off('click', slideMenuOpen);
+    $menuToggle.click(slideMenuClose);
   }
 
-  function setupNavMenu() {
-    var $navUserMenu = $('.js-nav-user-menu')
-      , $navUserMenuToggle = $('.js-nav-user-menu-toggle')
-      , closeNavMenu = function(e) {
-          $navUserMenu.addClass('is-hidden');
-          $(document).off('click', handleDocClick)
+  function slideMenuClose($page, $menuToggle) {
+    $page.animate({
+      left: 0
+    });
+  }
+
+  function setupSlideMenu() {
+    var $page = $('#Page')
+      , $toggle = $('.js-slide-menu-toggle')
+      , $navbar = $('.js-navbar')
+      , $menu = $('.js-slide-menu')
+      , menuWidth = $menu.outerWidth()
+      , menuRight = -1 * menuWidth
+      , slideMenuOpen = function() {
+          $toggle.off('click', slideMenuOpen);
+          $toggle.click(slideMenuClose);
+          $page.animate({
+            left: menuRight
+          }, { queue: false });
+          $navbar.animate({
+            left: menuRight
+          }, { queue: false });
+          $menu.animate({
+            right: 0
+          }, { queue: false });
         }
-      , handleDocClick = function(e) {
-          if (
-            !$navUserMenu.has(e.target).length &&
-            !$navUserMenuToggle.has(e.target).length
-          ) {
-            closeNavMenu();
-          }
+      , slideMenuClose = function() {
+          $toggle.off('click', slideMenuClose);
+          $toggle.click(slideMenuOpen);
+          $page.animate({
+            left: 0
+          }, { queue: false });
+          $navbar.animate({
+            left: 0
+          }, { queue: false });
+          $menu.animate({
+            right: menuRight
+          }, { queue: false });
         }
       ;
 
-    $navUserMenuToggle.click(function() {
-      if ($navUserMenu.hasClass('is-hidden')) {
-        $navUserMenu.removeClass('is-hidden');
-        $(document).click(handleDocClick);
-      } else {
-        closeNavMenu();
+    $toggle.click(slideMenuOpen);
+    $(window).resize(function() {
+      if ($(window).width() > navMobileWidth) {
+        $page.css({ left: 0 });
+        $navbar.css({ left: 0 });
+        $menu.css({ right: menuRight });
+        $toggle.off('click', slideMenuClose);
+        $toggle.click(slideMenuOpen);
       }
     });
   }
 
-  function setupNavLangMenu() {
-    var $menuToggle = $('.js-nav-user-menu-lang')
-      , $menu = $('.js-nav-user-menu-lang-menu')
-      , animateMillis
+  function setupLangMenus() {
+    var $menu = $('.js-lang-menu')
+      , openFn = function(e) {
+          var $that = $(this)
+            , closeFn = function() {
+                $that.removeClass('is-lang-menu-open');
+                $(document).off('click', closeFn);
+              }
+
+          e.stopPropagation();
+          $that.addClass('is-lang-menu-open');
+          $(document).click(closeFn);
+        }
       ;
 
-    $menuToggle.click(function() {
-      if (!$menuToggle.hasClass('is-lang-menu-open')) {
-        $menuToggle.addClass('is-lang-menu-open');
-        $menu.animate({
-          height: $menu.get(0).scrollHeight
-        }, animateMillis);
-      } else {
-        $menuToggle.removeClass('is-lang-menu-open');
-        $menu.animate({
-          height: 0
-        }, animateMillis);
-      }
-    });
+    $('.js-lang-menu').click(openFn);
   }
 
   $(function() {
-    $('#BarsIcon').click(slideMenuOpen);
-    $(window).resize(closeMenuIfNecessary);
     setTimeout(function() {
       $('.js-notice').fadeOut();
     }, 6000);
-    setupNavMenu();
-    setupNavLangMenu();
+    setupSlideMenu();
+    setupLangMenus();
 
     // Double-touch experience for hover elements
     $('.hoverable').on('touchstart', function(event) {

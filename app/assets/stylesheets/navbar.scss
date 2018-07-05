@@ -89,7 +89,7 @@ $nav-mobile-width: 648px;
     display: none;
   }
 
-  &:hover > .lang-item-choice {
+  &.is-lang-menu-open > .lang-item-choice {
     display: block;
   }
 

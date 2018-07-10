@@ -19,3 +19,8 @@ export function hiResCardImageUrl(card) {
   return cardMakerUrl('cards/' + card.id + '_' + card.version + '_hi.svg');
 }
 
+export function deckUrl(deck) {
+  return Routes.card_maker_url({ 
+    locale: (I18n.locale === I18n.default_locale ? null : I18n.locale) 
+  }) + '#deck_id=' + deck.id;
+}

@@ -121,6 +121,9 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
+    js-routes (1.4.4)
+      railties (>= 3.2)
+      sprockets-rails
     json (1.8.6)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -274,6 +277,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   jquery-ui-rails
+  js-routes
   listen
   mysql2
   rails (= 5.1.4)
@@ -291,4 +295,4 @@ DEPENDENCIES
   webpacker
 
 BUNDLED WITH
-   1.14.6
+   1.16.2

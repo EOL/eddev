@@ -11,8 +11,9 @@ import DeckUsersLightbox from './deck-users-lightbox'
 import RenameDeckLightbox from './rename-deck-lightbox'
 import CopyCardLightbox from './copy-card-lightbox'
 import CopyDeckLightbox from './copy-deck-lightbox'
+import DeckUrlLightbox from './deck-url-lightbox'
 import Search from './search'
-import {cardMakerUrl} from 'lib/card-maker/url-helper'
+import {cardMakerUrl, deckUrl} from 'lib/card-maker/url-helper'
 import LeftRail from './manager-left-rail'
 import Menu from './menu'
 
@@ -49,6 +50,7 @@ class CardManager extends React.Component {
         deck: false,
         sort: false
       },
+      deckUrl: null
     }
   }
 
@@ -704,6 +706,12 @@ class CardManager extends React.Component {
     });
   }
 
+  showDeckUrl = () => {
+    this.setState({
+      deckUrl: deckUrl(this.props.selectedDeck)
+    });
+  }
+
   deckMenuItems = (resourceCount) => {
     let items = [];
 
@@ -755,6 +763,11 @@ class CardManager extends React.Component {
               I18n.t('react.card_maker.make_deck_public')
           });
         }
+      } else {
+        items.push({
+          handleClick: this.showDeckUrl,
+          label: 'Show URL'
+        });
       }
     }
 
@@ -859,6 +872,11 @@ class CardManager extends React.Component {
           handleCopy={this.handleCopyDeck}
           deckNames={userDeckNames}
           name={this.deckCopyName(userDeckNames)}
+        />
+        <DeckUrlLightbox
+          isOpen={this.state.deckUrl !== null}
+          handleRequestClose={() => this.setState({ deckUrl: null })}
+          deckUrl={this.state.deckUrl}
         />
         <img src={iguanaBanner} className={styles.banner} />
         <LeftRail

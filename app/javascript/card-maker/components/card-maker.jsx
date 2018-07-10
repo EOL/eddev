@@ -335,6 +335,8 @@ class CardMaker extends React.Component {
           handleEditCard={this.handleEditCard}
           userRole={this.state.userRole}
           library={this.state.library}
+          reloadResources={this.reloadResources}
+          reloadResourcesWithCb={this.reloadResourcesWithCb}
           setLibrary={this.setLibrary}
           selectedDeck={this.state.selectedDeck}
           setSelectedDeck={this.setSelectedDeck}

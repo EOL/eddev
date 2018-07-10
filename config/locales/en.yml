@@ -475,6 +475,7 @@ en:
       select: select
       select_deck: deck (optional)
       select_a_deck_for_card: select a deck for your card (optional)
+      show_url: "show URL"
       sort_label: "Sort:"
       sorts:
         common_a_z: common name (a-z)

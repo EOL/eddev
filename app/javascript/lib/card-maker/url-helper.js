@@ -21,6 +21,6 @@ export function hiResCardImageUrl(card) {
 
 export function deckUrl(deck) {
   return Routes.card_maker_url({ 
-    locale: (I18n.locale === I18n.default_locale ? null : I18n.locale) 
+    locale: (I18n.locale === I18n.defaultLocale ? null : I18n.locale) 
   }) + '#deck_id=' + deck.id;
 }

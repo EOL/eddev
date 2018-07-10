@@ -766,7 +766,7 @@ class CardManager extends React.Component {
       } else {
         items.push({
           handleClick: this.showDeckUrl,
-          label: 'Show URL'
+          label: I18n.t('react.card_maker.show_url')
         });
       }
     }
@@ -902,16 +902,6 @@ class CardManager extends React.Component {
               {this.deckDesc()}
             </div>
           </div>
-          {/*
-          <div className={[styles.bar, styles.barMenu].join(' ')}>
-            </div>
-            <div className={styles.barMenuCount}>
-              {this.selectedResourceCount(resourceResult)}
-            </div>
-          </div>
-          */}
-          {/*
-          */}
           <div className={styles.searchContain}>
             <Search 
               handleChange={(val) => this.setState({ cardSearchVal: val})}

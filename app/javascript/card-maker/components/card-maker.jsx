@@ -149,8 +149,8 @@ class CardMaker extends React.Component {
   }
 
   reloadResources = () => {
-    this.props.showLoadingOverlay();
-    this.reloadResourcesWithCb(this.props.hideLoadingOverlay);
+    this.showLoadingOverlay();
+    this.reloadResourcesWithCb(this.hideLoadingOverlay);
   }
 
   reloadResourcesHelper = (lib, deckIdOverride, cb) => {
@@ -336,6 +336,7 @@ class CardMaker extends React.Component {
           userRole={this.state.userRole}
           library={this.state.library}
           reloadResources={this.reloadResources}
+          reloadAllResources={this.reloadAllResources}
           reloadResourcesWithCb={this.reloadResourcesWithCb}
           setLibrary={this.setLibrary}
           selectedDeck={this.state.selectedDeck}

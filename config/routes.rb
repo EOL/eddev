@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     put    "card_maker_ajax/cards/:card_id/deck_id"   => "card_maker_ajax#set_card_deck"
     delete "card_maker_ajax/cards/:card_id/deck_id"   => "card_maker_ajax#remove_card_deck"
 #    get    "card_maker_ajax/card_ids"                 => "card_maker_ajax#card_ids"
-    get    "card_maker_ajax/card_summaries"           => "card_maker_ajax#card_summaries"
+    get    "card_maker_ajax/cards"                    => "card_maker_ajax#cards"
     get    "card_maker_ajax/decks/:deck_id/card_ids"  => "card_maker_ajax#deck_card_ids"
     post   "card_maker_ajax/decks"                    => "card_maker_ajax#create_deck"
     get    "card_maker_ajax/decks"                    => "card_maker_ajax#decks"
@@ -56,8 +56,8 @@ Rails.application.routes.draw do
     post   "card_maker_ajax/decks/:deck_id/users"     => "card_maker_ajax#add_deck_user"
     delete "card_maker_ajax/decks/:deck_id/users/:user_id" => "card_maker_ajax#remove_deck_user"
     get    "card_maker_ajax/decks/:deck_id/users"     => "card_maker_ajax#deck_users"
-    get    "card_maker_ajax/public/cards"             => "card_maker_ajax#get_public_cards"
-    get    "card_maker_ajax/public/decks"             => "card_maker_ajax#get_public_decks"
+    get    "card_maker_ajax/public/cards"             => "card_maker_ajax#public_cards"
+    get    "card_maker_ajax/public/decks"             => "card_maker_ajax#public_decks"
     post   "card_maker_ajax/decks/:deck_id/name/"     => "card_maker_ajax#rename_deck"
     get    "card_maker"                               => "card_maker#index", :as => :card_maker
   end

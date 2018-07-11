@@ -99,8 +99,8 @@ class CardMakerAjaxController < ApplicationController
     json_response(CardServiceCaller.card_ids(logged_in_user.id))
   end
 
-  # GET /card_maker_ajax/card_summaries
-  def card_summaries
+  # GET /card_maker_ajax/cards
+  def cards
     json_response(CardServiceCaller.card_summaries(logged_in_user.id))
   end
 
@@ -208,12 +208,12 @@ class CardMakerAjaxController < ApplicationController
 
 
   # GET /card_maker_ajax/public/decks
-  def get_public_decks
+  def public_decks
     json_response(CardServiceCaller.get_public_decks)
   end
   
   # GET /card_maker_ajax/public/cards
-  def get_public_cards
+  def public_cards
     json_response(CardServiceCaller.get_public_cards)
   end
 

@@ -117,106 +117,103 @@ class CardMaker extends React.Component {
   }
 
   componentDidMount() {
-    var hashParams = EolUtil.parseHashParams();
+    const that = this
+      , hashParams = EolUtil.parseHashParams()
+      ;
 
     window.addEventListener('popstate', (event) => {
-      this.handleHistoryStateChange(event.state);
+      that.handleHistoryStateChange(event.state);
     });
 
-    $.getJSON('/user_sessions/user_info', (userInfo) => {
-      this.setState({
-        userRole: userInfo.role
-      }, () => {
-        if (hashParams.deck_id) {
-          this.reloadAllResources(hashParams.deck_id);
-        } else {
-          // If this is a page refresh, and the editor was previously open,
-          // open it now.
-          this.handleHistoryStateChange(history.state); 
+    that.showLoadingOverlay(null, (closeFn) => {
+      $.getJSON('/user_sessions/user_info', (userInfo) => {
+        that.setState({
+          userRole: userInfo.role
+        }, () => {
+          if (hashParams.deck_id) {
+            // library is set to public, which is what we want
+            if (that.state.userRole) {
+              // user decks are needed in both libraries, for example, for copying 
+              // public cards to a deck
+              that.reloadResource('user', 'decks', () => {
+                that.reloadCurLibResourcesSetDeck(hashParams.deck_id, closeFn);
+              });
+            } else {
+              that.reloadCurLibResourcesSetDeck(hashParams.deck_id, closeFn);
+            }
+          } else {
+            // If that is a page refresh, and the editor was previously open,
+            // open it now.
+            that.handleHistoryStateChange(history.state); 
 
-          if (this.state.userRole) {
-            this.setLibrary('user')
-          } 
-
-          this.reloadAllResources(null);
-        }
+            if (that.state.userRole) {
+              that.setLibrary('user', closeFn);
+            } else {
+              that.reloadCurLibResources(closeFn);
+            }
+          }
+        });
       });
     });
   }
 
-  reloadResourcesWithCb = (cb) => {
-    this.reloadResourcesHelper(this.props.library, null, cb);
+  reloadCurLibResources = (cb) => {
+    this.reloadCurLibResourcesSetDeck(null, cb);
   }
 
-  reloadResources = () => {
-    this.showLoadingOverlay();
-    this.reloadResourcesWithCb(this.hideLoadingOverlay);
-  }
+  reloadCurLibResourcesSetDeck = (deckOverrideId, cb) => {
+    const that = this;
 
-  reloadResourcesHelper = (lib, deckIdOverride, cb) => {
-    let that = this
-      , decksUrl
-      , cardsUrl
-      , cardsKey
-      , decksKey
-      ;
+    that.reloadResource(that.state.library, 'cards', () => {
+      that.reloadResource(that.state.library, 'decks', (decks) => {
+        let selectedDeck = decks.find((deck) => {
+          return deck.id === (deckOverrideId || that.state.selectedDeck.id);
+        });
 
-    if (lib === 'user') {
-      decksUrl = 'decks';
-      cardsUrl = 'card_summaries';
-      cardsKey = 'userCards';
-      decksKey = 'userDecks';
-    } else {
-      decksUrl = 'public/decks';
-      cardsUrl = 'public/cards';
-      cardsKey = 'publicCards';
-      decksKey = 'publicDecks';
-    }
+        if (!selectedDeck) {
+          selectedDeck = allCardsDeck;
+        }
 
-    this.req = $.ajax({
-      url: cardMakerUrl(decksUrl),
-      method: 'GET',
-      success: (decks) => {
-        this.req = $.ajax({
-          url: cardMakerUrl(cardsUrl),
-          method: 'GET',
-          success: (cards) => {
-            let selectedDeck = decks.find((deck) => {
-              return deck.id === (deckIdOverride || this.state.selectedDeck.id);
-            });
-
-            if (!selectedDeck) {
-              selectedDeck = allCardsDeck;
-            }
-
-            that.setState({
-              [cardsKey]: cards,
-              [decksKey]: decks,
-              showDescInput: false
-            }, () => {
-              if (lib === this.state.library) {
-                that.setSelectedDeck(selectedDeck);  
-              }
-
-              if (cb) {
-                cb();
-              }
-            });
+        that.setState({
+          selectedDeck: selectedDeck
+        }, () => {
+          if (cb) {
+            cb();
           }
         });
-      }
+      });
     });
   }
 
-  reloadAllResources = (deckIdOverride) => {
-    var that = this;
+  reloadResource = (lib, type, cb) => {
+    const that = this;
+    let keyExt
+      , path
+      ;
+    
+    if (type === 'cards') {
+      keyExt = 'Cards';
+    } else if (type === 'decks') {
+      keyExt = 'Decks';
+    } else {
+      throw new TypeError('invalid type: ' + type);
+    }
 
-    that.showLoadingOverlay();
-    that.reloadResourcesHelper('public', deckIdOverride, () => {
-      if (that.state.userRole) {
-        that.reloadResourcesHelper('user', deckIdOverride, that.hideLoadingOverlay);
-      } else {
-        that.hideLoadingOverlay();
+    if (lib === 'user') {
+      path = type;
+    } else if (lib === 'public') {
+      path = 'public/' + type;
+    } else {
+      throw new TypeError('Invalid lib: ' + lib);
+    }
+
+    $.ajax({
+      url: cardMakerUrl(path),
+      method: 'GET',
+      success: (resources) =>  {
+        that.setState({
+          [lib + keyExt]: resources
+        }, () => cb(resources));
       }
     });
   }
@@ -286,22 +283,29 @@ class CardMaker extends React.Component {
     window.history.back();
   }
 
-  setSelectedDeck = (deck) => {
+  setSelectedDeck = (deck, cb) => {
     this.setState({
       selectedDeck: deck
-    });
+    }, cb);
   }
 
   setLibrary = (newLib, cb) => {
-    if (this.state.library !== newLib) {
-      this.setState((prevState) => {
+    const that = this;
+
+    if (that.state.library !== newLib) {
+      that.setState((prevState) => {
         return {
           library: newLib,
           selectedDeck: allCardsDeck,
-          sort: sorts[this.sortsForLib(newLib)[0].key]
+          sort: sorts[that.sortsForLib(newLib)[0].key]
         };
-      }, cb);
-    } else {
+      }, () => {
+        that.reloadCurLibResources(); 
+        if (cb) {
+          cb();
+        }
+      });
+    } else if (cb) {
       cb();
     }
   }
@@ -335,9 +339,7 @@ class CardMaker extends React.Component {
           handleEditCard={this.handleEditCard}
           userRole={this.state.userRole}
           library={this.state.library}
-          reloadResources={this.reloadResources}
-          reloadAllResources={this.reloadAllResources}
-          reloadResourcesWithCb={this.reloadResourcesWithCb}
+          reloadCurLibResources={this.reloadCurLibResources}
           setLibrary={this.setLibrary}
           selectedDeck={this.state.selectedDeck}
           setSelectedDeck={this.setSelectedDeck}
@@ -361,10 +363,14 @@ class CardMaker extends React.Component {
     return component;
   }
 
-  showLoadingOverlay = (text) => {
+  showLoadingOverlay = (text, cb) => {
+    const that = this;
+
     this.setState({
       showLoadingOverlay: true,
       loadingOverlayText: text
+    }, () => {
+      cb(this.hideLoadingOverlay);
     });
   }
 

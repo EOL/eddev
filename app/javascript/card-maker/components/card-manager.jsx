@@ -54,17 +54,6 @@ class CardManager extends React.Component {
     }
   }
 
-
-
-  componentWillUnmount() {
-    if (this.req) {
-      this.req.abort();
-      this.req = null;
-    }
-
-    this.props.hideLoadingOverlay();
-  }
-
   closeMenu = (name) => {
     this.setState((prevState) => {
       return update(prevState, {
@@ -86,24 +75,32 @@ class CardManager extends React.Component {
   }
 
   assignCardDeck = (cardId, deckId) => {
-    const url = cardMakerUrl('cards/' + cardId + '/deck_id');
+    const that = this
+      , url = cardMakerUrl('cards/' + cardId + '/deck_id')  
+      ;
 
-    if (deckId != null) {
-      $.ajax(url, {
-        method: 'PUT',
-        data: deckId,
-        contentType: 'text/plain',
-        success: this.props.reloadResources,
-      });
-    } else {
-      $.ajax(url, {
-        method: 'DELETE',
-        success: this.props.reloadResources,
-      });
-    }
+    that.showLoadingOverlay(null, (closeFn) => {
+      const successFn = () => {
+        that.props.reloadCurLibResources(closeFn);
+      }
+
+      if (deckId != null) {
+        $.ajax(url, {
+          method: 'PUT',
+          data: deckId,
+          contentType: 'text/plain',
+          success: successFn,
+        });
+      } else {
+        $.ajax(url, {
+          method: 'DELETE',
+          success: successFn,
+        });
+      }
+    });
   }
 
-  handleDestroyResource(confirmMsg, resourceType, id) {
+  handleDestroyResource = (confirmMsg, resourceType, id) => {
     const that = this
         , shouldDestroy = confirm(confirmMsg)
         ;
@@ -112,13 +109,14 @@ class CardManager extends React.Component {
 
     if (!shouldDestroy) return;
 
-    that.props.showLoadingOverlay();
-    $.ajax({
-      url: cardMakerUrl(resourceType + '/' + id),
-      method: 'DELETE',
-      success: () => {
-        that.props.reloadResourcesWithCb(that.props.hideLoadingOverlay);
-      }
+    that.props.showLoadingOverlay(null, (closeFn) => {
+      $.ajax({
+        url: cardMakerUrl(resourceType + '/' + id),
+        method: 'DELETE',
+        success: () => {
+          that.props.reloadCurLibResources(closeFn);
+        }
+      });
     });
   }
 
@@ -164,24 +162,25 @@ class CardManager extends React.Component {
   createOrCopyCard = (data, deckId) => {
     let that = this;
 
-    that.props.showLoadingOverlay();
-
-    $.ajax({
-      url: this.createCardUrl(deckId),
-      data: JSON.stringify(data),
-      contentType: 'application/json',
-      method: 'POST',
-      success: (card) => {
-        if (data.copyFrom) {
-          that.props.reloadResourcesWithCb(that.props.hideLoadingOverlay);
-        } else {
-          that.props.handleEditCard(card.id)
+    that.props.showLoadingOverlay(null, (closeFn) => {
+      $.ajax({
+        url: this.createCardUrl(deckId),
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        method: 'POST',
+        success: (card) => {
+          if (data.copyFrom) {
+            that.props.reloadCurLibResources(closeFn);
+          } else {
+            closeFn();
+            that.props.handleEditCard(card.id)
+          }
+        },
+        error: () => {
+          alert(I18n.t('react.card_maker.unexpected_error_msg'));
+          closeFn();
         }
-      },
-      error: () => {
-        alert(I18n.t('react.card_maker.unexpected_error_msg'));
-        that.props.hideLoadingOverlay();
-      }
+      });
     });
   }
 
@@ -321,13 +320,13 @@ class CardManager extends React.Component {
     });
   }
 
-  showDeck = (id) => {
+  showDeck = (id, cb) => {
     var deck = this.props.decks.find((deck) => {
       return deck.id === id;
     });
 
     if (deck) {
-      this.props.setSelectedDeck(deck);
+      this.props.setSelectedDeck(deck, cb);
     }
   }
 
@@ -365,12 +364,16 @@ class CardManager extends React.Component {
   handleRenameDeck = (name) => {
     const that = this;
 
-    $.ajax({
-      url: cardMakerUrl(`decks/${this.props.selectedDeck.id}/name`),
-      method: 'POST',
-      data: name,
-      success: that.props.reloadResources
-    });
+    that.props.showLoadingOverlay(null, (closeFn) => {
+      $.ajax({
+        url: cardMakerUrl(`decks/${this.props.selectedDeck.id}/name`),
+        method: 'POST',
+        data: name,
+        success: () => {
+          that.props.reloadCurLibResources(closeFn);
+        }
+      });
+    })
   }
 
   handleCopyDeck = (deckName) => {
@@ -389,49 +392,46 @@ class CardManager extends React.Component {
           }
         ;
 
-    that.props.showLoadingOverlay();
-
-    $.ajax({
-      url: cardMakerUrl('decks'),
-      method: 'POST',
-      data: JSON.stringify(data),
-      success: (data) => {
-        const cb = (err) => { 
-          if (err) {
-            that.props.hideLoadingOverlay();
-            alert(I18n.t('react.card_maker.unexpected_error_msg'));
-          } else {
-            that.props.setLibrary('user', () => {
-              that.reloadResourcesWithCb(() => {
-                that.showDeck(data.id);
-                that.props.hideLoadingOverlay();
-              })
-            })
+    that.props.showLoadingOverlay(null, (closeFn) => {
+      $.ajax({
+        url: cardMakerUrl('decks'),
+        method: 'POST',
+        data: JSON.stringify(data),
+        success: (data) => {
+          const cb = (err) => { 
+            if (err) {
+              closeFn();
+              alert(I18n.t('react.card_maker.unexpected_error_msg'));
+            } else {
+              that.props.setLibrary('user', () => {
+                that.showDeck(data.id, closeFn);
+              });
+            }
           }
+
+          if (colId != null && colId.length) {
+            that.populateDeckFromCollection(data.id, colId, cb);
+          } else {
+            cb();
+          }
+        },
+        error: function(err) {
+          var alertMsg = '';
+
+          closeFn();
+
+          if (err.status === 422 &&
+              err.responseJSON &&
+              err.responseJSON.errors
+          ) { // Validation error
+            alertMsg = err.responseJSON.errors.join('\n');
+          } else {
+            alertMsg = I18n.t('react.card_maker.unexpected_error_msg')
+          }
+
+          alert(alertMsg);
         }
-
-        if (colId != null && colId.length) {
-          that.populateDeckFromCollection(data.id, colId, cb);
-        } else {
-          cb();
-        }
-      },
-      error: function(err) {
-        var alertMsg = '';
-
-        that.props.hideLoadingOverlay();
-
-        if (err.status === 422 &&
-            err.responseJSON &&
-            err.responseJSON.errors
-        ) { // Validation error
-          alertMsg = err.responseJSON.errors.join('\n');
-        } else {
-          alertMsg = I18n.t('react.card_maker.unexpected_error_msg')
-        }
-
-        alert(alertMsg);
-      }
+      });
     });
   }
 
@@ -444,33 +444,37 @@ class CardManager extends React.Component {
   makeDeckPdf = () => {
     const that = this;
 
-    that.props.showLoadingOverlay(I18n.t('react.card_maker.print_loading_msg'));
-
-    $.ajax({
-      url: cardMakerUrl('deck_pdfs'),
-      data: JSON.stringify({
-        deckId: this.props.selectedDeck.id
-      }),
-      method: 'POST',
-      success: (result) => {
-        that.pollPdfJob(result.jobId)
+    that.props.showLoadingOverlay(
+      I18n.t('react.card_maker.print_loading_msg'), 
+      (closeFn) => {
+        $.ajax({
+          url: cardMakerUrl('deck_pdfs'),
+          data: JSON.stringify({
+            deckId: that.props.selectedDeck.id
+          }),
+          method: 'POST',
+          success: (result) => {
+            that.pollPdfJob(result.jobId, closeFn);
+          }
+        });
       }
-    });
+    );
+
   }
 
-  pollPdfJob = (id) => {
+  pollPdfJob = (id, overlayCloseFn) => {
     const that = this;
 
     $.getJSON(cardMakerUrl('deck_pdfs/' + id + '/status'), (result) => {
       if (result.status === 'done') {
-        that.props.hideLoadingOverlay();
+        overlayCloseFn();
         window.open(cardMakerUrl('deck_pdfs/' + id + '/result.pdf'));
       } else if (result.status === 'running') {
         setTimeout(() => {
           that.pollPdfJob(id)
         }, pollIntervalMillis)
       } else {
-        that.props.hideLoadingOverlay();
+        overlayCloseFn();
         alert(I18n.t('react.card_maker.unexpected_error_msg'));
       }
     });
@@ -504,7 +508,8 @@ class CardManager extends React.Component {
   }
 
   handleSetDescBtnClick = () => {
-    const url = cardMakerUrl(
+    const that = this
+      , url = cardMakerUrl(
             'decks/' +
             this.props.selectedDeck.id +
             '/desc'
@@ -513,11 +518,13 @@ class CardManager extends React.Component {
 
     $.ajax({
       method: 'POST',
-      data: this.state.deckDescVal,
+      data: that.state.deckDescVal,
       url: url,
       success: () => {
-       this.closeAndClearDescInput(); 
-       this.props.reloadResources();
+        that.props.showLoadingOverlay(null, (closeFn) => {
+          that.closeAndClearDescInput(); 
+          that.props.reloadCurLibResources(closeFn);
+        });
       }
     });
   }
@@ -621,23 +628,26 @@ class CardManager extends React.Component {
   }
 
   toggleDeckPublic = () => {
-    var action = this.props.selectedDeck.public ?
+    const that = this 
+      , action = that.props.selectedDeck.public ?
           'make_private' :
           'make_public'
       , proceed = confirm(
-          this.props.selectedDeck.public ?
+          that.props.selectedDeck.public ?
           I18n.t('react.card_maker.confirm_make_private') :
           I18n.t('react.card_maker.confirm_make_public')
         )
       ;
 
     if (proceed) {
-      $.ajax({
-        url: cardMakerUrl('decks/' + this.props.selectedDeck.id + '/' + action),
-        method: 'POST',
-        success: () => {
-          this.props.reloadAllResources();
-        }
+      that.showLoadingOverlay(null, (closeFn) => {
+        $.ajax({
+          url: cardMakerUrl('decks/' + that.props.selectedDeck.id + '/' + action),
+          method: 'POST',
+          success: () => {
+            that.props.reloadCurLibResources(closeFn);
+          }
+        });
       });
     }
   }
@@ -689,11 +699,9 @@ class CardManager extends React.Component {
       newLib = 'user';
     }
 
-    this.setLibrary(newLib);
-  }
-
-  setLibrary = (newLib) => {
-    this.props.setLibrary(newLib, this.props.reloadResources);
+    this.props.showLoadingOverlay(null, (closeFn) => {
+      this.props.setLibrary(newLib, closeFn);
+    });
   }
 
   isUserLib = () => {

@@ -289,8 +289,13 @@ class CardMaker extends React.Component {
     }, cb);
   }
 
+  // always reloads resources
   setLibrary = (newLib, cb) => {
-    const that = this;
+    const that = this
+      , reloadFn = () => {
+          that.reloadCurLibResources(cb); 
+        }
+      ;
 
     if (that.state.library !== newLib) {
       that.setState((prevState) => {
@@ -299,14 +304,9 @@ class CardMaker extends React.Component {
           selectedDeck: allCardsDeck,
           sort: sorts[that.sortsForLib(newLib)[0].key]
         };
-      }, () => {
-        that.reloadCurLibResources(); 
-        if (cb) {
-          cb();
-        }
-      });
-    } else if (cb) {
-      cb();
+      }, reloadFn);
+    } else {
+      reloadFn();
     }
   }
 

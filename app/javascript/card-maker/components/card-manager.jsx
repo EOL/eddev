@@ -79,7 +79,7 @@ class CardManager extends React.Component {
       , url = cardMakerUrl('cards/' + cardId + '/deck_id')  
       ;
 
-    that.showLoadingOverlay(null, (closeFn) => {
+    that.props.showLoadingOverlay(null, (closeFn) => {
       const successFn = () => {
         that.props.reloadCurLibResources(closeFn);
       }
@@ -169,12 +169,12 @@ class CardManager extends React.Component {
         contentType: 'application/json',
         method: 'POST',
         success: (card) => {
-          if (data.copyFrom) {
-            that.props.reloadCurLibResources(closeFn);
-          } else {
+          that.props.reloadCurLibResources(() => {
             closeFn();
-            that.props.handleEditCard(card.id)
-          }
+            if (!data.copyFrom) {
+              that.props.handleEditCard(card.id);
+            }
+          })
         },
         error: () => {
           alert(I18n.t('react.card_maker.unexpected_error_msg'));
@@ -327,6 +327,8 @@ class CardManager extends React.Component {
 
     if (deck) {
       this.props.setSelectedDeck(deck, cb);
+    } else if (cb) {
+      cb();
     }
   }
 
@@ -397,20 +399,20 @@ class CardManager extends React.Component {
         url: cardMakerUrl('decks'),
         method: 'POST',
         data: JSON.stringify(data),
-        success: (data) => {
+        success: (deck) => {
           const cb = (err) => { 
             if (err) {
               closeFn();
               alert(I18n.t('react.card_maker.unexpected_error_msg'));
             } else {
               that.props.setLibrary('user', () => {
-                that.showDeck(data.id, closeFn);
+                that.showDeck(deck.id, closeFn);
               });
             }
           }
 
           if (colId != null && colId.length) {
-            that.populateDeckFromCollection(data.id, colId, cb);
+            that.populateDeckFromCollection(deck.id, colId, cb);
           } else {
             cb();
           }
@@ -471,7 +473,7 @@ class CardManager extends React.Component {
         window.open(cardMakerUrl('deck_pdfs/' + id + '/result.pdf'));
       } else if (result.status === 'running') {
         setTimeout(() => {
-          that.pollPdfJob(id)
+          that.pollPdfJob(id, overlayCloseFn)
         }, pollIntervalMillis)
       } else {
         overlayCloseFn();
@@ -640,7 +642,7 @@ class CardManager extends React.Component {
       ;
 
     if (proceed) {
-      that.showLoadingOverlay(null, (closeFn) => {
+      that.props.showLoadingOverlay(null, (closeFn) => {
         $.ajax({
           url: cardMakerUrl('decks/' + that.props.selectedDeck.id + '/' + action),
           method: 'POST',

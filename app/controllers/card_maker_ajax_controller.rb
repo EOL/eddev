@@ -3,8 +3,8 @@
 class CardMakerAjaxController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :ensure_user, :except => [
-    :get_public_cards, 
-    :get_public_decks,
+    :public_cards, 
+    :public_decks,
     :get_card,
     :create_deck_pdf,
     :deck_pdf_status,

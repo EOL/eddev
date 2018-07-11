@@ -32,7 +32,10 @@ class UserResources extends React.Component {
       this.props.resources.length !== nextProps.resources.length;
 
     for (let i = 0; i < this.props.resources.length && !changed; i++) {
-      if (this.props.resources[i].id !== nextProps.resources[i].id) {
+      if (
+        this.props.resources[i].id !== nextProps.resources[i].id ||
+        this.props.resources[i].updatedAt !== nextProps.resources[i].updatedAt
+      ) {
         changed = true;
       }
     }

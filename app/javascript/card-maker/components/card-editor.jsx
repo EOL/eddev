@@ -126,42 +126,45 @@ class CardEditor extends React.Component {
   }
 
   handleClose = () => {
-    this.props.handleRequestClose(false);
+    this.props.handleRequestClose();
   }
 
   saveWithCb = (cb) => {
     if (this.props.card) {
-      this.props.showLoadingOverlay();
-      this.props.card.save((err, newCard) => {
-        cb(err, newCard)
-        this.props.hideLoadingOverlay();
+      this.props.showLoadingOverlay(null, (closeFn) => {
+        this.props.card.save((err, newCard) => {
+          cb(err, newCard, closeFn)
+        });
       });
     }
   }
 
   handleSave = () => {
-    this.saveWithCb((err, newCard) => {
+    this.saveWithCb((err, newCard, closeFn) => {
       if (err) {
+        closeFn();
         throw err;
       }
 
       this.props.updateCard(() => {
         return newCard
-      });
+      }, closeFn);
     });
   }
 
   handleSaveAndExit = () => {
     const that = this;
 
-    that.saveWithCb((err, newCard) => {
+    that.saveWithCb((err, newCard, closeFn) => {
       if (err) {
+        closeFn();
         throw err;
       }
 
       this.props.updateCard(() => {
         return newCard
       }, () => {
+        closeFn();
         that.props.handleRequestClose();        
       })
     });

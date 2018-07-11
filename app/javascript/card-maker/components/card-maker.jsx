@@ -242,7 +242,7 @@ class CardMaker extends React.Component {
     if (proceed) {
       this.setState({
         screen: 'manager'
-      });
+      }, this.reloadCurLibResources);
     } else {
       window.history.pushState(state, '');
     }

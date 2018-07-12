@@ -60,6 +60,8 @@ Rails.application.routes.draw do
     get    "card_maker_ajax/public/decks"             => "card_maker_ajax#public_decks"
     post   "card_maker_ajax/decks/:deck_id/name/"     => "card_maker_ajax#rename_deck"
     get    "card_maker"                               => "card_maker#index", :as => :card_maker
+
+    get "podcasts" => "podcasts#index", :as => "podcasts"
   end
 
   # Example of named route that can be invoked with purchase_url(id: product.id)

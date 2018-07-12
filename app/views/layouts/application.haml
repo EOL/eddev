@@ -31,8 +31,9 @@
 
     - js_packs.each do |pack_name|
       = javascript_pack_tag pack_name
-      = stylesheet_pack_tag pack_name
-    
+      - if Webpacker.manifest.lookup("#{pack_name}.css")
+        = stylesheet_pack_tag pack_name 
+
     = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"
     :javascript
       WebFont.load({

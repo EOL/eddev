@@ -2,7 +2,7 @@
   %li.lang-item
     %span= t("language")
     %i.fa.fa-caret-down.nav-menu-caret.nav-menu-caret-lang
-  - I18n.available_locales.each do |locale|
+  - I18n.available_locales.sort.each do |locale|
     %li.lang-item.lang-item-choice
       - if I18n.locale != locale
         = link_to(I18n.t("language", :locale => locale), set_locale_path(:params => { :set_locale => locale }))

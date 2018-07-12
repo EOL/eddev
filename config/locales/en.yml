@@ -19,6 +19,7 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 en:
+  language: English
   activerecord:
     attributes:
       user:
@@ -82,7 +83,6 @@ en:
     forgot_password_email:
       body_html: "Hi, %{user_name}. Please click the following link to change your password: <a href=\"%{url}\">%{url}</a>"
       subject: "Reset your EOL L&E password"
-  language: English
   earth_tours:
     index:
       intro_hdr: Google Earth Tours

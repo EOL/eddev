@@ -22,17 +22,12 @@
               %span= t("language")
               %i.fa.fa-caret-down
               %i.fa.fa-caret-up
-            %ul.nav-user-menu-lang-menu.js-nav-user-menu-lang-menu
-              - I18n.available_locales.each do |locale|
-                - if I18n.locale != locale
-                  %li
-                    = link_to(I18n.t("language", :locale => locale), set_locale_path(:params => { :set_locale => locale }))
-              
+            = render :partial => "shared/lang_select", :locals => { :extra_class => "nav-user-menu-lang-menu" }
             -if logged_in_user
               %li
                 = link_to(logged_in_user.user_name, account_path)
               %li
-                = link_to(t(".sign_out"), logout_path)
+                = link_to(t("shared.header.sign_out"), logout_path)
             -else
               %li
                 = link_to(t("shared.header.sign_in"), login_path)

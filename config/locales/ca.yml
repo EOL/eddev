@@ -1,0 +1,201 @@
+ca:
+  language: català
+  user_sessions:
+    create:
+      invalid_creds: Nom d'usuari o clau incorrecta
+      sign_in_success: Has entrat correctament
+    new:
+      dont_have_account_html: No tens un compte? <a href='%{sign_up_path}'>Registra't</a>.
+      forgot_password: Has oblidat la teva clau?
+      password: Clau
+      sign_in: Entra
+      sign_up: Surt
+      user_name: Nom d'usuari
+  users:
+    account:
+      change_password: Canviar la clau
+    change_password:
+      success: Clau canviada amb èxit
+    change_password_form:
+      change_password: Canviar la clau
+      current_password: Clau actual
+      success: Clau canviada amb èxit
+    confirm:
+      success: T'has registrat amb èxit, %{user_name}! Pots entrar aquí sota.
+    confirmation_pending:
+      check_your_email: Gràcies per registrar-te, %{user_name}! Sisplau, revisa el
+        teu correu electrònic (%{email}) per veure les instruccions per completar
+        el teu registre.
+    forgot_password:
+      header: Esborra la teva clau
+      submit: Envia correu per esborrar la clau
+    mail_password_reset_token:
+      email_sent: Sisplau, revisa el teu compte de correu associat al nom d'usuari
+        per veure les instruccions de com esborrar la teva clau. Si no t'arriba un
+        correu en 15 minuts, sisplau envia'ns un correu a eol.learning@gmail.com (si
+        pot ser, en anglès!)
+      invalid_user_name: Nom d'usuari no trobat
+    new:
+      sign_up: Entra
+    reset_password:
+      success: Clau canviada amb èxit. Pots entrar aqui sota.
+    reset_password_form:
+      header: Canviar clau
+  activerecord:
+    attributes:
+      user:
+        email: Correu electrònic
+        full_name: Nom complet
+        password: Clau
+        password_confirmation: Confirmació de clau
+        user_name: Nom d'usuari
+    errors:
+      messages:
+        blank: no pot ser un camp en blanc
+        taken: ja està agafat
+      models:
+        user:
+          attributes:
+            password:
+              too_short: massa curt (mínim %{count} caràcters)
+            password_confirmation:
+              confirmation: la clau no coincideix
+            user_name:
+              invalid: només pot contenir lletres, números, i els caràcters '.', '@',
+                and '_'.
+      template:
+        header:
+          one: 1 error a impedit guardar aquest %{model}
+          other: "%{count} errors han impedit guardar aquest %{model}"
+    models:
+      user: Usuari
+  react:
+    card_maker:
+      add_desc: afegeix descripció
+      all_cards: totes les cartes
+      all_decks: tots els jocs
+      all_my_cards: totes les meves cartes
+      all_public_cards: totes les cartes públicques
+      are_you_sure_delete_card: Estas segur/a que vols esborrar aquesta carta?
+      are_you_sure_delete_deck: Estas segur/a que vols esborrar aquest joc i totes les
+        seves cartes?
+      are_you_sure_unsaved: Estas segur/a que vols abandonar aquesta pàgina? Es perdrà
+        tota la feina no desada.
+      assign_to_deck: Assignar a un joc
+      cancel: cancelar
+      card: carta
+      card_form_parens: "(entra la informació que apareixerà a la carta)"
+      card_maker_html: constructor<br/>de cartes (beta)
+      card_maker_title: Constructor de Cartes
+      card_manager: Gestor de Cartes
+      card_preview: Previsualitza la carta
+      card_preview_lightbox: Previsualitzador de cartes
+      card_preview_parens: "(Opcions de Previsualització en viu, Controls d'imatge,
+        Desar + Sortir)"
+      close: tanca
+      save_+_exit: desa i surt
+      collection_id_optional: id de la col·lecció d'EOL (opcional)
+      confirm_make_private: Estàs segur que vols que aquest joc sigui privat?
+      confirm_make_public: Estàs segur que vols que aquest joc sigui públic?
+      copy_card: copia una carta
+      copy_deck: copia un joc
+      copy_of_name: còpia de %{name}
+      create_a_card: crea una carta
+      create_a_deck: crea un joc
+      create_card: crea una carta
+      create_card_from_selection: Crea una carta des de la selecció
+      create_deck: crea un joc
+      deck: joc
+      delete_deck: elimina un joc
+      download_png: Descarrega PNG
+      edit_desc: edita la descripció
+      enter_deck_name: 'introdueix el nom del joc '
+      enter_text: introdueix text
+      failed_to_load_image_url: Error al carregar imatge des de l'URL
+      flip_horiz: Gira horitzontalment
+      flip_vert: Gira verticalment
+      font_size: 'Mida de lletra:'
+      go_back_to: 'ves enrera a:'
+      image_credit: Crèdit de la imatge
+      image_library: Llibreria d'imatges
+      make_deck_private: fes el joc privat
+      make_deck_public: fes el joc públic
+      manage_deck_users: gestiona els usuaris dels jocs
+      my_cards: les meves cartes
+      n_cards:
+        one: 1 carta
+        other: "%{count} de cartes"
+      n_decks:
+        one: 1 joc
+        other: "%{count} de jocs"
+      n_results: "%{count} de resultats"
+      name_cant_be_blank: el nom no pot quedar en blanc
+      name_taken: nom agafat
+      new_card_lc: nova carta
+      new_deck: Nou joc
+      new_deck_lc: nou joc
+      new_upper: NOU
+      no_deck_assigned: Cap joc assignat
+      open_eol_taxon_page_html: "<span>Obre la pàgina del tàxon</span> <i class='%{iconClass}'></i> "
+      or: o bé
+      press_enter_search: prem "enter" per cercar
+      print: imprimir
+      print_loading_msg: Generar el PDF de qualitat pot trigar una estona. Sisplau,
+        comprova que no tens bloquejades les finestres emergents, quan aquesta pantalla
+        desaparegui.
+      public_cards: cartes públiques
+      quick_save: guardar ràpidament
+      rename: reanomena
+      rename_deck: reanomena el joc
+      rotate_90: Gira 90°
+      save_card_to_deck: 'Guarda la carta al joc: '
+      save_desc: guarda la descripció
+      search: Cerca
+      search_cards: cerca cartes
+      search_decks: cerca jocs
+      search_species_taxon: cerca una espècie o tàxon
+      select_deck: joc (opcional)
+      sorts:
+        common_a_z: nom comú (a-z)
+        common_z_a: nom comú (a-z)
+        recent: editats recentment
+        sci_a_z: nom científic (a-z)
+        sci_z_a: nom científic (a-z)
+      species_search: Cerca espècies
+      suggestions: Suggerències
+      type_paste_url: Copia/Enganxa URL
+      unassigned: no assignat/da
+      unexpected_error_msg: Ha ocurrregut un error no esperat
+      upload_an_image: Carrega una imatge
+      add_user: afegeix usuari
+      added_user: usuari afegit amb èxit %{userName}
+      are_you_sure_remove_user: Segur que vols eliminar l'accés per l'usuari %{userName}?
+      click_choose_card_type: Clica per escollir un altre tipus de carta
+      create: crear
+      key_card: Carta Clau
+      no_results_found: no s'ha trobat cap resultat
+      or_select_different_card: o bé escull un altre tius de carta
+      owner_user: 'Propieari: %{usrName}'
+      proj_desc_card: Descripció del projeccte
+      removed_user: Usuari eliminat amb èxit %{userName}
+      select: selecciona
+      select_a_deck_for_card: selecciona un joc per la teva carta (opcional)
+      sort_label: 'Ordena:'
+      start_typing_user_name: comença escrivint el nom de l'usuari
+      title_card: Carta Primera
+      trait_card: Carta de Tret
+      users: Usuaris
+      vocab_card: Vocabulari
+  shared:
+    header:
+      settings: configuració
+      sign_in: entra
+      sign_out: surt
+  signup_confirmation_mailer:
+    confirmation_email:
+      body_html: 'Hola, %{username}, gràcies per registrar-te al lloc L&amp;E d''EOL.
+        Sisplau clica al següent enllaç per confirar la teva subscripció: <a href="%{url}">%{url}</a>'
+      subject: Completa la teva subscripció a lloc L&E d'EOL
+  locales:
+    disclaimer: Estem en procés de traduïr la nostra pàgina web. Ara per ara, el Card
+      Maker és l'unic recurs en català. Gràcies per la teva paciència!

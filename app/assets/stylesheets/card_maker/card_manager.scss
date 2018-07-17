@@ -989,9 +989,10 @@ $species-search-input-height: 45px;
 }
 
 /* Card zoom/png download lightbox */
-.lLightboxZoom {
+.lightboxZoom {
   margin: 20px auto 0 auto;
   padding: 0;
+  position: relative;
   width: 402px;
 
   & > button {
@@ -1002,6 +1003,21 @@ $species-search-input-height: 45px;
   &:focus {
     outline: 0;
   }
+}
+
+.zoomArrow {
+  color: $white;
+  cursor: pointer;
+  position: absolute;
+  top: 230px; 
+}
+
+.zoomArrowLeft {
+  left: -50px; 
+}
+
+.zoomArrowRight {
+  right: -50px;
 }
 
 .imageZoom {

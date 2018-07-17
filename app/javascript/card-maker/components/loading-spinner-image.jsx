@@ -10,6 +10,14 @@ class LoadingSpinnerImage extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.src !== nextProps.src) {
+      this.setState({
+        loaded: false
+      });
+    }
+  }
+
   imgLoaded = () => {
     this.setState((prevState, props) => {
       return {

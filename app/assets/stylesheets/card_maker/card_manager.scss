@@ -538,6 +538,14 @@ $species-search-input-height: 45px;
   padding: 10px;
 }
 
+.lightboxNoGlow {
+  border: none;
+  
+  &:focus {
+    outline: none;
+  }
+}
+
 .lightboxFlash {
   $height: 25px;
   background-color: #bcffba;
@@ -984,12 +992,8 @@ $species-search-input-height: 45px;
   width: 300px;
 }
 
-.deckSelectLabel {
-
-}
-
 /* Card zoom/png download lightbox */
-.lightboxZoom {
+.cardZoom {
   margin: 20px auto 0 auto;
   padding: 0;
   position: relative;
@@ -1042,6 +1046,9 @@ $species-search-input-height: 45px;
   top: 10px;
 }
 
+.modalXWhite {
+  color: $white;
+}
 
 // Deck URL lightbox
 .deckUrlLightbox {

@@ -1,0 +1,20 @@
+@import 'layout_vars';
+
+.lPage {
+  background-image: linear-gradient(to bottom, #dde4e8, #b4c2c9);
+}
+
+.lMainCol {
+  background-color: #c3cfd4;
+  margin: 0 auto;
+  position: relative;
+  width: $main-col-width * 1px;
+}
+.banner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 245px;
+}
+

@@ -24,6 +24,7 @@ import managerLogo from 'images/card_maker/icons/card_manager_logo.png'
 import newDeckIcon from 'images/card_maker/icons/new_deck.png'
 import iguanaBanner from 'images/card_maker/iguana_banner.png' /* TODO: convert to jpg */
 
+import layoutStyles from 'stylesheets/shared/react_layout'
 import styles from 'stylesheets/card_maker/card_manager'
 
 const pollIntervalMillis = 1000
@@ -888,7 +889,7 @@ class CardManager extends React.Component {
           handleRequestClose={() => this.setState({ deckUrl: null })}
           deckUrl={this.state.deckUrl}
         />
-        <img src={iguanaBanner} className={styles.banner} />
+        <img src={iguanaBanner} className={layoutStyles.banner} />
         <LeftRail
           library={this.props.library}
           handleToggleLibrary={this.toggleLibrary}

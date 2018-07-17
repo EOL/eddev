@@ -1,12 +1,11 @@
 import React from 'react'
 import ReactModal from 'react-modal'
 
+import Page from 'shared/components/page'
 import CardManager from './card-manager'
 import CardEditor from './card-editor'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
 import newImmutableCardInstance from 'lib/card-maker/immutable-card'
-
-import styles from 'stylesheets/card_maker/card_maker'
 
 import eolLogoHdr from 'images/card_maker/icons/eol_logo_hdr.png'
 
@@ -399,11 +398,7 @@ class CardMaker extends React.Component {
           }
         </ReactModal>
 
-        <div className={styles.lPage}>
-          <div className={styles.lMainCol}>
-            {this.screenComponent()}
-          </div>
-        </div>
+        <Page>{this.screenComponent()}</Page>
       </div>
     )
   }

@@ -1,5 +1,10 @@
 import React from 'react'
 
+import Page from 'shared/components/page'
+
+import frogBanner from 'images/podcasts/frog_banner.jpg'
+import layoutStyles from 'stylesheets/shared/react_layout'
+
 class Podcasts extends React.Component {
   constructor(props) {
     super(props);
@@ -9,7 +14,9 @@ class Podcasts extends React.Component {
 
   render() {
     return (
-      <div>Hello, podcasts world!</div>
+      <Page>
+        <img src={frogBanner} className={layoutStyles.banner} />
+      </Page>
     );
   }
 }

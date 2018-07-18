@@ -1024,6 +1024,11 @@ $species-search-input-height: 45px;
   right: -50px;
 }
 
+.isZoomArrowDisabled {
+  color: $txt-gray;
+  cursor: normal;
+}
+
 .imageZoom {
   height: 549px;
   margin: 0 auto 12px auto;

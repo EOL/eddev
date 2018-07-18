@@ -11,9 +11,19 @@ class CardZoomLightbox extends React.Component {
     if (this.props.card !== null) {
       this.bindKeyHandlers();
     }
+
+    this.state = {
+      cardLoaded: false,
+    }
   }
 
   componentWillReceiveProps(nextProps) {
+    if (this.props.card !== nextProps.card) {
+      this.setState({
+        cardLoaded: false
+      });
+    }
+
     if (this.props.card !== null && nextProps.card === null) {
       this.removeKeyHandlers();
     } else if (this.props.card === null && nextProps.card !== null) {
@@ -41,8 +51,31 @@ class CardZoomLightbox extends React.Component {
     window.open(cardMakerUrl(`cards/${cardId}.png`));
   }
 
+  handleRequestCardLoaded = () => {
+    this.setState({
+      cardLoaded: true
+    });
+  }
+
+  handleArrowClick = (dir) => {
+    if (this.state.cardLoaded) {
+      if (dir === 'next') {
+        this.props.requestNext();
+      } else if (dir === 'prev') {
+        this.props.requestPrev();
+      } else {
+        throw new TypeError('invalid dir parameter');
+      }
+    }
+  }
 
   render() {
+    var arrowBaseClasses = ['fa', 'fa-4x', styles.zoomArrow];
+
+    if (!this.state.cardLoaded) {
+      arrowBaseClasses.push(styles.isZoomArrowDisabled)  
+    }
+
     return (
       <CloseButtonModal
         isOpen={this.props.card !== null}
@@ -56,20 +89,31 @@ class CardZoomLightbox extends React.Component {
         fullScreenOverlay={true}
       >
         <div className={styles.cardZoom}>
-          <i 
-            className={`fa fa-angle-left fa-4x ${styles.zoomArrow} ${styles.zoomArrowLeft}`} 
-            onClick={this.props.requestPrev}
-          />
-          {this.props.card != null &&
+          {
+            this.props.hasPrev &&
+            <i 
+              className={`${arrowBaseClasses.join(' ')} fa-angle-left ${styles.zoomArrowLeft}`} 
+              onClick={() => this.handleArrowClick('prev')}
+            />
+          }
+          {
+            this.props.card != null &&
             <div className={styles.imageZoom}>
-              <LoadingSpinnerImage src={hiResCardImageUrl(this.props.card)} />
+              <LoadingSpinnerImage 
+                src={hiResCardImageUrl(this.props.card)} 
+                requestLoaded={this.handleRequestCardLoaded}
+                loaded={this.state.cardLoaded}
+              />
             </div>
           }
           <button onClick={() => this.handlePngClick(this.props.card.id)}>{I18n.t('react.card_maker.download_png')}</button>
-          <i 
-            className={`fa fa-angle-right fa-4x ${styles.zoomArrow} ${styles.zoomArrowRight}`}
-            onClick={this.props.requestNext}
-          />
+          {
+            this.props.hasNext &&
+            <i 
+              className={`${arrowBaseClasses.join(' ')} fa-angle-right ${styles.zoomArrowRight}`}
+              onClick={() => this.handleArrowClick('next')}
+            />
+          }
         </div>
 
       </CloseButtonModal>

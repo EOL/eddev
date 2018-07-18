@@ -19,23 +19,31 @@ class LoadingSpinnerImage extends React.Component {
   }
 
   imgLoaded = () => {
-    this.setState((prevState, props) => {
-      return {
-        loaded: true,
-      }
-    });
+    if (this.props.requestLoaded) {
+      this.props.requestLoaded();
+    } else {
+      this.setState((prevState, props) => {
+        return {
+          loaded: true,
+        }
+      });
+    }
+  }
+
+  isLoaded = () => {
+    return this.props.loaded || this.state.loaded;
   }
 
   render() {
     var imgClass = styles.fillParent;
 
-    if (!this.state.loaded) {
+    if (!this.isLoaded()) {
       imgClass += ' is-hidden';
     }
 
     return (
       <div className={styles.loadingSpinnerImage}>
-        {!this.state.loaded &&
+        {!this.isLoaded() &&
           <i className='fa fa-spinner fa-spin fa-2x' />
         }
         <img

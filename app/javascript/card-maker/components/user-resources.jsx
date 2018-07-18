@@ -156,6 +156,16 @@ class UserResources extends React.Component {
     });
   }
 
+  hasNext = () => {
+    return this.state.zoomCardIndex !== null &&
+      this.state.zoomCardIndex < this.props.resources.length - 1;
+  }
+
+  hasPrev = () => {
+    return this.state.zoomCardIndex !== null &&
+      this.state.zoomCardIndex > 0;
+  }
+
   render() {
     this.resourceCount = this.props.resources.length;
     
@@ -177,6 +187,8 @@ class UserResources extends React.Component {
               return updated;
             });
           }}
+          hasNext={this.hasNext()}
+          hasPrev={this.hasPrev()}
           handleRequestClose={this.handleCardZoomRequestClose}
         />
         <AdjustsForScrollbarContainer

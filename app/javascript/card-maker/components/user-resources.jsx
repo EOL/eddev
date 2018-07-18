@@ -174,7 +174,6 @@ class UserResources extends React.Component {
               if (updated < 0) { 
                 updated = length + updated;
               }
-              console.log(index, length, updated)
               return updated;
             });
           }}

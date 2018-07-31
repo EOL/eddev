@@ -483,6 +483,8 @@ en:
         recent: recently edited
         sci_a_z: scientific name (a-z)
         sci_z_a: scientific name (z-a)
+        taxon_group_a_z: taxon group (a-z)
+        taxon_group_z_a: taxon group (z-a)
       species_search: Species search
       start_typing_user_name: start typing user name to search
       suggestions: Suggestions

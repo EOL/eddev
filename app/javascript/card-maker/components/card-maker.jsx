@@ -10,6 +10,34 @@ import styles from 'stylesheets/card_maker/card_maker'
 
 import eolLogoHdr from 'images/card_maker/icons/eol_logo_hdr.png'
 
+function ascSort(field) {
+  return function(a, b) {
+    if (a.templateName !== 'trait' && b.templateName === 'trait') {
+      return -1; 
+    }
+
+    if (a.templateName === 'trait' && b.templateName !== 'trait') {
+      return 1;
+    }
+
+    if (a[field] <= b[field]) {
+      return -1;
+    } 
+
+    return 1;
+  }
+}
+
+function descSort(field) {
+  return function(a, b) {
+    if (a[field] > b[field]) {
+      return -1;
+    }
+
+    return 1;
+  }
+}
+
 const allDecksDeck = { // unused for now
         id: -1,
         name: I18n.t('react.card_maker.all_decks'),
@@ -24,54 +52,33 @@ const allDecksDeck = { // unused for now
       }
     , sorts = {
         commonAsc: {
-          fn: (a, b) => {
-            if (a.commonName <= b.commonName) {
-              return -1;
-            } else {
-              return 1;
-            }
-          },
+          fn: ascSort('commonName'),
           label: I18n.t('react.card_maker.sorts.common_a_z')
         },
         commonDesc: { 
-          fn: (a, b) => {
-            if (a.commonName > b.commonName) {
-              return -1;
-            } else {
-              return 1;
-            }
-          },
+          fn: descSort('commonName'),
           label: I18n.t('react.card_maker.sorts.common_z_a')
         },
         sciAsc: {
-          fn: (a, b) => {
-            if (a.sciName <= b.sciName) {
-              return -1;
-            } else {
-              return 1;
-            }
-          },
+          fn: ascSort('sciName'),
           label: I18n.t('react.card_maker.sorts.sci_a_z')
         },
         sciDesc: {
-          fn: (a, b) => {
-            if (a.sciName > b.sciName) {
-              return -1;
-            } else {
-              return 1
-            }
-          },
+          fn: descSort('sciName'),
           label: I18n.t('react.card_maker.sorts.sci_z_a')
         },
         recent: {
-          fn: (a, b) => {
-            if (a.updatedAt < b.updatedAt) {
-              return 1;
-            } else {
-              return -1;
-            }
-          },
-          label: I18n.t('react.card_maker.sorts.recent')
+          fn: descSort('updatedAt'),
+          label: I18n.t('react.card_maker.sorts.recent'),
+          pure: true
+        },
+        taxonGroupAsc: {
+          fn: ascSort('taxonGroup'),
+          label: I18n.t('react.card_maker.sorts.taxon_group_a_z')
+        },
+        taxonGroupDesc: {
+          fn: descSort('taxonGroup'),
+          label: I18n.t('react.card_maker.sorts.taxon_group_z_a')
         }
       }
     , userSorts = buildSorts([
@@ -79,13 +86,17 @@ const allDecksDeck = { // unused for now
         'commonAsc',
         'commonDesc',
         'sciAsc',
-        'sciDesc'
+        'sciDesc',
+        'taxonGroupAsc',
+        'taxonGroupDesc',
       ])
     , publicSorts = buildSorts([
         'commonAsc',
         'commonDesc',
         'sciAsc',
-        'sciDesc'
+        'sciDesc',
+        'taxonGroupAsc',
+        'taxonGroupDesc',
       ])
     ;
 

@@ -310,7 +310,6 @@ $species-search-input-height: 45px;
   position: relative;
   z-index: 2;
   min-width: 150px;
-  max-width: 300px;
 
   & > div {
     height: $menu-anchor-height; 
@@ -356,10 +355,10 @@ $species-search-input-height: 45px;
 .menuAnchorName {
   display: inline-block;
   overflow: hidden;
+  max-width: 600px;
   text-overflow: ellipsis;
   vertical-align: middle;
   white-space: nowrap;
-  max-width: 200px;
 }
 
 

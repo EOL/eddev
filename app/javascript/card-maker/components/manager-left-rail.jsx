@@ -9,7 +9,8 @@ class ManagerLeftRail extends React.Component {
     super(props);
 
     this.state = {
-      deckSearchVal: ''  
+      deckSearchVal: '',
+      hoverItem: null
     }
   }
 
@@ -51,9 +52,10 @@ class ManagerLeftRail extends React.Component {
         className={[styles.deck, 
           (selected ? styles.isDeckActive : '')
         ].join(' ')}
+        onMouseEnter={() => this.setState({ hoverItem: deck })}
+        onMouseLeave={() => this.setState({ hoverItem: null })}
       >
         <span className={styles.deckName} dangerouslySetInnerHTML={{ __html: highlightedName }} />
-        {selected && <i className={`${styles.checkDeck} fa fa-check`} />}
       </li>
     )
   }

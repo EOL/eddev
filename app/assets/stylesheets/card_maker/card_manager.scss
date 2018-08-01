@@ -240,10 +240,7 @@ $species-search-input-height: 45px;
 
   .deck {
     cursor: pointer;
-    overflow: hidden;
     padding: 5px 0;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     width: 100%;
   }
 
@@ -258,11 +255,8 @@ $species-search-input-height: 45px;
 
     .deckName {
       display: inline-block;
-      overflow: hidden;
       max-width: 150px;
-      text-overflow: ellipsis;
       vertical-align: middle;
-      white-space: nowrap;
       & > strong {
         font-weight: bold;
       }
@@ -270,11 +264,6 @@ $species-search-input-height: 45px;
 
     .isDeckActive {
       color: $eol-blue;
-      padding-left: 12px;
-    }
-
-    .checkDeck {
-      margin-left: 5px;
     }
 
 .bar {

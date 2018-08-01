@@ -599,7 +599,7 @@ $col-border-width: 5px;
     .btn {
       color: $white;
       cursor: pointer;
-      height: 60px;
+      min-height: 60px;
       padding-top: 10px;
       text-align: center;
       width: 135px;
@@ -1245,6 +1245,13 @@ $col-border-width: 5px;
         right: 0;
         top: 5px;
       }
+    }
+
+    .selected-txt {
+      max-width: 227px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .choices {

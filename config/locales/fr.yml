@@ -1,0 +1,207 @@
+fr:
+  language: français
+  user_sessions:
+    create:
+      invalid_creds: Utilisateur et/ou mot de passe inconnu(s)
+      sign_in_success: Vous êtes connecté(e).
+    new:
+      dont_have_account_html: Vous n'avez pas de compte ? <a href='%{sign_up_path}'>Créez
+        votre compte</a>.
+      forgot_password: Avez-vous oublié votre mot de passe ?
+      password: Mot de passe
+      sign_in: Se Connecter
+      sign_up: Créer un compte
+      user_name: Utilisateur
+  users:
+    account:
+      change_password: Modifier votre mot de passe
+    change_password:
+      success: Votre mot de passe a été modifié.
+    change_password_form:
+      change_password: Modifier votre mot de passe
+      current_password: Mot de pass actuel
+      success: Votre mot de passe a été modifié.
+    confirm:
+      success: "%{user_name}, votre compte a été créé. Vous pouvez vous connecter
+        ci-dessous."
+    confirmation_pending:
+      check_your_email: Bienvenue %{user_name} ! Veuillez regarder votre messagerie
+        (%{email}) pour compléter votre inscription et valider votre compte.
+    forgot_password:
+      header: Modifier votre mot de passe
+      submit: Envoyer un lien pour réinitialiser votre mot de passe.
+    mail_password_reset_token:
+      email_sent: Veuillez consulter la messagerie associée avec ce compte. Un lien
+        vous a été envoyé pour modifier votre mot de passe. Si vous n'avez pas reçu
+        de courrier électronic de notre part d'ici 15 minutes, veuillez nous contacter
+        à eol.learning@gmail.com.
+      invalid_user_name: Utilisateur inconnu
+    new:
+      sign_up: Créer un compte
+    reset_password:
+      success: Votre mot de passe a été modifié. Connectez-vous avec le lien ci-dessous.
+    reset_password_form:
+      header: Modifier votre mot de passe
+  activerecord:
+    attributes:
+      user:
+        email: Addresse électronique
+        full_name: Prénom(s) et nom
+        password: Mot de passe
+        password_confirmation: Confirmez votre mot de passe
+        user_name: Utilisateur
+    errors:
+      messages:
+        blank: Champs obligatoire
+        taken: pas disponible
+      models:
+        user:
+          attributes:
+            password:
+              too_short: trop court (%{count} caractères au minimum)
+            password_confirmation:
+              confirmation: ne correspond pas au mot de passe
+            user_name:
+              invalid: Seulement les lettres, chiffres, et '.', '@' et '_' sont reconnus.
+      template:
+        header:
+          one: 1 erreur s'est produite. %{model} n'a pas été sauvegardé.
+          other: "%{count} erreurs se sont produites. %{model} n'a pas été sauvegardé."
+    models:
+      user: Utilisateur
+  react:
+    card_maker:
+      add_desc: Ajouter une description
+      all_cards: Toutes les cartes
+      all_decks: Toutes les listes
+      all_my_cards: Toutes mes cartes
+      all_public_cards: Toutes les cartes publiques
+      are_you_sure_delete_card: Êtes-vous sûr(e) de vouloir supprimer cette carte ?
+      are_you_sure_delete_deck: Êtes-vous sûr(e) de vouloir supprimer cette liste et
+        toutes les cartes qui y figurent ?
+      are_you_sure_unsaved: Êtes-vous sûr(e) de vouloir quitter cette page ? Toute modification
+        que n'a pas encore été sauvegardée sera supprimée.
+      assign_to_deck: Attribuer à une liste
+      cancel: Annuler
+      card: Carte
+      card_form_parens: "(Indiquer les informations qui seront affichées sur la carte)"
+      card_maker_html: générateurr<br/>de cartes (beta)
+      card_maker_title: Générateur des cartes
+      card_manager: Gestionnaire de cartes
+      card_preview: Aperçu de la carte
+      card_preview_lightbox: Aperçu des cartes
+      card_preview_parens: "(Options Aperçu en direct, Paramètres d'image, Sauvegarder
+        + Quitter)"
+      close: Fermer
+      save_+_exit: Sauvegarder + fermer
+      collection_id_optional: Identifiant de la collection EOL (facultatif)
+      confirm_make_private: 'Êtes-vous sûr(e) de vouloir restreindre l''accès à cette
+        liste ? (liste privée) '
+      confirm_make_public: 'Êtes-vous sûr(e) de vouloir ouvrir l''accès à cette liste
+        à tous? (liste publique) '
+      copy_card: Dupliquer une carte
+      copy_deck: Dupliquer une liste
+      copy_of_name: copie de %{name}
+      create_a_card: Créer une carte
+      create_a_deck: Créer une liste
+      create_card: Créer une carte
+      create_card_from_selection: Créer une carte d'après de la donnée séléctionnée
+      create_deck: Créer une liste
+      deck: Liste
+      delete_deck: Supprimer cette liste
+      download_png: Télécharger PNG
+      edit_desc: Modifier la description
+      enter_deck_name: Indiquer le nom de la liste
+      enter_text: Indiquer le texte.
+      failed_to_load_image_url: Erreur. L'image de l'URL n'a pas été chargée.
+      flip_horiz: Inverser sur l'axe horizontal
+      flip_vert: Inverser l'axe vertical
+      font_size: Taille de police
+      go_back_to: Retourner à
+      image_credit: Attibution de l'image
+      image_library: Banque d'images
+      make_deck_private: Restreindre l'accès à cette liste  (liste privée)
+      make_deck_public: Ouvrir l'accès à cette liste à tous (liste publique)
+      manage_deck_users: Gérer les utilisateur de la liste
+      my_cards: Mes cartes
+      n_cards:
+        one: 1 carte
+        other: "%{count} des cartes"
+      n_decks:
+        one: 1 liste
+        other: "%{count} de listes"
+      n_results: "%{count} de résultats"
+      name_cant_be_blank: Il faut indiquer le nom.
+      name_taken: Ce nom n'est pas disponible.
+      new_card_lc: Nouvelle carte
+      new_deck: Nouvelle liste
+      new_deck_lc: nouvelle liste
+      new_upper: NOUVEAU
+      no_deck_assigned: Pas attribuée à une liste
+      open_eol_taxon_page_html: "<span>Ouvrir </span> <i class='%{iconClass}'></i>
+        <span> la page de taxon</span>"
+      or: ou
+      press_enter_search: Valider pour lancer la recherche
+      print: Imprimer
+      print_loading_msg: Générer un PDF de qualité imprimable peut prendre quelques
+        minutes. Veuillez consulter votre bloqueur des pop-ups si vous ne voyez pas
+        de résultat après que ce message disparaît.
+      public_cards: Cartes publiques
+      quick_save: Sauvegarde rapide
+      rename: Renommer
+      rename_deck: Renommer cette liste
+      rotate_90: Réorienter 90°
+      save_card_to_deck: 'Sauvegarder et attribuer cette carte à une liste:'
+      save_desc: Sauvegarder la description
+      search: Rechercher
+      search_cards: Rechercher des cartes
+      search_decks: Rechercher des listes
+      search_species_taxon: Rechercher une espèce ou un taxon
+      select_deck: liste (facultatif)
+      sorts:
+        common_a_z: Nom usuel (a-z)
+        common_z_a: Nom usuel (z-a)
+        recent: Modifié récemment
+        sci_a_z: Nom scientifique (a-z)
+        sci_z_a: Nom scientifique (z-a)
+      species_search: Rechercher une espèce
+      suggestions: Suggestions
+      type_paste_url: Entrer/coller l'URL
+      unassigned: Non attribué
+      unexpected_error_msg: Une erreur inattendue s'est produite.
+      upload_an_image: Charger une image
+      add_user: Ajouter utilisateur
+      added_user: L'utilisateur %{userName} a été ajouté.
+      are_you_sure_remove_user: Voulez-vous vraiment supprimer l'accès à l'utilisateur
+        %{userName} ?
+      click_choose_card_type: Sélectionner un autre type de carte
+      create: Créer
+      key_card: Carte clé
+      no_results_found: Pas de résultat trouvé
+      or_select_different_card: ou choisir une type de carte différente en dessous
+      owner_user: 'Propriétaire : %{userName}'
+      proj_desc_card: Desription du projet
+      removed_user: "%{userName} a été supprimé."
+      select: Sélectionner
+      select_a_deck_for_card: choisir une liste pour votre carte (facultatif)
+      sort_label: 'Trier:'
+      start_typing_user_name: Commencez à taper le nom d'utilisateur pour rechercher.
+      title_card: Carte - titre
+      trait_card: Carte - caractéristique
+      users: Utilisateurs
+      vocab_card: Vocabulaire
+  shared:
+    header:
+      settings: Paramètres
+      sign_in: Connexion
+      sign_out: Déconnexion
+  signup_confirmation_mailer:
+    confirmation_email:
+      body_html: 'Bonjour %{user_name}, merci d''avoir créé votre compte pour le site
+        EOL L&amp;E. Veuillez cliquer sur le lien suivant pour valider votre compte
+        : <a href="%{url}">%{url}</a> .'
+      subject: Complétez la création de votre compte EOL L&E.
+  locales:
+    disclaimer: Nous sommes en train de traduire notre site Web. Actuellement, le
+      Card Maker est la seule ressource disponible en français. Merci de votre compréhension
+      !

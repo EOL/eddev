@@ -91,7 +91,7 @@ class ApplicationController < ActionController::Base
 
       if logged_in_user
         user_locale = logged_in_user.locale.to_sym
-        if user_locale != I18n.locale
+        if user_locale != I18n.locale && I18n.available_locales.include?(user_locale)
           redirect_to(url_for(
             :locale => user_locale == I18n.default_locale ? 
               nil : 

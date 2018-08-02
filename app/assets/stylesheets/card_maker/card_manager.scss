@@ -76,17 +76,9 @@ $species-search-input-height: 45px;
   right: 0;
   bottom: 0;
   background-color: rgba(67, 82, 95, 0.79);
-  //overflow: auto;
-  position: absolute;
-  z-index: 50;
-}
-
-.lOverlayManager {
+  overflow: auto;
   position: fixed;
   width: 100%;
-  top: 0;
-  left: 0;
-  overflow: auto;
   z-index: 10;
 }
 
@@ -234,10 +226,7 @@ $species-search-input-height: 45px;
 
   .deck {
     cursor: pointer;
-    overflow: hidden;
     padding: 5px 0;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     width: 100%;
   }
 
@@ -252,11 +241,8 @@ $species-search-input-height: 45px;
 
     .deckName {
       display: inline-block;
-      overflow: hidden;
-      max-width: 150px;
-      text-overflow: ellipsis;
+      max-width: 200px;
       vertical-align: middle;
-      white-space: nowrap;
       & > strong {
         font-weight: bold;
       }
@@ -264,11 +250,6 @@ $species-search-input-height: 45px;
 
     .isDeckActive {
       color: $eol-blue;
-      padding-left: 12px;
-    }
-
-    .checkDeck {
-      margin-left: 5px;
     }
 
 .bar {
@@ -304,7 +285,6 @@ $species-search-input-height: 45px;
   position: relative;
   z-index: 2;
   min-width: 150px;
-  max-width: 300px;
 
   & > div {
     height: $menu-anchor-height; 
@@ -350,10 +330,10 @@ $species-search-input-height: 45px;
 .menuAnchorName {
   display: inline-block;
   overflow: hidden;
+  max-width: 600px;
   text-overflow: ellipsis;
   vertical-align: middle;
   white-space: nowrap;
-  max-width: 200px;
 }
 
 
@@ -530,6 +510,14 @@ $species-search-input-height: 45px;
 .lightbox {
   margin: 20px auto;
   padding: 10px;
+}
+
+.lightboxNoGlow {
+  border: none;
+  
+  &:focus {
+    outline: none;
+  }
 }
 
 .lightboxFlash {
@@ -978,14 +966,11 @@ $species-search-input-height: 45px;
   width: 300px;
 }
 
-.deckSelectLabel {
-
-}
-
 /* Card zoom/png download lightbox */
-.lLightboxZoom {
+.cardZoom {
   margin: 20px auto 0 auto;
   padding: 0;
+  position: relative;
   width: 402px;
 
   & > button {
@@ -996,6 +981,26 @@ $species-search-input-height: 45px;
   &:focus {
     outline: 0;
   }
+}
+
+.zoomArrow {
+  color: $white;
+  cursor: pointer;
+  position: absolute;
+  top: 230px; 
+}
+
+.zoomArrowLeft {
+  left: -50px; 
+}
+
+.zoomArrowRight {
+  right: -50px;
+}
+
+.isZoomArrowDisabled {
+  color: $txt-gray;
+  cursor: normal;
 }
 
 .imageZoom {
@@ -1020,6 +1025,9 @@ $species-search-input-height: 45px;
   top: 10px;
 }
 
+.modalXWhite {
+  color: $white;
+}
 
 // Deck URL lightbox
 .deckUrlLightbox {

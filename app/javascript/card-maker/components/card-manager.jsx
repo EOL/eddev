@@ -295,12 +295,22 @@ class CardManager extends React.Component {
     }
 
     resources = unfilteredCards.slice(0).sort((a, b) => {
-      if (a.locale === I18n.locale && b.locale !== I18n.locale) {
-        return -1;
-      }
+      if (!this.props.sort.pure) {
+        if (a.locale === I18n.locale && b.locale !== I18n.locale) {
+          return -1;
+        }
 
-      if (a.locale !== I18n.locale && b.locale === I18n.locale) {
-        return 1;
+        if (a.locale !== I18n.locale && b.locale === I18n.locale) {
+          return 1;
+        }
+
+        if (a.templateName === 'trait' && b.templateName !== 'trait') {
+          return -1;
+        }
+
+        if (a.templateName !== 'trait' && b.templateName === 'trait') {
+          return 1;
+        }
       }
 
       return this.props.sort.fn(a, b)
@@ -945,7 +955,7 @@ class CardManager extends React.Component {
             showCopyCard={this.isUserLib() || this.props.userRole}
             handleNewDeck={this.openNewDeckLightbox}
             makeDeckPdf={this.makeDeckPdf}
-            editable={this.props.library === 'user'}
+            editable={this.isUserLib()}
           />
         </div>
       </div>

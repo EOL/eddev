@@ -23,7 +23,8 @@ class UserResources extends React.Component {
     this.state = {
       containerScrollTop: null,
       resources: this.buildResources(props),
-      resourceSliceIndex: 0
+      resourceSliceIndex: 0,
+      zoomCardIndex: null
     };
   }
 
@@ -78,7 +79,7 @@ class UserResources extends React.Component {
       , minPlaceholders
       ;
 
-    let resourceMapFn = (resource) => {
+    let resourceMapFn = (resource, i) => {
       return (
         <Card
           data={resource}
@@ -87,7 +88,7 @@ class UserResources extends React.Component {
           handleEditClick={() => props.handleEditCard(resource.id)}
           handleCopyClick={() => props.handleCopyCard(resource.id)}
           handleDestroyClick={() => props.handleDestroyCard(resource.id)}
-          handleZoomClick={() => this.handleCardZoomClick(resource)}
+          handleZoomClick={() => this.handleCardZoomClick(i)}
           editable={props.editable}
           showCopy={this.props.showCopyCard}
         />
@@ -110,15 +111,15 @@ class UserResources extends React.Component {
     return resources;
   }
 
-  handleCardZoomClick = (card) => {
+  handleCardZoomClick = (i) => {
     this.setState({
-      zoomCard: card 
+      zoomCardIndex: i
     });
   }
 
   handleCardZoomRequestClose = () => {
     this.setState({
-      zoomCard: null
+      zoomCardIndex: null
     });
   }
 
@@ -147,13 +148,47 @@ class UserResources extends React.Component {
     }  
   }
 
+  updateZoomCardIndex = (updater) => {
+    this.setState((prevState, props) => {
+      return {
+        zoomCardIndex: prevState.zoomCardIndex === null ? null : updater(prevState.zoomCardIndex, props.resources.length)
+      }
+    });
+  }
+
+  hasNext = () => {
+    return this.state.zoomCardIndex !== null &&
+      this.state.zoomCardIndex < this.props.resources.length - 1;
+  }
+
+  hasPrev = () => {
+    return this.state.zoomCardIndex !== null &&
+      this.state.zoomCardIndex > 0;
+  }
+
   render() {
     this.resourceCount = this.props.resources.length;
     
     return (
       <div>
         <CardZoomLightbox
-          card={this.state.zoomCard}
+          card={this.state.zoomCardIndex === null ? null : this.props.resources[this.state.zoomCardIndex]}
+          requestNext={() => {
+            this.updateZoomCardIndex((index, length) => {
+              return (index + 1) % length;
+            });
+          }}
+          requestPrev={() => {
+            this.updateZoomCardIndex((index, length) => {
+              var updated = (index - 1) % length;
+              if (updated < 0) { 
+                updated = length + updated;
+              }
+              return updated;
+            });
+          }}
+          hasNext={this.hasNext()}
+          hasPrev={this.hasPrev()}
           handleRequestClose={this.handleCardZoomRequestClose}
         />
         <AdjustsForScrollbarContainer

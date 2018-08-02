@@ -5,6 +5,7 @@ class Podcast < ApplicationRecord
   validates :audio_file_name, { presence: true, uniqueness: true }
   validates :eol_page_id, { presence: true }
   validates :perm_id, { presence: true, uniqueness: true }
+  validates :sci_name, { presence: true }
 
   has_and_belongs_to_many :podcast_categories, join_table: :podcasts_to_categories
 end

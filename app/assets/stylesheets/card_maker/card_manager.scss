@@ -76,17 +76,9 @@ $species-search-input-height: 45px;
   right: 0;
   bottom: 0;
   background-color: rgba(67, 82, 95, 0.79);
-  //overflow: auto;
-  position: absolute;
-  z-index: 50;
-}
-
-.lOverlayManager {
+  overflow: auto;
   position: fixed;
   width: 100%;
-  top: 0;
-  left: 0;
-  overflow: auto;
   z-index: 10;
 }
 

@@ -461,11 +461,11 @@ $col-border-width: 5px;
   bottom: 0;
   background-color: rgba(67, 82, 95, 0.79);
   position: absolute;
-  z-index: 50;
+  z-index: 3;
 }
 
 .disable-exempt {
-  z-index: 100 !important;
+  z-index: 4 !important;
 }
 
 .col {

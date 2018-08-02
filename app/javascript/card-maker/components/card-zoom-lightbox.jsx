@@ -81,7 +81,7 @@ class CardZoomLightbox extends React.Component {
         isOpen={this.props.card !== null}
         contentLabel={I18n.t('react.card_maker.card_preview_lightbox')}
         parentSelector={() => {return document.getElementById('Page')}}
-        overlayClassName={[styles.lOverlay, styles.lOverlayManager].join(' ')}
+        overlayClassName={styles.lOverlay}
         className={[styles.lightbox, styles.lightboxNoGlow].join(' ')}
         bodyOpenClassName='noscroll'
         onRequestClose={this.props.handleRequestClose}

@@ -781,3 +781,115 @@ EarthTour.create!([
     :embed_url => "https://www.youtube.com/embed/KWxGuLLEywg"
   }
 ])
+
+podcast_categories = {}
+PodcastCategory.delete_all
+
+podcast_categories[:classify] = PodcastCategory.create!({
+  name: "Classify",
+  group: :skills,
+  perm_id: 0
+})
+podcast_categories[:measure] = PodcastCategory.create!({
+  name: "Measure",
+  group: :skills,
+  perm_id: 1
+})
+podcast_categories[:experiment] = PodcastCategory.create!({
+  name: "Experiment",
+  group: :skills,
+  perm_id: 2
+})
+podcast_categories[:observe] = PodcastCategory.create!({
+  name: "Observe",
+  group: :skills,
+  perm_id: 3
+})
+podcast_categories[:behavior] = PodcastCategory.create!({
+  name: "Behavior",
+  group: :themes,
+  perm_id: 4
+})
+podcast_categories[:cit_sci] = PodcastCategory.create!({
+  name: "Citizen Science",
+  group: :themes,
+  perm_id: 5
+})
+podcast_categories[:conservation] = PodcastCategory.create!({
+  name: "Conservation",
+  group: :themes,
+  perm_id: 6
+})
+podcast_categories[:ecology] = PodcastCategory.create!({
+  name: "Ecology",
+  group: :themes,
+  perm_id: 7
+})
+podcast_categories[:evolution] = PodcastCategory.create!({
+  name: "Evolution",
+  group: :themes,
+  perm_id: 8
+})
+podcast_categories[:impacts] = PodcastCategory.create!({
+  name: "Impacts",
+  group: :themes,
+  perm_id: 9
+})
+podcast_categories[:impacts] = PodcastCategory.create!({
+  name: "Research",
+  group: :themes,
+  perm_id: 10
+})
+podcast_categories[:amphibians] = PodcastCategory.create!({
+  name: "Amphibians",
+  group: :taxon_groups,
+  perm_id: 11
+})
+podcast_categories[:birds] = PodcastCategory.create!({
+  name: "Birds",
+  group: :taxon_groups,
+  perm_id: 12
+})
+podcast_categories[:fishes] = PodcastCategory.create!({
+  name: "Fishes",
+  group: :taxon_groups,
+  perm_id: 13
+})
+podcast_categories[:fungi] = PodcastCategory.create!({
+  name: "Fungi",
+  group: :taxon_groups,
+  perm_id: 14
+})
+podcast_categories[:insects] = PodcastCategory.create!({
+  name: "Insects",
+  group: :taxon_groups,
+  perm_id: 15
+})
+podcast_categories[:invertebrates] = PodcastCategory.create!({
+  name: "Invertebrates",
+  group: :taxon_groups,
+  perm_id: 16
+})
+podcast_categories[:mammals] = PodcastCategory.create!({
+  name: "Mammals",
+  group: :taxon_groups,
+  perm_id: 17
+})
+podcast_categories[:micro] = PodcastCategory.create!({
+  name: "Microorganisms",
+  group: :taxon_groups,
+  perm_id: 18
+})
+podcast_categories[:plants] = PodcastCategory.create!({
+  name: "Plants",
+  group: :taxon_groups,
+  perm_id: 19
+})
+podcast_categories[:reptiles] = PodcastCategory.create!({
+  name: "Reptiles",
+  group: :taxon_groups,
+  perm_id: 20
+})
+
+Podcast.delete_all
+#Podcast.create!([])

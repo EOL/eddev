@@ -80,7 +80,7 @@ fr:
       are_you_sure_delete_deck: Êtes-vous sûr(e) de vouloir supprimer cette liste et
         toutes les cartes qui y figurent ?
       are_you_sure_unsaved: Êtes-vous sûr(e) de vouloir quitter cette page ? Toute modification
-        que n'a pas encore été sauvegardée sera supprimée.
+        qui n'a pas encore été sauvegardée sera supprimée.
       assign_to_deck: Attribuer à une liste
       cancel: Annuler
       card: Carte

@@ -892,4 +892,13 @@ podcast_categories[:reptiles] = PodcastCategory.create!({
 })
 
 Podcast.delete_all
-#Podcast.create!([])
+Podcast.create!([{
+  title: "Test Pod 1",
+  description: "This podcast is for testing purposes only. One day, it will be replaced with a real, live podcast!!",
+  image_file_name: "springtails.jpg",
+  audio_file_name: "springtails.mp3",
+  eol_page_id: 1234,
+  lesson_plan_url: nil,
+  perm_id: 1,
+  sci_name: "<i>Elysia chlorotica</i>"
+}])

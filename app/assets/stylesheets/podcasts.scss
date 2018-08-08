@@ -1,0 +1,31 @@
+@import 'shared/layout_vars';
+
+$left-col-width: 72px;
+
+.pod {
+  background: $white;
+}
+
+.lPodLeft {
+  float: left;
+
+  & > img {
+    height: $left-col-width;
+    width: $left-col-width; 
+  }
+}
+
+.lPodRight {
+  font-size: 12px;
+  margin-left: $left-col-width;
+  padding: 6px 16px;
+  vertical-align: top;
+}
+
+.podTitle {
+  font-weight: $semibold;
+
+  & > i {
+    font-style: italic;
+  }
+}

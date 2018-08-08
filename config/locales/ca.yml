@@ -175,7 +175,7 @@ ca:
       key_card: Carta Clau
       no_results_found: no s'ha trobat cap resultat
       or_select_different_card: o bé escull un altre tius de carta
-      owner_user: 'Propieari: %{usrName}'
+      owner_user: 'Propieari: %{userName}'
       proj_desc_card: Descripció del projeccte
       removed_user: Usuari eliminat amb èxit %{userName}
       select: selecciona

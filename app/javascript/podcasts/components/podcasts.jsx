@@ -133,7 +133,7 @@ class Podcasts extends React.Component {
                 >{group.name}</div>
                 {
                   this.state.openGroup === group &&
-                  <ul>
+                  <ul className={styles.cats}>
                     {
                       group.categories.map((cat) => {
                         return <li key={cat.id}>{cat.name}</li>

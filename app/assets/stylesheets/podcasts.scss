@@ -101,6 +101,7 @@ $close-btn-width: 43px;
   background: #557a82;
   overflow: hidden;
   padding-top: 0;
+  min-height: 300px;
 }
 
 .catGrp {
@@ -118,4 +119,16 @@ $close-btn-width: 43px;
   line-height: $height;
   text-align: center;
   width: 100%;
+}
+
+.cats {
+  background: #e4ecef;
+  padding: 5px 0 10px 0;
+
+  & > li {
+    $height: 30px;
+    height: $height;
+    line-height: $height;
+    text-align: center;
+  }
 }

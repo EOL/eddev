@@ -11,20 +11,54 @@ class Podcasts extends React.Component {
     super(props);
 
     this.state = {
-      podcasts: [] 
+      podcasts: [],
+      categoryGroups: [],
+      view: 'default',
     };
   }
 
   componentDidMount() {
-    $.getJSON(Routes.podcasts_all_ajax_path(), (result) => {
+    $.getJSON(Routes.podcasts_path({ format: 'json' }), (result) => {
       this.setState({
         podcasts: result
       });
     });
+    $.getJSON(Routes.podcast_category_groups_path({ format: 'json' }), (result) => {
+      console.log('categories', result);
+      this.setState({
+        categoryGroups: result
+      });
+    });
   }
 
-  render() {
-    console.log(this.state.podcasts);
+  controlBarContents = () => {
+    if (this.state.view === 'default') {
+      return [
+        <i className="fa fa-search fa-2x" key='1'/>,
+        <i 
+          className="fa fa-th-large fa-2x" 
+          onClick={() => this.setState({ view: 'category' })}
+          key='2'
+        />
+      ];
+    } else if (this.state.view === 'category') {
+      return [
+        <div 
+          className={styles.closeBtn}
+          onClick={() => this.setState({ view: 'default' })}
+          key='1'
+        >
+          <i className="fa fa-times fa-lg" />
+        </div>,
+        <i className={`fa fa-th-large fa-2x ${styles.catIcon}`} key='2' />,
+        <div className={styles.ctrlHdr} key='3'>categories</div>,
+      ];
+    } else {
+      throw new TypeError('invalid view: ' + this.state.view);
+    }
+  }
+
+  podList = () => {
     return (
       <ul>
         {
@@ -34,16 +68,61 @@ class Podcasts extends React.Component {
               <li className={styles.pod} key={podcast.perm_id}>
                 <div className={styles.lPodLeft}>
                   <img src={podcast.image_path} />
+                  <ul className={styles.podLinks}>
+                    {
+                      podcast.eol_page_id != null &&
+                      <li>
+                        <a href={`https://eol.org/pages/${podcast.eol_page_id}`}>EOL Page</a>
+                      </li>
+                    }
+                    {
+                      podcast.transcript_path != null &&
+                      <li>
+                        <a href={podcast.transcript_path}>Transcript</a>
+                      </li>
+                    }
+                    {
+                      podcast.lesson_plan_url != null &&
+                      <li>
+                        <a href={podcast.lesson_plan_url}>Lesson Plan</a>
+                      </li>
+                    }
+                  </ul>
                 </div>
                 <div className={styles.lPodRight}>
                   <div className={styles.podTitle} dangerouslySetInnerHTML={{__html: fullTitle}} />
+                  {
+                    podcast.categories != null && podcast.categories.length > 0 &&
+                    <ul className={styles.podCats}>
+                      {
+                        podcast.categories.map((cat) => {
+                          return <li key={cat.id}>{cat.name}</li>    
+                        })
+                      }
+                    </ul>
+                  }
                   <div>{podcast.description}</div>
+                  <audio className={styles.podPlayer} src={podcast.audio_path} controls/>
                 </div>
               </li>
             );
           })
         }
       </ul>
+    );
+  }
+
+  render() {
+    let mainContent = this.state.view === 'category' ?
+        null :
+        this.podList()
+      ;
+
+    return (
+      <div>
+        <div className={styles.ctrlBar}>{this.controlBarContents()}</div>
+        {mainContent}
+      </div>
     );
   }
 }

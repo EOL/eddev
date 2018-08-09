@@ -7,5 +7,5 @@ class Podcast < ApplicationRecord
   validates :perm_id, { presence: true, uniqueness: true }
   validates :sci_name, { presence: true }
 
-  has_and_belongs_to_many :podcast_categories, join_table: :podcasts_to_categories
+  has_and_belongs_to_many :categories, join_table: :podcasts_to_categories, class_name: "PodcastCategory"
 end

@@ -782,112 +782,125 @@ EarthTour.create!([
   }
 ])
 
+category_groups = {}
+PodcastCategoryGroup.delete_all
+
+category_groups[:skills] = PodcastCategoryGroup.create!({
+  name: "Skills"
+})
+category_groups[:themes] = PodcastCategoryGroup.create!({
+  name: "Themes"
+})
+category_groups[:taxon_groups] = PodcastCategoryGroup.create!({
+  name: "Taxonomic Groups"
+})
+
 podcast_categories = {}
 PodcastCategory.delete_all
 
 podcast_categories[:classify] = PodcastCategory.create!({
   name: "Classify",
-  group: :skills,
+  group: category_groups[:skills],
   perm_id: 0
 })
 podcast_categories[:measure] = PodcastCategory.create!({
   name: "Measure",
-  group: :skills,
+  group: category_groups[:skills],
   perm_id: 1
 })
 podcast_categories[:experiment] = PodcastCategory.create!({
   name: "Experiment",
-  group: :skills,
+  group: category_groups[:skills],
   perm_id: 2
 })
 podcast_categories[:observe] = PodcastCategory.create!({
   name: "Observe",
-  group: :skills,
+  group: category_groups[:skills],
   perm_id: 3
 })
 podcast_categories[:behavior] = PodcastCategory.create!({
   name: "Behavior",
-  group: :themes,
+  group: category_groups[:themes],
   perm_id: 4
 })
 podcast_categories[:cit_sci] = PodcastCategory.create!({
   name: "Citizen Science",
-  group: :themes,
+  group: category_groups[:themes],
   perm_id: 5
 })
 podcast_categories[:conservation] = PodcastCategory.create!({
   name: "Conservation",
-  group: :themes,
+  group: category_groups[:themes],
   perm_id: 6
 })
 podcast_categories[:ecology] = PodcastCategory.create!({
   name: "Ecology",
-  group: :themes,
+  group: category_groups[:themes],
   perm_id: 7
 })
 podcast_categories[:evolution] = PodcastCategory.create!({
   name: "Evolution",
-  group: :themes,
+  group: category_groups[:themes],
   perm_id: 8
 })
 podcast_categories[:impacts] = PodcastCategory.create!({
   name: "Impacts",
-  group: :themes,
+  group: category_groups[:themes],
   perm_id: 9
 })
 podcast_categories[:impacts] = PodcastCategory.create!({
   name: "Research",
-  group: :themes,
+  group: category_groups[:themes],
   perm_id: 10
 })
 podcast_categories[:amphibians] = PodcastCategory.create!({
   name: "Amphibians",
-  group: :taxon_groups,
+  group: category_groups[:taxon_groups],
   perm_id: 11
 })
 podcast_categories[:birds] = PodcastCategory.create!({
   name: "Birds",
-  group: :taxon_groups,
+  group: category_groups[:taxon_groups],
   perm_id: 12
 })
 podcast_categories[:fishes] = PodcastCategory.create!({
   name: "Fishes",
-  group: :taxon_groups,
+  group: category_groups[:taxon_groups],
   perm_id: 13
 })
 podcast_categories[:fungi] = PodcastCategory.create!({
   name: "Fungi",
-  group: :taxon_groups,
+  group: category_groups[:taxon_groups],
   perm_id: 14
 })
 podcast_categories[:insects] = PodcastCategory.create!({
   name: "Insects",
-  group: :taxon_groups,
+  group: category_groups[:taxon_groups],
   perm_id: 15
 })
 podcast_categories[:invertebrates] = PodcastCategory.create!({
   name: "Invertebrates",
-  group: :taxon_groups,
+  group: category_groups[:taxon_groups],
   perm_id: 16
 })
 podcast_categories[:mammals] = PodcastCategory.create!({
   name: "Mammals",
-  group: :taxon_groups,
+  group: category_groups[:taxon_groups],
   perm_id: 17
 })
 podcast_categories[:micro] = PodcastCategory.create!({
   name: "Microorganisms",
-  group: :taxon_groups,
+  group: category_groups[:taxon_groups],
   perm_id: 18
 })
 podcast_categories[:plants] = PodcastCategory.create!({
   name: "Plants",
-  group: :taxon_groups,
+  group: category_groups[:taxon_groups],
   perm_id: 19
 })
 podcast_categories[:reptiles] = PodcastCategory.create!({
   name: "Reptiles",
-  group: :taxon_groups,
+  group: category_groups[:taxon_groups],
   perm_id: 20
 })
 
@@ -896,9 +909,11 @@ Podcast.create!([{
   title: "Test Pod 1",
   description: "This podcast is for testing purposes only. One day, it will be replaced with a real, live podcast!!",
   image_file_name: "springtails.jpg",
-  audio_file_name: "springtails.mp3",
-  eol_page_id: 1234,
-  lesson_plan_url: nil,
+  audio_file_name: "OSAAT_springtails.mp3",
+  eol_page_id: 2765766,
+  lesson_plan_url: "eol.org",
   perm_id: 1,
-  sci_name: "<i>Elysia chlorotica</i>"
+  sci_name: "<i>Elysia chlorotica</i>",
+  transcript_file_name: "springtails.pdf",
+  categories: [podcast_categories[:insects], podcast_categories[:evolution], podcast_categories[:classify]]
 }])

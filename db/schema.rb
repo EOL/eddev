@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180802204915) do
+ActiveRecord::Schema.define(version: 20180809193053) do
 
   create_table "decks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "human_name"
@@ -91,7 +91,13 @@ ActiveRecord::Schema.define(version: 20180802204915) do
   create_table "podcast_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "perm_id"
     t.string "name"
-    t.integer "group"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "group_id"
+  end
+
+  create_table "podcast_category_groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -107,6 +113,7 @@ ActiveRecord::Schema.define(version: 20180802204915) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "sci_name"
+    t.string "transcript_file_name"
   end
 
   create_table "podcasts_to_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

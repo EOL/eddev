@@ -1,15 +1,16 @@
 @import 'shared/layout_vars';
 
 $left-col-width: 72px;
-
-.pod {
-  background: $white;
-}
+$close-btn-width: 43px;
 
 .lPodLeft {
   float: left;
+  overflow: hidden;
+  white-space: nowrap;
+  width: $left-col-width;
 
   & > img {
+    display: block;
     height: $left-col-width;
     width: $left-col-width; 
   }
@@ -22,10 +23,76 @@ $left-col-width: 72px;
   vertical-align: top;
 }
 
+.pod {
+  background: $white;
+  min-height: 134px;
+}
+
 .podTitle {
   font-weight: $semibold;
 
   & > i {
     font-style: italic;
   }
+}
+
+.podPlayer {
+  margin-top: 5px;
+  max-width: 100%;
+}
+
+.podLinks {
+  font-size: 11px;
+  padding-left: 8px;
+
+  & > li {
+    margin-top: 3px;
+  }
+
+  & a {
+    color: $nav-link-blue;
+  }
+}
+
+.podCats {
+  & > li {
+    color: $nav-link-blue;
+    display: inline-block;
+    margin-right: 5px;
+  }
+}
+
+.ctrlBar {
+  $height: 54px;
+
+  background-color: #f3f9fb;
+  color: #4a97ca;
+  height: $height;
+  line-height: $height;
+
+  & > i {
+    //color: #4a97ca;
+    line-height: $height;
+    margin-left: 17px;
+    position: relative;
+  }
+}
+
+.ctrlHdr {
+  margin: 0 60px;
+  text-align: center;
+}
+
+.closeBtn {
+  background-color: #e2eaec;
+  color: $black;
+  float: left;
+  text-align: center;
+  width: $close-btn-width;
+}
+
+.catIcon {
+  color: #b7d9ef;
+  float: right;
+  margin-right: 16px;
 }

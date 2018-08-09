@@ -4,23 +4,32 @@ class PodcastsController < ApplicationController
   before_action :set_js_packs, :only => :index
 
   def index
-  end
+    respond_to do |format|
+      format.html {}
+      format.json do 
+        podcast_json = Podcast.all.includes(:categories).map do |podcast|
+          {
+            title: podcast.title,
+            description: podcast.description,
+            image_path: view_context.image_path("podcasts/#{podcast.image_file_name}"),
+            audio_path: "podcasts/#{podcast.audio_file_name}",
+            transcript_path: 
+              (
+                podcast.transcript_file_name ? 
+                "podcasts/#{podcast.transcript_file_name}" : 
+                nil
+              ),
+            eol_page_id: podcast.eol_page_id,
+            lesson_plan_url: podcast.lesson_plan_url,
+            perm_id: podcast.perm_id,
+            sci_name: podcast.sci_name,
+            categories: podcast.categories,
+          }
+        end.to_json
 
-  def all_podcasts_ajax
-    podcast_json = Podcast.all.map do |podcast|
-      {
-        title: podcast.title,
-        description: podcast.description,
-        image_path: view_context.image_path("podcasts/#{podcast.image_file_name}"),
-        audio_file_name: podcast.audio_file_name,
-        eol_page_id: podcast.eol_page_id,
-        lesson_plan_url: podcast.lesson_plan_url,
-        perm_id: podcast.perm_id,
-        sci_name: podcast.sci_name,
-      }
-    end.to_json
-
-    render json: podcast_json
+        render json: podcast_json
+      end
+    end
   end
 
   private

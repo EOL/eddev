@@ -13,6 +13,7 @@ class Podcasts extends React.Component {
     this.state = {
       podcasts: [],
       categoryGroups: [],
+      openGroup: null,
       view: 'default',
     };
   }
@@ -112,9 +113,45 @@ class Podcasts extends React.Component {
     );
   }
 
+  catList = () => {
+    return (
+      <ul className={styles.catGrps}>
+        {
+          this.state.categoryGroups.map((group) => {
+            return (
+              <li className={styles.catGrp} key={group.id}>
+                <div 
+                  className={styles.catGrpName}
+                  onClick={
+                    () => { 
+                      const newOpenGroup  = this.state.openGroup === group ?
+                        null :
+                        group;
+                      this.setState({ openGroup: newOpenGroup })
+                    }
+                  }
+                >{group.name}</div>
+                {
+                  this.state.openGroup === group &&
+                  <ul>
+                    {
+                      group.categories.map((cat) => {
+                        return <li key={cat.id}>{cat.name}</li>
+                      })
+                    }
+                  </ul>
+                }
+              </li>
+            );
+          })
+        }
+      </ul>
+    );
+  }
+
   render() {
     let mainContent = this.state.view === 'category' ?
-        null :
+        this.catList() :
         this.podList()
       ;
 

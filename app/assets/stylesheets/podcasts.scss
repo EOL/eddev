@@ -96,3 +96,26 @@ $close-btn-width: 43px;
   float: right;
   margin-right: 16px;
 }
+
+.catGrps {
+  background: #557a82;
+  overflow: hidden;
+  padding-top: 0;
+}
+
+.catGrp {
+  margin-top: 2px;
+  width: 100%;
+}
+
+.catGrpName {
+  $height: 46px;
+  background: $white;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: $semibold;
+  height: $height;
+  line-height: $height;
+  text-align: center;
+  width: 100%;
+}

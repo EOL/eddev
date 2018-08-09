@@ -2,6 +2,7 @@
 
 $left-col-width: 72px;
 $close-btn-width: 43px;
+$ctrl-bar-height: 54px;
 
 .lPodLeft {
   float: left;
@@ -63,16 +64,18 @@ $close-btn-width: 43px;
 }
 
 .ctrlBar {
-  $height: 54px;
-
   background-color: #f3f9fb;
   color: #4a97ca;
-  height: $height;
-  line-height: $height;
+  height: $ctrl-bar-height;
+  line-height: $ctrl-bar-height;
+  position: fixed;
+  top: $topbar-height;
+  width: 100%;
+  z-index: 5;
 
   & > i {
     //color: #4a97ca;
-    line-height: $height;
+    line-height: $ctrl-bar-height;
     margin-left: 17px;
     position: relative;
   }
@@ -132,3 +135,8 @@ $close-btn-width: 43px;
     text-align: center;
   }
 }
+
+.mainContent {
+  padding-top: $ctrl-bar-height;
+}
+

@@ -158,7 +158,7 @@ class Podcasts extends React.Component {
     return (
       <div>
         <div className={styles.ctrlBar}>{this.controlBarContents()}</div>
-        {mainContent}
+        <div className={styles.mainContent}>{mainContent}</div>
       </div>
     );
   }

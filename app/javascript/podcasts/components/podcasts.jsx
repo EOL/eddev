@@ -15,6 +15,7 @@ class Podcasts extends React.Component {
       categoryGroups: [],
       openGroup: null,
       view: 'default',
+      searchVal: ''
     };
   }
 
@@ -36,7 +37,14 @@ class Podcasts extends React.Component {
     return (
       <div 
         className={styles.closeBtn}
-        onClick={() => this.setState({ view: 'default' })}
+        onClick={
+          () => {
+            this.setState({ 
+              view: 'default',
+              searchVal: ''
+            }) 
+          }
+        }
         key='1'
       >
         <i className="fa fa-times fa-lg" />
@@ -67,10 +75,32 @@ class Podcasts extends React.Component {
     } else if (this.state.view === 'search') {
       return [
         this.controlBarClose(),
-        <input type="text" className={styles.search} key="2" placeholder="start typing to search" />
+        <i className={`fa fa-search fa-2x ${styles.catIcon}`} key='2' />,
+        <input 
+          type="text" 
+          className={styles.search} 
+          key='3' 
+          placeholder="start typing to search" 
+          value={this.state.searchVal}
+          onInput={(e) => this.setState({ searchVal: e.target.value })}
+        />
       ];
     } else {
       throw new TypeError('invalid view: ' + this.state.view);
+    }
+  }
+
+  searchFilteredPodcasts = () => {
+    if (this.state.searchVal === null || this.state.searchVal.trim().length === 0) {
+      return this.state.podcasts;
+    } else {
+      let lowerSearch = this.state.searchVal.toLowerCase();
+
+      return this.state.podcasts.filter((podcast) => {
+        return podcast.title.toLowerCase().includes(lowerSearch) ||
+          podcast.sci_name.toLowerCase().includes(lowerSearch) ||
+          podcast.description.toLowerCase().includes(lowerSearch);
+      });
     }
   }
 
@@ -78,7 +108,7 @@ class Podcasts extends React.Component {
     return (
       <ul>
         {
-          this.state.podcasts.map((podcast) => {
+          this.searchFilteredPodcasts().map((podcast) => {
             const fullTitle = `${podcast.title}, ${podcast.sci_name}`;
             return (
               <li className={styles.pod} key={podcast.perm_id}>
@@ -172,9 +202,9 @@ class Podcasts extends React.Component {
 
     return (
       <div>
-        <main role="main" className="main-col">
-          <div className={styles.ctrlBar}>
-            <div>{this.controlBarContents()}</div>
+        <main role="main" className={styles.main}>
+          <div className={styles.ctrlBarOuter}>
+            <div className={styles.ctrlBar}>{this.controlBarContents()}</div>
           </div>
           <div className={styles.mainContent}>{mainContent}</div>
         </main>

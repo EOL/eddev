@@ -63,27 +63,28 @@ $ctrl-bar-height: 54px;
   }
 }
 
-.ctrlBar {
+.ctrlBarOuter {
   position: fixed;
   height: $ctrl-bar-height;
   left: 0;
   line-height: $ctrl-bar-height;
   top: $topbar-height;
   width: 100%;
-  z-index: 5;
+  z-index: 4;
+}
 
-  & > div {
-    background-color: #f3f9fb;
-    color: #4a97ca;
-    margin: 0 auto;
-    max-width: $main-col-width-px;
-    width: 100%;
+.ctrlBar {
+  background-color: #f3f9fb;
+  color: #4a97ca;
+  height: 100%;
+  margin: 0 auto;
+  max-width: $main-col-width-px;
+  width: 100%;
 
-    & > i {
-      line-height: $ctrl-bar-height;
-      margin-left: 17px;
-      position: relative;
-    }
+  & > i {
+    line-height: $ctrl-bar-height;
+    margin-left: 17px;
+    position: relative;
   }
 }
 
@@ -160,6 +161,12 @@ $ctrl-bar-height: 54px;
   position: relative;
   text-align: center;
   top: 7px;
-  width: 80%;
+  width: 70%;
+}
+
+.main {
+  margin: 0 auto;
+  max-width: $main-col-width-px;
+  width: 100%;
 }
 

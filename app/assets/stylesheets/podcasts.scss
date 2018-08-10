@@ -3,6 +3,7 @@
 $left-col-width: 72px;
 $close-btn-width: 43px;
 $ctrl-bar-height: 54px;
+$txt-blue: #4a97ca;
 
 .lPodLeft {
   float: left;
@@ -75,7 +76,7 @@ $ctrl-bar-height: 54px;
 
 .ctrlBar {
   background-color: #f3f9fb;
-  color: #4a97ca;
+  color: $txt-blue;
   height: 100%;
   margin: 0 auto;
   max-width: $main-col-width-px;
@@ -142,6 +143,7 @@ $ctrl-bar-height: 54px;
 
   & > li {
     $height: 30px;
+    cursor: pointer;
     height: $height;
     line-height: $height;
     text-align: center;
@@ -150,6 +152,10 @@ $ctrl-bar-height: 54px;
 
 .mainContent {
   padding-top: $ctrl-bar-height;
+}
+
+.mainContentCatBar {
+  padding-top: $ctrl-bar-height * 2;
 }
 
 .search {
@@ -167,6 +173,34 @@ $ctrl-bar-height: 54px;
 .main {
   margin: 0 auto;
   max-width: $main-col-width-px;
+  min-height: 500px;
   width: 100%;
+}
+
+.catBarOuter {
+  position: fixed;
+  top: $topbar-height-px * 1px + $ctrl-bar-height;
+  height: $ctrl-bar-height;
+  line-height: $ctrl-bar-height;
+  width: 100%;
+}
+
+.catBar {
+  border-bottom: 1px solid $txt-blue;
+  color: $txt-blue;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: $semibold;
+  height: 100%;
+  max-width: $main-col-width-px;
+  position: relative;
+  text-align: center;
+  width: 100%;
+
+  & > i {
+    left: 22px;
+    position: absolute;
+    top: 8px;
+  }
 }
 

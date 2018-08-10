@@ -140,3 +140,15 @@ $ctrl-bar-height: 54px;
   padding-top: $ctrl-bar-height;
 }
 
+.search {
+  border: none;
+  border-radius: 22px;
+  display: block;
+  height: 40px;
+  margin: 0 auto;
+  position: relative;
+  text-align: center;
+  top: 7px;
+  width: 80%;
+}
+

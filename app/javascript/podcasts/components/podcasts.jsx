@@ -32,10 +32,26 @@ class Podcasts extends React.Component {
     });
   }
 
+  controlBarClose = () => {
+    return (
+      <div 
+        className={styles.closeBtn}
+        onClick={() => this.setState({ view: 'default' })}
+        key='1'
+      >
+        <i className="fa fa-times fa-lg" />
+      </div>
+    );
+  }
+
   controlBarContents = () => {
     if (this.state.view === 'default') {
       return [
-        <i className="fa fa-search fa-2x" key='1'/>,
+        <i 
+          className="fa fa-search fa-2x" 
+          key='1'
+          onClick={() => this.setState({ view: 'search' })}
+        />,
         <i 
           className="fa fa-th-large fa-2x" 
           onClick={() => this.setState({ view: 'category' })}
@@ -44,15 +60,14 @@ class Podcasts extends React.Component {
       ];
     } else if (this.state.view === 'category') {
       return [
-        <div 
-          className={styles.closeBtn}
-          onClick={() => this.setState({ view: 'default' })}
-          key='1'
-        >
-          <i className="fa fa-times fa-lg" />
-        </div>,
+        this.controlBarClose(),
         <i className={`fa fa-th-large fa-2x ${styles.catIcon}`} key='2' />,
         <div className={styles.ctrlHdr} key='3'>categories</div>,
+      ];
+    } else if (this.state.view === 'search') {
+      return [
+        this.controlBarClose(),
+        <input type="text" className={styles.search} key="2" placeholder="start typing to search" />
       ];
     } else {
       throw new TypeError('invalid view: ' + this.state.view);

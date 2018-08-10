@@ -15,7 +15,8 @@ class Podcasts extends React.Component {
       categoryGroups: [],
       openGroup: null,
       view: 'default',
-      searchVal: ''
+      searchVal: '',
+      category: null
     };
   }
 
@@ -91,17 +92,28 @@ class Podcasts extends React.Component {
   }
 
   searchFilteredPodcasts = () => {
-    if (this.state.searchVal === null || this.state.searchVal.trim().length === 0) {
-      return this.state.podcasts;
-    } else {
-      let lowerSearch = this.state.searchVal.toLowerCase();
+    const that = this
+        , lowerSearch = that.state.searchVal ? 
+            that.state.searchVal.toLowerCase() :
+            null
+        ;
 
-      return this.state.podcasts.filter((podcast) => {
-        return podcast.title.toLowerCase().includes(lowerSearch) ||
-          podcast.sci_name.toLowerCase().includes(lowerSearch) ||
-          podcast.description.toLowerCase().includes(lowerSearch);
-      });
-    }
+
+    return that.state.podcasts.filter((podcast) => {
+      let a = true;
+
+      return (
+        that.state.category === null || 
+        podcast.categories.find((cat) => {
+          return cat.id === that.state.category.id
+        })
+      ) && (
+        !lowerSearch ||
+        podcast.title.toLowerCase().includes(lowerSearch) ||
+        podcast.sciName.toLowerCase().includes(lowerSearch) ||
+        podcast.description.toLowerCase().includes(lowerSearch)
+      );
+    });
   }
 
   podList = () => {
@@ -109,28 +121,28 @@ class Podcasts extends React.Component {
       <ul>
         {
           this.searchFilteredPodcasts().map((podcast) => {
-            const fullTitle = `${podcast.title}, ${podcast.sci_name}`;
+            const fullTitle = `${podcast.title}, ${podcast.sciName}`;
             return (
-              <li className={styles.pod} key={podcast.perm_id}>
+              <li className={styles.pod} key={podcast.permId}>
                 <div className={styles.lPodLeft}>
-                  <img src={podcast.image_path} />
+                  <img src={podcast.imagePath} />
                   <ul className={styles.podLinks}>
                     {
-                      podcast.eol_page_id != null &&
+                      podcast.eolPageId != null &&
                       <li>
-                        <a href={`https://eol.org/pages/${podcast.eol_page_id}`}>EOL Page</a>
+                        <a href={`https://eol.org/pages/${podcast.eolPageId}`}>EOL Page</a>
                       </li>
                     }
                     {
-                      podcast.transcript_path != null &&
+                      podcast.transcriptPath != null &&
                       <li>
-                        <a href={podcast.transcript_path}>Transcript</a>
+                        <a href={podcast.transcriptPath}>Transcript</a>
                       </li>
                     }
                     {
-                      podcast.lesson_plan_url != null &&
+                      podcast.lessonPlanUrl != null &&
                       <li>
-                        <a href={podcast.lesson_plan_url}>Lesson Plan</a>
+                        <a href={podcast.lessonPlanUrl}>Lesson Plan</a>
                       </li>
                     }
                   </ul>
@@ -148,7 +160,7 @@ class Podcasts extends React.Component {
                     </ul>
                   }
                   <div>{podcast.description}</div>
-                  <audio className={styles.podPlayer} src={podcast.audio_path} controls/>
+                  <audio className={styles.podPlayer} src={podcast.audioPath} controls/>
                 </div>
               </li>
             );
@@ -181,7 +193,12 @@ class Podcasts extends React.Component {
                   <ul className={styles.cats}>
                     {
                       group.categories.map((cat) => {
-                        return <li key={cat.id}>{cat.name}</li>
+                        return (
+                          <li 
+                            key={cat.id}
+                            onClick={() => this.setCategory(cat)}
+                          >{cat.name}</li>
+                        );
                       })
                     }
                   </ul>
@@ -194,11 +211,25 @@ class Podcasts extends React.Component {
     );
   }
 
+  setCategory = (cat) => {
+    this.setState({
+      category: cat,
+      openGroup: null,
+      view: 'default'
+    });
+  }
+
   render() {
     let mainContent = this.state.view === 'category' ?
         this.catList() :
         this.podList()
+      , hasCatBar = this.state.category !== null && this.state.view !== 'category'
+      , mainContentClasses = [styles.mainContent]
       ;
+
+    if (hasCatBar) {
+      mainContentClasses.push(styles.mainContentCatBar);
+    }
 
     return (
       <div>
@@ -206,7 +237,19 @@ class Podcasts extends React.Component {
           <div className={styles.ctrlBarOuter}>
             <div className={styles.ctrlBar}>{this.controlBarContents()}</div>
           </div>
-          <div className={styles.mainContent}>{mainContent}</div>
+          {
+            hasCatBar &&
+            <div className={styles.catBarOuter}>
+              <div className={styles.catBar}>
+                <i 
+                  className='fa fa-angle-left fa-2x' 
+                  onClick={() => this.setState({ category: null })}
+                />
+                <span>{this.state.category.name}</span>
+              </div>
+            </div>
+          }
+          <div className={mainContentClasses.join(' ')}>{mainContent}</div>
         </main>
       </div>
     );

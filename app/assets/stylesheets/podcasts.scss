@@ -64,21 +64,31 @@ $ctrl-bar-height: 54px;
 }
 
 .ctrlBar {
-  background-color: #f3f9fb;
-  color: #4a97ca;
-  height: $ctrl-bar-height;
-  line-height: $ctrl-bar-height;
   position: fixed;
+  height: $ctrl-bar-height;
+  left: 0;
+  line-height: $ctrl-bar-height;
   top: $topbar-height;
   width: 100%;
   z-index: 5;
 
-  & > i {
-    //color: #4a97ca;
-    line-height: $ctrl-bar-height;
-    margin-left: 17px;
-    position: relative;
+  & > div {
+    background-color: #f3f9fb;
+    color: #4a97ca;
+    margin: 0 auto;
+    max-width: $main-col-width-px;
+    width: 100%;
+
+    & > i {
+      line-height: $ctrl-bar-height;
+      margin-left: 17px;
+      position: relative;
+    }
   }
+}
+
+.ctrlBarBtn {
+  cursor: pointer;
 }
 
 .ctrlHdr {
@@ -89,6 +99,7 @@ $ctrl-bar-height: 54px;
 .closeBtn {
   background-color: #e2eaec;
   color: $black;
+  cursor: pointer;
   float: left;
   text-align: center;
   width: $close-btn-width;

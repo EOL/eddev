@@ -48,12 +48,12 @@ class Podcasts extends React.Component {
     if (this.state.view === 'default') {
       return [
         <i 
-          className="fa fa-search fa-2x" 
+          className={`fa fa-search fa-2x ${styles.ctrlBarBtn}`} 
           key='1'
           onClick={() => this.setState({ view: 'search' })}
         />,
         <i 
-          className="fa fa-th-large fa-2x" 
+          className={`fa fa-th-large fa-2x ${styles.ctrlBarBtn}`}
           onClick={() => this.setState({ view: 'category' })}
           key='2'
         />
@@ -172,8 +172,12 @@ class Podcasts extends React.Component {
 
     return (
       <div>
-        <div className={styles.ctrlBar}>{this.controlBarContents()}</div>
-        <div className={styles.mainContent}>{mainContent}</div>
+        <main role="main" className="main-col">
+          <div className={styles.ctrlBar}>
+            <div>{this.controlBarContents()}</div>
+          </div>
+          <div className={styles.mainContent}>{mainContent}</div>
+        </main>
       </div>
     );
   }

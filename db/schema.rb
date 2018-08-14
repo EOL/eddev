@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180809193053) do
+ActiveRecord::Schema.define(version: 20180814180513) do
 
   create_table "decks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "human_name"
@@ -107,13 +107,13 @@ ActiveRecord::Schema.define(version: 20180809193053) do
     t.text "description"
     t.string "image_file_name"
     t.string "audio_file_name"
-    t.integer "eol_page_id"
     t.string "lesson_plan_url"
     t.integer "perm_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "sci_name"
     t.string "transcript_file_name"
+    t.string "eol_url"
   end
 
   create_table "podcasts_to_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

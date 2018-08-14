@@ -128,9 +128,9 @@ class Podcasts extends React.Component {
                   <img src={podcast.imagePath} />
                   <ul className={styles.podLinks}>
                     {
-                      podcast.eolPageId != null &&
+                      podcast.eolUrl != null &&
                       <li>
-                        <a href={`https://eol.org/pages/${podcast.eolPageId}`}>EOL Page</a>
+                        <a href={podcast.eolUrl}>EOL Page</a>
                       </li>
                     }
                     {

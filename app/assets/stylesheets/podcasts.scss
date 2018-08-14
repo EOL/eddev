@@ -27,6 +27,7 @@ $txt-blue: #4a97ca;
 
 .pod {
   background: $white;
+  border-top: 1px solid $txt-blue;
   min-height: 134px;
 }
 
@@ -117,7 +118,7 @@ $txt-blue: #4a97ca;
   background: #557a82;
   overflow: hidden;
   padding-top: 0;
-  min-height: 300px;
+  min-height: 460px;
 }
 
 .catGrp {
@@ -183,10 +184,11 @@ $txt-blue: #4a97ca;
   height: $ctrl-bar-height;
   line-height: $ctrl-bar-height;
   width: 100%;
+  z-index: 4;
 }
 
 .catBar {
-  border-bottom: 1px solid $txt-blue;
+  background: $white;
   color: $txt-blue;
   cursor: pointer;
   font-size: 18px;

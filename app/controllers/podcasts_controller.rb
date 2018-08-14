@@ -19,7 +19,7 @@ class PodcastsController < ApplicationController
                 "podcasts/#{podcast.transcript_file_name}" : 
                 nil
               ),
-            eolPageId: podcast.eol_page_id,
+            eolUrl: podcast.eol_url,
             lessonPlanUrl: podcast.lesson_plan_url,
             permId: podcast.perm_id,
             sciName: podcast.sci_name,

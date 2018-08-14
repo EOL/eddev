@@ -795,125 +795,114 @@ category_groups[:taxon_groups] = PodcastCategoryGroup.create!({
   name: "Taxonomic Groups"
 })
 
-podcast_categories = {}
 PodcastCategory.delete_all
 
-podcast_categories[:classify] = PodcastCategory.create!({
-  name: "Classify",
-  group: category_groups[:skills],
-  perm_id: 0
-})
-podcast_categories[:measure] = PodcastCategory.create!({
-  name: "Measure",
-  group: category_groups[:skills],
-  perm_id: 1
-})
-podcast_categories[:experiment] = PodcastCategory.create!({
-  name: "Experiment",
-  group: category_groups[:skills],
-  perm_id: 2
-})
-podcast_categories[:observe] = PodcastCategory.create!({
-  name: "Observe",
-  group: category_groups[:skills],
-  perm_id: 3
-})
-podcast_categories[:behavior] = PodcastCategory.create!({
-  name: "Behavior",
-  group: category_groups[:themes],
-  perm_id: 4
-})
-podcast_categories[:cit_sci] = PodcastCategory.create!({
-  name: "Citizen Science",
-  group: category_groups[:themes],
-  perm_id: 5
-})
-podcast_categories[:conservation] = PodcastCategory.create!({
-  name: "Conservation",
-  group: category_groups[:themes],
-  perm_id: 6
-})
-podcast_categories[:ecology] = PodcastCategory.create!({
-  name: "Ecology",
-  group: category_groups[:themes],
-  perm_id: 7
-})
-podcast_categories[:evolution] = PodcastCategory.create!({
-  name: "Evolution",
-  group: category_groups[:themes],
-  perm_id: 8
-})
-podcast_categories[:impacts] = PodcastCategory.create!({
-  name: "Impacts",
-  group: category_groups[:themes],
-  perm_id: 9
-})
-podcast_categories[:impacts] = PodcastCategory.create!({
-  name: "Research",
-  group: category_groups[:themes],
-  perm_id: 10
-})
-podcast_categories[:amphibians] = PodcastCategory.create!({
-  name: "Amphibians",
-  group: category_groups[:taxon_groups],
-  perm_id: 11
-})
-podcast_categories[:birds] = PodcastCategory.create!({
-  name: "Birds",
-  group: category_groups[:taxon_groups],
-  perm_id: 12
-})
-podcast_categories[:fishes] = PodcastCategory.create!({
-  name: "Fishes",
-  group: category_groups[:taxon_groups],
-  perm_id: 13
-})
-podcast_categories[:fungi] = PodcastCategory.create!({
-  name: "Fungi",
-  group: category_groups[:taxon_groups],
-  perm_id: 14
-})
-podcast_categories[:insects] = PodcastCategory.create!({
-  name: "Insects",
-  group: category_groups[:taxon_groups],
-  perm_id: 15
-})
-podcast_categories[:invertebrates] = PodcastCategory.create!({
-  name: "Invertebrates",
-  group: category_groups[:taxon_groups],
-  perm_id: 16
-})
-podcast_categories[:mammals] = PodcastCategory.create!({
-  name: "Mammals",
-  group: category_groups[:taxon_groups],
-  perm_id: 17
-})
-podcast_categories[:micro] = PodcastCategory.create!({
-  name: "Microorganisms",
-  group: category_groups[:taxon_groups],
-  perm_id: 18
-})
-podcast_categories[:plants] = PodcastCategory.create!({
-  name: "Plants",
-  group: category_groups[:taxon_groups],
-  perm_id: 19
-})
-podcast_categories[:reptiles] = PodcastCategory.create!({
-  name: "Reptiles",
-  group: category_groups[:taxon_groups],
-  perm_id: 20
-})
+PodcastCategory.create!([
+  {
+    name: "Classify",
+    group: category_groups[:skills],
+    perm_id: 0
+  },
+  {
+    name: "Measure",
+    group: category_groups[:skills],
+    perm_id: 1
+  },
+  {
+    name: "Experiment",
+    group: category_groups[:skills],
+    perm_id: 2
+  },
+  {
+    name: "Observe",
+    group: category_groups[:skills],
+    perm_id: 3
+  },
+  {
+    name: "Behavior",
+    group: category_groups[:themes],
+    perm_id: 4
+  },
+  {
+    name: "Citizen Science",
+    group: category_groups[:themes],
+    perm_id: 5
+  },
+  {
+    name: "Conservation",
+    group: category_groups[:themes],
+    perm_id: 6
+  },
+  {
+    name: "Ecology",
+    group: category_groups[:themes],
+    perm_id: 7
+  },
+  {
+    name: "Evolution",
+    group: category_groups[:themes],
+    perm_id: 8
+  },
+  {
+    name: "Impacts",
+    group: category_groups[:themes],
+    perm_id: 9
+  },
+  {
+    name: "Research",
+    group: category_groups[:themes],
+    perm_id: 10
+  },
+  {
+    name: "Amphibians",
+    group: category_groups[:taxon_groups],
+    perm_id: 11
+  },
+  {
+    name: "Birds",
+    group: category_groups[:taxon_groups],
+    perm_id: 12
+  },
+  {
+    name: "Fishes",
+    group: category_groups[:taxon_groups],
+    perm_id: 13
+  },
+  {
+    name: "Fungi",
+    group: category_groups[:taxon_groups],
+    perm_id: 14
+  },
+  {
+    name: "Insects",
+    group: category_groups[:taxon_groups],
+    perm_id: 15
+  },
+  {
+    name: "Invertebrates",
+    group: category_groups[:taxon_groups],
+    perm_id: 16
+  },
+  {
+    name: "Mammals",
+    group: category_groups[:taxon_groups],
+    perm_id: 17
+  },
+  {
+    name: "Microorganisms",
+    group: category_groups[:taxon_groups],
+    perm_id: 18
+  },
+  {
+    name: "Plants",
+    group: category_groups[:taxon_groups],
+    perm_id: 19
+  },
+  {
+    name: "Reptiles",
+    group: category_groups[:taxon_groups],
+    perm_id: 20
+  }
+])
 
-Podcast.delete_all
-Podcast.create!([{
-  title: "Test Pod 1",
-  description: "This podcast is for testing purposes only. One day, it will be replaced with a real, live podcast!!",
-  image_file_name: "springtails.jpg",
-  audio_file_name: "OSAAT_springtails.mp3",
-  eol_page_id: 2765766,
-  lesson_plan_url: "eol.org",
-  perm_id: 1,
-  sci_name: "<i>Elysia chlorotica</i>",
-  transcript_file_name: "springtails.pdf",
-  categories: [podcast_categories[:insects], podcast_categories[:evolution], podcast_categories[:classify]]
-}])
+Podcast.seed

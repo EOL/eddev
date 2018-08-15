@@ -29,8 +29,13 @@
     -if asset_exists? "#{params[:controller]}.js"
       = javascript_include_tag params[:controller]
 
+    = javascript_pack_tag "application"
+    = stylesheet_pack_tag "application"
+    - if Webpacker.manifest.lookup("#{params[:controller]}.css")
+      = stylesheet_pack_tag params[:controller] 
     - js_packs.each do |pack_name|
-      = javascript_pack_tag pack_name
+      -#
+        = javascript_pack_tag pack_name
       - if Webpacker.manifest.lookup("#{pack_name}.css")
         = stylesheet_pack_tag pack_name 
 

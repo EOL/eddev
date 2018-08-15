@@ -60,6 +60,7 @@ $txt-blue: #4a97ca;
 .podCats {
   & > li {
     color: $nav-link-blue;
+    cursor: pointer;
     display: inline-block;
     margin-right: 5px;
   }
@@ -204,5 +205,19 @@ $txt-blue: #4a97ca;
     position: absolute;
     top: 8px;
   }
+}
+
+.sort {
+  float: right;
+  margin-right: 9px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 13px;
+  top: 5px;
+  position: relative;
+}
+
+.sortLabel {
+  margin-right: 5px;
 }
 

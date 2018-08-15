@@ -1,0 +1,77 @@
+@import 'layout_vars';
+$menu-anchor-height: 50px;
+
+.isClickable {
+  cursor: pointer;
+}
+
+.menuWrap {
+  background: $white;
+  border-radius: 2px;
+  font-size: 16px;
+  height: $menu-anchor-height;
+  line-height: $menu-anchor-height;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  min-width: 150px;
+
+  & > div {
+    height: 100%;
+    padding: 0 15px;
+    text-align: center;
+  }
+}
+
+.menuAnchorName {
+  display: inline-block;
+  overflow: hidden;
+  max-width: 600px;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.menu {
+  background: $white;
+  color: $black;
+  font-size: 14px;
+  left: 50%;
+  min-width: 100%;
+  position: absolute;
+  text-align: center;
+  transform: translateX(-50%);
+
+  & > li {
+    $height: 30px;
+    cursor: pointer;
+    height: $height;
+    line-height: $height;
+    overflow: hidden;
+    padding: 0 8px;
+    white-space: nowrap;
+  }
+
+  & > li:hover {
+    background: $txt-gray;
+    color: $white;
+  }
+}
+
+.menuCaret {
+  display: inline-block;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+.menuWrapSort {
+  box-shadow: 0 1px 2px 0 rgba(194, 194, 194, 0.5);
+  color: $black;
+  display: inline-block;
+  height: 100%;
+  line-height: inherit;
+
+  & > div {
+    font-size: 13px;
+  }
+}

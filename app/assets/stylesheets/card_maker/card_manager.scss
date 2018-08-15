@@ -8,7 +8,6 @@ $cards-hdr-height: 44px;
 $btn-height: 36px;
 $lib-height: 32px;
 $menu-bar-height: 40px;
-$menu-anchor-height: 50px;
 $new-btn-width: 64px;
 $new-row-height: 33px;
 $search-results-width: 320px;
@@ -32,9 +31,6 @@ $species-search-card-height: 232px;
 $species-search-input-height: 45px;
 
 /* STATES */
-.isClickable {
-  cursor: pointer;
-}
 
 /* LAYOUTS */
 .lLeftRail {
@@ -276,22 +272,6 @@ $species-search-input-height: 45px;
   vertical-align: top;
 }
 
-.menuWrap {
-  background: $white;
-  border-radius: 2px;
-  font-size: 16px;
-  line-height: $menu-anchor-height;
-  margin: 0 auto;
-  position: relative;
-  z-index: 2;
-  min-width: 150px;
-
-  & > div {
-    height: $menu-anchor-height; 
-    padding: 0 15px;
-    text-align: center;
-  }
-}
 
 .lSort {
   $height: 40px;
@@ -310,32 +290,6 @@ $species-search-input-height: 45px;
   font-size: 12px;
   margin-right: 10px;
 }
-
-.menuWrapSort {
-  display: inline-block;
-
-  & > div {
-    font-size: 13px;
-    height: 100%;
-  }
-}
-
-
-.menuCaret {
-  display: inline-block;
-  margin-left: 5px;
-  vertical-align: middle;
-}
-
-.menuAnchorName {
-  display: inline-block;
-  overflow: hidden;
-  max-width: 600px;
-  text-overflow: ellipsis;
-  vertical-align: middle;
-  white-space: nowrap;
-}
-
 
 .lDesc {
   align-items: center;
@@ -479,32 +433,6 @@ $species-search-input-height: 45px;
   font-size: 12px;
   height: 100%;
   text-align: center;
-}
-
-.menu {
-  background: $white;
-  color: $txt-gray;
-  font-size: 14px;
-  left: 50%;
-  min-width: 100%;
-  position: absolute;
-  text-align: center;
-  transform: translateX(-50%);
-
-  & > li {
-    $height: 30px;
-    cursor: pointer;
-    height: $height;
-    line-height: $height;
-    overflow: hidden;
-    padding: 0 8px;
-    white-space: nowrap;
-  }
-
-  & > li:hover {
-    background: $txt-gray;
-    color: $white;
-  }
 }
 
 .lightbox {

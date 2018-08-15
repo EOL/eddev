@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styles from 'stylesheets/card_maker/card_manager'
+import styles from 'stylesheets/shared/menu'
 
 class Menu extends React.Component {
   constructor(props) {

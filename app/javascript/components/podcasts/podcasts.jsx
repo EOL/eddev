@@ -1,10 +1,24 @@
 import React from 'react'
 
-import Page from 'shared/components/page'
+import Menu from 'components/shared/menu'
+import {alphaSortAsc} from 'lib/util/sorts'
 
 import frogBanner from 'images/podcasts/frog_banner.jpg'
 import layoutStyles from 'stylesheets/shared/react_layout'
+
+import menuStyles from 'stylesheets/shared/menu'
 import styles from 'stylesheets/podcasts'
+
+const sorts = [
+  {
+    label: 'title',
+    fn: alphaSortAsc('title')
+  },
+  {
+    label: 'scientific name',
+    fn: alphaSortAsc('sciName')
+  }
+];
 
 class Podcasts extends React.Component {
   constructor(props) {
@@ -12,26 +26,13 @@ class Podcasts extends React.Component {
 
     this.state = {
       podcasts: [],
-      categoryGroups: [],
       openGroup: null,
       view: 'default',
       searchVal: '',
-      category: null
+      categoryId: null,
+      sortMenuOpen: false,
+      sort: sorts[0]
     };
-  }
-
-  componentDidMount() {
-    $.getJSON(Routes.podcasts_path({ format: 'json' }), (result) => {
-      this.setState({
-        podcasts: result
-      });
-    });
-    $.getJSON(Routes.podcast_category_groups_path({ format: 'json' }), (result) => {
-      console.log('categories', result);
-      this.setState({
-        categoryGroups: result
-      });
-    });
   }
 
   controlBarClose = () => {
@@ -53,6 +54,11 @@ class Podcasts extends React.Component {
     );
   }
 
+  sortItems = () => {
+    return [
+    ]
+  }
+
   controlBarContents = () => {
     if (this.state.view === 'default') {
       return [
@@ -65,7 +71,25 @@ class Podcasts extends React.Component {
           className={`fa fa-th-large fa-2x ${styles.ctrlBarBtn}`}
           onClick={() => this.setState({ view: 'category' })}
           key='2'
-        />
+        />,
+        <div className={styles.sort} key='3'>
+          <span className={styles.sortLabel}>sort by: </span>
+          <Menu 
+            items={
+              sorts.map((sort) => {
+                return {
+                  label: sort.label,
+                  handleClick: () => this.setState({ sort: sort })
+                }
+              })
+            }
+            anchorText={this.state.sort.label}
+            open={this.state.sortMenuOpen}
+            handleRequestOpen={() => this.setState({ sortMenuOpen: true })}
+            handleRequestClose={() => this.setState({ sortMenuOpen: false })}
+            extraClasses={[menuStyles.menuWrapSort]}
+          />
+        </div>
       ];
     } else if (this.state.view === 'category') {
       return [
@@ -99,13 +123,13 @@ class Podcasts extends React.Component {
         ;
 
 
-    return that.state.podcasts.filter((podcast) => {
+    return that.props.podcasts.filter((podcast) => {
       let a = true;
 
       return (
-        that.state.category === null || 
-        podcast.categories.find((cat) => {
-          return cat.id === that.state.category.id
+        that.state.categoryId === null || 
+        podcast.categoryIds.find((id) => {
+          return id === that.state.categoryId
         })
       ) && (
         !lowerSearch ||
@@ -113,7 +137,7 @@ class Podcasts extends React.Component {
         podcast.sciName.toLowerCase().includes(lowerSearch) ||
         podcast.description.toLowerCase().includes(lowerSearch)
       );
-    });
+    }).sort(this.state.sort.fn);
   }
 
   podList = () => {
@@ -150,11 +174,16 @@ class Podcasts extends React.Component {
                 <div className={styles.lPodRight}>
                   <div className={styles.podTitle} dangerouslySetInnerHTML={{__html: fullTitle}} />
                   {
-                    podcast.categories != null && podcast.categories.length > 0 &&
+                    podcast.categoryIds != null && podcast.categoryIds.length > 0 &&
                     <ul className={styles.podCats}>
                       {
-                        podcast.categories.map((cat) => {
-                          return <li key={cat.id}>{cat.name}</li>    
+                        podcast.categoryIds.map((id) => {
+                          return (
+                            <li 
+                              key={id} 
+                              onClick={() => this.setState({ categoryId: id })}
+                            >{this.props.categoriesById[id]}</li>    
+                          );
                         })
                       }
                     </ul>
@@ -174,7 +203,7 @@ class Podcasts extends React.Component {
     return (
       <ul className={styles.catGrps}>
         {
-          this.state.categoryGroups.map((group) => {
+          this.props.categoryGroups.map((group) => {
             return (
               <li className={styles.catGrp} key={group.id}>
                 <div 
@@ -192,12 +221,13 @@ class Podcasts extends React.Component {
                   this.state.openGroup === group &&
                   <ul className={styles.cats}>
                     {
-                      group.categories.map((cat) => {
+                      group.categoryIds.map((id) => {
+                        const name = this.props.categoriesById[id];
                         return (
                           <li 
-                            key={cat.id}
-                            onClick={() => this.setCategory(cat)}
-                          >{cat.name}</li>
+                            key={id}
+                            onClick={() => this.setCategoryId(id)}
+                          >{name}</li>
                         );
                       })
                     }
@@ -211,19 +241,25 @@ class Podcasts extends React.Component {
     );
   }
 
-  setCategory = (cat) => {
+  setCategoryId = (id) => {
     this.setState({
-      category: cat,
+      categoryId: id,
       openGroup: null,
       view: 'default'
     });
+  }
+
+  categoryName = () => {
+    return this.state.categoryId === null ? 
+      null : 
+      this.props.categoriesById[this.state.categoryId];
   }
 
   render() {
     let mainContent = this.state.view === 'category' ?
         this.catList() :
         this.podList()
-      , hasCatBar = this.state.category !== null && this.state.view !== 'category'
+      , hasCatBar = this.state.categoryId !== null && this.state.view !== 'category'
       , mainContentClasses = [styles.mainContent]
       ;
 
@@ -240,12 +276,14 @@ class Podcasts extends React.Component {
           {
             hasCatBar &&
             <div className={styles.catBarOuter}>
-              <div className={styles.catBar}>
+              <div 
+                className={styles.catBar}
+                onClick={() => this.setState({ categoryId: null })}
+              >
                 <i 
                   className='fa fa-angle-left fa-2x' 
-                  onClick={() => this.setState({ category: null })}
                 />
-                <span>{this.state.category.name}</span>
+                <span>{this.categoryName()}</span>
               </div>
             </div>
           }

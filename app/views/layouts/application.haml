@@ -14,6 +14,7 @@
 
     -if asset_exists? "#{params[:controller]}.css"
       = stylesheet_link_tag params[:controller], :media => 'all'
+    = stylesheet_pack_tag "application"
 
     = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"
     = javascript_include_tag "//cdn.jsdelivr.net/jquery.ui/1.11.4/jquery-ui.min.js"
@@ -30,14 +31,6 @@
       = javascript_include_tag params[:controller]
 
     = javascript_pack_tag "application"
-    = stylesheet_pack_tag "application"
-    - if Webpacker.manifest.lookup("#{params[:controller]}.css")
-      = stylesheet_pack_tag params[:controller] 
-    - js_packs.each do |pack_name|
-      -#
-        = javascript_pack_tag pack_name
-      - if Webpacker.manifest.lookup("#{pack_name}.css")
-        = stylesheet_pack_tag pack_name 
 
     = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"
     :javascript

@@ -15,7 +15,7 @@ import DeckUrlLightbox from './deck-url-lightbox'
 import Search from './search'
 import {cardMakerUrl, deckUrl} from 'lib/card-maker/url-helper'
 import LeftRail from './manager-left-rail'
-import Menu from './menu'
+import Menu from 'components/shared/menu'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
 import eolHdrIcon from 'images/card_maker/icons/eol_logo_sub_hdr.png'
@@ -25,6 +25,7 @@ import newDeckIcon from 'images/card_maker/icons/new_deck.png'
 import iguanaBanner from 'images/card_maker/iguana_banner.png' /* TODO: convert to jpg */
 
 import layoutStyles from 'stylesheets/shared/react_layout'
+import menuStyles from 'stylesheets/shared/menu'
 import styles from 'stylesheets/card_maker/card_manager'
 
 const pollIntervalMillis = 1000
@@ -938,7 +939,7 @@ class CardManager extends React.Component {
                 open={this.state.menus.sort}
                 handleRequestClose={() => { this.closeMenu('sort') }}
                 handleRequestOpen={() => { this.openMenu('sort') }}
-                extraClasses={[styles.menuWrapSort]}
+                extraClasses={[menuStyles.menuWrapSort]}
               />
             </div>
           </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactModal from 'react-modal'
 
-import Page from 'shared/components/page'
+import Page from 'components/shared/page'
 import CardManager from './card-manager'
 import CardEditor from './card-editor'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'

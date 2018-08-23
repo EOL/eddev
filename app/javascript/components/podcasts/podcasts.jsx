@@ -68,7 +68,7 @@ class Podcasts extends React.Component {
           onClick={() => this.setState({ view: 'search' })}
         />,
         <i 
-          className={`fa fa-th-large fa-2x ${styles.ctrlBarBtn}`}
+          className={`fa fa-th-large fa-2x ${styles.ctrlBarBtn} ${styles.ctrlBarBtnCat}`}
           onClick={() => this.setState({ view: 'category' })}
           key='2'
         />,
@@ -195,19 +195,26 @@ class Podcasts extends React.Component {
       <ul className={classNames.join(' ')}>
         {
           this.props.categoryGroups.map((group) => {
+            const groupOpen = this.state.openGroup === group
+                , angleClass = groupOpen ? 'fa-angle-up' : 'fa-angle-down'
+                ;
+
             return (
               <li className={styles.catGrp} key={group.id}>
                 <div 
                   className={styles.catGrpName}
                   onClick={
                     () => { 
-                      const newOpenGroup  = this.state.openGroup === group ?
+                      const newOpenGroup  = groupOpen ?
                         null :
                         group;
                       this.setState({ openGroup: newOpenGroup })
                     }
                   }
-                >{group.name}</div>
+                >
+                  <span>{group.name}</span>
+                  <i className={`${styles.catGrpAngle} fa ${angleClass} fa-lg`} />
+                </div>
                 {
                   this.state.openGroup === group &&
                   <ul className={styles.cats}>

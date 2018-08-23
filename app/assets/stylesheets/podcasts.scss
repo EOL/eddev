@@ -142,6 +142,7 @@ $txt-blue: #4a97ca;
   font-weight: $semibold;
   height: $height;
   line-height: $height;
+  position: relative;
   text-align: center;
   width: 100%;
 }
@@ -233,6 +234,12 @@ $txt-blue: #4a97ca;
   display: none;
 }
 
+.catGrpAngle {
+  position: absolute;
+  right: 22px;
+  top: 16px;
+}
+
 @media screen and (min-width: $main-col-width-px) {
   .podList {
     display: inline-block;
@@ -291,4 +298,9 @@ $txt-blue: #4a97ca;
   .podDesc {
     min-height: 34px;
   }
+
+  .ctrlBarBtnCat {
+    display: none;
+  }
+
 }

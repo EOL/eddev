@@ -30,6 +30,7 @@ $txt-blue: #4a97ca;
   margin-top: 1px;
   min-height: 134px;
   overflow: hidden;
+  position: relative;
 }
 
 .podTitle {
@@ -228,6 +229,10 @@ $txt-blue: #4a97ca;
   margin-right: 5px;
 }
 
+.podLinksRight {
+  display: none;
+}
+
 @media screen and (min-width: $main-col-width-px) {
   .podList {
     display: inline-block;
@@ -254,5 +259,36 @@ $txt-blue: #4a97ca;
       height: $width;
       width: $width;
     }
+  }
+
+  .podTitle {
+    display: inline;
+    font-size: 18px;
+    margin-right: 18px;
+  }
+
+  .podCats {
+    display: inline;
+  }
+
+  .podLinksRight {
+    bottom: 17px;
+    display: block;
+    font-size: 12px;
+    position: absolute;
+    right: 10px;
+
+    & > li {
+      display: inline;
+      margin-left: 5px;
+    }
+  }
+
+  .podLinksLeft {
+    display: none;
+  }
+
+  .podDesc {
+    min-height: 34px;
   }
 }

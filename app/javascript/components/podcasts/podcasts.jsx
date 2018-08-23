@@ -152,26 +152,7 @@ class Podcasts extends React.Component {
                 <li className={styles.pod} key={podcast.permId}>
                   <div className={styles.lPodLeft}>
                     <img src={podcast.imagePath} />
-                    <ul className={styles.podLinks}>
-                      {
-                        podcast.eolUrl != null &&
-                        <li>
-                          <a href={podcast.eolUrl}>EOL Page</a>
-                        </li>
-                      }
-                      {
-                        podcast.transcriptPath != null &&
-                        <li>
-                          <a href={podcast.transcriptPath}>Transcript</a>
-                        </li>
-                      }
-                      {
-                        podcast.lessonPlanUrl != null &&
-                        <li>
-                          <a href={podcast.lessonPlanUrl}>Lesson Plan</a>
-                        </li>
-                      }
-                    </ul>
+                    {this.podLinks(podcast, styles.podLinksLeft)}
                   </div>
                   <div className={styles.lPodRight}>
                     <div className={styles.podTitle} dangerouslySetInnerHTML={{__html: fullTitle}} />
@@ -190,9 +171,10 @@ class Podcasts extends React.Component {
                         }
                       </ul>
                     }
-                    <div>{podcast.description}</div>
+                    <p className={styles.podDesc}>{podcast.description}</p>
                     <audio className={styles.podPlayer} src={podcast.audioPath} controls/>
                   </div>
+                  {this.podLinks(podcast, styles.podLinksRight)}
                 </li>
               );
             })
@@ -262,6 +244,31 @@ class Podcasts extends React.Component {
     return this.state.categoryId === null ? 
       null : 
       this.props.categoriesById[this.state.categoryId];
+  }
+
+  podLinks = (podcast, className) => {
+    return (
+      <ul className={`${styles.podLinks} ${className}`}>
+        {
+          podcast.eolUrl != null &&
+          <li>
+            <a href={podcast.eolUrl}>EOL Page</a>
+          </li>
+        }
+        {
+          podcast.transcriptPath != null &&
+          <li>
+            <a href={podcast.transcriptPath}>Transcript</a>
+          </li>
+        }
+        {
+          podcast.lessonPlanUrl != null &&
+          <li>
+            <a href={podcast.lessonPlanUrl}>Lesson Plan</a>
+          </li>
+        }
+      </ul>
+    );
   }
 
   render() {

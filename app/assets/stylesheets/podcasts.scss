@@ -194,7 +194,7 @@ $txt-blue: #4a97ca;
   height: $ctrl-bar-height;
   line-height: $ctrl-bar-height;
   width: 100%;
-  z-index: 4;
+  z-index: 3;
 }
 
 .catBar {
@@ -269,13 +269,7 @@ $txt-blue: #4a97ca;
   }
 
   .podTitle {
-    display: inline;
     font-size: 18px;
-    margin-right: 18px;
-  }
-
-  .podCats {
-    display: inline;
   }
 
   .podLinksRight {
@@ -295,12 +289,7 @@ $txt-blue: #4a97ca;
     display: none;
   }
 
-  .podDesc {
-    min-height: 34px;
-  }
-
   .ctrlBarBtnCat {
     display: none;
   }
-
 }

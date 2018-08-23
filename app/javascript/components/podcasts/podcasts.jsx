@@ -205,7 +205,7 @@ class Podcasts extends React.Component {
                   className={styles.catGrpName}
                   onClick={
                     () => { 
-                      const newOpenGroup  = groupOpen ?
+                      const newOpenGroup = this.state.openGroup === group ?
                         null :
                         group;
                       this.setState({ openGroup: newOpenGroup })

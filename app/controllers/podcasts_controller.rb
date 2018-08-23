@@ -30,7 +30,8 @@ class PodcastsController < ApplicationController
     @category_groups = PodcastCategoryGroup.all.map do |g|
       {
         name: g.name,
-        categoryIds: g.categories.map { |c| c.id }
+        categoryIds: g.categories.map { |c| c.id },
+        id: g.id
       }
     end
   end

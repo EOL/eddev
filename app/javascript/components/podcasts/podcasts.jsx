@@ -142,66 +142,75 @@ class Podcasts extends React.Component {
 
   podList = () => {
     return (
-      <ul>
-        {
-          this.searchFilteredPodcasts().map((podcast) => {
-            const fullTitle = `${podcast.title}, ${podcast.sciName}`;
-            return (
-              <li className={styles.pod} key={podcast.permId}>
-                <div className={styles.lPodLeft}>
-                  <img src={podcast.imagePath} />
-                  <ul className={styles.podLinks}>
-                    {
-                      podcast.eolUrl != null &&
-                      <li>
-                        <a href={podcast.eolUrl}>EOL Page</a>
-                      </li>
-                    }
-                    {
-                      podcast.transcriptPath != null &&
-                      <li>
-                        <a href={podcast.transcriptPath}>Transcript</a>
-                      </li>
-                    }
-                    {
-                      podcast.lessonPlanUrl != null &&
-                      <li>
-                        <a href={podcast.lessonPlanUrl}>Lesson Plan</a>
-                      </li>
-                    }
-                  </ul>
-                </div>
-                <div className={styles.lPodRight}>
-                  <div className={styles.podTitle} dangerouslySetInnerHTML={{__html: fullTitle}} />
-                  {
-                    podcast.categoryIds != null && podcast.categoryIds.length > 0 &&
-                    <ul className={styles.podCats}>
+      <div>
+        {this.catList(styles.catGrpsSide)}
+        <ul className={styles.podList}>
+          {
+            this.searchFilteredPodcasts().map((podcast) => {
+              const fullTitle = `${podcast.title}, ${podcast.sciName}`;
+              return (
+                <li className={styles.pod} key={podcast.permId}>
+                  <div className={styles.lPodLeft}>
+                    <img src={podcast.imagePath} />
+                    <ul className={styles.podLinks}>
                       {
-                        podcast.categoryIds.map((id) => {
-                          return (
-                            <li 
-                              key={id} 
-                              onClick={() => this.setState({ categoryId: id })}
-                            >{this.props.categoriesById[id]}</li>    
-                          );
-                        })
+                        podcast.eolUrl != null &&
+                        <li>
+                          <a href={podcast.eolUrl}>EOL Page</a>
+                        </li>
+                      }
+                      {
+                        podcast.transcriptPath != null &&
+                        <li>
+                          <a href={podcast.transcriptPath}>Transcript</a>
+                        </li>
+                      }
+                      {
+                        podcast.lessonPlanUrl != null &&
+                        <li>
+                          <a href={podcast.lessonPlanUrl}>Lesson Plan</a>
+                        </li>
                       }
                     </ul>
-                  }
-                  <div>{podcast.description}</div>
-                  <audio className={styles.podPlayer} src={podcast.audioPath} controls/>
-                </div>
-              </li>
-            );
-          })
-        }
-      </ul>
+                  </div>
+                  <div className={styles.lPodRight}>
+                    <div className={styles.podTitle} dangerouslySetInnerHTML={{__html: fullTitle}} />
+                    {
+                      podcast.categoryIds != null && podcast.categoryIds.length > 0 &&
+                      <ul className={styles.podCats}>
+                        {
+                          podcast.categoryIds.map((id) => {
+                            return (
+                              <li 
+                                key={id} 
+                                onClick={() => this.setState({ categoryId: id })}
+                              >{this.props.categoriesById[id]}</li>    
+                            );
+                          })
+                        }
+                      </ul>
+                    }
+                    <div>{podcast.description}</div>
+                    <audio className={styles.podPlayer} src={podcast.audioPath} controls/>
+                  </div>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </div>
     );
   }
 
-  catList = () => {
+  catList = (className) => {
+    let classNames = [styles.catGrps];
+
+    if (className) {
+      classNames.push(className);
+    }
+
     return (
-      <ul className={styles.catGrps}>
+      <ul className={classNames.join(' ')}>
         {
           this.props.categoryGroups.map((group) => {
             return (
@@ -269,7 +278,7 @@ class Podcasts extends React.Component {
 
     return (
       <div>
-        <main role="main" className={styles.main}>
+        <main role="main" className={`${styles.main} is-nopad-bot`}>
           <div className={styles.ctrlBarOuter}>
             <div className={styles.ctrlBar}>{this.controlBarContents()}</div>
           </div>

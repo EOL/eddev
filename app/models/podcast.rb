@@ -27,7 +27,7 @@ class Podcast < ApplicationRecord
       data << ({
         title: line["title"],
         description: line["description"],
-        image_file_name: "springtails.jpg",
+        image_file_name: line["image_file_name"],
         audio_file_name: line["audio_file_name"],
         lesson_plan_url: line["lesson_plan_url"],
         perm_id: perm_id,

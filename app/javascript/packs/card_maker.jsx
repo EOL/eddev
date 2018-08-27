@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import CardMaker from 'card-maker/components/card-maker'
+import CardMaker from 'card-maker/card-maker'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
 
 // Module initialization

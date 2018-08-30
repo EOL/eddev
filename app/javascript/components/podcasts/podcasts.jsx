@@ -3,6 +3,7 @@ import React from 'react'
 import Menu from 'components/shared/menu'
 import ControlBar from './control-bar'
 import CategoryList from './category-list'
+import Podcast from './podcast'
 import {alphaSortAsc} from 'lib/util/sorts'
 
 import frogBanner from 'images/podcasts/frog_banner.jpg'
@@ -69,35 +70,14 @@ class Podcasts extends React.Component {
           {
             this.searchFilteredPodcasts().map((podcast) => {
               const fullTitle = `${podcast.title}, ${podcast.sciName}`;
-              return (
-                <li className={styles.pod} key={podcast.permId}>
-                  <div className={styles.lPodLeft}>
-                    <img src={podcast.imagePath} />
-                    {this.podLinks(podcast, styles.podLinksLeft)}
-                  </div>
-                  <div className={styles.lPodRight}>
-                    <div className={styles.podTitle} dangerouslySetInnerHTML={{__html: fullTitle}} />
-                    {
-                      podcast.categoryIds != null && podcast.categoryIds.length > 0 &&
-                      <ul className={styles.podCats}>
-                        {
-                          podcast.categoryIds.map((id) => {
-                            return (
-                              <li 
-                                key={id} 
-                                onClick={() => this.setState({ categoryId: id })}
-                              >{this.props.categoriesById[id]}</li>    
-                            );
-                          })
-                        }
-                      </ul>
-                    }
-                    <p className={styles.podDesc}>{podcast.description}</p>
-                    <audio className={styles.podPlayer} src={podcast.audioPath} controls/>
-                  </div>
-                  {this.podLinks(podcast, styles.podLinksRight)}
-                </li>
-              );
+              return ( 
+                <Podcast 
+                  categoriesById={this.props.categoriesById}
+                  fullTitle={fullTitle}
+                  handleCategorySelect={this.handleCategorySelect}
+                  podcast={podcast}
+                />
+              )
             })
           }
         </ul>
@@ -119,30 +99,6 @@ class Podcasts extends React.Component {
       this.props.categoriesById[this.state.categoryId];
   }
 
-  podLinks = (podcast, className) => {
-    return (
-      <ul className={`${styles.podLinks} ${className}`}>
-        {
-          podcast.eolUrl != null &&
-          <li>
-            <a href={podcast.eolUrl}>EOL Page</a>
-          </li>
-        }
-        {
-          podcast.transcriptPath != null &&
-          <li>
-            <a href={podcast.transcriptPath}>Transcript</a>
-          </li>
-        }
-        {
-          podcast.lessonPlanUrl != null &&
-          <li>
-            <a href={podcast.lessonPlanUrl}>Lesson Plan</a>
-          </li>
-        }
-      </ul>
-    );
-  }
 
   handleCategorySelect = (id) => {
     const stateUpdate = {

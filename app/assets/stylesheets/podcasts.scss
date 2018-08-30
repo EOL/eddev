@@ -69,13 +69,16 @@ $txt-blue: #4a97ca;
 }
 
 .ctrlBarOuter {
-  position: fixed;
   height: $ctrl-bar-height;
-  left: 0;
   line-height: $ctrl-bar-height;
-  top: $topbar-height;
   width: 100%;
   z-index: 4;
+}
+
+.ctrlBarOuterFixed {
+  position: fixed;
+  left: 0;
+  top: $topbar-height-px * 1px;
 }
 
 .ctrlBar {
@@ -160,8 +163,8 @@ $txt-blue: #4a97ca;
   }
 }
 
-.mainContent {
-  padding-top: $ctrl-bar-height;
+.mainContentPadTop {
+  padding-top: $ctrl-bar-height + 1px;
 }
 
 .mainContentCatBar {
@@ -240,12 +243,15 @@ $txt-blue: #4a97ca;
   top: 16px;
 }
 
+.banner {
+  background: blue;
+  height: 100px;
+  width: 100%
+}
+
 @media screen and (min-width: $main-col-width-px) {
   .podList {
     display: inline-block;
-    height: 60vh;
-    min-height: 470px;
-    overflow: auto;
     width: 709px;
   }
 

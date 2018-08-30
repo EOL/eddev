@@ -28,7 +28,7 @@ function PodLinks(props) {
 
 function Podcast(props) {
   return (
-    <li className={styles.pod} key={props.podcast.permId}>
+    <li className={styles.pod}>
       <div className={styles.lPodLeft}>
         <img src={props.podcast.imagePath} />
         <PodLinks

@@ -33,8 +33,41 @@ class Podcasts extends React.Component {
       view: 'default',
       searchVal: '',
       categoryId: null,
-      sort: sorts[0]
+      sort: sorts[0],
+      pastBanner: false,
     };
+  }
+
+  componentDidMount() {
+    document.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('scroll', this.handleScroll);
+  }
+
+  handleBannerRef = (node) => {
+    this.bannerHeight = $(node).outerHeight();
+    this.navbarHeight = $('.js-navbar').outerHeight();
+    console.log('banner', this.bannerHeight);
+    console.log('nav', this.navbarHeight);
+  }
+
+  handleScroll = (e) => {
+    const curVal = this.state.pastBanner;
+    let newVal;
+
+    if (this.bannerHeight && window.scrollY > this.bannerHeight) {
+      newVal = true;
+    } else {
+      newVal = false;
+    }
+
+    if (curVal !== newVal) {
+      this.setState({
+        pastBanner: newVal
+      });
+    }
   }
 
   searchFilteredPodcasts = () => {
@@ -76,6 +109,7 @@ class Podcasts extends React.Component {
                   fullTitle={fullTitle}
                   handleCategorySelect={this.handleCategorySelect}
                   podcast={podcast}
+                  key={podcast.permId}
                 />
               )
             })
@@ -136,16 +170,23 @@ class Podcasts extends React.Component {
 
   render() {
     const hasCatBar = this.state.categoryId !== null && this.state.view !== 'category'
-        , mainContentClasses = [styles.mainContent]
+        , mainContentClasses = []
+        , controlBarClasses = [styles.ctrlBarOuter]
         ;
 
     if (hasCatBar) {
       mainContentClasses.push(styles.mainContentCatBar);
     }
 
+    if (this.state.pastBanner) {
+      mainContentClasses.push(styles.mainContentPadTop);
+      controlBarClasses.push(styles.ctrlBarOuterFixed);
+    }
+
     return (
       <div>
         <main role="main" className={`${styles.main} is-nopad-bot`}>
+          <div className={styles.banner} ref={this.handleBannerRef} />
           <ControlBar 
             view={this.state.view} 
             sorts={sorts}
@@ -154,6 +195,7 @@ class Podcasts extends React.Component {
             handleRequestSetView={(view) => this.setState({ view: view })}
             handleSearchInput={(val) => this.setState({ searchVal: val })}
             searchVal={this.state.searchVal}
+            classNames={controlBarClasses}
           />
           {
             hasCatBar &&

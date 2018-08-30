@@ -87,7 +87,7 @@ class ControlBar extends React.Component {
 
   render() {
     return (
-      <div className={styles.ctrlBarOuter}>
+      <div className={this.props.classNames.join(' ')}>
         <div className={styles.ctrlBar}>{this.contents()}</div>
       </div>
     );

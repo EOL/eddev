@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Menu from 'components/shared/menu'
+import ControlBar from './control-bar'
 import {alphaSortAsc} from 'lib/util/sorts'
 
 import frogBanner from 'images/podcasts/frog_banner.jpg'
@@ -30,89 +31,8 @@ class Podcasts extends React.Component {
       view: 'default',
       searchVal: '',
       categoryId: null,
-      sortMenuOpen: false,
       sort: sorts[0]
     };
-  }
-
-  controlBarClose = () => {
-    return (
-      <div 
-        className={styles.closeBtn}
-        onClick={
-          () => {
-            this.setState({ 
-              view: 'default',
-              searchVal: ''
-            }) 
-          }
-        }
-        key='1'
-      >
-        <i className="fa fa-times fa-lg" />
-      </div>
-    );
-  }
-
-  sortItems = () => {
-    return [
-    ]
-  }
-
-  controlBarContents = () => {
-    if (this.state.view === 'default') {
-      return [
-        <i 
-          className={`fa fa-search fa-2x ${styles.ctrlBarBtn}`} 
-          key='1'
-          onClick={() => this.setState({ view: 'search' })}
-        />,
-        <i 
-          className={`fa fa-th-large fa-2x ${styles.ctrlBarBtn} ${styles.ctrlBarBtnCat}`}
-          onClick={() => this.setState({ view: 'category' })}
-          key='2'
-        />,
-        <div className={styles.sort} key='3'>
-          <span className={styles.sortLabel}>sort by: </span>
-          <Menu 
-            items={
-              sorts.map((sort) => {
-                return {
-                  label: sort.label,
-                  handleClick: () => this.setState({ sort: sort })
-                }
-              })
-            }
-            anchorText={this.state.sort.label}
-            open={this.state.sortMenuOpen}
-            handleRequestOpen={() => this.setState({ sortMenuOpen: true })}
-            handleRequestClose={() => this.setState({ sortMenuOpen: false })}
-            extraClasses={[menuStyles.menuWrapSort]}
-          />
-        </div>
-      ];
-    } else if (this.state.view === 'category') {
-      return [
-        this.controlBarClose(),
-        <i className={`fa fa-th-large fa-2x ${styles.catIcon}`} key='2' />,
-        <div className={styles.ctrlHdr} key='3'>categories</div>,
-      ];
-    } else if (this.state.view === 'search') {
-      return [
-        this.controlBarClose(),
-        <i className={`fa fa-search fa-2x ${styles.catIcon}`} key='2' />,
-        <input 
-          type="text" 
-          className={styles.search} 
-          key='3' 
-          placeholder="start typing to search" 
-          value={this.state.searchVal}
-          onInput={(e) => this.setState({ searchVal: e.target.value })}
-        />
-      ];
-    } else {
-      throw new TypeError('invalid view: ' + this.state.view);
-    }
   }
 
   searchFilteredPodcasts = () => {
@@ -293,9 +213,15 @@ class Podcasts extends React.Component {
     return (
       <div>
         <main role="main" className={`${styles.main} is-nopad-bot`}>
-          <div className={styles.ctrlBarOuter}>
-            <div className={styles.ctrlBar}>{this.controlBarContents()}</div>
-          </div>
+          <ControlBar 
+            view={this.state.view} 
+            sorts={sorts}
+            sort={this.state.sort}
+            handleSortSelect={(sort) => this.setState({ sort: sort })}
+            handleRequestSetView={(view) => this.setState({ view: view })}
+            handleSearchInput={(val) => this.setState({ searchVal: val })}
+            searchVal={this.state.searchVal}
+          />
           {
             hasCatBar &&
             <div className={styles.catBarOuter}>

@@ -122,14 +122,20 @@ $txt-blue: #4a97ca;
 
 .catGrps {
   overflow: hidden;
-  padding-top: 0;
+  padding: 0 0 3px 0;
+}
+
+.sidebar {
+  display: none;
+  position: relative;
+  width: 216px;
+  vertical-align: top;
 }
 
 .catGrpsSide {
-  display: none;
-  margin: 0 3px;
-  vertical-align: top;
-  width: 216px;
+  position: absolute;
+  left: 3px;
+  width: 210px;
 }
 
 .catGrp {
@@ -163,14 +169,6 @@ $txt-blue: #4a97ca;
   }
 }
 
-.mainContentPadTop {
-  padding-top: $ctrl-bar-height + 1px;
-}
-
-.mainContentCatBar {
-  padding-top: $ctrl-bar-height * 2;
-}
-
 .search {
   border: none;
   border-radius: 22px;
@@ -191,14 +189,33 @@ $txt-blue: #4a97ca;
   width: 100%;
 }
 
+.pastBanner {
+  padding-top: $ctrl-bar-height;
+  position: relative;
+}
+
+.pastBannerCatBar {
+  padding-top: $ctrl-bar-height * 2;
+}
+
+.bars {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 4;
+}
+
 .catBarOuter {
-  position: fixed;
-  top: $topbar-height-px * 1px + $ctrl-bar-height;
   height: $ctrl-bar-height;
   line-height: $ctrl-bar-height;
   width: 100%;
   z-index: 3;
 }
+
+.catBarOuterFixed {
+  position: fixed;
+  top: $topbar-height-px * 1px + $ctrl-bar-height;
+} 
 
 .catBar {
   background: $white;
@@ -259,7 +276,7 @@ $txt-blue: #4a97ca;
     margin-top: 3px;
   }
 
-  .catGrpsSide {
+  .sidebar {
     display: inline-block;
   }
 

@@ -34,38 +34,65 @@ class Podcasts extends React.Component {
       searchVal: '',
       categoryId: null,
       sort: sorts[0],
-      pastBanner: false,
+      catGrpsTop: 0,
     };
   }
 
   componentDidMount() {
-    document.addEventListener('scroll', this.handleScroll);
+    $(document).scroll(this.handleScroll);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('scroll', this.handleScroll);
+    $(document).off('scroll', this.handleScroll);
   }
 
   handleBannerRef = (node) => {
     this.bannerHeight = $(node).outerHeight();
-    this.navbarHeight = $('.js-navbar').outerHeight();
-    console.log('banner', this.bannerHeight);
-    console.log('nav', this.navbarHeight);
   }
 
   handleScroll = (e) => {
-    const curVal = this.state.pastBanner;
-    let newVal;
+    let pastBanner
+      , top
+      , maxTop
+      ;
 
-    if (this.bannerHeight && window.scrollY > this.bannerHeight) {
-      newVal = true;
-    } else {
-      newVal = false;
+    if (
+      this.bannerHeight == null || 
+      !this.catGrpsSideNode || 
+      !this.mainContentNode
+    ) {
+      if (this.state.catGrpsTop !== 0) {
+        // This fixes the mobile category view -- otherwise, the bars are stuck whereever they were last
+        this.setState({
+          catGrpsTop: 0
+        });
+      }
+
+      return;
     }
 
-    if (curVal !== newVal) {
+    this.navbarHeight = this.navbarHeight || $('.js-navbar').outerHeight();
+
+    if (window.scrollY > this.bannerHeight) {
+      pastBanner = true;
+    } else {
+      pastBanner = false;
+    }
+
+    if (pastBanner) {
+      top = window.scrollY - this.bannerHeight;
+      maxTop = $(this.mainContentNode).height() - $(this.catGrpsSideNode).height();
+
+      if ($(this.catGrpsSideNode).css('display') !== 'none' && maxTop < top) {
+        top = maxTop;
+      }
+    } else {
+      top = 0;
+    }
+
+    if (this.state.catGrpsTop !== top) {
       this.setState({
-        pastBanner: newVal
+        catGrpsTop: top
       });
     }
   }
@@ -98,7 +125,13 @@ class Podcasts extends React.Component {
   podList = () => {
     return (
       <div>
-        {this.catList(styles.catGrpsSide)}
+        <div className={styles.sidebar}>
+          {this.catList(
+            styles.catGrpsSide,
+            this.state.catGrpsTop,
+            (node) => { this.catGrpsSideNode = node }
+          )}
+        </div>
         <ul className={styles.podList}>
           {
             this.searchFilteredPodcasts().map((podcast) => {
@@ -147,15 +180,24 @@ class Podcasts extends React.Component {
     this.setState(stateUpdate);
   }
 
-  catList = (className) => {
+  handleRequestOpenGroup = (group) => {
+    // Firing/handling the scroll event ensures the sidebar doesn't spill over
+    this.setState({
+      openGroup: group
+    }, () => $(document).scroll());
+  }
+
+  catList = (className, top, handleRef) => {
     return (
       <CategoryList
         groups={this.props.categoryGroups}
         openGroup={this.state.openGroup}
-        handleRequestOpenGroup={(group) => this.setState({ openGroup: group })}
+        handleRequestOpenGroup={this.handleRequestOpenGroup}
         categoriesById={this.props.categoriesById}
         handleCategorySelect={this.handleCategorySelect}
         className={className}
+        top={top}
+        handleRef={handleRef}
       />
     );
   }
@@ -170,48 +212,52 @@ class Podcasts extends React.Component {
 
   render() {
     const hasCatBar = this.state.categoryId !== null && this.state.view !== 'category'
-        , mainContentClasses = []
+        , pastBannerClasses = [styles.pastBanner]
+        , mainContentClasses = [styles.mainContent]
         , controlBarClasses = [styles.ctrlBarOuter]
+        , catBarClasses = [styles.catBarOuter]
         ;
 
     if (hasCatBar) {
-      mainContentClasses.push(styles.mainContentCatBar);
-    }
-
-    if (this.state.pastBanner) {
-      mainContentClasses.push(styles.mainContentPadTop);
-      controlBarClasses.push(styles.ctrlBarOuterFixed);
+      pastBannerClasses.push(styles.pastBannerCatBar);
     }
 
     return (
       <div>
         <main role="main" className={`${styles.main} is-nopad-bot`}>
           <div className={styles.banner} ref={this.handleBannerRef} />
-          <ControlBar 
-            view={this.state.view} 
-            sorts={sorts}
-            sort={this.state.sort}
-            handleSortSelect={(sort) => this.setState({ sort: sort })}
-            handleRequestSetView={(view) => this.setState({ view: view })}
-            handleSearchInput={(val) => this.setState({ searchVal: val })}
-            searchVal={this.state.searchVal}
-            classNames={controlBarClasses}
-          />
-          {
-            hasCatBar &&
-            <div className={styles.catBarOuter}>
-              <div 
-                className={styles.catBar}
-                onClick={() => this.setState({ categoryId: null })}
-              >
-                <i 
-                  className='fa fa-angle-left fa-2x' 
-                />
-                <span>{this.categoryName()}</span>
-              </div>
+          <div className={pastBannerClasses.join(' ')}>
+            <div className={styles.bars} style={{top: this.state.catGrpsTop}}>
+              <ControlBar 
+                view={this.state.view} 
+                sorts={sorts}
+                sort={this.state.sort}
+                handleSortSelect={(sort) => this.setState({ sort: sort })}
+                handleRequestSetView={(view) => this.setState({ view: view })}
+                handleSearchInput={(val) => this.setState({ searchVal: val })}
+                searchVal={this.state.searchVal}
+                classNames={controlBarClasses}
+              />
+              {
+                hasCatBar &&
+                <div className={catBarClasses.join(' ')}>
+                  <div 
+                    className={styles.catBar}
+                    onClick={() => this.setState({ categoryId: null })}
+                  >
+                    <i 
+                      className='fa fa-angle-left fa-2x' 
+                    />
+                    <span>{this.categoryName()}</span>
+                  </div>
+                </div>
+              }
             </div>
-          }
-          <div className={mainContentClasses.join(' ')}>{this.mainContent()}</div>
+            <div 
+              className={styles.mainContent}
+              ref={(node) => this.mainContentNode = node}
+            >{this.mainContent()}</div>
+          </div>
         </main>
       </div>
     );

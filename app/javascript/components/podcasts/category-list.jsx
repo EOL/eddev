@@ -2,14 +2,28 @@ import React from 'react'
 import styles from 'stylesheets/podcasts'
 
 function CategoryList(props) {
-  let classNames = [styles.catGrps];
+  let classNames = [styles.catGrps]
+    , options = {
+        ref: props.ref
+      }
+    ;
 
   if (props.className) {
     classNames.push(props.className);
   }
 
+  options.className = classNames.join(' ');
+
+  if (props.top != null) {
+    options.style = { top: props.top };
+  }
+
+  if (props.handleRef) {
+    options.ref = props.handleRef;
+  }
+
   return (
-    <ul className={classNames.join(' ')}>
+    <ul {...options}>
       {
         props.groups.map((group) => {
           const groupOpen = props.openGroup === group

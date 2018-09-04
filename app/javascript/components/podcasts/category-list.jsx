@@ -4,7 +4,8 @@ import styles from 'stylesheets/podcasts'
 function CategoryList(props) {
   let classNames = [styles.catGrps]
     , options = {
-        ref: props.ref
+        ref: props.handleRef,
+        style: props.style,
       }
     ;
 
@@ -13,14 +14,6 @@ function CategoryList(props) {
   }
 
   options.className = classNames.join(' ');
-
-  if (props.top != null) {
-    options.style = { top: props.top };
-  }
-
-  if (props.handleRef) {
-    options.ref = props.handleRef;
-  }
 
   return (
     <ul {...options}>

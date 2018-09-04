@@ -34,7 +34,7 @@ class Podcasts extends React.Component {
       searchVal: '',
       categoryId: null,
       sort: sorts[0],
-      catGrpsTop: 0,
+      catGrpsStyle: { position: 'relative' },
     };
   }
 
@@ -54,47 +54,42 @@ class Podcasts extends React.Component {
     let pastBanner
       , top
       , maxTop
+      , styles = {
+          position: 'relative',
+          top: 0
+        }
       ;
 
     if (
       this.bannerHeight == null || 
       !this.catGrpsSideNode || 
-      !this.mainContentNode
+      !this.mainContentNode ||
+      !this.podListNode ||
+      $(this.podListNode).height() < $(this.catGrpsSideNode).height()
     ) {
-      if (this.state.catGrpsTop !== 0) {
-        // This fixes the mobile category view -- otherwise, the bars are stuck whereever they were last
-        this.setState({
-          catGrpsTop: 0
-        });
-      }
-
+      this.setState({ catGrpsStyle: styles })
       return;
     }
 
     this.navbarHeight = this.navbarHeight || $('.js-navbar').outerHeight();
 
-    if (window.scrollY > this.bannerHeight) {
+    if (window.scrollY >= this.bannerHeight) {
       pastBanner = true;
     } else {
       pastBanner = false;
     }
 
     if (pastBanner) {
-      top = window.scrollY - this.bannerHeight;
+      styles.top = window.scrollY - this.bannerHeight;
       maxTop = $(this.mainContentNode).height() - $(this.catGrpsSideNode).height();
 
-      if ($(this.catGrpsSideNode).css('display') !== 'none' && maxTop < top) {
-        top = maxTop;
+      if ($(this.catGrpsSideNode).css('display') !== 'none' && maxTop < styles.top) {
+        styles.top = maxTop;
       }
-    } else {
-      top = 0;
-    }
 
-    if (this.state.catGrpsTop !== top) {
-      this.setState({
-        catGrpsTop: top
-      });
+      styles.position = 'absolute'
     }
+    this.setState({ catGrpsStyle: styles })
   }
 
   searchFilteredPodcasts = () => {
@@ -126,13 +121,9 @@ class Podcasts extends React.Component {
     return (
       <div>
         <div className={styles.sidebar}>
-          {this.catList(
-            styles.catGrpsSide,
-            this.state.catGrpsTop,
-            (node) => { this.catGrpsSideNode = node }
-          )}
+          {this.catList('sidebar')}
         </div>
-        <ul className={styles.podList}>
+        <ul className={styles.podList} ref={(node) => this.podListNode = node}>
           {
             this.searchFilteredPodcasts().map((podcast) => {
               const fullTitle = `${podcast.title}, ${podcast.sciName}`;
@@ -187,18 +178,23 @@ class Podcasts extends React.Component {
     }, () => $(document).scroll());
   }
 
-  catList = (className, top, handleRef) => {
+  catList = (placement) => {
+    const props = {
+      groups: this.props.categoryGroups,
+      openGroup: this.state.openGroup,
+      handleRequestOpenGroup: this.handleRequestOpenGroup,
+      categoriesById: this.props.categoriesById,
+      handleCategorySelect: this.handleCategorySelect,
+    }
+
+    if (placement === 'sidebar') {
+      props.className = styles.catGrpsSide;
+      props.style = this.state.catGrpsStyle;
+      props.handleRef = (node) => { this.catGrpsSideNode = node };
+    }
+
     return (
-      <CategoryList
-        groups={this.props.categoryGroups}
-        openGroup={this.state.openGroup}
-        handleRequestOpenGroup={this.handleRequestOpenGroup}
-        categoriesById={this.props.categoriesById}
-        handleCategorySelect={this.handleCategorySelect}
-        className={className}
-        top={top}
-        handleRef={handleRef}
-      />
+      <CategoryList {...props} />
     );
   }
 
@@ -218,16 +214,20 @@ class Podcasts extends React.Component {
         , catBarClasses = [styles.catBarOuter]
         ;
 
-    if (hasCatBar) {
-      pastBannerClasses.push(styles.pastBannerCatBar);
+    if (this.state.catGrpsStyle.position === 'absolute') {
+      if (hasCatBar) {
+        pastBannerClasses.push(styles.pastBannerTwoBars);
+      } else {
+        pastBannerClasses.push(styles.pastBannerOneBar);
+      }
     }
 
     return (
       <div>
         <main role="main" className={`${styles.main} is-nopad-bot`}>
           <div className={styles.banner} ref={this.handleBannerRef} />
-          <div className={pastBannerClasses.join(' ')}>
-            <div className={styles.bars} style={{top: this.state.catGrpsTop}}>
+          <div className={pastBannerClasses.join(' ')} ref={(node) => this.mainContentNode = node}>
+            <div className={styles.bars} style={this.state.catGrpsStyle}>
               <ControlBar 
                 view={this.state.view} 
                 sorts={sorts}
@@ -255,7 +255,6 @@ class Podcasts extends React.Component {
             </div>
             <div 
               className={styles.mainContent}
-              ref={(node) => this.mainContentNode = node}
             >{this.mainContent()}</div>
           </div>
         </main>

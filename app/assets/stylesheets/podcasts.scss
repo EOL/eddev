@@ -190,11 +190,15 @@ $txt-blue: #4a97ca;
 }
 
 .pastBanner {
-  padding-top: $ctrl-bar-height;
+  min-height: 574px;
   position: relative;
 }
 
-.pastBannerCatBar {
+.pastBannerOneBar {
+  padding-top: $ctrl-bar-height;
+}
+
+.pastBannerTwoBars {
   padding-top: $ctrl-bar-height * 2;
 }
 

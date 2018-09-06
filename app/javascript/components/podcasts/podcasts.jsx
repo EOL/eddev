@@ -55,47 +55,43 @@ class Podcasts extends React.Component {
       , top
       , maxTop
       , styles = {
-          position: 'relative',
-          top: 0
+          position: 'relative'
         }
       ;
 
     if (
-      this.bannerHeight == null || 
-      !this.mainContentNode ||
-      (
+      this.bannerHeight != null &&
+      this.mainContentNode &&
+      !(
         this.podListNode && 
         this.catGrpsSideNode && 
         $(this.podListNode).height() < $(this.catGrpsSideNode).height()
       )
     ) {
-      this.setState({ catGrpsStyle: styles })
-      return;
-    }
+      this.navbarHeight = this.navbarHeight || $('.js-navbar').outerHeight();
 
-    this.navbarHeight = this.navbarHeight || $('.js-navbar').outerHeight();
-
-    if (window.scrollY >= this.bannerHeight) {
-      pastBanner = true;
-    } else {
-      pastBanner = false;
-    }
-
-    if (pastBanner) {
-      styles.top = window.scrollY - this.bannerHeight;
-      
-      if (this.catGrpsSideNode) {
-        maxTop = $(this.mainContentNode).height() - $(this.catGrpsSideNode).height();
-
-        if (
-          $(this.catGrpsSideNode).css('display') !== 'none' && 
-          maxTop < styles.top
-        ) {
-          styles.top = maxTop;
-        }
+      if (window.scrollY >= this.bannerHeight) {
+        pastBanner = true;
+      } else {
+        pastBanner = false;
       }
 
-      styles.position = 'absolute'
+      if (pastBanner) {
+        styles.top = window.scrollY - this.bannerHeight;
+        
+        if (this.catGrpsSideNode) {
+          maxTop = $(this.mainContentNode).height() - $(this.catGrpsSideNode).height();
+
+          if (
+            $(this.catGrpsSideNode).css('display') !== 'none' && 
+            maxTop < styles.top
+          ) {
+            styles.top = maxTop;
+          }
+        }
+
+        styles.position = 'absolute'
+      }
     }
 
     this.setState({ catGrpsStyle: styles })

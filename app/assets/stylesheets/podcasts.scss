@@ -127,15 +127,27 @@ $txt-blue: #4a97ca;
 
 .sidebar {
   display: none;
-  position: relative;
   width: 216px;
   vertical-align: top;
 }
 
 .catGrpsSide {
+  padding: 0 3px;
+  width: 216px;
+}
+
+.catGrpsSideFix {
+  position: fixed;
+  top: $ctrl-bar-height + $topbar-height-px * 1px;
+}
+
+.catGrpsSideFixTwoBars {
+  top: $ctrl-bar-height * 2 + $topbar-height-px * 1px;
+}
+
+.catGrpsSideAbs {
   position: absolute;
-  left: 3px;
-  width: 210px;
+  bottom: 0;
 }
 
 .catGrp {
@@ -202,10 +214,24 @@ $txt-blue: #4a97ca;
 }
 
 .bars {
-  position: absolute;
-  top: 0;
   width: 100%;
   z-index: 4;
+}
+
+.barsRel {
+  position: relative;
+}
+
+.barsFix {
+  position: fixed;
+  left: 0;
+  top: $topbar-height-px * 1px;
+}
+
+.barsAbs {
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }
 
 .catBarOuter {
@@ -228,6 +254,7 @@ $txt-blue: #4a97ca;
   font-weight: $semibold;
   height: 100%;
   max-width: $main-col-width-px;
+  margin: 0 auto;
   position: relative;
   text-align: center;
   width: 100%;

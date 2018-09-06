@@ -35,6 +35,7 @@ class Podcasts extends React.Component {
       categoryId: null,
       sort: sorts[0],
       catGrpsStyle: { position: 'relative' },
+      scrollPos: 'preBanner',
     };
   }
 
@@ -51,6 +52,8 @@ class Podcasts extends React.Component {
   }
 
   handleScroll = (e) => {
+    this.updateScrollPos();
+    /*
     let pastBanner
       , top
       , maxTop
@@ -95,6 +98,33 @@ class Podcasts extends React.Component {
     }
 
     this.setState({ catGrpsStyle: styles })
+    */
+  }
+
+  updateScrollPos = () => {
+    let scrollPos = 'preBanner';
+
+    if (this.bannerHeight != null && window.scrollY >= this.bannerHeight) {
+      let maxScroll = $(this.mainContentNode).height() + this.bannerHeight;
+      scrollPos = 'postBanner';
+
+      if (
+        this.catGrpsSideNode && 
+        $(this.catGrpsSideNode).css('display') !== 'none'
+      ) {
+        maxScroll -= $(this.catGrpsSideNode).height();
+      }
+
+      if (window.scrollY >= maxScroll) {
+        scrollPos = 'postBannerMax';
+      }
+    }   
+
+    if (scrollPos !== this.state.scrollPos) {
+      this.setState({
+        scrollPos: scrollPos
+      });
+    }
   }
 
   searchFilteredPodcasts = () => {
@@ -193,8 +223,7 @@ class Podcasts extends React.Component {
     }
 
     if (placement === 'sidebar') {
-      props.className = styles.catGrpsSide;
-      props.style = this.state.catGrpsStyle;
+      props.className = this.catGrpsSideClassName();
       props.handleRef = (node) => { this.catGrpsSideNode = node };
     }
 
@@ -211,15 +240,63 @@ class Podcasts extends React.Component {
     }
   }
 
+  barsClassName = () => {
+    const className = styles.bars;
+    let otherClassName;
+
+    if (this.state.scrollPos === 'preBanner') {
+      otherClassName = styles.barsRel;
+    } else if (this.state.scrollPos === 'postBanner') {
+      otherClassName = styles.barsFix;
+    } else {
+      otherClassName = styles.barsAbs;
+    }
+
+    return `${className} ${otherClassName}`
+  }
+
+  barsStyle = () => {
+    const style = {};
+
+    if (
+      this.state.scrollPos === 'postBannerMax' &&
+      this.catGrpsSideNode &&
+      $(this.catGrpsSideNode).css('display') !== 'none'
+    ) {
+      style.bottom = $(this.catGrpsSideNode).outerHeight();
+    }
+
+    return style;
+  }
+
+  catGrpsSideClassName = () => {
+    const classes = [styles.catGrps, styles.catGrpsSide];
+
+    if (this.state.scrollPos === 'postBanner') {
+      classes.push(styles.catGrpsSideFix);
+
+      if (this.hasCatBar()) {
+        classes.push(styles.catGrpsSideFixTwoBars);
+      }
+    } else if (this.state.scrollPos === 'postBannerMax') {
+      classes.push(styles.catGrpsSideAbs);
+    }
+
+    return classes.join(' ');
+  }
+
+  hasCatBar = () => {
+    return this.state.categoryId !== null && this.state.view !== 'category';
+  }
+
   render() {
     const hasCatBar = this.state.categoryId !== null && this.state.view !== 'category'
         , pastBannerClasses = [styles.pastBanner]
         , mainContentClasses = [styles.mainContent]
-        , controlBarClasses = [styles.ctrlBarOuter]
         , catBarClasses = [styles.catBarOuter]
         ;
 
-    if (this.state.catGrpsStyle.position === 'absolute') {
+    if (this.state.scrollPos !== 'preBanner') {
       if (hasCatBar) {
         pastBannerClasses.push(styles.pastBannerTwoBars);
       } else {
@@ -232,7 +309,7 @@ class Podcasts extends React.Component {
         <main role="main" className={`${styles.main} is-nopad-bot`}>
           <div className={styles.banner} ref={this.handleBannerRef} />
           <div className={pastBannerClasses.join(' ')} ref={(node) => this.mainContentNode = node}>
-            <div className={styles.bars} style={this.state.catGrpsStyle}>
+            <div className={this.barsClassName()} style={this.barsStyle()}>
               <ControlBar 
                 view={this.state.view} 
                 sorts={sorts}
@@ -241,7 +318,7 @@ class Podcasts extends React.Component {
                 handleRequestSetView={(view) => this.setState({ view: view })}
                 handleSearchInput={(val) => this.setState({ searchVal: val })}
                 searchVal={this.state.searchVal}
-                classNames={controlBarClasses}
+                classNames={[styles.ctrlBarOuter]}
               />
               {
                 hasCatBar &&

@@ -104,7 +104,10 @@ class Podcasts extends React.Component {
   updateScrollPos = () => {
     let scrollPos = 'preBanner';
 
-    if (this.bannerHeight != null && window.scrollY >= this.bannerHeight) {
+    if (
+      !(this.podListNode && $(this.podListNode).height() < $(this.catGrpsSideNode).height()) &&
+      (this.bannerHeight != null && window.scrollY >= this.bannerHeight)
+    ) {
       let maxScroll = $(this.mainContentNode).height() + this.bannerHeight;
       scrollPos = 'postBanner';
 

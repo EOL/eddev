@@ -40,81 +40,41 @@ class Podcasts extends React.Component {
   }
 
   componentDidMount() {
-    $(document).scroll(this.handleScroll);
+    $(document).scroll(this.updateScrollPos);
   }
 
   componentWillUnmount() {
-    $(document).off('scroll', this.handleScroll);
+    $(document).off('scroll', this.updateScrollPos);
   }
 
   handleBannerRef = (node) => {
     this.bannerHeight = $(node).outerHeight();
   }
 
-  handleScroll = (e) => {
-    this.updateScrollPos();
-    /*
-    let pastBanner
-      , top
-      , maxTop
-      , styles = {
-          position: 'relative'
-        }
-      ;
-
-    if (
-      this.bannerHeight != null &&
-      this.mainContentNode &&
-      !(
-        this.podListNode && 
-        this.catGrpsSideNode && 
-        $(this.podListNode).height() < $(this.catGrpsSideNode).height()
-      )
-    ) {
-      this.navbarHeight = this.navbarHeight || $('.js-navbar').outerHeight();
-
-      if (window.scrollY >= this.bannerHeight) {
-        pastBanner = true;
-      } else {
-        pastBanner = false;
-      }
-
-      if (pastBanner) {
-        styles.top = window.scrollY - this.bannerHeight;
-        
-        if (this.catGrpsSideNode) {
-          maxTop = $(this.mainContentNode).height() - $(this.catGrpsSideNode).height();
-
-          if (
-            $(this.catGrpsSideNode).css('display') !== 'none' && 
-            maxTop < styles.top
-          ) {
-            styles.top = maxTop;
-          }
-        }
-
-        styles.position = 'absolute'
-      }
-    }
-
-    this.setState({ catGrpsStyle: styles })
-    */
+  hasCatGrpsSideNode = () => {
+    return this.catGrpsSideNode && $(this.catGrpsSideNode).css('display') !== 'none';
   }
 
   updateScrollPos = () => {
+    const hasCatGrpsSideNode = this.hasCatGrpsSideNode();
+
     let scrollPos = 'preBanner';
 
     if (
-      !(this.podListNode && $(this.podListNode).height() < $(this.catGrpsSideNode).height()) &&
-      (this.bannerHeight != null && window.scrollY >= this.bannerHeight)
+      !(
+        // Special case where podcast list is shorter than sidebar -- keep pre-banner position
+        hasCatGrpsSideNode &&
+        this.podListNode && 
+        $(this.podListNode).height() < $(this.catGrpsSideNode).height()
+      ) &&
+      this.bannerHeight != null && 
+      window.scrollY >= this.bannerHeight &&
+      this.mainContentNode
     ) {
       let maxScroll = $(this.mainContentNode).height() + this.bannerHeight;
       scrollPos = 'postBanner';
 
-      if (
-        this.catGrpsSideNode && 
-        $(this.catGrpsSideNode).css('display') !== 'none'
-      ) {
+      if (hasCatGrpsSideNode) {
         maxScroll -= $(this.catGrpsSideNode).height();
       }
 
@@ -263,8 +223,7 @@ class Podcasts extends React.Component {
 
     if (
       this.state.scrollPos === 'postBannerMax' &&
-      this.catGrpsSideNode &&
-      $(this.catGrpsSideNode).css('display') !== 'none'
+      this.hasCatGrpsSideNode()
     ) {
       style.bottom = $(this.catGrpsSideNode).outerHeight();
     }
@@ -273,7 +232,7 @@ class Podcasts extends React.Component {
   }
 
   catGrpsSideClassName = () => {
-    const classes = [styles.catGrps, styles.catGrpsSide];
+    const classes = [styles.catGrpsSide];
 
     if (this.state.scrollPos === 'postBanner') {
       classes.push(styles.catGrpsSideFix);

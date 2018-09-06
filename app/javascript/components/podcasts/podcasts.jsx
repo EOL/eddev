@@ -62,10 +62,12 @@ class Podcasts extends React.Component {
 
     if (
       this.bannerHeight == null || 
-      !this.catGrpsSideNode || 
       !this.mainContentNode ||
-      !this.podListNode ||
-      $(this.podListNode).height() < $(this.catGrpsSideNode).height()
+      (
+        this.podListNode && 
+        this.catGrpsSideNode && 
+        $(this.podListNode).height() < $(this.catGrpsSideNode).height()
+      )
     ) {
       this.setState({ catGrpsStyle: styles })
       return;
@@ -81,14 +83,21 @@ class Podcasts extends React.Component {
 
     if (pastBanner) {
       styles.top = window.scrollY - this.bannerHeight;
-      maxTop = $(this.mainContentNode).height() - $(this.catGrpsSideNode).height();
+      
+      if (this.catGrpsSideNode) {
+        maxTop = $(this.mainContentNode).height() - $(this.catGrpsSideNode).height();
 
-      if ($(this.catGrpsSideNode).css('display') !== 'none' && maxTop < styles.top) {
-        styles.top = maxTop;
+        if (
+          $(this.catGrpsSideNode).css('display') !== 'none' && 
+          maxTop < styles.top
+        ) {
+          styles.top = maxTop;
+        }
       }
 
       styles.position = 'absolute'
     }
+
     this.setState({ catGrpsStyle: styles })
   }
 

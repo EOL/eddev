@@ -60,5 +60,8 @@ module Eddev
 
     # build i18n-js translation files (configured in i18n-js.yml)
     config.middleware.use I18n::JS::Middleware
+
+    # Logging
+    config.log_tags = [:request_id]
   end
 end

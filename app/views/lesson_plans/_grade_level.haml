@@ -1,0 +1,7 @@
+.grade-level{class: local_assigns.include?(:top_class) ? top_class : nil}
+  .grade-level-bar{class: bar_class, 'data-grade-id': category_id }
+    %span= name
+    %i{:class => "fa fa-chevron-down chevron", "aria-hidden" => true}
+  %ul.lesson-plan-list
+    - lessons.each_with_index do |lesson, index|
+      = render "regular", :lesson => lesson, :index => index, :total => lessons.length, :category => category_id

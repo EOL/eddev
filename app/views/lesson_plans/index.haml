@@ -24,27 +24,10 @@
   - grade_1_lessons = @grade_levels.second.lesson_plans
   - grade_2_lessons = @grade_levels.third.lesson_plans
 
-  .grade-level
-    #GradeLevelMenu0.grade-level-bar.grade-level-0{:'data-grade-id' => 0}
-      %span= @grade_levels.first.localized_name
-      %i{:class => "fa fa-chevron-down chevron", "aria-hidden" => true}
-    %ul.lesson-plan-list
-      - grade_0_lessons.each_with_index do |lesson, index|
-        = render "regular", :lesson => lesson, :index => index, :total => grade_0_lessons.length, :category => 0
-  .grade-level
-    #GradeLevelMenu1.grade-level-bar.grade-level-1{:'data-grade-id' => 1}
-      %span= @grade_levels.second.localized_name
-      %i{:class => "fa fa-chevron-down chevron", "aria-hidden" => true}
-    %ul.lesson-plan-list
-      - grade_1_lessons.each_with_index do |lesson, index|
-        = render "regular", :lesson => lesson, :index => index, :total => grade_1_lessons.length, :category => 1
-  .grade-level.last
-    #GradeLevelMenu2.grade-level-bar.grade-level-2{:'data-grade-id' => 2}
-      %span= @grade_levels.third.localized_name
-      %i{:class => "fa fa-chevron-down chevron", "aria-hidden" => true}
-    %ul.lesson-plan-list
-      - grade_2_lessons.each_with_index do |lesson, index|
-        = render "regular", :lesson => lesson, :index => index, :total => grade_2_lessons.length, :category => 2
+  = render partial: "grade_level", locals: { bar_class: "grade-level-0", name: @grade_levels.first.localized_name, lessons: grade_0_lessons, category_id: 0 }
+  = render partial: "grade_level", locals: { bar_class: "grade-level-1", name: @grade_levels.second.localized_name, lessons: grade_1_lessons, category_id: 1 }
+  = render partial: "grade_level", locals: { top_class: "last", bar_class: "grade-level-2", name: @grade_levels.third.localized_name, lessons: grade_2_lessons, category_id: 2 }
+
 = render  "shared/image_credits", 
   :images => [{ :title => "Grass",
   :author => "Moyan Brenn",

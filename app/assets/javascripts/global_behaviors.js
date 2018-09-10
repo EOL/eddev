@@ -1,66 +1,6 @@
 (function() {
   var navMobileWidth = 648; // XXX: duplicated in CSS
 
-  function slideMenuOpen() {
-    var $bars = $('#BarsIcon'),
-        $titleContainer = $('#TitleContainer'),
-        $slideMenu = $('#SlideMenu'),
-        $topbar = $('#Topbar'),
-        topbarWidth = $topbar.outerWidth(),
-        slideMenuWidth = $slideMenu.outerWidth(),
-        targetWidth = 
-          ((topbarWidth - slideMenuWidth) / topbarWidth) * 100 + '%';
-    
-    $bars.off('click');
-
-    $titleContainer.animate({
-      'width': targetWidth
-    },
-    function() {
-      $bars.click(slideMenuClose);
-    });
-  } 
-
-  function slideMenuClose() {
-    var $bars = $('#BarsIcon'),
-        $titleContainer = $('#TitleContainer');
-
-    $bars.off('click');
-
-    $titleContainer.animate({
-      'width': '100%'
-    }, 
-    function() {
-      $bars.click(slideMenuOpen);
-    });
-  }
-
-  function closeMenuIfNecessary() {
-    var transitionWidth = 525,
-        $bars = $('#BarsIcon');
-
-    if ($(window).width() > transitionWidth) {
-      $('#TitleContainer').css('width', '100%');
-      $bars.off('click');
-      $bars.click(slideMenuOpen);
-    }
-  }
-
-  function slideMenuOpen($page, $menuToggle) {
-    $page.animate({
-      left: -200
-    });
-
-    $page.off('click', slideMenuOpen);
-    $menuToggle.click(slideMenuClose);
-  }
-
-  function slideMenuClose($page, $menuToggle) {
-    $page.animate({
-      left: 0
-    });
-  }
-
   function setupSlideMenu() {
     var $page = $('#Page')
       , $toggle = $('.js-slide-menu-toggle')

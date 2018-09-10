@@ -1,6 +1,6 @@
 class LocalesController < ApplicationController
   def set_locale
-    locale = params[:set_locale]
+    locale = params.require(:set_locale)
 
     if logged_in_user
       if !logged_in_user.update(:locale => locale)

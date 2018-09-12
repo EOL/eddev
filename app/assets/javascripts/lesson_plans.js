@@ -9,10 +9,27 @@
     var $gradeLevel = $menu.closest('.grade-level')
       , $list = $gradeLevel.find('.lesson-plan-list')
       , $chevron = $menu.find('.chevron')
+      , $navbar
+      , $bar
+      , visible = $list.is(':visible')
       ;
 
+    if (visible) {
+      $navbar = $('.navbar');
+      $bar = $gradeLevel.find('.grade-level-bar-outer');
+      window.scrollTo(0, $list.offset().top + $navbar.height() + $bar.height());
+    }
+
     $list.slideToggle({
-      complete: callback  
+      complete: function() {
+        if (visible) {
+          setGradeLevelClass($gradeLevel, null);
+        }
+
+        if (callback) {
+          callback();
+        }
+      }
     });
 
     setGradeLevelClass($gradeLevel, null);

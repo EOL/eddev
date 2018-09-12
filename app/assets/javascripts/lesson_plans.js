@@ -1,28 +1,21 @@
 (function() {
   // Click handler for grade level bars. Shows all lesson plans for grade level.
   function gradeLevelClicked() {
-    var $this = $(this)
-        realBar = $this,
-        lessonPlansHdr = null;
-
-    if ($this.hasClass('fixed')) {
-      realBar = $('#GradeLevelMenu' + $this.data('grade-id'));
-      $("body").scrollTop(realBar.offset().top);
-      $this.remove();
-    }
-
-    toggleGradeLevelMenu(realBar);
+    toggleGradeLevelMenu($(this));
   }
 
   // Show/hide lesson plans for grade level
   function toggleGradeLevelMenu($menu, callback) {
-    var $list = $menu.next('.lesson-plan-list'),
-        $chevron = $menu.find('.chevron');
+    var $gradeLevel = $menu.closest('.grade-level')
+      , $list = $gradeLevel.find('.lesson-plan-list')
+      , $chevron = $menu.find('.chevron')
+      ;
 
     $list.slideToggle({
       complete: callback  
     });
-    $menu.toggleClass('open');
+
+    setGradeLevelClass($gradeLevel, null);
 
     $chevron.toggleClass('fa-chevron-down');
     $chevron.toggleClass('fa-chevron-up');
@@ -88,69 +81,62 @@
     }
   }
 
-
   // Scroll handler, enables persistent grade level headers
   function updateHeadersOnScroll() {
-    var windowScroll = $(window).scrollTop(),
-        $bars = $('.grade-level-bar.open').filter(function(i, bar) {
-            return !$(bar).hasClass('fixed'); 
-          }),
-        $navbar = $('.navbar'),
-        navHeight = $navbar.outerHeight()
+    var windowScroll = $(window).scrollTop()
+      , $lessonPlanLists = $('.lesson-plan-list:visible')
+      , $navbar = $('.navbar')
+      , navbarHeight = $navbar.height()
       ;
 
-    // Add new fixed bar if necessary
-    $bars.sort(function(a, b) {
-      return $(b).offset().top - $(a).offset().top; 
-    });
-
-    $bars.each(function(i, bar) {
-      var $bar = $(bar),
-          $lastLp = $bar.next('.lesson-plan-list').find('.lesson-plan').last(),
-          lastLpTop = $lastLp.offset().top,
-          barHeight = $bar.height(),
-          fixedBarTop = lastLpTop - windowScroll - barHeight,
-          $fixedBar = $('.grade-level-' + $bar.data('grade-id') + '.fixed')
+    $lessonPlanLists.each(function(i, list) {
+      var $list = $(list)
+        , $gradeLevel = $list.closest('.grade-level')
+        , $barOuter = $gradeLevel.find('.grade-level-bar-outer')
+        , $bar = $gradeLevel.find('.grade-level-bar')
+        , barHeight = $bar.height()
+        , listTop = $list.offset().top
+        , $lastLp = $list.find('.lesson-plan').last()
+        , lastLpTop = $lastLp.offset().top
+        , lastLpHeight
         ;
-
-      if (fixedBarTop > navHeight) {
-        fixedBarTop = navHeight 
-      }
-
-      if ($bar.offset().top <= windowScroll + navHeight && fixedBarTop + barHeight >= navHeight) {
-        if (!$fixedBar.length) {
-          $fixedBar = $bar.clone();
-          $fixedBar.addClass('fixed');
-          $fixedBar.attr('id', null);
-          $fixedBar.click(gradeLevelClicked);
-          resizeFixedBarHelper($fixedBar);
-          $("body").append($fixedBar);
+      if (
+        (
+          $gradeLevel.hasClass('grade-level-fixed-bar') || 
+          $gradeLevel.hasClass('grade-level-abs-bar') 
+        ) &&
+        listTop > windowScroll + navbarHeight // in this state there is top padding of barHeight
+      ) {
+        setGradeLevelClass($gradeLevel, null);
+      } else if (
+        lastLpTop <= windowScroll + navbarHeight + barHeight
+      ) {
+        if (!$gradeLevel.hasClass('grade-level-abs-bar')) {
+          lastLpHeight = $lastLp.outerHeight();
+          setGradeLevelClass($gradeLevel, 'grade-level-abs-bar')
+          $barOuter.css('bottom', lastLpHeight);
         }
-
-        $fixedBar.css('top', fixedBarTop);
-
-        return false;
-      } else if ($fixedBar.length) {
-        $fixedBar.remove();
-      }
+      } else if (
+        listTop <= windowScroll + navbarHeight + barHeight
+      ) {
+        if (!$gradeLevel.hasClass('grade-level-fixed-bar')) {
+          setGradeLevelClass($gradeLevel, 'grade-level-fixed-bar');
+        }
+      } 
     });
   }
 
-  // Resize persistent grade level header
-  function resizeFixedBarHelper($fixedBar) {
-    var width = $('.main-col').width(),
-        left = ($('body').width() - width) / 2;
-
-    $fixedBar.css('width', width);
-    $fixedBar.css('left', left);
-  }
-
-  // Resize active persistent grade level header(s) if exists
-  function resizeFixedBar() {
-    var $bar = $('.grade-level-bar.fixed');
-
-    if ($bar) {
-      resizeFixedBarHelper($bar);
+  function setGradeLevelClass($gradeLevel, klass) {
+    if (!klass || klass === 'grade-level-abs-bar') {
+      $gradeLevel.removeClass('grade-level-fixed-bar');
+    } 
+    
+    if (!klass || klass === 'grade-level-fixed-bar') {
+      $gradeLevel.removeClass('grade-level-abs-bar');
+    } 
+    
+    if (klass) {
+      $gradeLevel.addClass(klass);
     }
   }
 
@@ -160,6 +146,5 @@
     $('.lesson-plan.external a').click(updateStorage);
 
     $(window).scroll(updateHeadersOnScroll);
-    $(window).resize(resizeFixedBar);
   });
 })();

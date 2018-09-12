@@ -108,6 +108,7 @@ $lesson-plan-border-color: #aaaaaa;
 .grade-level-abs-bar {
   & > .grade-level-bar-outer {
     bottom: 0;
+    left: 0;
     position: absolute;
   }
 }

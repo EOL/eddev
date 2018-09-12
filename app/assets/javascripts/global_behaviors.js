@@ -21,6 +21,7 @@
           $menu.animate({
             right: 0
           }, { queue: false });
+          $('body').addClass('noscroll');
         }
       , slideMenuClose = function() {
           var $fixed = fixedElmtsForSlideMenu();
@@ -36,6 +37,7 @@
           $menu.animate({
             right: menuRight
           }, { queue: false });
+          $('body').removeClass('noscroll');
         }
       ;
 
@@ -50,6 +52,7 @@
         $menu.css({ right: menuRight });
         $toggle.off('click', slideMenuClose);
         $toggle.click(slideMenuOpen);
+        $('body').removeClass('noscroll');
       }
     });
   }

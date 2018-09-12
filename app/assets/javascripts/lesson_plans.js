@@ -131,7 +131,9 @@
         if (!$gradeLevel.hasClass('grade-level-abs-bar')) {
           lastLpHeight = $lastLp.outerHeight();
           setGradeLevelClass($gradeLevel, 'grade-level-abs-bar')
-          $barOuter.css('bottom', lastLpHeight);
+          $barOuter.css({
+            bottom: lastLpHeight
+          });
         }
       } else if (
         listTop <= windowScroll + navbarHeight + barHeight

@@ -87,6 +87,7 @@ en:
     index:
       intro_hdr: Google Earth Tours
       intro_p: EOL's Google Earth Tours give you a geographical view of the world's biodiversity. Using Google Earth's satellite imagery, these narrated video tours explore a range of topics such as migration and global research initiatives.
+      credits_html: "EOL Google Earth Tours were produced by Eduardo Garcia-Milagros, Ari Daniel Shapiro and <a href=\"http://atlantic.org\">Atlantic Public Media</a> in cooperation with the Encyclopedia of Life Learning + Education group located at the <a href=\"https://mcz.harvard.edu\">Harvard Museum of Comparative Zoology</a>. Narrated by Ari Daniel Shapiro. CC BY-NC"
       download_link_html: "<a href='%{url}'>Download the KMZ files for EOL Google Earth Tours</a>"
     titles:
       monarch_migration: Monarch Butterfly Migration

@@ -5,9 +5,10 @@
   - @tours.each do |tour|
     .tour
       %h2.tour-hdr= t("earth_tours.titles.#{tour.title_key}")
-      %p.resp-p= t("earth_tours.descriptions.#{tour.desc_key}") 
+      %p.resp-p.desc= t("earth_tours.descriptions.#{tour.desc_key}") 
       - if tour.extra_link_key
-        %p.resp-p
+        %p.resp-p.desc
           = link_to t("earth_tours.links.#{tour.extra_link_key}"), tour.extra_link_url
       .l-fluid-iframe
         %iframe{:width => 560, :height => 315, :src => tour.embed_url, :frameborder => 0, :allow => "autoplay; encrypted-media", :allowfullscreen => true}
+      = render "credits"

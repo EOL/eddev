@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_action :set_request_id
   before_action :set_locale
   before_action :store_user_sessions_referrer
 
@@ -99,6 +100,10 @@ class ApplicationController < ActionController::Base
           ))
         end
       end
+    end
+
+    def set_request_id
+      RequestId.set(request.request_id)
     end
 
     # Render standard 404 page

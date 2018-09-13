@@ -6,6 +6,8 @@ $grade-level-purple: #a366be;
 $grade-level-green: #7ab62d;
 $grade-level-red: #ce681a;
 
+$grade-level-bar-height: 34px;
+
 $flp-margin: 13;
 $flp-width: 225;
 
@@ -87,13 +89,44 @@ $lesson-plan-border-color: #aaaaaa;
   }
 }
 
+.grade-level-fixed-bar, .grade-level-abs-bar {
+  & > .lesson-plan-list {
+    padding-top: $grade-level-bar-height;
+  }
+}
+
+.grade-level-fixed-bar {
+  & > .grade-level-bar-outer {
+    left: 0;
+    padding: 0 $main-col-padding-pct;
+    position: fixed;
+    top: $topbar-height;
+    z-index: 2;
+  }
+}
+
+.grade-level-abs-bar {
+  & > .grade-level-bar-outer {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+  }
+}
+
+.grade-level-bar-outer {
+  z-index: 2;
+  width: 100%;
+}
+
 .grade-level-bar {
   color: $white;
   cursor: pointer;
   font-size: 18px;
   font-weight: $bold;
-  height: 34px;
-  line-height: 34px;
+  height: $grade-level-bar-height;
+  line-height: $grade-level-bar-height;
+  margin: 0 auto;
+  max-width: $main-col-width-px;
   position: relative;
   text-align: center;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
@@ -103,19 +136,12 @@ $lesson-plan-border-color: #aaaaaa;
     right: 10px;
     top: 8px;
   }
-
-  &.fixed {
-    position: fixed;
-    top: 0; 
-    z-index: 2;
-  }
 }
 
-.all-lesson-plans {
-  .grade-level {
-    clear: both;
-    margin-top: 10px;
-  }
+.grade-level {
+  clear: both;
+  margin-top: 10px;
+  position: relative;
 }
 
 .lesson-plan-list {

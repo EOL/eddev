@@ -30,7 +30,14 @@ import styles from 'stylesheets/card_maker/card_manager'
 
 const pollIntervalMillis = 1000
     , maxDescLength = 540
+    , specialCardOrder = {
+        'title': 0,
+        'desc': 1,
+        'vocab': 2,
+        'key': 3,
+      }
     ;
+
 
 class CardManager extends React.Component {
   constructor(props) {
@@ -306,11 +313,15 @@ class CardManager extends React.Component {
         }
 
         if (a.templateName === 'trait' && b.templateName !== 'trait') {
-          return -1;
+          return (this.regDeckSelected() ? 1 : -1);
         }
 
         if (a.templateName !== 'trait' && b.templateName === 'trait') {
-          return 1;
+          return (this.regDeckSelected() ? -1 : 1);
+        }
+
+        if (a.templateName !== 'trait' && b.templateName !== 'trait') {
+          return (specialCardOrder[a.templateName] || -1) - (specialCardOrder[b.templateName] || -1);
         }
       }
 
@@ -321,6 +332,11 @@ class CardManager extends React.Component {
       resources: resources,
       resourceType: resourceType,
     };
+  }
+
+  regDeckSelected = () => {
+    return this.props.selectedDeck !== this.props.allCardsDeck && 
+      this.props.selectedDeck !== this.props.unassignedCardsDeck;
   }
 
   searchFilterResources = (resources) => {

@@ -5,6 +5,7 @@ $main-col-width: 939;
 $main-col-width-px: $main-col-width * 1px;
 $main-col-padding: 12;
 $main-col-with-padding-width: $main-col-width + 2 * $main-col-padding;
+$main-col-padding-pct: percentage($main-col-padding / ($main-col-width + 2 * $main-col-padding));
 $topbar-height-px: 39;
 $topbar-height: $topbar-height-px / $em * 1em;
 $mobile-topbar-height: 61 / $em * 1em;
@@ -46,7 +47,7 @@ $light: 300;
 @mixin main-col-horiz {
   margin: 0 auto;
   max-width: $main-col-width / $em * 1em;
-  padding: 0 percentage($main-col-padding / ($main-col-width + 2 * $main-col-padding));
+  padding: 0 $main-col-padding-pct;
 }
 
 @mixin standard-link {

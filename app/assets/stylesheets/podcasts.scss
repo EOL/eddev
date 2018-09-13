@@ -132,13 +132,13 @@ $txt-blue: #4a97ca;
 
 .sidebar {
   display: none;
-  width: 216px;
+  width: 224px;
   vertical-align: top;
 }
 
 .catGrpsSide {
   padding: 0 3px;
-  width: 216px;
+  width: 100%;
 }
 
 .catGrpsSideFix {
@@ -158,6 +158,13 @@ $txt-blue: #4a97ca;
 .catGrp {
   margin-top: 2px;
   width: 100%;
+}
+
+.catGrpIcon {
+  left: 9px;
+  position: absolute;
+  top: 7px;
+  width: 32px;
 }
 
 .catGrpName {
@@ -269,6 +276,16 @@ $txt-blue: #4a97ca;
     left: 22px;
     position: absolute;
     top: 8px;
+  }
+}
+
+.catBarCatGrp {
+  position: absolute; 
+  right: 20px;
+  top: 9px;
+
+  & > img {
+    height: 36px;
   }
 }
 

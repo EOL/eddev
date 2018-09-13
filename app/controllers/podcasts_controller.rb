@@ -24,14 +24,15 @@ class PodcastsController < ApplicationController
     end
 
     @categories_by_id = PodcastCategory.all.map do |c|
-      [c.id, { name: c.name, desc: c.desc }]
+      [c.id, { name: c.name, desc: c.desc, groupId: c.group.id }]
     end.to_h
 
     @category_groups = PodcastCategoryGroup.all.map do |g|
       {
         name: g.name,
         categoryIds: g.categories.map { |c| c.id },
-        id: g.id
+        id: g.id,
+        iconPath: view_context.image_path("podcasts/icons/#{g.icon_file_name}")
       }
     end
   end

@@ -37,6 +37,7 @@ function CategoryList(props) {
                 }
               >
                 <span>{group.name}</span>
+                <img className={styles.catGrpIcon} src={group.iconPath} />
                 <i className={`${styles.catGrpAngle} fa ${angleClass} fa-lg`} />
               </div>
               {

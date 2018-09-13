@@ -123,6 +123,14 @@ class Podcasts extends React.Component {
       ;
   }
 
+  curCategoryGroup = () => {
+    const cat = this.curCategory();
+
+    return cat === null ? null : this.props.categoryGroups.find((group) => {
+      return group.id === cat.groupId
+    });
+  }
+
   podList = () => {
     var elmts = []
       , curCategory = this.curCategory()
@@ -315,6 +323,9 @@ class Podcasts extends React.Component {
                     <i 
                       className='fa fa-angle-left fa-2x' 
                     />
+                    <div className={styles.catBarCatGrp}>
+                      <img className={styles.catBarCatGrpIcon} src={this.curCategoryGroup().iconPath} />
+                    </div>
                     <span>{this.categoryName()}</span>
                   </div>
                 </div>

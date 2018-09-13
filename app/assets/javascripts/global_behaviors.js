@@ -1,110 +1,65 @@
 (function() {
   var navMobileWidth = 648; // XXX: duplicated in CSS
 
-  function slideMenuOpen() {
-    var $bars = $('#BarsIcon'),
-        $titleContainer = $('#TitleContainer'),
-        $slideMenu = $('#SlideMenu'),
-        $topbar = $('#Topbar'),
-        topbarWidth = $topbar.outerWidth(),
-        slideMenuWidth = $slideMenu.outerWidth(),
-        targetWidth = 
-          ((topbarWidth - slideMenuWidth) / topbarWidth) * 100 + '%';
-    
-    $bars.off('click');
-
-    $titleContainer.animate({
-      'width': targetWidth
-    },
-    function() {
-      $bars.click(slideMenuClose);
-    });
-  } 
-
-  function slideMenuClose() {
-    var $bars = $('#BarsIcon'),
-        $titleContainer = $('#TitleContainer');
-
-    $bars.off('click');
-
-    $titleContainer.animate({
-      'width': '100%'
-    }, 
-    function() {
-      $bars.click(slideMenuOpen);
-    });
-  }
-
-  function closeMenuIfNecessary() {
-    var transitionWidth = 525,
-        $bars = $('#BarsIcon');
-
-    if ($(window).width() > transitionWidth) {
-      $('#TitleContainer').css('width', '100%');
-      $bars.off('click');
-      $bars.click(slideMenuOpen);
-    }
-  }
-
-  function slideMenuOpen($page, $menuToggle) {
-    $page.animate({
-      left: -200
-    });
-
-    $page.off('click', slideMenuOpen);
-    $menuToggle.click(slideMenuClose);
-  }
-
-  function slideMenuClose($page, $menuToggle) {
-    $page.animate({
-      left: 0
-    });
-  }
-
   function setupSlideMenu() {
     var $page = $('#Page')
       , $toggle = $('.js-slide-menu-toggle')
-      , $navbar = $('.js-navbar')
       , $menu = $('.js-slide-menu')
       , menuWidth = $menu.outerWidth()
       , menuRight = -1 * menuWidth
       , slideMenuOpen = function() {
+          var $fixed = fixedElmtsForSlideMenu();
+
           $toggle.off('click', slideMenuOpen);
           $toggle.click(slideMenuClose);
           $page.animate({
             left: menuRight
           }, { queue: false });
-          $navbar.animate({
+          $fixed.animate({
             left: menuRight
           }, { queue: false });
           $menu.animate({
             right: 0
           }, { queue: false });
+          $('body').addClass('noscroll');
         }
       , slideMenuClose = function() {
+          var $fixed = fixedElmtsForSlideMenu();
+
           $toggle.off('click', slideMenuClose);
           $toggle.click(slideMenuOpen);
           $page.animate({
             left: 0
           }, { queue: false });
-          $navbar.animate({
+          $fixed.animate({
             left: 0
           }, { queue: false });
           $menu.animate({
             right: menuRight
           }, { queue: false });
+          $('body').removeClass('noscroll');
         }
       ;
 
     $toggle.click(slideMenuOpen);
+
     $(window).resize(function() {
       if ($(window).width() > navMobileWidth) {
+        var $fixed = fixedElmtsForSlideMenu();
+
         $page.css({ left: 0 });
-        $navbar.css({ left: 0 });
+        $fixed.css({ left: 0 });
         $menu.css({ right: menuRight });
         $toggle.off('click', slideMenuClose);
         $toggle.click(slideMenuOpen);
+        $('body').removeClass('noscroll');
       }
+    });
+  }
+
+  function fixedElmtsForSlideMenu() {
+    return $('.js-fixed').filter(function() {
+      return $(this).css('position') === 'fixed';
     });
   }
 

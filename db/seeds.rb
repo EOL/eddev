@@ -801,107 +801,128 @@ PodcastCategory.create!([
   {
     name: "Classify",
     group: category_groups[:skills],
-    perm_id: 0
+    perm_id: 0,
+    desc: "Taxonomic classification refers to the organization of organisms by traits, such as size, color, or form, or by their degree of genetic relatedness."
   },
   {
     name: "Measure",
     group: category_groups[:skills],
-    perm_id: 1
+    perm_id: 1,
+    desc: "To determine the size, amount, or degree of an object by using an instrument or device marked in standard units or by comparing it with an object of known size."
   },
   {
     name: "Experiment",
     group: category_groups[:skills],
-    perm_id: 2
+    perm_id: 2,
+    desc: "A scientific procedure undertaken to make a discovery, test a hypothesis, or demonstrate a known fact."
   },
   {
     name: "Observe",
     group: category_groups[:skills],
-    perm_id: 3
+    perm_id: 3,
+    desc: "To notice or perceive something, such as a shape, movement, sound, occurrence or behavior, and to describe or record it in a drawing, with notes or with an instrument, such as a camera or sound recorder."
   },
   {
     name: "Behavior",
     group: category_groups[:themes],
-    perm_id: 4
+    perm_id: 4,
+    desc: "Behavior is a term used to describe the actions and reactions of an organism in relation to its environment."
   },
   {
     name: "Citizen Science",
     group: category_groups[:themes],
-    perm_id: 5
+    perm_id: 5,
+    desc: "Citizen science, often called Public Participation in Scientific Research (PPSR), refers to activities in which volunteers, such as students, the general public and enthusiasts partner with scientists to collect information and answer real-world questions."
   },
   {
     name: "Conservation",
     group: category_groups[:themes],
-    perm_id: 6
+    perm_id: 6,
+    desc: "Conservation is a term used to describe efforts to save, restore and protect species and natural resources such as biodiversity, soil and water from negative human impacts."
   },
   {
     name: "Ecology",
     group: category_groups[:themes],
-    perm_id: 7
+    perm_id: 7,
+    desc: "Ecology is the study of the interrelationships among plants, animals and other organisms and their interaction with all aspects of their natural environment."
   },
   {
     name: "Evolution",
     group: category_groups[:themes],
-    perm_id: 8
+    perm_id: 8,
+    desc: "Evolution is the change in the inherited traits of biological populations over successive generations."
   },
   {
     name: "Impacts",
     group: category_groups[:themes],
-    perm_id: 9
+    perm_id: 9,
+    desc: "Human impacts on biodiversity include habitat loss and climate change as well as the work scientists, students and the general public are doing to minimize these impacts."
   },
   {
     name: "Research",
     group: category_groups[:themes],
-    perm_id: 10
+    perm_id: 10,
+    desc: "Scientific research being done to both discover new species as well us to understand how biodiversity information from the past can help us in the future."
   },
   {
     name: "Amphibians",
     group: category_groups[:taxon_groups],
-    perm_id: 11
+    perm_id: 11,
+    desc: "Amphibians are vertebrates in the taxonomic class Amphibia, including animals such as frogs and toads, salamanders, and caecilians."
   },
   {
     name: "Birds",
     group: category_groups[:taxon_groups],
-    perm_id: 12
+    perm_id: 12,
+    desc: "Birds live in a wide range of environments, from tropical rainforests to the polar regions. All birds have feathers, something that makes them unique among living animals."
   },
   {
     name: "Fishes",
     group: category_groups[:taxon_groups],
-    perm_id: 13
+    perm_id: 13,
+    desc: "Fishes are limbless cold-blooded vertebrate animals with gills and fins and living wholly in water."
   },
   {
     name: "Fungi",
     group: category_groups[:taxon_groups],
-    perm_id: 14
+    perm_id: 14,
+    desc: "Fungi, such as mushrooms, yeasts and molds are plant-like organisms that do not make chlorophyll."
   },
   {
     name: "Insects",
     group: category_groups[:taxon_groups],
-    perm_id: 15
+    perm_id: 15,
+    desc: "Insects have segmented bodies that include a head, thorax, and abdomen. They have 3 pairs of legs, one pair of antennae and one or two pairs of wings.  With around one million named species and perhaps several times that number unnamed, insects account for a great majority of the species of animals on earth."
   },
   {
     name: "Invertebrates",
     group: category_groups[:taxon_groups],
-    perm_id: 16
+    perm_id: 16,
+    desc: "Invertebrates are animals without backbones such as bugs, worms, snails, corals or sponges."
   },
   {
     name: "Mammals",
     group: category_groups[:taxon_groups],
-    perm_id: 17
+    perm_id: 17,
+    desc: "All mammals share at least three characteristics not found in other animals: three middle ear bones, hair, and the production of milk by mammary glands."
   },
   {
     name: "Microorganisms",
     group: category_groups[:taxon_groups],
-    perm_id: 18
+    perm_id: 18,
+    desc: "Microorganisms, also known as microbes, are microscopic living organisms. The most common microorganisms are bacteria, viruses, and some fungi and protozoa."
   },
   {
     name: "Plants",
     group: category_groups[:taxon_groups],
-    perm_id: 19
+    perm_id: 19,
+    desc: "Plants species include trees, forbs, shrubs, grasses, vines, ferns, and mosses."
   },
   {
     name: "Reptiles",
     group: category_groups[:taxon_groups],
-    perm_id: 20
+    perm_id: 20,
+    desc: "Reptile species include turtles, lizards, snakes, crocodiles, alligators, and lizard-like tuataras."
   }
 ])
 

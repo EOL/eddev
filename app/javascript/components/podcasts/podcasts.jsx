@@ -185,7 +185,7 @@ class Podcasts extends React.Component {
       stateUpdate.view = 'default';
     }
 
-    this.setState(stateUpdate);
+    this.setState(stateUpdate, () => { window.scrollTo(0, 0) });
   }
 
   handleRequestOpenGroup = (group) => {
@@ -310,7 +310,7 @@ class Podcasts extends React.Component {
                 <div className={catBarClasses.join(' ')}>
                   <div 
                     className={styles.catBar}
-                    onClick={() => this.setState({ categoryId: null })}
+                    onClick={() => this.handleCategorySelect(null)}
                   >
                     <i 
                       className='fa fa-angle-left fa-2x' 

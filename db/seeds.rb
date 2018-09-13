@@ -786,13 +786,16 @@ category_groups = {}
 PodcastCategoryGroup.delete_all
 
 category_groups[:skills] = PodcastCategoryGroup.create!({
-  name: "Skills"
+  name: "Skills",
+  icon_file_name: "skills.svg"
 })
 category_groups[:themes] = PodcastCategoryGroup.create!({
-  name: "Themes"
+  name: "Themes",
+  icon_file_name: "themes.svg"
 })
 category_groups[:taxon_groups] = PodcastCategoryGroup.create!({
-  name: "Taxonomic Groups"
+  name: "Taxonomic Groups",
+  icon_file_name: "taxon.svg"
 })
 
 PodcastCategory.delete_all

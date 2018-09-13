@@ -290,9 +290,23 @@ $txt-blue: #4a97ca;
 }
 
 .banner {
-  background: blue;
-  height: 100px;
-  width: 100%
+  background-image: url("images/podcasts/frog_banner.jpg");
+  height: 119px;
+  width: 100%;
+}
+
+.logo {
+  background: $white;
+  border-radius: 4px;
+  margin: 0 auto;
+  padding: 15px 0 10px 20px;
+  position: relative;
+  width: 217px;
+  top: 30px;
+
+  & > img {
+    margin: 0 auto;
+  }
 }
 
 @media screen and (min-width: $main-col-width-px) {

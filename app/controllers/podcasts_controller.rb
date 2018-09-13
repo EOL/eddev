@@ -7,7 +7,7 @@ class PodcastsController < ApplicationController
       {
         title: podcast.title,
         description: podcast.description,
-        imagePath: podcast.image_file_name ? view_context.image_path("podcasts/#{podcast.image_file_name}") : nil,
+        imagePath: podcast.image_file_name ? view_context.image_path("podcasts/thumbnails/#{podcast.image_file_name}") : nil,
         audioPath: podcast.audio_file_name ? "podcasts/#{podcast.audio_file_name}" : nil,
         transcriptPath: 
           (

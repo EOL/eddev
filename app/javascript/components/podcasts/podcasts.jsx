@@ -7,6 +7,7 @@ import Podcast from './podcast'
 import {alphaSortAsc} from 'lib/util/sorts'
 
 import frogBanner from 'images/podcasts/frog_banner.jpg'
+import logo from 'images/podcasts/logo.png'
 import layoutStyles from 'stylesheets/shared/react_layout'
 
 import menuStyles from 'stylesheets/shared/menu'
@@ -269,7 +270,11 @@ class Podcasts extends React.Component {
     return (
       <div>
         <main role="main" className={`${styles.main} is-nopad-bot`}>
-          <div className={styles.banner} ref={this.handleBannerRef} />
+          <div className={styles.banner} ref={this.handleBannerRef}>
+            <div className={styles.logo}>
+              <img src={logo} />
+            </div>
+          </div>
           <div className={pastBannerClasses.join(' ')} ref={(node) => this.mainContentNode = node}>
             <div className={this.barsClassName()} style={this.barsStyle()}>
               <ControlBar 

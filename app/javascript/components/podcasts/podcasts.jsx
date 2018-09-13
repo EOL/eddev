@@ -215,7 +215,7 @@ class Podcasts extends React.Component {
       otherClassName = styles.barsAbs;
     }
 
-    return `${className} ${otherClassName}`
+    return `${className} ${otherClassName} js-fixed`;
   }
 
   barsStyle = () => {

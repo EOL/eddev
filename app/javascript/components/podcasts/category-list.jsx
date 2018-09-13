@@ -44,7 +44,7 @@ function CategoryList(props) {
                 <ul className={styles.cats}>
                   {
                     group.categoryIds.map((id) => {
-                      const name = props.categoriesById[id];
+                      const name = props.categoriesById[id].name;
                       return (
                         <li 
                           key={id}

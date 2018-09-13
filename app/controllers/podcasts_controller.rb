@@ -24,7 +24,7 @@ class PodcastsController < ApplicationController
     end
 
     @categories_by_id = PodcastCategory.all.map do |c|
-      [c.id, c.name]
+      [c.id, { name: c.name, desc: c.desc }]
     end.to_h
 
     @category_groups = PodcastCategoryGroup.all.map do |g|

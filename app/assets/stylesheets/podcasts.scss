@@ -25,9 +25,14 @@ $txt-blue: #4a97ca;
   vertical-align: top;
 }
 
+.catDesc {
+  background: $background-gray;
+  font-size: 14px;
+  padding: 20px;
+}
+
 .pod {
   background: $white;
-  margin-top: 1px;
   min-height: 134px;
   overflow: hidden;
   position: relative;
@@ -306,6 +311,12 @@ $txt-blue: #4a97ca;
 
   & > img {
     margin: 0 auto;
+  }
+}
+
+.podList {
+  & > li {
+    margin-top: 1px;
   }
 }
 

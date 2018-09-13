@@ -116,27 +116,45 @@ class Podcasts extends React.Component {
     }).sort(this.state.sort.fn);
   }
 
+  curCategory = () => {
+    return this.state.categoryId === null ? 
+        null : 
+        this.props.categoriesById[this.state.categoryId]
+      ;
+  }
+
   podList = () => {
+    var elmts = []
+      , curCategory = this.curCategory()
+      ;
+
+    if (curCategory !== null) {
+      elmts.push((
+        <li className={styles.catDesc} key="catdesc">{curCategory.desc}</li>
+      ));
+    }
+
+    this.searchFilteredPodcasts().forEach((podcast) => {
+      const fullTitle = `${podcast.title}, ${podcast.sciName}`;
+
+      elmts.push((
+        <Podcast 
+          categoriesById={this.props.categoriesById}
+          fullTitle={fullTitle}
+          handleCategorySelect={this.handleCategorySelect}
+          podcast={podcast}
+          key={podcast.permId}
+        />
+      ));
+    });
+
     return (
       <div>
         <div className={styles.sidebar}>
           {this.catList('sidebar')}
         </div>
         <ul className={styles.podList} ref={(node) => this.podListNode = node}>
-          {
-            this.searchFilteredPodcasts().map((podcast) => {
-              const fullTitle = `${podcast.title}, ${podcast.sciName}`;
-              return ( 
-                <Podcast 
-                  categoriesById={this.props.categoriesById}
-                  fullTitle={fullTitle}
-                  handleCategorySelect={this.handleCategorySelect}
-                  podcast={podcast}
-                  key={podcast.permId}
-                />
-              )
-            })
-          }
+          {elmts}
         </ul>
       </div>
     );
@@ -153,7 +171,7 @@ class Podcasts extends React.Component {
   categoryName = () => {
     return this.state.categoryId === null ? 
       null : 
-      this.props.categoriesById[this.state.categoryId];
+      this.props.categoriesById[this.state.categoryId].name;
   }
 
 

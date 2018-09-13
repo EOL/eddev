@@ -47,7 +47,7 @@ function Podcast(props) {
                   <li 
                     key={id} 
                     onClick={() => props.handleCategorySelect(id)}
-                  >{props.categoriesById[id]}</li>    
+                  >{props.categoriesById[id].name}</li>    
                 );
               })
             }

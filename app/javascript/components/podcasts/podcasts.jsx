@@ -295,7 +295,7 @@ class Podcasts extends React.Component {
 
     return (
       <div>
-        <main role="main" className={`${styles.main} is-nopad-bot`}>
+        <div className={styles.main}>
           <div className={styles.banner} ref={this.handleBannerRef}>
             <div className={styles.logo}>
               <img src={logo} />
@@ -335,7 +335,7 @@ class Podcasts extends React.Component {
               className={styles.mainContent}
             >{this.mainContent()}</div>
           </div>
-        </main>
+        </div>
       </div>
     );
   }

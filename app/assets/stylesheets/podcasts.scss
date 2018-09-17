@@ -396,3 +396,12 @@ $txt-blue: #4a97ca;
     display: none;
   }
 }
+
+.noResults {
+  padding: 20px 10px;
+  text-align: center;
+
+  & > i {
+    font-style: italic;
+  }
+}

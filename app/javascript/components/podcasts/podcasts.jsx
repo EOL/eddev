@@ -134,6 +134,7 @@ class Podcasts extends React.Component {
   podList = () => {
     var elmts = []
       , curCategory = this.curCategory()
+      , podcasts = this.searchFilteredPodcasts()
       ;
 
     if (curCategory !== null) {
@@ -142,19 +143,25 @@ class Podcasts extends React.Component {
       ));
     }
 
-    this.searchFilteredPodcasts().forEach((podcast) => {
-      const fullTitle = `${podcast.title}, ${podcast.sciName}`;
+    if (podcasts.length) {
+      this.searchFilteredPodcasts().forEach((podcast) => {
+        const fullTitle = `${podcast.title}, ${podcast.sciName}`;
 
+        elmts.push((
+          <Podcast 
+            categoriesById={this.props.categoriesById}
+            fullTitle={fullTitle}
+            handleCategorySelect={this.handleCategorySelect}
+            podcast={podcast}
+            key={podcast.permId}
+          />
+        ));
+      });
+    } else {
       elmts.push((
-        <Podcast 
-          categoriesById={this.props.categoriesById}
-          fullTitle={fullTitle}
-          handleCategorySelect={this.handleCategorySelect}
-          podcast={podcast}
-          key={podcast.permId}
-        />
+        <li className={styles.noResults}>no results found for <i>{this.state.searchVal}</i></li>
       ));
-    });
+    }
 
     return (
       <div>

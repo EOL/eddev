@@ -53,7 +53,7 @@ function Podcast(props) {
             }
           </ul>
         }
-        <p className={styles.podDesc}>{props.podcast.description}</p>
+        <p className={styles.podDesc} dangerouslySetInnerHTML={{__html: props.podcast.description}} />
         <audio className={styles.podPlayer} src={props.podcast.audioPath} controls/>
       </div>
       <PodLinks 

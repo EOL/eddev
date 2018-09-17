@@ -42,12 +42,15 @@ $txt-blue: #4a97ca;
   position: relative;
 }
 
-.podTitle {
-  font-weight: $semibold;
-
+.podTitle, .podDesc {
   & > i {
     font-style: italic;
   }
+}
+
+.podTitle {
+  font-weight: $semibold;
+
 }
 
 .podPlayer {

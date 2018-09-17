@@ -294,7 +294,7 @@ class Podcasts extends React.Component {
     }
 
     return (
-      <div>
+      <div className={styles.page}>
         <div className={styles.main}>
           <div className={styles.banner} ref={this.handleBannerRef}>
             <div className={styles.logo}>

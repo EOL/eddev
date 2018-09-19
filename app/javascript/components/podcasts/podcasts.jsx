@@ -38,10 +38,28 @@ class Podcasts extends React.Component {
       catGrpsStyle: { position: 'relative' },
       scrollPos: 'preBanner',
     };
+    this.podcastNodes = {};
   }
 
   componentDidMount() {
     $(document).scroll(this.updateScrollPos);
+
+    let hashId = window.location.hash.replace('#', '');
+    
+    if (hashId) {
+      let node = this.podcastNodes[hashId];
+
+      if (node) {
+        setTimeout(() => {
+          window.scrollTo(
+            0, 
+            $(node).offset().top - 
+            $(this.ctrlBarNode).outerHeight() - 
+            $('.navbar').outerHeight()
+          );
+        }, 2000);
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -131,6 +149,10 @@ class Podcasts extends React.Component {
     });
   }
 
+  setPodcastNode = (permId, node) => {
+    this.podcastNodes[permId] = node;
+  }
+
   podList = () => {
     var elmts = []
       , curCategory = this.curCategory()
@@ -154,6 +176,7 @@ class Podcasts extends React.Component {
             handleCategorySelect={this.handleCategorySelect}
             podcast={podcast}
             key={podcast.permId}
+            handleRef={(node) => this.setPodcastNode(podcast.permId, node)}
           />
         ));
       });
@@ -319,6 +342,7 @@ class Podcasts extends React.Component {
                 handleSearchInput={(val) => this.setState({ searchVal: val })}
                 searchVal={this.state.searchVal}
                 classNames={[styles.ctrlBarOuter]}
+                handleRef={(node) => this.ctrlBarNode = node}
               />
               {
                 hasCatBar &&

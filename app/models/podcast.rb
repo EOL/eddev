@@ -4,7 +4,7 @@ class Podcast < ApplicationRecord
   #validates :image_file_name, { presence: true }
   #validates :audio_file_name, { presence: true, uniqueness: true }
   #validates :eol_url, { presence: true }
-  #validates :perm_id, { presence: true, uniqueness: true }
+  validates :perm_id, { presence: true, uniqueness: true }
   #validates :sci_name, { presence: true }
 
   has_and_belongs_to_many :categories, join_table: :podcasts_to_categories, class_name: "PodcastCategory"
@@ -12,7 +12,6 @@ class Podcast < ApplicationRecord
   def self.seed
     self.delete_all
     data = []
-    perm_id = 0 # TODO: better mechanism - hash?
     categories = PodcastCategory.all.map do |cat|
       [cat.name.downcase, cat]
     end.to_h
@@ -31,12 +30,11 @@ class Podcast < ApplicationRecord
         audio_file_name: line["audio_file_name"],
         transcript_file_name: line["transcript_file_name"],
         lesson_plan_url: line["lesson_plan_url"],
-        perm_id: perm_id,
+        perm_id: line["perm_id"],
         sci_name: line["sci_name"],
         eol_url: line["eol_url"],
         categories: line_cats.compact
       })
-      perm_id += 1
     end
     Podcast.create!(data)
   end

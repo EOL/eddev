@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180913191957) do
+ActiveRecord::Schema.define(version: 20180919191500) do
 
   create_table "decks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "human_name"
@@ -111,7 +111,7 @@ ActiveRecord::Schema.define(version: 20180913191957) do
     t.string "image_file_name"
     t.string "audio_file_name"
     t.string "lesson_plan_url"
-    t.integer "perm_id"
+    t.string "perm_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "sci_name"

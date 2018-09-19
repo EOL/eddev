@@ -29,10 +29,10 @@ class Podcast < ApplicationRecord
         description: line["description"],
         image_file_name: line["image_file_name"],
         audio_file_name: line["audio_file_name"],
+        transcript_file_name: line["transcript_file_name"],
         lesson_plan_url: line["lesson_plan_url"],
         perm_id: perm_id,
         sci_name: line["sci_name"],
-        transcript_file_name: nil,
         eol_url: line["eol_url"],
         categories: line_cats.compact
       })

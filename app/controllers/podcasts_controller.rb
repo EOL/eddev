@@ -8,11 +8,11 @@ class PodcastsController < ApplicationController
         title: podcast.title,
         description: podcast.description,
         imagePath: podcast.image_file_name ? view_context.image_path("podcasts/thumbnails/#{podcast.image_file_name}") : nil,
-        audioPath: podcast.audio_file_name ? "podcasts/#{podcast.audio_file_name}" : nil,
+        audioPath: podcast.audio_file_name ? "podcasts/audio/#{podcast.audio_file_name}" : nil,
         transcriptPath: 
           (
             podcast.transcript_file_name ? 
-            "podcasts/#{podcast.transcript_file_name}" : 
+            "podcasts/transcripts/#{podcast.transcript_file_name}" : 
             nil
           ),
         eolUrl: podcast.eol_url,

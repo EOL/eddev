@@ -203,7 +203,7 @@ $nav-img-height: 305;
   }
 
   .card-maker .img {
-    background-image: nav-img-url("card_maker");
+    background-image: nav-img-url("card_maker_single");
   }
 
   .lesson-plans .img {
@@ -223,7 +223,7 @@ $nav-img-height: 305;
   }
 
   .google-tours .img {
-    background-image: nav-img-url("google_tours");
+    background-image: nav-img-url("google_tours_single");
   }
 
   .collections .img {
@@ -243,9 +243,9 @@ $nav-img-height: 305;
   }
 
   .collections,
-  .species-cards,
-  .google-tours,
   .hi-res-images,
+  .lesson-plans,
+  .biodiv-articles,
   .coloring-books {
     margin-right: 0;
   }
@@ -290,23 +290,13 @@ $nav-img-height: 305;
       font-size: 14 / $em * 1em;
     }
 
-    .card-maker .img {
-      background-image: nav-img-url("card_maker_single");
-    }
-
-    .google-tours .img {
-      background-image: nav-img-url("google_tours_single");
-    }
-
     .inaturalist .img {
       background-image: nav-img-url("inaturalist_single");
     }
 
-    .hi-res-images,
-    .podcasts,
-    .lesson-plans,
     .species-cards,
-    .coloring-books {
+    .podcasts,
+    .biodiv-articles {
       margin-right: 0;
     }
   }

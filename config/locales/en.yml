@@ -645,6 +645,7 @@ en:
     nav_item:
       desc:
         biodiv_articles: "These articles introduce specific topics and provide links to EOL resources to dig deeper."
+        biodiv_cards: "Biodiversity Cards provide a quick overview of traits for a species or higher taxonomic rank (like genus or family). Print them for use in classrooms or for collecting."
         card_maker: "Make EOL biodiversity cards as a classroom project or download and print pre-made cards. Great for teaching about ecosystems and food webs."
         coloring_books: "The Biodiversity Heritage Library (BHL) provides the foundational literature to EOL, including original descriptions and beautiful illustrations."
         eol_places: "Visit Places to learn about environments and the species that live there. Explore biodiversity through food webs, species cards, statistics, lessons and more."
@@ -655,9 +656,9 @@ en:
         lesson_plans: "Bring EOL into your classroom with our lesson plans. Aligned to NGSS standards, they also pull in content and resources from EOL."
         memory_games: "Use this classic memory game as a warm-up activity for your students, or just play it yourself!"
         podcasts: "These 5-minute podcasts are great for the classroom to support science learning. Lesson plans, transcripts and scientist interviews included."
-        species_cards: "Species Cards provide a quick overview of traits for a species or higher taxonomic rank (like genus or family). Print them for use in classrooms or for collecting."
       title:
         biodiv_articles: "Biodiversity Articles"
+        biodiv_cards: "Biodiversity Cards"
         card_maker: "Card Maker"
         coloring_books: "BHL Coloring Books"
         eol_places: "EOL Places"
@@ -668,7 +669,6 @@ en:
         lesson_plans: "Lesson Plans"
         memory_games: "Memory Games"
         podcasts: "Podcasts"
-        species_cards: "Species Cards"
     publish_confirm: "Are you sure you want to publish this draft? It will immediately replace the current public version of this page."
     publish_label: "Publish draft"
     save_error: "Oops, something went wrong! Please try again later."

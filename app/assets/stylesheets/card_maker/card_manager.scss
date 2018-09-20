@@ -66,18 +66,6 @@ $species-search-input-height: 45px;
   z-index: 2;
 }
 
-.lOverlay {
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(67, 82, 95, 0.79);
-  overflow: auto;
-  position: fixed;
-  width: 100%;
-  z-index: 10;
-}
-
 /* GENERAL STATE */
 .isDisabled {
   color: $disabled-gray; 
@@ -433,19 +421,6 @@ $species-search-input-height: 45px;
   font-size: 12px;
   height: 100%;
   text-align: center;
-}
-
-.lightbox {
-  margin: 20px auto;
-  padding: 10px;
-}
-
-.lightboxNoGlow {
-  border: none;
-  
-  &:focus {
-    outline: none;
-  }
 }
 
 .lightboxFlash {
@@ -894,49 +869,6 @@ $species-search-input-height: 45px;
   width: 300px;
 }
 
-/* Card zoom/png download lightbox */
-.cardZoom {
-  margin: 20px auto 0 auto;
-  padding: 0;
-  position: relative;
-  width: 402px;
-
-  & > button {
-    display: block;
-    margin: 0 auto 10px auto;
-  }
-
-  &:focus {
-    outline: 0;
-  }
-}
-
-.zoomArrow {
-  color: $white;
-  cursor: pointer;
-  position: absolute;
-  top: 230px; 
-}
-
-.zoomArrowLeft {
-  left: -50px; 
-}
-
-.zoomArrowRight {
-  right: -50px;
-}
-
-.isZoomArrowDisabled {
-  color: $txt-gray;
-  cursor: normal;
-}
-
-.imageZoom {
-  height: 549px;
-  margin: 0 auto 12px auto;
-  width: 100%;
-}
-
 .loadingSpinnerImage {
   align-items: center;
   background: $white;
@@ -977,3 +909,8 @@ $species-search-input-height: 45px;
   }
 }
 
+.cardZoom {
+  height: 549px;
+  margin: 0 auto 12px auto;
+  width: 100%;
+}

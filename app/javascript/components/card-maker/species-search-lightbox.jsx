@@ -1,7 +1,7 @@
 import React from 'react'
 
 //import SpeciesSearch from './species-search'
-import CloseButtonModal from './close-button-modal'
+import CloseButtonModal from 'components/shared/close-button-modal'
 import UserResourceFilter from './user-resource-filter'
 import SpeciesSearchResult from './species-search-result'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'

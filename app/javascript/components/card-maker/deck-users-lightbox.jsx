@@ -1,5 +1,5 @@
 import React from 'react'
-import CloseButtonModal from './close-button-modal'
+import CloseButtonModal from 'components/shared/close-button-modal'
 import ReactAutocomplete from 'react-autocomplete'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
 import styles from 'stylesheets/card_maker/card_manager'

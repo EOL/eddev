@@ -4,6 +4,7 @@ import Menu from 'components/shared/menu'
 import ControlBar from './control-bar'
 import CategoryList from './category-list'
 import Podcast from './podcast'
+import PodcastImageLightbox from './podcast-image-lightbox'
 import {alphaSortAsc} from 'lib/util/sorts'
 
 import frogBanner from 'images/podcasts/frog_banner.jpg'
@@ -37,6 +38,7 @@ class Podcasts extends React.Component {
       sort: sorts[0],
       catGrpsStyle: { position: 'relative' },
       scrollPos: 'preBanner',
+      lightboxImg: null,
     };
     this.podcastNodes = {};
   }
@@ -177,6 +179,7 @@ class Podcasts extends React.Component {
             podcast={podcast}
             key={podcast.permId}
             handleRef={(node) => this.setPodcastNode(podcast.permId, node)}
+            requestImageLightbox={() => this.setState({ lightboxImg: podcast.imagePath})}
           />
         ));
       });
@@ -325,6 +328,13 @@ class Podcasts extends React.Component {
 
     return (
       <div className={styles.page}>
+        {
+          this.state.lightboxImg &&
+          <PodcastImageLightbox 
+            image={this.state.lightboxImg} 
+            handleRequestClose={() => this.setState({ lightboxImg: null })}
+          />
+        }
         <div className={styles.main}>
           <div className={styles.banner} ref={this.handleBannerRef}>
             <div className={styles.logo}>

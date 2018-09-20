@@ -30,7 +30,7 @@ function Podcast(props) {
   return (
     <li ref={props.handleRef} className={styles.pod}>
       <div className={styles.lPodLeft}>
-        <img src={props.podcast.imagePath} />
+        <img onClick={props.requestImageLightbox} src={props.podcast.imagePath} />
         <PodLinks
           podcast={props.podcast}
           className={styles.podLinksLeft}

@@ -1,6 +1,7 @@
 @import 'shared/layout_vars';
 
 $left-col-width: 72px;
+$left-col-width-lg: 127px;
 $close-btn-width: 43px;
 $ctrl-bar-height: 54px;
 $txt-blue: #4a97ca;
@@ -12,13 +13,37 @@ $txt-blue: #4a97ca;
 .lPodLeft {
   float: left;
   overflow: hidden;
+  position: relative;
   white-space: nowrap;
   width: $left-col-width;
+}
+
+.podImg {
+  cursor: pointer;
+  display: block;
+  height: $left-col-width;
+  width: $left-col-width; 
 
   & > img {
-    display: block;
-    height: $left-col-width;
-    width: $left-col-width; 
+    height: 100%;
+    width: 100%;
+  }
+
+  & > div {
+    background: rgba(.5, .5, .5, .5);
+    align-items: center;
+    color: $white;
+    justify-content: center;
+    display: none;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+    position: absolute;
+  }
+
+  &:hover > div {
+    display: flex;
   }
 }
 
@@ -361,14 +386,13 @@ $txt-blue: #4a97ca;
   }
 
   .lPodLeft {
-    $width: 127px;
     margin-right: 15px;
-    width: 127px;
+    width: $left-col-width-lg;
+  }
 
-    & > img {
-      height: $width;
-      width: $width;
-    }
+  .podImg {
+    height: $left-col-width-lg;
+    width: $left-col-width-lg;
   }
 
   .podTitle {

@@ -1,23 +1,11 @@
-@import 'layout_vars';
-
-.arrow {
-  color: $white;
-  cursor: pointer;
-  position: absolute;
-  top: 230px; 
-}
-
-.arrowLeft {
-  left: -50px; 
-}
-
-.arrowRight {
-  right: -50px;
-}
-
-.isArrowDisabled {
-  color: $txt-gray;
-  cursor: normal;
+.lightbox {
+  border: none;
+  margin: 20px auto;
+  padding: 10px;
+  
+  &:focus {
+    outline: none;
+  }
 }
 
 .overlay {
@@ -30,31 +18,5 @@
   position: fixed;
   width: 100%;
   z-index: 10;
-}
-
-.imageZoom {
-  margin: 20px auto 0 auto;
-  padding: 0;
-  position: relative;
-  width: 402px;
-
-  & > button {
-    display: block;
-    margin: 0 auto 10px auto;
-  }
-
-  &:focus {
-    outline: 0;
-  }
-}
-
-.lightbox {
-  border: none;
-  margin: 20px auto;
-  padding: 10px;
-  
-  &:focus {
-    outline: none;
-  }
 }
 

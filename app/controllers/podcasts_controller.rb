@@ -3,7 +3,7 @@ class PodcastsController < ApplicationController
   before_action :main_nopad_bot
 
   def index
-    @podcasts = Podcast.all.includes(:categories).map do |podcast|
+    @podcasts = Podcast.all.includes([:categories, :image]).map do |podcast|
       {
         title: podcast.title,
         description: podcast.description,
@@ -19,7 +19,13 @@ class PodcastsController < ApplicationController
         lessonPlanUrl: podcast.lesson_plan_url,
         permId: podcast.perm_id,
         sciName: podcast.sci_name,
-        categoryIds: podcast.categories.map { |c| c.id }
+        categoryIds: podcast.categories.map { |c| c.id },
+        image: {
+          path: podcast.image.file_name ? view_context.image_path("podcasts/thumbnails/#{podcast.image.file_name}") : nil,
+          author: podcast.image.author,
+          license: podcast.image.license,
+          title: podcast.image.title,
+        }
       }
     end
 

@@ -31,7 +31,7 @@ function Podcast(props) {
     <li ref={props.handleRef} className={styles.pod}>
       <div className={styles.lPodLeft}>
         <div className={styles.podImg} onClick={props.requestImageLightbox}>
-          <img  src={props.podcast.imagePath} />
+          <img  src={props.podcast.image.path} />
           <div><i className={'fa fa-expand fa-2x'} /></div>
         </div> 
         <PodLinks

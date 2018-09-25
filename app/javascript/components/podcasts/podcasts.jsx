@@ -179,7 +179,7 @@ class Podcasts extends React.Component {
             podcast={podcast}
             key={podcast.permId}
             handleRef={(node) => this.setPodcastNode(podcast.permId, node)}
-            requestImageLightbox={() => this.setState({ lightboxImg: podcast.imagePath})}
+            requestImageLightbox={() => this.setState({ lightboxImg: podcast.image})}
           />
         ));
       });
@@ -331,7 +331,10 @@ class Podcasts extends React.Component {
         {
           this.state.lightboxImg &&
           <PodcastImageLightbox 
-            image={this.state.lightboxImg} 
+            image={this.state.lightboxImg.path} 
+            author={this.state.lightboxImg.author}
+            license={this.state.lightboxImg.license}
+            title={this.state.lightboxImg.title}
             handleRequestClose={() => this.setState({ lightboxImg: null })}
           />
         }

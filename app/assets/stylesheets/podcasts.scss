@@ -6,6 +6,10 @@ $close-btn-width: 43px;
 $ctrl-bar-height: 54px;
 $txt-blue: #4a97ca;
 
+em { 
+  font-style: italic;
+}
+
 .page {
   background-image: linear-gradient(to bottom, #cde2e7, #94bbca);
 }
@@ -65,12 +69,6 @@ $txt-blue: #4a97ca;
   min-height: 134px;
   overflow: hidden;
   position: relative;
-}
-
-.podTitle, .podDesc {
-  & > i {
-    font-style: italic;
-  }
 }
 
 .podTitle {
@@ -424,8 +422,20 @@ $txt-blue: #4a97ca;
 .noResults {
   padding: 20px 10px;
   text-align: center;
+}
 
-  & > i {
-    font-style: italic;
+.lightboxImg {
+  margin-top: 20px;
+
+  & > div {
+    color: $white;
+    text-align: center;
+  }
+
+  & > img {
+    display: block;
+    max-width: 100%; 
+    margin: 0 auto;
   }
 }
+

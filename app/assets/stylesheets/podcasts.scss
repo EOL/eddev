@@ -27,6 +27,7 @@ em {
   display: block;
   height: $left-col-width;
   width: $left-col-width; 
+  position: relative;
 
   & > img {
     height: 100%;

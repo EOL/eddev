@@ -23,7 +23,6 @@
   = render "nav_item",
     :width => "single",
     :href => podcasts_path,
-    :image_name => "podcasts",
     :text_key => "podcasts",
     :klazz => "podcasts"
   = render "nav_item",
@@ -34,23 +33,26 @@
   = render "nav_item",
     :width => "single",
     :href => "http://eol.org/info/discover_articles",
-    :image_name => "biodiversity_articles",
     :text_key => "biodiv_articles",
     :klazz => "biodiv-articles border"
 = render "shared/section_head", :title_key => "welcome.index.sections.partner_resources_title"
 %ul.nav-items<
   = render "nav_item",
-    :width => "double",
+    :width => "single",
     :href => "http://www.inaturalist.org/",
-    :image_name => "inaturalist",
     :text_key => "inaturalist",
     :klazz => "inaturalist border"
   = render "nav_item",
     :width => "single",
     :href => "https://drive.google.com/file/d/0B00hDkSQMhfDMXdIVng0NGd0WlU/view",
-    :image_name => "bhl_coloring",
     :text_key => "coloring_books",
     :klazz => "coloring-books border"
+  = render "nav_item",
+    :width => "single",
+    :href => "http://citynaturechallenge.org/education-toolkit/",
+    :text_key => "cnc",
+    :klazz => "cnc border"
+
 = render "shared/image_credits", :images => [ { :title => "Harris Hawk",
   :author => "Ronnie MacDonald",
   :source => "Flickr",

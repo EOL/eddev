@@ -235,18 +235,22 @@ $nav-img-height: 305;
   }
 
   .inaturalist .img {
-    background-image: nav-img-url("inaturalist");
+    background-image: nav-img-url("inaturalist_single");
   }
 
   .coloring-books .img {
     background-image: nav-img-url("bhl_coloring");
   }
 
+  .cnc .img {
+    background-image: nav-img-url("cnc");
+  }
+
   .collections,
   .hi-res-images,
   .lesson-plans,
   .biodiv-articles,
-  .coloring-books {
+  .cnc {
     margin-right: 0;
   }
 }
@@ -296,7 +300,8 @@ $nav-img-height: 305;
 
     .species-cards,
     .podcasts,
-    .biodiv-articles {
+    .biodiv-articles,
+    .coloring-books {
       margin-right: 0;
     }
   }

@@ -342,6 +342,7 @@ class Podcasts extends React.Component {
           <div className={styles.banner} ref={this.handleBannerRef}>
             <div className={styles.logo}>
               <img src={logo} />
+              <div>One Species at a Time</div>
             </div>
           </div>
           <div className={pastBannerClasses.join(' ')} ref={(node) => this.mainContentNode = node}>

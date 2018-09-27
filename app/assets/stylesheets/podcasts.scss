@@ -353,14 +353,19 @@ em {
 .logo {
   background: $white;
   border-radius: 4px;
+  color: #7847bb;
   margin: 0 auto;
-  padding: 15px 0 10px 20px;
+  padding: 15px 20px 10px 20px;
   position: relative;
   width: 217px;
-  top: 30px;
+  top: 20px;
 
   & > img {
     margin: 0 auto;
+  }
+
+  & > div {
+    text-align: center;
   }
 }
 

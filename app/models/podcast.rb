@@ -33,6 +33,7 @@ class Podcast < ApplicationRecord
         perm_id: line["perm_id"],
         sci_name: line["sci_name"],
         eol_url: line["eol_url"],
+        audio_slideshow_url: line["audio_slideshow_url"],
         categories: line_cats.compact,
         image_attributes: {
           title: line["image_title"],

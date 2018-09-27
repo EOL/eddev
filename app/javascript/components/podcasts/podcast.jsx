@@ -22,6 +22,12 @@ function PodLinks(props) {
           <a href={props.podcast.lessonPlanUrl}>Lesson Plan</a>
         </li>
       }
+      {
+        props.podcast.audioSlideshowUrl != null &&
+        <li>
+          <a href={props.podcast.audioSlideshowUrl}>Audio Slideshow</a>
+        </li>
+      }
     </ul>
   );
 }

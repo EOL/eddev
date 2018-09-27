@@ -34,6 +34,7 @@ class PodcastPresenter < BasePresenter
       lessonPlanUrl: lesson_plan_url,
       permId: perm_id,
       sciName: sci_name,
+      audioSlideshowUrl: audio_slideshow_url,
       categoryIds: category_ids,
       image: image.to_obj
     }

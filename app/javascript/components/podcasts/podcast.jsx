@@ -25,7 +25,7 @@ function PodLinks(props) {
       {
         props.podcast.audioSlideshowUrl != null &&
         <li>
-          <a href={props.podcast.audioSlideshowUrl}>Audio Slideshow</a>
+          <a href={props.podcast.audioSlideshowUrl}>Slideshow</a>
         </li>
       }
     </ul>

@@ -130,7 +130,7 @@ class Podcasts extends React.Component {
       ) && (
         !lowerSearch ||
         podcast.title.toLowerCase().includes(lowerSearch) ||
-        podcast.sciName.toLowerCase().includes(lowerSearch) ||
+        (podcast.sciName && podcast.sciName.toLowerCase().includes(lowerSearch)) ||
         podcast.description.toLowerCase().includes(lowerSearch)
       );
     }).sort(this.state.sort.fn);
@@ -169,7 +169,7 @@ class Podcasts extends React.Component {
 
     if (podcasts.length) {
       this.searchFilteredPodcasts().forEach((podcast) => {
-        const fullTitle = `${podcast.title}, ${podcast.sciName}`;
+        const fullTitle = podcast.sciName ? `${podcast.title}, ${podcast.sciName}` : podcast.title;
 
         elmts.push((
           <Podcast 

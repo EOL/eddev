@@ -10,6 +10,12 @@ class PodcastPresenter < BasePresenter
     "podcasts/audio/#{audio_file_name}"
   end
 
+  def audio_size
+    File.open(Rails.root.join("public", audio_path), "r") do |f|
+      f.size
+    end
+  end
+
   def audio_url
     view.root_url + audio_path
   end
@@ -38,5 +44,15 @@ class PodcastPresenter < BasePresenter
       categoryIds: category_ids,
       image: image.to_obj
     }
+  end
+
+  def duration_string
+    mins = length_seconds / 60
+    secs = length_seconds % 60
+    sprintf "%d:%02d", mins, secs
+  end
+
+  def anchor_url
+    view.podcasts_url + "##{perm_id}"
   end
 end

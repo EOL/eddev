@@ -35,12 +35,13 @@ class Podcast < ApplicationRecord
         eol_url: line["eol_url"],
         audio_slideshow_url: line["audio_slideshow_url"],
         categories: line_cats.compact,
+        length_seconds: line["length_seconds"],
         image_attributes: {
           title: line["image_title"],
           file_name: line["image_file_name"],
           author: line["image_author"],
           license: line["image_license"]
-        }
+        },
       })
     end
     Podcast.create!(data)

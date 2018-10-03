@@ -5,12 +5,6 @@ function PodLinks(props) {
   return (
     <ul className={`${styles.podLinks} ${props.className}`}>
       {
-        props.podcast.eolUrl != null &&
-        <li>
-          <a href={props.podcast.eolUrl}>EOL Page <i className={`${styles.iExternalLink} fa fa-external-link`} /></a>
-        </li>
-      }
-      {
         props.podcast.transcriptPath != null &&
         <li>
           <a href={props.podcast.transcriptPath}>Transcript</a>
@@ -26,6 +20,12 @@ function PodLinks(props) {
         props.podcast.audioSlideshowUrl != null &&
         <li>
           <a href={props.podcast.audioSlideshowUrl}>Slideshow</a>
+        </li>
+      }
+      {
+        props.podcast.eolUrl != null &&
+        <li>
+          <a href={props.podcast.eolUrl}>EOL Page <i className={`${styles.iExternalLink} fa fa-external-link`} /></a>
         </li>
       }
     </ul>

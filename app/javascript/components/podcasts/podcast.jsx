@@ -7,7 +7,7 @@ function PodLinks(props) {
       {
         props.podcast.eolUrl != null &&
         <li>
-          <a href={props.podcast.eolUrl}>EOL Page</a>
+          <a href={props.podcast.eolUrl}>EOL Page <i className={`${styles.iExternalLink} fa fa-external-link`} /></a>
         </li>
       }
       {
@@ -19,7 +19,7 @@ function PodLinks(props) {
       {
         props.podcast.lessonPlanUrl != null &&
         <li>
-          <a href={props.podcast.lessonPlanUrl}>Lesson Plan</a>
+          <a href={props.podcast.lessonPlanUrl}>Lesson Plan <i className={`${styles.iExternalLink} fa fa-external-link`} /></a>
         </li>
       }
       {

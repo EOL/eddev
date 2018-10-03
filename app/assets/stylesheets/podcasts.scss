@@ -95,6 +95,11 @@ em {
   }
 }
 
+.iExternalLink {
+  bottom: 3px;
+  position: relative;
+}
+
 .podCats {
   & > li {
     color: $nav-link-blue;

@@ -53,7 +53,7 @@ class CardMakerAjaxController < ApplicationController
   def get_card
     respond_to do |format|
       format.json do
-        ensure_user
+        raise ApplicationController::ForbiddenError if !logged_in_user
         json_response(CardServiceCaller.json(logged_in_user.id, params[:card_id]))
       end
 

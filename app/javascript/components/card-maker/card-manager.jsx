@@ -261,7 +261,8 @@ class CardManager extends React.Component {
 
   handleDeckSelect = (deck) => {
     this.setState({
-      showDescInput: false
+      showDescInput: false,
+      cardSearchVal: '',
     });
     this.props.setSelectedDeck(deck);
   }

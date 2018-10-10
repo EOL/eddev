@@ -148,7 +148,7 @@ class ImmutableCard {
 }
 
 function newInstance(data, cb) {
-  CardWrapper.newInstance(data, { safeSpaceLines: true }, (err, cardWrapper) => {
+  CardWrapper.newInstance(data, (err, cardWrapper) => {
     if (err) return cb(err);
     cb(null, new ImmutableCard(cardWrapper));
   });

@@ -47,11 +47,15 @@ class PreviewCanvas extends React.Component {
 
     const canvasSupplier = {
       drawingCanvas: (width, height) => {
+        const canvasWidth = 300 
+            , canvasHeight = 400 
+            ;
+
         this.canvas.width = width * pixelRatio;
         this.canvas.height = height * pixelRatio;
 
-        this.canvas.style.width = width + 'px';
-        this.canvas.style.height = height + 'px';
+        this.canvas.style.width = canvasWidth + 'px';
+        this.canvas.style.height = canvasHeight + 'px';
 
         this.canvas.getContext('2d').setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 

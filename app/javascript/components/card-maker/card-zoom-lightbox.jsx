@@ -81,7 +81,7 @@ class CardZoomLightbox extends React.Component {
           contentLabel={I18n.t('react.card_maker.card_preview_lightbox')}
           onRequestClose={this.props.handleRequestClose}
         >
-          <div className={styles.imageZoom}>
+          <div className={styles.cardLightbox}>
             {
               this.props.hasPrev &&
               <i 
@@ -89,7 +89,7 @@ class CardZoomLightbox extends React.Component {
                 onClick={() => this.handleArrowClick('prev')}
               />
             }
-              <div className={styles.cardZoom}>
+              <div className={styles.cardLightboxCard}>
                 <LoadingSpinnerImage 
                   src={hiResCardImageUrl(this.props.card)} 
                   requestLoaded={this.handleRequestCardLoaded}

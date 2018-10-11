@@ -30,6 +30,8 @@ $species-search-card-width: 170px;
 $species-search-card-height: 232px;
 $species-search-input-height: 45px;
 
+$card-aspect-ratio: .75;
+
 /* STATES */
 
 /* LAYOUTS */
@@ -355,7 +357,7 @@ $species-search-input-height: 45px;
   background: $white;
   border-radius: 6px;
   display: inline-flex;
-  height: (4 * $width) / 3; // cards have aspect ratio of 3/4 including bleed
+  height: $width / $card-aspect-ratio;
   justify-content: center;
   margin-top: 10px;
   overflow: hidden;
@@ -913,13 +915,6 @@ $species-search-input-height: 45px;
   }
 }
 
-// Card zoom lightbox
-.cardZoom {
-  height: 549px;
-  margin: 0 auto 12px auto;
-  width: 100%;
-}
-
 .arrow {
   color: $white;
   cursor: pointer;
@@ -940,11 +935,14 @@ $species-search-input-height: 45px;
   cursor: normal;
 }
 
-.imageZoom {
+.cardLightbox {
+  $width: 402px;
+
   margin: 20px auto 0 auto;
   padding: 0;
   position: relative;
-  width: 402px;
+  width: $width;
+  height: $width / $card-aspect-ratio;
 
   & > button {
     display: block;
@@ -956,4 +954,9 @@ $species-search-input-height: 45px;
   }
 }
 
+// Card zoom lightbox
+.cardLightboxCard {
+  margin: 0 auto 12px auto;
+  width: 100%;
+}
 

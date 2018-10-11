@@ -51,6 +51,7 @@ class CardManager extends React.Component {
       newMenuOpen: false,
       copyCardOpen: false,
       copyDeckOpen: false,
+      upgradeDeckOnCopy: false,
       showDescInput: false,
       deckDescVal: null,
       cardSearchVal: '',
@@ -408,18 +409,19 @@ class CardManager extends React.Component {
   }
 
   handleCopyDeck = (deckName) => {
-    this.createDeckHelper(deckName, null, this.props.selectedDeck.id); 
+    this.createDeckHelper(deckName, null, this.props.selectedDeck.id, this.state.upgradeDeckOnCopy); 
   }
 
   handleCreateDeck = (deckName, colId) => {
-    this.createDeckHelper(deckName, colId, null);
+    this.createDeckHelper(deckName, colId, null, false);
   }
 
-  createDeckHelper = (deckName, colId, copyFrom) => {
+  createDeckHelper = (deckName, colId, copyFrom, upgrade) => {
     const that = this
         , data = {
             name: deckName,
-            copyFrom: copyFrom
+            copyFrom: copyFrom,
+            upgradeTemplates: upgrade
           }
         ;
 
@@ -751,6 +753,20 @@ class CardManager extends React.Component {
     });
   }
 
+  openCopyDeck = (upgrade) => {
+    this.setState({
+      copyDeckOpen: true,
+      upgradeDeckOnCopy: upgrade
+    });
+  }
+
+  closeCopyDeck = () => {
+    this.setState({
+      copyDeckOpen: false,
+      upgradeDeckOnCopy: false
+    });
+  }
+
   deckMenuItems = (resourceCount) => {
     let items = [];
 
@@ -764,12 +780,19 @@ class CardManager extends React.Component {
 
       if (this.props.userRole) {
         items.push({
-          handleClick: () => this.setState({ copyDeckOpen: true }),
+          handleClick: () => this.openCopyDeck(false),
           label: I18n.t('react.card_maker.copy_deck')
         });
       }
 
       if (this.isUserLib()) {
+        if (this.props.selectedDeck.needsUpgrade) {
+          items.push({
+            label: I18n.t('react.card_maker.upgrade_deck'),
+            handleClick: () => this.openCopyDeck(true)
+          });
+        }
+
         items.push({
           handleClick: this.handleDescBtnClick,
           label: this.props.selectedDeck.desc ? 
@@ -844,11 +867,21 @@ class CardManager extends React.Component {
 
   deckCopyName = (deckNames) => {
     let num = 2
-      , baseName = I18n.t('react.card_maker.copy_of_name', { 
-          name: this.props.selectedDeck.name 
-        })
-      , name = baseName
+      , baseName
+      , name
       ;
+
+    if (this.state.upgradeDeckOnCopy) {
+      baseName = I18n.t('react.card_maker.name_upgraded', {
+        name: this.props.selectedDeck.name
+      });
+    } else {
+      baseName = I18n.t('react.card_maker.copy_of_name', { 
+        name: this.props.selectedDeck.name 
+      })
+    }
+
+    name = baseName;
   
     while (deckNames.has(name) && num < 10) {
       name = `${baseName} (${num++})`;
@@ -907,10 +940,13 @@ class CardManager extends React.Component {
         />
         <CopyDeckLightbox
           isOpen={this.state.copyDeckOpen}
-          handleRequestClose={() => this.setState({ copyDeckOpen: false })}
+          handleRequestClose={this.closeCopyDeck}
           handleCopy={this.handleCopyDeck}
           deckNames={userDeckNames}
           name={this.deckCopyName(userDeckNames)}
+          showUpgradeMessage={this.state.upgradeDeckOnCopy}
+          message={this.state.upgradeDeckOnCopy ? I18n.t('react.card_maker.upgrade_deck_msg') : null}
+          submitLabel={this.state.upgradeDeckOnCopy ? I18n.t('react.card_maker.upgrade_deck') : I18n.t('react.card_maker.copy_deck')}
         />
         <DeckUrlLightbox
           isOpen={this.state.deckUrl !== null}

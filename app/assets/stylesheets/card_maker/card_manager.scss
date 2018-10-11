@@ -736,6 +736,11 @@ $card-aspect-ratio: .75;
   height: 40px;
 }
 
+.resourceLightboxMsg {
+  font-size: 12px;
+  margin: 20px 74px;
+}
+
 .cardTemplates {
   display: flex;
   justify-content: center;
@@ -915,6 +920,8 @@ $card-aspect-ratio: .75;
   }
 }
 
+// Card zoom lightbox
+
 .arrow {
   color: $white;
   cursor: pointer;
@@ -954,7 +961,6 @@ $card-aspect-ratio: .75;
   }
 }
 
-// Card zoom lightbox
 .cardLightboxCard {
   margin: 0 auto 12px auto;
   height: 100%;

@@ -5,12 +5,13 @@ function CopyDeckLightbox(props) {
   return (
     <DeckNameLightbox
       isOpen={props.isOpen}
-      contentLabel={I18n.t('react.card_maker.copy_deck')}
-      submitLabel={I18n.t('react.card_maker.copy_deck')}
+      contentLabel={props.submitLabel}
+      submitLabel={props.submitLabel}
       handleSubmit={props.handleCopy}
       handleRequestClose={props.handleRequestClose}
       deckNames={props.deckNames}
       name={props.name}
+      message={props.message}
     />
   );
 }

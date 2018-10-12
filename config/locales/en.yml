@@ -499,7 +499,7 @@ en:
       unexpected_error_msg: An unexpected error occurred
       update_card_layouts: update card layouts
       update_deck: "update deck"
-      update_deck_msg: "This deck contains cards that have an obsolete layout. This action will create a copy of this deck wiht updated card layouts. It will not affect the original deck."
+      update_deck_msg: "This deck contains cards that have obsolete layouts. This action will create a copy of the deck with updated card layouts. It will not affect the original deck."
       upload_an_image: Upload an image
       users: Users
       vocab_card: Vocabulary

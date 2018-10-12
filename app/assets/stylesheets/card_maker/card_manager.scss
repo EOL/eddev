@@ -1,4 +1,5 @@
 @import 'layout_vars';
+@import 'buttons';
 
 // TODO: standardize font colors!!!
 $manager-height: 762px;
@@ -672,13 +673,6 @@ $card-aspect-ratio: .75;
   display: inline-block;
   font-size: 14px;
   margin-right: 10px;
-}
-
-.btn {
-  background: $eol-blue;
-  border-radius: 2px;
-  color: $white;
-  cursor: pointer;
 }
 
 .btnBack {

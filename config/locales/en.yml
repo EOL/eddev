@@ -445,6 +445,7 @@ en:
       name_cant_be_blank: "name can't be blank"
       name_taken: "name taken"
       name_upgraded: "%{name} (upgraded)"
+      need_to_upgrade: "This deck contains cards with obsolete layouts that cannot be printed. You can fix this by clicking 'upgrade deck' in the menu."
       new_card_lc: new card
       new_deck: New deck
       new_deck_lc: new deck

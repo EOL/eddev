@@ -1,3 +1,6 @@
+@import "layout_vars";
+@import 'buttons';
+
 .lightbox {
   border: none;
   margin: 20px auto;
@@ -20,3 +23,22 @@
   z-index: 10;
 }
 
+.dialog {
+  background: $white;
+  font-size: 14px;
+  margin: 0 auto;
+  padding: 20px 40px;
+  width: 400px;
+
+  & > p {
+    margin-bottom: 20px;
+  }
+}
+
+.btnDialog {
+  display: block;
+  font-size: 16px;
+  margin: 0 auto;
+  height: 40px;
+  width: 80px;
+}

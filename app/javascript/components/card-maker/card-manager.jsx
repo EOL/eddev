@@ -16,6 +16,7 @@ import Search from './search'
 import {cardMakerUrl, deckUrl} from 'lib/card-maker/url-helper'
 import LeftRail from './manager-left-rail'
 import Menu from 'components/shared/menu'
+import DeckUpgradeNotice from './deck-upgrade-notice'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
 import eolHdrIcon from 'images/card_maker/icons/eol_logo_sub_hdr.png'
@@ -477,22 +478,25 @@ class CardManager extends React.Component {
   makeDeckPdf = () => {
     const that = this;
 
-    that.props.showLoadingOverlay(
-      I18n.t('react.card_maker.print_loading_msg'), 
-      (closeFn) => {
-        $.ajax({
-          url: cardMakerUrl('deck_pdfs'),
-          data: JSON.stringify({
-            deckId: that.props.selectedDeck.id
-          }),
-          method: 'POST',
-          success: (result) => {
-            that.pollPdfJob(result.jobId, closeFn);
-          }
-        });
-      }
-    );
-
+    if (that.props.selectedDeck.needsUpgrade) {
+      that.setState({ showDeckUpgradeNotice: true });         
+    } else {
+      that.props.showLoadingOverlay(
+        I18n.t('react.card_maker.print_loading_msg'), 
+        (closeFn) => {
+          $.ajax({
+            url: cardMakerUrl('deck_pdfs'),
+            data: JSON.stringify({
+              deckId: that.props.selectedDeck.id
+            }),
+            method: 'POST',
+            success: (result) => {
+              that.pollPdfJob(result.jobId, closeFn);
+            }
+          });
+        }
+      );
+    }
   }
 
   pollPdfJob = (id, overlayCloseFn) => {
@@ -952,6 +956,10 @@ class CardManager extends React.Component {
           isOpen={this.state.deckUrl !== null}
           handleRequestClose={() => this.setState({ deckUrl: null })}
           deckUrl={this.state.deckUrl}
+        />
+        <DeckUpgradeNotice
+          isOpen={this.state.showDeckUpgradeNotice}
+          onRequestClose={() => this.setState( { showDeckUpgradeNotice: false } )}
         />
         <img src={iguanaBanner} className={layoutStyles.banner} />
         <LeftRail

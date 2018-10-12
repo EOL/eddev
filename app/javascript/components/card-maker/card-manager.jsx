@@ -792,7 +792,7 @@ class CardManager extends React.Component {
       if (this.isUserLib()) {
         if (this.props.selectedDeck.needsUpgrade) {
           items.push({
-            label: I18n.t('react.card_maker.upgrade_deck'),
+            label: I18n.t('react.card_maker.update_card_layouts'),
             handleClick: () => this.openCopyDeck(true)
           });
         }
@@ -876,7 +876,7 @@ class CardManager extends React.Component {
       ;
 
     if (this.state.upgradeDeckOnCopy) {
-      baseName = I18n.t('react.card_maker.name_upgraded', {
+      baseName = I18n.t('react.card_maker.name_updated', {
         name: this.props.selectedDeck.name
       });
     } else {
@@ -949,8 +949,8 @@ class CardManager extends React.Component {
           deckNames={userDeckNames}
           name={this.deckCopyName(userDeckNames)}
           showUpgradeMessage={this.state.upgradeDeckOnCopy}
-          message={this.state.upgradeDeckOnCopy ? I18n.t('react.card_maker.upgrade_deck_msg') : null}
-          submitLabel={this.state.upgradeDeckOnCopy ? I18n.t('react.card_maker.upgrade_deck') : I18n.t('react.card_maker.copy_deck')}
+          message={this.state.upgradeDeckOnCopy ? I18n.t('react.card_maker.update_deck_msg') : null}
+          submitLabel={this.state.upgradeDeckOnCopy ? I18n.t('react.card_maker.update_deck') : I18n.t('react.card_maker.copy_deck')}
         />
         <DeckUrlLightbox
           isOpen={this.state.deckUrl !== null}

@@ -444,8 +444,8 @@ en:
       no_results_found: no results found
       name_cant_be_blank: "name can't be blank"
       name_taken: "name taken"
-      name_upgraded: "%{name} (upgraded)"
-      need_to_upgrade: "This deck contains cards with obsolete layouts that cannot be printed. You can fix this by clicking 'upgrade deck' in the menu."
+      name_updated: "%{name} (updated)"
+      need_to_upgrade: "This deck contains cards with obsolete layouts that cannot be printed. You can fix this by clicking 'update card layouts' in the menu."
       new_card_lc: new card
       new_deck: New deck
       new_deck_lc: new deck
@@ -497,8 +497,9 @@ en:
       unassigned: unassigned
       unexpected_error_msg: An unexpected error occurred
       unexpected_error_msg: An unexpected error occurred
-      upgrade_deck: upgrade deck
-      upgrade_deck_msg: "This deck contains cards that have an obsolete layout. Upgrading this deck will create a copy of the deck with updated card layouts. This action will not affect the original deck."
+      update_card_layouts: update card layouts
+      update_deck: "update deck"
+      update_deck_msg: "This deck contains cards that have an obsolete layout. This action will create a copy of this deck wiht updated card layouts. It will not affect the original deck."
       upload_an_image: Upload an image
       users: Users
       vocab_card: Vocabulary

@@ -17,6 +17,7 @@ import {cardMakerUrl, deckUrl} from 'lib/card-maker/url-helper'
 import LeftRail from './manager-left-rail'
 import Menu from 'components/shared/menu'
 import DeckUpgradeNotice from './deck-upgrade-notice'
+import DialogBox from 'components/shared/dialog-box'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
 import eolHdrIcon from 'images/card_maker/icons/eol_logo_sub_hdr.png'
@@ -419,6 +420,7 @@ class CardManager extends React.Component {
 
   createDeckHelper = (deckName, colId, copyFrom, upgrade) => {
     const that = this
+        , showUpgradedNotice = upgrade
         , data = {
             name: deckName,
             copyFrom: copyFrom,
@@ -439,6 +441,9 @@ class CardManager extends React.Component {
             } else {
               that.props.setLibrary('user', () => {
                 that.showDeck(deck.id, closeFn);
+                that.setState({
+                  showDeckUpgradedNotice: true
+                });
               });
             }
           }
@@ -479,7 +484,7 @@ class CardManager extends React.Component {
     const that = this;
 
     if (that.props.selectedDeck.needsUpgrade) {
-      that.setState({ showDeckUpgradeNotice: true });         
+      that.setState({ showNeedToUpgradeDeckNotice: true });         
     } else {
       that.props.showLoadingOverlay(
         I18n.t('react.card_maker.print_loading_msg'), 
@@ -958,8 +963,14 @@ class CardManager extends React.Component {
           deckUrl={this.state.deckUrl}
         />
         <DeckUpgradeNotice
-          isOpen={this.state.showDeckUpgradeNotice}
-          onRequestClose={() => this.setState( { showDeckUpgradeNotice: false } )}
+          isOpen={this.state.showNeedToUpgradeDeckNotice}
+          onRequestClose={() => this.setState( { showNeedToUpgradeDeckNotice: false } )}
+        />
+        <DialogBox
+          isOpen={this.state.showDeckUpgradedNotice}
+          onRequestClose={() => this.setState( { showDeckUpgradedNotice: false } )}
+          contentLabel={'newly upgraded deck notice'}
+          message={I18n.t('react.card_maker.remember_to_review_updated')}
         />
         <img src={iguanaBanner} className={layoutStyles.banner} />
         <LeftRail

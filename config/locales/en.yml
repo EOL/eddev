@@ -464,6 +464,7 @@ en:
       proj_desc_card: Project Description
       public_cards: public cards
       quick_save: quick save
+      remember_to_review_updated: "Remember to review updated cards to make sure all content is within the safe space for printing."
       removed_user: "Successfully removed user %{userName}"
       rename: rename
       rename_deck: rename deck
@@ -499,7 +500,7 @@ en:
       unexpected_error_msg: An unexpected error occurred
       update_card_layouts: update card layouts
       update_deck: "update deck"
-      update_deck_msg: "This deck contains cards that have obsolete layouts. This action will create a copy of the deck with updated card layouts. It will not affect the original deck. You will probably want to review the new cards and make adjustments as necessary."
+      update_deck_msg: "This deck contains cards that have obsolete layouts. This action will create a copy of the deck with updated card layouts. It will not affect the original deck."
       upload_an_image: Upload an image
       users: Users
       vocab_card: Vocabulary

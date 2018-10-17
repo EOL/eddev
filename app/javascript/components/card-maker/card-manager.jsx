@@ -441,9 +441,12 @@ class CardManager extends React.Component {
             } else {
               that.props.setLibrary('user', () => {
                 that.showDeck(deck.id, closeFn);
-                that.setState({
-                  showDeckUpgradedNotice: true
-                });
+
+                if (showUpgradedNotice) {
+                  that.setState({
+                    showDeckUpgradedNotice: true
+                  });
+                }
               });
             }
           }

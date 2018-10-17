@@ -38,18 +38,22 @@ const pollIntervalMillis = 1000
         'vocab': 2,
         'key': 3,
       }
+    , modals = {
+        deckUsers: 0,
+        renameDeck: 1,
+        newDeck: 2,
+        speciesSearch: 3,
+        copyCard: 4,
+        copyDeck: 5,
+        deckUrl: 6,
+        needToUpgradeDeckNotice: 7,
+        deckUpgradedNotice: 8
+      }
+    , menus = {
+        deck: 0,
+        sort: 1
+      }
     ;
-
-const DECK_USERS_LIGHTBOX = 0
-  , RENAME_DECK_LIGHTBOX = 1
-  , NEW_DECK_LIGHTBOX = 2
-  , SPECIES_SEARCH_LIGHTBOX = 3
-  , COPY_CARD_LIGHTBOX = 4
-  , COPY_DECK_LIGHTBOX = 5
-  , DECK_URL_LIGHTBOX = 6
-  , NEED_TO_UPGRADE_NOTICE = 7
-  , UPGRADED_NOTICE = 8
-  ;
 
 class CardManager extends React.Component {
   constructor(props) {
@@ -64,30 +68,19 @@ class CardManager extends React.Component {
       showDescInput: false,
       deckDescVal: null,
       cardSearchVal: '',
-      menus: {
-        deck: false,
-        sort: false
-      }
+      openMenu: null
     }
   }
 
-  closeMenu = (name) => {
-    this.setState((prevState) => {
-      return update(prevState, {
-        menus: {
-          [name]: { $set: false }
-        }
-      });
+  closeMenu = () => {
+    this.setState({
+      openMenu: null
     });
   }
 
-  openMenu = (name) => {
-    this.setState((prevState) => {
-      return update(prevState, {
-        menus: {
-          [name]: { $set: true }
-        }
-      });
+  openMenu = (id) => {
+    this.setState({
+      openMenu: id
     });
   }
 
@@ -154,7 +147,7 @@ class CardManager extends React.Component {
   }
 
   handleSpeciesSearchOpen = () => {
-    this.openModal(SPECIES_SEARCH_LIGHTBOX, {
+    this.openModal(modals.speciesSearch, {
       speciesSearchDeckId: this.props.selectedDeck.id
     });
   }
@@ -419,7 +412,7 @@ class CardManager extends React.Component {
                 that.showDeck(deck.id, closeFn);
 
                 if (showUpgradedNotice) {
-                  that.openModal(UPGRADED_NOTICE);
+                  that.openModal(modals.deckUpgradedNotice);
                 }
               });
             }
@@ -461,7 +454,7 @@ class CardManager extends React.Component {
     const that = this;
 
     if (that.props.selectedDeck.needsUpgrade) {
-      that.openModal(NEED_TO_UPGRADE_NOTICE);
+      that.openModal(modals.needToUpgradeDeckNotice);
     } else {
       that.props.showLoadingOverlay(
         I18n.t('react.card_maker.print_loading_msg'), 
@@ -728,7 +721,7 @@ class CardManager extends React.Component {
   }
 
   openCopyDeck = (upgrade) => {
-    this.openModal(COPY_DECK_LIGHTBOX, {
+    this.openModal(modals.copyDeck, {
       upgradeDeckOnCopy: upgrade
     })
   }
@@ -785,7 +778,7 @@ class CardManager extends React.Component {
         });
 
         items.push({
-          handleClick: () => this.openModal(RENAME_DECK_LIGHTBOX),
+          handleClick: () => this.openModal(modals.renameDeck),
           label: I18n.t('react.card_maker.rename_deck')
         });
 
@@ -797,7 +790,7 @@ class CardManager extends React.Component {
         }
 
         items.push({
-          handleClick: () => this.openModal(DECK_USERS_LIGHTBOX),
+          handleClick: () => this.openModal(modals.deckUsers),
           label: I18n.t('react.card_maker.manage_deck_users')
         });
 
@@ -811,7 +804,7 @@ class CardManager extends React.Component {
         }
       } else {
         items.push({
-          handleClick: () => this.openModal(DECK_URL_LIGHTBOX),
+          handleClick: () => this.openModal(modals.deckUrl),
           label: I18n.t('react.card_maker.show_url')
         });
       }
@@ -830,7 +823,7 @@ class CardManager extends React.Component {
   }
 
   openCopyCard = (id) => {
-    this.openModal(COPY_CARD_LIGHTBOX, {
+    this.openModal(modals.copyCard, {
       copyCardId: id
     });
   }
@@ -879,12 +872,12 @@ class CardManager extends React.Component {
     return (
       <div className={styles.lManager}>
         <DeckUsersLightbox
-          isOpen={this.state.openModal === DECK_USERS_LIGHTBOX}
+          isOpen={this.state.openModal === modals.deckUsers}
           handleRequestClose={this.closeModal}
           deck={this.props.selectedDeck}
         />
         <RenameDeckLightbox
-          isOpen={this.state.openModal === RENAME_DECK_LIGHTBOX}
+          isOpen={this.state.openModal === modals.renameDeck}
           handleRequestClose={this.closeModal}
           handleRename={this.handleRenameDeck}
           name={this.props.selectedDeck.name}
@@ -895,13 +888,13 @@ class CardManager extends React.Component {
           }))}
         />
         <NewDeckLightbox
-          isOpen={this.state.openModal === NEW_DECK_LIGHTBOX}
+          isOpen={this.state.openModal === modals.newDeck}
           handleCreate={this.handleCreateDeck}
           handleRequestClose={this.closeModal}
           deckNames={userDeckNames}
         />
         <SpeciesSearchLightbox
-          isOpen={this.state.openModal === SPECIES_SEARCH_LIGHTBOX}
+          isOpen={this.state.openModal === modals.speciesSearch}
           handleClose={this.closeModal}
           handleCreate={this.handleCreateCard}
           deckFilterItems={this.deckFilterItemsForNewCard()}
@@ -909,13 +902,13 @@ class CardManager extends React.Component {
           selectedDeckId={this.state.speciesSearchDeckId}
         />
         <CopyCardLightbox
-          isOpen={this.state.openModal === COPY_CARD_LIGHTBOX}
+          isOpen={this.state.openModal === modals.copyCard}
           handleRequestClose={this.closeModal}
           handleCopy={this.handleCopyCard}
           decks={this.props.userDecks} 
         />
         <CopyDeckLightbox
-          isOpen={this.state.openModal === COPY_DECK_LIGHTBOX}
+          isOpen={this.state.openModal === modals.copyDeck}
           handleRequestClose={this.closeCopyDeck}
           handleCopy={this.handleCopyDeck}
           deckNames={userDeckNames}
@@ -925,16 +918,16 @@ class CardManager extends React.Component {
           submitLabel={this.state.upgradeDeckOnCopy ? I18n.t('react.card_maker.update_deck') : I18n.t('react.card_maker.copy_deck')}
         />
         <DeckUrlLightbox
-          isOpen={this.state.openModal === DECK_URL_LIGHTBOX}
+          isOpen={this.state.openModal === modals.deckUrl}
           handleRequestClose={this.closeModal}
           deckUrl={deckUrl(this.props.selectedDeck)}
         />
         <DeckUpgradeNotice
-          isOpen={this.state.openModal === NEED_TO_UPGRADE_NOTICE}
+          isOpen={this.state.openModal === modals.needToUpgradeDeckNotice}
           onRequestClose={this.closeModal}
         />
         <DialogBox
-          isOpen={this.state.openModal === UPGRADED_NOTICE}
+          isOpen={this.state.openModal === modals.deckUpgradedNotice}
           onRequestClose={this.closeModal}
           contentLabel={'newly upgraded deck notice'}
           message={I18n.t('react.card_maker.remember_to_review_updated')}
@@ -944,7 +937,7 @@ class CardManager extends React.Component {
           library={this.props.library}
           handleToggleLibrary={this.toggleLibrary}
           handleDeckSelect={this.handleDeckSelect}
-          handleNewDeck={() => this.openModal(NEW_DECK_LIGHTBOX)}
+          handleNewDeck={() => this.openModal(modals.newDeck)}
           selectedDeck={this.props.selectedDeck}
           decks={this.props.decks}
           allCardsDeck={this.props.allCardsDeck}
@@ -955,10 +948,10 @@ class CardManager extends React.Component {
             <div className={styles.lDeckMenuFlex}>
               <Menu
                 items={this.deckMenuItems(resourceResult.resources.length)}
-                open={this.state.menus.deck}
+                open={this.state.openMenu === menus.deck}
                 anchorText={this.deckMenuAnchorText()}
-                handleRequestClose={() => this.closeMenu('deck')}
-                handleRequestOpen={() => this.openMenu('deck')}
+                handleRequestClose={() => this.closeMenu()}
+                handleRequestOpen={() => this.openMenu(menus.deck)}
               />
               {this.deckDesc()}
             </div>
@@ -975,9 +968,9 @@ class CardManager extends React.Component {
               <Menu
                 items={this.sortItems()}
                 anchorText={this.props.sort.label}
-                open={this.state.menus.sort}
-                handleRequestClose={() => { this.closeMenu('sort') }}
-                handleRequestOpen={() => { this.openMenu('sort') }}
+                open={this.state.openMenu === menus.sort}
+                handleRequestClose={() => { this.closeMenu() }}
+                handleRequestOpen={() => { this.openMenu(menus.sort) }}
                 extraClasses={[menuStyles.menuWrapSort]}
               />
             </div>
@@ -993,7 +986,7 @@ class CardManager extends React.Component {
             handleNewCard={this.handleSpeciesSearchOpen}
             handleCopyCard={this.openCopyCard}
             showCopyCard={this.isUserLib() || this.props.userRole}
-            handleNewDeck={() => this.openModal(NEW_DECK_LIGHTBOX)}
+            handleNewDeck={() => this.openModal(modals.newDeck)}
             makeDeckPdf={this.makeDeckPdf}
             editable={this.isUserLib()}
           />

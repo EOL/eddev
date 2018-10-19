@@ -18,6 +18,7 @@ import LeftRail from './manager-left-rail'
 import Menu from 'components/shared/menu'
 import DeckUpgradeNotice from './deck-upgrade-notice'
 import DialogBox from 'components/shared/dialog-box'
+import DeckDesc from './deck-desc'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
 import eolHdrIcon from 'images/card_maker/icons/eol_logo_sub_hdr.png'
@@ -31,7 +32,6 @@ import menuStyles from 'stylesheets/shared/menu'
 import styles from 'stylesheets/card_maker/card_manager'
 
 const pollIntervalMillis = 1000
-    , maxDescLength = 540
     , specialCardOrder = {
         'title': 0,
         'desc': 1,
@@ -60,15 +60,13 @@ class CardManager extends React.Component {
     super(props);
 
     this.state = {
-      selectedFilter: 'cards',
       speciesSearchDeckId: this.props.allCardsDeck.id,
       openModal: null,
-      newMenuOpen: false,
+      openMenu: null,
       upgradeDeckOnCopy: false,
       showDescInput: false,
       deckDescVal: null,
       cardSearchVal: '',
-      openMenu: null
     }
   }
 
@@ -237,22 +235,6 @@ class CardManager extends React.Component {
       cardSearchVal: '',
     });
     this.props.setSelectedDeck(deck);
-  }
-
-  handleDeckFilterClick = () => {
-    this.setState((prevState, props) => {
-      return {
-        selectedFilter: 'decks',
-      }
-    });
-  }
-
-  handleCardFilterClick = () => {
-    this.setState((prevState, props) => {
-      return {
-        selectedFilter: 'cards',
-      }
-    });
   }
 
   selectedResources = () => {
@@ -542,6 +524,7 @@ class CardManager extends React.Component {
   }
 
   handleDescInputChange = e => {
+    console.log(e.target.value);
     this.setState({
       deckDescVal: e.target.value
     });
@@ -552,79 +535,6 @@ class CardManager extends React.Component {
       showDescInput: false,
       deckDescVal: null,
     });
-  }
-
-  descInput = () => {
-    return [
-      // Explicit this.state.deckDescVal === null is important since
-      // otherwise the value can't ever be ''.
-      (
-        <textarea 
-          className={styles.descInput} 
-          value={this.state.deckDescVal === null ? 
-                 this.props.selectedDeck.desc :
-                 this.state.deckDescVal}
-          onChange={this.handleDescInputChange}
-          key='0'
-          ref={node => node && node.focus()}
-          maxLength={maxDescLength}
-        ></textarea>
-      ),
-      (
-        <ul 
-          className={styles.descBtns}
-          key='1'
-        >
-          <li 
-            className={styles.descBtn}
-            onClick={this.handleSetDescBtnClick}
-          >{I18n.t('react.card_maker.save_desc')}</li>
-          <li 
-            className={styles.descBtn}
-            onClick={this.closeAndClearDescInput}
-          >{I18n.t('react.card_maker.cancel')}</li>
-        </ul>
-      ),
-    ];
-  }
-
-  deckDesc = () => {
-    let inner = null
-      , result = null
-      ; 
-
-    if (this.state.showDescInput) {
-      inner = this.descInput();
-    } else if (
-      this.props.selectedDeck !== this.props.allCardsDeck && 
-      this.props.selectedDeck !== this.props.unassignedCardsDeck
-    ) {
-      if (this.props.selectedDeck.desc) {
-        inner = this.props.selectedDeck.desc;
-      } else if (this.props.library === 'user') {
-        inner = (
-          <div
-            className={styles.descAdd}
-            onClick={this.handleDescBtnClick}
-          >
-            <i className='fa fa-lg fa-edit' />
-            <span>{I18n.t('react.card_maker.add_desc')}</span>
-          </div>
-        );
-      }
-    }
-
-    if (inner) {
-      result = (
-        <div className={styles.lDesc}>
-          <div className={styles.desc}>
-            {inner} 
-          </div>
-        </div>
-      );
-    }
-
-    return result;
   }
 
   allDecksName = () => {
@@ -953,7 +863,19 @@ class CardManager extends React.Component {
                 handleRequestClose={() => this.closeMenu()}
                 handleRequestOpen={() => this.openMenu(menus.deck)}
               />
-              {this.deckDesc()}
+              {
+                this.props.selectedDeck !== this.props.allCardsDeck &&
+                this.props.selectedDeck !== this.props.unassignedCardsDeck &&
+                <DeckDesc
+                  value={this.state.showDescInput && this.state.deckDescVal !== null ? this.state.deckDescVal : this.props.selectedDeck.desc}
+                  handleInputChange={this.handleDescInputChange}
+                  handleRequestSave={this.handleSetDescBtnClick}
+                  handleRequestClose={this.closeAndClearDescInput}
+                  showInput={this.state.showDescInput}
+                  library={this.props.library}
+                  handleRequestInput={this.handleDescBtnClick}
+                />
+              }
             </div>
           </div>
           <div className={styles.searchContain}>

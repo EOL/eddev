@@ -19,6 +19,7 @@ import Menu from 'components/shared/menu'
 import DeckUpgradeNotice from './deck-upgrade-notice'
 import DialogBox from 'components/shared/dialog-box'
 import DeckDesc from './deck-desc'
+import PrintLightbox from './print-lightbox'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
 import eolHdrIcon from 'images/card_maker/icons/eol_logo_sub_hdr.png'
@@ -47,7 +48,8 @@ const pollIntervalMillis = 1000
         copyDeck: 5,
         deckUrl: 6,
         needToUpgradeDeckNotice: 7,
-        deckUpgradedNotice: 8
+        deckUpgradedNotice: 8,
+        print: 9
       }
     , menus = {
         deck: 0,
@@ -68,6 +70,9 @@ class CardManager extends React.Component {
       deckDescVal: null,
       cardSearchVal: '',
     }
+  }
+
+  componentDidMount() {
   }
 
   closeMenu = () => {
@@ -432,28 +437,40 @@ class CardManager extends React.Component {
     });
   }
 
-  makeDeckPdf = () => {
+  openPrintOptions = () => {
     const that = this;
 
     if (that.props.selectedDeck.needsUpgrade) {
       that.openModal(modals.needToUpgradeDeckNotice);
     } else {
-      that.props.showLoadingOverlay(
-        I18n.t('react.card_maker.print_loading_msg'), 
-        (closeFn) => {
-          $.ajax({
-            url: cardMakerUrl('deck_pdfs'),
-            data: JSON.stringify({
-              deckId: that.props.selectedDeck.id
-            }),
-            method: 'POST',
-            success: (result) => {
-              that.pollPdfJob(result.jobId, closeFn);
-            }
-          });
-        }
+      /* 
       );
+      */
+      this.openModal(modals.print);
     }
+  }
+
+  makeDeckPdf = (cardBackId) => {
+    const that = this;
+
+    that.closeModal();
+
+    that.props.showLoadingOverlay(
+      I18n.t('react.card_maker.print_loading_msg'), 
+      (closeFn) => {
+        $.ajax({
+          url: cardMakerUrl('deck_pdfs'),
+          data: JSON.stringify({
+            deckId: that.props.selectedDeck.id,
+            backId: cardBackId
+          }),
+          method: 'POST',
+          success: (result) => {
+            that.pollPdfJob(result.jobId, closeFn);
+          }
+        });
+      }
+    );
   }
 
   pollPdfJob = (id, overlayCloseFn) => {
@@ -660,7 +677,7 @@ class CardManager extends React.Component {
     if (this.props.selectedDeck !== this.props.allCardsDeck && this.props.selectedDeck !== this.props.unassignedCardsDeck) {
       if (resourceCount > 0) {
         items.push({
-          handleClick: this.makeDeckPdf,
+          handleClick: this.openPrintOptions,
           label: I18n.t('react.card_maker.print')
         });
       }
@@ -842,6 +859,11 @@ class CardManager extends React.Component {
           contentLabel={'newly upgraded deck notice'}
           message={I18n.t('react.card_maker.remember_to_review_updated')}
         />
+        <PrintLightbox
+          isOpen={this.state.openModal === modals.print}
+          onRequestClose={this.closeModal}
+          handleSubmit={this.makeDeckPdf}
+        />
         <img src={iguanaBanner} className={layoutStyles.banner} />
         <LeftRail
           library={this.props.library}
@@ -909,7 +931,6 @@ class CardManager extends React.Component {
             handleCopyCard={this.openCopyCard}
             showCopyCard={this.isUserLib() || this.props.userRole}
             handleNewDeck={() => this.openModal(modals.newDeck)}
-            makeDeckPdf={this.makeDeckPdf}
             editable={this.isUserLib()}
           />
         </div>

@@ -961,3 +961,43 @@ $card-aspect-ratio: .75;
   width: 100%;
 }
 
+.cardBackLightbox {
+
+}
+
+.cardBacks {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 20px 0;
+}
+  .cardBacksHdr {
+    text-align: center;
+  }
+
+  .cardBack {
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .cardBackImg {
+    align-items: center;
+    border: 1px solid $black;
+    display: flex;
+    height: 200px;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    width: 150px;
+
+    & > img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  
+  .createBtnCardBacks {
+    display: block;
+    margin: 0 auto;
+    width: 400px;
+  }
+

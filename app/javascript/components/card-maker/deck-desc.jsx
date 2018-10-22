@@ -5,8 +5,6 @@ const maxDescLength = 540
 function DeckDesc(props) {
   function descInput() {
     return [
-      // Explicit props.deckDescVal === null is important since
-      // otherwise the value can't ever be ''.
       (
         <textarea 
           className={styles.descInput} 

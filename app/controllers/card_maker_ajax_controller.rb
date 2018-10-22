@@ -295,6 +295,11 @@ class CardMakerAjaxController < ApplicationController
     ))
   end
 
+  # GET /card_maker_ajax/card_backs
+  def card_backs
+    json_response(CardServiceCaller.card_backs)
+  end
+
   private
     def json_response(httpartyResponse)
       json_response_helper(httpartyResponse.body, httpartyResponse.code)

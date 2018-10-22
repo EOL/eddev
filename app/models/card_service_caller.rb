@@ -266,6 +266,13 @@ module CardServiceCaller
     )
   end
 
+  def self.card_backs
+    HTTParty.get(
+      "#{SERVICE_URL}/cardBacks",
+      :headers => self.add_api_headers(JSON_HEADERS)
+    )
+  end
+
   private
     def self.user_prefix(user_id)
       "#{SERVICE_URL}/users/#{user_id}"

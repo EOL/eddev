@@ -434,6 +434,7 @@ en:
       make_deck_public: make deck public
       manage_deck_users: manage deck users
       my_cards: my cards
+      none: 'none'
       n_cards:
         one: "1 card"
         other: "%{count} cards"
@@ -477,6 +478,7 @@ en:
       search_decks: search decks
       search_species_taxon: search for a species or taxon
       select: select
+      select_card_back: "Select a card back option:"
       select_deck: deck (optional)
       select_a_deck_for_card: select a deck for your card (optional)
       show_url: "show URL"

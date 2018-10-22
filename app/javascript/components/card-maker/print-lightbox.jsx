@@ -54,7 +54,7 @@ class PrintLightbox extends React.Component {
         {
           this.loaded ? (
             <div>
-              <div className={styles.cardBacksHdr}>Select a card back option:</div>
+              <div className={styles.cardBacksHdr}>{I18n.t('react.card_maker.select_card_back')}</div>
               <ul className={styles.cardBacks}>
                 {
                   this.cardBacks.map((back) => {
@@ -74,7 +74,7 @@ class PrintLightbox extends React.Component {
                   id={noneKey}
                   key={noneKey}
                   img={<i className='fa fa-ban fa-4x' />}
-                  name='None'
+                  name={I18n.t('react.card_maker.none')}
                   isSelected={this.state.selection === null}
                   handleClick={() => this.setState({ selection: null })}
                 />

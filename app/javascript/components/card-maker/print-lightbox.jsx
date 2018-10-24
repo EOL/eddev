@@ -87,7 +87,11 @@ class PrintLightbox extends React.Component {
               </button>
             </div>
           ) :
-          (<div>Loading...</div>)
+            (
+              <div className={styles.cardBackLightboxSpinner}>
+                <i className="fa fa-4x fa-spinner fa-spin" /> 
+              </div>
+            )
         }
       </CloseButtonModal>
     );

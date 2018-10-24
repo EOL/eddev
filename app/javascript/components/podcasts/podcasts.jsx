@@ -17,11 +17,16 @@ import styles from 'stylesheets/podcasts'
 const sorts = [
   {
     label: 'title',
-    fn: alphaSortAsc('title')
+    fn: alphaSortAsc((a) => {
+      return a.title; 
+    })
   },
   {
     label: 'scientific name',
-    fn: alphaSortAsc('sciName', 'title')
+    fn: alphaSortAsc((a) => {
+      const field = a.sciName ? a.sciName : a.title;
+      return field.replace('<em>', '').replace('</em>', '');
+    })
   }
 ];
 

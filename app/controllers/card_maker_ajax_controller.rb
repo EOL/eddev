@@ -8,7 +8,8 @@ class CardMakerAjaxController < ApplicationController
     :get_card,
     :create_deck_pdf,
     :deck_pdf_status,
-    :deck_pdf_result
+    :deck_pdf_result,
+    :card_backs
   ]
 
   before_action :ensure_admin, :only => [ 

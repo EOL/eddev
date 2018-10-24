@@ -33,8 +33,8 @@ class PrintLightbox extends React.Component {
   componentDidMount() {
     $.getJSON(cardMakerUrl('/card_backs'), (response) => {
       this.cardBacks = response;
-      this.loaded = true;
       this.setState({
+        loaded: true,
         selection: this.cardBacks[0].key
       })
     });
@@ -52,7 +52,7 @@ class PrintLightbox extends React.Component {
         onRequestClose={this.props.onRequestClose}
       >
         {
-          this.loaded ? (
+          this.state.loaded ? (
             <div>
               <div className={styles.cardBacksHdr}>{I18n.t('react.card_maker.select_card_back')}</div>
               <ul className={styles.cardBacks}>

@@ -17,6 +17,7 @@ class CardBack extends React.Component {
           value={this.props.id} 
           ref={(node) => this.radio = node}
           checked={this.props.isSelected}
+          readOnly={true}
         />
       </li>
     );

@@ -438,14 +438,9 @@ class CardManager extends React.Component {
   }
 
   openPrintOptions = () => {
-    const that = this;
-
-    if (that.props.selectedDeck.needsUpgrade) {
-      that.openModal(modals.needToUpgradeDeckNotice);
+    if (this.props.selectedDeck.needsUpgrade) {
+      this.openModal(modals.needToUpgradeDeckNotice);
     } else {
-      /* 
-      );
-      */
       this.openModal(modals.print);
     }
   }

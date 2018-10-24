@@ -21,7 +21,7 @@ const sorts = [
   },
   {
     label: 'scientific name',
-    fn: alphaSortAsc('sciName')
+    fn: alphaSortAsc('sciName', 'title')
   }
 ];
 

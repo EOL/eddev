@@ -1,7 +1,9 @@
-export function alphaSortAsc(field) {
+export function alphaSortAsc(field, fallbackField) {
   return (a, b) => {
-    const aLow = a[field].toLowerCase()
-        , bLow = b[field].toLowerCase()
+    const aField = a[field]
+        , bField = b[field]
+        , aLow = aField ? aField.toLowerCase() : a[fallbackField].toLowerCase()
+        , bLow = bField ? bField.toLowerCase() : b[fallbackField].toLowerCase()
         ;
 
     if (aLow < bLow) {

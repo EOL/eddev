@@ -184,6 +184,28 @@ module CardServiceCaller
     )
   end
 
+  def self.create_deck_pngs(post_body)
+    HTTParty.post(
+      "#{SERVICE_URL}/deckPngs",
+      :body => post_body,
+      :headers => self.add_api_headers(JSON_HEADERS)
+    )
+  end
+
+  def self.deck_png_status(job_id)
+    HTTParty.get(
+      "#{SERVICE_URL}/deckPngs/#{job_id}/status",
+      :headers => self.add_api_headers(JSON_HEADERS)
+    )
+  end
+
+  def self.deck_png_result(job_id)
+    HTTParty.get(
+      "#{SERVICE_URL}/deckPngs/#{job_id}/result",
+      :headers => self.add_api_headers(JSON_HEADERS)
+    )
+  end
+
   def self.deck_pdf_status(job_id)
     HTTParty.get(
       "#{SERVICE_URL}/deckPdfs/#{job_id}/status",

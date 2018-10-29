@@ -419,6 +419,7 @@ en:
       deck: deck
       delete_deck: delete deck
       download_png: Download PNG
+      download_pngs: download PNGs
       edit_desc: edit description
       enter_deck_name: enter deck name
       enter_text: enter text
@@ -429,6 +430,7 @@ en:
       go_back_to: go back to
       image_credit: Image credit
       image_library: Image Library
+      it_may_take_a_few_mins: It may take a few minutes to prepare your download
       key_card: Key Card
       make_deck_private: make deck private
       make_deck_public: make deck public

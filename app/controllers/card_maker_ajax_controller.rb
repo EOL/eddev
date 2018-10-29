@@ -7,8 +7,11 @@ class CardMakerAjaxController < ApplicationController
     :public_decks,
     :get_card,
     :create_deck_pdf,
+    :create_deck_pngs,
     :deck_pdf_status,
     :deck_pdf_result,
+    :deck_png_status,
+    :deck_png_result,
     :card_backs
   ]
 
@@ -182,6 +185,26 @@ class CardMakerAjaxController < ApplicationController
   def create_deck_pdf
     json_response(CardServiceCaller.create_deck_pdf(
       request.raw_post
+    ))
+  end
+
+  def create_deck_pngs
+    json_response(CardServiceCaller.create_deck_pngs(
+      request.raw_post
+    ))
+  end
+
+  # GET /card_maker_ajax/deck_pngs/:id/status
+  def deck_png_status
+    json_response(CardServiceCaller.deck_png_status(
+      params[:id]
+    ))
+  end
+
+  # GET /card_maker_ajax/deck_pngs/:id/result
+  def deck_png_result
+    data_pass_thru_response(CardServiceCaller.deck_png_result(
+      params[:id]
     ))
   end
 

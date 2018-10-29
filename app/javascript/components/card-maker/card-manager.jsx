@@ -469,15 +469,19 @@ class CardManager extends React.Component {
   }
 
   pollPdfJob = (id, overlayCloseFn) => {
+    this.pollJob('deck_pdfs', id, overlayCloseFn, 'pdf');
+  }
+
+  pollJob = (baseUrl, id, overlayCloseFn, resultExt) => {
     const that = this;
 
-    $.getJSON(cardMakerUrl('deck_pdfs/' + id + '/status'), (result) => {
+    $.getJSON(cardMakerUrl(baseUrl + '/' + id + '/status'), (result) => {
       if (result.status === 'done') {
         overlayCloseFn();
-        window.open(cardMakerUrl('deck_pdfs/' + id + '/result.pdf'));
+        window.open(cardMakerUrl(baseUrl + '/' + id + '/result' + '.' + resultExt));
       } else if (result.status === 'running') {
         setTimeout(() => {
-          that.pollPdfJob(id, overlayCloseFn)
+          that.pollJob(baseUrl, id, overlayCloseFn, resultExt)
         }, pollIntervalMillis)
       } else {
         overlayCloseFn();
@@ -536,7 +540,6 @@ class CardManager extends React.Component {
   }
 
   handleDescInputChange = e => {
-    console.log(e.target.value);
     this.setState({
       deckDescVal: e.target.value
     });
@@ -666,6 +669,27 @@ class CardManager extends React.Component {
     }, extraProps))
   }
 
+  createDeckPngs = () => {
+    const that = this;
+
+    that.props.showLoadingOverlay(
+      I18n.t('react.card_maker.it_may_take_a_few_mins'),
+      (closeFn) => {
+        $.ajax({
+          url: cardMakerUrl('deck_pngs'),
+          data: JSON.stringify({
+            deckId: that.props.selectedDeck.id
+          }),
+          method: 'POST',
+          success: (result) => {
+            that.pollJob('deck_pngs', result.jobId, closeFn, 'zip');
+          },
+          error: closeFn
+        })
+      }
+    )
+  }
+
   deckMenuItems = (resourceCount) => {
     let items = [];
 
@@ -674,6 +698,11 @@ class CardManager extends React.Component {
         items.push({
           handleClick: this.openPrintOptions,
           label: I18n.t('react.card_maker.print')
+        });
+
+        items.push({
+          handleClick: this.createDeckPngs,
+          label: I18n.t('react.card_maker.download_pngs')
         });
       }
 

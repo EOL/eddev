@@ -693,8 +693,16 @@ class CardManager extends React.Component {
   deckMenuItems = (resourceCount) => {
     let items = [];
 
-    if (this.props.selectedDeck !== this.props.allCardsDeck && this.props.selectedDeck !== this.props.unassignedCardsDeck) {
-      if (resourceCount > 0) {
+    if (
+      this.props.selectedDeck !== this.props.allCardsDeck && 
+      this.props.selectedDeck !== this.props.unassignedCardsDeck
+    ) {
+      if (resourceCount > 0 &&
+        (
+          this.isUserLib() ||
+          !this.props.selectedDeck.needsUpgrade
+        )
+      ) {
         items.push({
           handleClick: this.openPrintOptions,
           label: I18n.t('react.card_maker.print')

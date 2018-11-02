@@ -1,6 +1,7 @@
 # Card service API interface
 
 require "httparty"
+require "uri"
 
 module CardServiceCaller
   SERVICE_HOST = Rails.application.config.x.card_service_host
@@ -201,7 +202,7 @@ module CardServiceCaller
 
   def self.deck_png_result(file_name)
     HTTParty.get(
-      "#{SERVICE_URL}/deckPngs/downloads/#{file_name}",
+      "#{SERVICE_URL}/deckPngs/downloads/#{URI.encode(file_name)}",
       :headers => self.add_api_headers(JSON_HEADERS)
     )
   end
@@ -215,7 +216,7 @@ module CardServiceCaller
 
   def self.deck_pdf_result(file_name)
     HTTParty.get(
-      "#{SERVICE_URL}/deckPdfs/downloads/#{file_name}",
+      "#{SERVICE_URL}/deckPdfs/downloads/#{URI.encode(file_name)}",
       :headers => self.add_api_headers(JSON_HEADERS)
     )
   end

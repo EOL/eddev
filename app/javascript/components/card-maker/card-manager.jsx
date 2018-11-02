@@ -468,28 +468,28 @@ class CardManager extends React.Component {
     );
   }
 
-  pollPdfJob = (id, overlayCloseFn) => {
-    this.pollJob('deck_pdfs', id, overlayCloseFn, 'pdf');
-  }
-
-  pollJob = (baseUrl, id, overlayCloseFn, resultExt) => {
+  pollJob = (baseUrl, jobId, overlayCloseFn) => {
     const that = this;
 
-    $.getJSON(cardMakerUrl(baseUrl + '/' + id + '/status'), (result) => {
+    $.getJSON(cardMakerUrl(baseUrl + '/' + jobId + '/status'), (result) => {
       if (result.status === 'done') {
         overlayCloseFn();
-        window.open(cardMakerUrl(baseUrl + '/' + id + '/result' + '.' + resultExt));
+        window.open(cardMakerUrl(baseUrl + '/downloads/' + result.resultFileName));
       } else if (result.status === 'running') {
         setTimeout(() => {
-          that.pollJob(baseUrl, id, overlayCloseFn, resultExt)
+          that.pollJob(baseUrl, jobId, overlayCloseFn)
         }, pollIntervalMillis)
       } else {
         overlayCloseFn();
         alert(I18n.t('react.card_maker.unexpected_error_msg'));
       }
     });
+
   }
 
+  pollPdfJob = (id, overlayCloseFn) => {
+    this.pollJob('deck_pdfs', id, overlayCloseFn);
+  }
 
   selectedResourceCount = (resourceResult) => {
     const count = resourceResult.resources.length;
@@ -682,7 +682,7 @@ class CardManager extends React.Component {
           }),
           method: 'POST',
           success: (result) => {
-            that.pollJob('deck_pngs', result.jobId, closeFn, 'zip');
+            that.pollJob('deck_pngs', result.jobId, closeFn);
           },
           error: closeFn
         })

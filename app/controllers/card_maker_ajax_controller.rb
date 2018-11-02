@@ -201,10 +201,10 @@ class CardMakerAjaxController < ApplicationController
     ))
   end
 
-  # GET /card_maker_ajax/deck_pngs/:id/result
+  # GET /card_maker_ajax/deck_pngs/downloads/:file_name
   def deck_png_result
     data_pass_thru_response(CardServiceCaller.deck_png_result(
-      params[:id]
+      params[:file_name]
     ))
   end
 
@@ -215,10 +215,11 @@ class CardMakerAjaxController < ApplicationController
     ))
   end
 
-  # GET /card_maker_ajax/deck_pdfs/:id/result
+  # GET /card_maker_ajax/deck_pdfs/downloads/:file_names
   def deck_pdf_result
-    svc_res = CardServiceCaller.deck_pdf_result(params[:id])
-    data_pass_thru_response(svc_res)
+    data_pass_thru_response(CardServiceCaller.deck_pdf_result(
+      params[:file_name]
+    ))
   end
 
   # POST /card_maker_ajax/decks/:deck_id/

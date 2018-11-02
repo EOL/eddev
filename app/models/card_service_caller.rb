@@ -199,9 +199,9 @@ module CardServiceCaller
     )
   end
 
-  def self.deck_png_result(job_id)
+  def self.deck_png_result(file_name)
     HTTParty.get(
-      "#{SERVICE_URL}/deckPngs/#{job_id}/result",
+      "#{SERVICE_URL}/deckPngs/downloads/#{file_name}",
       :headers => self.add_api_headers(JSON_HEADERS)
     )
   end
@@ -213,9 +213,9 @@ module CardServiceCaller
     )
   end
 
-  def self.deck_pdf_result(job_id)
+  def self.deck_pdf_result(file_name)
     HTTParty.get(
-      "#{SERVICE_URL}/deckPdfs/#{job_id}/result",
+      "#{SERVICE_URL}/deckPdfs/downloads/#{file_name}",
       :headers => self.add_api_headers(JSON_HEADERS)
     )
   end

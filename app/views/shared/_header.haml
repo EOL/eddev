@@ -1,5 +1,5 @@
 .navbar-outer.js-navbar.js-fixed
-  .navbar<
+  .navbar.navbar-top<
     .navbar-inner
       .l-abs-l
         .nav-menu.nav-menu-eol
@@ -33,3 +33,12 @@
                 = link_to(t("shared.header.sign_in"), login_path)
       %h1#Title.title 
         = t ".main_title"
+  .navbar.navbar-bottom<
+    .navbar-inner
+      %ul.nav-links
+        %li= link_to("Biodiversity Cards", card_maker_path)
+        %li= link_to("Lesson Plans", lesson_plans_path)
+        %li= link_to("Podcasts", podcasts_path)
+        %li= link_to("Google Earth Tours", earth_tours_path)
+        %li= link_to("Biodiversity Articles", "http://eol.org/info/discover_articles")
+        %li Partner Resources

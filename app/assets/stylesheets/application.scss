@@ -38,7 +38,7 @@ html {
 
 body { 
   margin: 0; 
-  padding: $topbar-height 0 0 0; 
+  padding: ($topbar-height) 0 0 0; 
 }
 
 body, p {
@@ -155,19 +155,6 @@ textarea {
   top: 0;
   right: 0;
 }
-
-
-.about {
-  $font-size-px: 14;
-  color: $white;
-  font-size: 14 / $em * 1em;
-  font-weight: $semibold;
-  right: 0;
-  top: 0;
-  line-height: $topbar-height-px / $font-size-px;
-  text-align: center;
-}
-
 
 .hero-image {
   position: relative;

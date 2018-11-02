@@ -11,11 +11,21 @@ $nav-mobile-width: 648px;
 }
 
 .navbar {
-  background: $navbar-gray;
-  height: $topbar-height;
-  line-height: $topbar-height;
+  background: $white;
+  height: $topbar-row-height;
+  line-height: $topbar-row-height;
   margin: 0 auto;
   max-width: $page-width-px * 1px; 
+  position: relative;
+}
+
+.navbar-top {
+  z-index: 2;
+}
+
+.navbar-bottom {
+  border-bottom: 1px solid $background-gray;
+  border-top: 1px solid $background-gray;
 }
 
 .navbar-inner {
@@ -31,7 +41,7 @@ $nav-mobile-width: 648px;
   margin: 0;
   font-size: $font-size-px / $em * 1em;
   font-weight: $semibold;
-  line-height: $topbar-height-px / $font-size-px * 1em;
+  line-height: $topbar-row-height;
   text-align: center;
 }
 
@@ -42,10 +52,8 @@ $nav-mobile-width: 648px;
 
 .nav-menu-eol {
   background: $white;
-  box-shadow: 0 1px 1px 0 #d0d0d0;
-  border-radius: 1px;
   color: $eol-green;
-  height: 102%;
+  height: 100%;
   padding: 0 11px;
   position: relative;
   width: 85px;
@@ -163,7 +171,7 @@ $nav-mobile-width: 648px;
   display: none;
   width: 220%;
   text-align: left;
-  top: $topbar-height-px * 1px;
+  top: $topbar-row-height;
   left: 0;
   position: absolute;
 
@@ -321,4 +329,22 @@ $nav-mobile-width: 648px;
 .user-links-slide {
   margin-bottom: 20px;
   text-align: center;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: space-evenly;
+
+  & > li {
+    color: #74a561;
+    display: inline-block;
+    height: $topbar-row-height;
+    line-height: $topbar-row-height;
+    padding: 0 5px;
+
+    & > a {
+      color: #74a561;
+      text-decoration: none;
+    }
+  }
 }

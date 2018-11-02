@@ -15,7 +15,7 @@
       ;
 
     if (visible) {
-      $navbar = $('.navbar');
+      $navbar = $('.navbar-outer');
       $bar = $gradeLevel.find('.grade-level-bar-outer');
       window.scrollTo(0, $list.offset().top + $navbar.height() + $bar.height());
     }
@@ -65,9 +65,10 @@
 
   // Scroll to lesson plan with id, opening the required grade level menu
   function scrollToId(id, highlight) {
-    var $lessonPlan = $('#LessonPlan' + id),
-        $menu = $lessonPlan.closest('.grade-level').find('.grade-level-bar'),
-        highlightColor = '#c9ddff';
+    var $lessonPlan = $('#LessonPlan' + id)
+      , $menu = $lessonPlan.closest('.grade-level').find('.grade-level-bar')
+      , highlightColor = '#c9ddff'
+      ;
 
     toggleGradeLevelMenu($menu, function() {
       var backgroundColor = $lessonPlan.css('background-color');
@@ -83,6 +84,16 @@
     });
   }
 
+  function scrollToGradeLevel(id) {
+    var $menu = $('.grade-level-' + id)
+      , $navbar = $('.navbar-outer')
+      ;
+
+    toggleGradeLevelMenu($menu, function() {
+      $(window).scrollTop($menu.offset().top - $navbar.outerHeight());
+    });
+  }
+
   // Scroll to lesson plan passed in via url hash or saved in session storage.
   // Highlights lesson plan if lesson plan scrolled to was indicated via url hash.
   function scrollWhereNecessary() {
@@ -92,8 +103,12 @@
     if (!restoreFromStorage()) {
       hashParams = EolUtil.parseHashParams();
 
-      if (hashParams && hashParams['scroll_to']) {
-        scrollToId(hashParams['scroll_to'], true);
+      if (hashParams) {
+        if (hashParams['scroll_to']) {
+          scrollToId(hashParams['scroll_to'], true);
+        } else if (hashParams['grade_level']) {
+          scrollToGradeLevel(hashParams['grade_level']);
+        }
       }
     }
   }
@@ -102,7 +117,7 @@
   function updateHeadersOnScroll() {
     var windowScroll = $(window).scrollTop()
       , $lessonPlanLists = $('.lesson-plan-list:visible')
-      , $navbar = $('.navbar')
+      , $navbar = $('.navbar-outer')
       , navbarHeight = $navbar.height()
       ;
 

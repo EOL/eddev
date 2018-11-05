@@ -4,6 +4,37 @@
     toggleGradeLevelMenu($(this));
   }
 
+  function closeAllMenus() {
+    var $gradeLevels = $('.grade-level');
+
+    $gradeLevels.each(function() {
+      var $list = $(this).find('.lesson-plan-list')
+        , $chevron = $(this).find('.chevron')
+        ;
+
+      $list.css({
+        display: 'none'
+      });
+      setGradeLevelClass($(this), null);
+      $chevron.removeClass('fa-chevron-up');
+      $chevron.addClass('fa-chevron-down');
+    });
+  }
+
+  function openMenu($menu) {
+    var $gradeLevel = $menu.closest('.grade-level')
+      , $list = $gradeLevel.find('.lesson-plan-list')
+      , $chevron = $gradeLevel.find('.chevron')
+      ;
+
+    $list.css({
+      display: 'block'
+    });
+
+    $chevron.removeClass('fa-chevron-down');
+    $chevron.addClass('fa-chevron-up');
+  }
+
   // Show/hide lesson plans for grade level
   function toggleGradeLevelMenu($menu, callback) {
     var $gradeLevel = $menu.closest('.grade-level')
@@ -89,9 +120,9 @@
       , $navbar = $('.navbar-outer')
       ;
 
-    toggleGradeLevelMenu($menu, function() {
-      $(window).scrollTop($menu.offset().top - $navbar.outerHeight());
-    });
+    closeAllMenus();
+    openMenu($menu);
+    $(window).scrollTop($menu.offset().top - $navbar.outerHeight());
   }
 
   // Scroll to lesson plan passed in via url hash or saved in session storage.
@@ -108,6 +139,7 @@
           scrollToId(hashParams['scroll_to'], true);
         } else if (hashParams['grade_level']) {
           scrollToGradeLevel(hashParams['grade_level']);
+          EolUtil.clearHash(); // To allow re-navigating to the same grade level
         }
       }
     }
@@ -180,5 +212,6 @@
     $('.lesson-plan.external a').click(updateStorage);
 
     $(window).scroll(updateHeadersOnScroll);
+    $(window).on('hashchange', scrollWhereNecessary);
   });
 })();

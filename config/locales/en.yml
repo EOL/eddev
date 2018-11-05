@@ -529,6 +529,16 @@ en:
       credit_nolink_html: "<span class='%{title_class}'>%{title}</span> by %{author} via %{source} %{license}"
       eol_promotes_html: "EOL promotes content sharing via Creative Commons and other open licenses. Learn more about <a href='http://eol.org/info/eol_licensing_policy'>EOL's Licensing Policy</a>."
       header: "Image Credits"
+    nav_items:
+      biodiversity_cards: "Biodiversity Cards"
+      lesson_plans: "Lesson Plans"
+      grades_2_5: "Grades 2–5"
+      grades_6_8: "Grades 6–8"
+      grades_9_12: "Grades 9–12"
+      podcasts: "Podcasts"
+      google_earth_tours: "Google Earth Tours"
+      biodiversity_articles: "Biodiversity Articles"
+      partner_resources: "Partner Resources"
   signup_confirmation_mailer:
     confirmation_email:
       body_html: "Hi, %{user_name}, thank you for signing up for the EOL L&amp;E site. Please click the following link to confirm your registration: <a href=\"%{url}\">%{url}</a>"

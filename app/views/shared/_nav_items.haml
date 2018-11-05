@@ -1,14 +1,14 @@
 %ul{class: menu_class}
-  %li{class: item_class}= link_to("Biodiversity Cards", card_maker_path)
+  %li{class: item_class}= link_to(t(".biodiversity_cards"), card_maker_path)
   %li{class: item_class}
-    = link_to("Lesson Plans", lesson_plans_path)
+    = link_to(t(".lesson_plans"), lesson_plans_path)
     - if show_sub_menus
       %ul{class: sub_menu_class}
-        %li= link_to("Grades 2-5", lesson_plans_path(anchor: "grade_level=0"))
-        %li= link_to("Grades 6-8", lesson_plans_path(anchor: "grade_level=1"))
-        %li= link_to("Grades 9-12", lesson_plans_path(anchor: "grade_level=2"))
-  %li{class: item_class}= link_to("Podcasts", podcasts_path)
-  %li{class: item_class}= link_to("Google Earth Tours", earth_tours_path)
-  %li{class: item_class}= link_to("Biodiversity Articles", "http://eol.org/info/discover_articles")
-  %li{class: item_class} Partner Resources
+        %li= link_to(t(".grades_2_5"), lesson_plans_path(anchor: "grade_level=0"))
+        %li= link_to(t(".grades_6_8"), lesson_plans_path(anchor: "grade_level=1"))
+        %li= link_to(t(".grades_9_12"), lesson_plans_path(anchor: "grade_level=2"))
+  %li{class: item_class}= link_to(t(".podcasts"), podcasts_path)
+  %li{class: item_class}= link_to(t(".google_earth_tours"), earth_tours_path)
+  %li{class: item_class}= link_to(t(".biodiversity_articles"), "http://eol.org/info/discover_articles")
+  %li{class: item_class}= t(".partner_resources")
 

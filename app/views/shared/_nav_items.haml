@@ -1,0 +1,14 @@
+%ul{class: menu_class}
+  %li{class: item_class}= link_to("Biodiversity Cards", card_maker_path)
+  %li{class: item_class}
+    = link_to("Lesson Plans", lesson_plans_path)
+    - if show_sub_menus
+      %ul{class: sub_menu_class}
+        %li= link_to("Grades 2-5", lesson_plans_path(anchor: "grade_level=0"))
+        %li= link_to("Grades 6-8", lesson_plans_path(anchor: "grade_level=1"))
+        %li= link_to("Grades 9-12", lesson_plans_path(anchor: "grade_level=2"))
+  %li{class: item_class}= link_to("Podcasts", podcasts_path)
+  %li{class: item_class}= link_to("Google Earth Tours", earth_tours_path)
+  %li{class: item_class}= link_to("Biodiversity Articles", "http://eol.org/info/discover_articles")
+  %li{class: item_class} Partner Resources
+

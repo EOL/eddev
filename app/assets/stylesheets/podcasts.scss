@@ -450,3 +450,20 @@ em {
   }
 }
 
+@media screen and (max-width: $nav-mobile-width) {
+  .barsFix {
+    top: $topbar-row-height;
+  }
+
+  .ctrlBarOuterFixed {
+    top: $topbar-row-height;
+  }
+
+  .catGrpsSideFix {
+    top: $ctrl-bar-height + $topbar-row-height;
+  }
+
+  .catGrpsSideFixTwoBars {
+    top: $ctrl-bar-height * 2 + $topbar-row-height;
+  }
+}

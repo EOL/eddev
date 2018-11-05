@@ -1,6 +1,5 @@
 @import "shared/layout_vars.scss";
 
-$nav-mobile-width: 648px;
 
 .navbar-outer {
   left: 0;
@@ -12,6 +11,7 @@ $nav-mobile-width: 648px;
 
 .navbar {
   background: $white;
+  border-bottom: 1px solid $background-gray;
   height: $topbar-row-height;
   line-height: $topbar-row-height;
   margin: 0 auto;
@@ -21,11 +21,6 @@ $nav-mobile-width: 648px;
 
 .navbar-top {
   z-index: 2;
-}
-
-.navbar-bottom {
-  border-bottom: 1px solid $background-gray;
-  border-top: 1px solid $background-gray;
 }
 
 .navbar-inner {
@@ -53,7 +48,7 @@ $nav-mobile-width: 648px;
 .nav-menu-eol {
   background: $white;
   color: $eol-green;
-  height: 100%;
+  height: $topbar-row-height - 1px; // for some reason, needed to not overlap border of parent
   padding: 0 11px;
   position: relative;
   width: 85px;
@@ -280,6 +275,90 @@ $nav-mobile-width: 648px;
   }
 }
 
+.slide-menu {
+  background: $navbar-gray;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 10px 10px 0 10px;
+  position: fixed;
+  right: -300px;
+  top: 0;
+  width: 300px;
+}
+
+.lang-menu-slide {
+  display: block;
+  float: none;
+  width: 280px;
+}
+
+.user-links-slide {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.nav-lnks {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.nav-lnks-mob {
+  display: block;
+}
+
+.nav-lnk {
+  color: #74a561;
+  height: $topbar-row-height;
+  line-height: $topbar-row-height;
+  padding: 0 5px;
+  position: relative;
+
+  & > a {
+    color: #74a561;
+    text-decoration: none;
+  }
+}
+
+.nav-lnk-menu {
+  background: $white;
+  color: $black;
+  display: none;
+  left: 50%;
+  line-height: 62px;
+  margin-left: -100px;
+  position: absolute;
+  text-align: center;
+  top: $topbar-row-height - 1px;
+  width: 200px;
+  z-index: 2;
+
+  & > li {
+    border-top: 1px solid $background-gray;
+    padding: 0 8px;
+
+    & > a {
+      color: $black;
+      text-decoration: none;
+    }
+  }
+}
+
+.nav-lnk:hover .nav-lnk-menu {
+  display: block;
+}
+
+.nav-lnks-mob {
+  padding-top: 10px;
+}
+
+.nav-lnk-mob, .nav-lnk-mob > a {
+  color: $black;
+  font-size: 14px;
+  font-weight: $semibold;
+  line-height: 28px;
+  text-decoration: none;
+}
+
 @media screen and (max-width: $nav-mobile-width) {
   .nav-user-menu {
     display: block;
@@ -308,74 +387,9 @@ $nav-mobile-width: 648px;
       display: none;
     }
   }
-}
 
-.slide-menu {
-  background: $navbar-gray;
-  box-sizing: border-box;
-  height: 100%;
-  padding: 10px 10px 0 10px;
-  position: fixed;
-  right: -300px;
-  top: 0;
-  width: 300px;
-}
-
-.lang-menu-slide {
-  display: block;
-  width: 280px;
-}
-
-.user-links-slide {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.nav-items {
-  display: flex;
-  justify-content: space-evenly;
-
-}
-
-.nav-item {
-  color: #74a561;
-  display: inline-block;
-  height: $topbar-row-height;
-  line-height: $topbar-row-height;
-  padding: 0 5px;
-  position: relative;
-
-  & > a {
-    color: #74a561;
-    text-decoration: none;
+  .navbar-bottom {
+    display: none;
   }
-}
-
-.nav-item-menu {
-  background: $white;
-  color: $black;
-  display: none;
-  left: 50%;
-  line-height: 62px;
-  margin-left: -100px;
-  padding: 0 8px;
-  position: absolute;
-  text-align: center;
-  top: $topbar-row-height - 1px;
-  width: 200px;
-  z-index: 2;
-
-  & > li {
-    border-top: 1px solid $background-gray;
-
-    & > a {
-      color: $black;
-      text-decoration: none;
-    }
-  }
-}
-
-.nav-item:hover .nav-item-menu {
-  display: block;
 }
 

@@ -371,3 +371,9 @@ $hero-transition-width: 525;
   }
 }
 
+
+@media screen and (max-width: $nav-mobile-width) {
+  body {
+    padding-top: $topbar-row-height;
+  }
+}

@@ -17,33 +17,8 @@
           = render :partial => "shared/user_links", :locals => { :top_class => "user-links-nav" }
           .nav-user-menu-toggle.js-slide-menu-toggle
             %i.fa.fa-bars.fa-lg
-          %ul.nav-user-menu.is-hidden.js-nav-user-menu
-            %li.nav-user-menu-lang.js-nav-user-menu-lang
-              %span= t("language")
-              %i.fa.fa-caret-down
-              %i.fa.fa-caret-up
-            = render :partial => "shared/lang_select", :locals => { :extra_class => "nav-user-menu-lang-menu" }
-            -if logged_in_user
-              %li
-                = link_to(logged_in_user.user_name, account_path)
-              %li
-                = link_to(t("shared.header.sign_out"), logout_path)
-            -else
-              %li
-                = link_to(t("shared.header.sign_in"), login_path)
       %h1#Title.title 
         = t ".main_title"
   .navbar.navbar-bottom<
     .navbar-inner
-      %ul.nav-items
-        %li.nav-item= link_to("Biodiversity Cards", card_maker_path)
-        %li.nav-item
-          = link_to("Lesson Plans", lesson_plans_path)
-          %ul.nav-item-menu
-            %li= link_to("Grades 2-5", lesson_plans_path(anchor: "grade_level=0"))
-            %li= link_to("Grades 6-8", lesson_plans_path(anchor: "grade_level=1"))
-            %li= link_to("Grades 9-12", lesson_plans_path(anchor: "grade_level=2"))
-        %li.nav-item= link_to("Podcasts", podcasts_path)
-        %li.nav-item= link_to("Google Earth Tours", earth_tours_path)
-        %li.nav-item= link_to("Biodiversity Articles", "http://eol.org/info/discover_articles")
-        %li.nav-item Partner Resources
+      = render "shared/nav_items", menu_class: "nav-lnks", sub_menu_class: "nav-lnk-menu", item_class: "nav-lnk", show_sub_menus: true

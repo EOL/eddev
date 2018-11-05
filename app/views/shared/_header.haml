@@ -35,15 +35,15 @@
         = t ".main_title"
   .navbar.navbar-bottom<
     .navbar-inner
-      %ul.nav-links
-        %li.nav-link= link_to("Biodiversity Cards", card_maker_path)
-        %li.nav-link
+      %ul.nav-items
+        %li.nav-item= link_to("Biodiversity Cards", card_maker_path)
+        %li.nav-item
           = link_to("Lesson Plans", lesson_plans_path)
-          %ul.nav-link-menu
+          %ul.nav-item-menu
             %li= link_to("Grades 2-5", lesson_plans_path(anchor: "grade_level=0"))
             %li= link_to("Grades 6-8", lesson_plans_path(anchor: "grade_level=1"))
             %li= link_to("Grades 9-12", lesson_plans_path(anchor: "grade_level=2"))
-        %li.nav-link= link_to("Podcasts", podcasts_path)
-        %li.nav-link= link_to("Google Earth Tours", earth_tours_path)
-        %li.nav-link= link_to("Biodiversity Articles", "http://eol.org/info/discover_articles")
-        %li.nav-link Partner Resources
+        %li.nav-item= link_to("Podcasts", podcasts_path)
+        %li.nav-item= link_to("Google Earth Tours", earth_tours_path)
+        %li.nav-item= link_to("Biodiversity Articles", "http://eol.org/info/discover_articles")
+        %li.nav-item Partner Resources

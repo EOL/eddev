@@ -331,13 +331,13 @@ $nav-mobile-width: 648px;
   text-align: center;
 }
 
-.nav-links {
+.nav-items {
   display: flex;
   justify-content: space-evenly;
 
 }
 
-.nav-link {
+.nav-item {
   color: #74a561;
   display: inline-block;
   height: $topbar-row-height;
@@ -351,7 +351,7 @@ $nav-mobile-width: 648px;
   }
 }
 
-.nav-link-menu {
+.nav-item-menu {
   background: $white;
   color: $black;
   display: none;
@@ -375,8 +375,7 @@ $nav-mobile-width: 648px;
   }
 }
 
-.nav-link:hover .nav-link-menu {
+.nav-item:hover .nav-item-menu {
   display: block;
 }
-
 

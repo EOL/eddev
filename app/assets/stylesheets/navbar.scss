@@ -1,6 +1,5 @@
 @import "shared/layout_vars.scss";
 
-
 .navbar-outer {
   left: 0;
   position: fixed;
@@ -49,7 +48,7 @@
   background: $white;
   color: $eol-green;
   height: $topbar-row-height - 1px; // for some reason, needed to not overlap border of parent
-  padding: 0 11px;
+  padding: 0 10px;
   position: relative;
   width: 85px;
 
@@ -308,28 +307,41 @@
 
 .nav-lnk {
   color: #74a561;
+  cursor: default;
   height: $topbar-row-height;
   line-height: $topbar-row-height;
-  padding: 0 5px;
+  padding: 0 15px;
   position: relative;
 
-  & > a {
+  & a {
     color: #74a561;
+    cursor: pointer;
+    display: block;
+    height: 100%;
     text-decoration: none;
+    width: 100%;
+  }
+
+  &:hover {
+    .nav-lnk-txt, .nav-lnk-txt > a {
+      color: $eol-blue;
+    }
+
+    .nav-lnk-txt > a {
+      text-decoration: underline;
+    }
   }
 }
 
 .nav-lnk-menu {
   background: $white;
+  border: 1px solid $background-gray;
   color: $black;
   display: none;
-  left: 50%;
   line-height: 62px;
-  margin-left: -100px;
   position: absolute;
   text-align: center;
   top: $topbar-row-height - 1px;
-  width: 200px;
   z-index: 2;
 
   & > li {
@@ -340,23 +352,50 @@
       color: $black;
       text-decoration: none;
     }
+
+    &:hover, &:hover > a {
+      text-decoration: underline;
+    }
   }
 }
 
-.nav-lnk:hover .nav-lnk-menu {
-  display: block;
+  .nav-lnk:hover .nav-lnk-menu {
+    display: block;
+  }
+  
+  .nav-lnk-menu-lesson {
+    left: 50%;
+    margin-left: -100px;
+    width: 200px;
+  }
+
+  .nav-lnk-menu-partner {
+    right: 0;
+    width: 400px;
+  }
+
+.nav-lnk-menu-mob {
+  padding-left: 14px;
 }
 
 .nav-lnks-mob {
   padding-top: 10px;
 }
 
-.nav-lnk-mob, .nav-lnk-mob > a {
+.nav-lnk-mob, 
+.nav-lnk-mob a, 
+.nav-lnk-menu-mob > li, 
+.nav-lnk-menu-mob > li > a {
   color: $black;
   font-size: 14px;
   font-weight: $semibold;
-  line-height: 28px;
+  margin: 14px 0;
   text-decoration: none;
+}
+
+.nav-lnk-mob .nav-lnk-txt > a, 
+.nav-lnk-menu-mob > li > a {
+  text-decoration: underline;
 }
 
 @media screen and (max-width: $nav-mobile-width) {

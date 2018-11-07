@@ -16,4 +16,7 @@ class CardsController < ApplicationController
     @create_a_creature = LessonPlan.find_by(:grade_level => grade_level_2_5,
       :human_name => :create_a_creature)
   end
+
+  def resources
+  end
 end

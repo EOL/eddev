@@ -42,7 +42,7 @@
       ;
 
     $toggle.click(slideMenuOpen);
-
+    $(window).on('hashchange', slideMenuClose);
     $(window).resize(function() {
       if ($(window).width() > navMobileWidth) {
         var $fixed = fixedElmtsForSlideMenu();

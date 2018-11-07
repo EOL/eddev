@@ -86,13 +86,24 @@
   font-size: 14px;
   line-height: $height;
   position: relative;
+  user-select: none;
 
   & > .lang-item-choice {
     display: none;
   }
 
-  &.is-lang-menu-open > .lang-item-choice {
-    display: block;
+  &.is-lang-menu-open {
+    & > .lang-item-choice {
+      display: block;
+    }
+
+    & .nav-menu-caret-down {
+      display: none;
+    }
+
+    & .nav-menu-caret-up {
+      display: block;
+    }
   }
 
   a {
@@ -100,6 +111,14 @@
     display: block;
     text-decoration: none;
     width: 100%;
+  }
+
+  & .nav-menu-caret-down {
+    display: block;
+  }
+
+  & .nav-menu-caret-up {
+    display: none;
   }
 }
 
@@ -239,26 +258,6 @@
     & > a {
       color: $black;
     }
-  }
-}
-
-.nav-user-menu-lang {
-  & > i {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-  }
-
-  & > .fa-caret-up {
-    display: none;
-  }
-
-  &.is-lang-menu-open > .fa-caret-up {
-    display: inline;
-  }
-
-  &.is-lang-menu-open > .fa-caret-down {
-    display: none;
   }
 }
 

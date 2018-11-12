@@ -894,7 +894,9 @@ $col-border-width: 5px;
   }
 
   .multiline-text-field-input {
+    background: white;
     display: block;
+    font-size: 12px;
     resize: none;
     margin: 22px auto;
     height: 162px;

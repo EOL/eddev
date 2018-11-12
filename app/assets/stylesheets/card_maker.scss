@@ -902,6 +902,10 @@ $col-border-width: 5px;
     height: 162px;
     padding: 7px 12px;
     width: 350px;
+
+    & b {
+      font-weight: $bold;
+    }
   }
 
   .text-field-input {

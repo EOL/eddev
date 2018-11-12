@@ -27,14 +27,17 @@ function serializeNode(node, options = {}) {
   ) {
     return node.nodes.map(serializeNode).join(delimiter);
   } else {
-    var hasBold = node.getMarks().some((mark) => {
-      return mark.type == 'bold'
-    })
-    if (hasBold) {
-      return '<b>' + node.text + '</b>';
-    } else {
-      return node.text;
-    }
+    return node.leaves.map((leaf) => {
+      var hasBold = leaf.marks.some((mark) => {
+        return mark.type == 'bold'
+      })
+
+      if (hasBold) {
+        return '<b>' + leaf.text + '</b>';
+      } else {
+        return leaf.text;
+      }
+    }).join('');
   }
 }
 

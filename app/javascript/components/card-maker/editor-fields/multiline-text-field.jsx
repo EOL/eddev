@@ -3,6 +3,7 @@ import { Editor } from 'slate-react'
 import { Value } from 'slate'
 import Html from 'slate-html-serializer'
 import MarkSerializer from 'lib/card-maker/mark-serializer'
+import TextToolbar from './text-toolbar'
 
 import fieldWrapper from './field-wrapper'
 
@@ -77,12 +78,10 @@ class MultilineTextField extends React.Component {
 
   onKeyDown = (event, editor, next) => {
     if (!event.ctrlKey) return next()
-    // Decide what to do based on the key code...
     switch (event.key) {
-      // When "B" is pressed, add a "bold" mark to the text.
       case 'b': {
         event.preventDefault()
-        editor.addMark('bold')
+        editor.toggleMark('bold')
       }
       default: {
         return next()
@@ -99,15 +98,33 @@ class MultilineTextField extends React.Component {
     }
   }
 
+  isMarkActive = type => {
+    const { value } = this.state;
+    return value.activeMarks.some(mark => mark.type == type);
+  }
+
   render() {
+    const buttons = {
+      bold: this.isMarkActive('bold')
+    };
+
+    console.log(buttons);
+
     return (
-      <Editor 
-        className={'text-entry multiline-text-field-input'}
-        value={this.state.value}
-        onChange={this.handleChange}
-        onKeyDown={this.onKeyDown}
-        renderMark={this.renderMark}
-      />
+      <div>
+        <TextToolbar 
+          buttons={buttons}
+          onButtonClick={type => this.editor && this.editor.toggleMark(type)}
+        />
+        <Editor 
+          className={'text-entry multiline-text-field-input'}
+          value={this.state.value}
+          onChange={this.handleChange}
+          onKeyDown={this.onKeyDown}
+          renderMark={this.renderMark}
+          ref={editor => this.editor = editor}
+        />
+      </div>
     );
   }
 }

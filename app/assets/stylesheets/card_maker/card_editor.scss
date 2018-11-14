@@ -286,3 +286,19 @@ $key-val-field-spacing: 2px;
   z-index: 4 !important;
 }
 
+// Text toolbar
+.textButton {
+  background-color: $white;
+  color: $black;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 10px;
+
+  & > i {
+    color: $black;
+  }
+}
+  
+  .isTextButtonActive {
+    background-color: #bbb;
+  }

@@ -286,19 +286,53 @@ $key-val-field-spacing: 2px;
   z-index: 4 !important;
 }
 
+.richTextField {
+  margin: 22px auto;
+  position: relative;
+  width: 350px;
+}
+
+.richTextEditor {
+  height: 162px;
+  font-size: 12px;
+  padding: 7px 12px;
+  width: 100%;
+
+  & strong {
+    font-weight: bold;
+  }
+
+  & em {
+    font-style: italic;
+  }
+}
+
 // Text toolbar
 .textButton {
   background-color: $white;
+  border-radius: 2px;
   color: $black;
   cursor: pointer;
   display: inline-block;
+  margin-right: 5px;
   padding: 5px 10px;
 
   & > i {
     color: $black;
   }
+
+  &:hover {
+    background-color: #ddd;
+  }
 }
   
-  .isTextButtonActive {
+  .isTextButtonActive, .isTextButtonActive:hover {
     background-color: #bbb;
   }
+
+.textToolbar {
+  background-color: white;
+  border-bottom: 1px solid $black;
+  padding: 5px 10px;
+}
+

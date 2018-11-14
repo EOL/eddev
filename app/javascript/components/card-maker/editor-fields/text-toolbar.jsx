@@ -1,9 +1,10 @@
 import React from 'react'
 import TextButton from './text-button'
+import styles from 'stylesheets/card_maker/card_editor'
 
 function TextToolbar(props) {
   return (
-    <div>
+    <ul className={styles.textToolbar}>
       {Object.keys(props.buttons).map(button => {
         return <TextButton 
           icon={button} 
@@ -13,9 +14,10 @@ function TextToolbar(props) {
             e.preventDefault();
             props.onButtonClick(button)
           }}
+					key={button}
         />
       })}
-    </div>
+    </ul>
   );
 }
 

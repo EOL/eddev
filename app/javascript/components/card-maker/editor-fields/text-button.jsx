@@ -10,9 +10,9 @@ function TextButton(props) {
 
   return (
     // mouse down instead of click so we can prevent the editor from losing focus with e.preventDefault
-    <div className={classNames.join(' ')} onMouseDown={props.onMouseDown}>
+    <li className={classNames.join(' ')} onMouseDown={props.onMouseDown}>
       <i className={`fa fa-${props.icon}`} />
-    </div>
+    </li>
   );
 }
 

@@ -8,22 +8,22 @@ const MARK_TAGS = {
 }
 
 const htmlRules = [
-			{
-				deserialize(el, next) {
-					const type = MARK_TAGS[el.tagName.toLowerCase()]
-					if (type) {
-						return {
-							object: 'mark',
-							type: type,
-							nodes: next(el.childNodes),
-						}
-					}
-				},
-				serialize(obj, children) {} // unused
-			}
-		]
-	, html = new Html({ rules: htmlRules })
-	;
+      {
+        deserialize(el, next) {
+          const type = MARK_TAGS[el.tagName.toLowerCase()]
+          if (type) {
+            return {
+              object: 'mark',
+              type: type,
+              nodes: next(el.childNodes),
+            }
+          }
+        },
+        serialize(obj, children) {} // unused
+      }
+    ]
+  , html = new Html({ rules: htmlRules })
+  ;
 
 /**
  * Serialize a Slate `value` to a text string with html tags representing marks
@@ -53,24 +53,34 @@ function serializeNode(node, options = {}) {
     return node.nodes.map(serializeNode).join(delimiter);
   } else {
     return node.leaves.map((leaf) => {
-      var beforeTags = []
+      var isBold = false
+        , isItalic = false
+        , beforeTags = []
         , afterTags = []
         ;
 
+      // This two-step process is to ensure deterministic ordering of the tags
       leaf.marks.forEach((mark) => {
         switch (mark.type) {
-          case 'bold': {
-            beforeTags.push('<strong>');
-            afterTags.push('</strong>');
+          case 'bold':
+            isBold = true;
             break;
-          }
           case 'italic': {
-            beforeTags.push('<em>');
-            afterTags.push('</em>');
+            isItalic = true;
             break;
           }
         }
       });
+
+      if (isBold) {
+        beforeTags.push('<strong>');
+        afterTags.push('</strong>');
+      }
+
+      if (isItalic) {
+        beforeTags.push('<em>');
+        afterTags.push('</em>');
+      }
 
       return beforeTags.join('') + leaf.text + afterTags.reverse().join('');
     }).join('');
@@ -94,12 +104,16 @@ function deserialize(string, options = {}) {
       object: 'document',
       data: {},
       nodes: string.split(delimiter).map(line => {
+        var lineDoc = html.deserialize(line).document
+          , lineNodes = !lineDoc.nodes.isEmpty() ? lineDoc.nodes.first().nodes : []
+          ;
+
         return {
           ...defaultBlock,
           object: 'block',
           data: {},
-          nodes: html.deserialize(line).document.nodes
-				}
+          nodes: lineNodes
+        }
       }),
     },
   }
@@ -116,5 +130,5 @@ function deserialize(string, options = {}) {
 
 export default {
   serialize,
-	deserialize
+  deserialize
 }

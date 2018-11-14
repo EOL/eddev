@@ -18,8 +18,8 @@ class MultilineTextField extends React.Component {
   }
 
   handleChange = ({ value }) => {
-    if (value != this.state.value) {
-      var serialized = MarkSerializer.serialize(value)
+    var serialized = MarkSerializer.serialize(value)
+    if (serialized !== this.props.value.text) {
       this.props.setDataAttr('text', serialized);
     }
 

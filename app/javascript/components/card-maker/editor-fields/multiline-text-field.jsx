@@ -11,7 +11,7 @@ const BLOCK_TAGS = {
 }
 
 const MARK_TAGS = {
-  strong: 'bold'
+  b: 'bold'
 }
 
 const rules = [

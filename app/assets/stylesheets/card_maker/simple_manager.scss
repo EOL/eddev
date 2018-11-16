@@ -1,0 +1,46 @@
+.headerBar {
+  border-bottom: 1px solid black;
+  font-weight: bold;
+  padding: 10px 0;
+  position: relative;
+  text-align: center;
+
+  & > i {
+    cursor: pointer;
+    left: 10px;
+    position: absolute;
+    top: 5px;
+  }
+}
+
+// Deck area
+.decks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;  
+}
+
+.deck, .card { // I expect these styles to diverge, so separate classes
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 7px;
+  cursor: pointer;
+  display: flex;
+  height: 266px;
+  justify-content: center;
+  margin-bottom: 10px;
+  overflow: hidden;
+  text-align: center;
+  width: 200px;
+
+  & img {
+    height: 100%;
+    width: 100%; 
+  }
+}
+
+.deckText {
+  padding: 0 10px;
+}
+

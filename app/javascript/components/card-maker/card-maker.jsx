@@ -2,6 +2,7 @@ import React from 'react'
 import ReactModal from 'react-modal'
 
 import Page from 'components/shared/page'
+import SimpleManager from './simple-manager'
 import CardManager from './card-manager'
 import CardEditor from './card-editor'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
@@ -117,7 +118,7 @@ class CardMaker extends React.Component {
       userDecks: [],
       publicCards: [],
       publicDecks: [],
-      selectedDeck: allCardsDeck,
+      selectedDeck: null,
       library: 'public',
       screen: 'manager',
       sort: sorts[publicSorts[0].key],
@@ -213,12 +214,8 @@ class CardMaker extends React.Component {
     that.reloadResource(that.state.library, 'cards', () => {
       that.reloadResource(that.state.library, 'decks', (decks) => {
         let selectedDeck = decks.find((deck) => {
-          return deck.id === (deckOverrideId || that.state.selectedDeck.id);
+          return deck.id === (deckOverrideId || (that.state.selectedDeck && that.state.selectedDeck.id));
         });
-
-        if (!selectedDeck) {
-          selectedDeck = allCardsDeck;
-        }
 
         that.setState({
           selectedDeck: selectedDeck
@@ -376,7 +373,7 @@ class CardMaker extends React.Component {
 
     if (this.state.screen === 'manager') {
       component = (
-        <CardManager
+        <SimpleManager
           allCardsDeck={allCardsDeck}
           cards={this.state.library === 'user' ? this.state.userCards : this.state.publicCards}
           decks={this.state.library === 'user' ? this.state.userDecks : this.state.publicDecks}
@@ -444,8 +441,7 @@ class CardMaker extends React.Component {
             <div>{this.state.loadingOverlayText}</div>
           }
         </ReactModal>
-
-        <Page>{this.screenComponent()}</Page>
+        {this.screenComponent()}
       </div>
     )
   }

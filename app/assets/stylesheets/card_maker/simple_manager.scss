@@ -59,8 +59,8 @@
 .decks {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  padding: 20px;  
+  justify-content: center;
+  padding: 20px -10px;  
 }
 
 .deck, .card { // I expect these styles to diverge, so separate classes
@@ -71,7 +71,7 @@
   display: flex;
   height: 266px;
   justify-content: center;
-  margin-bottom: 10px;
+  margin: 10px;
   overflow: hidden;
   text-align: center;
   width: 200px;
@@ -79,6 +79,10 @@
   & img {
     height: 100%;
     width: 100%; 
+  }
+
+  &:hover {
+    background-color: #eee;
   }
 }
 

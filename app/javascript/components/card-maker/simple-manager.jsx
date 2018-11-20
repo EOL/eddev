@@ -13,7 +13,7 @@ function DescPart(props) {
     let text; 
 
     if (props.selectedDeck) {
-      text = props.selectedDeck.desc;
+      text = desc;
     } else {
       text = 'Welcome to the public biodiversity card library! You can browse and print our pre-made decks here, or create your own by switching to your library.';
     }
@@ -84,20 +84,61 @@ class SimpleManager extends React.Component {
     );
   }
 
+  newElmt = (text, onClick) => {
+    return (
+      <li
+        className={[styles.card, styles.cardNew].join(' ')}
+        onClick={onClick}
+        key='new'
+      >
+        <div>
+          <i className='fa fa-plus fa-3x' />
+          <div>{text}</div>
+        </div>
+      </li>
+    );
+  }
+
+  newCardElmt = () => {
+    return this.newElmt(
+      'new card', 
+      () => this.setState({ openModal: 'newCard' })
+    );
+  }
+
+  newDeckElmt = () => {
+    return this.newElmt(
+      'new deck', 
+      () => this.setState({ openModal: 'newDeck' })
+    );
+  }
+
   resources = () => {
+    let resources;
+
     if (this.props.selectedDeck) {
       let deckCards = this.props.cards.filter((card) => {
         return card.deck === this.props.selectedDeck.id;
       });
 
-      return deckCards.map((card) => {
+      resources = deckCards.map((card) => {
         return this.cardItem(card);
       });
     } else {
-      return this.props.decks.map((deck) => {
+      resources = this.props.decks.map((deck) => {
         return this.deckItem(deck);
       });
     }
+
+    if (this.props.library === 'user') {
+      if (this.props.selectedDeck) {
+        resources = [this.newCardElmt()].concat(resources);
+      } else {
+        resources = [this.newDeckElmt()].concat(resources);
+      }
+    }
+
+    return resources;
   }
 
   closeModal = () => {
@@ -129,6 +170,79 @@ class SimpleManager extends React.Component {
     });
   }
 
+  handleCreateDeck = (deckName, colId) => {
+    this.createDeckHelper(deckName, colId, null, false);
+  }
+
+  createDeckHelper = (deckName, colId, copyFrom, upgrade) => {
+    const that = this
+        , showUpgradedNotice = upgrade
+        , data = {
+            name: deckName,
+            copyFrom: copyFrom,
+            upgradeTemplates: upgrade
+          }
+        ;
+
+    that.props.showLoadingOverlay(null, (closeFn) => {
+      $.ajax({
+        url: cardMakerUrl('decks'),
+        method: 'POST',
+        data: JSON.stringify(data),
+        success: (deck) => {
+          const cb = (err) => { 
+            if (err) {
+              closeFn();
+              alert(I18n.t('react.card_maker.unexpected_error_msg'));
+            } else {
+              that.props.setLibrary('user', () => {
+                that.showDeck(deck.id, closeFn);
+
+                if (showUpgradedNotice) {
+                  that.openModal(modals.deckUpgradedNotice);
+                }
+              });
+            }
+          }
+
+          if (colId != null && colId.length) {
+            that.populateDeckFromCollection(deck.id, colId, cb);
+          } else {
+            cb();
+          }
+        },
+        error: function(err) {
+          var alertMsg = '';
+
+          closeFn();
+
+          if (err.status === 422 &&
+              err.responseJSON &&
+              err.responseJSON.errors
+          ) { // Validation error
+            alertMsg = err.responseJSON.errors.join('\n');
+          } else {
+            alertMsg = I18n.t('react.card_maker.unexpected_error_msg')
+          }
+
+          alert(alertMsg);
+        }
+      });
+    });
+  }
+
+  showDeck = (id, cb) => {
+    var deck = this.props.decks.find((deck) => {
+      return deck.id === id;
+    });
+
+    if (deck) {
+      this.props.setSelectedDeck(deck, cb);
+    } else if (cb) {
+      cb();
+    }
+  }
+
   render() {
     return (
       <div>
@@ -137,6 +251,8 @@ class SimpleManager extends React.Component {
           selectedDeck={this.props.selectedDeck}
           closeModal={this.closeModal}
           onRequestSaveDeckDesc={this.handleSaveDeckDesc}
+          userDeckNames={new Set(this.props.userDecks.map((deck) => deck.name))}
+          onRequestCreateDeck={this.handleCreateDeck}
         />
         <HeaderBar
           selectedDeck={this.props.selectedDeck}

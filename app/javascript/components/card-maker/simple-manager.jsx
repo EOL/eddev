@@ -1,11 +1,56 @@
 import React from 'react';
 
+import ManagerModals from './manager-modals'
 import LoadingSpinnerImage from './loading-spinner-image'
-import {loResCardImageUrl} from 'lib/card-maker/url-helper'
-import Card from './card'
+import {cardMakerUrl, loResCardImageUrl} from 'lib/card-maker/url-helper'
+import HeaderBar from './header-bar'
 import styles from 'stylesheets/card_maker/simple_manager'
 
+function DescPart(props) {
+  let inner;
+
+  if (props.library == 'public') {
+    let text; 
+
+    if (props.selectedDeck) {
+      text = props.selectedDeck.desc;
+    } else {
+      text = 'Welcome to the public biodiversity card library! You can browse and print our pre-made decks here, or create your own by switching to your library.';
+    }
+
+    return <p className={styles.desc}>{text}</p>;
+  } else {
+    if (props.selectedDeck) {
+      if (props.selectedDeck.desc) {
+        return (
+          <p className={styles.desc}>
+            {props.selectedDeck.desc} 
+            <i onClick={props.onRequestEditDesc} className={'fa fa-edit'} />
+          </p>
+        );
+      } else {
+        return (
+          <div 
+            className={[styles.btn, styles.btnDesc].join(' ')}
+            onClick={props.onRequestEditDesc}
+          >add a description</div>
+        );
+      }
+    }
+  }
+
+  return null;
+}
+
 class SimpleManager extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      openModal: null
+    }
+  }
+
   deckItem = (deck) => {
     var inner;
 
@@ -39,26 +84,6 @@ class SimpleManager extends React.Component {
     );
   }
 
-  headerBar = () => {
-    var headerText;
-
-    if (this.props.selectedDeck) {
-      headerText = this.props.selectedDeck.name;
-    } else {
-      headerText = 'Browsing All Decks';
-    }
-
-    return (
-      <div className={styles.headerBar}>
-        {
-          this.props.selectedDeck != null &&
-          <i className='fa fa-arrow-left fa-2x' onClick={() => this.props.setSelectedDeck(null)} />
-        }
-        <h1>{headerText}</h1>
-      </div>
-    );
-  }
-
   resources = () => {
     if (this.props.selectedDeck) {
       let deckCards = this.props.cards.filter((card) => {
@@ -75,10 +100,55 @@ class SimpleManager extends React.Component {
     }
   }
 
+  closeModal = () => {
+    this.setState({
+      openModal: null
+    });
+  }
+
+  handleSaveDeckDesc = (desc) => {
+    const that = this
+      , url = cardMakerUrl(
+            'decks/' +
+            this.props.selectedDeck.id +
+            '/desc'
+          )
+        ;
+
+    that.closeModal();
+    that.props.showLoadingOverlay(null, (close) => {
+      $.ajax({
+        method: 'POST',
+        data: desc,
+        url: url,
+        success: () => {
+          that.props.reloadCurLibResources(close);
+        },
+        error: close
+      });
+    });
+  }
+
   render() {
     return (
       <div>
-        {this.headerBar()}
+        <ManagerModals 
+          openModal={this.state.openModal} 
+          selectedDeck={this.props.selectedDeck}
+          closeModal={this.closeModal}
+          onRequestSaveDeckDesc={this.handleSaveDeckDesc}
+        />
+        <HeaderBar
+          selectedDeck={this.props.selectedDeck}
+          setSelectedDeck={this.props.setSelectedDeck}
+          library={this.props.library}
+          setLibrary={this.props.setLibrary}
+        />
+        <DescPart
+          library={this.props.library}
+          selectedDeck={this.props.selectedDeck}
+          onRequestEditDesc={() => this.setState({ openModal: 'deckDesc' })}
+        />
         <ul className={styles.decks}>
           {this.resources()}
         </ul>

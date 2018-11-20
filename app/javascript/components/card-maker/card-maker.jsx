@@ -340,6 +340,12 @@ class CardMaker extends React.Component {
         }
       ;
 
+    if (!this.state.userRole && newLib === 'user') {
+      // then we're toggling to user library, and they need to log in
+      window.location = './login';
+      return;
+    }
+
     if (that.state.library !== newLib) {
       that.setState((prevState) => {
         return {

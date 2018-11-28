@@ -21,7 +21,7 @@ function ManagerModals(props) {
       <SpeciesSearchLightbox
         isOpen={props.openModal === 'newCard'}
         handleClose={props.closeModal}
-        handleCreate={props.handleCreateCard}
+        handleCreate={props.onRequestCreateCard}
         selectedDeckId={props.selectedDeck ? props.selectedDeck.id : null}
       />
     </div>

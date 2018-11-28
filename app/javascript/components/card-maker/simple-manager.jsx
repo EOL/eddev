@@ -2,7 +2,7 @@ import React from 'react';
 
 import ManagerModals from './manager-modals'
 import LoadingSpinnerImage from './loading-spinner-image'
-import {cardMakerUrl, loResCardImageUrl} from 'lib/card-maker/url-helper'
+import {cardMakerUrl, loResCardImageUrl, createCardUrl} from 'lib/card-maker/url-helper'
 import HeaderBar from './header-bar'
 import styles from 'stylesheets/card_maker/simple_manager'
 
@@ -13,7 +13,7 @@ function DescPart(props) {
     let text; 
 
     if (props.selectedDeck) {
-      text = desc;
+      text = props.selectedDeck.desc;
     } else {
       text = 'Welcome to the public biodiversity card library! You can browse and print our pre-made decks here, or create your own by switching to your library.';
     }
@@ -243,6 +243,49 @@ class SimpleManager extends React.Component {
     }
   }
 
+  createOrCopyCard = (data, deck) => {
+    let that = this;
+
+    that.props.showLoadingOverlay(null, (closeFn) => {
+      $.ajax({
+        url: createCardUrl(deck),
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        method: 'POST',
+        success: (card) => {
+          that.props.reloadCurLibResources(() => {
+            closeFn();
+            if (!data.copyFrom) {
+              that.props.handleEditCard(card.id);
+            }
+          })
+        },
+        error: () => {
+          alert(I18n.t('react.card_maker.unexpected_error_msg'));
+          closeFn();
+        }
+      });
+    });
+  }
+
+  handleCopyCard = (deckId) => {
+    this.closeModal();
+    this.createOrCopyCard({ 
+      copyFrom: this.state.copyCardId 
+    }, deckId);
+  }
+
+  handleCreateCard = (template, params) => {
+    const data = {
+            templateName: template,
+            templateParams: params,
+          }
+        ;
+
+    this.closeModal();
+    this.createOrCopyCard(data, this.props.selectedDeck);
+  }
+
   render() {
     return (
       <div>
@@ -253,6 +296,7 @@ class SimpleManager extends React.Component {
           onRequestSaveDeckDesc={this.handleSaveDeckDesc}
           userDeckNames={new Set(this.props.userDecks.map((deck) => deck.name))}
           onRequestCreateDeck={this.handleCreateDeck}
+          onRequestCreateCard={this.handleCreateCard}
         />
         <HeaderBar
           selectedDeck={this.props.selectedDeck}

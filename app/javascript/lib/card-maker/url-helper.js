@@ -24,3 +24,10 @@ export function deckUrl(deck) {
     locale: (I18n.locale === I18n.defaultLocale ? null : I18n.locale) 
   }) + '#deck_id=' + deck.id;
 }
+
+export function createCardUrl(deck) {
+  return deck ? 
+    cardMakerUrl('decks/' + deck.id + '/cards') :
+    cardMakerUrl('cards');
+}
+

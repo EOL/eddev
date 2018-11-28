@@ -4,6 +4,7 @@ import ManagerModals from './manager-modals'
 import LoadingSpinnerImage from './loading-spinner-image'
 import {cardMakerUrl, loResCardImageUrl, createCardUrl} from 'lib/card-maker/url-helper'
 import HeaderBar from './header-bar'
+import Toolbar from './toolbar'
 import styles from 'stylesheets/card_maker/simple_manager'
 
 function DescPart(props) {
@@ -304,6 +305,10 @@ class SimpleManager extends React.Component {
           library={this.props.library}
           setLibrary={this.props.setLibrary}
         />
+        {
+          this.props.selectedDeck != null && 
+          <Toolbar />
+        }
         <DescPart
           library={this.props.library}
           selectedDeck={this.props.selectedDeck}

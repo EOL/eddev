@@ -36,7 +36,7 @@ function HeaderBar(props) {
   }
 
   return (
-    <div className={styles.headerBar}>
+    <div className={[styles.bar, styles.headerBar].join(' ')}>
       {
         props.selectedDeck != null &&
         <i className='fa fa-angle-left fa-2x' onClick={() => props.setSelectedDeck(null)} />

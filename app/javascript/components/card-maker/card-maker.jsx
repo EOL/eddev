@@ -350,7 +350,7 @@ class CardMaker extends React.Component {
       that.setState((prevState) => {
         return {
           library: newLib,
-          selectedDeck: allCardsDeck,
+          selectedDeck: null,
           sort: sorts[that.sortsForLib(newLib)[0].key]
         };
       }, reloadFn);

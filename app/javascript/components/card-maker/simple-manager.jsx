@@ -350,6 +350,27 @@ class SimpleManager extends React.Component {
     this.pollJob('deck_pdfs', id, overlayCloseFn);
   }
 
+  createDeckPngs = () => {
+    const that = this;
+
+    that.props.showLoadingOverlay(
+      I18n.t('react.card_maker.it_may_take_a_few_mins'),
+      (closeFn) => {
+        $.ajax({
+          url: cardMakerUrl('deck_pngs'),
+          data: JSON.stringify({
+            deckId: that.props.selectedDeck.id
+          }),
+          method: 'POST',
+          success: (result) => {
+            that.pollJob('deck_pngs', result.jobId, closeFn);
+          },
+          error: closeFn
+        })
+      }
+    )
+  }
+
   render() {
     return (
       <div className={styles.simpleManager}>
@@ -375,6 +396,7 @@ class SimpleManager extends React.Component {
           this.props.selectedDeck != null && 
           <Toolbar 
             onRequestPrint={() => this.setState({ openModal: 'print' })} 
+            onRequestPngDownload={this.createDeckPngs}
           />
         }
         <div className={styles.managerMain}>

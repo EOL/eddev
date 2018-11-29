@@ -287,6 +287,21 @@ class SimpleManager extends React.Component {
     this.createOrCopyCard(data, this.props.selectedDeck);
   }
 
+  handleRenameDeck = (name) => {
+    const that = this;
+
+    that.props.showLoadingOverlay(null, (closeFn) => {
+      $.ajax({
+        url: cardMakerUrl(`decks/${this.props.selectedDeck.id}/name`),
+        method: 'POST',
+        data: name,
+        success: () => {
+          that.props.reloadCurLibResources(closeFn);
+        }
+      });
+    })
+  }
+
   render() {
     return (
       <div>
@@ -298,12 +313,14 @@ class SimpleManager extends React.Component {
           userDeckNames={new Set(this.props.userDecks.map((deck) => deck.name))}
           onRequestCreateDeck={this.handleCreateDeck}
           onRequestCreateCard={this.handleCreateCard}
+          onRequestRenameDeck={this.handleRenameDeck}
         />
         <HeaderBar
           selectedDeck={this.props.selectedDeck}
           setSelectedDeck={this.props.setSelectedDeck}
           library={this.props.library}
           setLibrary={this.props.setLibrary}
+          onRequestEditDeckName={() => this.setState({ openModal: 'renameDeck' })}
         />
         {
           this.props.selectedDeck != null && 

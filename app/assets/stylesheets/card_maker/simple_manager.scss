@@ -39,6 +39,14 @@
   top: 5px;
 }
 
+.headerText {
+  & > i {
+    color: $eol-blue;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+}
+
 .toolbar {
   padding-left: 10px;
   padding-right: 10px;

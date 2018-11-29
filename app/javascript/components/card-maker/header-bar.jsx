@@ -41,7 +41,13 @@ function HeaderBar(props) {
         props.selectedDeck != null &&
         <i className='fa fa-angle-left fa-2x' onClick={() => props.setSelectedDeck(null)} />
       }
-      <h1>{headerText}</h1>
+      <h1 className={styles.headerText}>
+        {headerText}
+        {
+          props.selectedDeck != null && props.library == 'user' &&
+            <i className="fa fa-edit" onClick={props.onRequestEditDeckName}/>
+        }
+      </h1>
       <LibButton {...props} />
     </div>
   );

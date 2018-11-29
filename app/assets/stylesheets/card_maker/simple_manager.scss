@@ -93,16 +93,18 @@
   }
 }
 
-.decks {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  padding: 15px;
+$deck-width: 200px;
+$deck-margin: 15px;
+
+@function decks-width($per-row) {
+  @return $per-row * $deck-width + 
+    (2 * $per-row + 2) * $deck-margin;
 }
 
-.decks::after {
-  content: "";
-  flex: auto;
+.decks {
+  padding: $deck-margin;
+  margin: 0 auto;
+  width: decks-width(5);
 }
 
 .deck, .card { // I expect these styles to diverge, so separate classes
@@ -110,13 +112,14 @@
   border: 1px solid black;
   border-radius: 7px;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   height: 266px;
   justify-content: center;
-  margin: 15px;
+  margin: $deck-margin;
   overflow: hidden;
   text-align: center;
-  width: 200px;
+  vertical-align: top;
+  width: $deck-width;
 
   & img {
     height: 100%;
@@ -157,4 +160,28 @@
 .btnSaveDesc {
   margin: 0 auto;
   width: 200px;
+}
+
+@media screen and (max-width: (decks-width(5) - 1px)) {
+  .decks {
+    width: decks-width(4);
+  }
+}
+
+@media screen and (max-width: (decks-width(4) - 1px)) {
+  .decks {
+    width: decks-width(3);
+  }
+}
+
+@media screen and (max-width: (decks-width(3) - 1px)) {
+  .decks {
+    width: decks-width(2);
+  }
+}
+
+@media screen and (max-width: (decks-width(2) - 1px)) {
+  .decks {
+    width: decks-width(1);
+  }
 }

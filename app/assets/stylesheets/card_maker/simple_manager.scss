@@ -1,5 +1,8 @@
 @import "layout_vars";
 
+.managerMain {
+}
+
 // common styles
 .btn {
   border: 1px solid #000;
@@ -109,6 +112,7 @@ $deck-margin: 15px;
 
 .deck, .card { // I expect these styles to diverge, so separate classes
   align-items: center;
+  background-color: #fff;
   border: 1px solid black;
   border-radius: 7px;
   cursor: pointer;

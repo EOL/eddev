@@ -5,7 +5,7 @@ function Toolbar(props) {
   return (
     <div className={[styles.bar, styles.toolbar].join(' ')}>
       <ul className={styles.toolbarBtns}>
-        <li><i className="fa fa-lg fa-print" /></li>
+        <li><i onClick={props.onRequestPrint} className="fa fa-lg fa-print" /></li>
         <li><i className="fa fa-lg fa-download" /></li>
         <li><i className="fa fa-lg fa-copy" /></li>
       </ul>

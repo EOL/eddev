@@ -7,6 +7,8 @@ import HeaderBar from './header-bar'
 import Toolbar from './toolbar'
 import styles from 'stylesheets/card_maker/simple_manager'
 
+const pollIntervalMillis = 1000;
+
 function DescPart(props) {
   let inner;
 
@@ -302,9 +304,55 @@ class SimpleManager extends React.Component {
     })
   }
 
+  handleMakePdf = (cardBackId) => {
+    const that = this;
+
+    that.closeModal();
+
+    that.props.showLoadingOverlay(
+      I18n.t('react.card_maker.print_loading_msg'), 
+      (closeFn) => {
+        $.ajax({
+          url: cardMakerUrl('deck_pdfs'),
+          data: JSON.stringify({
+            deckId: that.props.selectedDeck.id,
+            backId: cardBackId
+          }),
+          method: 'POST',
+          success: (result) => {
+            that.pollPdfJob(result.jobId, closeFn);
+          }
+        });
+      }
+    );
+  }
+
+  pollJob = (baseUrl, jobId, overlayCloseFn) => {
+    const that = this;
+
+    $.getJSON(cardMakerUrl(baseUrl + '/' + jobId + '/status'), (result) => {
+      if (result.status === 'done') {
+        overlayCloseFn();
+        window.open(cardMakerUrl(baseUrl + '/downloads/' + result.resultFileName));
+      } else if (result.status === 'running') {
+        setTimeout(() => {
+          that.pollJob(baseUrl, jobId, overlayCloseFn)
+        }, pollIntervalMillis)
+      } else {
+        overlayCloseFn();
+        alert(I18n.t('react.card_maker.unexpected_error_msg'));
+      }
+    });
+
+  }
+
+  pollPdfJob = (id, overlayCloseFn) => {
+    this.pollJob('deck_pdfs', id, overlayCloseFn);
+  }
+
   render() {
     return (
-      <div>
+      <div className={styles.simpleManager}>
         <ManagerModals 
           openModal={this.state.openModal} 
           selectedDeck={this.props.selectedDeck}
@@ -314,6 +362,7 @@ class SimpleManager extends React.Component {
           onRequestCreateDeck={this.handleCreateDeck}
           onRequestCreateCard={this.handleCreateCard}
           onRequestRenameDeck={this.handleRenameDeck}
+          onRequestMakePdf={this.handleMakePdf}
         />
         <HeaderBar
           selectedDeck={this.props.selectedDeck}
@@ -324,16 +373,20 @@ class SimpleManager extends React.Component {
         />
         {
           this.props.selectedDeck != null && 
-          <Toolbar />
+          <Toolbar 
+            onRequestPrint={() => this.setState({ openModal: 'print' })} 
+          />
         }
-        <DescPart
-          library={this.props.library}
-          selectedDeck={this.props.selectedDeck}
-          onRequestEditDesc={() => this.setState({ openModal: 'deckDesc' })}
-        />
-        <ul className={styles.decks}>
-          {this.resources()}
-        </ul>
+        <div className={styles.managerMain}>
+          <DescPart
+            library={this.props.library}
+            selectedDeck={this.props.selectedDeck}
+            onRequestEditDesc={() => this.setState({ openModal: 'deckDesc' })}
+          />
+          <ul className={styles.decks}>
+            {this.resources()}
+          </ul>
+        </div>
       </div>
     );
   }

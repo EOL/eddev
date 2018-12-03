@@ -10,6 +10,25 @@ class Toolbar extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('click', this.closeMenu);
+  }
+
+  openMenu = () => {
+    this.setState({
+      menuOpen: true
+    });
+
+    document.addEventListener('click', this.closeMenu);
+  }
+
+  closeMenu = () => {
+    document.removeEventListener('click', this.closeMenu);
+    this.setState({
+      menuOpen: false
+    });
+  }
+
   render() {
     return (
       <div className={[styles.bar, styles.toolbar].join(' ')}>
@@ -28,7 +47,7 @@ class Toolbar extends React.Component {
           ><i className="fa fa-lg fa-copy" /></li>
           {
             (this.props.showOwnerOptions || this.props.showAdminOptions) && (
-              <li className={[styles.toolbarBtn, styles.toolbarBtnMenu].join(' ')} onClick={() => this.setState({ menuOpen: true })}>
+              <li className={[styles.toolbarBtn, styles.toolbarBtnMenu].join(' ')} onClick={this.openMenu}>
                 <span>more&nbsp;</span>
                 <i className="fa fa-caret-down" />
                 {

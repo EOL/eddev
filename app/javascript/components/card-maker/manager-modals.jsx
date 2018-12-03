@@ -4,6 +4,7 @@ import NewDeckLightbox from './new-deck-lightbox'
 import SpeciesSearchLightbox from './species-search-lightbox'
 import RenameDeckLightbox from './rename-deck-lightbox'
 import PrintLightbox from './print-lightbox'
+import CopyDeckLightbox from './copy-deck-lightbox'
 
 function ManagerModals(props) {
   const deckNamesMinusCur = new Set([...props.userDeckNames]);
@@ -39,11 +40,21 @@ function ManagerModals(props) {
         name={props.selectedDeck ? props.selectedDeck.name : ''}
         deckNames={deckNamesMinusCur}
       />
-        <PrintLightbox
-          isOpen={props.openModal === 'print'}
-          onRequestClose={props.closeModal}
-          handleSubmit={props.onRequestMakePdf}
-        />
+      <CopyDeckLightbox
+        isOpen={props.openModal === 'copyDeck'}
+        handleRequestClose={props.closeModal}
+        handleCopy={props.onRequestCopyDeck}
+        deckNames={props.userDeckNames}
+        upgradeDeck={props.upgradeDeckOnCopy}
+        message={props.copyDeckMessage}
+        submitLabel={props.copyDeckSubmitLabel}
+        deck={props.selectedDeck}
+      />
+      <PrintLightbox
+        isOpen={props.openModal === 'print'}
+        onRequestClose={props.closeModal}
+        handleSubmit={props.onRequestMakePdf}
+      />
     </div>
   );
 }

@@ -22,7 +22,10 @@ class Toolbar extends React.Component {
             className={styles.toolbarBtn}
             onClick={this.props.onRequestPngDownload} 
           ><i className="fa fa-lg fa-download" /></li>
-          <li className={styles.toolbarBtn}><i className="fa fa-lg fa-copy" /></li>
+          <li 
+            className={styles.toolbarBtn}
+            onClick={this.props.onRequestCopy}
+          ><i className="fa fa-lg fa-copy" /></li>
           {
             (this.props.showOwnerOptions || this.props.showAdminOptions) && (
               <li className={[styles.toolbarBtn, styles.toolbarBtnMenu].join(' ')} onClick={() => this.setState({ menuOpen: true })}>

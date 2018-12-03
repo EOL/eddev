@@ -74,7 +74,7 @@ class PreviewCanvas extends React.Component {
 
   draw = () => {
     if (this.renderer && this.props.card) {
-      this.renderer.draw(this.props.card, function(err) {
+      this.renderer.draw(this.props.card, { safeSpaceLines: true }, function(err) {
         if (err) console.log(err);
       });
     }

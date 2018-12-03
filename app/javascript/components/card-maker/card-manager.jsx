@@ -16,6 +16,10 @@ import Search from './search'
 import {cardMakerUrl, deckUrl} from 'lib/card-maker/url-helper'
 import LeftRail from './manager-left-rail'
 import Menu from 'components/shared/menu'
+import DeckUpgradeNotice from './deck-upgrade-notice'
+import DialogBox from 'components/shared/dialog-box'
+import DeckDesc from './deck-desc'
+import PrintLightbox from './print-lightbox'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
 import eolHdrIcon from 'images/card_maker/icons/eol_logo_sub_hdr.png'
@@ -29,57 +33,57 @@ import menuStyles from 'stylesheets/shared/menu'
 import styles from 'stylesheets/card_maker/card_manager'
 
 const pollIntervalMillis = 1000
-    , maxDescLength = 540
     , specialCardOrder = {
         'title': 0,
         'desc': 1,
         'vocab': 2,
         'key': 3,
       }
+    , modals = {
+        deckUsers: 0,
+        renameDeck: 1,
+        newDeck: 2,
+        speciesSearch: 3,
+        copyCard: 4,
+        copyDeck: 5,
+        deckUrl: 6,
+        needToUpgradeDeckNotice: 7,
+        deckUpgradedNotice: 8,
+        print: 9
+      }
+    , menus = {
+        deck: 0,
+        sort: 1
+      }
     ;
-
 
 class CardManager extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      selectedFilter: 'cards',
       speciesSearchDeckId: this.props.allCardsDeck.id,
-      speciesSearchOpen: false,
-      newDeckOpen: false,
-      newMenuOpen: false,
-      copyCardOpen: false,
-      copyDeckOpen: false,
+      openModal: null,
+      openMenu: null,
+      upgradeDeckOnCopy: false,
       showDescInput: false,
       deckDescVal: null,
       cardSearchVal: '',
-      deckUsersOpen: false,
-      menus: {
-        deck: false,
-        sort: false
-      },
-      deckUrl: null
     }
   }
 
-  closeMenu = (name) => {
-    this.setState((prevState) => {
-      return update(prevState, {
-        menus: {
-          [name]: { $set: false }
-        }
-      });
+  componentDidMount() {
+  }
+
+  closeMenu = () => {
+    this.setState({
+      openMenu: null
     });
   }
 
-  openMenu = (name) => {
-    this.setState((prevState) => {
-      return update(prevState, {
-        menus: {
-          [name]: { $set: true }
-        }
-      });
+  openMenu = (id) => {
+    this.setState({
+      openMenu: id
     });
   }
 
@@ -145,21 +149,10 @@ class CardManager extends React.Component {
     );
   }
 
-  handleSpeciesSearchClose = () => {
-    this.setState(() => {
-      return {
-        speciesSearchOpen: false
-      }
-    });
-  }
-
   handleSpeciesSearchOpen = () => {
-    this.setState((prevState) => {
-      return {
-        speciesSearchOpen: true,
-        speciesSearchDeckId: this.props.selectedDeck.id
-      }
-    })
+    this.openModal(modals.speciesSearch, {
+      speciesSearchDeckId: this.props.selectedDeck.id
+    });
   }
 
   createCardUrl = (deckId) => {
@@ -200,33 +193,15 @@ class CardManager extends React.Component {
           }
         ;
 
-    this.setState({
-      speciesSearchOpen: false,
-    });
+    this.closeModal();
     this.createOrCopyCard(data, this.state.speciesSearchDeckId);
   }
 
   handleCopyCard = (deckId) => {
-    this.closeCopyCard();
+    this.closeModal();
     this.createOrCopyCard({ 
       copyFrom: this.state.copyCardId 
     }, deckId);
-  }
-
-  openNewDeckLightbox = () => {
-    this.setState(() => {
-      return {
-        newDeckOpen: true,
-      }
-    })
-  }
-
-  handleCloseNewDeckLightbox = () => {
-    this.setState(() => {
-      return {
-        newDeckOpen: false,
-      }
-    });
   }
 
   deckFilterItemsHelper = (noSelectionText, includeCount) => {
@@ -265,22 +240,6 @@ class CardManager extends React.Component {
       cardSearchVal: '',
     });
     this.props.setSelectedDeck(deck);
-  }
-
-  handleDeckFilterClick = () => {
-    this.setState((prevState, props) => {
-      return {
-        selectedFilter: 'decks',
-      }
-    });
-  }
-
-  handleCardFilterClick = () => {
-    this.setState((prevState, props) => {
-      return {
-        selectedFilter: 'cards',
-      }
-    });
   }
 
   selectedResources = () => {
@@ -408,18 +367,20 @@ class CardManager extends React.Component {
   }
 
   handleCopyDeck = (deckName) => {
-    this.createDeckHelper(deckName, null, this.props.selectedDeck.id); 
+    this.createDeckHelper(deckName, null, this.props.selectedDeck.id, this.state.upgradeDeckOnCopy); 
   }
 
   handleCreateDeck = (deckName, colId) => {
-    this.createDeckHelper(deckName, colId, null);
+    this.createDeckHelper(deckName, colId, null, false);
   }
 
-  createDeckHelper = (deckName, colId, copyFrom) => {
+  createDeckHelper = (deckName, colId, copyFrom, upgrade) => {
     const that = this
+        , showUpgradedNotice = upgrade
         , data = {
             name: deckName,
-            copyFrom: copyFrom
+            copyFrom: copyFrom,
+            upgradeTemplates: upgrade
           }
         ;
 
@@ -436,6 +397,10 @@ class CardManager extends React.Component {
             } else {
               that.props.setLibrary('user', () => {
                 that.showDeck(deck.id, closeFn);
+
+                if (showUpgradedNotice) {
+                  that.openModal(modals.deckUpgradedNotice);
+                }
               });
             }
           }
@@ -472,8 +437,18 @@ class CardManager extends React.Component {
     });
   }
 
-  makeDeckPdf = () => {
+  openPrintOptions = () => {
+    if (this.props.selectedDeck.needsUpgrade) {
+      this.openModal(modals.needToUpgradeDeckNotice);
+    } else {
+      this.openModal(modals.print);
+    }
+  }
+
+  makeDeckPdf = (cardBackId) => {
     const that = this;
+
+    that.closeModal();
 
     that.props.showLoadingOverlay(
       I18n.t('react.card_maker.print_loading_msg'), 
@@ -481,7 +456,8 @@ class CardManager extends React.Component {
         $.ajax({
           url: cardMakerUrl('deck_pdfs'),
           data: JSON.stringify({
-            deckId: that.props.selectedDeck.id
+            deckId: that.props.selectedDeck.id,
+            backId: cardBackId
           }),
           method: 'POST',
           success: (result) => {
@@ -490,27 +466,30 @@ class CardManager extends React.Component {
         });
       }
     );
-
   }
 
-  pollPdfJob = (id, overlayCloseFn) => {
+  pollJob = (baseUrl, jobId, overlayCloseFn) => {
     const that = this;
 
-    $.getJSON(cardMakerUrl('deck_pdfs/' + id + '/status'), (result) => {
+    $.getJSON(cardMakerUrl(baseUrl + '/' + jobId + '/status'), (result) => {
       if (result.status === 'done') {
         overlayCloseFn();
-        window.open(cardMakerUrl('deck_pdfs/' + id + '/result.pdf'));
+        window.open(cardMakerUrl(baseUrl + '/downloads/' + result.resultFileName));
       } else if (result.status === 'running') {
         setTimeout(() => {
-          that.pollPdfJob(id, overlayCloseFn)
+          that.pollJob(baseUrl, jobId, overlayCloseFn)
         }, pollIntervalMillis)
       } else {
         overlayCloseFn();
         alert(I18n.t('react.card_maker.unexpected_error_msg'));
       }
     });
+
   }
 
+  pollPdfJob = (id, overlayCloseFn) => {
+    this.pollJob('deck_pdfs', id, overlayCloseFn);
+  }
 
   selectedResourceCount = (resourceResult) => {
     const count = resourceResult.resources.length;
@@ -571,79 +550,6 @@ class CardManager extends React.Component {
       showDescInput: false,
       deckDescVal: null,
     });
-  }
-
-  descInput = () => {
-    return [
-      // Explicit this.state.deckDescVal === null is important since
-      // otherwise the value can't ever be ''.
-      (
-        <textarea 
-          className={styles.descInput} 
-          value={this.state.deckDescVal === null ? 
-                 this.props.selectedDeck.desc :
-                 this.state.deckDescVal}
-          onChange={this.handleDescInputChange}
-          key='0'
-          ref={node => node && node.focus()}
-          maxLength={maxDescLength}
-        ></textarea>
-      ),
-      (
-        <ul 
-          className={styles.descBtns}
-          key='1'
-        >
-          <li 
-            className={styles.descBtn}
-            onClick={this.handleSetDescBtnClick}
-          >{I18n.t('react.card_maker.save_desc')}</li>
-          <li 
-            className={styles.descBtn}
-            onClick={this.closeAndClearDescInput}
-          >{I18n.t('react.card_maker.cancel')}</li>
-        </ul>
-      ),
-    ];
-  }
-
-  deckDesc = () => {
-    let inner = null
-      , result = null
-      ; 
-
-    if (this.state.showDescInput) {
-      inner = this.descInput();
-    } else if (
-      this.props.selectedDeck !== this.props.allCardsDeck && 
-      this.props.selectedDeck !== this.props.unassignedCardsDeck
-    ) {
-      if (this.props.selectedDeck.desc) {
-        inner = this.props.selectedDeck.desc;
-      } else if (this.props.library === 'user') {
-        inner = (
-          <div
-            className={styles.descAdd}
-            onClick={this.handleDescBtnClick}
-          >
-            <i className='fa fa-lg fa-edit' />
-            <span>{I18n.t('react.card_maker.add_desc')}</span>
-          </div>
-        );
-      }
-    }
-
-    if (inner) {
-      result = (
-        <div className={styles.lDesc}>
-          <div className={styles.desc}>
-            {inner} 
-          </div>
-        </div>
-      );
-    }
-
-    return result;
   }
 
   allDecksName = () => {
@@ -739,37 +645,90 @@ class CardManager extends React.Component {
     return this.props.library === 'user';
   }
 
-  handleOpenDeckName = () => {
-    this.setState({
-      deckNameOpen: true
+  openCopyDeck = (upgrade) => {
+    this.openModal(modals.copyDeck, {
+      upgradeDeckOnCopy: upgrade
+    })
+  }
+
+  closeCopyDeck = () => {
+    this.closeModal({
+      upgradeDeckOnCopy: false
     });
   }
 
-  showDeckUrl = () => {
-    this.setState({
-      deckUrl: deckUrl(this.props.selectedDeck)
-    });
+  openModal = (id, extraProps) => {
+    this.setState(Object.assign({
+      openModal: id
+    }, extraProps || {}));
+  }
+
+  closeModal = (extraProps) => {
+    this.setState(Object.assign({
+      openModal: null
+    }, extraProps))
+  }
+
+  createDeckPngs = () => {
+    const that = this;
+
+    that.props.showLoadingOverlay(
+      I18n.t('react.card_maker.it_may_take_a_few_mins'),
+      (closeFn) => {
+        $.ajax({
+          url: cardMakerUrl('deck_pngs'),
+          data: JSON.stringify({
+            deckId: that.props.selectedDeck.id
+          }),
+          method: 'POST',
+          success: (result) => {
+            that.pollJob('deck_pngs', result.jobId, closeFn);
+          },
+          error: closeFn
+        })
+      }
+    )
   }
 
   deckMenuItems = (resourceCount) => {
     let items = [];
 
-    if (this.props.selectedDeck !== this.props.allCardsDeck && this.props.selectedDeck !== this.props.unassignedCardsDeck) {
-      if (resourceCount > 0) {
+    if (
+      this.props.selectedDeck !== this.props.allCardsDeck && 
+      this.props.selectedDeck !== this.props.unassignedCardsDeck
+    ) {
+      if (resourceCount > 0 &&
+        (
+          this.isUserLib() ||
+          !this.props.selectedDeck.needsUpgrade
+        )
+      ) {
         items.push({
-          handleClick: this.makeDeckPdf,
+          handleClick: this.openPrintOptions,
           label: I18n.t('react.card_maker.print')
+        });
+
+        items.push({
+          handleClick: this.createDeckPngs,
+          label: I18n.t('react.card_maker.download_pngs')
         });
       }
 
       if (this.props.userRole) {
         items.push({
-          handleClick: () => this.setState({ copyDeckOpen: true }),
+          handleClick: () => this.openCopyDeck(false),
           label: I18n.t('react.card_maker.copy_deck')
         });
       }
 
       if (this.isUserLib()) {
+        if (this.props.selectedDeck.needsUpgrade) {
+          items.push({
+            label: I18n.t('react.card_maker.update_card_layouts'),
+            handleClick: () => this.openCopyDeck(true)
+          });
+        }
+
         items.push({
           handleClick: this.handleDescBtnClick,
           label: this.props.selectedDeck.desc ? 
@@ -778,7 +737,7 @@ class CardManager extends React.Component {
         });
 
         items.push({
-          handleClick: this.handleOpenDeckName,
+          handleClick: () => this.openModal(modals.renameDeck),
           label: I18n.t('react.card_maker.rename_deck')
         });
 
@@ -790,7 +749,7 @@ class CardManager extends React.Component {
         }
 
         items.push({
-          handleClick: () => this.setState({ deckUsersOpen: true }),
+          handleClick: () => this.openModal(modals.deckUsers),
           label: I18n.t('react.card_maker.manage_deck_users')
         });
 
@@ -804,7 +763,7 @@ class CardManager extends React.Component {
         }
       } else {
         items.push({
-          handleClick: this.showDeckUrl,
+          handleClick: () => this.openModal(modals.deckUrl),
           label: I18n.t('react.card_maker.show_url')
         });
       }
@@ -823,16 +782,8 @@ class CardManager extends React.Component {
   }
 
   openCopyCard = (id) => {
-    this.setState({
-      copyCardId: id,
-      copyCardOpen: true,
-    });
-  }
-
-  closeCopyCard = () => {
-    this.setState({
-      copyCardId: null,
-      copyCardOpen: false,
+    this.openModal(modals.copyCard, {
+      copyCardId: id
     });
   }
 
@@ -844,11 +795,21 @@ class CardManager extends React.Component {
 
   deckCopyName = (deckNames) => {
     let num = 2
-      , baseName = I18n.t('react.card_maker.copy_of_name', { 
-          name: this.props.selectedDeck.name 
-        })
-      , name = baseName
+      , baseName
+      , name
       ;
+
+    if (this.state.upgradeDeckOnCopy) {
+      baseName = I18n.t('react.card_maker.name_updated', {
+        name: this.props.selectedDeck.name
+      });
+    } else {
+      baseName = I18n.t('react.card_maker.copy_of_name', { 
+        name: this.props.selectedDeck.name 
+      })
+    }
+
+    name = baseName;
   
     while (deckNames.has(name) && num < 10) {
       name = `${baseName} (${num++})`;
@@ -870,13 +831,13 @@ class CardManager extends React.Component {
     return (
       <div className={styles.lManager}>
         <DeckUsersLightbox
-          isOpen={this.state.deckUsersOpen}
-          handleRequestClose={() => this.setState({ deckUsersOpen: false })}
+          isOpen={this.state.openModal === modals.deckUsers}
+          handleRequestClose={this.closeModal}
           deck={this.props.selectedDeck}
         />
         <RenameDeckLightbox
-          isOpen={this.state.deckNameOpen}
-          handleRequestClose={() => this.setState({ deckNameOpen: false })}
+          isOpen={this.state.openModal === modals.renameDeck}
+          handleRequestClose={this.closeModal}
           handleRename={this.handleRenameDeck}
           name={this.props.selectedDeck.name}
           deckNames={new Set(this.props.userDecks.filter((deck) => {
@@ -886,43 +847,61 @@ class CardManager extends React.Component {
           }))}
         />
         <NewDeckLightbox
-          isOpen={this.state.newDeckOpen}
+          isOpen={this.state.openModal === modals.newDeck}
           handleCreate={this.handleCreateDeck}
-          handleRequestClose={this.handleCloseNewDeckLightbox}
+          handleRequestClose={this.closeModal}
           deckNames={userDeckNames}
         />
         <SpeciesSearchLightbox
-          isOpen={this.state.speciesSearchOpen}
-          handleClose={this.handleSpeciesSearchClose}
+          isOpen={this.state.openModal === modals.speciesSearch}
+          handleClose={this.closeModal}
           handleCreate={this.handleCreateCard}
           deckFilterItems={this.deckFilterItemsForNewCard()}
           handleDeckSelect={this.handleSpeciesSearchDeckSelect}
           selectedDeckId={this.state.speciesSearchDeckId}
         />
         <CopyCardLightbox
-          isOpen={this.state.copyCardOpen}
-          handleRequestClose={this.closeCopyCard}
+          isOpen={this.state.openModal === modals.copyCard}
+          handleRequestClose={this.closeModal}
           handleCopy={this.handleCopyCard}
           decks={this.props.userDecks} 
         />
         <CopyDeckLightbox
-          isOpen={this.state.copyDeckOpen}
-          handleRequestClose={() => this.setState({ copyDeckOpen: false })}
+          isOpen={this.state.openModal === modals.copyDeck}
+          handleRequestClose={this.closeCopyDeck}
           handleCopy={this.handleCopyDeck}
           deckNames={userDeckNames}
           name={this.deckCopyName(userDeckNames)}
+          showUpgradeMessage={this.state.upgradeDeckOnCopy}
+          message={this.state.upgradeDeckOnCopy ? I18n.t('react.card_maker.update_deck_msg') : null}
+          submitLabel={this.state.upgradeDeckOnCopy ? I18n.t('react.card_maker.update_deck') : I18n.t('react.card_maker.copy_deck')}
         />
         <DeckUrlLightbox
-          isOpen={this.state.deckUrl !== null}
-          handleRequestClose={() => this.setState({ deckUrl: null })}
-          deckUrl={this.state.deckUrl}
+          isOpen={this.state.openModal === modals.deckUrl}
+          handleRequestClose={this.closeModal}
+          deckUrl={deckUrl(this.props.selectedDeck)}
+        />
+        <DeckUpgradeNotice
+          isOpen={this.state.openModal === modals.needToUpgradeDeckNotice}
+          onRequestClose={this.closeModal}
+        />
+        <DialogBox
+          isOpen={this.state.openModal === modals.deckUpgradedNotice}
+          onRequestClose={this.closeModal}
+          contentLabel={'newly upgraded deck notice'}
+          message={I18n.t('react.card_maker.remember_to_review_updated')}
+        />
+        <PrintLightbox
+          isOpen={this.state.openModal === modals.print}
+          onRequestClose={this.closeModal}
+          handleSubmit={this.makeDeckPdf}
         />
         <img src={iguanaBanner} className={layoutStyles.banner} />
         <LeftRail
           library={this.props.library}
           handleToggleLibrary={this.toggleLibrary}
           handleDeckSelect={this.handleDeckSelect}
-          handleNewDeck={this.openNewDeckLightbox}
+          handleNewDeck={() => this.openModal(modals.newDeck)}
           selectedDeck={this.props.selectedDeck}
           decks={this.props.decks}
           allCardsDeck={this.props.allCardsDeck}
@@ -933,12 +912,24 @@ class CardManager extends React.Component {
             <div className={styles.lDeckMenuFlex}>
               <Menu
                 items={this.deckMenuItems(resourceResult.resources.length)}
-                open={this.state.menus.deck}
+                open={this.state.openMenu === menus.deck}
                 anchorText={this.deckMenuAnchorText()}
-                handleRequestClose={() => this.closeMenu('deck')}
-                handleRequestOpen={() => this.openMenu('deck')}
+                handleRequestClose={() => this.closeMenu()}
+                handleRequestOpen={() => this.openMenu(menus.deck)}
               />
-              {this.deckDesc()}
+              {
+                this.props.selectedDeck !== this.props.allCardsDeck &&
+                this.props.selectedDeck !== this.props.unassignedCardsDeck &&
+                <DeckDesc
+                  value={this.state.showDescInput && this.state.deckDescVal !== null ? this.state.deckDescVal : this.props.selectedDeck.desc}
+                  handleInputChange={this.handleDescInputChange}
+                  handleRequestSave={this.handleSetDescBtnClick}
+                  handleRequestClose={this.closeAndClearDescInput}
+                  showInput={this.state.showDescInput}
+                  library={this.props.library}
+                  handleRequestInput={this.handleDescBtnClick}
+                />
+              }
             </div>
           </div>
           <div className={styles.searchContain}>
@@ -953,9 +944,9 @@ class CardManager extends React.Component {
               <Menu
                 items={this.sortItems()}
                 anchorText={this.props.sort.label}
-                open={this.state.menus.sort}
-                handleRequestClose={() => { this.closeMenu('sort') }}
-                handleRequestOpen={() => { this.openMenu('sort') }}
+                open={this.state.openMenu === menus.sort}
+                handleRequestClose={() => { this.closeMenu() }}
+                handleRequestOpen={() => { this.openMenu(menus.sort) }}
                 extraClasses={[menuStyles.menuWrapSort]}
               />
             </div>
@@ -971,8 +962,7 @@ class CardManager extends React.Component {
             handleNewCard={this.handleSpeciesSearchOpen}
             handleCopyCard={this.openCopyCard}
             showCopyCard={this.isUserLib() || this.props.userRole}
-            handleNewDeck={this.openNewDeckLightbox}
-            makeDeckPdf={this.makeDeckPdf}
+            handleNewDeck={() => this.openModal(modals.newDeck)}
             editable={this.isUserLib()}
           />
         </div>

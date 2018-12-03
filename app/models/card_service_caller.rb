@@ -1,6 +1,7 @@
 # Card service API interface
 
 require "httparty"
+require "uri"
 
 module CardServiceCaller
   SERVICE_HOST = Rails.application.config.x.card_service_host
@@ -184,6 +185,28 @@ module CardServiceCaller
     )
   end
 
+  def self.create_deck_pngs(post_body)
+    HTTParty.post(
+      "#{SERVICE_URL}/deckPngs",
+      :body => post_body,
+      :headers => self.add_api_headers(JSON_HEADERS)
+    )
+  end
+
+  def self.deck_png_status(job_id)
+    HTTParty.get(
+      "#{SERVICE_URL}/deckPngs/#{job_id}/status",
+      :headers => self.add_api_headers(JSON_HEADERS)
+    )
+  end
+
+  def self.deck_png_result(file_name)
+    HTTParty.get(
+      "#{SERVICE_URL}/deckPngs/downloads/#{URI.encode(file_name)}",
+      :headers => self.add_api_headers(JSON_HEADERS)
+    )
+  end
+
   def self.deck_pdf_status(job_id)
     HTTParty.get(
       "#{SERVICE_URL}/deckPdfs/#{job_id}/status",
@@ -191,9 +214,9 @@ module CardServiceCaller
     )
   end
 
-  def self.deck_pdf_result(job_id)
+  def self.deck_pdf_result(file_name)
     HTTParty.get(
-      "#{SERVICE_URL}/deckPdfs/#{job_id}/result",
+      "#{SERVICE_URL}/deckPdfs/downloads/#{URI.encode(file_name)}",
       :headers => self.add_api_headers(JSON_HEADERS)
     )
   end
@@ -263,6 +286,13 @@ module CardServiceCaller
       "#{self.user_prefix(user_id)}/decks/#{deck_id}/name",
       :body => name,
       :headers => self.add_api_headers(TEXT_PLAIN_HEADERS)
+    )
+  end
+
+  def self.card_backs
+    HTTParty.get(
+      "#{SERVICE_URL}/cardBacks",
+      :headers => self.add_api_headers(JSON_HEADERS)
     )
   end
 

@@ -78,6 +78,10 @@ class ResourceLightbox extends React.Component {
               </button>
             </div>
           </div>
+          {
+            this.props.message != null &&
+            <p className={styles.resourceLightboxMsg}>{this.props.message}</p>
+          }
         </div>
       </CloseButtonModal>
     );

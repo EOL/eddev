@@ -79,6 +79,7 @@ class DeckNameLightbox extends React.Component {
         fields={this.fields()}
         handleSubmit={this.handleSubmit}
         submitLabel={this.props.submitLabel}
+        message={this.props.message}
       />
     );
   }

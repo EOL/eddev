@@ -419,6 +419,7 @@ en:
       deck: deck
       delete_deck: delete deck
       download_png: Download PNG
+      download_pngs: download PNGs
       edit_desc: edit description
       enter_deck_name: enter deck name
       enter_text: enter text
@@ -429,11 +430,13 @@ en:
       go_back_to: go back to
       image_credit: Image credit
       image_library: Image Library
+      it_may_take_a_few_mins: It may take a few minutes to prepare your download
       key_card: Key Card
       make_deck_private: make deck private
       make_deck_public: make deck public
       manage_deck_users: manage deck users
       my_cards: my cards
+      none: 'none'
       n_cards:
         one: "1 card"
         other: "%{count} cards"
@@ -444,6 +447,8 @@ en:
       no_results_found: no results found
       name_cant_be_blank: "name can't be blank"
       name_taken: "name taken"
+      name_updated: "%{name} (updated)"
+      need_to_upgrade: "This deck contains cards with obsolete layouts that cannot be printed. You can fix this by clicking 'update card layouts' in the menu."
       new_card_lc: new card
       new_deck: New deck
       new_deck_lc: new deck
@@ -462,6 +467,7 @@ en:
       proj_desc_card: Project Description
       public_cards: public cards
       quick_save: quick save
+      remember_to_review_updated: "Remember to review updated cards to make sure all content is within the safe space for printing."
       removed_user: "Successfully removed user %{userName}"
       rename: rename
       rename_deck: rename deck
@@ -474,6 +480,7 @@ en:
       search_decks: search decks
       search_species_taxon: search for a species or taxon
       select: select
+      select_card_back: "Select a card back option:"
       select_deck: deck (optional)
       select_a_deck_for_card: select a deck for your card (optional)
       show_url: "show URL"
@@ -495,6 +502,9 @@ en:
       unassigned: unassigned
       unexpected_error_msg: An unexpected error occurred
       unexpected_error_msg: An unexpected error occurred
+      update_card_layouts: update card layouts
+      update_deck: "update deck"
+      update_deck_msg: "This deck contains cards that have obsolete layouts. This action will create a copy of the deck with updated card layouts. It will not affect the original deck."
       upload_an_image: Upload an image
       users: Users
       vocab_card: Vocabulary

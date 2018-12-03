@@ -7,8 +7,12 @@ class CardMakerAjaxController < ApplicationController
     :public_decks,
     :get_card,
     :create_deck_pdf,
+    :create_deck_pngs,
     :deck_pdf_status,
-    :deck_pdf_result
+    :deck_pdf_result,
+    :deck_png_status,
+    :deck_png_result,
+    :card_backs
   ]
 
   before_action :ensure_admin, :only => [ 
@@ -184,6 +188,26 @@ class CardMakerAjaxController < ApplicationController
     ))
   end
 
+  def create_deck_pngs
+    json_response(CardServiceCaller.create_deck_pngs(
+      request.raw_post
+    ))
+  end
+
+  # GET /card_maker_ajax/deck_pngs/:id/status
+  def deck_png_status
+    json_response(CardServiceCaller.deck_png_status(
+      params[:id]
+    ))
+  end
+
+  # GET /card_maker_ajax/deck_pngs/downloads/:file_name
+  def deck_png_result
+    data_pass_thru_response(CardServiceCaller.deck_png_result(
+      params[:file_name]
+    ))
+  end
+
   # GET /card_maker_ajax/deck_pdfs/:id/status
   def deck_pdf_status
     json_response(CardServiceCaller.deck_pdf_status(
@@ -191,10 +215,11 @@ class CardMakerAjaxController < ApplicationController
     ))
   end
 
-  # GET /card_maker_ajax/deck_pdfs/:id/result
+  # GET /card_maker_ajax/deck_pdfs/downloads/:file_names
   def deck_pdf_result
-    svc_res = CardServiceCaller.deck_pdf_result(params[:id])
-    data_pass_thru_response(svc_res)
+    data_pass_thru_response(CardServiceCaller.deck_pdf_result(
+      params[:file_name]
+    ))
   end
 
   # POST /card_maker_ajax/decks/:deck_id/
@@ -293,6 +318,11 @@ class CardMakerAjaxController < ApplicationController
       params[:deck_id],
       request.raw_post
     ))
+  end
+
+  # GET /card_maker_ajax/card_backs
+  def card_backs
+    json_response(CardServiceCaller.card_backs)
   end
 
   private

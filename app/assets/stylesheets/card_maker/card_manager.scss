@@ -1,4 +1,5 @@
 @import 'layout_vars';
+@import 'buttons';
 
 // TODO: standardize font colors!!!
 $manager-height: 762px;
@@ -29,6 +30,8 @@ $species-search-pad-horiz: 30px;
 $species-search-card-width: 170px;
 $species-search-card-height: 232px;
 $species-search-input-height: 45px;
+
+$card-aspect-ratio: .75;
 
 /* STATES */
 
@@ -355,7 +358,7 @@ $species-search-input-height: 45px;
   background: $white;
   border-radius: 6px;
   display: inline-flex;
-  height: (3.74 * $width) / 2.74; // cards have aspect ratio of 2.74/3.74 including bleed
+  height: $width / $card-aspect-ratio;
   justify-content: center;
   margin-top: 10px;
   overflow: hidden;
@@ -672,13 +675,6 @@ $species-search-input-height: 45px;
   margin-right: 10px;
 }
 
-.btn {
-  background: $eol-blue;
-  border-radius: 2px;
-  color: $white;
-  cursor: pointer;
-}
-
 .btnBack {
   height: 40px;
   line-height: 40px;
@@ -732,6 +728,11 @@ $species-search-input-height: 45px;
 
 .createCardRow {
   height: 40px;
+}
+
+.resourceLightboxMsg {
+  font-size: 12px;
+  margin: 20px 74px;
 }
 
 .cardTemplates {
@@ -914,11 +915,6 @@ $species-search-input-height: 45px;
 }
 
 // Card zoom lightbox
-.cardZoom {
-  height: 549px;
-  margin: 0 auto 12px auto;
-  width: 100%;
-}
 
 .arrow {
   color: $white;
@@ -940,11 +936,14 @@ $species-search-input-height: 45px;
   cursor: normal;
 }
 
-.imageZoom {
+.cardLightbox {
+  $width: 402px;
+
   margin: 20px auto 0 auto;
   padding: 0;
   position: relative;
-  width: 402px;
+  width: $width;
+  height: $width / $card-aspect-ratio;
 
   & > button {
     display: block;
@@ -956,4 +955,57 @@ $species-search-input-height: 45px;
   }
 }
 
+.cardLightboxCard {
+  margin: 0 auto 12px auto;
+  height: 100%;
+  width: 100%;
+}
+
+.cardBackLightbox {
+  position: relative;
+}
+
+.cardBackLightboxSpinner {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 361px;
+  width: 100%;
+}
+
+.cardBacks {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 20px 0;
+}
+  .cardBacksHdr {
+    text-align: center;
+  }
+
+  .cardBack {
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .cardBackImg {
+    align-items: center;
+    border: 1px solid $black;
+    display: flex;
+    height: 200px;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    width: 150px;
+
+    & > img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  
+  .createBtnCardBacks {
+    display: block;
+    margin: 0 auto;
+    width: 400px;
+  }
 

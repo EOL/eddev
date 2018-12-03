@@ -881,6 +881,7 @@ $col-border-width: 5px;
   }
 
   .text-entry {
+    background-color: $white;
     border: none;
     border-radius: 1.4px;
     color: #242424;
@@ -891,15 +892,6 @@ $col-border-width: 5px;
   .text-input {
     height: 34px;
     padding: 0 13px;
-  }
-
-  .multiline-text-field-input {
-    display: block;
-    resize: none;
-    margin: 22px auto;
-    height: 162px;
-    padding: 7px 12px;
-    width: 350px;
   }
 
   .text-field-input {

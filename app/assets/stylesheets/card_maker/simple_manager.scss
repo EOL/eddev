@@ -29,7 +29,7 @@ $toolbar-height: 38px;
 // Header bar
 .bar {
   border-bottom: 1px solid black;
-  position: relative;
+  max-width: $page-width-px * 1px;
 }
 
 .headerBar {

@@ -1,6 +1,16 @@
 @import "layout_vars";
 
 $btn-hover-gray: #eee;
+$header-height: 44px;
+$toolbar-height: 38px;
+
+.simpleManager {
+  padding-top: $header-height;  
+}
+
+.simpleManagerWToolbar {
+  padding-top: $toolbar-height + $header-height;
+}
 
 // common styles
 .btn {
@@ -23,9 +33,15 @@ $btn-hover-gray: #eee;
 }
 
 .headerBar {
+  background: $white;
   font-weight: bold;
+  height: $header-height;
   padding: 10px 0;
+  position: fixed;
   text-align: center;
+  top: $navbar-height;
+  z-index: 2;
+  width: 100%;
 
   & > i {
     cursor: pointer;
@@ -49,11 +65,14 @@ $btn-hover-gray: #eee;
   }
 }
 
-$toolbar-height: 38px;
 .toolbar {
+  background: $white;
   height: $toolbar-height;
   padding-left: 10px;
   padding-right: 10px;
+  position: fixed;
+  top: $navbar-height + $header-height;
+  width: 100%;
   z-index: 2;
 }
 

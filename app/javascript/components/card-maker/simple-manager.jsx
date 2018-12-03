@@ -372,8 +372,16 @@ class SimpleManager extends React.Component {
   }
 
   render() {
+    const hasToolbar = this.props.selectedDeck != null
+      , managerClasses = [styles.simpleManager]
+      ;
+
+    if (hasToolbar) {
+      managerClasses.push(styles.simpleManagerWToolbar);
+    }
+
     return (
-      <div className={styles.simpleManager}>
+      <div className={managerClasses.join(' ')}>
         <ManagerModals 
           openModal={this.state.openModal} 
           selectedDeck={this.props.selectedDeck}
@@ -393,7 +401,7 @@ class SimpleManager extends React.Component {
           onRequestEditDeckName={() => this.setState({ openModal: 'renameDeck' })}
         />
         {
-          this.props.selectedDeck != null && 
+          hasToolbar && 
           <Toolbar 
             onRequestPrint={() => this.setState({ openModal: 'print' })} 
             onRequestPngDownload={this.createDeckPngs}

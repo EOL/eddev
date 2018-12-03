@@ -397,6 +397,8 @@ class SimpleManager extends React.Component {
           <Toolbar 
             onRequestPrint={() => this.setState({ openModal: 'print' })} 
             onRequestPngDownload={this.createDeckPngs}
+            showOwnerOptions={this.props.library === 'user' && this.props.selectedDeck && this.props.selectedDeck.isOwner}
+            showAdminOptions={this.props.library === 'user' && this.props.userRole === 'admin'}
           />
         }
         <div className={styles.managerMain}>

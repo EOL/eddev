@@ -28,7 +28,7 @@ class CopyDeckLightbox extends React.Component {
       return '';
     }
 
-    if (this.props.upgradeDeck) {
+    if (this.props.upgradedInName) {
       baseName = I18n.t('react.card_maker.name_updated', {
         name: deck.name
       });

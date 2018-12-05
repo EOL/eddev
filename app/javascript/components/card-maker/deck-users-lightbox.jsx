@@ -122,7 +122,7 @@ class DeckUsersLightbox extends React.Component {
         overlayClassName={`fixed-center-wrap disable-overlay`}
       >
         <div className={styles.deckUsersHead}>
-          <h2>Manage users for deck <strong>{this.props.deck.name}</strong></h2>
+          <h2>Manage users for deck <strong>{this.props.deck ? this.props.deck.name : ''}</strong></h2>
           <h2>{I18n.t('react.card_maker.owner_user', {
             userName: this.state.owner.userName 
           })}</h2>

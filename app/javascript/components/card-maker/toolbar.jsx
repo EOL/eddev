@@ -29,14 +29,54 @@ class Toolbar extends React.Component {
     });
   }
 
+  menuItems = () => {
+    let items = [];
+
+    if (this.props.library == 'user') {
+      items.push({
+        handleClick: this.props.onRequestOpenDeckUsers,
+        label: I18n.t('react.card_maker.manage_deck_users')
+      });
+
+      if (this.props.selectedDeck.needsUpgrade) {
+        items.push({
+          label: I18n.t('react.card_maker.update_card_layouts'),
+          handleClick: this.props.onRequestUpgrade
+        });
+      }
+
+      if (this.props.userRole == 'admin') {
+        items.push({
+          handleClick: this.props.onRequestToggleDeckPublic,
+          label: this.props.selectedDeck.public ? 
+            I18n.t('react.card_maker.make_deck_private') :
+            I18n.t('react.card_maker.make_deck_public')
+        });
+      }
+    } else {
+      items.push({
+        handleClick: this.props.onRequestShowUrl,
+        label: I18n.t('react.card_maker.show_url')
+      });
+    }
+
+    return items;
+  }
+
   render() {
+    const menuItems = this.menuItems();
+
     return (
       <div className={[styles.bar, styles.toolbar].join(' ')}>
         <ul className={styles.toolbarBtns}>
-          <li
-            className={styles.toolbarBtn}
-            onClick={this.props.onRequestPrint} 
-          ><i className="fa fa-lg fa-print" /></li>
+          {
+            (this.props.library == 'user' ||
+            !this.props.selectedDeck.needsUpgrade) &&
+            (<li
+              className={styles.toolbarBtn}
+              onClick={this.props.onRequestPrint} 
+            ><i className="fa fa-lg fa-print" /></li>)
+          }
           <li
             className={styles.toolbarBtn}
             onClick={this.props.onRequestPngDownload} 
@@ -46,16 +86,19 @@ class Toolbar extends React.Component {
             onClick={this.props.onRequestCopy}
           ><i className="fa fa-lg fa-copy" /></li>
           {
-            (this.props.showOwnerOptions || this.props.showAdminOptions) && (
+            menuItems.length > 0 && (
               <li className={[styles.toolbarBtn, styles.toolbarBtnMenu].join(' ')} onClick={this.openMenu}>
                 <span>more&nbsp;</span>
-                <i className="fa fa-caret-down" />
+                <i className="fa fa-angle-down" />
                 {
-                  this.state.menuOpen && (
-                    <ul className={styles.toolbarMenu}>
-                      <li>option</li>
-                    </ul>
-                  )
+                  this.state.menuOpen && 
+                  (<ul className={styles.toolbarMenu}>
+                    {menuItems.map((item) => {
+                      return (
+                        <li key={item.label} onClick={item.handleClick}>{item.label}</li>
+                      )
+                    })}
+                  </ul>)
                 }
               </li>
             )

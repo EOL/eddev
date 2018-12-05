@@ -177,6 +177,10 @@ class SimpleManager extends React.Component {
     this.createDeckHelper(deckName, colId, null, false);
   }
 
+  handleUpgradeDeck = (deckName) => {
+    this.createDeckHelper(deckName, null, this.props.selectedDeck.id, true);
+  }
+
   createDeckHelper = (deckName, colId, copyFrom, upgrade) => {
     const that = this
         , showUpgradedNotice = upgrade
@@ -375,6 +379,31 @@ class SimpleManager extends React.Component {
     this.createDeckHelper(deckName, null, this.props.selectedDeck.id, this.state.upgradeDeckOnCopy); 
   }
 
+  toggleDeckPublic = () => {
+    const that = this 
+      , action = that.props.selectedDeck.public ?
+          'make_private' :
+          'make_public'
+      , proceed = confirm(
+          that.props.selectedDeck.public ?
+          I18n.t('react.card_maker.confirm_make_private') :
+          I18n.t('react.card_maker.confirm_make_public')
+        )
+      ;
+
+    if (proceed) {
+      that.props.showLoadingOverlay(null, (closeFn) => {
+        $.ajax({
+          url: cardMakerUrl('decks/' + that.props.selectedDeck.id + '/' + action),
+          method: 'POST',
+          success: () => {
+            that.props.reloadCurLibResources(closeFn);
+          }
+        });
+      });
+    }
+  }
+
   render() {
     const hasToolbar = this.props.selectedDeck != null
       , managerClasses = [styles.simpleManager]
@@ -397,9 +426,7 @@ class SimpleManager extends React.Component {
           onRequestRenameDeck={this.handleRenameDeck}
           onRequestMakePdf={this.handleMakePdf}
           onRequestCopyDeck={this.handleCopyDeck}
-          upgradeDeckOnCopy={false /* TODO: update -- see below as well */}
-          copyDeckMessage={false ? I18n.t('react.card_maker.update_deck_msg') : null}
-          copyDeckSubmitLabel={false ? I18n.t('react.card_maker.update_deck') : I18n.t('react.card_maker.copy_deck')}
+          onRequestUpgradeDeck={this.handleUpgradeDeck}
         />
         <HeaderBar
           selectedDeck={this.props.selectedDeck}
@@ -413,9 +440,14 @@ class SimpleManager extends React.Component {
           <Toolbar 
             onRequestPrint={() => this.setState({ openModal: 'print' })} 
             onRequestPngDownload={this.createDeckPngs}
-            showOwnerOptions={this.props.library === 'user' && this.props.selectedDeck && this.props.selectedDeck.isOwner}
-            showAdminOptions={this.props.library === 'user' && this.props.userRole === 'admin'}
+            userRole={this.props.userRole}
+            library={this.props.library}
+            selectedDeck={this.props.selectedDeck}
             onRequestCopy={() => this.setState({ openModal: 'copyDeck'})}
+            onRequestUpgrade={() => this.setState({ openModal: 'upgradeDeck' })}
+            onRequestShowUrl={() => this.setState({ openModal: 'deckUrl' })}
+            onRequestToggleDeckPublic={this.toggleDeckPublic}
+            onRequestOpenDeckUsers={() => this.setState({ openModal: 'deckUsers' })}
           />
         }
         <div className={styles.managerMain}>

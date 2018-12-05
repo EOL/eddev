@@ -5,6 +5,9 @@ import SpeciesSearchLightbox from './species-search-lightbox'
 import RenameDeckLightbox from './rename-deck-lightbox'
 import PrintLightbox from './print-lightbox'
 import CopyDeckLightbox from './copy-deck-lightbox'
+import DeckUrlLightbox from './deck-url-lightbox'
+import DeckUsersLightbox from './deck-users-lightbox'
+import {deckUrl} from 'lib/card-maker/url-helper'
 
 function ManagerModals(props) {
   const deckNamesMinusCur = new Set([...props.userDeckNames]);
@@ -45,15 +48,35 @@ function ManagerModals(props) {
         handleRequestClose={props.closeModal}
         handleCopy={props.onRequestCopyDeck}
         deckNames={props.userDeckNames}
-        upgradeDeck={props.upgradeDeckOnCopy}
-        message={props.copyDeckMessage}
-        submitLabel={props.copyDeckSubmitLabel}
+        upgradedInName={false}
+        message={null}
+        submitLabel={I18n.t('react.card_maker.copy_deck')}
+        deck={props.selectedDeck}
+      />
+      <CopyDeckLightbox
+        isOpen={props.openModal === 'upgradeDeck'}
+        handleRequestClose={props.closeModal}
+        handleCopy={props.onRequestUpgradeDeck}
+        deckNames={props.userDeckNames}
+        upgradedInName={true}
+        message={I18n.t('react.card_maker.update_deck_msg')}
+        submitLabel={I18n.t('react.card_maker.update_deck')}
         deck={props.selectedDeck}
       />
       <PrintLightbox
         isOpen={props.openModal === 'print'}
         onRequestClose={props.closeModal}
         handleSubmit={props.onRequestMakePdf}
+      />
+      <DeckUrlLightbox
+        isOpen={props.openModal === 'deckUrl'}
+        handleRequestClose={props.closeModal}
+        deckUrl={props.selectedDeck ? deckUrl(props.selectedDeck) : ''}
+      />
+      <DeckUsersLightbox
+        isOpen={props.openModal === 'deckUsers'}
+        handleRequestClose={props.closeModal}
+        deck={props.selectedDeck}
       />
     </div>
   );

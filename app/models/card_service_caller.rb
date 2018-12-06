@@ -296,6 +296,13 @@ module CardServiceCaller
     )
   end
 
+  def self.cached_image(img_url)
+    HTTParty.get(
+      "#{SERVICE_URL}/cachedImages/#{img_url}",
+      :headers => self.add_api_headers({})
+    )
+  end
+
   private
     def self.user_prefix(user_id)
       "#{SERVICE_URL}/users/#{user_id}"

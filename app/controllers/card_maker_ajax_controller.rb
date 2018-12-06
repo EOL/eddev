@@ -325,6 +325,12 @@ class CardMakerAjaxController < ApplicationController
     json_response(CardServiceCaller.card_backs)
   end
 
+  def cached_image
+    data_pass_thru_response(CardServiceCaller.cached_image(
+      params[:img_url]
+    ))
+  end
+
   private
     def json_response(httpartyResponse)
       json_response_helper(httpartyResponse.body, httpartyResponse.code)

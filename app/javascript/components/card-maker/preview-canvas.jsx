@@ -28,7 +28,7 @@ const imageFetcher = {
       cb(new Error("Failed to load image for url " + url));
     });
     $img.attr({
-      src: url
+      src: `/card_maker_ajax/cached_images/${encodeURIComponent(url)}`
     });
   }
 }

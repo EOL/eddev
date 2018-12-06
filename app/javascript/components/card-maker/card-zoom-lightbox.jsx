@@ -74,41 +74,43 @@ class CardZoomLightbox extends React.Component {
     if (!this.state.cardLoaded) {
       arrowBaseClasses.push(styles.isArrowDisabled)  
     }
-
-    return this.props.card ? 
-      (
-        <LightboxOverlay
-          contentLabel={I18n.t('react.card_maker.card_preview_lightbox')}
-          onRequestClose={this.props.handleRequestClose}
-        >
-          <div className={styles.cardLightbox}>
-            {
-              this.props.hasPrev &&
-              <i 
-                className={`${arrowBaseClasses.join(' ')} fa-angle-left ${styles.arrowLeft}`} 
-                onClick={() => this.handleArrowClick('prev')}
-              />
-            }
-              <div className={styles.cardLightboxCard}>
-                <LoadingSpinnerImage 
-                  src={hiResCardImageUrl(this.props.card)} 
-                  requestLoaded={this.handleRequestCardLoaded}
-                  loaded={this.state.cardLoaded}
-                />
+    return (
+      <LightboxOverlay
+        contentLabel={I18n.t('react.card_maker.card_preview_lightbox')}
+        onRequestClose={this.props.handleRequestClose}
+      >
+        <div className={styles.cardLightbox}>
+          {
+            this.props.hasPrev &&
+            <i 
+              className={`${arrowBaseClasses.join(' ')} fa-angle-left ${styles.arrowLeft}`} 
+              onClick={() => this.handleArrowClick('prev')}
+            />
+          }
+          {
+            this.props.card != null && (
+              <div>
+                <div className={styles.cardLightboxCard}>
+                  <LoadingSpinnerImage 
+                    src={hiResCardImageUrl(this.props.card)} 
+                    requestLoaded={this.handleRequestCardLoaded}
+                    loaded={this.state.cardLoaded}
+                  />
+                </div>
+                <button onClick={() => this.handlePngClick(this.props.card.id)}>{I18n.t('react.card_maker.download_png')}</button>
               </div>
-              <button onClick={() => this.handlePngClick(this.props.card.id)}>{I18n.t('react.card_maker.download_png')}</button>
-            {
-              this.props.hasNext &&
-              <i 
-                className={`${arrowBaseClasses.join(' ')} fa-angle-right ${styles.arrowRight}`}
-                onClick={() => this.handleArrowClick('next')}
-              />
-            }
-          </div>
-        </LightboxOverlay>
-      ) :
-      null
-    ;
+            )
+          }
+          {
+            this.props.hasNext &&
+            <i 
+              className={`${arrowBaseClasses.join(' ')} fa-angle-right ${styles.arrowRight}`}
+              onClick={() => this.handleArrowClick('next')}
+            />
+          }
+        </div>
+      </LightboxOverlay>
+    );
   }
 }
 

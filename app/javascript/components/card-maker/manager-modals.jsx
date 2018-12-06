@@ -7,6 +7,7 @@ import PrintLightbox from './print-lightbox'
 import CopyDeckLightbox from './copy-deck-lightbox'
 import DeckUrlLightbox from './deck-url-lightbox'
 import DeckUsersLightbox from './deck-users-lightbox'
+import CardZoomLightbox from './card-zoom-lightbox'
 import {deckUrl} from 'lib/card-maker/url-helper'
 
 function ManagerModals(props) {
@@ -77,6 +78,15 @@ function ManagerModals(props) {
         isOpen={props.openModal === 'deckUsers'}
         handleRequestClose={props.closeModal}
         deck={props.selectedDeck}
+      />
+      <CardZoomLightbox
+        isOpen={props.openModal === 'cardZoom'}
+        card={props.zoomCard}
+        requestNext={props.onRequestNextZoomCard}
+        requestPrev={props.onRequestPrevZoomCard}
+        handleRequestClose={props.closeModal}
+        hasNext={props.hasNextZoomCard}
+        hasPrev={props.hasPrevZoomCard}
       />
     </div>
   );

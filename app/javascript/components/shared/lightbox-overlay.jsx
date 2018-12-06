@@ -5,7 +5,7 @@ import CloseButtonModal from './close-button-modal'
 function LightboxOverlay(props) {
   return (
     <CloseButtonModal
-      isOpen={true}
+      isOpen={props.isOpen}
       contentLabel={props.contentLabel}
       parentSelector={() => {return document.getElementById('Page')}}
       overlayClassName={styles.overlay}

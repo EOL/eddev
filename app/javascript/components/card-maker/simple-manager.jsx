@@ -50,7 +50,8 @@ class SimpleManager extends React.Component {
     super(props);
 
     this.state = {
-      openModal: null
+      openModal: null,
+      zoomCardIndex: null
     }
   }
 
@@ -76,13 +77,40 @@ class SimpleManager extends React.Component {
     );
   }
 
-  cardItem = (card) => {
+  handleCardZoomClick = (i) => {
+    this.setState({
+      openModal: 'cardZoom',
+      zoomCardIndex: i
+    });
+  }
+
+  cardItem = (card, i) => {
     return (
       <li
         className={styles.card}
         key={card.id}
       >
         <LoadingSpinnerImage src={loResCardImageUrl(card)} />
+        <div className={styles.resourceOverlay}>
+          {
+            this.props.library === 'user' &&
+            <i
+              className='fa fa-edit fa-3x edit-btn'
+              onClick={() => this.props.editCard}
+            />
+          }
+          <i
+            className='fa fa-expand fa-3x'
+            onClick={() => this.handleCardZoomClick(i)}
+          />
+          {
+            this.props.library === 'user' && 
+            <i
+              className='fa fa-trash-o fa-3x'
+              onClick={this.props.handleDestroyClick}
+            />
+          }
+        </div>
       </li>
     );
   }
@@ -116,16 +144,20 @@ class SimpleManager extends React.Component {
     );
   }
 
-  resources = () => {
+  deckCards = () => {
+    return this.props.selectedDeck ? 
+      this.props.cards.filter((card) => {
+        return card.deck === this.props.selectedDeck.id;
+      }) :
+      [];
+  }
+
+  resources = (cards) => {
     let resources;
 
     if (this.props.selectedDeck) {
-      let deckCards = this.props.cards.filter((card) => {
-        return card.deck === this.props.selectedDeck.id;
-      });
-
-      resources = deckCards.map((card) => {
-        return this.cardItem(card);
+      resources = cards.map((card, i) => {
+        return this.cardItem(card, i);
       });
     } else {
       resources = this.props.decks.map((deck) => {
@@ -347,7 +379,6 @@ class SimpleManager extends React.Component {
         alert(I18n.t('react.card_maker.unexpected_error_msg'));
       }
     });
-
   }
 
   pollPdfJob = (id, overlayCloseFn) => {
@@ -404,9 +435,21 @@ class SimpleManager extends React.Component {
     }
   }
 
+  updateZoomCardIndex = (updater) => {
+    this.setState((prevState, props) => {
+      return {
+        zoomCardIndex: prevState.zoomCardIndex === null ? 
+          null : 
+          updater(prevState.zoomCardIndex)
+      }
+    });
+  }
+
   render() {
     const hasToolbar = this.props.selectedDeck != null
       , managerClasses = [styles.simpleManager]
+      , deckCards = this.deckCards()
+      , resources = this.resources(deckCards)
       ;
 
     if (hasToolbar) {
@@ -427,6 +470,23 @@ class SimpleManager extends React.Component {
           onRequestMakePdf={this.handleMakePdf}
           onRequestCopyDeck={this.handleCopyDeck}
           onRequestUpgradeDeck={this.handleUpgradeDeck}
+          zoomCard={this.openModal == 'cardZoom' ? deckCards[this.state.zoomCardIndex] : null}
+          onRequestNextZoomCard={() => {
+            this.updateZoomCardIndex((index) => {
+              return (index + 1) % deckCards.length;
+            });
+          }}
+          onRequestPrevZoomCard={() => {
+            this.updateZoomCardIndex((index) => {
+              var updated = (index - 1) % deckCards.length;
+              if (updated < 0) { 
+                updated = deckCards.length + updated;
+              }
+              return updated;
+            });
+          }}
+          hasNextZoomCard={this.state.zoomCardIndex != null && this.state.zoomCardIndex < deckCards.length - 1}
+          hasPrevZoomCard={this.state.zoomCardIndex != null && this.state.zoomCardIndex > 0}
         />
         <HeaderBar
           selectedDeck={this.props.selectedDeck}
@@ -457,7 +517,7 @@ class SimpleManager extends React.Component {
             onRequestEditDesc={() => this.setState({ openModal: 'deckDesc' })}
           />
           <ul className={styles.decks}>
-            {this.resources()}
+            {resources}
           </ul>
         </div>
       </div>

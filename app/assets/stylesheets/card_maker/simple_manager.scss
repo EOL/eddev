@@ -172,6 +172,7 @@ $deck-margin: 15px;
   justify-content: center;
   margin: $deck-margin;
   overflow: hidden;
+  position: relative;
   text-align: center;
   vertical-align: top;
   width: $deck-width;
@@ -183,6 +184,31 @@ $deck-margin: 15px;
 
   &:hover {
     background-color: $btn-hover-gray;
+
+    & .resourceOverlay {
+      display: flex;
+    }
+  }
+}
+
+.resourceOverlay {
+  align-items: center;
+  background: rgba(.5, .5, .5, .5);
+  bottom: 0; 
+  color: $white;
+  display: none;
+  //flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  vertical-align: top;
+
+  & > i {
+    text-align: center;
+    width: 100%;
   }
 }
 

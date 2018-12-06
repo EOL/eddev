@@ -84,6 +84,41 @@ class SimpleManager extends React.Component {
     });
   }
 
+  handleDestroyResource = (confirmMsg, resourceType, id) => {
+    const that = this
+        , shouldDestroy = confirm(confirmMsg)
+        ;
+
+    if (!shouldDestroy) return;
+
+    that.props.showLoadingOverlay(null, (closeFn) => {
+      $.ajax({
+        url: cardMakerUrl(resourceType + '/' + id),
+        method: 'DELETE',
+        success: () => {
+          that.props.reloadCurLibResources(closeFn);
+        }
+      });
+    });
+  }
+
+  handleDestroyCard = (card) => {
+    this.handleDestroyResource(
+      I18n.t('react.card_maker.are_you_sure_delete_card'),
+      'cards',
+      card.id
+    );
+  }
+
+  handleDestroyDeck = (deck) => {
+    this.handleDestroyResource(
+      I18n.t('react.card_maker.are_you_sure_delete_deck'),
+      'decks',
+      deck.id
+    );
+  }
+
+
   cardItem = (card, i) => {
     return (
       <li
@@ -96,7 +131,7 @@ class SimpleManager extends React.Component {
             this.props.library === 'user' &&
             <i
               className='fa fa-edit fa-3x edit-btn'
-              onClick={() => this.props.editCard}
+              onClick={() => this.props.onRequestEditCard(card)}
             />
           }
           <i
@@ -107,7 +142,7 @@ class SimpleManager extends React.Component {
             this.props.library === 'user' && 
             <i
               className='fa fa-trash-o fa-3x'
-              onClick={this.props.handleDestroyClick}
+              onClick={() => this.handleDestroyCard(card)}
             />
           }
         </div>
@@ -295,7 +330,7 @@ class SimpleManager extends React.Component {
           that.props.reloadCurLibResources(() => {
             closeFn();
             if (!data.copyFrom) {
-              that.props.handleEditCard(card.id);
+              that.props.onRequestEditCard(card);
             }
           })
         },

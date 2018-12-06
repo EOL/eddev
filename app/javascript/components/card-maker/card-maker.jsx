@@ -305,9 +305,9 @@ class CardMaker extends React.Component {
     });
   }
 
-  handleEditCard = (cardId) => {
+  handleEditCard = (card) => {
     const state = {
-      editorCardId: cardId,
+      editorCardId: card.id,
     }
 
     window.history.pushState(state, '');
@@ -385,7 +385,7 @@ class CardMaker extends React.Component {
           decks={this.state.library === 'user' ? this.state.userDecks : this.state.publicDecks}
           userDecks={this.state.userDecks}
           unassignedCardsDeck={unassignedCardsDeck}
-          handleEditCard={this.handleEditCard}
+          onRequestEditCard={this.handleEditCard}
           userRole={this.state.userRole}
           library={this.state.library}
           reloadCurLibResources={this.reloadCurLibResources}

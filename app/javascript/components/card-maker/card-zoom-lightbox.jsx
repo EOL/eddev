@@ -74,8 +74,10 @@ class CardZoomLightbox extends React.Component {
     if (!this.state.cardLoaded) {
       arrowBaseClasses.push(styles.isArrowDisabled)  
     }
+
     return (
       <LightboxOverlay
+        isOpen={this.props.isOpen}
         contentLabel={I18n.t('react.card_maker.card_preview_lightbox')}
         onRequestClose={this.props.handleRequestClose}
       >
@@ -89,16 +91,18 @@ class CardZoomLightbox extends React.Component {
           }
           {
             this.props.card != null && (
-              <div>
-                <div className={styles.cardLightboxCard}>
-                  <LoadingSpinnerImage 
-                    src={hiResCardImageUrl(this.props.card)} 
-                    requestLoaded={this.handleRequestCardLoaded}
-                    loaded={this.state.cardLoaded}
-                  />
-                </div>
-                <button onClick={() => this.handlePngClick(this.props.card.id)}>{I18n.t('react.card_maker.download_png')}</button>
+              <div className={styles.cardLightboxCard}>
+                <LoadingSpinnerImage 
+                  src={hiResCardImageUrl(this.props.card)} 
+                  requestLoaded={this.handleRequestCardLoaded}
+                  loaded={this.state.cardLoaded}
+                />
               </div>
+            )
+          }
+          {
+            this.props.card != null && (
+              <button onClick={() => this.handlePngClick(this.props.card.id)}>{I18n.t('react.card_maker.download_png')}</button>
             )
           }
           {

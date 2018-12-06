@@ -456,6 +456,8 @@ class SimpleManager extends React.Component {
       managerClasses.push(styles.simpleManagerWToolbar);
     }
 
+    console.log(this.state);
+
     return (
       <div className={managerClasses.join(' ')}>
         <ManagerModals 
@@ -470,7 +472,7 @@ class SimpleManager extends React.Component {
           onRequestMakePdf={this.handleMakePdf}
           onRequestCopyDeck={this.handleCopyDeck}
           onRequestUpgradeDeck={this.handleUpgradeDeck}
-          zoomCard={this.openModal == 'cardZoom' ? deckCards[this.state.zoomCardIndex] : null}
+          zoomCard={this.state.openModal == 'cardZoom' ? deckCards[this.state.zoomCardIndex] : null}
           onRequestNextZoomCard={() => {
             this.updateZoomCardIndex((index) => {
               return (index + 1) % deckCards.length;

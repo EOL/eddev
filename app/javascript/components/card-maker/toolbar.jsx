@@ -53,6 +53,11 @@ class Toolbar extends React.Component {
             I18n.t('react.card_maker.make_deck_public')
         });
       }
+
+      items.push({
+        handleClick: this.props.onRequestDestroyDeck,
+        label: I18n.t('react.card_maker.delete_deck'),
+      });
     } else {
       items.push({
         handleClick: this.props.onRequestShowUrl,

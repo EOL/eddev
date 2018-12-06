@@ -545,6 +545,7 @@ class SimpleManager extends React.Component {
             onRequestShowUrl={() => this.setState({ openModal: 'deckUrl' })}
             onRequestToggleDeckPublic={this.toggleDeckPublic}
             onRequestOpenDeckUsers={() => this.setState({ openModal: 'deckUsers' })}
+            onRequestDestroyDeck={() => this.handleDestroyDeck(this.props.selectedDeck)}
           />
         }
         <div className={styles.managerMain}>

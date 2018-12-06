@@ -7,7 +7,14 @@ import HeaderBar from './header-bar'
 import Toolbar from './toolbar'
 import styles from 'stylesheets/card_maker/simple_manager'
 
-const pollIntervalMillis = 1000;
+const pollIntervalMillis = 1000
+    , specialCardOrder = {
+        'title': 0,
+        'desc': 1,
+        'vocab': 2,
+        'key': 3,
+      }
+    ;
 
 function DescPart(props) {
   let inner;
@@ -118,7 +125,6 @@ class SimpleManager extends React.Component {
     );
   }
 
-
   cardItem = (card, i) => {
     return (
       <li
@@ -183,8 +189,32 @@ class SimpleManager extends React.Component {
     return this.props.selectedDeck ? 
       this.props.cards.filter((card) => {
         return card.deck === this.props.selectedDeck.id;
-      }) :
+      }).sort(this.deckCardSort) :
       [];
+  }
+
+  deckCardSort = (a, b) => {
+    if (a.locale === I18n.locale && b.locale !== I18n.locale) {
+      return -1;
+    }
+
+    if (a.locale !== I18n.locale && b.locale === I18n.locale) {
+      return 1;
+    }
+
+    if (a.templateName === 'trait' && b.templateName !== 'trait') {
+      return 1;
+    }
+
+    if (a.templateName !== 'trait' && b.templateName === 'trait') {
+      return -1
+    }
+
+    if (a.templateName !== 'trait' && b.templateName !== 'trait') {
+      return (specialCardOrder[a.templateName] || -1) - (specialCardOrder[b.templateName] || -1);
+    }
+
+    return this.props.sort.fn(a, b)
   }
 
   resources = (cards) => {

@@ -246,8 +246,8 @@ class SpeciesSearchLightbox extends React.Component {
             {
               this.state.screen === 'create' && (this.state.cardType !== 'trait' || this.state.selectedResultId !== null) && (
               <div className={styles.createCardRow}>
-                <div className={styles.deckSelectLabel}>{I18n.t('react.card_maker.select_deck')}</div>
                 {/* 
+                <div className={styles.deckSelectLabel}>{I18n.t('react.card_maker.select_deck')}</div>
                 <UserResourceFilter
                   topClass={styles.newInputSelectCard}
                   anchorClass={styles.newInputAnchorCard}

@@ -225,7 +225,13 @@ class SimpleManager extends React.Component {
         return this.cardItem(card, i);
       });
     } else {
-      resources = this.props.decks.map((deck) => {
+      resources = this.props.decks.sort((a, b) => {
+        if (a.name.toLowerCase() < b.name.toLowerCase()) {
+          return -1;
+        } else {
+          return 1;
+        }
+      }).map((deck) => {
         return this.deckItem(deck);
       });
     }

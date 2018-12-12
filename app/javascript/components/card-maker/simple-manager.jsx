@@ -560,6 +560,7 @@ class SimpleManager extends React.Component {
           }}
           hasNextZoomCard={this.state.zoomCardIndex != null && this.state.zoomCardIndex < deckCards.length - 1}
           hasPrevZoomCard={this.state.zoomCardIndex != null && this.state.zoomCardIndex > 0}
+          onRequestPublicCardsForTaxon={this.props.onRequestPublicCardsForTaxon}
         />
         <HeaderBar
           selectedDeck={this.props.selectedDeck}

@@ -1,7 +1,8 @@
 import React from 'react'
 import DeckDescModal from './deck-desc-modal'
 import NewDeckLightbox from './new-deck-lightbox'
-import SpeciesSearchLightbox from './species-search-lightbox'
+//import SpeciesSearchLightbox from './species-search-lightbox'
+import SimpleNewCardLightbox from './simple-new-card-lightbox'
 import RenameDeckLightbox from './rename-deck-lightbox'
 import PrintLightbox from './print-lightbox'
 import CopyDeckLightbox from './copy-deck-lightbox'
@@ -31,11 +32,18 @@ function ManagerModals(props) {
         handleRequestClose={props.closeModal}
         deckNames={props.userDeckNames}
       />
+      {/*
       <SpeciesSearchLightbox
         isOpen={props.openModal === 'newCard'}
         handleClose={props.closeModal}
         handleCreate={props.onRequestCreateCard}
+        onRequestPublicCardsForTaxon={props.onRequestPublicCardsForTaxon}
         selectedDeckId={props.selectedDeck ? props.selectedDeck.id : null}
+      />
+      */}
+      <SimpleNewCardLightbox
+        isOpen={props.openModal === 'newCard'}
+        onRequestClose={props.closeModal}
       />
       <RenameDeckLightbox
         isOpen={props.openModal === 'renameDeck'}

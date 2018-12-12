@@ -303,6 +303,13 @@ module CardServiceCaller
     )
   end
 
+  def self.public_cards_for_taxon(taxon_id)
+    HTTParty.get(
+      "#{SERVICE_URL}/taxa/#{taxon_id}/cards/public",
+      :headers => self.add_api_headers(JSON_HEADERS)
+    )
+  end
+
   private
     def self.user_prefix(user_id)
       "#{SERVICE_URL}/users/#{user_id}"

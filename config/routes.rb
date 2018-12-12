@@ -65,6 +65,7 @@ Rails.application.routes.draw do
     post   "card_maker_ajax/decks/:deck_id/name/"     => "card_maker_ajax#rename_deck"
     get    "card_maker_ajax/card_backs"               => "card_maker_ajax#card_backs"
     get    "card_maker_ajax/cached_images/:img_url"   => "card_maker_ajax#cached_image", constraints: { img_url: /.+/ }
+    get    "card_maker_ajax/taxa/:taxon_id/cards/public" => "card_maker_ajax#public_cards_for_taxon"
     get    "card_maker"                               => "card_maker#index", :as => :card_maker
 
     get "podcasts" => "podcasts#index", :as => "podcasts"

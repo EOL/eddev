@@ -660,6 +660,14 @@ $card-aspect-ratio: .75;
   color: $white;
 }
 
+.speciesSearchPublicCard {
+  display: inline-block;
+
+  & > img {
+    width: 100px;
+  }
+}
+
 .resultTxt {
   overflow: hidden;
   text-overflow: ellipsis;

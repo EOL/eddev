@@ -142,7 +142,6 @@ class CardMaker extends React.Component {
           userRole: userInfo.role
         }, () => {
           if (hashParams.deck_id) {
-            // library is set to public, which is what we want
             if (that.state.userRole) {
               // user decks are needed in both libraries, for example, for copying 
               // public cards to a deck
@@ -395,6 +394,7 @@ class CardMaker extends React.Component {
           setSort={this.setSort}
           sort={this.state.sort}
           sorts={this.sortsForLib(this.state.library)}
+          onRequestPublicCardsForTaxon={this.handleRequestPublicCardsForTaxon}
           {...commonProps}
         />
       )
@@ -427,6 +427,14 @@ class CardMaker extends React.Component {
     this.setState({
       showLoadingOverlay: false,
       loadingOverlayText: null
+    });
+  }
+
+  handleRequestPublicCardsForTaxon = (id) => {
+    console.log('all public cards', this.state.publicCards);
+    return this.state.publicCards.filter((card) => {
+      console.log(card, id);
+      return card.templateName === 'trait' && card.speciesId === id;
     });
   }
 

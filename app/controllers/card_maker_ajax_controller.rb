@@ -331,6 +331,11 @@ class CardMakerAjaxController < ApplicationController
     ))
   end
 
+  # GET /card_maker_ajax/taxa/:taxon_id/cards/public
+  def public_cards_for_taxon
+    json_response(CardServiceCaller.public_cards_for_taxon(params[:taxon_id]))
+  end
+
   private
     def json_response(httpartyResponse)
       json_response_helper(httpartyResponse.body, httpartyResponse.code)

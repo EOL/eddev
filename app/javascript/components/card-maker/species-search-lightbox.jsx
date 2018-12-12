@@ -4,7 +4,7 @@ import React from 'react'
 import CloseButtonModal from 'components/shared/close-button-modal'
 import UserResourceFilter from './user-resource-filter'
 import SpeciesSearchResult from './species-search-result'
-import {cardMakerUrl} from 'lib/card-maker/url-helper'
+import {cardMakerUrl, loResCardImageUrl} from 'lib/card-maker/url-helper'
 
 import traitCardImg from 'images/card_maker/sample_cards/trait.png'
 import titleCardImg from 'images/card_maker/sample_cards/title.png'
@@ -52,6 +52,23 @@ var cardTypes = {};
 ].forEach((type) => {
   cardTypes[type.template] = type;
 });
+
+function LeftColumn(props) {
+  return (
+    <div className={styles.lSpeciesSearchLeft}>
+      <img className={styles.speciesSearchCardImg} src={props.img} />
+      <div className={styles.speciesSearchCardLabel}>{I18n.t('react.card_maker.' + props.nameKey)}</div>
+      {
+        props.screen !== 'start' && 
+        <button 
+          type='button' 
+          className={[styles.btn, styles.btnBack].join(' ')}
+          onClick={props.onRequestBack}
+        ><i className='fa fa-2x fa-arrow-left' /></button>
+      }
+    </div>
+  );
+}
 
 class SpeciesSearchLightbox extends React.Component {
   constructor(props) {
@@ -174,6 +191,15 @@ class SpeciesSearchLightbox extends React.Component {
     );
   }
 
+  loadPublicCards = () => {
+    $.getJSON(cardMakerUrl(`taxa/${this.state.selectedResultId}/cards/public`), (result) => {
+      this.setState({
+        screen: 'selectCard',
+        cardsForResult: result
+      });
+    });
+  }
+
   render() {
     var curType = cardTypes[this.state.cardType];
 
@@ -188,21 +214,18 @@ class SpeciesSearchLightbox extends React.Component {
         onRequestClose={this.handleRequestClose}
       >
         <div className={styles.speciesSearch}>
-          <div className={styles.lSpeciesSearchLeft}>
-            <img className={styles.speciesSearchCardImg} src={curType.img} />
-            <div className={styles.speciesSearchCardLabel}>{I18n.t('react.card_maker.' + curType.nameKey)}</div>
-            {
-              this.state.screen !== 'start' && 
-              <button 
-                type='button' 
-                className={[styles.btn, styles.btnBack].join(' ')}
-                onClick={() => this.setState({ screen: 'start', cardType: 'trait' })}
-              ><i className='fa fa-2x fa-arrow-left' /></button>
-            }
-          </div>
+          <LeftColumn
+            onRequestBack={() => this.setState({ screen: 'start', cardType: 'trait' })}
+            img={curType.img}
+            nameKey={curType.nameKey}
+          />
           <div className={styles.speciesSearchForm}>
             {
-              (this.state.screen === 'start' || this.state.screen === 'inFlight' || this.state.cardType === 'trait') &&
+              (
+                this.state.screen === 'start' || 
+                this.state.screen === 'inFlight' || 
+                (this.state.screen === 'create' && this.state.cardType === 'trait')
+              ) &&
               <form 
                 action="#" 
                 onSubmit={this.handleQuerySubmit} 
@@ -246,23 +269,11 @@ class SpeciesSearchLightbox extends React.Component {
             {
               this.state.screen === 'create' && (this.state.cardType !== 'trait' || this.state.selectedResultId !== null) && (
               <div className={styles.createCardRow}>
-                {/* 
-                <div className={styles.deckSelectLabel}>{I18n.t('react.card_maker.select_deck')}</div>
-                <UserResourceFilter
-                  topClass={styles.newInputSelectCard}
-                  anchorClass={styles.newInputAnchorCard}
-                  itemsClass={styles.newInputSelectItemsCard}
-                  count={this.props.deckFilterItems.length - 1}
-                  filterItems={this.props.deckFilterItems}
-                  selectedId={this.props.selectedDeckId}
-                  handleSelect={this.props.handleDeckSelect}
-                />
-                */}
                 <button 
                   className={[styles.btn, styles.btnCreateCard].join(' ')} 
-                  onClick={this.handleCreate}
+                  onClick={this.state.cardType == 'trait' ? this.loadPublicCards : this.handleCreate}
                   type='button'
-                >{I18n.t('react.card_maker.create')}</button>
+                >{this.state.cardType == 'trait' ? 'next' : I18n.t('react.card_maker.create')}</button>
               </div>
             )}
             {
@@ -271,9 +282,21 @@ class SpeciesSearchLightbox extends React.Component {
                   { this.templateItem('title') }
                   { this.templateItem('key')   }
                   { this.templateItem('desc')  }
-                  { this.templateItem('vocab')  }
+                  { this.templateItem('vocab') }
                 </ul>
               )
+            }
+            {
+              this.state.screen === 'selectCard' &&
+              <ul className={styles.speciesSearchPublicCards}>{
+                this.state.cardsForResult.map((card) => {
+                  return (
+                    <li className={styles.speciesSearchPublicCard} key={card.id}>
+                      <img src={loResCardImageUrl(card)} /> 
+                    </li>
+                  );
+                })
+              }</ul>
             }
           </div>
         </div>
@@ -283,3 +306,4 @@ class SpeciesSearchLightbox extends React.Component {
 }
 
 export default SpeciesSearchLightbox;
+

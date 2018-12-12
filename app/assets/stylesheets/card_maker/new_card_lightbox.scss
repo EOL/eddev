@@ -1,0 +1,55 @@
+@import "../shared/layout_vars";
+@import "buttons";
+
+.btnNewCard {
+  margin: 0 auto 30px auto;
+  width: 400px;  
+}
+
+.newCardLightbox {
+  background: $white;
+  overflow: hidden;
+  margin: 0 auto;
+  position: relative;
+  width: $main-col-width-px;
+
+
+  & > h2 {
+    border-bottom: 1px solid $black;
+    font-weight: bold;
+    padding: 8px 0;
+    position: relative;
+    text-align: center;
+    width: 100%;
+
+    & > i {
+      cursor: pointer;
+      left: 10px;
+      top: 3px;
+      position: absolute;
+    }
+  }
+}
+
+.templateSelect {
+}
+
+.templates {
+  justify-content: space-around;
+  display: flex;
+  margin: 30px auto;
+}
+
+.template {
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  width: 150px;
+
+  & > img {
+    width: 100%;
+  }
+
+  & > div {
+  }
+}

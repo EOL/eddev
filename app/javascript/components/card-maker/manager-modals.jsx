@@ -44,6 +44,7 @@ function ManagerModals(props) {
       <SimpleNewCardLightbox
         isOpen={props.openModal === 'newCard'}
         onRequestClose={props.closeModal}
+        onRequestCreateCard={props.onRequestCreateCard}
       />
       <RenameDeckLightbox
         isOpen={props.openModal === 'renameDeck'}

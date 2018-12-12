@@ -1,0 +1,15 @@
+$btn-hover-gray: #eee;
+
+.btn {
+  border: 1px solid #000;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 5px 10px;
+  text-align: center;
+
+  &:hover {
+    background-color: #eee;
+  }
+}
+

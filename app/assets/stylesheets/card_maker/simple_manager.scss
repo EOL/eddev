@@ -1,6 +1,6 @@
 @import "layout_vars";
+@import "buttons";
 
-$btn-hover-gray: #eee;
 $header-height: 44px;
 $toolbar-height: 38px;
 
@@ -13,19 +13,6 @@ $toolbar-height: 38px;
 }
 
 // common styles
-.btn {
-  border: 1px solid #000;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  padding: 5px 10px;
-  text-align: center;
-
-  &:hover {
-    background-color: #eee;
-  }
-}
-
 // Header bar
 .bar {
   border-bottom: 1px solid black;

@@ -12,7 +12,7 @@ import styles from 'stylesheets/card_maker/card_manager'
 const resourcesPerRow = 4
     , initRows = 3 
     , minResources = resourcesPerRow * initRows
-    , resourceHeight = 218.4 // TODO: these shouldn't just be hard-coded..
+    , resourceHeight = 213.3 // TODO: these REALLY shouldn't just be hard-coded.
     , containerHeight = 600
     , resourceMarginTop = 10
     ;

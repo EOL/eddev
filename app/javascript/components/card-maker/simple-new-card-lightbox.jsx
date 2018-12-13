@@ -54,7 +54,7 @@ var views = {
     title: 'select a card type',
   },
   search: {
-    title: 'search for a species or taxon',
+    title: 'search',
     prev: 'templateSelect'
   }
 }

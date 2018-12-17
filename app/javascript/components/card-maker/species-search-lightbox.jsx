@@ -3,7 +3,7 @@ import React from 'react'
 //import SpeciesSearch from './species-search'
 import CloseButtonModal from 'components/shared/close-button-modal'
 import UserResourceFilter from './user-resource-filter'
-import SpeciesSearchResult from './species-search-result'
+import SpeciesSearchResult from './new-card-lightbox/species-search-result'
 import {cardMakerUrl, loResCardImageUrl} from 'lib/card-maker/url-helper'
 
 import traitCardImg from 'images/card_maker/sample_cards/trait.png'

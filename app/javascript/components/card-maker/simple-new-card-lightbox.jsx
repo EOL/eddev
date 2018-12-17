@@ -1,7 +1,5 @@
 import React from 'react'
 
-//import SpeciesSearch from './species-search'
-import SpeciesSearchResult from './species-search-result'
 import CloseButtonModal from 'components/shared/close-button-modal'
 import TemplateSelect from './new-card-lightbox/template-select'
 import Search from './new-card-lightbox/search'

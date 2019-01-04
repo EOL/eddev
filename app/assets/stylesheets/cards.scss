@@ -142,3 +142,29 @@ $mobile-col-width: 270px;
     margin: 0 auto;
     width: 254px;
   }
+
+@media only screen and (min-width: 700px) {
+  .anchor-links {
+    overflow: hidden;
+    width: 381px;
+  }
+
+    .anchor-link {
+      display: inline-block;
+      margin-right: 7px;
+      margin-top: 10px;
+      width: 187px;
+    }
+
+    li:nth-of-type(even).anchor-link {
+      margin-right: 0;
+    }
+
+  .card-type {
+    width: 150px;
+  }
+
+    .card-type-name {
+
+    }
+}

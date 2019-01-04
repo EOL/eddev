@@ -98,12 +98,17 @@
   function scrollToId(id, highlight) {
     var $lessonPlan = $('#LessonPlan' + id)
       , $menu = $lessonPlan.closest('.grade-level').find('.grade-level-bar')
+      , $navbar = $('.navbar-outer')
       , highlightColor = '#c9ddff'
       ;
 
     toggleGradeLevelMenu($menu, function() {
       var backgroundColor = $lessonPlan.css('background-color');
-      $(window).scrollTop($lessonPlan.offset().top - $menu.height()); //accommodate persistent header
+      $(window).scrollTop(
+        $lessonPlan.offset().top - 
+        $menu.height() -
+        $navbar.outerHeight()
+      ); //accommodate persistent header
 
       if (highlight) {
         $lessonPlan.css('background-color', highlightColor);

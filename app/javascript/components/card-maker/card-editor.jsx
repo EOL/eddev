@@ -272,6 +272,8 @@ class CardEditor extends React.Component {
                       forceCardDirty={this.forceDirty}
                       disableCol={this.disableRightCol}
                       enableCol={this.enableRightCol}
+                      userRole={this.props.userRole}
+                      requestReloadCard={this.props.requestReloadCard}
                     />
                   }
                 </div>

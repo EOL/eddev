@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     get    "card_maker_ajax/cards/:card_id(.:format)" => "card_maker_ajax#get_card"
     put    "card_maker_ajax/cards/:card_id/deck_id"   => "card_maker_ajax#set_card_deck"
     delete "card_maker_ajax/cards/:card_id/deck_id"   => "card_maker_ajax#remove_card_deck"
+    post   "card_maker_ajax/cards/:card_id/refresh_images" => "card_maker_ajax#refresh_card_images"
 #    get    "card_maker_ajax/card_ids"                 => "card_maker_ajax#card_ids"
     get    "card_maker_ajax/cards"                    => "card_maker_ajax#cards"
     get    "card_maker_ajax/decks/:deck_id/card_ids"  => "card_maker_ajax#deck_card_ids"

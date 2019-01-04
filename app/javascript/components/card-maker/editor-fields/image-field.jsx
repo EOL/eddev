@@ -169,6 +169,39 @@ class ImageField extends React.Component {
     this.props.setDataAttr('credit', { text: event.target.value });
   }
 
+  refreshImageLibrary = (e) => {
+    const that = this;
+
+    e.stopPropagation();
+    if (this.props.isCardDirty) {
+      alert('Please save your changes first');
+    } else {
+      let proceed = confirm('Are you sure you want to refresh the image library? This will overwrite the old one.');
+
+      if (!proceed) {
+        return;
+      }
+
+      $.ajax({
+        url: cardMakerUrl('cards/' + this.props.cardId + '/refresh_images'),
+        method: 'post',
+        data: {},
+        success: (newCard) => {
+          that.props.requestReloadCard((err) => {
+            if (err) {
+              alert('Something went wrong!');
+            } else {
+              alert('Image library refreshed!');
+            }
+          })
+        },
+        error: () => {
+          alert('Something went wrong!');
+        }
+      });
+    }
+  }
+
   render() {
     const uploadThumbUrl = this.props.getUserDataAttr('upload', 'thumbUrl')
         , showThumbs = this.props.choices != null && this.props.choices.length
@@ -191,6 +224,10 @@ class ImageField extends React.Component {
               <div className='img-lib-thumbs'>
                 {this.buildImgLibPreviewThumbs()}
               </div>
+              {
+                this.props.userRole === 'admin' &&
+                <button onClick={this.refreshImageLibrary}>Refresh</button>
+              }
             </div>
           }
           {

@@ -5,9 +5,9 @@ Rails.application.routes.draw do
   scope '(:locale)', locale: /#{I18n.available_locales.reject { |l| l == I18n.default_locale}.join('|')}/ do
     get  ''            => 'welcome#index', :as => :home
     get  'about'        => 'welcome#about',      :as => :about
-    get  'species_cards'        => 'cards#index',        :as => :cards
-    get  'card_resources'       => 'cards#resources',    :as => :card_resources
+    get  'card_resources'       => 'cards#index',    :as => :cards
     get  'lesson_plans' => 'lesson_plans#index', :as => :lesson_plans
+    get  'lesson_plans/:name' => 'lesson_plans#show', :as => :lesson_plan
     get  'earth_tours' => 'earth_tours#index', :as => :earth_tours
 
     resources :users, :only => [:new, :create]

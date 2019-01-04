@@ -79,6 +79,9 @@ en:
         thats_classified_html: "See: <a href='%{lp_path}'>That's Classified (grades 2-5): Collect 3-of-a-kind in this Go-Fish style classification game</a>"
       how_to_use: "How to Use Species Cards"
       species_card_key: "Species card key"
+    resources:
+      title: "Biodiversity Card Resources"
+      intro_p: "This is a placeholder for the real paragraph! You can learn about biodiversity cards here. Check em out!"
   forgot_password_mailer:
     forgot_password_email:
       body_html: "Hi, %{user_name}. Please click the following link to change your password: <a href=\"%{url}\">%{url}</a>"

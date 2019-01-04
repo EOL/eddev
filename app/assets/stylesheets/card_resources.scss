@@ -1,22 +1,6 @@
 @import "shared/layout_vars";
 
-.boxes {
-  margin-top: 56px;
-}
-
-.boxWelcome {
-  background-color: gray;
-  color: #52a1cc;
-  padding: 14px 32px;
-  text-align: center;
-  width: 564px;
-
-  & > h2 {
-    font-size: 24px;
-    font-weight: $semibold;
-  }
-
-  & > p {
-    font-size: 14px;
-  }
+.banner {
+  background-color: green;
+  height: 113px;
 }

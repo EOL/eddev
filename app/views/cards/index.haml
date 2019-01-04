@@ -1,71 +1,34 @@
-= render "shared/intro_section", :header => "cards.index.cards_hdr",
-  :paragraphs => [{ :key => "cards.index.compare_and_learn_html",
-  :vars => { :how_to_use_id => "HowToUseIntro",
-  :lesson_plans_path => lesson_plans_path,
-  :contact_url => "http://eol.org/contact_us?subject=learning"}}],
-  :hideable => false
-= render "shared/section_head", :title_key => "cards.index.featured_decks"
-%ul.featured-decks<
-  = render "featured", :class_str => "first",
-    :image_name => "bioblitz_common",
-    :desc_key => "bioblitz_common",
-    :color => "blue",
-    :file_name => "bioblitz"
-  = render "featured", :class_str => "second",
-    :image_name => "okaloosa_bio",
-    :desc_key => "okaloosa_bio",
-    :color => "orange",
-    :file_name => "okaloosa_biodiversity"
-  = render "featured", :class_str => "third",
-    :image_name => "ne_urban",
-    :desc_key => "ne_urban",
-    :color => "pink",
-    :file_name => "ne_urban"
-  = render "featured", :class_str => "fourth trait-card",
-    :image_name => "blank",
-    :desc_key => "blank_cards",
-    :color => "gray",
-    :file_name => "blank_species_card_packet"
-= render "shared/section_head", :title_key => "cards.index.all_decks"
-%ul.all-decks<
-  - @all_decks.each_with_index do |deck, index|
-    = render "deck", :deck => deck, :index => index
-
-= render "shared/section_head", :title_key => "cards.index.how_to_use", :id => "HowToUseIntro"
-.how-to-use
-  .how-to-content<
-    = render "how_to_section", :hdr_key => "build_food_chains",
-      :content_key => "explore_different_food",
-      :lp_key => "food_chains_rummy_html",
-      :lp_path => scroll_to_lesson_plan_path(@food_chains_rummy),
-      :additional_class => "first"
-    = render "how_to_section", :hdr_key => "explore_adaptations",
-      :content_key => "some_card_decks",
-      :lp_key => "go_adapt_html",
-      :lp_path => scroll_to_lesson_plan_path(@go_adapt),
-      :additional_class => "second"
-    = render "how_to_section", :hdr_key => "classify",
-      :content_key => "sort_cards",
-      :lp_key => "thats_classified_html",
-      :lp_path => scroll_to_lesson_plan_path(@thats_classified),
-      :additional_class => "third"
-    = render "how_to_section", :hdr_key => "create_your_own",
-      :content_key => "print_our_blank",
-      :lp_key => "create_a_creature_html",
-      :lp_path => scroll_to_lesson_plan_path(@create_a_creature),
-      :additional_class => "fourth"
-  .example-cards<
-    .example-card-wrap.first>
-      = image_tag "cards/example_newt.png", :class => "example-card"
-      .caption= t ".example_species_card"
-    .example-card-wrap.second>
-      = image_tag "cards/example_key.png", :class => "example-card"
-      .caption= t ".species_card_key"
-  .cards-idea-contact= t ".have_a_great_idea_html", :contact_url => "http://eol.org/contact_us?subject=learning"
-
-= render  "shared/image_credits",
-  :images => [{ :title => "Delta WSR",
-  :author => "Bob Wick, Bureau of Land Management",
-  :source => "Flickr",
-  :url => "https://www.flickr.com/photos/mypubliclands/16539119029/in/photolist-rcviSD-gAQJ3S-azeGX2-eiXKJR-rcuN6p-fUkiy9-qwX3Kb-fUkc4C-fkFwFq-qwXowW-rcorQL-HXmq9A-rrERX5-gAQPJw-aZGSwn-gAQwZE-fUjaKx-aZKTTi-aZKRT2-aZKSxv-fvDnDK-fJbNBL-fUk2Ri-nygUyK-H8q5HU-aZKT4i-fUjDQa-gARB7K-fvTDXW-fUjXQG-pfHaer-raCYXi-fHUgbD-raDceT-fHUeKD-fUkuvF-8d32Ja-rtXfQK-qwXXWb-rcvCir-rtR6mo-fJbTg9-rtS9ty-raCmsp-qwXWnj-fZw2vX-raDejK-qxag3H-rcoE2G-qxasMV",
-  :license => "CC-BY"}]
+= render "shared/intro_section", header: "cards.resources.title", paragraphs: ["cards.resources.intro_p"], hideable: false
+.card-resources
+  %ul.anchor-links
+    %li.anchor-link.anchor-link-types 
+      %a{href: "#CardTypes"} Card Types
+    %li.anchor-link.anchor-link-tutorials 
+      %a{href: "#Tutorials"} Tutorials
+    %li.anchor-link.anchor-link-activities 
+      %a{href: "#Activities"} Activities
+    %li.anchor-link.anchor-link-standards 
+      %a{href: "#Standards"} Standards
+.section
+  %a#CardTypes.section-anchor
+  %h3.section-head-cards.section-head-cards-types Card Types
+  %p.resp-p.resp-p-section Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+  %ul.card-types
+    = render "card_type", image_file_name: "trait.png", name: "Trait Card", desc: "This card has traits. You can make your own."
+.section
+  %a#Tutorials.section-anchor
+  %h3.section-head-cards.section-head-cards-tutorials Tutorials
+  %p.resp-p.resp-p-section Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+  %ul.tutorials
+    = render "tutorial", file_name: "#", name: "Create a Card"
+    = render "tutorial", file_name: "#", name: "Card Manager"
+  %a#Activities.section-anchor
+  %h3.section-head-cards.section-head-cards-activities Activities
+  %p.resp-p.resp-p-section Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+  %ul.activities
+    = render "activity", lesson_plan: @food_chains_rummy, text: "Food Chains Rummy (grades 2-5, 6-8, 9-12): Build food chains and webs with a deck of cards"
+    = render "activity", lesson_plan: @thats_classified, text: "That's Classified (grades 2-5): Collect 3-of-a-kind in this Go Fish style classification game"
+    = render "activity", lesson_plan: @go_adapt, text: "Go Adapt (grades 2-5): collect sets of organisms with similar adaptations (flying, claws, etc.) in a Go Fish style game"
+    = render "activity", lesson_plan: @create_a_creature, text: "Create a Creature (grades 2-5): Create a species card for a new species adapted to survive in your community"
+  %a#Standards.section-anchor
+  %h3.section-head-cards.section-head-cards-standards Standards

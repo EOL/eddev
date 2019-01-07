@@ -28,6 +28,8 @@ $nav-menu-width: 120px;
   background-position: center;
 }
 
+$hero-width: $main-col-width + 2 * $main-col-padding;
+
 *, *:before, *:after {
   box-sizing: border-box; *behavior: asset-url("polyfill/box-sizing.htc");
 }
@@ -178,17 +180,21 @@ textarea {
 }
 
 .hero-shim {
-  $width: $main-col-width + 2 * $main-col-padding;
-
   position: relative;
   background-position: center;
   margin: 0 auto;
-  max-width: $width * 1px;
+  max-width: $hero-width * 1px;
   z-index: 2;
 
   .hero-shim-inner {
-    @include hero-fluid($width, 349);
+    @include hero-fluid($hero-width, 349);
   }
+}
+
+.hero-slim {
+  height: 125px;
+  object-fit: cover;
+  width: 100%;
 }
 
 .hero-small {

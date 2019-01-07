@@ -366,6 +366,18 @@ class CardMaker extends React.Component {
     return lib === 'user' ? userSorts : publicSorts;
   }
 
+  handleReloadCard = (cb) => {
+    this.loadCard(this.state.editorCard.id(), (err, card) => {
+      if (err) {
+        return cb(err);
+      }
+
+      this.setState({
+        editorCard: card
+      }, cb);
+    })
+  }
+
   screenComponent = () => {
     const commonProps = {
       showLoadingOverlay: this.showLoadingOverlay,
@@ -401,7 +413,7 @@ class CardMaker extends React.Component {
           card={this.state.editorCard}
           updateCard={this.updateEditorCard}
           handleRequestClose={this.handleEditorCloseRequest}
-          requestReloadCard={(cb) => this.loadCard(this.state.editorCard.id(), cb)}
+          requestReloadCard={this.handleReloadCard}
           {...commonProps}
         />
       )
@@ -453,3 +465,4 @@ class CardMaker extends React.Component {
 }
 
 export default CardMaker
+

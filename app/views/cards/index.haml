@@ -13,19 +13,23 @@
   %a#CardTypes.section-anchor
   %h3.section-head-cards.section-head-cards-types Card Types
   %p.resp-p.resp-p-section Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-  %ul.card-types
-    = render "card_type", image_file_name: "trait.png", name: "Trait Card", desc: "This card has traits. You can make your own."
+  %ul.card-types<
+    = render "card_type", image_file_name: "trait.png", name: "Trait", desc: "This card has traits. You can make your own."
+    = render "card_type", image_file_name: "title.png", name: "Title", desc: "This card has traits. You can make your own."
+    = render "card_type", image_file_name: "project.png", name: "Project Description", desc: "This card has traits. You can make your own."
+    = render "card_type", image_file_name: "vocab.png", name: "Vocabulary", desc: "This card has traits. You can make your own."
+    = render "card_type", image_file_name: "key.png", name: "Key", desc: "This card has traits. You can make your own."
 .section
   %a#Tutorials.section-anchor
   %h3.section-head-cards.section-head-cards-tutorials Tutorials
   %p.resp-p.resp-p-section Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-  %ul.tutorials
-    = render "tutorial", file_name: "#", name: "Create a Card"
-    = render "tutorial", file_name: "#", name: "Card Manager"
+  %ul.tutorials<
+    = render "tutorial", icon_file_name: "create.png", file_name: "#", name: "Create a Card"
+    = render "tutorial", icon_file_name: "manager.png", file_name: "#", name: "Card Manager"
   %a#Activities.section-anchor
   %h3.section-head-cards.section-head-cards-activities Activities
   %p.resp-p.resp-p-section Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-  %ul.activities
+  %ul.activities<
     = render "activity", lesson_plan: @food_chains_rummy, text: "Food Chains Rummy (grades 2-5, 6-8, 9-12): Build food chains and webs with a deck of cards"
     = render "activity", lesson_plan: @thats_classified, text: "That's Classified (grades 2-5): Collect 3-of-a-kind in this Go Fish style classification game"
     = render "activity", lesson_plan: @go_adapt, text: "Go Adapt (grades 2-5): collect sets of organisms with similar adaptations (flying, claws, etc.) in a Go Fish style game"

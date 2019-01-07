@@ -81,6 +81,7 @@ $mobile-col-width: 270px;
 }
 
 .card-type {
+  font-size: 13px;
   margin: 21px auto 0 auto;
   overflow: hidden;
   position: relative;
@@ -93,7 +94,7 @@ $mobile-col-width: 270px;
 }
 
   .card-type-name {
-    font-size: 21px;
+    font-size: 18px;
     font-weight: $semibold;
     margin: 5px 0;
   }
@@ -110,7 +111,7 @@ $mobile-col-width: 270px;
   color: $tutorials-blue;
   font-size: 17px;
   font-weight: $semibold;
-  height: 236px;
+  padding: 21px 0 11px 0;
   text-align: center;
   width: 100%;
 
@@ -122,8 +123,7 @@ $mobile-col-width: 270px;
 
   .tutorial-icon {
     display: block;
-    margin: 21px auto 12px auto;
-    height: 165px;
+    margin: 0 auto 12px auto;
     width: 128px;
   }
 
@@ -144,6 +144,10 @@ $mobile-col-width: 270px;
   }
 
 @media only screen and (min-width: 700px) {
+  .resp-p-section {
+    max-width: 525px;
+  }
+
   .anchor-links {
     overflow: hidden;
     width: 381px;
@@ -160,11 +164,53 @@ $mobile-col-width: 270px;
       margin-right: 0;
     }
 
-  .card-type {
-    width: 150px;
+  .card-types {
+    align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 332px;
   }
 
-    .card-type-name {
+    .card-type {
+      flex: 0 0 auto;
+      width: 150px;
+    }
 
+      li:nth-of-type(even).card-type {
+        margin-right: 0;
+      }
+
+      .card-type-name {
+        margin: 10px 0 5px 0;
+      }
+
+  .tutorial {
+    display: inline-block;
+    font-size: 13px;
+    padding: 40px 0 36px 0;
+    width: 50%;
+  }
+
+    li:nth-of-type(odd).tutorial {
+      border-right: 1px solid $border-gray;
+    }
+
+    .tutorial-icon {
+      margin: 0 auto 10px auto;
+      width: 97px;
+    }
+
+  .activity {
+    display: inline-block;
+    font-size: 13px;
+    padding: 33px 0;
+    vertical-align: top;
+    width: 50%;
+  }
+
+    li:nth-of-type(odd).activity {
+      border-right: 1px solid $border-gray;
     }
 }

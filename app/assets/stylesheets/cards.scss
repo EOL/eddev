@@ -8,7 +8,28 @@ $border-gray: #ddd;
 
 $mobile-col-width: 270px;
 
+h1 {
+  color: $nav-green;
+  font-size: 20px;
+  font-weight: normal;
+  margin: 31px 0 18px 0;
+  text-align: center;
+}
+
+p {
+  margin: 15px auto 21px auto;
+  text-align: center;
+  max-width: $mobile-col-width;
+}
+
+.text {
+  font-size: 14px;
+}
+
 .anchor-links {
+  justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
   margin: 0 auto;
   width: $mobile-col-width;
 }
@@ -74,12 +95,6 @@ $mobile-col-width: 270px;
     background-color: $standards-red;
   }
 
-.resp-p-section {
-  margin: 15px auto 21px auto;
-  text-align: center;
-  max-width: $mobile-col-width;
-}
-
 .card-type {
   font-size: 13px;
   margin: 21px auto 0 auto;
@@ -143,8 +158,16 @@ $mobile-col-width: 270px;
     width: 254px;
   }
 
-@media only screen and (min-width: 700px) {
-  .resp-p-section {
+@media only screen and (min-width: 600px) {
+  .text {
+    font-size: 16px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  p {
     max-width: 525px;
   }
 
@@ -154,14 +177,8 @@ $mobile-col-width: 270px;
   }
 
     .anchor-link {
-      display: inline-block;
-      margin-right: 7px;
       margin-top: 10px;
       width: 187px;
-    }
-
-    li:nth-of-type(even).anchor-link {
-      margin-right: 0;
     }
 
   .card-types {
@@ -177,10 +194,6 @@ $mobile-col-width: 270px;
       flex: 0 0 auto;
       width: 150px;
     }
-
-      li:nth-of-type(even).card-type {
-        margin-right: 0;
-      }
 
       .card-type-name {
         margin: 10px 0 5px 0;
@@ -214,3 +227,19 @@ $mobile-col-width: 270px;
       border-right: 1px solid $border-gray;
     }
 }
+
+@media only screen and (min-width: 800px) {
+  .anchor-links {
+    width: 100%;
+  }
+
+  .anchor-link {
+    height: 50px;
+    font-size: 18px;
+  }
+
+  .card-types {
+    width: 100%;
+  }
+}
+

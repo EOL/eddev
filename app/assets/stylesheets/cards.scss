@@ -39,7 +39,7 @@ p {
   border-radius: 8px;
   height: 43px;
   font-size: 13px;
-  margin-top: 5px;
+  margin-top: 15px;
   width: 100%;
   
   & > a {
@@ -158,7 +158,7 @@ p {
     width: 254px;
   }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: $tablet-width) {
   .text {
     font-size: 16px;
   }
@@ -173,11 +173,13 @@ p {
 
   .anchor-links {
     overflow: hidden;
-    width: 381px;
+    width: 400px;
   }
 
     .anchor-link {
-      margin-top: 10px;
+      font-size: 18px;
+      height: 60px;
+      margin-top: 16px;
       width: 187px;
     }
 
@@ -238,16 +240,15 @@ p {
       margin: 0 auto 10px auto;
       width: 120px;
     }
+
+  .section-head-cards {
+    font-size: 16px;
+  }
 }
 
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: $full-width) {
   .anchor-links {
     width: 790px;
-  }
-
-  .anchor-link {
-    height: 50px;
-    font-size: 18px;
   }
 
   .card-types {
@@ -261,3 +262,11 @@ p {
 
 }
 
+@media screen and (max-width: $nav-mobile-width) {
+  .section-anchor {
+    display: block;
+    position: relative;
+    top: -1 * $topbar-row-height;
+    visibility: hidden;
+  }
+}

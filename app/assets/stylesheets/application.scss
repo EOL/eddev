@@ -192,7 +192,7 @@ textarea {
 }
 
 .hero-slim {
-  height: 125px;
+  height: 80px;
   object-fit: cover;
   width: 100%;
 }
@@ -381,5 +381,17 @@ $hero-transition-width: 525;
 @media screen and (max-width: $nav-mobile-width) {
   body {
     padding-top: $topbar-row-height;
+  }
+}
+
+@media only screen and (min-width: $tablet-width) {
+  .hero-slim {
+    height: 98px;
+  }
+}
+
+@media only screen and (min-width: $full-width) {
+  .hero-slim {
+    height: 125px;
   }
 }

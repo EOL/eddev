@@ -128,16 +128,13 @@ p {
 
 .tutorial {
   border-top: 1px solid $border-gray;
-  color: $tutorials-blue;
-  font-size: 17px;
-  font-weight: $semibold;
-  height: 231px;
+  height: 295px;
   text-align: center;
+  vertical-align: top;
   width: 100%;
 
   & > a {
     align-items: center;
-    color: $tutorials-blue;
     display: flex;
     height: 100%;
     justify-content: center;
@@ -154,6 +151,19 @@ p {
     display: block;
     margin: 0 auto 12px auto;
     width: 128px;
+  }
+
+  .tutorial-name {
+    color: $tutorials-blue;
+    font-size: 17px;
+    font-weight: $semibold;
+  }
+
+  .tutorial-desc {
+    color: $black;
+    font-size: 14px;
+    margin: 8px auto 0 auto;;
+    width: 80%;
   }
 
 .activity {
@@ -224,8 +234,6 @@ p {
 
   .tutorial {
     display: inline-block;
-    font-size: 13px;
-    padding: 40px 0 36px 0;
     width: 50%;
   }
 
@@ -236,6 +244,10 @@ p {
     .tutorial-icon {
       margin: 0 auto 10px auto;
       width: 97px;
+    }
+
+    .tutorial-name {
+      font-size: 13px;
     }
 
   .activity {
@@ -251,14 +263,16 @@ p {
 
   .tutorial {
     display: inline-block;
-    font-size: 16px;
-    padding: 40px 0 36px 0;
     width: 50%;
   }
 
     .tutorial-icon {
       margin: 0 auto 10px auto;
       width: 120px;
+    }
+
+    .tutorial-name {
+      font-size: 16px;
     }
 
   .section-head-cards {

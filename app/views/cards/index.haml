@@ -1,40 +1,40 @@
-%h1= t("cards.resources.title")
-%p.text= t("cards.resources.intro_p")
+%h1= t(".intro_header")
+%p.text= t(".intro_text")
 
 .card-resources
   %ul.anchor-links
     %li.anchor-link.anchor-link-types>
-      %a{href: "#CardTypes"} Card Types
+      %a{href: "#CardTypes"}= t(".card_types_header")
     %li.anchor-link.anchor-link-tutorials>
-      %a{href: "#Tutorials"} Tutorials
+      %a{href: "#Tutorials"}= t(".tutorials_header")
     %li.anchor-link.anchor-link-activities> 
-      %a{href: "#Activities"} Activities
+      %a{href: "#Activities"}= t(".activities_header")
     %li.anchor-link.anchor-link-standards>
-      %a{href: "#Standards"} Standards
+      %a{href: "#Standards"}= t(".standards_header")
 .section
   %a#CardTypes.section-anchor
-  %h3.section-head-cards.section-head-cards-types Card Types
-  %p.text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+  %h3.section-head-cards.section-head-cards-types= t(".card_types_header")
+  %p.text= t(".card_types_text")
   %ul.card-types<
-    = render "card_type", image_file_name: "trait.png", name: "Trait", desc: "This card has traits. You can make your own."
-    = render "card_type", image_file_name: "title.png", name: "Title", desc: "This card has traits. You can make your own."
-    = render "card_type", image_file_name: "project.png", name: "Project", desc: "This card has traits. You can make your own."
-    = render "card_type", image_file_name: "vocab.png", name: "Vocabulary", desc: "This card has traits. You can make your own."
-    = render "card_type", image_file_name: "key.png", name: "Key", desc: "This card has traits. You can make your own."
+    = render "card_type", image_file_name: "trait.png", name: t(".trait_name"), desc: t(".trait_desc")
+    = render "card_type", image_file_name: "title.png", name: t(".title_name"), desc: t(".title_desc")
+    = render "card_type", image_file_name: "project.png", name: t(".project_name"), desc: t(".project_desc")
+    = render "card_type", image_file_name: "vocab.png", name: t(".vocabulary_name"), desc: t(".vocabulary_desc")
+    = render "card_type", image_file_name: "key.png", name: t(".key_name"), desc: t(".key_desc")
 .section
   %a#Tutorials.section-anchor
-  %h3.section-head-cards.section-head-cards-tutorials Tutorials
-  %p.text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+  %h3.section-head-cards.section-head-cards-tutorials= t(".tutorials_header")
+  %p.text= t(".tutorials_text")
   %ul.tutorials<
-    = render "tutorial", icon_file_name: "create.png", file_name: "#", name: "Create a Card"
-    = render "tutorial", icon_file_name: "manager.png", file_name: "#", name: "Card Manager"
+    = render "tutorial", icon_file_name: "create.png", file_name: "card_editor_tutorial.pdf", name: t(".create_a_card")
+    = render "tutorial", icon_file_name: "manager.png", file_name: "card_maker_tutorial.pdf", name: t(".card_manager")
   %a#Activities.section-anchor
-  %h3.section-head-cards.section-head-cards-activities Activities
-  %p.text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+  %h3.section-head-cards.section-head-cards-activities= t(".activities_header")
+  %p.text= t(".activities_text")
   %ul.activities<
-    = render "activity", lesson_plan: @food_chains_rummy, text: "Food Chains Rummy (grades 2-5, 6-8, 9-12): Build food chains and webs with a deck of cards"
-    = render "activity", lesson_plan: @thats_classified, text: "That's Classified (grades 2-5): Collect 3-of-a-kind in this Go Fish style classification game"
-    = render "activity", lesson_plan: @go_adapt, text: "Go Adapt (grades 2-5): collect sets of organisms with similar adaptations (flying, claws, etc.) in a Go Fish style game"
-    = render "activity", lesson_plan: @create_a_creature, text: "Create a Creature (grades 2-5): Create a species card for a new species adapted to survive in your community"
+    = render "activity", lesson_plan: @food_chains_rummy, text: t(".food_chains_rummy")
+    = render "activity", lesson_plan: @thats_classified, text: t(".thats_classified")
+    = render "activity", lesson_plan: @go_adapt, text: t(".go_adapt")
+    = render "activity", lesson_plan: @create_a_creature, text: t(".create_a_creature")
   %a#Standards.section-anchor
   %h3.section-head-cards.section-head-cards-standards Standards

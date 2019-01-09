@@ -1,4 +1,5 @@
 %li.tutorial
   = link_to file_name do
-    = image_tag "cards/tutorial_icons/#{icon_file_name}", class: "tutorial-icon"
-    .tutorial-name= name
+    %div
+      = image_tag "cards/tutorial_icons/#{icon_file_name}", class: "tutorial-icon"
+      .tutorial-name= name

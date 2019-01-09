@@ -5,6 +5,7 @@ $activities-yellow: #bdb261;
 $tutorials-blue: #69a4bd;
 $standards-red: #d57070;
 $border-gray: #ddd;
+$hover-gray: #eee;
 
 $mobile-col-width: 270px;
 
@@ -126,13 +127,22 @@ p {
   color: $tutorials-blue;
   font-size: 17px;
   font-weight: $semibold;
-  padding: 21px 0 11px 0;
+  height: 231px;
   text-align: center;
   width: 100%;
 
   & > a {
+    align-items: center;
     color: $tutorials-blue;
+    display: flex;
+    height: 100%;
+    justify-content: center;
     text-decoration: none;
+    width: 100%;
+  }
+
+  &:hover {
+    background-color: $hover-gray;
   }
 }
 
@@ -145,16 +155,23 @@ p {
 .activity {
   border-top: 1px solid $border-gray;
   font-size: 14px;
-  padding: 25px 0;
+  height: 132px;
   text-align: center;
 
   & > a {
+    align-items: center;
     color: $black;
+    display: flex;
+    height: 100%;
+    justify-content: center;
     text-decoration: none;
+  }
+
+  &:hover {
+    background-color: $hover-gray;
   }
 }
   .activity-text {
-    margin: 0 auto;
     width: 254px;
   }
 
@@ -220,7 +237,6 @@ p {
   .activity {
     display: inline-block;
     font-size: 13px;
-    padding: 33px 0;
     vertical-align: top;
     width: 50%;
   }

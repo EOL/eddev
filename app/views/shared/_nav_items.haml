@@ -1,6 +1,12 @@
 %ul{class: menu_class}
   %li{class: item_class}
-    %span.nav-lnk-txt= link_to(t(".biodiversity_cards"), card_maker_path)
+    %span.nav-link-txt
+      = t(".biodiversity_cards")
+      - if down_arrows
+        %i.fa.fa-caret-down.nav-lnk-down
+    %ul{class: [sub_menu_base_class, "#{sub_menu_base_class}-cards"]}
+      %li= link_to(t(".card_maker"), card_maker_path)
+      %li= link_to(t(".card_resources"), cards_path)
   %li{class: item_class}
     %span.nav-lnk-txt
       = t(".lesson_plans")

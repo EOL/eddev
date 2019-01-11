@@ -82,10 +82,10 @@ en:
       card_manager_tutorial_desc: "This tutorial is an introduction to the EOL Card Manager, our public card library and how to view and manage the cards you make."
       card_editor_tutorial_desc: "View this short tutorial to learn how to make and edit your own cards and decks."
       activities_text: "The following lesson plans use pre-made EOL Biodiversity Cards. They are examples of how to incorporate cards into your learning activities. The possibilities are endless!"
-      food_chains_rummy: "Food Chains Rummy (grades 2-5, 6-8, 9-12): Build food chains and webs with a deck of cards"
-      thats_classified: "That's Classified (grades 2-5): Collect 3-of-a-kind in this Go Fish style classification game"
-      go_adapt: "Go Adapt (grades 2-5): collect sets of organisms with similar adaptations (flying, claws, etc.) in a Go Fish style game"
-      create_a_creature: "Create a Creature (grades 2-5): Create a species card for a new species adapted to survive in your community"
+      food_chains_rummy_html: "<em>Food Chains Rummy</em> (grades 2-5, 6-8, 9-12): Build food chains and webs with a deck of cards"
+      thats_classified_html: "<em>That's Classified</em> (grades 2-5): Collect 3-of-a-kind in this Go Fish style classification game"
+      go_adapt_html: "<em>Go Adapt</em> (grades 2-5): collect sets of organisms with similar adaptations (flying, claws, etc.) in a Go Fish style game"
+      create_a_creature_html: "<em>Create a Creature</em> (grades 2-5): Create a species card for a new species adapted to survive in your community"
       lesson_plans: Lesson Plans
       blank_cards_pdf: Blank Cards PDF
       food_chain_template: Food Chain Template

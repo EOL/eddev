@@ -39,9 +39,9 @@
     = render "card", image_file_name: "trait.png", name: t(".trophic_food_pyramid"), desc: t(".trait_desc"), file_path: "activities/trophic_pyramid_eol_cards.pdf"
   %h4= t(".lesson_plans")
   %ul.lesson-plans<
-    = render "activity", lesson_plan: @food_chains_rummy, text: t(".food_chains_rummy")
-    = render "activity", lesson_plan: @thats_classified, text: t(".thats_classified")
-    = render "activity", lesson_plan: @go_adapt, text: t(".go_adapt")
-    = render "activity", lesson_plan: @create_a_creature, text: t(".create_a_creature")
+    = render "activity", lesson_plan: @food_chains_rummy, text: t(".food_chains_rummy_html")
+    = render "activity", lesson_plan: @thats_classified, text: t(".thats_classified_html")
+    = render "activity", lesson_plan: @go_adapt, text: t(".go_adapt_html")
+    = render "activity", lesson_plan: @create_a_creature, text: t(".create_a_creature_html")
   %a#Standards.section-anchor
   %h3.section-head-cards.section-head-cards-standards Standards

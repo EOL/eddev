@@ -201,7 +201,7 @@ p {
   }
 
   .tutorial-name {
-    color: $tutorials-blue;
+    color: $eol-blue;
     font-size: 17px;
     font-weight: $semibold;
   }
@@ -234,6 +234,11 @@ p {
 }
   .lesson-plan-text {
     width: 254px;
+
+    & > em {
+      color: $eol-blue;
+      font-style: normal;
+    }
   }
 
 @media only screen and (min-width: $tablet-width) {

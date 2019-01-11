@@ -63,7 +63,8 @@ en:
       activities_header: Activities
       standards_header: Standards
       intro_header: EOL Biodiversity Card Resources
-      intro_text: "Biodiversity cards have information about species or taxon groups. They are a fun way to share and learn about the traits or characteristics of organisms, including their conservation status, where they live, how big they are, and how long they live. You can start by copying pre-made cards for your own decks. Or, you can copy and customize them to meet your project needs or make your own from scratch. Information about card types, tutorials on how to make cards and resources to keep your trait data in order are all listed below. Have fun!"
+      intro_text1: "Biodiversity cards are a fun way to share and learn about the traits or characteristics of organisms. Find out about their conservation status, where they live, how big they are, and how long they live. Use the cards in games, lessons or as field guides."
+      intro_text2: "Start by using EOL’s pre-made cards or copying cards to make your own decks. Cards can also be copied and customized or make your own! Information about card types, tutorials on how to make cards and resources to keep your trait data in order are all listed below. Have fun!"
       card_types_text: "There are different card types available. You will find them in all public decks and you can customize and add any of these cards to your own decks."
       trait_name: Trait
       title_name: Title

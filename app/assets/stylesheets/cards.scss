@@ -1,6 +1,10 @@
 @import "layout_vars.scss";
 
 // CARD RESOURCES
+$cards-text-green: #5d9832;
+$activities-text-yellow: #a39420;
+$standards-text-red: #ca3636;
+$tutorials-text-blue: #2989b1;
 $cards-green: #8dbd69;
 $activities-yellow: #bdb261;
 $tutorials-blue: #69a4bd;
@@ -63,28 +67,28 @@ p {
   }
 }
 
-  @mixin anchor-link($color) {
-    border-color: $color;
+  @mixin anchor-link($border-color, $text-color) {
+    border-color: $border-color;
 
     & > a {
-      color: $color;
+      color: $text-color;
     }
   }
 
   .anchor-link-types {
-    @include anchor-link($cards-green);
+    @include anchor-link($cards-green, $cards-text-green);
   }
 
   .anchor-link-activities {
-    @include anchor-link($activities-yellow);
+    @include anchor-link($activities-yellow, $activities-text-yellow);
   }
 
   .anchor-link-tutorials {
-    @include anchor-link($tutorials-blue);
+    @include anchor-link($tutorials-blue, $tutorials-text-blue);
   }
 
   .anchor-link-standards {
-    @include anchor-link($standards-red);
+    @include anchor-link($standards-red, $standards-text-red);
   }
 
 .section {

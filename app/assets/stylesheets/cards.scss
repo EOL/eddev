@@ -135,11 +135,10 @@ p {
 
 .card {
   font-size: 13px;
-  margin: 21px auto 0 auto;
-  overflow: hidden;
+  margin-top: 21px;
+  overflow: visible;
   position: relative;
   text-align: center;
-  width: 182px;
 
   & > a {
     color: $black;
@@ -147,7 +146,6 @@ p {
 
     & > .card-name {
       color: $eol-blue;
-
     }
 
     &:hover > .card-name{
@@ -156,8 +154,8 @@ p {
   }
 }
 
-.card-img {
-  width: 100%;
+.card-img, .card-desc {
+  width: 182px;
 }
 
 .card-name {
@@ -270,17 +268,30 @@ p {
     align-items: flex-start;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    width: 332px;
+    justify-content: space-around;
+    width: 400px;
   }
 
   .card {
     flex: 0 0 auto;
+  }
+
+  .card-img, .card-desc {
     width: 150px;
   }
 
   .card-name {
     margin: 10px 0 5px 0;
+
+    &:before {
+      content: "";
+      margin-left: -100%;
+    }
+
+    &:after {
+      content: "";
+      margin-right: -100%;
+    }
   }
 
   .tutorial {

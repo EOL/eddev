@@ -36,8 +36,9 @@ p {
 }
 
 .anchor-link { 
-  border: 1px solid black;
   border-radius: 8px;
+  border-style: solid;
+  border-width: 1px;
   height: 43px;
   font-size: 13px;
   margin-top: 15px;
@@ -56,20 +57,29 @@ p {
     background-color: $hover-gray;
   }
 }
-  .anchor-link-types > a {
-    color: $nav-green;
+
+  @mixin anchor-link($color) {
+    border-color: $color;
+
+    & > a {
+      color: $color;
+    }
   }
 
-  .anchor-link-activities > a {
-    color: $activities-yellow;
+  .anchor-link-types {
+    @include anchor-link($nav-green);
   }
 
-  .anchor-link-tutorials > a {
-    color: $tutorials-blue;
+  .anchor-link-activities {
+    @include anchor-link($activities-yellow);
   }
 
-  .anchor-link-standards > a {
-    color: $standards-red;
+  .anchor-link-tutorials {
+    @include anchor-link($tutorials-blue);
+  }
+
+  .anchor-link-standards {
+    @include anchor-link($standards-red);
   }
 
 .section {

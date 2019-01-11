@@ -22,6 +22,12 @@ h1 {
   text-align: center;
 }
 
+h4 {
+  font-size: 20px;
+  margin: 10px 0;
+  text-align: center;
+}
+
 p {
   margin: 15px auto 21px auto;
   text-align: center;
@@ -119,7 +125,15 @@ p {
     background-color: $standards-red;
   }
 
-.card-type {
+.cards {
+  margin: 0 auto;
+}
+
+  .cards-activity {
+    margin-bottom: 70px;
+  }
+
+.card {
   font-size: 13px;
   margin: 21px auto 0 auto;
   overflow: hidden;
@@ -127,16 +141,30 @@ p {
   text-align: center;
   width: 182px;
 
-  & > img {
-    width: 100%;
+  & > a {
+    color: $black;
+    text-decoration: none;
+
+    & > .card-name {
+      color: $eol-blue;
+
+    }
+
+    &:hover > .card-name{
+      text-decoration: underline;
+    }
   }
 }
 
-  .card-type-name {
-    font-size: 18px;
-    font-weight: $semibold;
-    margin: 5px 0;
-  }
+.card-img {
+  width: 100%;
+}
+
+.card-name {
+  font-size: 18px;
+  font-weight: $semibold;
+  margin: 5px 0;
+}
 
 .section-anchor {
   display: block;
@@ -185,7 +213,7 @@ p {
     width: 80%;
   }
 
-.activity {
+.lesson-plan {
   border-top: 1px solid $border-gray;
   font-size: 14px;
   height: 132px;
@@ -204,7 +232,7 @@ p {
     background-color: $hover-gray;
   }
 }
-  .activity-text {
+  .lesson-plan-text {
     width: 254px;
   }
 
@@ -233,23 +261,22 @@ p {
       width: 187px;
     }
 
-  .card-types {
+  .cards {
     align-items: flex-start;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin: 0 auto;
     width: 332px;
   }
 
-    .card-type {
-      flex: 0 0 auto;
-      width: 150px;
-    }
+  .card {
+    flex: 0 0 auto;
+    width: 150px;
+  }
 
-      .card-type-name {
-        margin: 10px 0 5px 0;
-      }
+  .card-name {
+    margin: 10px 0 5px 0;
+  }
 
   .tutorial {
     display: inline-block;
@@ -269,14 +296,14 @@ p {
       font-size: 13px;
     }
 
-  .activity {
+  .lesson-plan {
     display: inline-block;
     font-size: 13px;
     vertical-align: top;
     width: 50%;
   }
 
-    li:nth-of-type(odd).activity {
+    li:nth-of-type(odd).lesson-plan {
       border-right: 1px solid $border-gray;
     }
 
@@ -304,9 +331,13 @@ p {
     width: 790px;
   }
 
-  .card-types {
+  .cards {
     width: 100%;
   }
+
+    .cards-activity {
+      width: 750px;
+    }
 
   .section-head-cards {
     font-size: 18px;

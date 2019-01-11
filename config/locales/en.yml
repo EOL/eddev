@@ -86,6 +86,10 @@ en:
       thats_classified: "That's Classified (grades 2-5): Collect 3-of-a-kind in this Go Fish style classification game"
       go_adapt: "Go Adapt (grades 2-5): collect sets of organisms with similar adaptations (flying, claws, etc.) in a Go Fish style game"
       create_a_creature: "Create a Creature (grades 2-5): Create a species card for a new species adapted to survive in your community"
+      lesson_plans: Lesson Plans
+      blank_cards_pdf: Blank Cards PDF
+      food_chain_template: Food Chain Template
+      trophic_food_pyramid: Trophic Food Pyramid
   forgot_password_mailer:
     forgot_password_email:
       body_html: "Hi, %{user_name}. Please click the following link to change your password: <a href=\"%{url}\">%{url}</a>"

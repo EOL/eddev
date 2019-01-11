@@ -17,12 +17,12 @@
   %a#CardTypes.section-anchor
   %h3.section-head-cards.section-head-cards-types= t(".card_types_header")
   %p.text= t(".card_types_text")
-  %ul.card-types<
-    = render "card_type", image_file_name: "trait.png", name: t(".trait_name"), desc: t(".trait_desc")
-    = render "card_type", image_file_name: "title.png", name: t(".title_name"), desc: t(".title_desc")
-    = render "card_type", image_file_name: "project.png", name: t(".project_name"), desc: t(".project_desc")
-    = render "card_type", image_file_name: "vocab.png", name: t(".vocabulary_name"), desc: t(".vocabulary_desc")
-    = render "card_type", image_file_name: "key.png", name: t(".key_name"), desc: t(".key_desc")
+  %ul.cards<
+    = render "card", image_file_name: "trait.png", name: t(".trait_name"), desc: t(".trait_desc")
+    = render "card", image_file_name: "title.png", name: t(".title_name"), desc: t(".title_desc")
+    = render "card", image_file_name: "project.png", name: t(".project_name"), desc: t(".project_desc")
+    = render "card", image_file_name: "vocab.png", name: t(".vocabulary_name"), desc: t(".vocabulary_desc")
+    = render "card", image_file_name: "key.png", name: t(".key_name"), desc: t(".key_desc")
 .section
   %a#Tutorials.section-anchor
   %h3.section-head-cards.section-head-cards-tutorials= t(".tutorials_header")
@@ -33,7 +33,12 @@
   %a#Activities.section-anchor
   %h3.section-head-cards.section-head-cards-activities= t(".activities_header")
   %p.text= t(".activities_text")
-  %ul.activities<
+  %ul.cards.cards-activity<
+    = render "card", image_file_name: "trait.png", name: t(".blank_cards_pdf"), desc: t(".trait_desc"), file_path: "activities/blank_species_card_packet.pdf"
+    = render "card", image_file_name: "trait.png", name: t(".food_chain_template"), desc: t(".trait_desc"), file_path: "activities/foodchain.pdf"
+    = render "card", image_file_name: "trait.png", name: t(".trophic_food_pyramid"), desc: t(".trait_desc"), file_path: "activities/trophic_pyramid_eol_cards.pdf"
+  %h4= t(".lesson_plans")
+  %ul.lesson-plans<
     = render "activity", lesson_plan: @food_chains_rummy, text: t(".food_chains_rummy")
     = render "activity", lesson_plan: @thats_classified, text: t(".thats_classified")
     = render "activity", lesson_plan: @go_adapt, text: t(".go_adapt")

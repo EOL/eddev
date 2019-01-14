@@ -347,27 +347,7 @@ $hero-transition-width: 525;
   margin: 1.4419% 0;
 }
 
-@media screen and (max-width: 646px) {
-  .intro-box.hideable {
-    .intro-hdr {
-      border-bottom: none;
-    }
-
-    .intro-content {
-      display: none;
-    }
-  }
-}
-
 @media screen and (max-width: $head-trans-width * 1px) {
-  .intro-hdr {
-    font-size: 14px;
-  }
-
-  .resp-p {
-    font-size: 12px;
-  }
-
   .image-credits-hdr {
     font-size: 14px;
   }

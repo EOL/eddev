@@ -710,6 +710,17 @@ en:
         lesson_plans: "Lesson Plans"
         memory_games: "Memory Games"
         podcasts: "Podcasts"
+    section:
+      headers:
+        cards: Biodiversity Cards
+        lessons: Lesson Plans
+      descs:
+        cards_html: "Make <a href='%{card_maker_path}'>EOL Biodiversity Cards</a> as a classroom project or download and print pre-made cards. Great for teaching about ecosystems and food webs. View our <a href='%{cards_path}'>Card Resources</a> for more!"
+        lessons_html: "Bring EOL into your classroom with our <a href='%{lesson_plans_path}'>lesson plans</a>. Aligned to NGSS standards, they also pull in content and resources from EOL."
+      buttons:
+        lesson1: Grades 2-5
+        lesson2: Grades 6-8
+        lesson3: Grades 9-12
     publish_confirm: "Are you sure you want to publish this draft? It will immediately replace the current public version of this page."
     publish_label: "Publish draft"
     save_error: "Oops, something went wrong! Please try again later."

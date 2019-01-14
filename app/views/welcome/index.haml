@@ -1,4 +1,11 @@
 = render "shared/intro_section", header: "welcome.index.intro_header", paragraphs: ["welcome.index.intro_text_html"]
+
+.home-section
+  = render "section", type: "cards", desc_vars: { card_maker_path: card_maker_path, cards_path: cards_path }
+  = render "section", type: "lessons", desc_vars: { lesson_plans_path: lesson_plans_path }, 
+    buttons: [ { text_key: "lesson1", path: lesson_plans_path(anchor: "grade_level=0") },
+    { text_key: "lesson2", path: lesson_plans_path(anchor: "grade_level=1") },
+    { text_key: "lesson3", path: lesson_plans_path(anchor: "grade_level=2") }]
 -#
   = render "shared/intro_section", :header => "welcome.index.welcome_box.welcome_to_l_and_e", 
     :paragraphs => ["welcome.index.welcome_box.l_and_e_is_part_html"],

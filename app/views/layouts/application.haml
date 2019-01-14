@@ -66,9 +66,9 @@
         .notice.js-notice= flash[:global_notice]
       = render "shared/header"
 
-      -if @hero_image_partial
+      -unless @nohero
         #HeroImage.hero-image
-          = render @hero_image_partial
+          = render "shared/hero_slim"
 
       %main{:role => "main", :class => (main_nopad_bot? ? "is-nopad-bot" : "")}
         - if @disable_main_col

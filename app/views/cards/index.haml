@@ -1,7 +1,4 @@
-%h1= t(".intro_header")
-
-%p.text.text-intro= t(".intro_text1")
-%p.text.text-intro= t(".intro_text2")
+= render "shared/intro_section", header: "cards.index.intro_header", paragraphs: ["cards.index.intro_text1", "cards.index.intro_text2"]
 
 .card-resources
   %ul.anchor-links
@@ -16,7 +13,7 @@
 .section
   %a#CardTypes.section-anchor
   %h3.section-head-cards.section-head-cards-types= t(".card_types_header")
-  %p.text= t(".card_types_text")
+  %p.text.text-p.text-p-cards= t(".card_types_text")
   %ul.cards<
     = render "card", image_file_name: "trait.png", name: t(".trait_name"), desc: t(".trait_desc")
     = render "card", image_file_name: "title.png", name: t(".title_name"), desc: t(".title_desc")
@@ -26,13 +23,13 @@
 .section
   %a#Tutorials.section-anchor
   %h3.section-head-cards.section-head-cards-tutorials= t(".tutorials_header")
-  %p.text= t(".tutorials_text")
+  %p.text.text-p.text-p-cards= t(".tutorials_text")
   %ul.tutorials<
     = render "tutorial", icon_file_name: "create.png", file_name: "card_editor_tutorial.pdf", name: t(".card_editor_tutorial_title"), desc: t(".card_editor_tutorial_desc")
     = render "tutorial", icon_file_name: "manager.png", file_name: "card_manager_tutorial.pdf", name: t(".card_manager_tutorial_title"), desc: t(".card_manager_tutorial_desc")
   %a#Activities.section-anchor
   %h3.section-head-cards.section-head-cards-activities= t(".activities_header")
-  %p.text= t(".activities_text")
+  %p.text.text-p.text-p-cards= t(".activities_text")
   %ul.cards.cards-activity<
     = render "card", image_file_name: "trait.png", name: t(".blank_cards_pdf"), desc: t(".trait_desc"), file_path: "activities/blank_species_card_packet.pdf"
     = render "card", image_file_name: "trait.png", name: t(".food_chain_template"), desc: t(".trait_desc"), file_path: "activities/foodchain.pdf"

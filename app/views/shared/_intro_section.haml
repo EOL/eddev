@@ -1,12 +1,10 @@
-%div{:class => ["intro-box", ("hideable" if hideable)]}
-  %h2.intro-hdr
-    = t header
-  .intro-content
-    - paragraphs.each do |para|
-      %p.resp-p.resp-p-intro
-        - if para.is_a? String
-          = t para
-        - else 
-          -# Hash is the only other accepted type
-          = t para[:key], para[:vars]
+.intro
+  %h1.intro-hdr= t header
+  - paragraphs.each do |para|
+    %p.text.text-p
+      - if para.is_a? String
+        = t para
+      - else 
+        -# Hash is the only other accepted type
+        = t para[:key], para[:vars]
 

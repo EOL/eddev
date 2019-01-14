@@ -14,33 +14,12 @@ $hover-gray: #eee;
 
 $mobile-col-width: 270px;
 
-h1 {
-  color: $nav-green;
-  font-size: 20px;
-  font-weight: normal;
-  margin: 31px 0 18px 0;
-  text-align: center;
-}
 
 h4 {
   font-size: 20px;
   margin: 10px 0;
   text-align: center;
 }
-
-p {
-  margin: 15px auto 21px auto;
-  text-align: center;
-  max-width: $mobile-col-width;
-}
-
-.text {
-  font-size: 14px;
-}
-
-  .text-intro {
-    max-width: 85%;
-  }
 
 .anchor-links {
   justify-content: space-between;
@@ -125,6 +104,10 @@ p {
     background-color: $standards-red;
   }
 
+.text-p-cards {
+  margin: 20px auto 15px auto;
+}
+
 .cards {
   margin: 0 auto;
 }
@@ -152,6 +135,10 @@ p {
       text-decoration: underline;
     }
   }
+}
+
+.card-desc {
+  margin: 0 auto;   
 }
 
 .card-img, .card-desc {
@@ -206,7 +193,6 @@ p {
 
   .tutorial-desc {
     color: $black;
-    font-size: 14px;
     margin: 8px auto 0 auto;;
     width: 80%;
   }
@@ -240,18 +226,6 @@ p {
   }
 
 @media only screen and (min-width: $tablet-width) {
-  .text {
-    font-size: 16px;
-  }
-
-  h1 {
-    font-size: 24px;
-  }
-
-  p {
-    max-width: 525px;
-  }
-
   .anchor-links {
     overflow: hidden;
     width: 400px;

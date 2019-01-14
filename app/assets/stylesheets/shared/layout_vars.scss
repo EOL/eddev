@@ -17,6 +17,7 @@ $page-width-px: $page-padding * 2 + $main-col-width;
 $head-trans-width: 525;
 
 // Based on card resources page -- not final
+// This is obviously a very coarse way of doing responsive design, but it's where we're at right now.
 $tablet-width: 600px;
 $full-width: 800px;
 

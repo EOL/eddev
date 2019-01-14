@@ -232,45 +232,59 @@ $hero-transition-width: 525;
   margin-top: percentage(37 / $main-col-width);
 }
 
-.intro-content {
-  padding-top: 11 / $em * 1em;
-}
-
 .intro-hdr {
-  border-bottom: solid 1px $section-border-gray;
-  font-size: 20px;
-  font-weight: $semibold;
-  padding: 0 0 (7 / $em * 1em) 0;
+  color: $nav-green;
+  font-size: 15px;
+  font-weight: normal;
+  margin: 12px 0 10px 0;
+  text-align: center;
 }
 
 .resp-p {
-  $font-size: 14;
-  font-size: $font-size / $em * 1em;
-  line-height: 1.7;
+  font-size: 12px;
+}
 
-  &.hidden {
-    display: none;
+.text {
+  font-size: 12px;
+}
+
+.text-p {
+  margin: 10px auto;
+  max-width: 385px;
+  padding: 0;
+  text-align: center;
+  width: 90%;
+}
+
+@media only screen and (min-width: $tablet-width) {
+  .intro-hdr {
+    font-size: 23px;
+  }
+
+  .text {
+    font-size: 14px;
   }
 }
 
+@media only screen and (min-width: $full-width) {
+  .text-p {
+    max-width: 600px;
+  }
+}
+
+/*
 .resp-p-intro {
   margin-bottom: percentage(22 / $main-col-width);
   padding: 0 percentage(85 / $main-col-width);
 }
+*/
 
-.welcome-more-bar {
-  $height: 23 / $em * 1em;
-  background-image: radial-gradient(circle at 50% 0, #b3c81d, #cfdd6d);
-  border-radius: 0 0 11px 11px;
-  height: $height;
-  line-height: $height;
-
-  font-size: 14 / $em * 1em;
-  font-weight: $semibold;
+// New intro
+.intro-text {
+  font-size: 12px;
+  max-width: 90%;
   text-align: center;
-  color: #6f6f6f;
 }
-
 
 // MAIN COLUMN
 .main-col {

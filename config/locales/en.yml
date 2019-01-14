@@ -637,6 +637,8 @@ en:
     edit_mode_off: "Edit mode off"
     edit_mode_on: "Edit mode on"
     index:
+      intro_header: Welcome to EOL Learning + Education
+      intro_text_html: "<a href='/about'>The Encyclopedia of Life Learning + Education team</a> (EOL L+E) is part of the larger EOL collaborative. EOL L+E works with educators, citizen scientists and partners to make this information accessible through free tools, services and resources found here."
       sections:
         eol_resources_desc: "EOL has been the main website for the organization since we launched in 2008 so that's why we have so many of our resources over there. Stay tuned for some changes."
         eol_resources_title: "EOL.org Resources"

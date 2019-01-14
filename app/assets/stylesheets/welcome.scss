@@ -2,6 +2,7 @@
 
 $cards-red: #ca6262;
 $lessons-green: #60b26a;
+$podcasts-blue: #548fd1;
 
 // ------------ HOME ----------------
 .home-section {
@@ -12,6 +13,7 @@ $lessons-green: #60b26a;
   $height: 49px;
   color: white;
   font-size: 20px;
+  font-weight: $bold;
   height: $height;
   line-height: $height;
   padding-right: 16px;
@@ -27,6 +29,13 @@ $lessons-green: #60b26a;
     background-color: $lessons-green;
   }
 
+  .home-section-head-tourspods {
+    background-color: $podcasts-blue;
+    font-size: 14px;
+    line-height: normal;
+    padding-top: 5px;
+  }
+
 .home-section-content {
   background: rgba(255, 255, 255, 0.79);
   padding: 10px 14px 10px 165px;
@@ -36,7 +45,7 @@ $lessons-green: #60b26a;
 .home-section-img {
   left: 0;
   position: absolute;
-  top: -8px;
+  top: -10px;
   transform: rotate(6deg);
   width: 145px;
 }
@@ -47,6 +56,8 @@ $lessons-green: #60b26a;
 }
 
 .home-section-btns {
+  background-color: rgba(233, 240, 239, 0.69); 
+  backdrop-filter: blur(1.1px);
   display: flex; 
   justify-content: space-around;
   padding: 8px 0;

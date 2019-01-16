@@ -1,12 +1,12 @@
 = render "shared/intro_section", header: "welcome.index.intro_header", paragraphs: ["welcome.index.intro_text_html"]
 
-.home-section
+%ul.home-sections
   = render "section", type: "cards", desc_vars: { card_maker_path: card_maker_path, cards_path: cards_path }
   = render "section", type: "lessons", desc_vars: { lesson_plans_path: lesson_plans_path }, 
     buttons: [ { text_key: "lesson1", path: lesson_plans_path(anchor: "grade_level=0") },
     { text_key: "lesson2", path: lesson_plans_path(anchor: "grade_level=1") },
     { text_key: "lesson3", path: lesson_plans_path(anchor: "grade_level=2") }]
-= render "section", type: "tourspods", desc_vars: { earth_tours_path: earth_tours_path, podcasts_path: podcasts_path }
+  = render "section", type: "tourspods", desc_vars: { earth_tours_path: earth_tours_path, podcasts_path: podcasts_path }
 %h3.partner-head= t(".partner_resources")
 %ul.parter-sections<
   = render "partner_section", text_key: "cnc"

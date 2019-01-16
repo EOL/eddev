@@ -11,8 +11,12 @@ $desc-trans-width: 540px;
 $section-head-height-mob: 49px;
 
 // ------------ HOME ----------------
+.home-sections {
+  margin-top: 20px;
+}
+
 .home-section {
-  overflow: hidden;
+  overflow: hidden; 
 }
 
 .home-section-head {

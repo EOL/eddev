@@ -7,6 +7,11 @@
     { text_key: "lesson2", path: lesson_plans_path(anchor: "grade_level=1") },
     { text_key: "lesson3", path: lesson_plans_path(anchor: "grade_level=2") }]
 = render "section", type: "tourspods", desc_vars: { earth_tours_path: earth_tours_path, podcasts_path: podcasts_path }
+%h3.partner-head= t(".partner_resources")
+%ul.parter-sections<
+  = render "partner_section", text_key: "cnc"
+  = render "partner_section", text_key: "bhl"
+  = render "partner_section", text_key: "inat"
 -#
   = render "shared/intro_section", :header => "welcome.index.welcome_box.welcome_to_l_and_e", 
     :paragraphs => ["welcome.index.welcome_box.l_and_e_is_part_html"],

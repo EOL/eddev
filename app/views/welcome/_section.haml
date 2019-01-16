@@ -1,14 +1,21 @@
 - desc_vars = local_assigns.has_key?(:desc_vars) ? desc_vars : {}
 
 .home-section{class: "section-#{type}"}
-  .home-section-head{class: "home-section-head-#{type}"}= t(".headers.#{type}_html")
+  .home-section-head{class: "home-section-head-#{type}"}
+    %div= t(".headers.#{type}_html")
   .home-section-content{class: "home-section-content-#{type}"}
+    .home-section-desc
+      %p= t(".descs.#{type}_html", desc_vars)
+      - if local_assigns.has_key?(:buttons)
+        %ul.home-section-btns.home-section-btns-desc
+          - buttons.each do |btn|
+            %li
+              = link_to t(".buttons.#{btn[:text_key]}"), btn[:path]
     = image_tag "cards/card_types/trait.png", class: "home-section-img"
-    %p.home-section-desc= t(".descs.#{type}_html", desc_vars)
 
-  - if local_assigns.has_key?(:buttons)
-    %ul.home-section-btns
-      - buttons.each do |btn|
-        %li
-          = link_to t(".buttons.#{btn[:text_key]}"), btn[:path]
+    - if local_assigns.has_key?(:buttons)
+      %ul.home-section-btns.home-section-btns-bottom
+        - buttons.each do |btn|
+          %li
+            = link_to t(".buttons.#{btn[:text_key]}"), btn[:path]
 

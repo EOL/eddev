@@ -3,6 +3,12 @@
 $cards-red: #ca6262;
 $lessons-green: #60b26a;
 $podcasts-blue: #548fd1;
+$partner-blue: #6f9fd2;
+
+$min-mobile-width: 320; // The width of the 'mobile' designs in Zeplin, used to calculate percentage values.
+$desc-width: 385px;
+$desc-trans-width: 540px;
+$section-head-height-mob: 49px;
 
 // ------------ HOME ----------------
 .home-section {
@@ -10,12 +16,11 @@ $podcasts-blue: #548fd1;
 }
 
 .home-section-head {
-  $height: 49px;
   color: white;
   font-size: 20px;
   font-weight: $bold;
-  height: $height;
-  line-height: $height;
+  height: $section-head-height-mob;
+  line-height: $section-head-height-mob;
   padding-right: 16px;
   text-align: right;
   width: 100%;
@@ -34,12 +39,18 @@ $podcasts-blue: #548fd1;
     font-size: 14px;
     line-height: normal;
     padding-top: 5px;
+
+    & > div {
+      display: inline-block;
+      width: 140px;
+    }
   }
 
 .home-section-content {
-  background: rgba(255, 255, 255, 0.79);
-  padding: 10px 14px 10px 165px;
+  background-color: green;
+  display: block;
   position: relative;
+  text-align: right;
 }
 
 .home-section-img {
@@ -51,8 +62,14 @@ $podcasts-blue: #548fd1;
 }
 
 .home-section-desc {
+  background: rgba(255, 255, 255, 0.79);
   font-size: 11px;
   line-height: 1.68;
+  min-height: 120px;
+  padding: 10px 14px 10px 167px;
+  position: relative;
+  text-align: left;
+  width: 100%;
 }
 
 .home-section-btns {
@@ -85,6 +102,178 @@ $podcasts-blue: #548fd1;
         text-decoration: underline; 
       }
     }
+  }
+}
+
+.home-section-btns-desc {
+  display: none;
+}
+
+.partner-head {
+  $height: 65px;
+  background-color: $partner-blue;
+  color: $white;
+  font-size: 20px;
+  font-weight: $semibold;
+  height: $height;
+  line-height: $height;
+  margin: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.partner-section-head {
+  color: $black;
+  font-size: 20px;
+  font-weight: $semibold;
+  height: 83px;
+  padding: 14px 20px;
+}
+
+.partner-section-head-text {
+  align-items: center;
+  display: flex;
+  height: 54px;
+}
+
+.partner-section-content {
+  align-items: center;
+  background: green;
+  color: $black;
+  display: flex;
+  height: 187px;
+  justify-content: center;
+}
+
+.partner-section-desc {
+  background-color: rgba(255, 255, 255, 0.79);
+  font-size: 11px;
+  line-height: 1.68;
+  margin: 0 auto;
+  padding: 11px 25px;
+  max-width: 67%;
+}
+
+
+@media only screen and (min-width: 500px) {
+  .home-section-head-tourspods {
+    font-size: 20px;
+    line-height: $section-head-height-mob;
+    padding-top: 0;
+
+    & > div {
+      width: 100%;
+    }
+  }
+}
+
+
+@media only screen and (min-width: $tablet-width) {
+  $desc-width: 385px;
+
+  .home-section-content {
+    height: 175px;
+  }
+
+  .home-section-desc {
+    border-radius: 0 0 4px 4px;
+    display: inline-block;
+    min-height: 0;
+    padding: 12px 22px;
+    width: $desc-width;
+  }
+
+  .home-section-btns-desc {
+    background: none;
+    display: flex;
+    margin-top: 12px;
+  }
+
+  .home-section-btns-bottom {
+    display: none;
+  }
+
+  .home-section-head {
+    & > div {
+      display: inline-block;
+      text-align: left;
+      padding-left: 5px;
+      width:  $desc-width;
+    }
+  }
+
+  .home-section-head, .home-section-content {
+    padding-right: 3%;
+  }
+
+  .home-section-img {
+    left: 4%;
+    max-width: 190px;
+    position: absolute;
+    top: -10px;
+    transform: rotate(-8deg);
+    width: 25%;
+  }
+}
+
+@media only screen and (min-width: 675px) {
+  .home-section-img {
+    left: 8%;
+  }
+
+  .home-section-head, .home-section-content {
+    padding-right: 7%;
+  }
+}
+
+@media only screen and (min-width: 767px) {
+  .partner-section {
+    display: inline-block;
+    vertical-align: top;
+    width: 33.33%;
+  }
+
+  .partner-section-head {
+    border-right: 1px solid #ddd;
+  }
+
+  .partner-section-content {
+    height: 180px;
+  }
+}
+
+@media only screen and (min-width: $full-width) {
+  .home-section-head {
+    $height: 60px;
+    height: $height;
+    line-height: $height;
+    font-size: 22px;
+  }
+
+  .home-section-desc {
+    font-size: 14px;
+    padding: 20px 30px;
+    width: 430px;
+  }
+
+  .home-section-btns > li {
+    font-size: 14px;
+    width: 110px;
+  }
+
+  .partner-head {
+    $height: 80px;
+    font-size: 24px;
+    height: $height;
+    line-height: $height;
+  }
+
+  .partner-section-content {
+    height: 270px;
+  }
+
+  .partner-section-desc {
+    font-size: 14px;
   }
 }
 

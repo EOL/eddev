@@ -11,6 +11,10 @@
           - buttons.each do |btn|
             %li
               = link_to t(".buttons.#{btn[:text_key]}"), btn[:path]
+    .home-section-taxon
+      %span.home-section-taxon-name= t(".taxa.#{type}_html")
+      %span &nbsp;|&nbsp;
+      = link_to(t(".eol_taxon_page"), "https://eol.org/pages/#{page_id}", class: "home-section-taxon-link")
     = image_tag "cards/card_types/trait.png", class: "home-section-img"
 
     - if local_assigns.has_key?(:buttons)

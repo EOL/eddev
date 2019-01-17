@@ -240,10 +240,6 @@ $hero-transition-width: 525;
   text-align: center;
 }
 
-.resp-p {
-  font-size: 12px;
-}
-
 .text {
   font-size: 12px;
 }
@@ -271,13 +267,6 @@ $hero-transition-width: 525;
     max-width: 600px;
   }
 }
-
-/*
-.resp-p-intro {
-  margin-bottom: percentage(22 / $main-col-width);
-  padding: 0 percentage(85 / $main-col-width);
-}
-*/
 
 // New intro
 .intro-text {

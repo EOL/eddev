@@ -52,7 +52,7 @@ main {
 }
 
 
-p a, .std-link {
+a, .std-link {
   @include standard-link;
 }
 

@@ -33,7 +33,6 @@ $section-border-gray: #979797;
 $section-title-gray: #3e3e3e;
 $section-intro-gray: #161616;
 $nav-overlay-gray: #333;
-$link-blue: #00ace8;
 $eol-blue: #379dff;
 $red: #f00;
 $txt-gray: #53666e;
@@ -57,10 +56,9 @@ $light: 300;
 }
 
 @mixin standard-link {
-  color: $link-blue;
+  color: $eol-blue;
   cursor: pointer;
-  font-weight: $semibold;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 @mixin clearfix {

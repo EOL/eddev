@@ -1,13 +1,14 @@
 class PodcastsController < ApplicationController
   before_action :disable_main_col
   before_action :main_nopad_bot
-  before_action :set_podcasts, only: :index
+  before_action :set_podcasts, only: [:index, :rss]
 
   def index
-    respond_to do |format|
-      format.html { index_html }
-      format.rss { index_rss }
-    end
+    index_html
+  end
+
+  def rss
+    index_rss
   end
 
   private

@@ -22,7 +22,7 @@ xml.rss("xmlns:itunes": "http://www.itunes.com/dtds/podcast-1.0.dtd", "xmlns:con
     xml.language("en")
     xml.link(podcasts_url)
 
-    @podcasts.reverse.each do |podcast|
+    @podcasts.each do |podcast|
       xml.item do
         xml.title(podcast.title)
         xml.tag!("itunes:title", podcast.title)

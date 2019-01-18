@@ -51,8 +51,4 @@ class PodcastPresenter < BasePresenter
     secs = length_seconds % 60
     sprintf "%d:%02d", mins, secs
   end
-
-  def anchor_url
-    view.podcasts_url + "##{perm_id}"
-  end
 end

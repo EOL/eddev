@@ -69,6 +69,7 @@ Rails.application.routes.draw do
     get    "card_maker"                               => "card_maker#index", :as => :card_maker
 
     get "podcasts" => "podcasts#index", :as => "podcasts"
+    get "podcasts/:slug", to: redirect("/podcasts#%{slug}", status: 302), as: "podcast"
     get "podcast_category_groups" => "podcast_category_groups#index", :as => "podcast_category_groups"
   end
 

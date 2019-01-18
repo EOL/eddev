@@ -1,7 +1,7 @@
 summary = "Listen and learn about life as small as bacteria and as big as a bowhead whale. Our series includes over 70 podcasts, accompanied by resources such as transcripts, scientist interview, multi-media and lesson plans. These resources are available at https://education.eol.org/podcasts."
 
 xml.instruct!("xml", version: "1.0", encoding: "UTF-8")
-xml.rss("xmlns:itunes": "http://www.itunes.com/dtds/podcast-1.0.dtd", version: "2.0") do
+xml.rss("xmlns:itunes": "http://www.itunes.com/dtds/podcast-1.0.dtd", "xmlns:content": "http://purl.org/rss/1.0/modules/content/", version: "2.0") do
   xml.channel do
     xml.title("One Species at a Time")
     xml.tag!("itunes:subtitle", "Explore the diversity of life with One Species at a Time podcasts from the Encyclopedia of Life.")

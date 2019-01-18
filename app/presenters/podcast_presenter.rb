@@ -51,4 +51,16 @@ class PodcastPresenter < BasePresenter
     secs = length_seconds % 60
     sprintf "%d:%02d", mins, secs
   end
+
+  def url
+    view.podcast_url(slug: perm_id)
+  end
+
+  def clean_description
+    @clean_description ||= view.strip_tags(description)
+  end
+
+  def description_has_html?
+    clean_description != description
+  end
 end

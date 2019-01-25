@@ -8,7 +8,7 @@ $main-col-with-padding-width: $main-col-width + 2 * $main-col-padding;
 $main-col-padding-pct: percentage($main-col-padding / ($main-col-width + 2 * $main-col-padding));
 $topbar-row-height: 39px;
 $topbar-height: $topbar-row-height * 2;
-$nav-mobile-width: 920px;
+$nav-mobile-width: 760px;
 
 $page-padding: 250;
 $page-width: ($page-padding * 2 + $main-col-width) / $em * 1em;

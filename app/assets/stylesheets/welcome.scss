@@ -51,11 +51,24 @@ $section-head-height-mob: 49px;
   }
 
 .home-section-content {
-  background-color: green;
+  background-size: cover;
   display: block;
   position: relative;
   text-align: right;
 }
+
+  .home-section-content-cards {
+    background-image: image_url("welcome/bg_cards.png");
+  }
+
+  .home-section-content-lessons {
+    background-image: image_url("welcome/bg_lessons.png");
+  }
+
+  .home-section-content-tourspods {
+    background-image: image_url("welcome/bg_podcasts.png");
+  }
+
 
 .home-section-img {
   left: 0;
@@ -137,6 +150,7 @@ $section-head-height-mob: 49px;
   font-weight: $semibold;
   height: 83px;
   padding: 14px 20px;
+  position: relative;
 }
 
 .partner-section-head-text {
@@ -145,14 +159,33 @@ $section-head-height-mob: 49px;
   height: 54px;
 }
 
+.partner-section-head-icon {
+  height: 85%;
+  position: absolute;
+  right: 20px;
+  top: 5px;
+}
+
 .partner-section-content {
   align-items: center;
-  background: green;
+  background-size: cover;
   color: $black;
   display: flex;
   height: 187px;
   justify-content: center;
 }
+
+  .partner-section-content-cnc {
+    background-image: image_url("welcome/bg_cnc.png");
+  }
+
+  .partner-section-content-bhl {
+    background-image: image_url("welcome/bg_bhl.png");
+  }
+
+  .partner-section-content-inat {
+    background-image: image_url("welcome/bg_inat.png");
+  }
 
 .partner-section-desc {
   background-color: rgba(255, 255, 255, 0.79);
@@ -251,7 +284,7 @@ $section-head-height-mob: 49px;
   }
 }
 
-@media only screen and (min-width: 767px) {
+@media only screen and (min-width: 870px) {
   .partner-section {
     display: inline-block;
     vertical-align: top;

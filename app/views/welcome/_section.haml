@@ -1,6 +1,6 @@
 - desc_vars = local_assigns.has_key?(:desc_vars) ? desc_vars : {}
 
-%li.home-section{class: "section-#{type}"}
+%li.home-section{class: "home-section-#{type}"}
   .home-section-head{class: "home-section-head-#{type}"}
     %div= t(".headers.#{type}_html")
   .home-section-content{class: "home-section-content-#{type}"}
@@ -12,10 +12,10 @@
             %li
               = link_to t(".buttons.#{btn[:text_key]}"), btn[:path]
     .home-section-taxon
-      %span.home-section-taxon-name= t(".taxa.#{type}_html")
+      %span.home-section-taxon-name= t(".taxa.#{taxon_name_key}")
       %span &nbsp;|&nbsp;
       = link_to(t(".eol_taxon_page"), "https://eol.org/pages/#{page_id}", class: "home-section-taxon-link")
-    = image_tag "cards/card_types/trait.png", class: "home-section-img"
+    = image_tag "welcome/icon_#{type}.png", class: "home-section-img"
 
     - if local_assigns.has_key?(:buttons)
       %ul.home-section-btns.home-section-btns-bottom

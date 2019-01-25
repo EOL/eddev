@@ -1,5 +1,7 @@
 @import "shared/layout_vars.scss";
 
+$nav-pad-lr: 2%;
+
 .navbar-outer {
   left: 0;
   position: fixed;
@@ -14,26 +16,28 @@
   height: $topbar-row-height;
   line-height: $topbar-row-height;
   margin: 0 auto;
-  max-width: $page-width-px * 1px; 
+  padding: 0 $nav-pad-lr;
   position: relative;
+  width: 100%;
+}
+
+.navbar-left {
+  left: $nav-pad-lr;
+  position: absolute;
+}
+
+.navbar-right {
+  right: $nav-pad-lr;
+  position: absolute;
 }
 
 .navbar-top {
   z-index: 2;
 }
 
-.navbar-inner {
-  height: 100%;
-  max-width: $main-col-width * 1px;
-  margin: 0 auto;
-  position: relative;
-}
-
 .title {
-  $font-size-px: 12;
   color: $nav-green;
   margin: 0;
-  font-size: $font-size-px / $em * 1em;
   font-weight: $semibold;
   line-height: $topbar-row-height;
   text-align: center;
@@ -47,10 +51,10 @@
 .nav-menu-eol {
   background: $white;
   color: $eol-green;
-  height: $topbar-row-height - 1px; // for some reason, needed to not overlap border of parent
+  height: calc(#{$topbar-row-height} - 1px); // for some reason, needed to not overlap border of parent
   padding: 0 10px;
   position: relative;
-  width: 85px;
+  width: px-to-rem(75);
 
   & > a {
     color: $eol-green;
@@ -62,8 +66,8 @@
 }
 
 .eol-logo {
-  height: 20px;   
-  margin-right: 5px;
+  height: px-to-rem(18);
+  margin-right: px-to-rem(5);
   vertical-align: middle;
 }
 
@@ -74,16 +78,15 @@
 
 .nav-menu-caret-lang {
   position: absolute;
-  right: 13px;
-  top: 8px;
+  right: px-to-rem(10);
+  top: px-to-rem(4);
 }
 
 .lang-menu {
-  $height: 29px;
+  $height: px-to-rem(20);
   background: $white;
   border-radius: 3px;
   box-shadow: 0 1px 3px 0 rgba(186, 186, 186, 0.5);
-  font-size: 14px;
   line-height: $height;
   position: relative;
   user-select: none;
@@ -123,13 +126,13 @@
 }
 
 .lang-menu-nav {
-  margin-left: 7px;
-  top: 5px;
-  width: 160px;
+  margin-left: px-to-rem(7);
+  top: px-to-rem(5);
+  width: px-to-rem(100);
 }
 
 .lang-item {
-  padding: 0 13px;
+  padding: 0 px-to-rem(10);
 }
 
 .lang-item-choice:hover {
@@ -139,7 +142,6 @@
 
 .nav-user {
   float: right;
-  padding-right: 5px;
   position: relative;
 }
 
@@ -149,14 +151,12 @@
 
 .nav-link-account {
   color: $nav-link-blue;
-  font-size: 13px;
   font-weight: $semibold;
 }
 
 .nav-link-sign-out {
   color: $nav-link-gray;
-  font-size: 12px;
-  margin-left: 8px;
+  margin-left: px-to-rem(5);
 }
 
 
@@ -179,20 +179,19 @@
 
 .eol-dropdown {
   $eol-link-padding-px: 13;
-  $font-size-px: 14;
 
   display: none;
-  width: 220%;
   text-align: left;
   top: $topbar-row-height;
   left: 0;
   position: absolute;
+  width: 220%;
 
   .eol-link {
-    $height-em: 37 / $em;
+    $height: px-to-rem(30);
     background: $background-gray;
-    height: 37px;
-    line-height: 37px;
+    height: $height;
+    line-height: $height;
     padding-left: $eol-link-padding-px * 1px;
 
     a {
@@ -224,52 +223,6 @@
 
   &.is-nav-user-menu-open > .fa-chevron-down {
     display: none;
-  }
-}
-
-.nav-user-menu, .nav-user-menu-lang-menu {
-  & > li {
-    border-top: 1px solid $black;
-    cursor: pointer;
-    overflow: hidden;
-    padding: 0 5px 0 10px;
-    white-space: nowrap;
-
-    & > a {
-      display: block;
-      height: 100%;
-      text-decoration: none;
-      width: 100%;
-    }
-  }
-}
-
-.nav-user-menu {
-  background: $navbar-gray;
-  display: none;
-
-  position: absolute;
-  right: 0;
-  width: 180px;
-
-  & > li {
-    border-top: 1px solid $black;
-
-    & > a {
-      color: $black;
-    }
-  }
-}
-
-.nav-user-menu-lang-menu {
-  background: $white;
-  overflow: hidden;
-  height: 0;
-
-  & > li {
-    & > a {
-      color: $txt-gray;
-    }
   }
 }
 
@@ -309,7 +262,6 @@
   cursor: default;
   height: $topbar-row-height;
   line-height: $topbar-row-height;
-  padding: 0 12px;
   position: relative;
 
   & a {
@@ -337,15 +289,15 @@
   border: 1px solid $background-gray;
   color: $black;
   display: none;
-  line-height: 62px;
+  line-height: px-to-rem(40);
   position: absolute;
   text-align: center;
-  top: $topbar-row-height - 1px;
+  top: calc(#{$topbar-row-height} - 1px);
   z-index: 2;
 
   & > li {
     border-top: 1px solid $background-gray;
-    padding: 0 8px;
+    padding: 0 px-to-rem(5);
 
     & > a {
       color: $black;
@@ -364,18 +316,18 @@
   
   .nav-lnk-menu-lesson {
     left: 50%;
-    margin-left: -100px;
-    width: 200px;
+    margin-left: px-to-rem(-80);
+    width: px-to-rem(160);
   }
 
   .nav-lnk-menu-partner {
     right: 0;
-    width: 400px;
+    width: px-to-rem(300);
   }
 
   .nav-lnk-menu-cards {
     left: 0;
-    width: 200px;
+    width: px-to-rem(150);
   }
 
 .nav-lnk-menu-mob {
@@ -391,7 +343,6 @@
 .nav-lnk-menu-mob > li, 
 .nav-lnk-menu-mob > li > a {
   color: $black;
-  font-size: 14px;
   font-weight: $semibold;
   margin: 14px 0;
   text-decoration: none;
@@ -421,14 +372,6 @@
 
   .home-lnk > i{
     display: none;
-  }
-
-  .nav-menu-eol {
-    width: 70px;
-
-    &:hover .eol-dropdown {
-      display: none;
-    }
   }
 
   .navbar-bottom {

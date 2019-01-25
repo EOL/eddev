@@ -1,24 +1,22 @@
 .navbar-outer.js-navbar.js-fixed
   .navbar.navbar-top<
-    .navbar-inner
-      .l-abs-l
-        .nav-menu.nav-menu-eol
-          = link_to home_path, :class => "home-lnk" do
-            = image_tag "welcome/eol_logo.png", :class => "eol-logo"
-            %i.fa.fa-caret-down.nav-menu-caret
-          %ul.eol-dropdown
-            %li.eol-link.selected
-              = link_to t(".eol_nav.l_and_e"), home_path
-            %li.eol-link
-              = link_to t(".eol_nav.eol"), "http://www.eol.org"
-        = render :partial => "shared/lang_select", :locals => { :extra_class => "lang-menu-nav" }
-      .l-abs-r
-        .nav-user
-          = render :partial => "shared/user_links", :locals => { :top_class => "user-links-nav" }
-          .nav-user-menu-toggle.js-slide-menu-toggle
-            %i.fa.fa-bars.fa-lg
-      %h1#Title.title 
-        = t ".main_title"
+    .navbar-left
+      .nav-menu.nav-menu-eol
+        = link_to home_path, :class => "home-lnk" do
+          = image_tag "welcome/eol_logo.png", :class => "eol-logo"
+          %i.fa.fa-caret-down.nav-menu-caret
+        %ul.eol-dropdown
+          %li.eol-link.selected
+            = link_to t(".eol_nav.l_and_e"), home_path
+          %li.eol-link
+            = link_to t(".eol_nav.eol"), "http://www.eol.org"
+      = render :partial => "shared/lang_select", :locals => { :extra_class => "lang-menu-nav" }
+    .navbar-right
+      .nav-user
+        = render :partial => "shared/user_links", :locals => { :top_class => "user-links-nav" }
+        .nav-user-menu-toggle.js-slide-menu-toggle
+          %i.fa.fa-bars.fa-lg
+    %h1#Title.title 
+      = t ".main_title"
   .navbar.navbar-bottom<
-    .navbar-inner
-      = render "shared/nav_items", menu_class: "nav-lnks", sub_menu_base_class: "nav-lnk-menu", item_class: "nav-lnk", down_arrows: true
+    = render "shared/nav_items", menu_class: "nav-lnks", sub_menu_base_class: "nav-lnk-menu", item_class: "nav-lnk", down_arrows: true

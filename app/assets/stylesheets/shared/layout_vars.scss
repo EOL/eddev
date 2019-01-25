@@ -1,14 +1,21 @@
+@import "typography";
+
+@function px-to-rem($pixels) {
+  @return ($pixels / $rem) * 1rem;
+}
+
 // Dimensions/units
 $unit-px: 16px;
 $em: 16;
+$rem: 12;
 $main-col-width: 939;
 $main-col-width-px: $main-col-width * 1px;
 $main-col-padding: 12;
 $main-col-with-padding-width: $main-col-width + 2 * $main-col-padding;
 $main-col-padding-pct: percentage($main-col-padding / ($main-col-width + 2 * $main-col-padding));
-$topbar-row-height: 39px;
+$topbar-row-height: px-to-rem(30);
 $topbar-height: $topbar-row-height * 2;
-$nav-mobile-width: 760px;
+$nav-mobile-width: 780px;
 
 $page-padding: 250;
 $page-width: ($page-padding * 2 + $main-col-width) / $em * 1em;

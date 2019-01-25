@@ -161,60 +161,24 @@ textarea {
 }
 
 // PAGE INTRO
-.intro-box {
-  text-align: center;
-  width: 100%;
-  margin-top: percentage(37 / $main-col-width);
-}
-
-.intro-hdr {
+h1 {
   color: $nav-green;
-  font-size: 15px;
-  font-weight: normal;
-  margin: 12px 0 10px 0;
+  font-size: px-to-rem(16);
+  font-weight: $semibold;
+  margin: px-to-rem(12) 0 px-to-rem(8) 0;
   text-align: center;
 }
 
-.text {
-  font-size: 12px;
-}
-
-.text-p {
-  margin: 10px auto;
-  max-width: 385px;
-  padding: 0;
+p {
+  margin: px-to-rem(12) auto;
   text-align: center;
-  width: 90%;
-}
-
-@media only screen and (min-width: $tablet-width) {
-  .intro-hdr {
-    font-size: 23px;
-  }
-
-  .text {
-    font-size: 14px;
-  }
-}
-
-@media only screen and (min-width: $full-width) {
-  .text-p {
-    max-width: 600px;
-  }
-}
-
-// New intro
-.intro-text {
-  font-size: 12px;
-  max-width: 90%;
-  text-align: center;
+  width: 70%;
 }
 
 // MAIN COLUMN
 .main-col {
   box-sizing: content-box;
   overflow: hidden;
-  @include main-col-horiz;
 }
 
 // IMAGE CREDITS

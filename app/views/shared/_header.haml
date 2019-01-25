@@ -16,7 +16,6 @@
         = render :partial => "shared/user_links", :locals => { :top_class => "user-links-nav" }
         .nav-user-menu-toggle.js-slide-menu-toggle
           %i.fa.fa-bars.fa-lg
-    %h1#Title.title 
-      = t ".main_title"
+    .title= t ".main_title"
   .navbar.navbar-bottom<
     = render "shared/nav_items", menu_class: "nav-lnks", sub_menu_base_class: "nav-lnk-menu", item_class: "nav-lnk", down_arrows: true

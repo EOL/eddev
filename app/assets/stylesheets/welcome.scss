@@ -8,24 +8,20 @@ $partner-blue: #6f9fd2;
 $min-mobile-width: 320; // The width of the 'mobile' designs in Zeplin, used to calculate percentage values.
 $desc-width: 385px;
 $desc-trans-width: 540px;
-$section-head-height-mob: 49px;
+$section-head-height: px-to-rem(35);
 
 // ------------ HOME ----------------
-.home-sections {
-  margin-top: 20px;
-}
-
 .home-section {
   overflow: hidden; 
 }
 
 .home-section-head {
   color: white;
-  font-size: 20px;
+  font-size: px-to-rem(18);
   font-weight: $bold;
-  height: $section-head-height-mob;
-  line-height: $section-head-height-mob;
-  padding-right: 16px;
+  height: $section-head-height;
+  line-height: $section-head-height;
+  padding-right: 2%;
   text-align: right;
   width: 100%;
 }
@@ -40,13 +36,14 @@ $section-head-height-mob: 49px;
 
   .home-section-head-tourspods {
     background-color: $podcasts-blue;
-    font-size: 14px;
+    
+    font-size: px-to-rem(12);
     line-height: normal;
-    padding-top: 5px;
+    padding-top: px-to-rem(2);
 
     & > div {
       display: inline-block;
-      width: 140px;
+      width: px-to-rem(130);
     }
   }
 
@@ -55,6 +52,7 @@ $section-head-height-mob: 49px;
   display: block;
   position: relative;
   text-align: right;
+  width: 100%;
 }
 
   .home-section-content-cards {
@@ -73,20 +71,26 @@ $section-head-height-mob: 49px;
 .home-section-img {
   left: 0;
   position: absolute;
-  top: -10px;
+  top: px-to-rem(-8);
   transform: rotate(6deg);
-  width: 145px;
+  width: 40%;
 }
 
 .home-section-desc {
   background: rgba(255, 255, 255, 0.79);
-  font-size: 11px;
+  font-size: px-to-rem(12);
   line-height: 1.68;
-  min-height: 120px;
-  padding: 10px 14px 10px 167px;
+  padding: 5% 5% 5% 45%;
+  //padding: 10px 14px 10px 167px;
   position: relative;
   text-align: left;
   width: 100%;
+
+  & > p {
+    margin: 0;
+    text-align: left;
+    width: 100%;
+  }
 }
 
 .home-section-taxon {
@@ -98,18 +102,18 @@ $section-head-height-mob: 49px;
   backdrop-filter: blur(1.1px);
   display: flex; 
   justify-content: space-around;
-  padding: 8px 0;
+  padding: px-to-rem(8);
 
   & > li {
-    $height: 35px;
+    $height: px-to-rem(32);
     background-color: $white;
     border-radius: 4px;
     box-shadow: 0 1px 2px 0 rgba(177, 177, 177, 0.5);
-    font-size: 11px;
+    font-size: px-to-rem(12);
     height: $height;
     line-height: $height;
     text-align: center;
-    width: 100px;
+    width: px-to-rem(90);
     z-index: 2;
 
     & > a {
@@ -132,10 +136,10 @@ $section-head-height-mob: 49px;
 }
 
 .partner-head {
-  $height: 65px;
+  $height: px-to-rem(50);
   background-color: $partner-blue;
   color: $white;
-  font-size: 20px;
+  font-size: px-to-rem(20);
   font-weight: $semibold;
   height: $height;
   line-height: $height;
@@ -146,24 +150,24 @@ $section-head-height-mob: 49px;
 
 .partner-section-head {
   color: $black;
-  font-size: 20px;
+  font-size: px-to-rem(18);
   font-weight: $semibold;
-  height: 83px;
-  padding: 14px 20px;
+  height: px-to-rem(70);
+  padding: px-to-rem(11) px-to-rem(18);
   position: relative;
 }
 
 .partner-section-head-text {
   align-items: center;
   display: flex;
-  height: 54px;
+  height: px-to-rem(45);
 }
 
 .partner-section-head-icon {
-  height: 85%;
+  height: px-to-rem(60);
   position: absolute;
-  right: 20px;
-  top: 5px;
+  right: px-to-rem(18);
+  top: px-to-rem(5)
 }
 
 .partner-section-content {
@@ -171,7 +175,7 @@ $section-head-height-mob: 49px;
   background-size: cover;
   color: $black;
   display: flex;
-  height: 187px;
+  height: px-to-rem(170);
   justify-content: center;
 }
 
@@ -189,18 +193,16 @@ $section-head-height-mob: 49px;
 
 .partner-section-desc {
   background-color: rgba(255, 255, 255, 0.79);
-  font-size: 11px;
   line-height: 1.68;
   margin: 0 auto;
-  padding: 11px 25px;
+  padding: px-to-rem(10) px-to-rem(18);
   max-width: 67%;
 }
 
-
 @media only screen and (min-width: 500px) {
   .home-section-head-tourspods {
-    font-size: 20px;
-    line-height: $section-head-height-mob;
+    font-size: px-to-rem(18);
+    line-height: $section-head-height;
     padding-top: 0;
 
     & > div {
@@ -211,18 +213,16 @@ $section-head-height-mob: 49px;
 
 
 @media only screen and (min-width: $tablet-width) {
-  $desc-width: 385px;
-
   .home-section-content {
-    height: 175px;
+    height: px-to-rem(175);
   }
 
   .home-section-desc {
     border-radius: 0 0 4px 4px;
     display: inline-block;
     min-height: 0;
-    padding: 12px 22px;
-    width: $desc-width;
+    padding: px-to-rem(12) px-to-rem(22);
+    width: 68%;
   }
 
   .home-section-btns-desc {
@@ -239,8 +239,8 @@ $section-head-height-mob: 49px;
     & > div {
       display: inline-block;
       text-align: left;
-      padding-left: 5px;
-      width:  $desc-width;
+      padding-left: 2%;
+      width: 68%;
     }
   }
 
@@ -250,9 +250,8 @@ $section-head-height-mob: 49px;
 
   .home-section-img {
     left: 4%;
-    max-width: 190px;
     position: absolute;
-    top: -10px;
+    top: px-to-rem(-10);
     transform: rotate(-8deg);
     width: 25%;
   }
@@ -262,8 +261,7 @@ $section-head-height-mob: 49px;
     bottom: 0;
     color: $white;
     display: block;
-    font-size: 11px;
-    padding: 7px 14px;
+    padding: px-to-rem(6) px-to-rem(12);
     position: absolute;
     text-align: right;
     width: 100%;
@@ -271,16 +269,6 @@ $section-head-height-mob: 49px;
     & > a {
       color:  #b8d7ff;
     }
-  }
-}
-
-@media only screen and (min-width: 675px) {
-  .home-section-img {
-    left: 8%;
-  }
-
-  .home-section-head, .home-section-content {
-    padding-right: 7%;
   }
 }
 
@@ -296,10 +284,11 @@ $section-head-height-mob: 49px;
   }
 
   .partner-section-content {
-    height: 180px;
+    height: px-to-rem(190);
   }
 }
 
+/*
 @media only screen and (min-width: $full-width) {
   .home-section-head {
     $height: 60px;
@@ -343,6 +332,7 @@ $section-head-height-mob: 49px;
     font-size: 14px;
   }
 }
+*/
 
 // ---------  ABOUT  ------------
 .about-box {

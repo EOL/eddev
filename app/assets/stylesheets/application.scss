@@ -154,71 +154,10 @@ textarea {
   right: 0;
 }
 
-.hero-image {
-  position: relative;
-  max-width: 100%;
-  max-height: (385px / $unit-px) + em;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.hero-full {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  background-size: cover;
-  background-position: center;
-  padding-top: 349 / $em * 1em;
-  width: 100%;
-  margin: 0 auto;
-  overflow: visible;
-  z-index: 1;
-}
-
-.hero-shim {
-  position: relative;
-  background-position: center;
-  margin: 0 auto;
-  max-width: $hero-width * 1px;
-  z-index: 2;
-
-  .hero-shim-inner {
-    @include hero-fluid($hero-width, 349);
-  }
-}
-
 .hero-slim {
-  height: 60px;
+  height: px-to-rem(50);
   object-fit: cover;
   width: 100%;
-}
-
-.hero-small {
-  display: none;
-}
-
-$hero-transition-width: 525;
-@media screen and (max-width: $hero-transition-width * 1px) {
-  .hero-shim, .hero-full {
-    display: none;
-  }
-
-  .hero-small {
-    display: block;
-    @include hero-fluid($hero-transition-width, 300);
-  }
-
-  .about {
-    display: none;
-  }
-
-  .nav-link {
-    background: transparent;
-  }
-
-  .nav-menu-user {
-    display: none;
-  }
 }
 
 // PAGE INTRO
@@ -341,17 +280,7 @@ $hero-transition-width: 525;
   }
 }
 
-@media only screen and (min-width: $tablet-width) {
-  .hero-slim {
-    height: 80px;
-  }
-}
-
 @media only screen and (min-width: $full-width) {
-  .hero-slim {
-    height: 100px;
-  }
-
   .image-credits-section {
     padding: 42px 0;
   }

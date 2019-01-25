@@ -47,11 +47,6 @@ body, p {
   font: normal 100% $open-sans;
 }
 
-main {
-  padding-bottom: percentage(50 / $page-width-px);
-}
-
-
 a, .std-link {
   @include standard-link;
 }
@@ -110,8 +105,9 @@ textarea {
 .footer {
   $footer-v-spacing: 23 / $em * 1em;
 
-  background-color: #f0f0f0;
-  padding: percentage(23 / $page-width-px) 0 percentage(37 / $page-width-px) 0;
+  margin: 0 auto;
+  padding: 28px 0;
+  width: 90%;
 
   a {
     color: #50558d;
@@ -131,7 +127,7 @@ textarea {
   }
 
   .addr-line {
-    font-size: 14 / $em * 1em;
+    font-size: 11 / $em * 1em;
     text-align: center;
   }
 

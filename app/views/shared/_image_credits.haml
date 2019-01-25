@@ -1,7 +1,7 @@
-#ImageCredits.image-credit-section
+#ImageCredits.image-credits-section
   %h2.image-credits-hdr= t ".header"
-  %p.image-credits-overview= t ".eol_promotes_html"
-  .image-credits
+  %p.image-credits-text.image-credits-overview= t ".eol_promotes_html"
+  .image-credits.image-credits-text
     -images.each do |image|
       .image-credit
         - if image.key?(:url)

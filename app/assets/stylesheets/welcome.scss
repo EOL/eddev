@@ -97,6 +97,10 @@ $section-head-height: px-to-rem(35);
   display: none;
 }
 
+.home-section-taxon-name > em {
+  font-style: italic;
+}
+
 .home-section-btns {
   background-color: rgba(233, 240, 239, 0.69); 
   backdrop-filter: blur(1.1px);

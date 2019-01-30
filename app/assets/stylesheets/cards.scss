@@ -145,13 +145,13 @@ h4 {
 }
 
 .card-img, .card-desc {
-  width: 182px;
+  width: px-to-rem(180);
 }
 
 .card-name {
-  font-size: 18px;
+  font-size: px-to-rem(18);
   font-weight: $semibold;
-  margin: 5px 0;
+  margin: px-to-rem(5) 0;
 }
 
 .section-anchor {
@@ -163,7 +163,7 @@ h4 {
 
 .tutorial {
   border-top: 1px solid $border-gray;
-  height: 295px;
+  height: px-to-rem(295);
   text-align: center;
   vertical-align: top;
   width: 100%;
@@ -184,26 +184,26 @@ h4 {
 
   .tutorial-icon {
     display: block;
-    margin: 0 auto 12px auto;
-    width: 128px;
+    margin: 0 auto;
+    width: px-to-rem(128);
   }
 
   .tutorial-name {
     color: $eol-blue;
-    font-size: 17px;
+    font-size: px-to-rem(16);
     font-weight: $semibold;
+    margin: px-to-rem(12) 0;
   }
 
   .tutorial-desc {
     color: $black;
-    margin: 8px auto 0 auto;;
+    margin: px-to-rem(8) auto 0 auto;
     width: 80%;
   }
 
 .lesson-plan {
   border-top: 1px solid $border-gray;
-  font-size: 14px;
-  height: 132px;
+  height: px-to-rem(120);
   text-align: center;
 
   & > a {
@@ -220,7 +220,7 @@ h4 {
   }
 }
   .lesson-plan-text {
-    width: 254px;
+    width: 80%;
 
     & > em {
       color: $eol-blue;
@@ -231,14 +231,13 @@ h4 {
 @media only screen and (min-width: $tablet-width) {
   .anchor-links {
     overflow: hidden;
-    width: 400px;
+    width: px-to-rem(390);
   }
 
     .anchor-link {
-      font-size: 18px;
-      height: 60px;
-      margin-top: 16px;
-      width: 187px;
+      height: px-to-rem(45);
+      margin-top: px-to-rem(18);
+      width: px-to-rem(180);
     }
 
   .cards {
@@ -246,19 +245,20 @@ h4 {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    width: 400px;
+    width: px-to-rem(440);
   }
 
   .card {
     flex: 0 0 auto;
+    margin-top: px-to-rem(32);
   }
 
   .card-img, .card-desc {
-    width: 150px;
+    width: px-to-rem(150);
   }
 
   .card-name {
-    margin: 10px 0 5px 0;
+    margin: px-to-rem(10) 0 px-to-rem(5) 0;
 
     &:before {
       content: "";
@@ -273,6 +273,7 @@ h4 {
 
   .tutorial {
     display: inline-block;
+    height: px-to-rem(320);
     width: 50%;
   }
 
@@ -281,17 +282,16 @@ h4 {
     }
 
     .tutorial-icon {
-      margin: 0 auto 10px auto;
-      width: 97px;
+      width: px-to-rem(120);
     }
 
     .tutorial-name {
-      font-size: 13px;
+      font-size: px-to-rem(16);
     }
 
   .lesson-plan {
     display: inline-block;
-    font-size: 13px;
+    font-size: px-to-rem(14);
     vertical-align: top;
     width: 50%;
   }
@@ -300,43 +300,29 @@ h4 {
       border-right: 1px solid $border-gray;
     }
 
-  .tutorial {
-    display: inline-block;
-    width: 50%;
-  }
-
-    .tutorial-icon {
-      margin: 0 auto 10px auto;
-      width: 120px;
-    }
-
-    .tutorial-name {
-      font-size: 16px;
-    }
-
   .section-head-cards {
-    font-size: 16px;
+    font-size: px-to-rem(16);
   }
 }
 
-@media only screen and (min-width: $full-width) {
+@media only screen and (min-width: 825px) {
   .anchor-links {
-    width: 790px;
+    width: px-to-rem(550);
   }
 
+  .anchor-link {
+    width: 23%;
+  }
+}
+
+@media only screen and (min-width: 1100px) {
   .cards {
-    width: 100%;
+    width: 97%;
   }
 
-    .cards-activity {
-      width: 750px;
-    }
-
-  .section-head-cards {
-    font-size: 18px;
-    padding: 16px 0 18px;
+  .card-img, .card-desc {
+    width: px-to-rem(140);
   }
-
 }
 
 @media screen and (max-width: $nav-mobile-width) {

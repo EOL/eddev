@@ -281,10 +281,11 @@ $section-head-height: px-to-rem(35);
 
   .partner-section-head {
     border-right: 1px solid #ddd;
+    font-size: px-to-rem(14);
   }
 
   .partner-section-content {
-    height: px-to-rem(190);
+    height: px-to-rem(220);
   }
 }
 

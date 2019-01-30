@@ -16,8 +16,8 @@ $mobile-col-width: 270px;
 
 
 h4 {
-  font-size: 20px;
-  margin: 10px 0;
+  font-size: px-to-rem(20);
+  margin: px-to-rem(10);
   text-align: center;
 }
 
@@ -33,9 +33,9 @@ h4 {
   border-radius: 8px;
   border-style: solid;
   border-width: 2px;
-  height: 43px;
-  font-size: 13px;
-  margin-top: 15px;
+  height: px-to-rem(40);
+  font-size: px-to-rem(12);
+  margin-top: px-to-rem(15);
   width: 100%;
   
   & > a {
@@ -77,14 +77,17 @@ h4 {
   }
 
 .section {
-  margin-top: 50px;
+  margin-top: px-to-rem(50);
 }
 
 .section-head-cards {
+  $height: px-to-rem(42);
   box-shadow: inset 0 1px 2px 0 rgba(91, 91, 91, 0.5);
   color: $white;
-  font-size: 14px;
-  padding: 13px 0 15px 0;
+  font-size: px-to-rem(14);
+  height: $height;
+  line-height: $height;
+//  padding: px-to-rem(12) 0 px-to-rem(15);
   text-align: center;
   width: 100%;
 }
@@ -105,7 +108,7 @@ h4 {
   }
 
 .text-p-cards {
-  margin: 20px auto 15px auto;
+  margin: px-to-rem(20) auto px-to-rem(15) auto;
 }
 
 .cards {
@@ -113,12 +116,12 @@ h4 {
 }
 
   .cards-activity {
-    margin-bottom: 70px;
+    margin-bottom: px-to-rem(70);
   }
 
 .card {
-  font-size: 13px;
-  margin-top: 21px;
+  font-size: px-to-rem(12);
+  margin-top: px-to-rem(20);
   overflow: visible;
   position: relative;
   text-align: center;

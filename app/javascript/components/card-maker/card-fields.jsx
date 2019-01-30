@@ -78,6 +78,10 @@ class CardFields extends React.Component {
               enableCol={this.props.enableCol}
               customTab={field.allowCustom}
               fieldColor={fieldColor}
+              userRole={this.props.userRole}
+              isCardDirty={this.props.card.isDirty()}
+              requestReloadCard={this.props.requestReloadCard}
+              cardId={this.props.card.id()}
             />
           );
 

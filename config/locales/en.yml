@@ -564,6 +564,7 @@ en:
     create:
       invalid_creds: "Invalid user name and/or password"
       sign_in_success: "Successfully signed in"
+      please_confirm_account: "Please check the email address associated with this account for instructions on how to complete your registration."
     new:
       dont_have_account_html: "Don't have an account? <a href='%{sign_up_path}'>Sign up</a>."
       forgot_password: "Forgot your password?"

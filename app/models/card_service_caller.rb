@@ -303,6 +303,14 @@ module CardServiceCaller
     )
   end
 
+  def self.refresh_card_images(user_id, card_id)
+    HTTParty.post(
+      "#{self.user_prefix(user_id)}/cards/#{card_id}/refreshImages",
+      :body => {},
+      :headers => self.add_api_headers(JSON_HEADERS)
+    )
+  end
+
   private
     def self.user_prefix(user_id)
       "#{SERVICE_URL}/users/#{user_id}"

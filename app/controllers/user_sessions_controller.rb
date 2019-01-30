@@ -11,23 +11,15 @@ class UserSessionsController < ApplicationController
 
     user = log_in(user_name, password)
 
-    respond_to do |format|
-      if user
-        format.html { session_redirect }
-        format.json { render :json => {
-          :success => true
-        }}
-      else
+    if user && user.confirmed?
+      session_redirect
+    else
+      if !user
         @error_msg = t(".invalid_creds")
-
-        format.html { render :new }
-        format.json do
-          render :json => {
-            :success => false,
-            :error_msg => @error_msg,
-          }
-        end
+      else
+        @error_msg = t(".please_confirm_account")
       end
+      render :new
     end
   end
 

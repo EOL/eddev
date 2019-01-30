@@ -77,7 +77,7 @@ class User < ApplicationRecord
   end
 
   def set_confirm_token
-    self.confirm_token = SecureRandom.base64
+    self.confirm_token ||= SecureRandom.base64
   end
 
   def set_default_role

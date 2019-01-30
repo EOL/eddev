@@ -17,6 +17,10 @@ class ImageField extends React.Component {
   }
 
   buildImgLibPreviewThumbs = () => {
+    if (!this.props.choices) {
+      return [];
+    }
+
     const thumbs = []
         , numThumbs = Math.min(
             this.props.choices.length,
@@ -169,9 +173,42 @@ class ImageField extends React.Component {
     this.props.setDataAttr('credit', { text: event.target.value });
   }
 
+  refreshImageLibrary = (e) => {
+    const that = this;
+
+    e.stopPropagation();
+    if (this.props.isCardDirty) {
+      alert('Please save or discard your changes first.');
+    } else {
+      let proceed = confirm('Are you sure you want to refresh the image library? This will overwrite the old one, and may delete the current card image.');
+
+      if (!proceed) {
+        return;
+      }
+
+      $.ajax({
+        url: cardMakerUrl('cards/' + this.props.cardId + '/refresh_images'),
+        method: 'post',
+        data: {},
+        success: (newCard) => {
+          that.props.requestReloadCard((err) => {
+            if (err) {
+              alert('Something went wrong!');
+            } else {
+              alert('Image library refreshed!');
+            }
+          })
+        },
+        error: () => {
+          alert('Something went wrong!');
+        }
+      });
+    }
+  }
+
   render() {
     const uploadThumbUrl = this.props.getUserDataAttr('upload', 'thumbUrl')
-        , showThumbs = this.props.choices != null && this.props.choices.length
+        , showThumbs = (this.props.choices != null && this.props.choices.length > 0) || this.props.userRole === 'admin'
         ;
 
     let uploadThumbClassName = 'upload-img-preview thumb';
@@ -185,16 +222,20 @@ class ImageField extends React.Component {
       {!this.state.libOpen &&
         (<div className='img-field-main'>
           {
-            showThumbs && 
+            showThumbs === true && 
             <div className='img-lib-link img-field-sec' onClick={this.handleLibOpenClick}>
               <div className='img-lib-hdr img-lib-btn'>{I18n.t('react.card_maker.image_library')}</div>
               <div className='img-lib-thumbs'>
                 {this.buildImgLibPreviewThumbs()}
               </div>
+              {
+                this.props.userRole === 'admin' &&
+                <button onClick={this.refreshImageLibrary}>Refresh</button>
+              }
             </div>
           }
           {
-            showThumbs &&
+            showThumbs === true &&
             <div className='img-field-sep'></div>
           }
           <div className='img-url img-field-sec'>

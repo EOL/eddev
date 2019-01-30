@@ -185,7 +185,7 @@ p {
 .image-credits-section {
   background-color: #eef1f1;
   color: $black;
-  padding: 20px 0;
+  padding: px-to-rem(20) 0;
   text-align: center;
 
   a {
@@ -194,15 +194,15 @@ p {
 }
 
 .image-credits-hdr {
-  font-size: 19px;
+  font-size: px-to-rem(18);
   font-weight: $semibold;
   margin: 0;
   padding: 0;
 }
 
 .image-credits-text {
-  font-size: 10px;
-  margin: 16px 0 0 0;
+  font-size: px-to-rem(10);
+  margin: px-to-rem(14) auto 0 auto;
   padding: 0;
 }
 
@@ -244,18 +244,3 @@ p {
   }
 }
 
-@media only screen and (min-width: $full-width) {
-  .image-credits-section {
-    padding: 42px 0;
-  }
-
-  .image-credits-hdr {
-    font-size: 20px;
-  }
-
-  .image-credits-text {
-    font-size: 14px;
-    margin: 22px auto 0 auto;
-    width: 90%;
-  }
-}

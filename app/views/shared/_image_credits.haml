@@ -11,9 +11,14 @@
             :source => image[:source],
             :url => image[:url],
             :license => image[:license]
-        - else
+        - elsif image.key?(:source)
           = t ".credit_nolink_html", :title => image[:title],
             :title_class => "image-title",
             :author => image[:author],
             :source => image[:source],
+            :license => image[:license]
+        - else
+          = t ".credit_nosource_html", :title => image[:title],
+            :title_class => "image-title",
+            :author => image[:author],
             :license => image[:license]

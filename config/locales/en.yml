@@ -538,6 +538,7 @@ en:
     image_credits:
       credit_html: "<span class='%{title_class}'>%{title}</span> by %{author} via <a href='%{url}'>%{source}</a> %{license}"
       credit_nolink_html: "<span class='%{title_class}'>%{title}</span> by %{author} via %{source} %{license}"
+      credit_nosource_html: "<span class='%{title_class}'>%{title}</span> by %{author} %{license}"
       eol_promotes_html: "EOL promotes content sharing via Creative Commons and other open licenses. Learn more about <a href='http://eol.org/info/eol_licensing_policy'>EOL's Licensing Policy</a>."
       header: "Image Credits"
     nav_items:

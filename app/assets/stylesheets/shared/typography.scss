@@ -1,4 +1,10 @@
+$rem: 12;
+
+@function px-to-rem($pixels) {
+  @return ($pixels / $rem) * 1rem;
+}
+
 :root {
-  font-size: calc(12px + .5vw);
+  font-size: calc(#{($rem - 400 * .005) * 1px} + .5vw);
 }
 

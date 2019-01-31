@@ -1,13 +1,8 @@
 @import "typography";
 
-@function px-to-rem($pixels) {
-  @return ($pixels / $rem) * 1rem;
-}
-
 // Dimensions/units
 $unit-px: 16px;
 $em: 16;
-$rem: 12;
 $main-col-width: 939;
 $main-col-width-px: $main-col-width * 1px;
 $main-col-padding: 12;

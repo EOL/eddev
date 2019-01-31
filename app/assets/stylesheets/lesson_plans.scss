@@ -6,12 +6,12 @@ $grade-level-purple: #a366be;
 $grade-level-green: #7ab62d;
 $grade-level-red: #ce681a;
 
-$grade-level-bar-height: 34px;
+$grade-level-bar-height: px-to-rem(34);
 
 $flp-margin: 13;
 $flp-width: 225;
 
-$lesson-plan-icon-size: 141px;
+$lesson-plan-icon-size: px-to-rem(140);
 $lesson-plan-icon-size-sm: 113px;
 
 $icon-dark-gray: #515151;
@@ -29,66 +29,6 @@ $lesson-plan-border-color: #aaaaaa;
   background: $grade-level-purple;
 }
 
-.featured-lesson-plans {
-  margin-top: percentage(15 / $main-col-width);
-}
-
-.featured-lesson-plan {
-  $text-padding-left: 15px;
-  $margin-pct: percentage($flp-margin / $main-col-width);
-  display: inline-block;
-  margin: $margin-pct $margin-pct 0 0;
-  position: relative;
-  width: percentage($flp-width / $main-col-width);
-
-  .top-bar {
-    color: $white;
-    font-size: 14px;
-    font-weight: $bold;
-    height: 34px;
-    line-height: 34px;
-    padding-left: $text-padding-left;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  }
-
-  .icons {
-    color: $icon-dark-gray;
-    float: right;
-    font-size: 20px;
-    height: 100%;
-    margin-right: 6px;
-    padding-top: 4px;
-    text-shadow: none;
-  }
-
-  .image-wrap {
-    position: relative;
-  }
-
-  .image {
-    vertical-align: top;
-    width: 100%;
-  }
-
-  .text-overlay {
-    background-color: rgba(20, 20, 20, 0.74);
-    bottom: 0;
-    color: $white;
-    font-size: 16px;
-    font-weight: $bold;
-    height: 40px;
-    left: 0;
-    line-height: 40px;
-    padding-left: $text-padding-left;
-    position: absolute;
-    width: 100%;
-  }
-
-  &.fourth {
-    margin-right: 0;
-  }
-}
-
 .grade-level-fixed-bar, .grade-level-abs-bar {
   & > .lesson-plan-list {
     padding-top: $grade-level-bar-height;
@@ -98,7 +38,6 @@ $lesson-plan-border-color: #aaaaaa;
 .grade-level-fixed-bar {
   & > .grade-level-bar-outer {
     left: 0;
-    padding: 0 $main-col-padding-pct;
     position: fixed;
     top: $topbar-height;
     z-index: 2;
@@ -121,20 +60,19 @@ $lesson-plan-border-color: #aaaaaa;
 .grade-level-bar {
   color: $white;
   cursor: pointer;
-  font-size: 18px;
+  font-size: px-to-rem(16);
   font-weight: $bold;
   height: $grade-level-bar-height;
   line-height: $grade-level-bar-height;
   margin: 0 auto;
-  max-width: $main-col-width-px;
   position: relative;
   text-align: center;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 
   .chevron {
     position: absolute;
-    right: 10px;
-    top: 8px;
+    right: px-to-rem(10);
+    top: px-to-rem(8);
   }
 }
 
@@ -156,7 +94,7 @@ $lesson-plan-border-color: #aaaaaa;
   box-sizing: content-box;
   clear: both;
   min-height: $lesson-plan-icon-size;
-  padding: 7px 0 7px 7px;
+  padding: px-to-rem(7) 0 px-to-rem(7) px-to-rem(7);
   position: relative;
 
   $pdf-button-width: 90;
@@ -246,16 +184,16 @@ $lesson-plan-border-color: #aaaaaa;
 
 .lesson-plan-title {
   color: #2f2f2f;
-  font-size: 16px;
+  font-size: px-to-rem(16);
   font-weight: $bold;
-  margin-bottom: 15px;
+  margin-bottom: px-to-rem(15);
 }
 
 .icon-list-vert, .icon-list-horiz {
   .icon {
     color: #c1c1c1;
-    font-size: 21px;
-    line-height: 21px;
+    font-size: px-to-rem(22);
+    line-height: px-to-rem(22);
 
     &.active {
       color: #1e1e1e;
@@ -270,10 +208,10 @@ $lesson-plan-border-color: #aaaaaa;
 .icon-list-vert {
   display: inline-block;
   float: left;
-  margin-right: 24px;
+  margin-right: px-to-rem(24);
 
   li {
-    margin-bottom: 7px;
+    margin-bottom: px-to-rem(7);
   }
 }
 
@@ -281,11 +219,17 @@ $lesson-plan-border-color: #aaaaaa;
   margin-top: 15px;
 }
 
+.lesson-plan-desc {
+  overflow: hidden;
+}
+
+/*
 .lesson-plan-desc, .lesson-plan-objectives {
   color: #1f1f1f;
   font-size: 13px;
 //  line-height: 1.12;
 }
+*/
 
 .lesson-plan-objectives {
   list-style: outside disc;
@@ -300,57 +244,37 @@ $lesson-plan-border-color: #aaaaaa;
 }
 
 .subject-key-block, .icon-key-block {
-  display: inline-block;
   position: relative;
   vertical-align: top;
-}
-
-$icon-key-block-width: 293px;
-$subject-key-block-width: 600px;
-
-.subject-key-block {
-  margin-right: $main-col-width - $subject-key-block-width - $icon-key-block-width;
-  width: $subject-key-block-width;
-}
-
-.icon-key-block {
-  width: $icon-key-block-width;
 }
 
 .category-key {
   border: solid 1px #979797;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
   display: block;
-  margin: 22px auto 0 auto;
-  padding: 17px;
+  margin: px-to-rem(25) auto 0 auto;
+  padding: px-to-rem(20);
   vertical-align: top;
-  width: $subject-key-block-width;
+  width: px-to-rem(225);
 }
 
-.icon-key {
-  width: $icon-key-block-width; 
+.icon-row {
+  height: px-to-rem(35);
+  line-height: px-to-rem(35);
+}
 
-  .icon-row {
-    height: 37px;
-    line-height: 37px;
-  }
+.icon {
+  font-size: 25px;
+  margin-right: 14px;
+}
 
-  .icon {
-    font-size: 25px;
-    margin-right: 14px;
-  }
+.icon, .icon-desc {
+  display: inline-block;
+  vertical-align: middle;
+}
 
-  .icon, .icon-desc {
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  .icon-desc {
-    color: #161616;
-    font-size: 14px;
-    font-weight: $light;
-    width: 175px;
-  }
+.icon-desc {
+  color: #161616;
 }
 
 .grade-level-key {
@@ -365,32 +289,30 @@ $subject-key-block-width: 600px;
   }
 }
 
-.subject-key {
-  .subject {
-    display: inline-block;
-    width: 33%;
+.subject {
+  display: block;
+  height: px-to-rem(50);
+  margin-bottom: px-to-rem(8);
+  width: 100%;
+}
 
-    &.first, &.second {
-      margin-bottom: 9px;
-    }
-  }
+li:last-of-type.subject {
+  margin-bottom: 0;
+}
 
-  .subject-icon, .subject-name {
-    display: inline-block;
-    vertical-align: middle;
-  }
+.subject-icon, .subject-name {
+  display: inline-block;
+  vertical-align: middle;
+}
 
-  .subject-name {
-    color: #161616;
-    font-size: 14px;
-    overflow: visible;
-  }
+.subject-name {
+  color: #161616;
+  overflow: visible;
+}
 
-  .subject-icon {
-    height: 51px;
-    margin-right: 5px;
-    width: 51px;
-  }
+.subject-icon {
+  height: 100%;
+  margin-right: px-to-rem(8);
 }
 
 .key-tooltip {
@@ -440,6 +362,37 @@ $subject-key-block-width: 600px;
   }
 }
 
+@media screen and (min-width: 825px) {
+  .subject-key {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: px-to-rem(385);
+  }
+
+  .subject {
+    width: 42%;
+  }
+}
+
+@media screen and (min-width: 1250px) {
+  .subject-key-block, .icon-key-block {
+    display: inline-block;
+  }
+
+  .subject-key-block {
+    margin-left: 2%;
+    margin-right: 4%;
+    width: 60%;
+  }
+
+  .icon-key-block {
+    margin-right: 2%;
+    width: 30%;
+  }
+}
+
+/*
 @media screen and (max-width: 978px) {
   .subject-key-block, .icon-key-block {
     width: 100%;
@@ -596,4 +549,4 @@ $subject-key-block-width: 600px;
     top: $topbar-row-height;
   }
 }
-
+*/

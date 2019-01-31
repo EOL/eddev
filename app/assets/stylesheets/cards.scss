@@ -225,6 +225,43 @@ h4 {
     }
   }
 
+.main-organizer {
+  margin: 0 auto;
+  width: 138px;
+
+  & > img {
+    box-shadow: -3px 3px 2px 0px rgba(156,156,156,0.47);
+    width: 100%;
+  }
+}
+
+.organizers {
+  margin-top: 20px;
+
+  & > li {
+    $height: 50px;
+    border-radius: 1px;
+    box-shadow: 0px 1px 1px 1px rgba(199,199,199,1);
+    font-size: 14px;
+    height: $height;
+    line-height: $height;
+    margin: 0 auto 5px auto;
+    text-align: center;
+    width: 300px;
+
+    &:hover {
+      background: $hover-gray;
+    }
+
+    & > a {
+      display: block;
+      height: 100%;
+      text-decoration: none;
+      width: 100%;
+    }
+  }
+}
+
 @media only screen and (min-width: $tablet-width) {
   .anchor-links {
     overflow: hidden;

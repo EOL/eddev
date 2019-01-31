@@ -42,3 +42,13 @@
     = render "activity", lesson_plan: @create_a_creature, text: t(".create_a_creature_html")
   %a#Standards.section-anchor
   %h3.section-head-cards.section-head-cards-standards= t(".data_resources_organizers_header")
+  %p.text.text-p.text-p-cards= t(".intro_organizer")
+  .main-organizer
+    = image_tag "cards/organizer_icons/intro_icon.png"
+  %ul.organizers 
+    = render "organizer", title: "Example Cards", url: "#"
+    = render "organizer", title: "Biodiversity Card Research Organizer", url: "#"
+    = render "organizer", title: "Resources for Trait Research", url: "#"
+    = render "organizer", title: "Biodiversity Vocabulary", url: "#"
+    = render "organizer", title: "Data Collection Template", url: "#"
+    = render "organizer", title: "Advanced Collection Template", url: "#"

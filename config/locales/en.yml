@@ -90,6 +90,7 @@ en:
       blank_cards_pdf: Blank Cards PDF
       food_chain_template: Food Chain Template
       trophic_food_pyramid: Trophic Food Pyramid
+      intro_organizer: "This guide gives an overview of different options for making individual cards or decks."
   forgot_password_mailer:
     forgot_password_email:
       body_html: "Hi, %{user_name}. Please click the following link to change your password: <a href=\"%{url}\">%{url}</a>"

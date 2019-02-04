@@ -35,6 +35,7 @@
     = render "card", image_file_name: "trait.png", name: t(".food_chain_template"), desc: t(".food_chain_desc"), file_path: "activities/foodchain.pdf"
     = render "card", image_file_name: "trait.png", name: t(".trophic_food_pyramid"), desc: t(".trophic_desc"), file_path: "activities/trophic_pyramid_eol_cards.pdf"
   %h4= t(".lesson_plans")
+  %p.text.text-p.text-p-cards= t(".lesson_plans_intro_html", lesson_plans_path: lesson_plans_path)
   %ul.lesson-plans<
     = render "activity", lesson_plan: @food_chains_rummy, text: t(".food_chains_rummy_html")
     = render "activity", lesson_plan: @thats_classified, text: t(".thats_classified_html")

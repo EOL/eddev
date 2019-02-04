@@ -76,7 +76,7 @@ en:
       project_desc: "Add information about the deck and your project or organization"
       vocabulary_desc: "Include definitions for words on Biodiversity Cards"
       key_desc: "Helps interpret information on Biodiversity Cards"
-      tutorials_text: "These short tutorials will give you an overview of the EOL Card Maker and how to make your own biodiversity cards."
+      tutorials_text: "These short tutorials will give you an overview of the EOL Card Maker and how to make your own Biodiversity Cards."
       intro_tutorial_title: An Introduction to EOL Biodiversity Cards
       how_to_make_tutorial_title: How to Make EOL Biodiversity Cards
       intro_tutorial_desc: "This tutorial is an introduction to EOL Biodiversity Cards"
@@ -90,7 +90,7 @@ en:
       blank_cards_pdf: Blank Cards PDF
       food_chain_template: Food Chain Template
       trophic_food_pyramid: Trophic Food Pyramid
-      research_tools_desc: "Making cards requires researching trait information for your organisms of interest. In this section you will find good trait data resources and data organizers to keep data and references in a format easy to transfer into your EOL biodiversity cards."
+      research_tools_desc: "Making cards requires researching trait information for your organisms of interest. In this section you will find good trait data resources and data organizers to keep data and references in a format easy to transfer into your EOL Biodiversity Cards."
       intro_organizer_title: Introduction to Trait Data Resources and Organizers (PDF)
       intro_organizer: "This guide gives an overview of different options for making individual cards or decks."
       steps_header: "Create a Trait Card in four easy steps:"
@@ -98,6 +98,7 @@ en:
       blank_desc: "Make your own cards with drawings. Print these blank cards and let your students get creative!"
       food_chain_desc: "Print out this template, a deck of cards and have students use their knowledge to make food chains."
       trophic_desc: "Print out the Trophic Pyramid template, a deck of cards and have students explain their selections."
+      lesson_plans_intro_html: "Most EOL <a href='%{lesson_plans_path}'>Lesson Plans</a> can incorporate Biodiversity Cards. Here are a few examples:"
     organizer:
       example_cards: "Example Cards (PDF)"
       research: "Card Research Organizer (Word Doc)"

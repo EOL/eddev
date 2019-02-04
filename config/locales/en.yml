@@ -76,11 +76,11 @@ en:
       project_desc: "Add information about the deck and your project or organization"
       vocabulary_desc: "Include definitions for words on Biodiversity Cards"
       key_desc: "Helps interpret information on Biodiversity Cards"
-      tutorials_text: "These short tutorials will guide you on how to make your own Biodiversity Cards and tips on how to use the EOL Card Manager."
-      card_manager_tutorial_title: Card Manager Tutorial
-      card_editor_tutorial_title: Card Editor Tutorial
-      card_manager_tutorial_desc: "This tutorial is an introduction to the EOL Card Manager, our public card library and how to view and manage the cards you make."
-      card_editor_tutorial_desc: "View this short tutorial to learn how to make and edit your own cards and decks."
+      tutorials_text: "These short tutorials will give you an overview of the EOL Card Maker and how to make your own biodiversity cards."
+      intro_tutorial_title: An Introduction to EOL Biodiversity Cards
+      how_to_make_tutorial_title: How to Make EOL Biodiversity Cards
+      intro_tutorial_desc: "This tutorial is an introduction to EOL Biodiversity Cards"
+      how_to_make_tutorial_desc: "View this short tutorial to learn how to make, edit and manage your own cards and decks"
       activities_text: "The following lesson plans use pre-made EOL Biodiversity Cards. They are examples of how to incorporate cards into your learning activities. The possibilities are endless!"
       food_chains_rummy_html: "<em>Food Chains Rummy</em> (grades 2-5, 6-8, 9-12): Build food chains and webs with a deck of cards"
       thats_classified_html: "<em>That's Classified</em> (grades 2-5): Collect 3-of-a-kind in this Go Fish style classification game"

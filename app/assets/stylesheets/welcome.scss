@@ -431,6 +431,7 @@ $bio-img-outer-width-px: $bio-img-width-px + $bio-img-rmargin-px;
   margin-top: 4 / $em * 1em;
 }
 
+
 @media screen and (max-width: 525px) {
   .team-head-title {
     font-size: 16px;
@@ -449,5 +450,11 @@ $bio-img-outer-width-px: $bio-img-width-px + $bio-img-rmargin-px;
   .bio-img {
     height: 85px;
     width: 85px;
+  }
+}
+
+@media screen and (min-width: $full-width) {
+  .intro-about .text-p {
+    max-width: 620px;
   }
 }

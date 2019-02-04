@@ -53,9 +53,10 @@
   %h4.sub-head= t(".data_subheader")
   .section-organizers
     .main-organizer>
+      %p.text.text-p.text-p-cards.text-p-main-organizer= t(".intro_organizer")
       = link_to "card_resources/make_biodiversity_cards.pdf", class: "main-organizer-link" do
         = image_tag "cards/organizer_icons/intro_icon.png", class: "main-organizer-img"
-        %p.text.text-p.text-p-cards= t(".intro_organizer")
+        .main-organizer-title= t(".intro_organizer_title")
     %ul.organizers>
       = render "organizer", title_key: "example_cards", file_name: "card_examples.pdf"
       = render "organizer", title_key: "research", file_name: "card_research_organizer.docx"

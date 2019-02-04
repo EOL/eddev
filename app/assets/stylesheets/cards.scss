@@ -236,7 +236,15 @@ h4 {
   width: 138px;
 }
 
+.main-organizer-title {
+  font-size: 14px;
+  margin: 10px auto 0 auto;
+  text-align: center;
+  width: 200px;
+}
+
 .main-organizer-link {
+  display: block;
   text-decoration: none;
 
   &:hover {

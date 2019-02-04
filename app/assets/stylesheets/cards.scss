@@ -226,12 +226,21 @@ h4 {
   }
 
 .main-organizer {
+  margin: 40px auto;
+}
+
+.main-organizer-img {
+  box-shadow: -3px 3px 2px 0px rgba(156,156,156,0.47);
+  display: block;
   margin: 0 auto;
   width: 138px;
+}
 
-  & > img {
-    box-shadow: -3px 3px 2px 0px rgba(156,156,156,0.47);
-    width: 100%;
+.main-organizer-link {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
   }
 }
 
@@ -258,6 +267,36 @@ h4 {
       height: 100%;
       text-decoration: none;
       width: 100%;
+    }
+  }
+}
+
+.sub-head {
+  margin: 50px 0 40px 0;
+}
+
+.trait-steps-hdr {
+  font-size: 14px;
+}
+
+.trait-steps {
+  margin: 0 auto;
+
+  & > li {
+    margin: 25px auto 0 auto;
+    overflow: visible;
+    width: 155px;
+    white-space: nowrap;
+
+    & > img {
+      display: block;
+      margin: 0 auto 10px auto;
+      width: 100%;
+    }
+
+    & > div {
+      margin: 0 -50%;
+      text-align: center;
     }
   }
 }
@@ -351,6 +390,45 @@ h4 {
   .section-head-cards {
     font-size: 16px;
   }
+
+  .trait-steps {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 460px;
+  }
+
+  .trait-steps-hdr {
+    font-size: 16px;
+  }
+
+  .card {
+    width: 150px;
+  }
+}
+
+.sub-head {
+  $height: 45px;
+  background: #f4f8fc;
+  height: $height;
+  font-size: 14px;
+  line-height: $height;
+}
+
+@media only screen and (min-width: 670px) {
+  .section-organizers {
+    display: flex;
+    align-items: center;
+  }
+
+  .organizers, .main-organizer {
+    width: 50%;
+  }
+
+  .main-organizer {
+    margin: 0 auto; 
+  }
 }
 
 @media only screen and (min-width: $full-width) {
@@ -371,6 +449,18 @@ h4 {
     padding: 16px 0 18px;
   }
 
+}
+
+@media only screen and (min-width: 900px) {
+  .trait-steps {
+    justify-content: space-between;
+    width: 100%;
+
+    & > li {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
 }
 
 @media screen and (max-width: $nav-mobile-width) {

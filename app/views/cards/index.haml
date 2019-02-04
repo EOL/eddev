@@ -42,13 +42,24 @@
     = render "activity", lesson_plan: @create_a_creature, text: t(".create_a_creature_html")
   %a#Standards.section-anchor
   %h3.section-head-cards.section-head-cards-standards= t(".data_resources_organizers_header")
-  %p.text.text-p.text-p-cards= t(".intro_organizer")
-  .main-organizer
-    = image_tag "cards/organizer_icons/intro_icon.png"
-  %ul.organizers 
-    = render "organizer", title: "Example Cards", url: "#"
-    = render "organizer", title: "Biodiversity Card Research Organizer", url: "#"
-    = render "organizer", title: "Resources for Trait Research", url: "#"
-    = render "organizer", title: "Biodiversity Vocabulary", url: "#"
-    = render "organizer", title: "Data Collection Template", url: "#"
-    = render "organizer", title: "Advanced Collection Template", url: "#"
+  %p.text.text-p.text-p-cards= t(".research_tools_desc")
+  %h4.trait-steps-hdr= t(".steps_header")
+  %ul.trait-steps
+    = render "trait_step", file_name: "choose_species.png", text: "1. Choose a species"
+    = render "trait_step", file_name: "research.png", text: "2. Research species traits"
+    = render "trait_step", file_name: "create.png", text: "3. Create card in Card Maker"
+    = render "trait_step", file_name: "publish.png", text: "4. Publish/print card"
+
+  %h4.sub-head= t(".data_subheader")
+  .section-organizers
+    .main-organizer>
+      = link_to "card_resources/make_biodiversity_cards.pdf", class: "main-organizer-link" do
+        = image_tag "cards/organizer_icons/intro_icon.png", class: "main-organizer-img"
+        %p.text.text-p.text-p-cards= t(".intro_organizer")
+    %ul.organizers>
+      = render "organizer", title: "Example Cards (PDF)", file_name: "card_examples.pdf"
+      = render "organizer", title: "Card Research Organizer (Word Doc)", file_name: "card_research_organizer.docx"
+      = render "organizer", title: "Resources for Trait Research (Excel)", file_name: "trait_research_resources.xlsx"
+      = render "organizer", title: "Biodiversity Vocabulary (Word Doc)", file_name: "card_vocabulary.docx"
+      = render "organizer", title: "Data Collection Template (Excel)", file_name: "card_data_collection_template_simple.xlsx"
+      = render "organizer", title: "Advanced Collection Template (Excel)", file_name: "data_collection_template_advanced.xlsx"

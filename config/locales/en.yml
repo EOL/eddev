@@ -90,7 +90,10 @@ en:
       blank_cards_pdf: Blank Cards PDF
       food_chain_template: Food Chain Template
       trophic_food_pyramid: Trophic Food Pyramid
+      research_tools_desc: "Making cards requires researching trait information for your organisms of interest. In this section you will find good trait data resources and data organizers to keep data and references in a format easy to transfer into your EOL biodiversity cards."
       intro_organizer: "This guide gives an overview of different options for making individual cards or decks."
+      steps_header: "Create a Trait Card in four easy steps:"
+      data_subheader: "Trait Data Resources and Organizers"
   forgot_password_mailer:
     forgot_password_email:
       body_html: "Hi, %{user_name}. Please click the following link to change your password: <a href=\"%{url}\">%{url}</a>"

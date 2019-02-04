@@ -664,10 +664,10 @@ en:
         cards_html: "Make <a href='%{card_maker_path}'>EOL Biodiversity Cards</a> as a classroom project or download and print pre-made cards. Great for teaching about ecosystems and food webs. View our <a href='%{cards_path}'>Card Resources</a> for more!"
         lessons_html: "Bring EOL into your classroom with our <a href='%{lesson_plans_path}'>lesson plans</a>. Aligned to NGSS standards, they also pull in content and resources from EOL."
         tourspods_html: "Our five-minute <a href='%{podcasts_path}'>podcasts</a> are great for the classroom. They include Lesson Plans, transcripts, and scientist interviews.<br /><a href='%{earth_tours_path}'>Google Earth Tours</a> add a significant geographic context to these biodiversity stories."
-      taxa: 
       taxa:
-        summers_poison_frog_html: "<em>Ranitomeya summersi</em>"
+        prevosts_squirrel_html: "Prevost's squirrel <em>Callosciurus prevostii</em>"
         nasturtium_html: "Nasturtium <em>Tropaeolum majus</em>"
+        violet_woodnymph_html: "Violet-crowned woodnymph <em>Thalurania colombica</em>"
       eol_taxon_page: EOL Taxon Page
       buttons:
         lesson1: Grades 2-5

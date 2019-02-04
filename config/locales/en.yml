@@ -94,6 +94,13 @@ en:
       intro_organizer: "This guide gives an overview of different options for making individual cards or decks."
       steps_header: "Create a Trait Card in four easy steps:"
       data_subheader: "Trait Data Resources and Organizers"
+    organizer:
+      example_cards: "Example Cards (PDF)"
+      research: "Card Research Organizer (Word Doc)"
+      resources: "Resources for Trait Research (Excel)"
+      biodiversity: "Biodiversity Vocabulary (Word Doc)"
+      data: "Data Collection Template (Excel)"
+      data_advanced: "Advanced Data Collection Template (Excel)"
   forgot_password_mailer:
     forgot_password_email:
       body_html: "Hi, %{user_name}. Please click the following link to change your password: <a href=\"%{url}\">%{url}</a>"

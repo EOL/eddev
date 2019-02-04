@@ -57,9 +57,9 @@
         = image_tag "cards/organizer_icons/intro_icon.png", class: "main-organizer-img"
         %p.text.text-p.text-p-cards= t(".intro_organizer")
     %ul.organizers>
-      = render "organizer", title: "Example Cards (PDF)", file_name: "card_examples.pdf"
-      = render "organizer", title: "Card Research Organizer (Word Doc)", file_name: "card_research_organizer.docx"
-      = render "organizer", title: "Resources for Trait Research (Excel)", file_name: "trait_research_resources.xlsx"
-      = render "organizer", title: "Biodiversity Vocabulary (Word Doc)", file_name: "card_vocabulary.docx"
-      = render "organizer", title: "Data Collection Template (Excel)", file_name: "card_data_collection_template_simple.xlsx"
-      = render "organizer", title: "Advanced Collection Template (Excel)", file_name: "data_collection_template_advanced.xlsx"
+      = render "organizer", title_key: "example_cards", file_name: "card_examples.pdf"
+      = render "organizer", title_key: "research", file_name: "card_research_organizer.docx"
+      = render "organizer", title_key: "resources", file_name: "trait_research_resources.xlsx"
+      = render "organizer", title_key: "biodiversity", file_name: "card_vocabulary.docx"
+      = render "organizer", title_key: "data", file_name: "card_data_collection_template_simple.xlsx"
+      = render "organizer", title_key: "data_advanced", file_name: "data_collection_template_advanced.xlsx"

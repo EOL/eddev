@@ -4,7 +4,6 @@ class CardMakerController < ApplicationController
   before_action :main_nopad_bot
 
   def index
-    render status: 503
   end
 
   def set_js_translations

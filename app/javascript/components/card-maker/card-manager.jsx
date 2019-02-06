@@ -69,6 +69,8 @@ class CardManager extends React.Component {
       showDescInput: false,
       deckDescVal: null,
       cardSearchVal: '',
+      cancelPolling: false,
+      pollingRequest: null
     }
   }
 
@@ -92,7 +94,7 @@ class CardManager extends React.Component {
       , url = cardMakerUrl('cards/' + cardId + '/deck_id')  
       ;
 
-    that.props.showLoadingOverlay(null, (closeFn) => {
+    that.props.showLoadingOverlay(null, null, (closeFn) => {
       const successFn = () => {
         that.props.reloadCurLibResources(closeFn);
       }
@@ -122,7 +124,7 @@ class CardManager extends React.Component {
 
     if (!shouldDestroy) return;
 
-    that.props.showLoadingOverlay(null, (closeFn) => {
+    that.props.showLoadingOverlay(null, null, (closeFn) => {
       $.ajax({
         url: cardMakerUrl(resourceType + '/' + id),
         method: 'DELETE',
@@ -164,7 +166,7 @@ class CardManager extends React.Component {
   createOrCopyCard = (data, deckId) => {
     let that = this;
 
-    that.props.showLoadingOverlay(null, (closeFn) => {
+    that.props.showLoadingOverlay(null, null, (closeFn) => {
       $.ajax({
         url: this.createCardUrl(deckId),
         data: JSON.stringify(data),
@@ -354,7 +356,7 @@ class CardManager extends React.Component {
   handleRenameDeck = (name) => {
     const that = this;
 
-    that.props.showLoadingOverlay(null, (closeFn) => {
+    that.props.showLoadingOverlay(null, null, (closeFn) => {
       $.ajax({
         url: cardMakerUrl(`decks/${this.props.selectedDeck.id}/name`),
         method: 'POST',
@@ -384,7 +386,7 @@ class CardManager extends React.Component {
           }
         ;
 
-    that.props.showLoadingOverlay(null, (closeFn) => {
+    that.props.showLoadingOverlay(null, null, (closeFn) => {
       $.ajax({
         url: cardMakerUrl('decks'),
         method: 'POST',
@@ -452,7 +454,13 @@ class CardManager extends React.Component {
 
     that.props.showLoadingOverlay(
       I18n.t('react.card_maker.print_loading_msg'), 
+      () => {
+        // TODO: send cancel request
+        this.cancelPolling();
+        console.log('cancel printing');
+      },
       (closeFn) => {
+        /*
         $.ajax({
           url: cardMakerUrl('deck_pdfs'),
           data: JSON.stringify({
@@ -464,12 +472,20 @@ class CardManager extends React.Component {
             that.pollPdfJob(result.jobId, closeFn);
           }
         });
+        */
       }
     );
   }
 
   pollJob = (baseUrl, jobId, overlayCloseFn) => {
     const that = this;
+
+    if (that.state.cancelPolling) {
+      that.setState({
+        cancelPolling: false
+      });
+      return;
+    }
 
     $.getJSON(cardMakerUrl(baseUrl + '/' + jobId + '/status'), (result) => {
       if (result.status === 'done') {
@@ -531,7 +547,7 @@ class CardManager extends React.Component {
       data: that.state.deckDescVal,
       url: url,
       success: () => {
-        that.props.showLoadingOverlay(null, (closeFn) => {
+        that.props.showLoadingOverlay(null, null, (closeFn) => {
           that.closeAndClearDescInput(); 
           that.props.reloadCurLibResources(closeFn);
         });
@@ -577,7 +593,7 @@ class CardManager extends React.Component {
       ;
 
     if (proceed) {
-      that.props.showLoadingOverlay(null, (closeFn) => {
+      that.props.showLoadingOverlay(null, null, (closeFn) => {
         $.ajax({
           url: cardMakerUrl('decks/' + that.props.selectedDeck.id + '/' + action),
           method: 'POST',
@@ -636,7 +652,7 @@ class CardManager extends React.Component {
       newLib = 'user';
     }
 
-    this.props.showLoadingOverlay(null, (closeFn) => {
+    this.props.showLoadingOverlay(null, null, (closeFn) => {
       this.props.setLibrary(newLib, closeFn);
     });
   }
@@ -669,11 +685,27 @@ class CardManager extends React.Component {
     }, extraProps))
   }
 
+  cancelPolling = () => {
+    if (this.state.pollingRequest) {
+      this.state.pollingRequest.abort();
+    }
+
+    this.setState({
+      cancelPolling: true,
+      pollingRequest: null
+    });
+  }
+
   createDeckPngs = () => {
     const that = this;
 
     that.props.showLoadingOverlay(
       I18n.t('react.card_maker.it_may_take_a_few_mins'),
+      () => {
+        // TODO: send cancel request
+        this.cancelPolling();
+        console.log('cancel png');
+      },
       (closeFn) => {
         $.ajax({
           url: cardMakerUrl('deck_pngs'),

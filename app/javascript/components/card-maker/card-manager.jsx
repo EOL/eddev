@@ -447,60 +447,65 @@ class CardManager extends React.Component {
     }
   }
 
+  clearPollingState = (cb) => {
+    this.setState({
+      pollingRequest: null,
+      cancelPolling: false
+    }, cb);
+  }
+
   makeDeckPdf = (cardBackId) => {
     const that = this;
+    that.clearPollingState(() => {
+      that.closeModal();
 
-    that.closeModal();
-
-    that.props.showLoadingOverlay(
-      I18n.t('react.card_maker.print_loading_msg'), 
-      () => {
-        // TODO: send cancel request
-        this.cancelPolling();
-        console.log('cancel printing');
-      },
-      (closeFn) => {
-        /*
-        $.ajax({
-          url: cardMakerUrl('deck_pdfs'),
-          data: JSON.stringify({
-            deckId: that.props.selectedDeck.id,
-            backId: cardBackId
-          }),
-          method: 'POST',
-          success: (result) => {
-            that.pollPdfJob(result.jobId, closeFn);
-          }
-        });
-        */
-      }
-    );
+      that.props.showLoadingOverlay(
+        I18n.t('react.card_maker.print_loading_msg'), 
+        () => {
+          this.cancelPolling();
+          console.log('cancel printing');
+        },
+        (closeFn) => {
+          $.ajax({
+            url: cardMakerUrl('deck_pdfs'),
+            data: JSON.stringify({
+              deckId: that.props.selectedDeck.id,
+              backId: cardBackId
+            }),
+            method: 'POST',
+            success: (result) => {
+              that.pollPdfJob(result.jobId, closeFn);
+            }
+          });
+        }
+      );
+    })
   }
 
   pollJob = (baseUrl, jobId, overlayCloseFn) => {
     const that = this;
 
-    if (that.state.cancelPolling) {
-      that.setState({
-        cancelPolling: false
-      });
-      return;
-    }
-
-    $.getJSON(cardMakerUrl(baseUrl + '/' + jobId + '/status'), (result) => {
+    Poller.poll(
+      cardMakerUrl(baseUrl + '/' + jobId + '/status'),
+    $.getJSON(, (result) => {
       if (result.status === 'done') {
-        overlayCloseFn();
-        window.open(cardMakerUrl(baseUrl + '/downloads/' + result.resultFileName));
+        if (!that.state.cancelPolling) {
+          overlayCloseFn();
+          window.open(cardMakerUrl(baseUrl + '/downloads/' + result.resultFileName));
+        }
       } else if (result.status === 'running') {
-        setTimeout(() => {
-          that.pollJob(baseUrl, jobId, overlayCloseFn)
-        }, pollIntervalMillis)
+        if (!that.state.cancelPolling) {
+          setTimeout(() => {
+            that.pollJob(baseUrl, jobId, overlayCloseFn)
+          }, pollIntervalMillis)
+        }
       } else {
-        overlayCloseFn();
-        alert(I18n.t('react.card_maker.unexpected_error_msg'));
+        if (!that.state.cancelPolling) {
+          overlayCloseFn();
+          alert(I18n.t('react.card_maker.unexpected_error_msg'));
+        }
       }
     });
-
   }
 
   pollPdfJob = (id, overlayCloseFn) => {
@@ -699,27 +704,29 @@ class CardManager extends React.Component {
   createDeckPngs = () => {
     const that = this;
 
-    that.props.showLoadingOverlay(
-      I18n.t('react.card_maker.it_may_take_a_few_mins'),
-      () => {
-        // TODO: send cancel request
-        this.cancelPolling();
-        console.log('cancel png');
-      },
-      (closeFn) => {
-        $.ajax({
-          url: cardMakerUrl('deck_pngs'),
-          data: JSON.stringify({
-            deckId: that.props.selectedDeck.id
-          }),
-          method: 'POST',
-          success: (result) => {
-            that.pollJob('deck_pngs', result.jobId, closeFn);
-          },
-          error: closeFn
-        })
-      }
-    )
+    that.clearPollingState(() => {
+      that.props.showLoadingOverlay(
+        I18n.t('react.card_maker.it_may_take_a_few_mins'),
+        () => {
+          // TODO: send cancel request
+          this.cancelPolling();
+          console.log('cancel png');
+        },
+        (closeFn) => {
+          $.ajax({
+            url: cardMakerUrl('deck_pngs'),
+            data: JSON.stringify({
+              deckId: that.props.selectedDeck.id
+            }),
+            method: 'POST',
+            success: (result) => {
+              that.pollJob('deck_pngs', result.jobId, closeFn);
+            },
+            error: closeFn
+          })
+        }
+      );
+    });
   }
 
   deckMenuItems = (resourceCount) => {

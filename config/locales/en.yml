@@ -575,9 +575,9 @@ en:
       google_earth_tours: "Google Earth Tours"
       biodiversity_articles: "Biodiversity Articles"
       partner_resources: "Partner Resources"
-      inaturalist: "iNaturalist Observation Platform"
-      bhl_coloring: "Biodiversity Heritage Library Coloring Books"
-      cnc: "City Nature Challenge"
+      inaturalist_html: "iNaturalist Observation Platform <i class='fa fa-external-link'></i>"
+      bhl_coloring_html: "Biodiversity Heritage Library Coloring Books <i class='fa fa-external-link'></i>"
+      cnc_html: "City Nature Challenge <i class='fa fa-external-link'></i>"
       overview: "Overview"
   signup_confirmation_mailer:
     confirmation_email:
@@ -670,9 +670,9 @@ en:
         cnc_html: "City Nature<br />Challenge"
         inat_html: iNaturalist
       descs:
-        bhl_html: "The <a href='https://www.biodiversitylibrary.org/'>Biodiversity Heritage Library</a> (BHL) provides the foundational literature to EOL, including original descriptions and <a href='https://drive.google.com/file/d/0B00hDkSQMhfDMXdIVng0NGd0WlU/view'>a beautiful coloring book.</a>"
-        cnc_html: "Use the <a href='http://citynaturechallenge.org/education-toolkit/'>City Nature Challenge</a> activities in your classroom."
-        inat_html: "<a href='https://www.inaturalist.org'>iNaturalist</a> is an open science, biodiversity observation platform. Their research-grade images flow back into EOL."
+        bhl_html: "The <a href='https://www.biodiversitylibrary.org/'>Biodiversity Heritage Library <i class='fa fa-external-link'></i></a> (BHL) provides the foundational literature to EOL, including original descriptions and <a href='https://drive.google.com/file/d/0B00hDkSQMhfDMXdIVng0NGd0WlU/view'>a beautiful coloring book <i class='fa fa-external-link'></i></a>."
+        cnc_html: "Use the <a href='http://citynaturechallenge.org/education-toolkit/'>City Nature Challenge <i class='fa fa-external-link'></i></a> activities in your classroom."
+        inat_html: "<a href='https://www.inaturalist.org'>iNaturalist <i class='fa fa-external-link'></i></a> is an open science, biodiversity observation platform. Their research-grade images flow back into EOL."
     section:
       headers:
         cards_html: Biodiversity Cards

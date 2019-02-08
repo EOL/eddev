@@ -15,6 +15,7 @@ $page-width: ($page-padding * 2 + $main-col-width) / $em * 1em;
 $page-width-px: $page-padding * 2 + $main-col-width;
 
 $head-trans-width: 525;
+$max-width: 1439px;
 
 // Based on card resources page -- not final
 // This is obviously a very coarse way of doing responsive design, but it's where we're at right now.
@@ -41,6 +42,7 @@ $navbar-gray: #f7f7f7;
 $nav-link-blue: #54a3ff;
 $nav-link-gray: #b3b3b3;
 $nav-green: #74a561;
+$hover-gray: #eee;
 
 // Fonts
 $open-sans: 'Open Sans', sans-serif;

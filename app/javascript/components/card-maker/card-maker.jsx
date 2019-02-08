@@ -458,7 +458,7 @@ class CardMaker extends React.Component {
           }
         </ReactModal>
 
-        <Page>{this.screenComponent()}</Page>
+        <Page noMainCol={true}>{this.screenComponent()}</Page>
       </div>
     )
   }

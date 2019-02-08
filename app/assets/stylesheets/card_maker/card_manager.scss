@@ -32,6 +32,7 @@ $species-search-card-height: 232px;
 $species-search-input-height: 45px;
 
 $card-aspect-ratio: .75;
+$resources-width: calc(100% - #{$left-rail-width});
 
 /* STATES */
 
@@ -49,7 +50,7 @@ $card-aspect-ratio: .75;
   flex-direction: column;
   position: relative;
   vertical-align: top;
-  width: $main-col-width-px - $left-rail-width;
+  width: $resources-width;
 } 
 
 .lDeckMenu {
@@ -1009,3 +1010,32 @@ $card-aspect-ratio: .75;
     width: 400px;
   }
 
+
+.toolbar {
+  background: $white;
+  height: $search-height;
+  max-width: calc(#{$max-width} - #{$left-rail-width});
+  position: fixed;
+  top: $topbar-height; // TODO: responsive (but who cares)
+  width: $resources-width;
+
+  & > h3 {
+    font-weight: $semibold;
+    line-height: $search-height;
+    text-align: center;
+  }
+}
+
+.libToggle {
+  border: 1px solid $black;
+  border-radius: 5px;
+  cursor: pointer;
+  right: 5px;
+  top: 10px;
+  padding: 5px 20px;
+  position: absolute;
+
+  &:hover {
+    background-color: $hover-gray;
+  }
+}

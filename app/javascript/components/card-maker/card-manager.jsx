@@ -826,6 +826,11 @@ class CardManager extends React.Component {
     var resourceResult = this.selectedResources()
       , searchFilteredResources = this.searchFilterResources(resourceResult.resources)
       , userDeckNames = this.userDeckNames()
+      , libDeckName = (
+            this.props.library === 'user' ?
+            'User library: ' :
+            'Public library: '
+          ) + this.props.selectedDeck.name;
       ;
 
     return (
@@ -896,7 +901,6 @@ class CardManager extends React.Component {
           onRequestClose={this.closeModal}
           handleSubmit={this.makeDeckPdf}
         />
-        <img src={iguanaBanner} className={layoutStyles.banner} />
         <LeftRail
           library={this.props.library}
           handleToggleLibrary={this.toggleLibrary}
@@ -908,6 +912,17 @@ class CardManager extends React.Component {
           unassignedCardsDeck={this.props.unassignedCardsDeck}
         />
         <div className={styles.lResources}>
+          <div className={styles.toolbar}>
+            <h3>{libDeckName}</h3>
+            <div 
+              className={styles.libToggle}
+              onClick={this.toggleLibrary}
+            >
+              <i className='fa fa-exchange'></i>
+              {' Switch to ' + (this.props.library === 'user' ? 'public' : 'user') + ' library'}
+            </div>
+          </div>
+          {/*
           <div className={styles.lDeckMenu}>
             <div className={styles.lDeckMenuFlex}>
               <Menu
@@ -932,6 +947,8 @@ class CardManager extends React.Component {
               }
             </div>
           </div>
+          */}
+          {/*
           <div className={styles.searchContain}>
             <Search 
               handleChange={(val) => this.setState({ cardSearchVal: val})}
@@ -951,6 +968,7 @@ class CardManager extends React.Component {
               />
             </div>
           </div>
+          */}
           <UserResources
             resources={searchFilteredResources}
             resourceType={resourceResult.resourceType}

@@ -1,6 +1,7 @@
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
 
 const _poll = Symbol('poll');
+const pollIntervalMillis = 1000;
 
 class Poller {
   constructor() {
@@ -10,19 +11,18 @@ class Poller {
     this.timeout = null;
     this.onSuccess = null;
     this.onError = null;
-    this.onCancel = null;
   }
 
-  start = (url, onSuccess, onError, onCancel) => {
-    (this.inFlight) {
-      throw new TypeError('polling job already in flight');
+  start = (url, onSuccess, onError) => {
+    if (this.inFlight) {
+      throw new TypeError('polling job already running');
     }
 
     this.url = url;
     this.inFlight = true;
     this.onSuccess = onSuccess;
     this.onError = onError;
-    this.onCancel = onCancel;
+    this[_poll]();
   }
 
   cancel = () => {
@@ -38,7 +38,6 @@ class Poller {
       }
 
       this.inFlight = false;
-      onCancel();
     }
   }
 
@@ -51,15 +50,15 @@ class Poller {
 
       if (result.status === 'done') {
         that.inFlight = false;
-        cb(null, result);
+        that.onSuccess(result);
       } else if (result.status === 'running') {
-        that.timout = setTimeout(that[_poll], pollIntervalMillis);
+        that.timeout = setTimeout(that[_poll].bind(that), pollIntervalMillis);
       } else {
         that.inFlight = false;
-        cb(new TypeError('got an unrecognized status: ' + result.status));
+        that.onError(new TypeError('got an unrecognized status: ' + result.status));
       }
     });
   }
 }
 
-export default new Poller();
+export default Poller;

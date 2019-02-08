@@ -14,6 +14,7 @@ import CopyDeckLightbox from './copy-deck-lightbox'
 import DeckUrlLightbox from './deck-url-lightbox'
 import Search from './search'
 import {cardMakerUrl, deckUrl} from 'lib/card-maker/url-helper'
+import Poller from 'lib/card-maker/poller'
 import LeftRail from './manager-left-rail'
 import Menu from 'components/shared/menu'
 import DeckUpgradeNotice from './deck-upgrade-notice'
@@ -61,6 +62,7 @@ class CardManager extends React.Component {
   constructor(props) {
     super(props);
 
+    this.poller = new Poller();
     this.state = {
       speciesSearchDeckId: this.props.allCardsDeck.id,
       openModal: null,
@@ -69,8 +71,6 @@ class CardManager extends React.Component {
       showDescInput: false,
       deckDescVal: null,
       cardSearchVal: '',
-      cancelPolling: false,
-      pollingRequest: null
     }
   }
 
@@ -447,65 +447,45 @@ class CardManager extends React.Component {
     }
   }
 
-  clearPollingState = (cb) => {
-    this.setState({
-      pollingRequest: null,
-      cancelPolling: false
-    }, cb);
-  }
-
   makeDeckPdf = (cardBackId) => {
     const that = this;
-    that.clearPollingState(() => {
-      that.closeModal();
-
-      that.props.showLoadingOverlay(
-        I18n.t('react.card_maker.print_loading_msg'), 
-        () => {
-          this.cancelPolling();
-          console.log('cancel printing');
-        },
-        (closeFn) => {
-          $.ajax({
-            url: cardMakerUrl('deck_pdfs'),
-            data: JSON.stringify({
-              deckId: that.props.selectedDeck.id,
-              backId: cardBackId
-            }),
-            method: 'POST',
-            success: (result) => {
-              that.pollPdfJob(result.jobId, closeFn);
-            }
-          });
-        }
-      );
-    })
+    that.closeModal();
+    that.props.showLoadingOverlay(
+      I18n.t('react.card_maker.print_loading_msg'), 
+      () => {
+        this.cancelPolling();
+        console.log('cancel printing');
+      },
+      (closeFn) => {
+        $.ajax({
+          url: cardMakerUrl('deck_pdfs'),
+          data: JSON.stringify({
+            deckId: that.props.selectedDeck.id,
+            backId: cardBackId
+          }),
+          method: 'POST',
+          success: (result) => {
+            that.pollPdfJob(result.jobId, closeFn);
+          }
+        });
+      }
+    );
   }
 
   pollJob = (baseUrl, jobId, overlayCloseFn) => {
     const that = this;
 
-    Poller.poll(
+    that.poller.start(
       cardMakerUrl(baseUrl + '/' + jobId + '/status'),
-    $.getJSON(, (result) => {
-      if (result.status === 'done') {
-        if (!that.state.cancelPolling) {
-          overlayCloseFn();
-          window.open(cardMakerUrl(baseUrl + '/downloads/' + result.resultFileName));
-        }
-      } else if (result.status === 'running') {
-        if (!that.state.cancelPolling) {
-          setTimeout(() => {
-            that.pollJob(baseUrl, jobId, overlayCloseFn)
-          }, pollIntervalMillis)
-        }
-      } else {
-        if (!that.state.cancelPolling) {
-          overlayCloseFn();
-          alert(I18n.t('react.card_maker.unexpected_error_msg'));
-        }
+      (result) => {
+        overlayCloseFn();
+        window.open(cardMakerUrl(baseUrl + '/downloads/' + result.resultFileName));
+      },
+      () => {
+        overlayCloseFn();
+        alert(I18n.t('react.card_maker.unexpected_error_msg'));
       }
-    });
+    );
   }
 
   pollPdfJob = (id, overlayCloseFn) => {
@@ -691,42 +671,33 @@ class CardManager extends React.Component {
   }
 
   cancelPolling = () => {
-    if (this.state.pollingRequest) {
-      this.state.pollingRequest.abort();
-    }
-
-    this.setState({
-      cancelPolling: true,
-      pollingRequest: null
-    });
+    this.poller.cancel();
+    this.props.hideLoadingOverlay();
   }
 
   createDeckPngs = () => {
     const that = this;
-
-    that.clearPollingState(() => {
-      that.props.showLoadingOverlay(
-        I18n.t('react.card_maker.it_may_take_a_few_mins'),
-        () => {
-          // TODO: send cancel request
-          this.cancelPolling();
-          console.log('cancel png');
-        },
-        (closeFn) => {
-          $.ajax({
-            url: cardMakerUrl('deck_pngs'),
-            data: JSON.stringify({
-              deckId: that.props.selectedDeck.id
-            }),
-            method: 'POST',
-            success: (result) => {
-              that.pollJob('deck_pngs', result.jobId, closeFn);
-            },
-            error: closeFn
-          })
-        }
-      );
-    });
+    that.props.showLoadingOverlay(
+      I18n.t('react.card_maker.it_may_take_a_few_mins'),
+      () => {
+        // TODO: send cancel request
+        this.cancelPolling();
+        console.log('cancel png');
+      },
+      (closeFn) => {
+        $.ajax({
+          url: cardMakerUrl('deck_pngs'),
+          data: JSON.stringify({
+            deckId: that.props.selectedDeck.id
+          }),
+          method: 'POST',
+          success: (result) => {
+            that.pollJob('deck_pngs', result.jobId, closeFn);
+          },
+          error: closeFn
+        })
+      }
+    );
   }
 
   deckMenuItems = (resourceCount) => {

@@ -14,6 +14,8 @@ $hover-gray: #eee;
 
 $mobile-col-width: 270px;
 
+$item-shadow: -3px 3px 2px 0px rgba(156,156,156,0.47);
+
 
 h4 {
   font-size: 20px;
@@ -141,6 +143,11 @@ h4 {
   margin: 0 auto;   
 }
 
+.card-img {
+  border-radius: 7px;
+  box-shadow: $item-shadow;
+}
+
 .card-img, .card-desc {
   width: 182px;
 }
@@ -230,7 +237,7 @@ h4 {
 }
 
 .main-organizer-img {
-  box-shadow: -3px 3px 2px 0px rgba(156,156,156,0.47);
+  box-shadow: $item-shadow;
   display: block;
   margin: 0 auto;
   width: 138px;

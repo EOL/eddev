@@ -1,10 +1,10 @@
 %li.card
   - if local_assigns.include? :file_path
     = link_to file_path do
-      = image_tag "cards/card_types/#{image_file_name}", class: "card-img"
+      = image_tag "cards/#{image_file_name}", class: "card-img"
       .card-name= name
       %p.card-desc.text= desc
   - else
-    = image_tag "cards/card_types/#{image_file_name}", class: "card-img"
+    = image_tag "cards/#{image_file_name}", class: "card-img"
     .card-name= name
     %p.card-desc.text= desc

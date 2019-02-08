@@ -9,7 +9,7 @@
     %li.anchor-link.anchor-link-activities> 
       %a{href: "#Activities"}= t(".activities_header")
     %li.anchor-link.anchor-link-standards>
-      %a{href: "#Standards"}= t(".standards_header")
+      %a{href: "#Standards"}= t(".data_resources_header")
 .section
   %a#CardTypes.section-anchor
   %h3.section-head-cards.section-head-cards-types= t(".card_types_header")
@@ -46,10 +46,10 @@
   %p.text.text-p.text-p-cards= t(".research_tools_desc")
   %h4.trait-steps-hdr= t(".steps_header")
   %ul.trait-steps
-    = render "trait_step", file_name: "choose_species.png", text: "1. Choose a species"
-    = render "trait_step", file_name: "research.png", text: "2. Research species traits"
-    = render "trait_step", file_name: "create.png", text: "3. Create card in Card Maker"
-    = render "trait_step", file_name: "publish.png", text: "4. Publish/print card"
+    = render "trait_step", file_name: "choose_species.png", text: t(".steps.choose_species");
+    = render "trait_step", file_name: "research.png", text: t(".steps.research_traits")
+    = render "trait_step", file_name: "create.png", text: t(".steps.create_card")
+    = render "trait_step", file_name: "publish.png", text: t(".steps.publish_card")
 
   %h4.sub-head= t(".data_subheader")
   .section-organizers

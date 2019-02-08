@@ -286,10 +286,6 @@ h4 {
   }
 }
 
-.sub-head {
-  margin: 50px 0 40px 0;
-}
-
 .trait-steps-hdr {
   font-size: 14px;
 }
@@ -429,6 +425,7 @@ h4 {
   height: $height;
   font-size: 14px;
   line-height: $height;
+  margin: 50px 0 40px 0;
 }
 
 @media only screen and (min-width: 670px) {
@@ -464,6 +461,12 @@ h4 {
     padding: 16px 0 18px;
   }
 
+  .sub-head {
+    $height: 50px;
+    font-size: 16px;
+    height: $height;
+    line-height: $height;
+  }
 }
 
 @media only screen and (min-width: 900px) {

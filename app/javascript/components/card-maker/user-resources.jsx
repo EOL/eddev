@@ -9,22 +9,14 @@ import CardZoomLightbox from './card-zoom-lightbox'
 
 import styles from 'stylesheets/card_maker/card_manager'
 
-const resourcesPerRow = 4
-    , initRows = 3 
-    , minResources = resourcesPerRow * initRows
-    , resourceHeight = 213.3 // TODO: these REALLY shouldn't just be hard-coded.
-    , containerHeight = 600
-    , resourceMarginTop = 10
-    ;
+const numCardsLoading = 10; // Don't load more than this many card images at a given time
 
 class UserResources extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      containerScrollTop: null,
-      resources: this.buildResources(props),
-      resourceSliceIndex: 0,
-      zoomCardIndex: null
+      zoomCardIndex: null,
+      cardLoadIndex: numCardsLoading - 1
     };
   }
 
@@ -43,9 +35,8 @@ class UserResources extends React.Component {
 
     if (changed) {
       this.setState({
-        resources: this.buildResources(nextProps),
-        resourceSliceIndex: 0, 
-      }, this.updateResourceSliceIndex);
+        cardLoadIndex: numCardsLoading - 1
+      })
     }
   }
 
@@ -71,8 +62,8 @@ class UserResources extends React.Component {
     )];
   }
 
-  buildResources = (props) => {
-    let resources = props.editable ? 
+  buildResources = () => {
+    let resources = this.props.editable ? 
           [this.createBtnResource()] :
           []
       , placeholderKey = 0
@@ -84,22 +75,25 @@ class UserResources extends React.Component {
         <Card
           data={resource}
           key={resource.id}
-          handleDeckSelect={props.handleCardDeckSelect.bind(null, resource.id)}
-          handleEditClick={() => props.handleEditCard(resource.id)}
-          handleCopyClick={() => props.handleCopyCard(resource.id)}
-          handleDestroyClick={() => props.handleDestroyCard(resource.id)}
+          handleDeckSelect={this.props.handleCardDeckSelect.bind(null, resource.id)}
+          handleEditClick={() => this.props.handleEditCard(resource.id)}
+          handleCopyClick={() => this.props.handleCopyCard(resource.id)}
+          handleDestroyClick={() => this.props.handleDestroyCard(resource.id)}
           handleZoomClick={() => this.handleCardZoomClick(i)}
-          editable={props.editable}
+          editable={this.props.editable}
           showCopy={this.props.showCopyCard}
+          load={this.state.cardLoadIndex >= i}
+          onLoad={this.handleCardLoad}
         />
       )
     }
     
     resources = resources.concat(
-      props.resources.map(resourceMapFn)
+      this.props.resources.map(resourceMapFn)
     );
 
-    if (props.editable) {
+    /*
+    if (this.props.editable) {
       minPlaceholders = resourcesPerRow + 
         Math.min((resourcesPerRow - (resources.length % resourcesPerRow)), resourcesPerRow - 1);
 
@@ -107,6 +101,7 @@ class UserResources extends React.Component {
         resources.push(<ResourcePlaceholder key={placeholderKey++} />);
       }
     }
+    */
 
     return resources;
   }
@@ -121,23 +116,6 @@ class UserResources extends React.Component {
     this.setState({
       zoomCardIndex: null
     });
-  }
-
-  updateResourceSliceIndex = () => {
-    if (this.containerNode) {
-      let rows = Math.ceil(
-            ($(this.containerNode).scrollTop() + containerHeight) /
-            (resourceMarginTop + resourceHeight)
-          )
-        , sliceIndex = rows * resourcesPerRow
-        ;
-
-      if (sliceIndex > this.state.resourceSliceIndex) {
-        this.setState({
-          resourceSliceIndex: sliceIndex
-        });
-      }
-    }
   }
 
   handleContainerRef = (node) => {
@@ -166,6 +144,12 @@ class UserResources extends React.Component {
       this.state.zoomCardIndex > 0;
   }
 
+  handleCardLoad = () => {
+    this.setState((prevState, props) => ({
+      cardLoadIndex: prevState.cardLoadIndex + 1
+    }));
+  }
+
   render() {
     this.resourceCount = this.props.resources.length;
     
@@ -191,14 +175,11 @@ class UserResources extends React.Component {
           hasPrev={this.hasPrev()}
           handleRequestClose={this.handleCardZoomRequestClose}
         />
-        <AdjustsForScrollbarContainer
+        <div
           className={styles.resources}
-          itemsPerRow={resourcesPerRow}
-          handleScroll={this.updateResourceSliceIndex}
-          handleRef={this.handleContainerRef}
         >
-          {this.state.resources.slice(0, this.state.resourceSliceIndex)}
-        </AdjustsForScrollbarContainer>
+          {this.buildResources()}
+        </div>
       </div>
     );
   }

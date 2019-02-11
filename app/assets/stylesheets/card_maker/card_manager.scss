@@ -48,6 +48,7 @@ $resources-width: calc(100% - #{$left-rail-width});
 .lResources {
   display: inline-flex;
   flex-direction: column;
+  padding-top: $search-height;
   position: relative;
   vertical-align: top;
   width: $resources-width;
@@ -344,8 +345,7 @@ $resources-width: calc(100% - #{$left-rail-width});
   align-content: flex-start;
   display: flex;
   flex-flow: row wrap;
-  height: $resources-height;
-  overflow: auto;
+  justify-content: space-around;
   padding: 0 11px 11px 11px;
   text-align: center;
   width: 100%;

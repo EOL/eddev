@@ -1,7 +1,8 @@
 %ul.nav-menu.lang-menu.js-lang-menu{ :class => extra_class }
   %li.lang-item
     %span= t("language")
-    %i.fa.fa-caret-down.nav-menu-caret.nav-menu-caret-lang
+    %i.fa.fa-caret-down.nav-menu-caret.nav-menu-caret-lang.nav-menu-caret-down
+    %i.fa.fa-caret-up.nav-menu-caret.nav-menu-caret-lang.nav-menu-caret-up
   - I18n.available_locales.sort.each do |locale|
     %li.lang-item.lang-item-choice
       - if I18n.locale != locale

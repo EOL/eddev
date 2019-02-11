@@ -58,27 +58,60 @@ en:
       ne_urban: "Here are 26 species commonly found in New England urban habitats with information about biological and physical adaptations as well as energy sources"
       okaloosa_bio: "This 28 species deck is designed for classroom activities in classification, ecology, and adaptations. Visit the lesson plans page for activities that use these Species Cards and others"
     index:
-      all_decks: "All Decks"
-      cards_hdr: "Species Cards"
-      compare_and_learn_html: "Compare and learn facts and figures about organisms with EOL Species Cards. Students can collect cards or play games to learn about classification and adaptations. Decks have been made for specific locations, projects or taxonomic groups. View cards online or download to print. <a href='#%{how_to_use_id}'>See below</a> to find ideas for games and <a href='%{lesson_plans_path}'>lesson plan</a> activities using Species Cards. <a href='%{contact_url}'>Let us know</a> what kinds of species cards you'd like to see on EOL!"
-      example_species_card: "Example species card"
-      featured_decks: "Featured Decks"
-      have_a_great_idea_html: "Have a great idea for cards? <a href='%{contact_url}'>Share your experiences and feedback with us</a>!"
-      how_to:
-        build_food_chains: "Build Food Chains"
-        classify: "Classify Organisms"
-        create_a_creature_html: "See: <a href='%{lp_path}'>Create a Creature (Gr. 2-5): Create a species card for a new species adapted to survive in your community.</a>"
-        create_your_own: "Create Your Own Cards"
-        explore_adaptations: "Explore Adaptations"
-        explore_different_food: "Explore different food web roles: primary producers, consumers (herbivore, omnivore, carnivore, apex predator, scavenger), decomposers/detritivores. Have students read about energy sources on cards and from other sources, and use the information to build food chains, and overlapping food chains to build food webs."
-        food_chains_rummy_html: "See: <a href='%{lp_path}'>Food Chains Rummy (grades 2-5, 6-8, 9-12): Build food chains and webs with a deck of cards</a>"
-        go_adapt_html: "See: <a href='%{lp_path}'>Go Adapt (grades 2-5): collect sets of organisms with similar adaptations (flying, claws, etc.) in a Go Fish style game</a>"
-        print_our_blank: "Print out our blank cards template and have students or participants make their own cards from something they observe in the field or create their own creatures."
-        some_card_decks: "Some card decks contain information on physical and behavioral adaptations of animals, as well as information about adaptations for growth and development of plants and fungi."
-        sort_cards: "Sort cards into different groups based on characteristics. Cards are color-coded for fungi, plants, and major animal groups. Students can start at a high taxonomic level and separate cards by kingdom, phylum, etc. They can observe similarities and differences among species within a group (birds, mammals, flowering plants)."
-        thats_classified_html: "See: <a href='%{lp_path}'>That's Classified (grades 2-5): Collect 3-of-a-kind in this Go-Fish style classification game</a>"
-      how_to_use: "How to Use Species Cards"
-      species_card_key: "Species card key"
+      card_types_header: Card Types
+      tutorials_header: Tutorials
+      activities_header: Activities
+      data_resources_header: Data Resources
+      data_resources_organizers_header: Data Resources and Organizers
+      intro_header: EOL Biodiversity Card Resources
+      intro_text1: "Biodiversity cards are a fun way to share and learn about the traits or characteristics of organisms. Find out about their conservation status, where they live, how big they are, and how long they live. Use the cards in games, lessons or as field guides."
+      intro_text2: "Start by using EOL’s pre-made cards or copying cards to make your own decks. Cards can also be copied and customized or make your own! Information about card types, tutorials on how to make cards and resources to keep your trait data in order are all listed below. Have fun!"
+      card_types_text: "There are different card types available. You will find them in all public decks and you can customize and add any of these cards to your own decks."
+      trait_name: Trait
+      title_name: Title
+      project_name: Project
+      vocabulary_name: Vocabulary
+      key_name: Key
+      trait_desc: "Share an image and trait information about a species or taxon group"
+      title_desc: "Customize decks with descriptive title cards"
+      project_desc: "Add information about the deck and your project or organization"
+      vocabulary_desc: "Include definitions for words found on Biodiversity Cards"
+      key_desc: "Helps interpret information on Biodiversity Cards"
+      tutorials_text: "These short tutorials will give you an overview of the EOL Card Maker and how to make your own Biodiversity Cards."
+      intro_tutorial_title: An Introduction to EOL Biodiversity Cards
+      how_to_make_tutorial_title: How to Make EOL Biodiversity Cards
+      intro_tutorial_desc: "This tutorial is an introduction to EOL Biodiversity Cards"
+      how_to_make_tutorial_desc: "View this short tutorial to learn how to make, edit and manage your own cards and decks"
+      activities_text: "The following lesson plans use pre-made EOL Biodiversity Cards. They are examples of how to incorporate cards into your learning activities. The possibilities are endless!"
+      food_chains_rummy_html: "<em>Food Chains Rummy</em> (grades 2-5, 6-8, 9-12): Build food chains and webs with a deck of cards"
+      thats_classified_html: "<em>That's Classified</em> (grades 2-5): Collect 3-of-a-kind in this Go Fish style classification game"
+      go_adapt_html: "<em>Go Adapt</em> (grades 2-5): collect sets of organisms with similar adaptations (flying, claws, etc.) in a Go Fish style game"
+      create_a_creature_html: "<em>Create a Creature</em> (grades 2-5): Create a species card for a new species adapted to survive in your community"
+      lesson_plans: Lesson Plans
+      blank_cards_pdf: Blank Cards PDF
+      food_chain_template: Food Chain Template
+      trophic_food_pyramid: Trophic Food Pyramid
+      research_tools_desc: "Making cards requires researching trait information for your organisms of interest. In this section you will find good trait data resources and data organizers to keep data and references in a format easy to transfer into your EOL Biodiversity Cards."
+      intro_organizer_title: Introduction to Trait Data Resources and Organizers (PDF)
+      intro_organizer: "This overview provides examples and resources to make cards and decks."
+      steps_header: "Create a Trait Card in four easy steps:"
+      data_subheader: "Trait Data Resources and Organizers"
+      blank_desc: "Make your own cards with drawings. Print these blank cards and let your students get creative!"
+      food_chain_desc: "Print out this template, a deck of cards and have students use their knowledge to make food chains."
+      trophic_desc: "Print out the Trophic Pyramid template, a deck of cards and have students explain their selections."
+      lesson_plans_intro_html: "Most EOL <a href='%{lesson_plans_path}'>Lesson Plans</a> can incorporate Biodiversity Cards. Here are a few examples:"
+      steps:
+        choose_species: "1. Choose a species"
+        research_traits: "2. Research traits"
+        create_card: "3. Create card in Card Maker"
+        publish_card: "4. Publish/print card"
+    organizer:
+      example_cards: "Example Cards (PDF)"
+      research: "Card Research Organizer (Word Doc)"
+      resources: "Resources for Trait Research (Excel)"
+      biodiversity: "Biodiversity Vocabulary (Word Doc)"
+      data: "Data Collection Template (Excel)"
+      data_advanced: "Advanced Data Collection Template (Excel)"
   forgot_password_mailer:
     forgot_password_email:
       body_html: "Hi, %{user_name}. Please click the following link to change your password: <a href=\"%{url}\">%{url}</a>"
@@ -527,8 +560,25 @@ en:
     image_credits:
       credit_html: "<span class='%{title_class}'>%{title}</span> by %{author} via <a href='%{url}'>%{source}</a> %{license}"
       credit_nolink_html: "<span class='%{title_class}'>%{title}</span> by %{author} via %{source} %{license}"
+      credit_nosource_html: "<span class='%{title_class}'>%{title}</span> by %{author} %{license}"
       eol_promotes_html: "EOL promotes content sharing via Creative Commons and other open licenses. Learn more about <a href='http://eol.org/info/eol_licensing_policy'>EOL's Licensing Policy</a>."
       header: "Image Credits"
+    nav_items:
+      biodiversity_cards: "Biodiversity Cards"
+      card_maker: "Card Maker"
+      card_resources: "Card Resources"
+      lesson_plans: "Lesson Plans"
+      grades_2_5: "Grades 2–5"
+      grades_6_8: "Grades 6–8"
+      grades_9_12: "Grades 9–12"
+      podcasts: "Podcasts"
+      google_earth_tours: "Google Earth Tours"
+      biodiversity_articles: "Biodiversity Articles"
+      partner_resources: "Partner Resources"
+      inaturalist_html: "iNaturalist Observation Platform <i class='fa fa-external-link'></i>"
+      bhl_coloring_html: "Biodiversity Heritage Library Coloring Books <i class='fa fa-external-link'></i>"
+      cnc_html: "City Nature Challenge <i class='fa fa-external-link'></i>"
+      overview: "Overview"
   signup_confirmation_mailer:
     confirmation_email:
       body_html: "Hi, %{user_name}, thank you for signing up for the EOL L&amp;E site. Please click the following link to confirm your registration: <a href=\"%{url}\">%{url}</a>"
@@ -581,7 +631,7 @@ en:
         signup_failure_msg: "Please correct the above errors and try again."
         signup_success_msg: "Please check your email for instructions on how to activate your account."
         username_label: "Username"
-      eol_is_an_open_science_html: "The Encyclopedia of Life (EOL) is an <a href='https://en.wikipedia.org/wiki/Open_science'>open science project</a> that pulls together information from <a href='http://eol.org/info/partners'>over 350 partners</a> about the world’s living nature - or <a href='http://eol.org/info/about_biodiversity'>biodiversity</a> - including all plants, animals and microorganisms that have <a href='http://eol.org/info/naming_species'>scientific names</a>. All of the text, images, videos and data on EOL are served under open licenses and are free to be reused and repurposed with <a href='http://eol.org/info/copyright_and_linking#using_content'>attribution</a>."
+      eol_is_an_open_science_html: "The Encyclopedia of Life (EOL) is an <a href='https://en.wikipedia.org/wiki/Open_science'>open science project</a> that pulls together information from over 350 partners about the world’s living nature - or <a href='http://eol.org/info/about_biodiversity'>biodiversity</a> - including all plants, animals and microorganisms that have <a href='http://eol.org/info/naming_species'>scientific names</a>. All of the text, images, videos and data on EOL are served under open licenses and are free to be reused and repurposed with <a href='http://eol.org/info/copyright_and_linking#using_content'>attribution</a>."
       if_you_are_interested_in_collaborating_html: "If you are interested in collaborating or have ideas for how we can improve our materials, please <a href='%{contact_url}'>contact us</a>."
       le_is_located_html: "EOL <a href='%{eol_groups_url}'>working groups and partners</a> are found all over the world. The Learning + Education group is located at the <a href='%{mcz_url}'>Harvard Museum of Comparative Zoology</a> in Cambridge, Massachusetts, USA."
       meet_the_team: "Meet the Team"
@@ -611,77 +661,36 @@ en:
     edit_mode_off: "Edit mode off"
     edit_mode_on: "Edit mode on"
     index:
-      sections:
-        eol_resources_desc: "EOL has been the main website for the organization since we launched in 2008 so that's why we have so many of our resources over there. Stay tuned for some changes."
-        eol_resources_title: "EOL.org Resources"
-        l_and_e_resources_desc: "EOL L+E tools and resources are found on this website and EOL. We're working ot make the connection between the sites more seamless. At the moment, here is what you can find on this website."
-        l_and_e_resources_title: "EOL Learning + Education Resources"
-        partner_resources_desc: "EOL and EOL L+E work closely with many open science and open education partners to extend the possibilities for learning about biodiversity. Here are two that we find enormously useful and enjoyable."
-        partner_resources_title: "Partner Resources"
-      slides:
-        descriptions:
-          bioblitz_deck: "Developed for the 2016 National Park BioBlitz, this deck contains information for common groups of animals"
-          card_maker: "Make your own biodiversity cards or view, download and print cards or decks from EOL's Card Library"
-          flowering_plants: "Check out EOL's introductory article with links to other resources to learn about flowering plants"
-          food_chain_rummy: "Explore this middle school classroom activity addressing US Next Generation Science Standards (NGSS) benchmarks"
-          go_adapt: "Explore this elementary school classroom behavioral adaptations activity aligned to Next Generation Science Standards (NGSS) benchmarks"
-          right_whale: "This 6-minute podcast on animal communication has lesson plans, transcripts, and scientist interviews, too"
-          sea_monsters: "Play this Memory Game to meet some incredible sea creatures"
-          sea_slugs: "This 6-minute podcast on classification has lesson plans, transcripts and scientist interviews"
-          trees_na: "Play this memory game to learn about some common trees found in North America"
-          what_is_amph: "Check-out EOL’s introductory article with links to other resources to learn about amphibians"
-        subtitles:
-          bioblitz_deck: "BioBlitz Deck"
-          card_maker: "Card Maker"
-          flowering_plants: "Flowering Plants"
-          food_chain_rummy: "Energy Flow and Food Chain Rummy"
-          food_chain_rummy: "Energy Flow and Food Chain Rummy"
-          go_adapt: "Go Adapt!"
-          right_whale: "The Right Whale"
-          sea_monsters: "Beautiful Sea Monsters"
-          sea_slugs: "Sea Slugs"
-          trees_na: "Trees of North America"
-          what_is_amph: "What is an Amphibian"
-        titles:
-          biodiv_article: "Biodiversity Article"
-          lesson_plan: "Lesson Plan"
-          memory_game: "Memory Game"
-          new: "NEW!"
-          podcast: "Podcast"
-          species_cards: "Species Cards"
-      welcome_box:
-        l_and_e_is_part_html: "<a href='/about'>The Encyclopedia of Life Learning + Education team</a> (EOL L+E) is part of the larger EOL collaborative. EOL L+E works with educators, citizen scientists and partners to make this information accessible through free tools, services and resources found here."
-        our_website_transition_html: "Our website is in transition. At the moment, several of our resources are found on <a href='http://www.eol.org/'>EOL</a> or partner websites. Thank you for your patience and we look forward to <a href='http://eol.org/contact_us?subject=learning'>hearing from you</a> if you have questions or feedback."
-        welcome_to_l_and_e: "Welcome to Learning + Education at the Encyclopedia of Life"
-    nav_item:
-      desc:
-        biodiv_articles: "These articles introduce specific topics and provide links to EOL resources to dig deeper."
-        biodiv_cards: "Biodiversity Cards provide a quick overview of traits for a species or higher taxonomic rank (like genus or family). Print them for use in classrooms or for collecting."
-        card_maker: "Make EOL biodiversity cards as a classroom project or download and print pre-made cards. Great for teaching about ecosystems and food webs."
-        cnc: "Use the City Nature Challenge Education Activities in your classroom."
-        coloring_books: "The Biodiversity Heritage Library (BHL) provides the foundational literature to EOL, including original descriptions and beautiful illustrations."
-        eol_places: "Visit Places to learn about environments and the species that live there. Explore biodiversity through food webs, species cards, statistics, lessons and more."
-        featured_collections: "Explore Collections to find out about topics in biodiversity. You can also learn how to make your own Collections."
-        google_tours: "Google Earth Tours add a significant geographic context to these biodiversity stories."
-        hi_res_images: "EOL has many stunning high resolution images that can be reused and repurposed with attribution. Look, use and enjoy!"
-        inaturalist: "iNaturalist is an open science, biodiversity observation platform. Their research-grade images flow back into EOL."
-        lesson_plans: "Bring EOL into your classroom with our lesson plans. Aligned to NGSS standards, they also pull in content and resources from EOL."
-        memory_games: "Use this classic memory game as a warm-up activity for your students, or just play it yourself!"
-        podcasts: "These 5-minute podcasts are great for the classroom to support science learning. Lesson plans, transcripts and scientist interviews included."
-      title:
-        biodiv_articles: "Biodiversity Articles"
-        biodiv_cards: "Biodiversity Cards"
-        card_maker: "Card Maker"
-        cnc: "City Nature Challenge"
-        coloring_books: "BHL Coloring Books"
-        eol_places: "EOL Places"
-        featured_collections: "Featured Collections"
-        google_tours: "Google Earth Tours"
-        hi_res_images: "High Resolution Images"
-        inaturalist: "iNaturalist Observation Platform"
-        lesson_plans: "Lesson Plans"
-        memory_games: "Memory Games"
-        podcasts: "Podcasts"
+      intro_header: Welcome to EOL Learning + Education
+      intro_text_html: "<a href='/about'>The Encyclopedia of Life Learning + Education team</a> (EOL L+E) is part of the larger EOL collaborative. EOL L+E works with educators, citizen scientists and partners to make this information accessible through free tools, services and resources found here."
+      partner_resources: Partner Resources
+    partner_section:
+      headers:
+        bhl_html: "Biodiversity<br />Heritage Library"
+        cnc_html: "City Nature<br />Challenge"
+        inat_html: iNaturalist
+      descs:
+        bhl_html: "The <a href='https://www.biodiversitylibrary.org/'>Biodiversity Heritage Library <i class='fa fa-external-link'></i></a> (BHL) provides the foundational literature to EOL, including original descriptions and <a href='https://drive.google.com/file/d/0B00hDkSQMhfDMXdIVng0NGd0WlU/view'>a beautiful coloring book <i class='fa fa-external-link'></i></a>."
+        cnc_html: "Use the <a href='http://citynaturechallenge.org/education-toolkit/'>City Nature Challenge <i class='fa fa-external-link'></i></a> activities in your classroom."
+        inat_html: "<a href='https://www.inaturalist.org'>iNaturalist <i class='fa fa-external-link'></i></a> is an open science, biodiversity observation platform. Their research-grade images flow back into EOL."
+    section:
+      headers:
+        cards_html: Biodiversity Cards
+        lessons_html: Lesson Plans
+        tourspods_html: "Podcasts and Google Earth Tours"
+      descs:
+        cards_html: "Make <a href='%{card_maker_path}'>EOL Biodiversity Cards</a> as a classroom project or download and print pre-made cards. Great for teaching about ecosystems and food webs. View our <a href='%{cards_path}'>Card Resources</a> for more!"
+        lessons_html: "Bring EOL into your classroom with our <a href='%{lesson_plans_path}'>lesson plans</a>. Aligned to NGSS standards, they also pull in content and resources from EOL."
+        tourspods_html: "Our five-minute <a href='%{podcasts_path}'>podcasts</a> are great for the classroom. They include Lesson Plans, transcripts, and scientist interviews.<br /><a href='%{earth_tours_path}'>Google Earth Tours</a> add a significant geographic context to these biodiversity stories."
+      taxa:
+        prevosts_squirrel_html: "Prevost's squirrel <em>Callosciurus prevostii</em>"
+        nasturtium_html: "Nasturtium <em>Tropaeolum majus</em>"
+        violet_woodnymph_html: "Violet-crowned woodnymph <em>Thalurania colombica</em>"
+      eol_taxon_page: EOL Taxon Page
+      buttons:
+        lesson1: Grades 2-5
+        lesson2: Grades 6-8
+        lesson3: Grades 9-12
     publish_confirm: "Are you sure you want to publish this draft? It will immediately replace the current public version of this page."
     publish_label: "Publish draft"
     save_error: "Oops, something went wrong! Please try again later."

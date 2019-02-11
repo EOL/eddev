@@ -6,7 +6,7 @@ class LessonPlan < ApplicationRecord
   validates_presence_of :objective_keys
   validates_presence_of :desc_key
   validates_presence_of :grade_level
-  validates_uniqueness_of :human_name, :scope => :grade_level_id, :allow_nil => true
+  validates_uniqueness_of :human_name, :allow_nil => true
   validate :file_name_or_external_url_present_not_both
   belongs_to :theme, :class_name => "LessonPlanTheme"
   belongs_to :grade_level, :class_name => "LessonPlanGradeLevel"

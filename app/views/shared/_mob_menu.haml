@@ -1,3 +1,4 @@
 .js-slide-menu.slide-menu
   = render :partial => "shared/user_links", :locals => { :top_class => "user-links-slide" }
   = render :partial => "shared/lang_select", :locals => { :extra_class => "lang-menu-slide" }
+  = render "shared/nav_items", menu_class: "nav-lnks-mob", item_class: "nav-lnk-mob", sub_menu_base_class: "nav-lnk-menu-mob", down_arrows: false

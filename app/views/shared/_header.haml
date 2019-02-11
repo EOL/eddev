@@ -1,5 +1,5 @@
 .navbar-outer.js-navbar.js-fixed
-  .navbar<
+  .navbar.navbar-top<
     .navbar-inner
       .l-abs-l
         .nav-menu.nav-menu-eol
@@ -17,19 +17,8 @@
           = render :partial => "shared/user_links", :locals => { :top_class => "user-links-nav" }
           .nav-user-menu-toggle.js-slide-menu-toggle
             %i.fa.fa-bars.fa-lg
-          %ul.nav-user-menu.is-hidden.js-nav-user-menu
-            %li.nav-user-menu-lang.js-nav-user-menu-lang
-              %span= t("language")
-              %i.fa.fa-caret-down
-              %i.fa.fa-caret-up
-            = render :partial => "shared/lang_select", :locals => { :extra_class => "nav-user-menu-lang-menu" }
-            -if logged_in_user
-              %li
-                = link_to(logged_in_user.user_name, account_path)
-              %li
-                = link_to(t("shared.header.sign_out"), logout_path)
-            -else
-              %li
-                = link_to(t("shared.header.sign_in"), login_path)
       %h1#Title.title 
         = t ".main_title"
+  .navbar.navbar-bottom<
+    .navbar-inner
+      = render "shared/nav_items", menu_class: "nav-lnks", sub_menu_base_class: "nav-lnk-menu", item_class: "nav-lnk", down_arrows: true

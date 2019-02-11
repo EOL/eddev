@@ -1,0 +1,6 @@
+%li.partner-section
+  .partner-section-head
+    .partner-section-head-text= t(".headers.#{type}_html")
+    = image_tag "welcome/icon_#{type}.png", class: "partner-section-head-icon"
+  .partner-section-content{class: "partner-section-content-#{type}"}
+    .partner-section-desc= t(".descs.#{type}_html")

@@ -6,15 +6,20 @@ $main-col-width-px: $main-col-width * 1px;
 $main-col-padding: 12;
 $main-col-with-padding-width: $main-col-width + 2 * $main-col-padding;
 $main-col-padding-pct: percentage($main-col-padding / ($main-col-width + 2 * $main-col-padding));
-$topbar-height-px: 39;
-$topbar-height: $topbar-height-px / $em * 1em;
-$mobile-topbar-height: 61 / $em * 1em;
+$topbar-row-height: 39px;
+$topbar-height: $topbar-row-height * 2;
+$nav-mobile-width: 760px;
 
 $page-padding: 250;
 $page-width: ($page-padding * 2 + $main-col-width) / $em * 1em;
 $page-width-px: $page-padding * 2 + $main-col-width;
 
 $head-trans-width: 525;
+
+// Based on card resources page -- not final
+// This is obviously a very coarse way of doing responsive design, but it's where we're at right now.
+$tablet-width: 600px;
+$full-width: 800px;
 
 // Colors
 $white: #fff;
@@ -28,7 +33,6 @@ $section-border-gray: #979797;
 $section-title-gray: #3e3e3e;
 $section-intro-gray: #161616;
 $nav-overlay-gray: #333;
-$link-blue: #00ace8;
 $eol-blue: #379dff;
 $red: #f00;
 $txt-gray: #53666e;
@@ -36,6 +40,7 @@ $card-field-blue: #71baff;
 $navbar-gray: #f7f7f7;
 $nav-link-blue: #54a3ff;
 $nav-link-gray: #b3b3b3;
+$nav-green: #74a561;
 
 // Fonts
 $open-sans: 'Open Sans', sans-serif;
@@ -51,10 +56,9 @@ $light: 300;
 }
 
 @mixin standard-link {
-  color: $link-blue;
+  color: $eol-blue;
   cursor: pointer;
-  font-weight: $semibold;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 @mixin clearfix {

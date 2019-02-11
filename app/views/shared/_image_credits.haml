@@ -1,7 +1,7 @@
-#ImageCredits.image-credit-section
+#ImageCredits.image-credits-section
   %h2.image-credits-hdr= t ".header"
-  %p.image-credits-overview= t ".eol_promotes_html"
-  .image-credits
+  %p.image-credits-text.image-credits-overview= t ".eol_promotes_html"
+  .image-credits.image-credits-text
     -images.each do |image|
       .image-credit
         - if image.key?(:url)
@@ -11,9 +11,14 @@
             :source => image[:source],
             :url => image[:url],
             :license => image[:license]
-        - else
+        - elsif image.key?(:source)
           = t ".credit_nolink_html", :title => image[:title],
             :title_class => "image-title",
             :author => image[:author],
             :source => image[:source],
+            :license => image[:license]
+        - else
+          = t ".credit_nosource_html", :title => image[:title],
+            :title_class => "image-title",
+            :author => image[:author],
             :license => image[:license]

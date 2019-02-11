@@ -119,7 +119,7 @@ em {
 .ctrlBarOuterFixed {
   position: fixed;
   left: 0;
-  top: $topbar-height-px * 1px;
+  top: $topbar-height;
 }
 
 .ctrlBar {
@@ -179,11 +179,11 @@ em {
 
 .catGrpsSideFix {
   position: fixed;
-  top: $ctrl-bar-height + $topbar-height-px * 1px;
+  top: $ctrl-bar-height + $topbar-height;
 }
 
 .catGrpsSideFixTwoBars {
-  top: $ctrl-bar-height * 2 + $topbar-height-px * 1px;
+  top: $ctrl-bar-height * 2 + $topbar-height;
 }
 
 .catGrpsSideAbs {
@@ -274,7 +274,7 @@ em {
 .barsFix {
   position: fixed;
   left: 0;
-  top: $topbar-height-px * 1px;
+  top: $topbar-height;
 }
 
 .barsAbs {
@@ -292,7 +292,7 @@ em {
 
 .catBarOuterFixed {
   position: fixed;
-  top: $topbar-height-px * 1px + $ctrl-bar-height;
+  top: $topbar-height + $ctrl-bar-height;
 } 
 
 .catBar {
@@ -450,3 +450,20 @@ em {
   }
 }
 
+@media screen and (max-width: $nav-mobile-width) {
+  .barsFix {
+    top: $topbar-row-height;
+  }
+
+  .ctrlBarOuterFixed {
+    top: $topbar-row-height;
+  }
+
+  .catGrpsSideFix {
+    top: $ctrl-bar-height + $topbar-row-height;
+  }
+
+  .catGrpsSideFixTwoBars {
+    top: $ctrl-bar-height * 2 + $topbar-row-height;
+  }
+}

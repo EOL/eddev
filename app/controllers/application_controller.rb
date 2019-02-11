@@ -89,6 +89,10 @@ class ApplicationController < ActionController::Base
     end
     helper_method :main_nopad_bot?
 
+    def nohero
+      @nohero = true
+    end
+
   private
     def set_locale
       I18n.locale = params[:locale] || I18n.default_locale

@@ -42,7 +42,7 @@
       ;
 
     $toggle.click(slideMenuOpen);
-
+    $(window).on('hashchange', slideMenuClose);
     $(window).resize(function() {
       if ($(window).width() > navMobileWidth) {
         var $fixed = fixedElmtsForSlideMenu();
@@ -70,10 +70,14 @@
             , closeFn = function() {
                 $that.removeClass('is-lang-menu-open');
                 $(document).off('click', closeFn);
+                $that.off('click', closeFn);
+                $that.click(openFn);
               }
 
           e.stopPropagation();
           $that.addClass('is-lang-menu-open');
+          $that.off('click', openFn);
+          $that.click(closeFn);
           $(document).click(closeFn);
         }
       ;

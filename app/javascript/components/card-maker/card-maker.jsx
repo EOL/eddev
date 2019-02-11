@@ -122,6 +122,7 @@ class CardMaker extends React.Component {
       screen: 'manager',
       sort: sorts[publicSorts[0].key],
       showLoadingOverlay: false,
+      loadingOverlayOnCancel: false,
       userRole: null
     }
   }
@@ -135,7 +136,7 @@ class CardMaker extends React.Component {
       that.handleHistoryStateChange(event.state);
     });
 
-    that.showLoadingOverlay(null, (closeFn) => {
+    that.showLoadingOverlay(null, null, (closeFn) => {
       $.getJSON('/user_sessions/user_info', (userInfo) => {
         that.setState({
           userRole: userInfo.role
@@ -422,22 +423,29 @@ class CardMaker extends React.Component {
     return component;
   }
 
-  showLoadingOverlay = (text, cb) => {
+  showLoadingOverlay = (text, onCancel, cb) => {
     const that = this;
 
     this.setState({
       showLoadingOverlay: true,
-      loadingOverlayText: text
+      loadingOverlayText: text,
+      loadingOverlayOnCancel: onCancel
     }, () => {
       cb(this.hideLoadingOverlay);
     });
   }
 
-  hideLoadingOverlay = () => {
+  cancelLoadingOverlay = () => {
+    const loadingOverlayOnCancel = this.state.loadingOverlayOnCancel;
+    this.hideLoadingOverlay(loadingOverlayOnCancel);
+  }
+
+  hideLoadingOverlay = (cb) => {
     this.setState({
       showLoadingOverlay: false,
-      loadingOverlayText: null
-    });
+      loadingOverlayText: null,
+      loadingOverlayOnCancel: null
+    }, cb);
   }
 
   render() {
@@ -455,6 +463,12 @@ class CardMaker extends React.Component {
           {
             this.state.loadingOverlayText &&
             <div>{this.state.loadingOverlayText}</div>
+          }
+          {
+            this.state.loadingOverlayOnCancel != null &&
+            <button 
+              onClick={this.cancelLoadingOverlay}
+            >{I18n.t('react.card_maker.cancel')}</button>
           }
         </ReactModal>
 

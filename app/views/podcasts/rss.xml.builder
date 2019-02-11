@@ -20,6 +20,7 @@ xml.rss("xmlns:itunes": "http://www.itunes.com/dtds/podcast-1.0.dtd", "xmlns:con
       xml.tag!("itunes:name", "EOL Learning + Education Group")
     end
     xml.language("en")
+    xml.tag!("itunes:image", href: root_url + "images/podcasts/podcasts_logo_hi_res.png")
     xml.link(podcasts_url)
 
     @podcasts.each do |podcast|

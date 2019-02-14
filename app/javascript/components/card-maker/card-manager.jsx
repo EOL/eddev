@@ -21,6 +21,7 @@ import DeckUpgradeNotice from './deck-upgrade-notice'
 import DialogBox from 'components/shared/dialog-box'
 import DeckDesc from './deck-desc'
 import PrintLightbox from './print-lightbox'
+import Toolbar from './toolbar'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
 import eolHdrIcon from 'images/card_maker/icons/eol_logo_sub_hdr.png'
@@ -917,16 +918,28 @@ class CardManager extends React.Component {
           unassignedCardsDeck={this.props.unassignedCardsDeck}
         />
         <div className={styles.lResources}>
-          <div className={styles.toolbar}>
-            <h3>{libDeckName}</h3>
-            <div 
-              className={styles.libToggle}
-              onClick={this.toggleLibrary}
-            >
-              <i className='fa fa-exchange'></i>
-              {' Switch to ' + (this.props.library === 'user' ? 'public' : 'user') + ' library'}
-            </div>
-          </div>
+          <Toolbar 
+            libDeckName={libDeckName}
+            onRequestToggleLibrary={this.toggleLibrary}
+            library={this.props.library}
+            actions={[
+              {
+                icon: 'copy',
+                text: 'copy',
+                onClick: () => this.openModal(modals.copyDeck)
+              },
+              {
+                icon: 'print',
+                text: 'print',
+                onClick: () => this.openModal(modals.print)
+              },
+              {
+                icon: 'download',
+                text: 'download PNGs',
+                onClick: this.createDeckPngs
+              }
+            ]}
+          />
           {/*
           <div className={styles.lDeckMenu}>
             <div className={styles.lDeckMenuFlex}>

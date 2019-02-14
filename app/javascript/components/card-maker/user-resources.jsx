@@ -9,15 +9,27 @@ import CardZoomLightbox from './card-zoom-lightbox'
 
 import styles from 'stylesheets/card_maker/card_manager'
 
-const numCardsLoading = 10; // Don't load more than this many card images at a given time
+const numCardsLoading = 10 // Don't load more than this many card images at a given time
+    , cardWidth = 160 // XXX: not great, but makes things a lot easier. Update when necessary.
+    , minSpaceBetweenCards = cardWidth / 10 // minimum px between cards (and between cards and the edge of the container)
+    ; 
 
 class UserResources extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       zoomCardIndex: null,
-      cardLoadIndex: numCardsLoading - 1
+      cardLoadIndex: numCardsLoading - 1,
+      cardMargin: null
     };
+  }
+
+  componentDidMount() {
+    $(window).resize(this.computeCardMargin);
+  }
+
+  componentWillUnmount() {
+    $(window).off('resize', this.computeCardMargin);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -57,17 +69,21 @@ class UserResources extends React.Component {
       <CreateButtonResource
         createMsg={createMsg}
         handleCreate={handleCreate}
+        style={{marginTop: this.state.cardMargin, marginLeft: this.state.cardMargin}}
         key='0'
       />
     )];
   }
 
   buildResources = () => {
+    if (!this.state.cardMargin) {
+      return []
+    }
+
     let resources = this.props.editable ? 
           [this.createBtnResource()] :
           []
       , placeholderKey = 0
-      , minPlaceholders
       ;
 
     let resourceMapFn = (resource, i) => {
@@ -84,6 +100,7 @@ class UserResources extends React.Component {
           showCopy={this.props.showCopyCard}
           load={this.state.cardLoadIndex >= i}
           onLoad={this.handleCardLoad}
+          style={{ marginLeft: this.state.cardMargin, marginTop: this.state.cardMargin }}
         />
       )
     }
@@ -150,6 +167,26 @@ class UserResources extends React.Component {
     }));
   }
 
+  computeCardMargin = () => {
+    if (this.resourcesNode) {
+      let width = $(this.resourcesNode).width()
+        , cardsPerRow = Math.floor((width - minSpaceBetweenCards) / (cardWidth + minSpaceBetweenCards))
+        , cardMargin = (width - cardsPerRow * cardWidth) / (cardsPerRow + 1)
+        ;
+
+      this.setState({
+        cardMargin: cardMargin
+      });
+    }
+  }
+
+  resourcesRef = (node) => {
+    if (node) { 
+      this.resourcesNode = node; 
+      this.computeCardMargin();
+    }
+  }
+
   render() {
     this.resourceCount = this.props.resources.length;
     
@@ -177,6 +214,8 @@ class UserResources extends React.Component {
         />
         <div
           className={styles.resources}
+          ref={this.resourcesRef}
+          style={{paddingBottom: this.state.cardMargin}}
         >
           {this.buildResources()}
         </div>

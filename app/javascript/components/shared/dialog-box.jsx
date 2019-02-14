@@ -5,7 +5,7 @@ import styles from 'stylesheets/shared/lightbox'
 function DialogBox(props) {
   return (
     <ReactModal
-      parentSelector={() => { return document.getElementById('Page') } }
+      parentSelector={() => { return document.body } }
       overlayClassName={styles.overlay}
       className={styles.lightbox}
       bodyOpenClassName='noscroll'

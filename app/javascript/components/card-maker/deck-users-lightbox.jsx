@@ -116,7 +116,7 @@ class DeckUsersLightbox extends React.Component {
         onAfterOpen={this.handleAfterOpen}
         onRequestClose={this.handleRequestClose}
         contentLabel={I18n.t('react.card_maker.manage_deck_users')}
-        parentSelector={() => {return document.getElementById('Page')}}
+        parentSelector={() => {return document.body }}
         bodyOpenClassName='noscroll'
         className={[styles.lNewLightbox, styles.lNewLightboxDeckUsers].join(' ')}
         overlayClassName={`fixed-center-wrap disable-overlay`}

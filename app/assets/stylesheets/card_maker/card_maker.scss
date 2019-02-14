@@ -1,2 +1,18 @@
+@import "dimensions";
 
+.title {
+  background: #fff;
+  border-bottom: 1px solid #000;
+  height: $title-height;
+  line-height: $title-height;
+  position: fixed;
+  text-align: center;
+  top: 0;
+  width: 100%;
+}
+
+.cardMaker {
+  overflow: hidden;
+  padding-top: $title-height;
+}
 

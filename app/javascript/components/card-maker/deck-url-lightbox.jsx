@@ -18,7 +18,7 @@ class DeckUrlLightbox extends React.Component {
       <CloseButtonModal
         isOpen={this.props.isOpen}
         contentLabel='Deck URL'
-        parentSelector={() => { return document.getElementById('Page')}}
+        parentSelector={() => { return document.body}}
         className={styles.deckUrlLightbox}
         overlayClassName='fixed-center-wrap disable-overlay'
         bodyOpenClassName='noscroll'

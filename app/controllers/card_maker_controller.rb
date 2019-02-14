@@ -5,6 +5,7 @@ class CardMakerController < ApplicationController
   before_action :nohero
 
   def index
+    render layout: "head_only"
   end
 
   def set_js_translations

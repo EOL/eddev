@@ -1,5 +1,6 @@
 @import 'layout_vars';
 @import 'buttons';
+@import 'dimensions';
 
 // TODO: standardize font colors!!!
 $manager-height: 762px;
@@ -30,6 +31,9 @@ $species-search-pad-horiz: 30px;
 $species-search-card-width: 170px;
 $species-search-card-height: 232px;
 $species-search-input-height: 45px;
+$actions-height: 38px;
+$toolbar-row-height: 40px;
+$toolbar-height: $toolbar-row-height * 2;
 
 $card-aspect-ratio: .75;
 $resources-width: calc(100% - #{$left-rail-width});
@@ -37,10 +41,14 @@ $resources-width: calc(100% - #{$left-rail-width});
 /* STATES */
 
 /* LAYOUTS */
+body { // TODO: move
+  padding: 0; 
+  height: 100vh;
+}
+
 .lLeftRail {
   display: inline-block;
-  height: 100%;
-  position: relative;
+  height: calc(100vh - #{$title-height});
   vertical-align: top;
   width: $left-rail-width;
 }
@@ -48,7 +56,7 @@ $resources-width: calc(100% - #{$left-rail-width});
 .lResources {
   display: inline-flex;
   flex-direction: column;
-  padding-top: $search-height;
+  padding-top: $toolbar-height;
   position: relative;
   vertical-align: top;
   width: $resources-width;
@@ -209,7 +217,6 @@ $resources-width: calc(100% - #{$left-rail-width});
 .decks {
   background: $white;
   font-size: 12px;
-  height: $resources-height + $search-height;
   list-style: none;
   overflow: auto;
   padding: 17px 23px;
@@ -345,8 +352,8 @@ $resources-width: calc(100% - #{$left-rail-width});
   align-content: flex-start;
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-around;
-  padding: 0 11px 11px 11px;
+  height: calc(100vh - #{$toolbar-height + $title-height});
+  overflow: auto;
   text-align: center;
   width: 100%;
 }
@@ -361,7 +368,6 @@ $resources-width: calc(100% - #{$left-rail-width});
   display: inline-flex;
   height: $width / $card-aspect-ratio;
   justify-content: center;
-  margin-top: 10px;
   overflow: hidden;
   position: relative;
   width: $width;
@@ -1013,16 +1019,34 @@ $resources-width: calc(100% - #{$left-rail-width});
 
 .toolbar {
   background: $white;
-  height: $search-height;
-  max-width: calc(#{$max-width} - #{$left-rail-width});
+  height: $toolbar-row-height;
   position: fixed;
-  top: $topbar-height; // TODO: responsive (but who cares)
+  top: $title-height;
   width: $resources-width;
+  z-index: 2;
 
   & > h3 {
     font-weight: $semibold;
-    line-height: $search-height;
+    line-height: $toolbar-row-height;
     text-align: center;
+  }
+}
+
+.actions {
+  margin: 0 auto;
+  text-align: center;
+  top: $toolbar-row-height;
+  position: absolute;
+  width: 100%;
+
+  & > li {
+    background: $white;
+    border: 1px solid $black;
+    cursor: pointer;
+    display: inline-block;
+    height: $toolbar-row-height;
+    padding: 8px 16px;
+    margin: 0;
   }
 }
 
@@ -1030,12 +1054,14 @@ $resources-width: calc(100% - #{$left-rail-width});
   border: 1px solid $black;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 14px;
   right: 5px;
-  top: 10px;
-  padding: 5px 20px;
+  top: 5px;
+  padding: 3px 20px;
   position: absolute;
 
   &:hover {
     background-color: $hover-gray;
   }
 }
+

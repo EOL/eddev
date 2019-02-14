@@ -7,7 +7,7 @@ function LightboxOverlay(props) {
     <CloseButtonModal
       isOpen={true}
       contentLabel={props.contentLabel}
-      parentSelector={() => {return document.getElementById('Page')}}
+      parentSelector={() => {return document.body}}
       overlayClassName={styles.overlay}
       className={styles.lightbox}
       bodyOpenClassName='noscroll'

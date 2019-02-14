@@ -47,7 +47,7 @@ class PrintLightbox extends React.Component {
         isOpen={this.props.isOpen}
         contentLabel={'print options'}
         className={[styles.lNewLightbox, styles.cardBackLightbox].join(' ')}
-        parentSelector={() => {return document.getElementById('Page')}}
+        parentSelector={() => {return document.body}}
         overlayClassName='fixed-center-wrap disable-overlay'
         bodyOpenClassName='noscroll'
         onRequestClose={this.props.onRequestClose}

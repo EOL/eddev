@@ -9,6 +9,8 @@ import newImmutableCardInstance from 'lib/card-maker/immutable-card'
 
 import eolLogoHdr from 'images/card_maker/icons/eol_logo_hdr.png'
 
+import styles from 'stylesheets/card_maker/card_maker'
+
 function ascSort(field) {
   return function(a, b) {
     if (a.templateName !== 'trait' && b.templateName === 'trait') {
@@ -453,7 +455,7 @@ class CardMaker extends React.Component {
       <div className='card-maker'>
         <ReactModal
           isOpen={this.state.showLoadingOverlay}
-          parentSelector={() => {return document.getElementById('Page')}}
+          parentSelector={() => {return document.body}}
           contentLabel='Loading spinner'
           className='global-loading lightbox'
           overlayClassName='fixed-center-wrap disable-overlay'
@@ -472,7 +474,12 @@ class CardMaker extends React.Component {
           }
         </ReactModal>
 
-        <Page noMainCol={true}>{this.screenComponent()}</Page>
+        <Page className={styles.page} noMainCol={true}>
+          <h1 className={styles.title}>EOL Card Maker (logo goes here)</h1>
+          <div className={styles.cardMaker}>
+            {this.screenComponent()}
+          </div>
+        </Page>
       </div>
     )
   }

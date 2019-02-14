@@ -61,7 +61,7 @@ class ResourceLightbox extends React.Component {
       <CloseButtonModal
         isOpen={this.props.isOpen}
         contentLabel={this.props.contentLabel}
-        parentSelector={() => {return document.getElementById('Page')}}
+        parentSelector={() => {return document.body}}
         overlayClassName='fixed-center-wrap disable-overlay'
         className={styles.lNewLightbox}
         bodyOpenClassName='noscroll'

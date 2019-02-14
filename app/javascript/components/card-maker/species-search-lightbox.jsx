@@ -181,7 +181,7 @@ class SpeciesSearchLightbox extends React.Component {
       <CloseButtonModal
         isOpen={this.props.isOpen}
         contentLabel={I18n.t('react.card_maker.species_search')}
-        parentSelector={() => {return document.getElementById('Page')}}
+        parentSelector={() => {return document.body}}
         overlayClassName='fixed-center-wrap disable-overlay'
         className={[styles.lNewLightbox, styles.lNewLightboxNewCard].join(' ')}
         bodyOpenClassName='noscroll'

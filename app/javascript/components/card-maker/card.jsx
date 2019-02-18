@@ -46,7 +46,11 @@ class Card extends React.Component {
 
     return (
       <div>
-        <LoadingSpinnerImage src={loResCardImageUrl(this.props.data)} />
+        <LoadingSpinnerImage 
+          src={loResCardImageUrl(this.props.data)} 
+          load={this.props.loadImage}
+          onLoad={this.props.onImageLoad}
+        />
         {this.props.showOverlay &&
           <div className={overlayStyles.join(' ')}>
             {

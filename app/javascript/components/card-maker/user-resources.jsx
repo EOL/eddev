@@ -15,6 +15,7 @@ const resourcesPerRow = 4
     , resourceHeight = 213.3 // TODO: these REALLY shouldn't just be hard-coded.
     , containerHeight = 600
     , resourceMarginTop = 10
+    , numImagesLoading = 3 // load this many images concurrently
     ;
 
 class UserResources extends React.Component {
@@ -22,8 +23,8 @@ class UserResources extends React.Component {
     super(props);
     this.state = {
       containerScrollTop: null,
-      resources: this.buildResources(props),
       resourceSliceIndex: 0,
+      imageLoadIndex: numImagesLoading - 1,
       zoomCardIndex: null
     };
   }
@@ -43,8 +44,8 @@ class UserResources extends React.Component {
 
     if (changed) {
       this.setState({
-        resources: this.buildResources(nextProps),
         resourceSliceIndex: 0, 
+        imageLoadIndex: numImagesLoading - 1
       }, this.updateResourceSliceIndex);
     }
   }
@@ -71,8 +72,8 @@ class UserResources extends React.Component {
     )];
   }
 
-  buildResources = (props) => {
-    let resources = props.editable ? 
+  buildResources = () => {
+    let resources = this.props.editable ? 
           [this.createBtnResource()] :
           []
       , placeholderKey = 0
@@ -84,22 +85,24 @@ class UserResources extends React.Component {
         <Card
           data={resource}
           key={resource.id}
-          handleDeckSelect={props.handleCardDeckSelect.bind(null, resource.id)}
-          handleEditClick={() => props.handleEditCard(resource.id)}
-          handleCopyClick={() => props.handleCopyCard(resource.id)}
-          handleDestroyClick={() => props.handleDestroyCard(resource.id)}
+          handleDeckSelect={this.props.handleCardDeckSelect.bind(null, resource.id)}
+          handleEditClick={() => this.props.handleEditCard(resource.id)}
+          handleCopyClick={() => this.props.handleCopyCard(resource.id)}
+          handleDestroyClick={() => this.props.handleDestroyCard(resource.id)}
           handleZoomClick={() => this.handleCardZoomClick(i)}
-          editable={props.editable}
+          editable={this.props.editable}
           showCopy={this.props.showCopyCard}
+          loadImage={this.state.imageLoadIndex >= i}
+          onImageLoad={this.incrImageLoadIndex}
         />
       )
     }
     
     resources = resources.concat(
-      props.resources.map(resourceMapFn)
+      this.props.resources.map(resourceMapFn)
     );
 
-    if (props.editable) {
+    if (this.props.editable) {
       minPlaceholders = resourcesPerRow + 
         Math.min((resourcesPerRow - (resources.length % resourcesPerRow)), resourcesPerRow - 1);
 
@@ -109,6 +112,14 @@ class UserResources extends React.Component {
     }
 
     return resources;
+  }
+
+  incrImageLoadIndex = () => {
+    this.setState((prevState, props) => {
+      return {
+        imageLoadIndex: prevState.imageLoadIndex + 1
+      }
+    });
   }
 
   handleCardZoomClick = (i) => {
@@ -197,7 +208,7 @@ class UserResources extends React.Component {
           handleScroll={this.updateResourceSliceIndex}
           handleRef={this.handleContainerRef}
         >
-          {this.state.resources.slice(0, this.state.resourceSliceIndex)}
+          {this.buildResources().slice(0, this.state.resourceSliceIndex)}
         </AdjustsForScrollbarContainer>
       </div>
     );

@@ -21,7 +21,7 @@ class CardZoomLightbox extends React.Component {
     }
   }
 
-  handleRequestCardLoaded = () => {
+  handleCardLoad = () => {
     this.setState({
       cardLoaded: true
     });
@@ -92,8 +92,9 @@ class CardZoomLightbox extends React.Component {
               <div className={styles.cardLightboxCard}>
                 <LoadingSpinnerImage 
                   src={hiResCardImageUrl(this.props.card)} 
-                  requestLoaded={this.handleRequestCardLoaded}
+                  onLoad={this.handleCardLoad}
                   loaded={this.state.cardLoaded}
+                  load={true}
                 />
               </div>
               <button onClick={() => this.handlePngClick(this.props.card.id)}>{I18n.t('react.card_maker.download_png')}</button>

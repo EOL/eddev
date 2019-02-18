@@ -31,9 +31,9 @@ $species-search-pad-horiz: 30px;
 $species-search-card-width: 170px;
 $species-search-card-height: 232px;
 $species-search-input-height: 45px;
-$actions-height: 38px;
-$toolbar-row-height: 40px;
-$toolbar-height: $toolbar-row-height * 2;
+$actions-height: 40px;
+$toolbar-row-height: $search-height;
+$toolbar-height: $toolbar-row-height + $actions-height;
 
 $card-aspect-ratio: .75;
 $resources-width: calc(100% - #{$left-rail-width});
@@ -48,7 +48,7 @@ body { // TODO: move
 
 .lLeftRail {
   display: inline-block;
-  height: calc(100vh - #{$title-height});
+  height: calc(100vh - #{$topbar-row-height});
   vertical-align: top;
   width: $left-rail-width;
 }
@@ -56,6 +56,8 @@ body { // TODO: move
 .lResources {
   display: inline-flex;
   flex-direction: column;
+  height: calc(100vh - #{$topbar-row-height});
+  overflow: auto;
   padding-top: $toolbar-height;
   position: relative;
   vertical-align: top;
@@ -301,7 +303,7 @@ body { // TODO: move
   flex: 0 0 auto;
   flex-direction: column;
   justify-content: center;
-  margin: 5px auto;
+  margin: 20px auto;
 }
 
 .desc {
@@ -352,8 +354,6 @@ body { // TODO: move
   align-content: flex-start;
   display: flex;
   flex-flow: row wrap;
-  height: calc(100vh - #{$toolbar-height + $title-height});
-  overflow: auto;
   text-align: center;
   width: 100%;
 }
@@ -1021,7 +1021,7 @@ body { // TODO: move
   background: $white;
   height: $toolbar-row-height;
   position: fixed;
-  top: $title-height;
+  top: $topbar-row-height;
   width: $resources-width;
   z-index: 2;
 
@@ -1029,6 +1029,10 @@ body { // TODO: move
     font-weight: $semibold;
     line-height: $toolbar-row-height;
     text-align: center;
+  }
+
+  & li:hover {
+    background: $hover-gray; 
   }
 }
 
@@ -1044,9 +1048,29 @@ body { // TODO: move
     border: 1px solid $black;
     cursor: pointer;
     display: inline-block;
-    height: $toolbar-row-height;
-    padding: 8px 16px;
+    height: $actions-height;
     margin: 0;
+    padding: 8px 16px;
+    position: relative;
+  }
+}
+
+.moreMenu {
+  background: white;
+  position: absolute;
+  top: $actions-height;
+  right: 0;
+
+  & > li {
+    border-bottom: 1px solid $black;
+    border-left: 1px solid $black;
+    border-right: 1px solid $black;
+    height: 40px;
+    line-height: 40px;
+    overflow: hidden;
+    padding: 0 20px;
+    text-align: center;
+    white-space: nowrap;
   }
 }
 
@@ -1055,9 +1079,9 @@ body { // TODO: move
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
-  right: 5px;
-  top: 5px;
-  padding: 3px 20px;
+  right: 8px;
+  top: 9px;
+  padding: 6px 20px;
   position: absolute;
 
   &:hover {
@@ -1065,3 +1089,23 @@ body { // TODO: move
   }
 }
 
+.libName {
+  float: left;
+  line-height: $toolbar-row-height;
+  margin-left: 8px;
+}
+
+.back {
+  color: $eol-blue;
+  cursor: pointer;
+  text-align: center;
+  height: $search-height;
+  line-height: $search-height;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: underline;
+
+  & > i {
+    margin-right: 8px;
+  }
+}

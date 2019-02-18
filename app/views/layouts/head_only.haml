@@ -1,0 +1,7 @@
+!!! 5
+%html{:lang => I18n.locale}
+  = render "layouts/head"
+  %body
+    = render "shared/header", top_only: true
+    %main
+      = yield

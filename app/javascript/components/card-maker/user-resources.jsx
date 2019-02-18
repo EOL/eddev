@@ -6,6 +6,7 @@ import CreateButtonResource from './create-button-resource'
 import ResourcePlaceholder from './resource-placeholder'
 import AdjustsForScrollbarContainer from './adjusts-for-scrollbar-container'
 import CardZoomLightbox from './card-zoom-lightbox'
+import DeckDesc from './deck-desc'
 
 import styles from 'stylesheets/card_maker/card_manager'
 
@@ -69,7 +70,7 @@ class UserResources extends React.Component {
       <CreateButtonResource
         createMsg={createMsg}
         handleCreate={handleCreate}
-        style={{marginTop: this.state.cardMargin, marginLeft: this.state.cardMargin}}
+        style={{marginBottom: this.state.cardMargin, marginLeft: this.state.cardMargin}}
         key='0'
       />
     )];
@@ -100,7 +101,7 @@ class UserResources extends React.Component {
           showCopy={this.props.showCopyCard}
           load={this.state.cardLoadIndex >= i}
           onLoad={this.handleCardLoad}
-          style={{ marginLeft: this.state.cardMargin, marginTop: this.state.cardMargin }}
+          style={{ marginLeft: this.state.cardMargin, marginBottom: this.state.cardMargin }}
         />
       )
     }
@@ -212,6 +213,18 @@ class UserResources extends React.Component {
           hasPrev={this.hasPrev()}
           handleRequestClose={this.handleCardZoomRequestClose}
         />
+        {
+          this.props.showDesc &&
+          <DeckDesc
+            handleInputChange={this.props.onDescInputChange}
+            handleRequestSave={this.props.onRequestDescSave}
+            handleRequestClose={this.props.onRequestDescClose}
+            showInput={this.props.showDescInput}
+            editable={this.props.editable}
+            handleRequestInput={this.props.onRequestDescInput}
+            value={this.props.descValue}
+          />
+        }
         <div
           className={styles.resources}
           ref={this.resourcesRef}

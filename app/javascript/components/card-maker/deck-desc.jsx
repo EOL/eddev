@@ -42,7 +42,7 @@ function DeckDesc(props) {
   } else {
     if (props.value) {
       inner = props.value;
-    } else if (props.library === 'user') {
+    } else if (props.editable) {
       inner = (
         <div
           className={styles.descAdd}

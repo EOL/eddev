@@ -475,7 +475,6 @@ class CardMaker extends React.Component {
         </ReactModal>
 
         <Page className={styles.page} noMainCol={true}>
-          <h1 className={styles.title}>EOL Card Maker (logo goes here)</h1>
           <div className={styles.cardMaker}>
             {this.screenComponent()}
           </div>

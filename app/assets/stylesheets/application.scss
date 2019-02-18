@@ -40,7 +40,6 @@ html {
 
 body { 
   margin: 0; 
-  padding: ($topbar-height) 0 0 0; 
 }
 
 body, p {
@@ -80,6 +79,7 @@ textarea {
   max-width: $page-width;
   margin: 0 auto;
   overflow: hidden;
+  padding: ($topbar-height) 0 0 0; 
   position: relative;
 }
 
@@ -337,7 +337,7 @@ $hero-transition-width: 525;
 }
 
 @media screen and (max-width: $nav-mobile-width) {
-  body {
+  #Page {
     padding-top: $topbar-row-height;
   }
 }

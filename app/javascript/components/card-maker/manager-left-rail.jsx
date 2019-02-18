@@ -137,6 +137,7 @@ class ManagerLeftRail extends React.Component {
   render() {
     return (
       <div className={styles.lLeftRail}>
+        <div className={styles.back} onClick={() => window.history.back()}><i className='fa fa-lg fa-arrow-left' />back to site </div>
         {
           this.props.decks.length > 0 && 
           <div className={styles.searchContain}>

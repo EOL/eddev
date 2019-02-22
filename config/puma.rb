@@ -11,10 +11,13 @@ threads threads_count, threads_count
 rails_env = ENV.fetch("RAILS_ENV") { "development" }
 environment rails_env
 
-pidfile "#{::Rails.root}/tmp/pids/puma.pid"
+app_dir = File.expand_path("../..", __FILE__)
+tmp_dir = "#{app_dir}/tmp"
+
+pidfile "#{tmp_dir}/pids/puma.pid"
 
 if rails_env == "production"
-  bind "#{::Rails.root}/tmp/sockets/puma.sock"
+  bind "#{tmp_dir}/sockets/puma.sock"
 else
   # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
   #

@@ -39,6 +39,15 @@ set :default_stage, "staging"
 set :keep_releases, 3
 
 namespace :deploy do
+  desc 'Restart application'
+  task :restart do
+    on roles(:app) do
+      execute "bundle exec pumactl -F config/puma.rb phased-restart"
+    end
+  end
+end
+
+after "deploy:publishing", "deploy:restart"
 #
 #  after :restart, :clear_cache do
 #    on roles(:web), in: :groups, limit: 3, wait: 10 do
@@ -49,7 +58,6 @@ namespace :deploy do
 #    end
 #  end
 #
-end
 
 Rake::Task["git:create_release"].clear_actions
 namespace :git do

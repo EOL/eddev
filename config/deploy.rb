@@ -42,7 +42,9 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app) do
-      execute "bundle exec pumactl -F config/puma.rb phased-restart"
+      within release_path do
+        execute :bundle, :exec, :pumactl, "-F", "config/puma.rb", "phased-restart"
+      end
     end
   end
 end

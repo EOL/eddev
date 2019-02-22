@@ -11,6 +11,8 @@ threads threads_count, threads_count
 rails_env = ENV.fetch("RAILS_ENV") { "development" }
 environment rails_env
 
+pidfile "/var/run/puma.pid"
+
 if rails_env == "production"
   bind "unix:///var/run/puma.sock"
 else

@@ -38,9 +38,6 @@ set :default_stage, "staging"
 # Default value for keep_releases is 5
 set :keep_releases, 3
 
-set :puma_conf, "config/puma.rb"
-set :puma_restart_command, 'bundle exec pumactl restart'
-
 namespace :deploy do
 #
 #  after :restart, :clear_cache do

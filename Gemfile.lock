@@ -82,10 +82,6 @@ GEM
       capistrano-bundler (~> 1.1)
     capistrano-rails-collection (0.1.0)
       capistrano-rails (~> 1.1)
-    capistrano3-puma (3.1.1)
-      capistrano (~> 3.7)
-      capistrano-bundler
-      puma (~> 3.4)
     coderay (1.1.2)
     concurrent-ruby (1.0.5)
     connection_pool (2.2.2)
@@ -269,7 +265,6 @@ DEPENDENCIES
   capistrano-git-with-submodules (~> 2.0)
   capistrano-rails (~> 1.1)
   capistrano-rails-collection
-  capistrano3-puma
   consistency_fail
   factory_girl_rails (~> 4.0)
   figaro

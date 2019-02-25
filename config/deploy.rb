@@ -43,7 +43,9 @@ namespace :deploy do
   task :restart do
     on roles(:app) do
       within release_path do
-        execute :bundle, :exec, :pumactl, "-F", "config/puma.rb", "phased-restart"
+        with rails_env: fetch(:rails_env) do
+          execute :bundle, :exec, :pumactl, "-F", "config/puma.rb", "phased-restart"
+        end
       end
     end
   end

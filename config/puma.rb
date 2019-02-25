@@ -1,23 +1,28 @@
+require 'figaro'
+#
+# Specifies the `environment` that Puma will run in.
+rails_env = ENV.fetch("RAILS_ENV") { "development" }
+environment rails_env
+
+# Do this AFTER the above since RAILS_ENV should be a real environment variable
+Figaro.application = Figaro::Application.new(environment: rails_env, path: File.expand_path('../application.yml', __FILE__))
+Figaro.load
+
 # Puma can serve each request in a thread from an internal thread pool.
 # The `threads` method setting takes two numbers: a minimum and maximum.
 # Any libraries that use thread pools should be configured to match
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum; this matches the default thread size of Active Record.
 #
-threads_count = ENV.fetch("RAILS_MAX_THREADS") { 16 }
+threads_count = ENV.fetch("puma_threads_per_worker") { 16 }.to_i # Figaro only supports strings
 threads threads_count, threads_count
-
-# Specifies the `environment` that Puma will run in.
-rails_env = ENV.fetch("RAILS_ENV") { "development" }
-environment rails_env
 
 app_dir = File.expand_path("../..", __FILE__)
 tmp_dir = "#{app_dir}/tmp"
-
 pidfile "#{tmp_dir}/pids/puma.pid"
 
 if rails_env == "production"
-  bind "#{tmp_dir}/sockets/puma.sock"
+  bind "unix://#{tmp_dir}/sockets/puma.sock"
 else
   # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
   #
@@ -29,7 +34,8 @@ end
 # the concurrency of the application would be max `threads` * `workers`.
 # Workers do not work on JRuby or Windows (both of which do not support
 # processes).
- workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+concurrency = ENV.fetch("puma_workers") { 2 }.to_i
+workers concurrency
 
 # Use the `preload_app!` method when specifying a `workers` number.
 # This directive tells Puma to first boot the application and load code

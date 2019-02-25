@@ -17,11 +17,10 @@ Figaro.load
 threads_count = ENV.fetch("puma_threads_per_worker") { 16 }.to_i # Figaro only supports strings
 threads threads_count, threads_count
 
-app_dir = File.expand_path("../..", __FILE__)
-tmp_dir = "#{app_dir}/tmp"
-pidfile "#{tmp_dir}/pids/puma.pid"
-
 if rails_env == "production"
+  app_dir = "/var/www/eddev/current"
+  tmp_dir = "#{app_dir}/tmp"
+  pidfile "#{tmp_dir}/pids/puma.pid"
   bind "unix://#{tmp_dir}/sockets/puma.sock"
 else
   # Specifies the `port` that Puma will listen on to receive requests; default is 3000.

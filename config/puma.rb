@@ -18,8 +18,7 @@ threads_count = ENV.fetch("puma_threads_per_worker") { 16 }.to_i # Figaro only s
 threads threads_count, threads_count
 
 if rails_env == "production"
-  app_dir = "/var/www/eddev/current"
-  tmp_dir = "#{app_dir}/tmp"
+  tmp_dir = "/var/www/eddev/shared/tmp"
   pidfile "#{tmp_dir}/pids/puma.pid"
   bind "unix://#{tmp_dir}/sockets/puma.sock"
 else
@@ -36,28 +35,12 @@ end
 concurrency = ENV.fetch("puma_workers") { 2 }.to_i
 workers concurrency
 
-# Set up connection pool (recommended in Puma README)
-on_worker_boot do
-  ActiveSupport.on_load(:active_record) do
-    ActiveRecord::Base.establish_connection
-  end
-end
-
-# Use the `preload_app!` method when specifying a `workers` number.
-# This directive tells Puma to first boot the application and load code
-# before forking the application. This takes advantage of Copy On Write
-# process behavior so workers use less memory. If you use this option
-# you need to make sure to reconnect any threads in the `on_worker_boot`
-# block.
-#
-preload_app!
-
 # From puma repo deployment docs:
 # Don't use preload!. This dirties the master process and means it will have to shutdown all the workers and re-exec itself to get your new code. It is not compatible with phased-restart and prune_bundler as well.
 #
 # Use prune_bundler. This makes it so that the cluster master will detach itself from a Bundler context on start. This allows the cluster workers to load your app and start a brand new Bundler context within the worker only. This means your master remains pristine and can live on between new releases of your code.
 #
-# XXX: prune_bundler caused lots of warnings in the systemd logs. Not happening.
+# XXX: prune_bundler caused lots of warnings in the systemd logs. Not happening. Also, we're using socket activation on the server which should at least provide some semblance of graceful reload.
 #prune_bundler
 
 # If you are preloading your application and using Active Record, it's
@@ -75,9 +58,21 @@ end
 # or connections that may have been created at application boot, as Ruby
 # cannot share connections between processes.
 #
+# Set up connection pool (recommended in Puma README)
 on_worker_boot do
-  ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
+  ActiveSupport.on_load(:active_record) do
+    ActiveRecord::Base.establish_connection
+  end
 end
+
+# Use the `preload_app!` method when specifying a `workers` number.
+# This directive tells Puma to first boot the application and load code
+# before forking the application. This takes advantage of Copy On Write
+# process behavior so workers use less memory. If you use this option
+# you need to make sure to reconnect any threads in the `on_worker_boot`
+# block.
+#
+preload_app!
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart

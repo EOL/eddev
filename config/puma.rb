@@ -36,6 +36,13 @@ end
 concurrency = ENV.fetch("puma_workers") { 2 }.to_i
 workers concurrency
 
+# Set up connection pool (recommended in Puma README)
+on_worker_boot do
+  ActiveSupport.on_load(:active_record) do
+    ActiveRecord::Base.establish_connection
+  end
+end
+
 # Use the `preload_app!` method when specifying a `workers` number.
 # This directive tells Puma to first boot the application and load code
 # before forking the application. This takes advantage of Copy On Write
@@ -43,13 +50,15 @@ workers concurrency
 # you need to make sure to reconnect any threads in the `on_worker_boot`
 # block.
 #
-#preload_app!
+preload_app!
 
 # From puma repo deployment docs:
 # Don't use preload!. This dirties the master process and means it will have to shutdown all the workers and re-exec itself to get your new code. It is not compatible with phased-restart and prune_bundler as well.
 #
 # Use prune_bundler. This makes it so that the cluster master will detach itself from a Bundler context on start. This allows the cluster workers to load your app and start a brand new Bundler context within the worker only. This means your master remains pristine and can live on between new releases of your code.
-prune_bundler
+#
+# XXX: prune_bundler caused lots of warnings in the systemd logs. Not happening.
+#prune_bundler
 
 # If you are preloading your application and using Active Record, it's
 # recommended that you close any connections to the database before workers

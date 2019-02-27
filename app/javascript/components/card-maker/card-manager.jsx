@@ -153,7 +153,7 @@ class CardManager extends React.Component {
 
   handleSpeciesSearchOpen = () => {
     this.openModal(modals.speciesSearch, {
-      speciesSearchDeckId: this.props.selectedDeck.id
+      speciesSearchDeckId: this.props.selectedDeck === this.props.unassignedCardsDeck ? this.props.allCardsDeck.id : this.props.selectedDeck.id
     });
   }
 

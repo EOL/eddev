@@ -93,6 +93,10 @@ class ApplicationController < ActionController::Base
       @nohero = true
     end
 
+    def nofooter
+      @nofooter = true
+    end
+
   private
     def set_locale
       I18n.locale = params[:locale] || I18n.default_locale

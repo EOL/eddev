@@ -77,5 +77,6 @@
           .main-col
             = yield
 
-      = render "shared/footer"
+      - unless @nofooter
+        = render "shared/footer"
     = render "shared/mob_menu"

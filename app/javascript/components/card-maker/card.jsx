@@ -45,7 +45,7 @@ class Card extends React.Component {
     }
 
     return (
-      <div>
+      <div ref={this.props.domRef}>
         <LoadingSpinnerImage 
           src={loResCardImageUrl(this.props.data)} 
           load={this.props.loadImage}
@@ -179,7 +179,11 @@ class DeckAssignSelect extends React.Component {
     }
 
     return (
-      <div className='deck-assign-select' onClick={this.handleOpenClick} ref={this.setNode}>
+      <div 
+        className='deck-assign-select' 
+        onClick={this.handleOpenClick} 
+        ref={this.setNode}
+      >
         <div className='deck-assign-top'>
           <div className='deck-name'>{selectedDeck.selectedText}</div>
           <div className='open-msg'>{selectedDeck.openText}</div>

@@ -7,6 +7,7 @@ function CreateButtonResource(props) {
     <div
       className={[styles.fillParent, styles.newResource].join(' ')}
       onClick={props.handleCreate}
+      ref={props.domRef}
     >
       <i className='fa fa-plus fa-2x' />
       <div>{props.createMsg}</div>

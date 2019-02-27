@@ -7,6 +7,8 @@ import CardEditor from './card-editor'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
 import newImmutableCardInstance from 'lib/card-maker/immutable-card'
 
+import styles from 'stylesheets/card_maker/card_maker';
+
 import eolLogoHdr from 'images/card_maker/icons/eol_logo_hdr.png'
 
 function ascSort(field) {
@@ -450,7 +452,7 @@ class CardMaker extends React.Component {
 
   render() {
     return (
-      <div className='card-maker'>
+      <div className={styles.cardMaker}>
         <ReactModal
           isOpen={this.state.showLoadingOverlay}
           parentSelector={() => {return document.getElementById('Page')}}
@@ -472,7 +474,7 @@ class CardMaker extends React.Component {
           }
         </ReactModal>
 
-        <Page>{this.screenComponent()}</Page>
+        <Page noMainCol={true}>{this.screenComponent()}</Page>
       </div>
     )
   }

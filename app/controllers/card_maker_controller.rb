@@ -3,6 +3,7 @@ class CardMakerController < ApplicationController
   before_action :set_js_translations
   before_action :main_nopad_bot
   before_action :nohero
+  before_action :nofooter
 
   def index
   end

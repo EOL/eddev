@@ -30,6 +30,7 @@ $species-search-pad-horiz: 30px;
 $species-search-card-width: 170px;
 $species-search-card-height: 232px;
 $species-search-input-height: 45px;
+$deck-menu-height: 192px;
 
 $card-aspect-ratio: .75;
 
@@ -45,15 +46,16 @@ $card-aspect-ratio: .75;
 }
 
 .lResources {
-  display: inline-flex;
-  flex-direction: column;
+  display: inline-block;
+  height: calc(100vh - #{$topbar-height});
+  overflow: hidden;
   position: relative;
   vertical-align: top;
-  width: $main-col-width-px - $left-rail-width;
+  width: calc(100% - #{$left-rail-width});
 } 
 
 .lDeckMenu {
-  height: 192px;
+  height: $deck-menu-height;
   padding: 10px 0;
   position: relative;
   width: 100%;
@@ -207,7 +209,7 @@ $card-aspect-ratio: .75;
 .decks {
   background: $white;
   font-size: 12px;
-  height: $resources-height + $search-height;
+  //height: $resources-height + $search-height;
   list-style: none;
   overflow: auto;
   padding: 17px 23px;
@@ -339,14 +341,14 @@ $card-aspect-ratio: .75;
   padding-left: 10px;
 }
 
-.resources {
-  align-content: flex-start;
-  display: flex;
-  flex-flow: row wrap;
-  height: $resources-height;
+.userResources {
+  height: calc(100% - #{$deck-menu-height} - #{$search-height});
+}
+
+.resourceList {
+  display: block;
+  height: 100%;
   overflow: auto;
-  padding: 0 11px 11px 11px;
-  text-align: center;
   width: 100%;
 }
 
@@ -1009,3 +1011,13 @@ $card-aspect-ratio: .75;
     width: 400px;
   }
 
+.banner {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  object-fit: cover;
+  height: 245px;
+  position: absolute;
+  width: 100%;
+}

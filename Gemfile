@@ -54,7 +54,7 @@ gem "webpacker"
 gem "i18n-js"
 
 # Error reporting
-gem "bugsnag"
+gem "bugsnag", "~> 6.10.0"
 
 gem "js-routes"
 

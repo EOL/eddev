@@ -63,7 +63,7 @@ GEM
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
-    bugsnag (6.8.0)
+    bugsnag (6.10.0)
       concurrent-ruby (~> 1.0)
     builder (3.2.3)
     byebug (10.0.2)
@@ -259,7 +259,7 @@ DEPENDENCIES
   aws-sdk (< 2.0)
   bcrypt (~> 3.1.7)
   better_errors
-  bugsnag
+  bugsnag (~> 6.10.0)
   byebug
   capistrano (~> 3.1)
   capistrano-git-with-submodules (~> 2.0)
@@ -294,4 +294,4 @@ DEPENDENCIES
   webpacker
 
 BUNDLED WITH
-   1.16.6
+   2.0.1

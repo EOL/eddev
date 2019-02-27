@@ -833,7 +833,7 @@ class CardManager extends React.Component {
       ;
 
     return (
-      <div className={styles.lManager}>
+      <div className={styles.cardManager}>
         <DeckUsersLightbox
           isOpen={this.state.openModal === modals.deckUsers}
           handleRequestClose={this.closeModal}

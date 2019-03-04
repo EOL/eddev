@@ -4,6 +4,7 @@ class CardMakerController < ApplicationController
   before_action :main_nopad_bot
   before_action :nohero
   before_action :nofooter
+  before_action :header_slim
 
   def index
   end

@@ -21,6 +21,7 @@ import DeckUpgradeNotice from './deck-upgrade-notice'
 import DialogBox from 'components/shared/dialog-box'
 import DeckDesc from './deck-desc'
 import PrintLightbox from './print-lightbox'
+import ManagerToolbar from './manager-toolbar'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
 import eolHdrIcon from 'images/card_maker/icons/eol_logo_sub_hdr.png'
@@ -776,6 +777,92 @@ class CardManager extends React.Component {
     return items;
   }
 
+	toolbarItems = (resourceCount) => {
+    let actions = []
+      , moreItems = []
+      ;
+
+    if (
+      this.props.selectedDeck !== this.props.allCardsDeck && 
+      this.props.selectedDeck !== this.props.unassignedCardsDeck
+    ) {
+      if (resourceCount > 0 && !this.props.selectedDeck.needsUpgrade) {
+        actions.push({
+          onClick: this.openPrintOptions,
+          text: I18n.t('react.card_maker.print'),
+          icon: 'print'
+        });
+
+        actions.push({
+          onClick: this.createDeckPngs,
+          text: I18n.t('react.card_maker.download_pngs'),
+          icon: 'download'
+        });
+      }
+
+      if (this.props.userRole) {
+        actions.push({
+          onClick: () => this.openCopyDeck(false),
+          text: I18n.t('react.card_maker.copy_deck'),
+          icon: 'copy'
+        });
+      }
+
+      if (this.isUserLib()) {
+        if (this.props.selectedDeck.needsUpgrade) {
+          moreItems.push({
+            text: I18n.t('react.card_maker.update_card_layouts'),
+            onClick: () => this.openCopyDeck(true)
+          });
+        }
+
+        moreItems.push({
+          onClick: this.openDescInput,
+          text: this.props.selectedDeck.desc ? 
+            I18n.t('react.card_maker.edit_desc') :
+            I18n.t('react.card_maker.add_desc')
+        });
+
+        moreItems.push({
+          onClick: () => this.openModal(modals.renameDeck),
+          text: I18n.t('react.card_maker.rename_deck')
+        });
+
+        if (this.props.selectedDeck.isOwner) {
+          moreItems.push({
+            onClick: () => this.handleDestroyDeck(this.props.selectedDeck.id),
+            text: I18n.t('react.card_maker.delete_deck')
+          });
+        }
+
+        moreItems.push({
+          onClick: () => this.openModal(modals.deckUsers),
+          text: I18n.t('react.card_maker.manage_deck_users')
+        });
+
+        if (this.props.userRole == 'admin') {
+          moreItems.push({
+            onClick: this.toggleDeckPublic,
+            text: this.props.selectedDeck.public ? 
+              I18n.t('react.card_maker.make_deck_private') :
+              I18n.t('react.card_maker.make_deck_public')
+          });
+        }
+      } else {
+        actions.push({
+          onClick: () => this.openModal(modals.deckUrl),
+          text: I18n.t('react.card_maker.show_url'),
+          icon: 'link'
+        });
+      }
+    }
+
+    return {
+      actions: actions,
+      moreItems: moreItems
+    };
+  }
+
   sortItems = () => {
     return this.props.sorts.map((sort) => {
       return {
@@ -830,6 +917,7 @@ class CardManager extends React.Component {
     var resourceResult = this.selectedResources()
       , searchFilteredResources = this.searchFilterResources(resourceResult.resources)
       , userDeckNames = this.userDeckNames()
+      , toolbarItems = this.toolbarItems(resourceResult.resources.length)
       ;
 
     return (
@@ -915,7 +1003,7 @@ class CardManager extends React.Component {
           <div className={styles.lDeckMenu}>
             <div className={styles.lDeckMenuFlex}>
               <Menu
-                items={this.deckMenuItems(resourceResult.resources.length)}
+                items={[]}
                 open={this.state.openMenu === menus.deck}
                 anchorText={this.deckMenuAnchorText()}
                 handleRequestClose={() => this.closeMenu()}
@@ -936,6 +1024,10 @@ class CardManager extends React.Component {
               }
             </div>
           </div>
+          <ManagerToolbar 
+            actions={toolbarItems.actions}
+            moreItems={toolbarItems.moreItems}
+          />
           <div className={styles.searchContain}>
             <Search 
               handleChange={(val) => this.setState({ cardSearchVal: val})}

@@ -97,6 +97,10 @@ class ApplicationController < ActionController::Base
       @nofooter = true
     end
 
+    def header_slim
+      @header_slim = true
+    end
+
   private
     def set_locale
       I18n.locale = params[:locale] || I18n.default_locale

@@ -40,7 +40,11 @@ html {
 
 body { 
   margin: 0; 
-  padding: ($topbar-height) 0 0 0; 
+  padding: $topbar-height 0 0 0; 
+}
+
+.body-slim-head {
+  padding: $topbar-row-height 0 0 0;
 }
 
 body, p {

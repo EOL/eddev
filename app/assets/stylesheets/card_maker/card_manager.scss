@@ -32,6 +32,7 @@ $species-search-card-height: 232px;
 $species-search-input-height: 45px;
 $deck-menu-height: 192px;
 $libs-height: 91px;
+$toolbar-height: 44px;
 
 $card-aspect-ratio: .75;
 
@@ -343,9 +344,16 @@ $card-aspect-ratio: .75;
   padding-left: 10px;
 }
 
-.userResources {
+.resourceArea {
   height: calc(100% - #{$deck-menu-height} - #{$search-height});
 }
+
+.userResources {
+  height: 100%;
+}
+  .userResourcesToolbar {
+    height: calc(100% - #{$toolbar-height});
+  }
 
 .resourceList {
   display: block;
@@ -1035,24 +1043,26 @@ $card-aspect-ratio: .75;
 }
 
 .toolbarItems {
+  font-size: 14px;
   display: inline-block;
+  height: 100%;
   text-align: center;
 
   & > li { 
     background: rgba(255, 255, 255, 0.9);
     cursor: pointer;
     display: inline-block;
-    height: $search-height;
+    height: $toolbar-height;
     margin: 0 10px;
-    padding: 15px 25px;
+    padding: 11px 25px;
     position: relative;
   }
 }
 
 .toolbarMenu {
-  background: $white;
+  background: rgba(255, 255, 255, 0.9);
   right: 0;
-  top: $search-height;
+  top: 44px;
   position: absolute;
   text-align: center;
   white-space: nowrap;
@@ -1061,7 +1071,7 @@ $card-aspect-ratio: .75;
     padding: 10px 40px; 
 
     &:hover {
-      background: $nav-link-gray;
+      background: rgba(200, 200, 200, 0.9);
     }
   }
 

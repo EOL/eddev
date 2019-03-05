@@ -216,10 +216,14 @@ class UserResources extends React.Component {
   }
 
   render() {
-    this.resourceCount = this.props.resources.length;
-    
+    const classes = [styles.userResources];
+
+    if (this.props.extraClass) {
+      classes.push(this.props.extraClass);
+    }
+
     return (
-      <div className={styles.userResources}>
+      <div className={classes.join(' ')}>
         <CardZoomLightbox
           card={this.state.zoomCardIndex === null ? null : this.props.resources[this.state.zoomCardIndex]}
           requestNext={() => {

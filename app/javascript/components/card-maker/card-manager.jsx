@@ -511,8 +511,7 @@ class CardManager extends React.Component {
   }
 
 
-  handleDescBtnClick = () => {
-    this.closeMenu('deck');
+  openDescInput = () => {
     this.setState({
       showDescInput: true
     });
@@ -735,7 +734,7 @@ class CardManager extends React.Component {
         }
 
         items.push({
-          handleClick: this.handleDescBtnClick,
+          handleClick: this.openDescInput,
           label: this.props.selectedDeck.desc ? 
             I18n.t('react.card_maker.edit_desc') :
             I18n.t('react.card_maker.add_desc')
@@ -1019,15 +1018,11 @@ class CardManager extends React.Component {
                   handleRequestClose={this.closeAndClearDescInput}
                   showInput={this.state.showDescInput}
                   library={this.props.library}
-                  handleRequestInput={this.handleDescBtnClick}
+                  handleRequestInput={this.openDescInput}
                 />
               }
             </div>
           </div>
-          <ManagerToolbar 
-            actions={toolbarItems.actions}
-            moreItems={toolbarItems.moreItems}
-          />
           <div className={styles.searchContain}>
             <Search 
               handleChange={(val) => this.setState({ cardSearchVal: val})}
@@ -1047,20 +1042,27 @@ class CardManager extends React.Component {
               />
             </div>
           </div>
-          <UserResources
-            resources={searchFilteredResources}
-            resourceType={resourceResult.resourceType}
-            handleCardDeckSelect={this.assignCardDeck}
-            handleEditCard={this.props.handleEditCard}
-            handleDeckSelect={this.handleDeckSelect}
-            handleDestroyCard={this.handleDestroyCard}
-            handleDestroyDeck={this.handleDestroyDeck}
-            handleNewCard={this.handleSpeciesSearchOpen}
-            handleCopyCard={this.openCopyCard}
-            showCopyCard={this.isUserLib() || this.props.userRole}
-            handleNewDeck={() => this.openModal(modals.newDeck)}
-            editable={this.isUserLib()}
-          />
+          <div className={styles.resourceArea}>
+            <ManagerToolbar 
+              actions={toolbarItems.actions}
+              moreItems={toolbarItems.moreItems}
+            />
+            <UserResources
+              resources={searchFilteredResources}
+              resourceType={resourceResult.resourceType}
+              handleCardDeckSelect={this.assignCardDeck}
+              handleEditCard={this.props.handleEditCard}
+              handleDeckSelect={this.handleDeckSelect}
+              handleDestroyCard={this.handleDestroyCard}
+              handleDestroyDeck={this.handleDestroyDeck}
+              handleNewCard={this.handleSpeciesSearchOpen}
+              handleCopyCard={this.openCopyCard}
+              showCopyCard={this.isUserLib() || this.props.userRole}
+              handleNewDeck={() => this.openModal(modals.newDeck)}
+              editable={this.isUserLib()}
+              extraClass={(toolbarItems.actions.length || toolbarItems.moreItems.length) ? styles.userResourcesToolbar : null}
+            />
+          </div>
         </div>
       </div>
     );

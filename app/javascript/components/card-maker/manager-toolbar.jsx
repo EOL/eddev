@@ -33,30 +33,33 @@ class ManagerToolbar extends React.Component {
   render() {
     return (
       <div className={styles.toolbar}>
-        <ul className={styles.toolbarItems}>
-          {this.props.actions.map((item, i) => {
-            return (
-              <li onClick={item.onClick} key={i}>
-                {item.text}&nbsp;&nbsp;
-                <i className={`fa fa-lg fa-${item.icon}`} />
+        {
+          (this.props.actions.length > 0 || this.props.moreItems.length > 0) &&
+          <ul className={styles.toolbarItems}>
+            {this.props.actions.map((item, i) => {
+              return (
+                <li onClick={item.onClick} key={i}>
+                  {item.text}&nbsp;&nbsp;
+                  <i className={`fa fa-lg fa-${item.icon}`} />
+                </li>
+              );
+            })}
+            {
+              this.props.moreItems.length > 0 &&
+              <li onClick={this.openMenu}>
+                more&nbsp;&nbsp;<i className='fa fa-lg fa-caret-down' />
+                {
+                  this.state.menuOpen === true && 
+                  <ul className={styles.toolbarMenu}>
+                    {this.props.moreItems.map((item, i) => {
+                      return <li onClick={item.onClick} key={i}>{item.text}</li>
+                    })}
+                  </ul>
+                }
               </li>
-            );
-          })}
-          {
-            this.props.moreItems.length > 0 &&
-            <li onClick={this.openMenu}>
-              more&nbsp;&nbsp;<i className='fa fa-lg fa-caret-down' />
-              {
-                this.state.menuOpen === true && 
-                <ul className={styles.toolbarMenu}>
-                  {this.props.moreItems.map((item, i) => {
-                    return <li onClick={item.onClick} key={i}>{item.text}</li>
-                  })}
-                </ul>
-              }
-            </li>
-          }
-        </ul>
+            }
+          </ul>
+        }
       </div>
     ); 
   }

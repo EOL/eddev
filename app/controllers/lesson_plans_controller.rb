@@ -21,7 +21,7 @@ class LessonPlansController < ApplicationController
   end
 
   def show
-    lesson_plan = LessonPlan.find_by_human_name(params[:name])
+    lesson_plan = LessonPlan.find_by_human_name!(params[:name])
     redirect_to "#{lesson_plans_path}#scroll_to=#{lesson_plan.id}", status: 302
   end
 end

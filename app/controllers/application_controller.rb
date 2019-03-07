@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :set_request_id
   before_action :set_locale
   before_action :store_user_sessions_referrer
+  before_action :store_card_maker_referrer
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -93,6 +94,14 @@ class ApplicationController < ActionController::Base
       @nohero = true
     end
 
+    def nofooter
+      @nofooter = true
+    end
+
+    def header_slim
+      @header_slim = true
+    end
+
   private
     def set_locale
       I18n.locale = params[:locale] || I18n.default_locale
@@ -118,15 +127,28 @@ class ApplicationController < ActionController::Base
       render(:file => File.join(Rails.root, 'public/404'), :status => 404, :layout => false)
     end
 
+    def reg_req?
+      request.get? && 
+      request.format.html? &&
+      !request.xhr?
+    end
+
     def store_user_sessions_referrer
       if (
-        request.get? && 
-        request.format.html? &&
+        reg_req? && 
         request.controller_class != UserSessionsController &&
-        request.controller_class != UsersController &&
-        !request.xhr?
+        request.controller_class != UsersController
       )
         session[:user_sessions_referrer] = request.fullpath
+      end
+    end
+
+    def store_card_maker_referrer
+      if (
+        reg_req? &&
+        request.controller_class != CardMakerController
+      )
+        session[:card_maker_referrer] = request.fullpath
       end
     end
 end

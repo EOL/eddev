@@ -21,6 +21,7 @@ import DeckUpgradeNotice from './deck-upgrade-notice'
 import DialogBox from 'components/shared/dialog-box'
 import DeckDesc from './deck-desc'
 import PrintLightbox from './print-lightbox'
+import ManagerToolbar from './manager-toolbar'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
 import eolHdrIcon from 'images/card_maker/icons/eol_logo_sub_hdr.png'
@@ -29,7 +30,6 @@ import managerLogo from 'images/card_maker/icons/card_manager_logo.png'
 import newDeckIcon from 'images/card_maker/icons/new_deck.png'
 import iguanaBanner from 'images/card_maker/iguana_banner.png' /* TODO: convert to jpg */
 
-import layoutStyles from 'stylesheets/shared/react_layout'
 import menuStyles from 'stylesheets/shared/menu'
 import styles from 'stylesheets/card_maker/card_manager'
 
@@ -454,7 +454,6 @@ class CardManager extends React.Component {
       I18n.t('react.card_maker.print_loading_msg'), 
       () => {
         this.cancelPolling();
-        console.log('cancel printing');
       },
       (closeFn) => {
         $.ajax({
@@ -511,8 +510,7 @@ class CardManager extends React.Component {
   }
 
 
-  handleDescBtnClick = () => {
-    this.closeMenu('deck');
+  openDescInput = () => {
     this.setState({
       showDescInput: true
     });
@@ -682,7 +680,6 @@ class CardManager extends React.Component {
       () => {
         // TODO: send cancel request
         this.cancelPolling();
-        console.log('cancel png');
       },
       (closeFn) => {
         $.ajax({
@@ -735,7 +732,7 @@ class CardManager extends React.Component {
         }
 
         items.push({
-          handleClick: this.handleDescBtnClick,
+          handleClick: this.openDescInput,
           label: this.props.selectedDeck.desc ? 
             I18n.t('react.card_maker.edit_desc') :
             I18n.t('react.card_maker.add_desc')
@@ -775,6 +772,92 @@ class CardManager extends React.Component {
     }
 
     return items;
+  }
+
+	toolbarItems = (resourceCount) => {
+    let actions = []
+      , moreItems = []
+      ;
+
+    if (
+      this.props.selectedDeck !== this.props.allCardsDeck && 
+      this.props.selectedDeck !== this.props.unassignedCardsDeck
+    ) {
+      if (resourceCount > 0 && !this.props.selectedDeck.needsUpgrade) {
+        actions.push({
+          onClick: this.openPrintOptions,
+          text: I18n.t('react.card_maker.print'),
+          icon: 'print'
+        });
+
+        actions.push({
+          onClick: this.createDeckPngs,
+          text: I18n.t('react.card_maker.download_pngs'),
+          icon: 'download'
+        });
+      }
+
+      if (this.props.userRole) {
+        actions.push({
+          onClick: () => this.openCopyDeck(false),
+          text: I18n.t('react.card_maker.copy_deck'),
+          icon: 'copy'
+        });
+      }
+
+      if (this.isUserLib()) {
+        if (this.props.selectedDeck.needsUpgrade) {
+          moreItems.push({
+            text: I18n.t('react.card_maker.update_card_layouts'),
+            onClick: () => this.openCopyDeck(true)
+          });
+        }
+
+        moreItems.push({
+          onClick: this.openDescInput,
+          text: this.props.selectedDeck.desc ? 
+            I18n.t('react.card_maker.edit_desc') :
+            I18n.t('react.card_maker.add_desc')
+        });
+
+        moreItems.push({
+          onClick: () => this.openModal(modals.renameDeck),
+          text: I18n.t('react.card_maker.rename_deck')
+        });
+
+        if (this.props.selectedDeck.isOwner) {
+          moreItems.push({
+            onClick: () => this.handleDestroyDeck(this.props.selectedDeck.id),
+            text: I18n.t('react.card_maker.delete_deck')
+          });
+        }
+
+        moreItems.push({
+          onClick: () => this.openModal(modals.deckUsers),
+          text: I18n.t('react.card_maker.manage_deck_users')
+        });
+
+        if (this.props.userRole == 'admin') {
+          moreItems.push({
+            onClick: this.toggleDeckPublic,
+            text: this.props.selectedDeck.public ? 
+              I18n.t('react.card_maker.make_deck_private') :
+              I18n.t('react.card_maker.make_deck_public')
+          });
+        }
+      } else {
+        actions.push({
+          onClick: () => this.openModal(modals.deckUrl),
+          text: I18n.t('react.card_maker.show_url'),
+          icon: 'link'
+        });
+      }
+    }
+
+    return {
+      actions: actions,
+      moreItems: moreItems
+    };
   }
 
   sortItems = () => {
@@ -831,10 +914,11 @@ class CardManager extends React.Component {
     var resourceResult = this.selectedResources()
       , searchFilteredResources = this.searchFilterResources(resourceResult.resources)
       , userDeckNames = this.userDeckNames()
+      , toolbarItems = this.toolbarItems(resourceResult.resources.length)
       ;
 
     return (
-      <div className={styles.lManager}>
+      <div className={styles.cardManager}>
         <DeckUsersLightbox
           isOpen={this.state.openModal === modals.deckUsers}
           handleRequestClose={this.closeModal}
@@ -901,8 +985,9 @@ class CardManager extends React.Component {
           onRequestClose={this.closeModal}
           handleSubmit={this.makeDeckPdf}
         />
-        <img src={iguanaBanner} className={layoutStyles.banner} />
+        <img src={iguanaBanner} className={styles.banner} />
         <LeftRail
+          backPath={this.props.backPath}
           library={this.props.library}
           handleToggleLibrary={this.toggleLibrary}
           handleDeckSelect={this.handleDeckSelect}
@@ -916,7 +1001,7 @@ class CardManager extends React.Component {
           <div className={styles.lDeckMenu}>
             <div className={styles.lDeckMenuFlex}>
               <Menu
-                items={this.deckMenuItems(resourceResult.resources.length)}
+                items={[]}
                 open={this.state.openMenu === menus.deck}
                 anchorText={this.deckMenuAnchorText()}
                 handleRequestClose={() => this.closeMenu()}
@@ -932,7 +1017,7 @@ class CardManager extends React.Component {
                   handleRequestClose={this.closeAndClearDescInput}
                   showInput={this.state.showDescInput}
                   library={this.props.library}
-                  handleRequestInput={this.handleDescBtnClick}
+                  handleRequestInput={this.openDescInput}
                 />
               }
             </div>
@@ -956,20 +1041,27 @@ class CardManager extends React.Component {
               />
             </div>
           </div>
-          <UserResources
-            resources={searchFilteredResources}
-            resourceType={resourceResult.resourceType}
-            handleCardDeckSelect={this.assignCardDeck}
-            handleEditCard={this.props.handleEditCard}
-            handleDeckSelect={this.handleDeckSelect}
-            handleDestroyCard={this.handleDestroyCard}
-            handleDestroyDeck={this.handleDestroyDeck}
-            handleNewCard={this.handleSpeciesSearchOpen}
-            handleCopyCard={this.openCopyCard}
-            showCopyCard={this.isUserLib() || this.props.userRole}
-            handleNewDeck={() => this.openModal(modals.newDeck)}
-            editable={this.isUserLib()}
-          />
+          <div className={styles.resourceArea}>
+            <ManagerToolbar 
+              actions={toolbarItems.actions}
+              moreItems={toolbarItems.moreItems}
+            />
+            <UserResources
+              resources={searchFilteredResources}
+              resourceType={resourceResult.resourceType}
+              handleCardDeckSelect={this.assignCardDeck}
+              handleEditCard={this.props.handleEditCard}
+              handleDeckSelect={this.handleDeckSelect}
+              handleDestroyCard={this.handleDestroyCard}
+              handleDestroyDeck={this.handleDestroyDeck}
+              handleNewCard={this.handleSpeciesSearchOpen}
+              handleCopyCard={this.openCopyCard}
+              showCopyCard={this.isUserLib() || this.props.userRole}
+              handleNewDeck={() => this.openModal(modals.newDeck)}
+              editable={this.isUserLib()}
+              extraClass={(toolbarItems.actions.length || toolbarItems.moreItems.length) ? styles.userResourcesToolbar : null}
+            />
+          </div>
         </div>
       </div>
     );

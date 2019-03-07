@@ -14,7 +14,7 @@ Figaro.load
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum; this matches the default thread size of Active Record.
 #
-threads_count = ENV.fetch("puma_threads_per_worker") { 16 }.to_i # Figaro only supports strings
+threads_count = ENV.fetch("puma_threads_per_worker") { 5 }.to_i # Figaro only supports strings
 threads threads_count, threads_count
 
 if rails_env == "production"

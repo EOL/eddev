@@ -4,18 +4,14 @@ import Card from './card'
 import Deck from './deck'
 import CreateButtonResource from './create-button-resource'
 import ResourcePlaceholder from './resource-placeholder'
-import AdjustsForScrollbarContainer from './adjusts-for-scrollbar-container'
+//import AdjustsForScrollbarContainer from './adjusts-for-scrollbar-container'
 import CardZoomLightbox from './card-zoom-lightbox'
 
 import styles from 'stylesheets/card_maker/card_manager'
 
-const resourcesPerRow = 4
-    , initRows = 3 
-    , minResources = resourcesPerRow * initRows
-    , resourceHeight = 213.3 // TODO: these REALLY shouldn't just be hard-coded.
-    , containerHeight = 600
-    , resourceMarginTop = 10
-    , numImagesLoading = 3 // load this many images concurrently
+const numImagesLoading = 3 // load this many images concurrently
+    , minSpaceBetweenItemsDivisor = 10
+    , startingSliceIndex = 1 // Start with one item visible for calculations
     ;
 
 class UserResources extends React.Component {
@@ -23,10 +19,26 @@ class UserResources extends React.Component {
     super(props);
     this.state = {
       containerScrollTop: null,
-      resourceSliceIndex: 0,
       imageLoadIndex: numImagesLoading - 1,
-      zoomCardIndex: null
+      zoomCardIndex: null,
+      margin: null,
+      numPlaceholders: 0,
+      sliceIndex: startingSliceIndex, // We need to start with one item visible
+      itemsPerRow: 0
     };
+  }
+
+  componentDidMount() { 
+    this.updateItemMargin();
+    $(window).resize(this.updateItemMargin);
+  }
+
+  componentWillUnmount() {
+    $(window).off('resize', this.updateItemMargin);
+  }
+
+  componentDidUpdate() {
+    this.updateItemMargin();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -44,9 +56,9 @@ class UserResources extends React.Component {
 
     if (changed) {
       this.setState({
-        resourceSliceIndex: 0, 
+        sliceIndex: startingSliceIndex, 
         imageLoadIndex: numImagesLoading - 1
-      }, this.updateResourceSliceIndex);
+      }, this.updateSliceIndex);
     }
   }
 
@@ -68,8 +80,14 @@ class UserResources extends React.Component {
         createMsg={createMsg}
         handleCreate={handleCreate}
         key='0'
+        domRef={this.itemRef}
+        style={{ marginLeft: this.state.margin, marginTop: this.state.margin }}
       />
     )];
+  }
+
+  itemRef = (node) => {
+    this.itemNode = node;
   }
 
   buildResources = () => {
@@ -94,6 +112,8 @@ class UserResources extends React.Component {
           showCopy={this.props.showCopyCard}
           loadImage={this.state.imageLoadIndex >= i}
           onImageLoad={this.incrImageLoadIndex}
+          domRef={i === 0 && !resources.length ? this.itemRef : null}
+          style={{ marginLeft: this.state.margin, marginTop: this.state.margin }}
         />
       )
     }
@@ -101,15 +121,6 @@ class UserResources extends React.Component {
     resources = resources.concat(
       this.props.resources.map(resourceMapFn)
     );
-
-    if (this.props.editable) {
-      minPlaceholders = resourcesPerRow + 
-        Math.min((resourcesPerRow - (resources.length % resourcesPerRow)), resourcesPerRow - 1);
-
-      while (resources.length < minResources || placeholderKey < minPlaceholders) {
-        resources.push(<ResourcePlaceholder key={placeholderKey++} />);
-      }
-    }
 
     return resources;
   }
@@ -134,18 +145,19 @@ class UserResources extends React.Component {
     });
   }
 
-  updateResourceSliceIndex = () => {
-    if (this.containerNode) {
-      let rows = Math.ceil(
-            ($(this.containerNode).scrollTop() + containerHeight) /
-            (resourceMarginTop + resourceHeight)
+  updateSliceIndex = () => {
+    if (this.containerNode && this.itemNode) {
+      let $containerNode = $(this.containerNode)
+        , rowsVisible = Math.ceil(
+            ($containerNode.scrollTop() + $containerNode.outerHeight()) /
+            (this.state.margin + $(this.itemNode).outerHeight())
           )
-        , sliceIndex = rows * resourcesPerRow
+        , sliceIndex = rowsVisible * this.state.itemsPerRow
         ;
 
-      if (sliceIndex > this.state.resourceSliceIndex) {
+      if (sliceIndex > this.state.sliceIndex) {
         this.setState({
-          resourceSliceIndex: sliceIndex
+          sliceIndex: sliceIndex
         });
       }
     }
@@ -155,7 +167,7 @@ class UserResources extends React.Component {
     this.containerNode = node;
 
     if (node) {
-      this.updateResourceSliceIndex();
+      this.updateSliceIndex();
     }  
   }
 
@@ -177,11 +189,40 @@ class UserResources extends React.Component {
       this.state.zoomCardIndex > 0;
   }
 
+  // Set margin of resources dynamically to account for scrollbar weirdness
+  updateItemMargin = () => {
+    if (
+      this.containerNode && this.itemNode
+    ) {
+      const scrollbarWidth = this.containerNode.offsetWidth - this.containerNode.clientWidth
+          , innerWidth = $(this.containerNode).width()
+          , resourceWidth = $(this.itemNode).outerWidth()
+          , minSpaceBetweenItems = resourceWidth / minSpaceBetweenItemsDivisor
+          , itemsPerRow = Math.floor((innerWidth - minSpaceBetweenItems) / (resourceWidth + minSpaceBetweenItems))
+          , margin = (innerWidth - itemsPerRow * resourceWidth) / (itemsPerRow + 1)
+          , numPlaceholders = 0//Math.max(itemsPerRow * this.props.minRows - this.props.children.length, 0)
+          ;
+
+
+      if (margin != this.state.margin) {
+        this.setState({
+          margin,
+          numPlaceholders,
+          itemsPerRow
+        }, this.updateSliceIndex);
+      }
+    }
+  }
+
   render() {
-    this.resourceCount = this.props.resources.length;
-    
+    const classes = [styles.userResources];
+
+    if (this.props.extraClass) {
+      classes.push(this.props.extraClass);
+    }
+
     return (
-      <div>
+      <div className={classes.join(' ')}>
         <CardZoomLightbox
           card={this.state.zoomCardIndex === null ? null : this.props.resources[this.state.zoomCardIndex]}
           requestNext={() => {
@@ -202,14 +243,14 @@ class UserResources extends React.Component {
           hasPrev={this.hasPrev()}
           handleRequestClose={this.handleCardZoomRequestClose}
         />
-        <AdjustsForScrollbarContainer
-          className={styles.resources}
-          itemsPerRow={resourcesPerRow}
-          handleScroll={this.updateResourceSliceIndex}
-          handleRef={this.handleContainerRef}
+        <ul 
+          className={styles.resourceList}
+          onScroll={this.updateSliceIndex} 
+          ref={(node) => { this.containerNode = node }}
+          style={{ paddingBottom: this.state.margin }}
         >
-          {this.buildResources().slice(0, this.state.resourceSliceIndex)}
-        </AdjustsForScrollbarContainer>
+          {this.buildResources().slice(0, this.state.sliceIndex)}
+        </ul>
       </div>
     );
   }

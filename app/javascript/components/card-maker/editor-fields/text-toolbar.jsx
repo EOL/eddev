@@ -10,7 +10,6 @@ function TextToolbar(props) {
           icon={button} 
           isActive={props.buttons[button]} 
           onMouseDown={e => {
-            console.log(button);
             e.preventDefault();
             props.onButtonClick(button)
           }}

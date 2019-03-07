@@ -7,6 +7,19 @@ class CardMakerController < ApplicationController
   before_action :header_slim
 
   def index
+    referrer = begin
+                 request.referer ? URI(request.referer) : nil
+               rescue => e
+                 logger.warn("failed to parse request.referer", e)
+                 nil
+               end
+
+    @back_path = (
+      !session[:card_maker_referrer].blank? && 
+      session[:card_maker_referrer] == referrer&.path
+    ) ? 
+    session[:card_maker_referrer] :
+    root_path
   end
 
   def set_js_translations

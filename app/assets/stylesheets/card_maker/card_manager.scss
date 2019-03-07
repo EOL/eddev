@@ -149,6 +149,21 @@ $card-aspect-ratio: .75;
   height: 120px;
 }
 
+.backBtn {
+  background: $white;
+  color: $nav-link-blue;
+  height: $cards-hdr-height;
+  line-height: $cards-hdr-height;
+  text-align: center;
+
+  & > a {
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+  }
+}
+
+/*
 .cardsHdr {
   background: $white;
   color: $eol-green;
@@ -172,6 +187,7 @@ $card-aspect-ratio: .75;
   text-align: left;
   vertical-align: middle;
 }
+*/
 
 .libs {
   height: $libs-height;

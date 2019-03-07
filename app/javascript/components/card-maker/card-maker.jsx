@@ -394,6 +394,7 @@ class CardMaker extends React.Component {
       component = (
         <CardManager
           allCardsDeck={allCardsDeck}
+          backPath={this.props.backPath}
           cards={this.state.library === 'user' ? this.state.userCards : this.state.publicCards}
           decks={this.state.library === 'user' ? this.state.userDecks : this.state.publicDecks}
           userDecks={this.state.userDecks}

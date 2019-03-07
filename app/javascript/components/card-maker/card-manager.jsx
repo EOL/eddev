@@ -989,6 +989,7 @@ class CardManager extends React.Component {
         />
         <img src={iguanaBanner} className={styles.banner} />
         <LeftRail
+          backPath={this.props.backPath}
           library={this.props.library}
           handleToggleLibrary={this.toggleLibrary}
           handleDeckSelect={this.handleDeckSelect}

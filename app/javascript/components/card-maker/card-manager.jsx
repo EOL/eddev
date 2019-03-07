@@ -454,7 +454,6 @@ class CardManager extends React.Component {
       I18n.t('react.card_maker.print_loading_msg'), 
       () => {
         this.cancelPolling();
-        console.log('cancel printing');
       },
       (closeFn) => {
         $.ajax({
@@ -681,7 +680,6 @@ class CardManager extends React.Component {
       () => {
         // TODO: send cancel request
         this.cancelPolling();
-        console.log('cancel png');
       },
       (closeFn) => {
         $.ajax({

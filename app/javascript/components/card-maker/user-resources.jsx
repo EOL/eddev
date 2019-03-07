@@ -87,7 +87,6 @@ class UserResources extends React.Component {
   }
 
   itemRef = (node) => {
-    console.log('ref', node);
     this.itemNode = node;
   }
 

@@ -56,6 +56,7 @@ const pollIntervalMillis = 1000
         deck: 0,
         sort: 1
       }
+    , newDeckId = -100
     ;
 
 class CardManager extends React.Component {
@@ -199,11 +200,25 @@ class CardManager extends React.Component {
     this.createOrCopyCard(data, this.state.speciesSearchDeckId);
   }
 
-  handleCopyCard = (deckId) => {
-    this.closeModal();
-    this.createOrCopyCard({ 
-      copyFrom: this.state.copyCardId 
-    }, deckId);
+  handleCopyCard = (deckId, deckName) => {
+    const that = this;
+
+    that.closeModal();
+
+    if (deckId === newDeckId) {
+      if (!deckName) {
+        throw new TypeError('deck name required');
+      }
+      that.createDeckHelper(deckName, null, null, false, (deckId, close) => {
+        that.createOrCopyCard({ 
+          copyFrom: that.state.copyCardId 
+        }, deckId);
+      });
+    } else {
+      that.createOrCopyCard({ 
+        copyFrom: that.state.copyCardId 
+      }, deckId);
+    }
   }
 
   deckFilterItemsHelper = (noSelectionText, includeCount) => {
@@ -376,7 +391,7 @@ class CardManager extends React.Component {
     this.createDeckHelper(deckName, colId, null, false);
   }
 
-  createDeckHelper = (deckName, colId, copyFrom, upgrade) => {
+  createDeckHelper = (deckName, colId, copyFrom, upgrade, afterCreate) => {
     const that = this
         , showUpgradedNotice = upgrade
         , data = {
@@ -396,13 +411,18 @@ class CardManager extends React.Component {
             if (err) {
               closeFn();
               alert(I18n.t('react.card_maker.unexpected_error_msg'));
+            } else if (afterCreate) {
+              afterCreate(deck.id, closeFn);
             } else {
               that.props.setLibrary('user', () => {
-                that.showDeck(deck.id, closeFn);
+                that.showDeck(deck.id, () => {
+                  closeFn();
 
-                if (showUpgradedNotice) {
-                  that.openModal(modals.deckUpgradedNotice);
-                }
+                  if (showUpgradedNotice) {
+                    that.openModal(modals.deckUpgradedNotice);
+                  }
+                });
+
               });
             }
           }
@@ -954,6 +974,8 @@ class CardManager extends React.Component {
           handleRequestClose={this.closeModal}
           handleCopy={this.handleCopyCard}
           decks={this.props.userDecks} 
+          deckNames={userDeckNames}
+          newDeckId={newDeckId}
         />
         <CopyDeckLightbox
           isOpen={this.state.openModal === modals.copyDeck}

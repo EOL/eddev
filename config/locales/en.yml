@@ -449,6 +449,7 @@ en:
       create_card: create card
       create_card_from_selection: Create a card from selection
       create_deck: create deck
+      create_new_deck: create a new deck
       deck: deck
       delete_deck: delete deck
       download_png: Download PNG

@@ -2,6 +2,7 @@ import React from 'react'
 import Search from './search'
 import styles from 'stylesheets/card_maker/card_manager'
 import eolLogo from 'images/welcome/eol_logo.png'
+import { deckNameCardCount } from 'lib/card-maker/deck-helpers'
 
 
 class ManagerLeftRail extends React.Component {
@@ -55,7 +56,9 @@ class ManagerLeftRail extends React.Component {
         onMouseEnter={() => this.setState({ hoverItem: deck })}
         onMouseLeave={() => this.setState({ hoverItem: null })}
       >
-        <span className={styles.deckName} dangerouslySetInnerHTML={{ __html: highlightedName }} />
+        <span className={styles.deckName}>
+          {deckNameCardCount(deck, highlightedName)}
+        </span>
       </li>
     )
   }

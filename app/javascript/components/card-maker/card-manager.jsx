@@ -22,6 +22,7 @@ import DialogBox from 'components/shared/dialog-box'
 import DeckDesc from './deck-desc'
 import PrintLightbox from './print-lightbox'
 import ManagerToolbar from './manager-toolbar'
+import WelcomeMessage from './welcome-message'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
 import eolHdrIcon from 'images/card_maker/icons/eol_logo_sub_hdr.png'
@@ -261,6 +262,13 @@ class CardManager extends React.Component {
 
   selectedResources = () => {
     const that = this;
+
+    if (!that.props.selectedDeck) {
+      return {
+        resources: [],
+        resourceType: 'card'
+      };
+    }
 
     let resources
       , resourceType = 'card'
@@ -799,78 +807,80 @@ class CardManager extends React.Component {
       , moreItems = []
       ;
 
-    if (
-      this.props.selectedDeck !== this.props.allCardsDeck && 
-      this.props.selectedDeck !== this.props.unassignedCardsDeck
-    ) {
-      if (resourceCount > 0 && !this.props.selectedDeck.needsUpgrade) {
-        actions.push({
-          onClick: this.openPrintOptions,
-          text: I18n.t('react.card_maker.print'),
-          icon: 'print'
-        });
+    if (this.props.selectedDeck) {
+      if (
+        this.props.selectedDeck !== this.props.allCardsDeck && 
+        this.props.selectedDeck !== this.props.unassignedCardsDeck
+      ) {
+        if (resourceCount > 0 && !this.props.selectedDeck.needsUpgrade) {
+          actions.push({
+            onClick: this.openPrintOptions,
+            text: I18n.t('react.card_maker.print'),
+            icon: 'print'
+          });
 
-        actions.push({
-          onClick: this.createDeckPngs,
-          text: I18n.t('react.card_maker.download_pngs'),
-          icon: 'download'
-        });
-      }
-
-      if (this.props.userRole) {
-        actions.push({
-          onClick: () => this.openCopyDeck(false),
-          text: I18n.t('react.card_maker.copy_deck'),
-          icon: 'copy'
-        });
-      }
-
-      if (this.isUserLib()) {
-        if (this.props.selectedDeck.needsUpgrade) {
-          moreItems.push({
-            text: I18n.t('react.card_maker.update_card_layouts'),
-            onClick: () => this.openCopyDeck(true)
+          actions.push({
+            onClick: this.createDeckPngs,
+            text: I18n.t('react.card_maker.download_pngs'),
+            icon: 'download'
           });
         }
 
-        moreItems.push({
-          onClick: this.openDescInput,
-          text: this.props.selectedDeck.desc ? 
-            I18n.t('react.card_maker.edit_desc') :
-            I18n.t('react.card_maker.add_desc')
-        });
-
-        moreItems.push({
-          onClick: () => this.openModal(modals.renameDeck),
-          text: I18n.t('react.card_maker.rename_deck')
-        });
-
-        if (this.props.selectedDeck.isOwner) {
-          moreItems.push({
-            onClick: () => this.handleDestroyDeck(this.props.selectedDeck.id),
-            text: I18n.t('react.card_maker.delete_deck')
+        if (this.props.userRole) {
+          actions.push({
+            onClick: () => this.openCopyDeck(false),
+            text: I18n.t('react.card_maker.copy_deck'),
+            icon: 'copy'
           });
         }
 
-        moreItems.push({
-          onClick: () => this.openModal(modals.deckUsers),
-          text: I18n.t('react.card_maker.manage_deck_users')
-        });
+        if (this.isUserLib()) {
+          if (this.props.selectedDeck.needsUpgrade) {
+            moreItems.push({
+              text: I18n.t('react.card_maker.update_card_layouts'),
+              onClick: () => this.openCopyDeck(true)
+            });
+          }
 
-        if (this.props.userRole == 'admin') {
           moreItems.push({
-            onClick: this.toggleDeckPublic,
-            text: this.props.selectedDeck.public ? 
-              I18n.t('react.card_maker.make_deck_private') :
-              I18n.t('react.card_maker.make_deck_public')
+            onClick: this.openDescInput,
+            text: this.props.selectedDeck.desc ? 
+              I18n.t('react.card_maker.edit_desc') :
+              I18n.t('react.card_maker.add_desc')
+          });
+
+          moreItems.push({
+            onClick: () => this.openModal(modals.renameDeck),
+            text: I18n.t('react.card_maker.rename_deck')
+          });
+
+          if (this.props.selectedDeck.isOwner) {
+            moreItems.push({
+              onClick: () => this.handleDestroyDeck(this.props.selectedDeck.id),
+              text: I18n.t('react.card_maker.delete_deck')
+            });
+          }
+
+          moreItems.push({
+            onClick: () => this.openModal(modals.deckUsers),
+            text: I18n.t('react.card_maker.manage_deck_users')
+          });
+
+          if (this.props.userRole == 'admin') {
+            moreItems.push({
+              onClick: this.toggleDeckPublic,
+              text: this.props.selectedDeck.public ? 
+                I18n.t('react.card_maker.make_deck_private') :
+                I18n.t('react.card_maker.make_deck_public')
+            });
+          }
+        } else {
+          actions.push({
+            onClick: () => this.openModal(modals.deckUrl),
+            text: I18n.t('react.card_maker.show_url'),
+            icon: 'link'
           });
         }
-      } else {
-        actions.push({
-          onClick: () => this.openModal(modals.deckUrl),
-          text: I18n.t('react.card_maker.show_url'),
-          icon: 'link'
-        });
       }
     }
 
@@ -939,16 +949,19 @@ class CardManager extends React.Component {
 
     return (
       <div className={styles.cardManager}>
-        <DeckUsersLightbox
-          isOpen={this.state.openModal === modals.deckUsers}
-          handleRequestClose={this.closeModal}
-          deck={this.props.selectedDeck}
-        />
+        {
+          this.props.selectedDeck != null &&
+          <DeckUsersLightbox
+            isOpen={this.state.openModal === modals.deckUsers}
+            handleRequestClose={this.closeModal}
+            deck={this.props.selectedDeck}
+          />
+        }
         <RenameDeckLightbox
           isOpen={this.state.openModal === modals.renameDeck}
           handleRequestClose={this.closeModal}
           handleRename={this.handleRenameDeck}
-          name={this.props.selectedDeck.name}
+          name={this.props.selectedDeck ? this.props.selectedDeck.name : ''}
           deckNames={new Set(this.props.userDecks.filter((deck) => {
             return deck !== this.props.selectedDeck;
           }).map((deck) => {
@@ -982,7 +995,7 @@ class CardManager extends React.Component {
           handleRequestClose={this.closeCopyDeck}
           handleCopy={this.handleCopyDeck}
           deckNames={userDeckNames}
-          name={this.deckCopyName(userDeckNames)}
+          name={this.props.selectedDeck ? this.deckCopyName(userDeckNames) : ''}
           showUpgradeMessage={this.state.upgradeDeckOnCopy}
           message={this.state.upgradeDeckOnCopy ? I18n.t('react.card_maker.update_deck_msg') : null}
           submitLabel={this.state.upgradeDeckOnCopy ? I18n.t('react.card_maker.update_deck') : I18n.t('react.card_maker.copy_deck')}
@@ -990,7 +1003,7 @@ class CardManager extends React.Component {
         <DeckUrlLightbox
           isOpen={this.state.openModal === modals.deckUrl}
           handleRequestClose={this.closeModal}
-          deckUrl={deckUrl(this.props.selectedDeck)}
+          deckUrl={this.props.selectedDeck ? deckUrl(this.props.selectedDeck) : ''}
         />
         <DeckUpgradeNotice
           isOpen={this.state.openModal === modals.needToUpgradeDeckNotice}
@@ -1022,14 +1035,18 @@ class CardManager extends React.Component {
         <div className={styles.lResources}>
           <div className={styles.lDeckMenu}>
             <div className={styles.lDeckMenuFlex}>
-              <Menu
-                items={[]}
-                open={this.state.openMenu === menus.deck}
-                anchorText={this.deckMenuAnchorText()}
-                handleRequestClose={() => this.closeMenu()}
-                handleRequestOpen={() => this.openMenu(menus.deck)}
-              />
               {
+                this.props.selectedDeck != null &&
+                <Menu
+                  items={[]}
+                  open={this.state.openMenu === menus.deck}
+                  anchorText={this.deckMenuAnchorText()}
+                  handleRequestClose={() => this.closeMenu()}
+                  handleRequestOpen={() => this.openMenu(menus.deck)}
+                />
+              }
+              {
+                this.props.selectedDeck != null &&
                 this.props.selectedDeck !== this.props.allCardsDeck &&
                 this.props.selectedDeck !== this.props.unassignedCardsDeck &&
                 <DeckDesc
@@ -1068,21 +1085,25 @@ class CardManager extends React.Component {
               actions={toolbarItems.actions}
               moreItems={toolbarItems.moreItems}
             />
-            <UserResources
-              resources={searchFilteredResources}
-              resourceType={resourceResult.resourceType}
-              handleCardDeckSelect={this.assignCardDeck}
-              handleEditCard={this.props.handleEditCard}
-              handleDeckSelect={this.handleDeckSelect}
-              handleDestroyCard={this.handleDestroyCard}
-              handleDestroyDeck={this.handleDestroyDeck}
-              handleNewCard={this.handleSpeciesSearchOpen}
-              handleCopyCard={this.openCopyCard}
-              showCopyCard={this.isUserLib() || this.props.userRole}
-              handleNewDeck={() => this.openModal(modals.newDeck)}
-              editable={this.isUserLib()}
-              extraClass={(toolbarItems.actions.length || toolbarItems.moreItems.length) ? styles.userResourcesToolbar : null}
-            />
+            {
+              this.props.selectedDeck != null ?
+              <UserResources
+                resources={searchFilteredResources}
+                resourceType={resourceResult.resourceType}
+                handleCardDeckSelect={this.assignCardDeck}
+                handleEditCard={this.props.handleEditCard}
+                handleDeckSelect={this.handleDeckSelect}
+                handleDestroyCard={this.handleDestroyCard}
+                handleDestroyDeck={this.handleDestroyDeck}
+                handleNewCard={this.handleSpeciesSearchOpen}
+                handleCopyCard={this.openCopyCard}
+                showCopyCard={this.isUserLib() || this.props.userRole}
+                handleNewDeck={() => this.openModal(modals.newDeck)}
+                editable={this.isUserLib()}
+                extraClass={(toolbarItems.actions.length || toolbarItems.moreItems.length) ? styles.userResourcesToolbar : null}
+              /> :
+              <WelcomeMessage />
+            }
           </div>
         </div>
       </div>

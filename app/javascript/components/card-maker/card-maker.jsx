@@ -119,7 +119,7 @@ class CardMaker extends React.Component {
       userDecks: [],
       publicCards: [],
       publicDecks: [],
-      selectedDeck: allCardsDeck,
+      selectedDeck: null,
       library: 'public',
       screen: 'manager',
       sort: sorts[publicSorts[0].key],
@@ -215,12 +215,18 @@ class CardMaker extends React.Component {
 
     that.reloadResource(that.state.library, 'cards', () => {
       that.reloadResource(that.state.library, 'decks', (decks) => {
-        let selectedDeck = decks.find((deck) => {
-          return deck.id === (deckOverrideId || that.state.selectedDeck.id);
-        });
+        let selectedDeck = that.state.selectedDeck ? 
+          decks.find((deck) => {
+            return deck.id === (deckOverrideId || that.state.selectedDeck.id);
+          }) : 
+          null;
 
         if (!selectedDeck) {
-          selectedDeck = allCardsDeck;
+          if (this.state.library === 'public') {
+            selectedDeck = null;
+          } else {
+            selectedDeck = allCardsDeck;
+          }
         }
 
         that.setState({

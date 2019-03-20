@@ -18,7 +18,7 @@ class CardPreview extends React.Component {
         ;
 
     for (const field of imgFields) {
-      let val = this.props.card.resolvedFieldData(field)
+      let val = this.props.card.resolvedDataForField(field)
         , url = val.thumbUrl
         , thumbClass = 'thumb'
         ;

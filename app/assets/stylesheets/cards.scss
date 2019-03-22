@@ -423,6 +423,34 @@ h4 {
   .card {
     width: 150px;
   }
+
+  .observer-card-images {
+    $space-between: 16px;
+    margin: 0 auto;
+    width: $observer-card-image-width * 2 + $space-between;
+
+    & > li {
+      display: inline-block; 
+
+      &:nth-of-type(2) {
+        margin-right: $space-between;
+      }
+
+      &:first-of-type {
+        display: block;
+      }
+    }
+  } 
+
+  .observer-card-links {
+    margin-right: -50px;
+    text-align: center;
+  }
+
+  .observer-card-link {
+    display: inline-block;
+    margin-right: 50px;
+  }
 }
 
 .sub-head {
@@ -455,26 +483,6 @@ h4 {
       color: $black;
     }
   }
-}
-
-@media only screen and (min-width: $tablet-width) {
-  .observer-card-images {
-    $space-between: 16px;
-    margin: 0 auto;
-    width: $observer-card-image-width * 2 + $space-between;
-
-    & > li {
-      display: inline-block; 
-
-      &:nth-of-type(2) {
-        margin-right: $space-between;
-      }
-
-      &:first-of-type {
-        display: block;
-      }
-    }
-  } 
 }
 
 @media only screen and (min-width: 670px) {

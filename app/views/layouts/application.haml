@@ -68,7 +68,7 @@
 
       -unless @nohero
         #HeroImage.hero-image
-          = render "shared/hero_slim"
+          = render "shared/hero_slim", image: @banner_image ? @banner_image : nil
 
       %main{:role => "main", :class => (main_nopad_bot? ? "is-nopad-bot" : "")}
         - if @disable_main_col

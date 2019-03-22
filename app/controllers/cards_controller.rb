@@ -9,5 +9,6 @@ class CardsController < ApplicationController
   end
 
   def observer_cards
+    @banner_image = "cards/bee_banner.png"
   end
 end

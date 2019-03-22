@@ -111,7 +111,7 @@ en:
     observer_cards_section:
       bee_cards_desc: "There are approximately 20,000 described species of bees living on all continents except Antarctica. Bees play an essential role in natural ecosystems by pollinating wild plants, and in agricultural systems by pollinating cultivated crops. Most people are familiar with honey bees and bumble bees, but these make up just a tiny component of a vast bee fauna. Use these cards to help you focus on the key traits and behaviors that make different bee species unique. Drawings and photographs are a great way to supplement your field notes as you explore the tiny world of these amazing animals."
       bee_cards_header: "Bee Observer Cards"
-      frog_cards_desc: "Amphibians are a unique group of vertebrates that are distributed across the globe. Sadly, nearly one-third of the world’s over 7,400 species are threatened. Frogs are the most speciose of three orders of amphibians, which also includes salamanders and worm-like caecilians. Use these cards to help you focus on the key traits and behaviors that make different frogs species unique. Drawings, photographs, and recordings of frog calls are a great way to supplement your field notes as you explore the diversity of these amazing animals. Find out what species are in your area before you go looking for frogs by searching online or using photographs, and recordings of frog calls"
+      frog_cards_desc: "Amphibians are a unique group of vertebrates that are distributed across the globe. Sadly, nearly one-third of the world’s over 7,400 species are threatened. Frogs are the most speciose of three orders of amphibians, which also includes salamanders and worm-like caecilians. Use these cards to help you focus on the key traits and behaviors that make different frogs species unique. Drawings, photographs, and recordings of frog calls are a great way to supplement your field notes as you explore the diversity of these amazing animals. Find out what species are in your area before you go looking for frogs by searching online or using photographs, and recordings of frog calls."
       frog_cards_header: "Frog Observer Cards"
     observer_card_links:
       bee_cards_ebook: "Bee Observer Cards eBook"
@@ -592,6 +592,7 @@ en:
       bhl_coloring_html: "Biodiversity Heritage Library Coloring Books <i class='fa fa-external-link'></i>"
       cnc_html: "City Nature Challenge <i class='fa fa-external-link'></i>"
       overview: "Overview"
+      observer_cards: "Observer Cards"
   signup_confirmation_mailer:
     confirmation_email:
       body_html: "Hi, %{user_name}, thank you for signing up for the EOL L&amp;E site. Please click the following link to confirm your registration: <a href=\"%{url}\">%{url}</a>"

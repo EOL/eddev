@@ -10,6 +10,7 @@ $activities-yellow: #bdb261;
 $tutorials-blue: #69a4bd;
 $standards-red: #d57070;
 $bee-cards-green: #b7c24d;
+$frog-cards-purple: #bba0cf;
 $border-gray: #ddd;
 $hover-gray: #eee;
 
@@ -108,8 +109,12 @@ h4 {
     background-color: $standards-red;
   }
 
-  .section-head-cards-bees {
+  .section-head-cards-bee {
     background-color: $bee-cards-green;
+  }
+
+  .section-head-cards-frog {
+    background-color: $frog-cards-purple;
   }
 
 .text-p-cards {

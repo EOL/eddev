@@ -1,0 +1,5 @@
+.section
+  %h3.section-head-cards{class: "section-head-cards-#{type}"}= t(".#{type}_cards_header")
+  = render "observer_card_images", images: ["#{type}1.png", "#{type}2.png", "#{type}3.png"]
+  %p.text.text-p.text-p-cards= t(".#{type}_cards_desc")
+  = render "observer_card_links", type: type

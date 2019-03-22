@@ -1,12 +1,4 @@
 = render "shared/intro_section", header: "cards.observer_cards.intro_header", paragraphs: %w(cards.observer_cards.intro_text)
-.section
-  %h3.section-head-cards.section-head-cards-bees= t(".bee_cards_header")
-  = render "observer_card_images", images: %w(bees1.png bees2.png bees3.png)
-  %p.text.text-p.text-p-cards= t(".bee_cards_desc")
-  = render "observer_card_links", type: "bee"
-.section
-  %h3.section-head-cards.section-head-cards-bees= t(".bee_cards_header")
-  = render "observer_card_images", images: %w(bees1.png bees2.png bees3.png)
-  %p.text.text-p.text-p-cards= t(".bee_cards_desc")
-  = render "observer_card_links", type: "bee"
+= render "observer_cards_section", type: "bee"
+= render "observer_cards_section", type: "frog"
 

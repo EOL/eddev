@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     get  'about'        => 'welcome#about',      :as => :about
     get  'card_resources'       => 'cards#index',    :as => :cards
     get  'species_cards', to: redirect('/card_resources')
+    get  'observer_cards' => "cards#observer_cards", :as => :observer_cards
     get  'lesson_plans' => 'lesson_plans#index', :as => :lesson_plans
     get  'lesson_plans/2-5_EnergyFlow1_PredatorsPrey.pdf', to: redirect('/lesson_plans/2-5_EnergyFlow1_PredatorsAndPrey.pdf')
     get  'lesson_plans/2-5_ScienceSkills_SkillBuilders4_ModelingClassification.pdf', to: redirect('/lesson_plans/2-5_ScienceSkills_BioblitzSkillbuilder4.pdf')

@@ -9,6 +9,7 @@ $cards-green: #8dbd69;
 $activities-yellow: #bdb261;
 $tutorials-blue: #69a4bd;
 $standards-red: #d57070;
+$bee-cards-green: #b7c24d;
 $border-gray: #ddd;
 $hover-gray: #eee;
 
@@ -16,6 +17,7 @@ $mobile-col-width: 270px;
 
 $item-shadow: -3px 3px 2px 0px rgba(156,156,156,0.47);
 
+$observer-card-image-width: 240px;
 
 h4 {
   font-size: 20px;
@@ -104,6 +106,10 @@ h4 {
 
   .section-head-cards-standards {
     background-color: $standards-red;
+  }
+
+  .section-head-cards-bees {
+    background-color: $bee-cards-green;
   }
 
 .text-p-cards {
@@ -428,6 +434,49 @@ h4 {
   margin: 50px 0 40px 0;
 }
 
+.observer-card-images {
+  & > li {
+    margin: 20px auto 0 auto;
+    width: $observer-card-image-width;
+
+    & > img {
+      width: 100%;
+    }
+  }
+}
+
+.observer-card-link {
+  font-size: 18px;
+  margin-top: 29px;
+  text-align: center;
+
+  & > a {
+    & > i {
+      color: $black;
+    }
+  }
+}
+
+@media only screen and (min-width: $tablet-width) {
+  .observer-card-images {
+    $space-between: 16px;
+    margin: 0 auto;
+    width: $observer-card-image-width * 2 + $space-between;
+
+    & > li {
+      display: inline-block; 
+
+      &:nth-of-type(2) {
+        margin-right: $space-between;
+      }
+
+      &:first-of-type {
+        display: block;
+      }
+    }
+  } 
+}
+
 @media only screen and (min-width: 670px) {
   .section-organizers {
     display: flex;
@@ -466,6 +515,36 @@ h4 {
     font-size: 16px;
     height: $height;
     line-height: $height;
+  }
+
+  .observer-card-images {
+    margin-bottom: 60px;
+    position: relative;
+    width: $observer-card-image-width;
+
+    & > li {
+      $spacing: 5px;
+      $rotate: 12deg;
+      position: absolute;
+      top: 7px;
+      z-index: 1;
+
+      &:first-of-type {
+        position: relative;
+        top: 0;
+        z-index: 2;
+      }
+
+      &:nth-of-type(2) {
+        left: -1 * ($observer-card-image-width + $spacing);
+        transform: rotate(-1 * $rotate);
+      }
+
+      &:nth-of-type(3) {
+        right: -1 * ($observer-card-image-width + $spacing);
+        transform: rotate($rotate);
+      }
+    }
   }
 }
 

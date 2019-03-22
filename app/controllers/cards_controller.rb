@@ -7,4 +7,7 @@ class CardsController < ApplicationController
     @thats_classified = LessonPlan.find_by_human_name!("thats_classified_2_5")
     @create_a_creature = LessonPlan.find_by_human_name!("create_a_creature_2_5")
   end
+
+  def observer_cards
+  end
 end

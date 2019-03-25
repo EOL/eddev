@@ -26,7 +26,7 @@ module Eddev
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :en
     config.i18n.available_locales = [:en, :'es-ES', :ca, :fr]
-    config.i18n.fallbacks = [:en]
+    config.i18n.fallbacks = [I18n.default_locale]
 
     config.secret_key_base = ENV['secret_key_base']
 

@@ -311,6 +311,7 @@ h4 {
     white-space: nowrap;
 
     & > img {
+      box-shadow: $item-shadow;
       display: block;
       margin: 0 auto 10px auto;
       width: 100%;

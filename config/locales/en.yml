@@ -104,7 +104,7 @@ en:
         choose_species: "1. Choose a species"
         research_traits: "2. Research traits"
         create_card: "3. Create card in Card Maker"
-        publish_card: "4. Publish/print card"
+        publish_card: "4. Publish or print card"
     observer_cards:
       intro_header: "Observer Cards"
       intro_text: "Observer cards are designed to develop the art and science of observing nature. Each set of cards provides key traits and techniques neccessary to make accurate and useful scientific observations."

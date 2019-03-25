@@ -91,7 +91,6 @@ group :development do
   gem 'capistrano-rails-collection'
   #gem 'capistrano-passenger', '~> 0.2.0'
   gem 'capistrano-git-with-submodules', '~> 2.0'
-  gem 'capistrano-nvm', require: false
 
   gem 'better_errors'
   gem 'i18n_yaml_sorter'

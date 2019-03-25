@@ -146,6 +146,7 @@ class ApplicationController < ActionController::Base
     def store_card_maker_referrer
       if (
         reg_req? &&
+        request.controller_class != UserSessionsController &&
         request.controller_class != CardMakerController
       )
         session[:card_maker_referrer] = request.fullpath

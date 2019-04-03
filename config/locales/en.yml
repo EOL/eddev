@@ -712,5 +712,6 @@ en:
     unsaved_beforeunload: "You currently have unsaved changes that will be lost if you leave this page."
   banner_taxon:
     bee: Bee
+    damselflies: Damselflies
     eol_taxon_page: EOL Taxon Page
 

@@ -6,6 +6,8 @@ class CardsController < ApplicationController
     @go_adapt = LessonPlan.find_by_human_name!("go_adapt_2_5")
     @thats_classified = LessonPlan.find_by_human_name!("thats_classified_2_5")
     @create_a_creature = LessonPlan.find_by_human_name!("create_a_creature_2_5")
+    @banner_image = "cards/damselfly_banner.jpg"
+    @banner_taxon = BannerTaxon.new("damselflies", "<em>Zygoptera</em>", 2764228)
   end
 
   def observer_cards

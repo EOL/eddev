@@ -193,8 +193,30 @@ textarea {
 
 .hero-slim {
   height: 60px;
-  object-fit: cover;
   width: 100%;
+
+  & > img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+.hero-taxon {
+  background-color: rgba(#242424, .6);
+  bottom: 0;
+  color: #fff;
+  display: none;
+  height: 30px;
+  line-height: 30px;
+  position: absolute;
+  text-align: right;
+  width: 100%;
+
+  & > div {
+    @include main-col-horiz();
+    padding: 0 30px;
+  }
 }
 
 .hero-small {
@@ -349,6 +371,10 @@ $hero-transition-width: 525;
 @media only screen and (min-width: $tablet-width) {
   .hero-slim {
     height: 80px;
+  }
+
+  .hero-taxon {
+    display: block;
   }
 }
 

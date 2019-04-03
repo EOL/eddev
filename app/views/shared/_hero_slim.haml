@@ -1,1 +1,11 @@
-= image_tag (image || "shared/banner_slim.png"), class: "hero-slim"
+#HeroImage.hero-image
+  .hero-slim
+    = image_tag (image || "shared/banner_slim.png")
+    - if taxon
+      .hero-taxon
+        .hero-taxon-inner
+          = t(".banner_taxon.#{taxon.common_name_key}")
+          &nbsp;
+          = taxon.sci_name.html_safe
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          = link_to(t("banner_taxon.eol_taxon_page"), "https://eol.org/pages/#{taxon.eol_id}")

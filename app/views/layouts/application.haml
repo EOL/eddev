@@ -67,8 +67,7 @@
       = render "shared/header"
 
       -unless @nohero
-        #HeroImage.hero-image
-          = render "shared/hero_slim", image: @banner_image ? @banner_image : nil
+        = render "shared/hero_slim", image: @banner_image ? @banner_image : nil, taxon: @banner_taxon
 
       %main{:role => "main", :class => (main_nopad_bot? ? "is-nopad-bot" : "")}
         - if @disable_main_col

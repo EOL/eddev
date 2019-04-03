@@ -210,12 +210,10 @@ textarea {
   height: 30px;
   line-height: 30px;
   position: absolute;
-  text-align: right;
   width: 100%;
 
   & > div {
     @include main-col-horiz();
-    padding: 0 30px;
   }
 }
 

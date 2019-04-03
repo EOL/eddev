@@ -10,6 +10,6 @@ class CardsController < ApplicationController
 
   def observer_cards
     @banner_image = "cards/bee_banner.png"
-    @banner_taxon = BannerTaxon.new("bee", "<i>apis somethingorother</i>", 1)
+    @banner_taxon = BannerTaxon.new("bees", "<em>Apidae</em>", 677)
   end
 end

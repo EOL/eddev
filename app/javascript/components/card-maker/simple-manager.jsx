@@ -131,7 +131,7 @@ class SimpleManager extends React.Component {
         className={styles.card}
         key={card.id}
       >
-        <LoadingSpinnerImage src={loResCardImageUrl(card)} />
+        <LoadingSpinnerImage src={loResCardImageUrl(card)} load={true}/>
         <div className={styles.resourceOverlay}>
           {
             this.props.library === 'user' &&

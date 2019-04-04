@@ -143,7 +143,7 @@ LessonPlan.create_with(:grade_level => grade_level_0).create!([
     :desc_key => "students_apply_go_fish_html",
     :file_name => "2-5_Classification4_ThatsClassified",
     :overview_file_name => "2-5_Classification_LessonOverview",
-    :human_name => "thats_classified"
+    :human_name => "thats_classified_2_5"
   },
   {
     :theme => energy_flow_theme,
@@ -224,7 +224,7 @@ LessonPlan.create_with(:grade_level => grade_level_0).create!([
     :perks => [species_card_perk],
     :file_name => "2-5_Adaptations4_GoAdapt",
     :overview_file_name => "2-5_Adaptations_LessonOverview",
-    :human_name => "go_adapt"
+    :human_name => "go_adapt_2_5"
   },
   {
     :theme => adaptations_theme,
@@ -234,7 +234,7 @@ LessonPlan.create_with(:grade_level => grade_level_0).create!([
     :perks => [species_card_perk],
     :file_name => "2-5_Adaptations5_CreateACreature",
     :overview_file_name => "2-5_Adaptations_LessonOverview",
-    :human_name => "create_a_creature"
+    :human_name => "create_a_creature_2_5"
   },
   {
     :theme => science_skills_theme,
@@ -380,7 +380,7 @@ LessonPlan.create_with(:grade_level => grade_level_1).create!([
     :perks => [species_card_perk],
     :file_name => "6-8_FoodWebs4_FoodChainsRummy",
     :overview_file_name => "6-8_FoodWebs_LessonOverview",
-    :human_name => "food_chains_rummy"
+    :human_name => "food_chains_rummy_6_8"
   },
   {
     :theme => adaptations_theme,
@@ -475,7 +475,7 @@ LessonPlan.create_with(:grade_level => grade_level_2).create!([
     :perks => [species_card_perk],
     :file_name => "9-12_Interdependence3_FoodChainsRummy",
     :overview_file_name => "9-12_Interdependence_LessonOverview",
-    :human_name => "food_chains_rummy"
+    :human_name => "food_chains_rummy_9_12"
   },
   {
     :theme => science_skills_theme,
@@ -485,7 +485,7 @@ LessonPlan.create_with(:grade_level => grade_level_2).create!([
     :perks => [bio_stats_perk, species_card_perk],
     :file_name => "9-12_CitSci1_IntroToBiodiversity",
     :overview_file_name => "9-12_CitSci-Overview",
-    :human_name => "intro_to_biodiversity"
+    :human_name => "intro_to_biodiversity_9_12"
   },
   {
     :theme => science_skills_theme,
@@ -495,7 +495,7 @@ LessonPlan.create_with(:grade_level => grade_level_2).create!([
     :perks => [bio_stats_perk],
     :file_name => "9-12_CitSci2_CitSci-OpenSci-Presentation",
     :overview_file_name => "9-12_CitSci-Overview",
-    :human_name => "citizen_science_presentation"
+    :human_name => "citizen_science_presentation_9_12"
   },
   {
     :theme => science_skills_theme,
@@ -505,7 +505,7 @@ LessonPlan.create_with(:grade_level => grade_level_2).create!([
     :perks => [field_work_perk],
     :file_name => "9-12_CitSci3_IntroToINat",
     :overview_file_name => "9-12_CitSci-Overview",
-    :human_name => "intro_to_inaturalist"
+    :human_name => "intro_to_inaturalist_9_12"
   },
   {
     :theme => science_skills_theme,
@@ -515,7 +515,7 @@ LessonPlan.create_with(:grade_level => grade_level_2).create!([
     :perks => [bio_stats_perk],
     :file_name => "9-12_CitSci4_CNC-Data",
     :overview_file_name => "9-12_CitSci-Overview",
-    :human_name => "cnc_data_exploration"
+    :human_name => "cnc_data_exploration_9_12"
   },
 ])
 

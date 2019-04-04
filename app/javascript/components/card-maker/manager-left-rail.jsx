@@ -2,6 +2,7 @@ import React from 'react'
 import Search from './search'
 import styles from 'stylesheets/card_maker/card_manager'
 import eolLogo from 'images/welcome/eol_logo.png'
+import { deckNameCardCount } from 'lib/card-maker/deck-helpers'
 
 
 class ManagerLeftRail extends React.Component {
@@ -55,7 +56,9 @@ class ManagerLeftRail extends React.Component {
         onMouseEnter={() => this.setState({ hoverItem: deck })}
         onMouseLeave={() => this.setState({ hoverItem: null })}
       >
-        <span className={styles.deckName} dangerouslySetInnerHTML={{ __html: highlightedName }} />
+        <span className={styles.deckName}>
+          {deckNameCardCount(deck, highlightedName)}
+        </span>
       </li>
     )
   }
@@ -137,10 +140,17 @@ class ManagerLeftRail extends React.Component {
   render() {
     return (
       <div className={styles.lLeftRail}>
-        <div className={styles.cardsHdr}>
-          {/* <img src={eolLogo} className={styles.cardsHdrEolLogo}/> */}
+        <div className={styles.backBtn}>
+          <a href={this.props.backPath}>
+            <i className='fa fa-lg fa-arrow-left' />
+            <span>&nbsp;&nbsp;back to site</span>
+          </a>
+          {
+            /* <img src={eolLogo} className={styles.cardsHdrEolLogo}/> 
           <i className={`cm-icon-two-cards ${styles.cardsHdrTwoCards}`} />
           <div className={styles.cardsHdrTxt} dangerouslySetInnerHTML={{__html: I18n.t('react.card_maker.card_maker_html')}} />
+            */
+          }
         </div>
         <ul className={styles.libs} >
           {this.lib(I18n.t('react.card_maker.my_cards'), 'user', 'user')}

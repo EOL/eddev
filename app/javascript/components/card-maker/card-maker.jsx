@@ -8,6 +8,8 @@ import CardEditor from './card-editor'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
 import newImmutableCardInstance from 'lib/card-maker/immutable-card'
 
+import styles from 'stylesheets/card_maker/card_maker';
+
 import eolLogoHdr from 'images/card_maker/icons/eol_logo_hdr.png'
 
 function ascSort(field) {
@@ -123,6 +125,7 @@ class CardMaker extends React.Component {
       screen: 'manager',
       sort: sorts[publicSorts[0].key],
       showLoadingOverlay: false,
+      loadingOverlayOnCancel: false,
       userRole: null
     }
   }
@@ -136,7 +139,7 @@ class CardMaker extends React.Component {
       that.handleHistoryStateChange(event.state);
     });
 
-    that.showLoadingOverlay(null, (closeFn) => {
+    that.showLoadingOverlay(null, null, (closeFn) => {
       $.getJSON('/user_sessions/user_info', (userInfo) => {
         that.setState({
           userRole: userInfo.role
@@ -368,10 +371,23 @@ class CardMaker extends React.Component {
     return lib === 'user' ? userSorts : publicSorts;
   }
 
+  handleReloadCard = (cb) => {
+    this.loadCard(this.state.editorCard.id(), (err, card) => {
+      if (err) {
+        return cb(err);
+      }
+
+      this.setState({
+        editorCard: card
+      }, cb);
+    })
+  }
+
   screenComponent = () => {
     const commonProps = {
       showLoadingOverlay: this.showLoadingOverlay,
       hideLoadingOverlay: this.hideLoadingOverlay,
+      userRole: this.state.userRole
     }
 
     let component;
@@ -380,12 +396,13 @@ class CardMaker extends React.Component {
       component = (
         <SimpleManager
           allCardsDeck={allCardsDeck}
+          backPath={this.props.backPath}
           cards={this.state.library === 'user' ? this.state.userCards : this.state.publicCards}
           decks={this.state.library === 'user' ? this.state.userDecks : this.state.publicDecks}
           userDecks={this.state.userDecks}
           unassignedCardsDeck={unassignedCardsDeck}
-          onRequestEditCard={this.handleEditCard}
           userRole={this.state.userRole}
+          handleEditCard={this.handleEditCard}
           library={this.state.library}
           reloadCurLibResources={this.reloadCurLibResources}
           setLibrary={this.setLibrary}
@@ -404,6 +421,7 @@ class CardMaker extends React.Component {
           card={this.state.editorCard}
           updateCard={this.updateEditorCard}
           handleRequestClose={this.handleEditorCloseRequest}
+          requestReloadCard={this.handleReloadCard}
           {...commonProps}
         />
       )
@@ -412,22 +430,29 @@ class CardMaker extends React.Component {
     return component;
   }
 
-  showLoadingOverlay = (text, cb) => {
+  showLoadingOverlay = (text, onCancel, cb) => {
     const that = this;
 
     this.setState({
       showLoadingOverlay: true,
-      loadingOverlayText: text
+      loadingOverlayText: text,
+      loadingOverlayOnCancel: onCancel
     }, () => {
       cb(this.hideLoadingOverlay);
     });
   }
 
-  hideLoadingOverlay = () => {
+  cancelLoadingOverlay = () => {
+    const loadingOverlayOnCancel = this.state.loadingOverlayOnCancel;
+    this.hideLoadingOverlay(loadingOverlayOnCancel);
+  }
+
+  hideLoadingOverlay = (cb) => {
     this.setState({
       showLoadingOverlay: false,
-      loadingOverlayText: null
-    });
+      loadingOverlayText: null,
+      loadingOverlayOnCancel: null
+    }, cb);
   }
 
   handleRequestPublicCardsForTaxon = (id) => {
@@ -440,7 +465,7 @@ class CardMaker extends React.Component {
 
   render() {
     return (
-      <div className='card-maker'>
+      <div className={styles.cardMaker}>
         <ReactModal
           isOpen={this.state.showLoadingOverlay}
           parentSelector={() => {return document.getElementById('Page')}}
@@ -454,11 +479,18 @@ class CardMaker extends React.Component {
             this.state.loadingOverlayText &&
             <div>{this.state.loadingOverlayText}</div>
           }
+          {
+            this.state.loadingOverlayOnCancel != null &&
+            <button 
+              onClick={this.cancelLoadingOverlay}
+            >{I18n.t('react.card_maker.cancel')}</button>
+          }
         </ReactModal>
-        {this.screenComponent()}
+        <Page noMainCol={true}>{this.screenComponent()}</Page>
       </div>
     )
   }
 }
 
 export default CardMaker
+

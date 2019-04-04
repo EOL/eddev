@@ -32,7 +32,7 @@ class CardFields extends React.Component {
 
       for (let i = 0; i < fields.length; i++) {
         let field = fields[i]
-          , value = this.props.card.resolvedFieldData(field)
+          , value = this.props.card.resolvedDataForField(field)
           , choices = this.props.card.getFieldChoices(field.id)
           , choiceTips = this.props.card.getFieldChoiceTips(field.id)
           , setDataAttr = this.props.setCardData.bind(null, field.id)
@@ -78,6 +78,10 @@ class CardFields extends React.Component {
               enableCol={this.props.enableCol}
               customTab={field.allowCustom}
               fieldColor={fieldColor}
+              userRole={this.props.userRole}
+              isCardDirty={this.props.card.isDirty()}
+              requestReloadCard={this.props.requestReloadCard}
+              cardId={this.props.card.id()}
             />
           );
 

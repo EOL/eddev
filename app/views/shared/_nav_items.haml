@@ -1,0 +1,34 @@
+%ul{class: menu_class}
+  %li{class: item_class}
+    %span.nav-lnk-txt
+      = t(".biodiversity_cards")
+      - if down_arrows
+        %i.fa.fa-caret-down.nav-lnk-down
+    %ul{class: [sub_menu_base_class, "#{sub_menu_base_class}-cards"]}
+      %li= link_to(t(".card_resources"), cards_path)
+      %li= link_to(t(".card_maker"), card_maker_path)
+      %li= link_to(t(".observer_cards"), observer_cards_path)
+  %li{class: item_class}
+    %span.nav-lnk-txt
+      = t(".lesson_plans")
+      - if down_arrows
+        %i.fa.fa-caret-down.nav-lnk-down
+    %ul{class: [sub_menu_base_class, "#{sub_menu_base_class}-lesson"]}
+      %li= link_to(t(".overview"), lesson_plans_path + "#")
+      %li= link_to(t(".grades_2_5"), lesson_plans_path(anchor: "grade_level=0"))
+      %li= link_to(t(".grades_6_8"), lesson_plans_path(anchor: "grade_level=1"))
+      %li= link_to(t(".grades_9_12"), lesson_plans_path(anchor: "grade_level=2"))
+  %li{class: item_class}
+    %span.nav-lnk-txt= link_to(t(".podcasts"), podcasts_path)
+  %li{class: item_class}
+    %span.nav-lnk-txt= link_to(t(".google_earth_tours"), earth_tours_path)
+  %li{class: item_class}
+    %span.nav-lnk-txt
+      = t(".partner_resources")
+      - if down_arrows
+        %i.fa.fa-caret-down.nav-lnk-down
+    %ul{class: [sub_menu_base_class, "#{sub_menu_base_class}-partner"]}
+      %li= link_to(t(".inaturalist_html"), "https://www.inaturalist.org/")
+      %li= link_to(t(".bhl_coloring_html"), "https://drive.google.com/file/d/0B00hDkSQMhfDMXdIVng0NGd0WlU/view")
+      %li= link_to(t(".cnc_html"), "http://citynaturechallenge.org/education-toolkit/")
+

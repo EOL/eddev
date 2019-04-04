@@ -4,6 +4,37 @@
     toggleGradeLevelMenu($(this));
   }
 
+  function closeAllMenus() {
+    var $gradeLevels = $('.grade-level');
+
+    $gradeLevels.each(function() {
+      var $list = $(this).find('.lesson-plan-list')
+        , $chevron = $(this).find('.chevron')
+        ;
+
+      $list.css({
+        display: 'none'
+      });
+      setGradeLevelClass($(this), null);
+      $chevron.removeClass('fa-chevron-up');
+      $chevron.addClass('fa-chevron-down');
+    });
+  }
+
+  function openMenu($menu) {
+    var $gradeLevel = $menu.closest('.grade-level')
+      , $list = $gradeLevel.find('.lesson-plan-list')
+      , $chevron = $gradeLevel.find('.chevron')
+      ;
+
+    $list.css({
+      display: 'block'
+    });
+
+    $chevron.removeClass('fa-chevron-down');
+    $chevron.addClass('fa-chevron-up');
+  }
+
   // Show/hide lesson plans for grade level
   function toggleGradeLevelMenu($menu, callback) {
     var $gradeLevel = $menu.closest('.grade-level')
@@ -15,7 +46,7 @@
       ;
 
     if (visible) {
-      $navbar = $('.navbar');
+      $navbar = $('.navbar-outer');
       $bar = $gradeLevel.find('.grade-level-bar-outer');
       window.scrollTo(0, $list.offset().top + $navbar.height() + $bar.height());
     }
@@ -65,13 +96,19 @@
 
   // Scroll to lesson plan with id, opening the required grade level menu
   function scrollToId(id, highlight) {
-    var $lessonPlan = $('#LessonPlan' + id),
-        $menu = $lessonPlan.closest('.grade-level').find('.grade-level-bar'),
-        highlightColor = '#c9ddff';
+    var $lessonPlan = $('#LessonPlan' + id)
+      , $menu = $lessonPlan.closest('.grade-level').find('.grade-level-bar')
+      , $navbar = $('.navbar-outer')
+      , highlightColor = '#c9ddff'
+      ;
 
     toggleGradeLevelMenu($menu, function() {
       var backgroundColor = $lessonPlan.css('background-color');
-      $(window).scrollTop($lessonPlan.offset().top - $menu.height()); //accommodate persistent header
+      $(window).scrollTop(
+        $lessonPlan.offset().top - 
+        $menu.height() -
+        $navbar.outerHeight()
+      ); //accommodate persistent header
 
       if (highlight) {
         $lessonPlan.css('background-color', highlightColor);
@@ -83,6 +120,16 @@
     });
   }
 
+  function scrollToGradeLevel(id) {
+    var $menu = $('.grade-level-' + id)
+      , $navbar = $('.navbar-outer')
+      ;
+
+    closeAllMenus();
+    openMenu($menu);
+    $(window).scrollTop($menu.offset().top - $navbar.outerHeight());
+  }
+
   // Scroll to lesson plan passed in via url hash or saved in session storage.
   // Highlights lesson plan if lesson plan scrolled to was indicated via url hash.
   function scrollWhereNecessary() {
@@ -92,8 +139,13 @@
     if (!restoreFromStorage()) {
       hashParams = EolUtil.parseHashParams();
 
-      if (hashParams && hashParams['scroll_to']) {
-        scrollToId(hashParams['scroll_to'], true);
+      if (hashParams) {
+        if (hashParams['scroll_to']) {
+          scrollToId(hashParams['scroll_to'], true);
+        } else if (hashParams['grade_level']) {
+          scrollToGradeLevel(hashParams['grade_level']);
+          EolUtil.clearHash(); // To allow re-navigating to the same grade level
+        }
       }
     }
   }
@@ -102,7 +154,7 @@
   function updateHeadersOnScroll() {
     var windowScroll = $(window).scrollTop()
       , $lessonPlanLists = $('.lesson-plan-list:visible')
-      , $navbar = $('.navbar')
+      , $navbar = $('.navbar-outer')
       , navbarHeight = $navbar.height()
       ;
 
@@ -165,5 +217,6 @@
     $('.lesson-plan.external a').click(updateStorage);
 
     $(window).scroll(updateHeadersOnScroll);
+    $(window).on('hashchange', scrollWhereNecessary);
   });
 })();

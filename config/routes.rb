@@ -5,8 +5,13 @@ Rails.application.routes.draw do
   scope '(:locale)', locale: /#{I18n.available_locales.reject { |l| l == I18n.default_locale}.join('|')}/ do
     get  ''            => 'welcome#index', :as => :home
     get  'about'        => 'welcome#about',      :as => :about
-    get  'species_cards'        => 'cards#index',        :as => :cards
+    get  'card_resources'       => 'cards#index',    :as => :cards
+    get  'species_cards', to: redirect('/card_resources')
+    get  'observer_cards' => "cards#observer_cards", :as => :observer_cards
     get  'lesson_plans' => 'lesson_plans#index', :as => :lesson_plans
+    get  'lesson_plans/2-5_EnergyFlow1_PredatorsPrey.pdf', to: redirect('/lesson_plans/2-5_EnergyFlow1_PredatorsAndPrey.pdf')
+    get  'lesson_plans/2-5_ScienceSkills_SkillBuilders4_ModelingClassification.pdf', to: redirect('/lesson_plans/2-5_ScienceSkills_BioblitzSkillbuilder4.pdf')
+    get  'lesson_plans/:name' => 'lesson_plans#show', :as => :lesson_plan
     get  'earth_tours' => 'earth_tours#index', :as => :earth_tours
 
     resources :users, :only => [:new, :create]
@@ -33,6 +38,7 @@ Rails.application.routes.draw do
     get    "card_maker_ajax/cards/:card_id(.:format)" => "card_maker_ajax#get_card"
     put    "card_maker_ajax/cards/:card_id/deck_id"   => "card_maker_ajax#set_card_deck"
     delete "card_maker_ajax/cards/:card_id/deck_id"   => "card_maker_ajax#remove_card_deck"
+    post   "card_maker_ajax/cards/:card_id/refresh_images" => "card_maker_ajax#refresh_card_images"
 #    get    "card_maker_ajax/card_ids"                 => "card_maker_ajax#card_ids"
     get    "card_maker_ajax/cards"                    => "card_maker_ajax#cards"
     get    "card_maker_ajax/decks/:deck_id/card_ids"  => "card_maker_ajax#deck_card_ids"
@@ -69,6 +75,8 @@ Rails.application.routes.draw do
     get    "card_maker"                               => "card_maker#index", :as => :card_maker
 
     get "podcasts" => "podcasts#index", :as => "podcasts"
+    get "podcasts/rss.xml" => "podcasts#rss"
+    get "podcasts/:slug", to: redirect("/podcasts#%{slug}", status: 302), as: "podcast"
     get "podcast_category_groups" => "podcast_category_groups#index", :as => "podcast_category_groups"
   end
 

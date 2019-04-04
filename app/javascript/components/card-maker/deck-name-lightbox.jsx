@@ -41,27 +41,31 @@ class DeckNameLightbox extends React.Component {
       , success = false
       ;
 
-    if (!name.length) {
-      this.setState({
-        nameErr: I18n.t('react.card_maker.name_cant_be_blank')
-      });
-    } else if (!this.state.nameErr) {
+    if (this.props.hideDeckNameInput || (name.length && !this.state.nameErr)) {
       this.props.handleSubmit(name);
       this.props.handleRequestClose();
       success = true;
+    } else if (!name.length) {
+      this.setState({
+        nameErr: I18n.t('react.card_maker.name_cant_be_blank')
+      });
     }
 
     return success;
   }
 
   fields = () => {
-    var fields = [{
-      type: 'text',
-      value: this.state.name,
-      errMsg: this.state.nameErr,
-      handleChange: this.handleNameChange,
-      placeholder: I18n.t('react.card_maker.enter_deck_name')
-    }];
+    let fields = [];
+    
+    if (!this.props.hideDeckNameInput) {
+      fields.push({
+        type: 'text',
+        value: this.state.name,
+        errMsg: this.state.nameErr,
+        handleChange: this.handleNameChange,
+        placeholder: I18n.t('react.card_maker.enter_deck_name')
+      });
+    }
 
     if (this.props.fields) {
       fields = fields.concat(this.props.fields);

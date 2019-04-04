@@ -26,7 +26,7 @@ set :linked_files, fetch(:linked_files, []).push('config/application.yml')
 
 # Default value for linked_dirs is []
 # set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
-set :linked_dirs, fetch(:linked_dirs, []).push('log')
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/sockets')
 
 
 set :stages, ["staging", "production"]
@@ -36,9 +36,22 @@ set :default_stage, "staging"
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 # Default value for keep_releases is 5
- set :keep_releases, 3
+set :keep_releases, 3
 
 namespace :deploy do
+  desc 'Restart application'
+  task :restart do
+    on roles(:app) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :sudo, "/bin/systemctl", :restart, :puma
+        end
+      end
+    end
+  end
+end
+
+after "deploy:publishing", "deploy:restart"
 #
 #  after :restart, :clear_cache do
 #    on roles(:web), in: :groups, limit: 3, wait: 10 do
@@ -49,17 +62,6 @@ namespace :deploy do
 #    end
 #  end
 #
-  desc 'Runs rake db:seed'
-  task :seed => [:set_rails_env] do
-    on primary fetch(:migration_role) do
-      within release_path do
-        with rails_env: fetch(:rails_env) do
-          execute :rake, "db:seed"
-        end
-      end
-    end
-  end
-end
 
 Rake::Task["git:create_release"].clear_actions
 namespace :git do

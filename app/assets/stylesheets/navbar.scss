@@ -1,7 +1,5 @@
 @import "shared/layout_vars.scss";
 
-$nav-mobile-width: 648px;
-
 .navbar-outer {
   left: 0;
   position: fixed;
@@ -11,11 +9,17 @@ $nav-mobile-width: 648px;
 }
 
 .navbar {
-  background: $navbar-gray;
-  height: $topbar-height;
-  line-height: $topbar-height;
+  background: $white;
+  border-bottom: 1px solid $background-gray;
+  height: $topbar-row-height;
+  line-height: $topbar-row-height;
   margin: 0 auto;
   max-width: $page-width-px * 1px; 
+  position: relative;
+}
+
+.navbar-top {
+  z-index: 2;
 }
 
 .navbar-inner {
@@ -27,11 +31,11 @@ $nav-mobile-width: 648px;
 
 .title {
   $font-size-px: 12;
-  color: $eol-green;
+  color: $nav-green;
   margin: 0;
   font-size: $font-size-px / $em * 1em;
   font-weight: $semibold;
-  line-height: $topbar-height-px / $font-size-px * 1em;
+  line-height: $topbar-row-height;
   text-align: center;
 }
 
@@ -42,11 +46,9 @@ $nav-mobile-width: 648px;
 
 .nav-menu-eol {
   background: $white;
-  box-shadow: 0 1px 1px 0 #d0d0d0;
-  border-radius: 1px;
   color: $eol-green;
-  height: 102%;
-  padding: 0 11px;
+  height: $topbar-row-height - 1px; // for some reason, needed to not overlap border of parent
+  padding: 0 10px;
   position: relative;
   width: 85px;
 
@@ -84,13 +86,24 @@ $nav-mobile-width: 648px;
   font-size: 14px;
   line-height: $height;
   position: relative;
+  user-select: none;
 
   & > .lang-item-choice {
     display: none;
   }
 
-  &.is-lang-menu-open > .lang-item-choice {
-    display: block;
+  &.is-lang-menu-open {
+    & > .lang-item-choice {
+      display: block;
+    }
+
+    & .nav-menu-caret-down {
+      display: none;
+    }
+
+    & .nav-menu-caret-up {
+      display: block;
+    }
   }
 
   a {
@@ -98,6 +111,14 @@ $nav-mobile-width: 648px;
     display: block;
     text-decoration: none;
     width: 100%;
+  }
+
+  & .nav-menu-caret-down {
+    display: block;
+  }
+
+  & .nav-menu-caret-up {
+    display: none;
   }
 }
 
@@ -163,7 +184,7 @@ $nav-mobile-width: 648px;
   display: none;
   width: 220%;
   text-align: left;
-  top: $topbar-height-px * 1px;
+  top: $topbar-row-height;
   left: 0;
   position: absolute;
 
@@ -240,26 +261,6 @@ $nav-mobile-width: 648px;
   }
 }
 
-.nav-user-menu-lang {
-  & > i {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-  }
-
-  & > .fa-caret-up {
-    display: none;
-  }
-
-  &.is-lang-menu-open > .fa-caret-up {
-    display: inline;
-  }
-
-  &.is-lang-menu-open > .fa-caret-down {
-    display: none;
-  }
-}
-
 .nav-user-menu-lang-menu {
   background: $white;
   overflow: hidden;
@@ -270,6 +271,135 @@ $nav-mobile-width: 648px;
       color: $txt-gray;
     }
   }
+}
+
+.slide-menu {
+  background: $navbar-gray;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 10px 10px 0 10px;
+  position: fixed;
+  right: -300px;
+  top: 0;
+  width: 300px;
+}
+
+.lang-menu-slide {
+  display: block;
+  float: none;
+  width: 280px;
+}
+
+.user-links-slide {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.nav-lnks {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.nav-lnks-mob {
+  display: block;
+}
+
+.nav-lnk {
+  color: $nav-green;
+  cursor: default;
+  height: $topbar-row-height;
+  line-height: $topbar-row-height;
+  padding: 0 12px;
+  position: relative;
+
+  & a {
+    color: #74a561;
+    cursor: pointer;
+    display: block;
+    height: 100%;
+    text-decoration: none;
+    width: 100%;
+  }
+
+  &:hover {
+    .nav-lnk-txt, .nav-lnk-txt > a {
+      color: $eol-blue;
+    }
+
+    .nav-lnk-txt > a {
+      text-decoration: underline;
+    }
+  }
+}
+
+.nav-lnk-menu {
+  background: $white;
+  border: 1px solid $background-gray;
+  color: $black;
+  display: none;
+  line-height: 62px;
+  position: absolute;
+  text-align: center;
+  top: $topbar-row-height - 1px;
+  z-index: 2;
+
+  & > li {
+    border-top: 1px solid $background-gray;
+    padding: 0 8px;
+
+    & > a {
+      color: $black;
+      text-decoration: none;
+    }
+
+    &:hover, &:hover > a {
+      text-decoration: underline;
+    }
+  }
+}
+
+  .nav-lnk:hover .nav-lnk-menu {
+    display: block;
+  }
+  
+  .nav-lnk-menu-lesson {
+    left: 50%;
+    margin-left: -100px;
+    width: 200px;
+  }
+
+  .nav-lnk-menu-partner {
+    right: 0;
+    width: 400px;
+  }
+
+  .nav-lnk-menu-cards {
+    left: 0;
+    width: 200px;
+  }
+
+.nav-lnk-menu-mob {
+  padding-left: 14px;
+}
+
+.nav-lnks-mob {
+  padding-top: 10px;
+}
+
+.nav-lnk-mob, 
+.nav-lnk-mob a, 
+.nav-lnk-menu-mob > li, 
+.nav-lnk-menu-mob > li > a {
+  color: $black;
+  font-size: 14px;
+  font-weight: $semibold;
+  margin: 14px 0;
+  text-decoration: none;
+}
+
+.nav-lnk-mob .nav-lnk-txt > a, 
+.nav-lnk-menu-mob > li > a {
+  text-decoration: underline;
 }
 
 @media screen and (max-width: $nav-mobile-width) {
@@ -300,25 +430,9 @@ $nav-mobile-width: 648px;
       display: none;
     }
   }
+
+  .navbar-bottom {
+    display: none;
+  }
 }
 
-.slide-menu {
-  background: $navbar-gray;
-  box-sizing: border-box;
-  height: 100%;
-  padding: 10px 10px 0 10px;
-  position: fixed;
-  right: -300px;
-  top: 0;
-  width: 300px;
-}
-
-.lang-menu-slide {
-  display: block;
-  width: 280px;
-}
-
-.user-links-slide {
-  margin-bottom: 20px;
-  text-align: center;
-}

@@ -1,19 +1,20 @@
 import React from 'react'
 
 import ResourceLightbox from './resource-lightbox'
+import DeckNameLightbox from './deck-name-lightbox'
 
 class CopyCardLightbox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      deckId: null
+      deckId: null,
     }
   }
 
   componentWillReceiveProps(newProps) {
     if (this.props.isOpen && !newProps.isOpen) {
       this.setState({
-        deckId: null
+        deckId: null,
       });
     }
   }
@@ -25,10 +26,16 @@ class CopyCardLightbox extends React.Component {
   }
 
   deckOptions = () => {
-    return [{
-      name: I18n.t('react.card_maker.select_deck'),
-      id: null
-    }].concat(
+    return [
+      {
+        name: I18n.t('react.card_maker.select_deck'),
+        id: null
+      },
+      {
+        name: I18n.t('react.card_maker.create_new_deck'),
+        id: this.props.newDeckId
+      },
+    ].concat(
       this.props.decks.map((deck) => {
         return {
           name: deck.name,
@@ -61,18 +68,35 @@ class CopyCardLightbox extends React.Component {
     }];
   }
 
+  handleSubmit = (deckName) => {
+    this.props.handleCopy(this.state.deckId, deckName);
+  }
+
   render() {
     return (
-      <ResourceLightbox
+      <DeckNameLightbox
         isOpen={this.props.isOpen}
         contentLabel={I18n.t('react.card_maker.copy_card')}
         submitLabel={I18n.t('react.card_maker.copy_card')}
-        fields={this.fields()}
-        handleSubmit={() => this.props.handleCopy(this.state.deckId)}
         handleRequestClose={this.props.handleRequestClose}
+        handleSubmit={this.handleSubmit}
+        hideDeckNameInput={this.state.deckId !== this.props.newDeckId}
+        fields={this.fields()}
+        deckNames={this.props.deckNames}
       />
     )
   }
+
+  /*
+  <ResourceLightbox
+    isOpen={this.props.isOpen}
+    contentLabel={I18n.t('react.card_maker.copy_card')}
+    submitLabel={I18n.t('react.card_maker.copy_card')}
+    fields={this.fields()}
+    
+    handleRequestClose={this.props.handleRequestClose}
+  />
+  */
 }
 
 export default CopyCardLightbox;

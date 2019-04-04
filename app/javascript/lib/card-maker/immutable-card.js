@@ -56,12 +56,12 @@ class ImmutableCard {
     return this.delegate.imageFields();
   }
 
-  resolvedFieldData = (field) => {
-    return this.delegate.resolvedFieldData(field);
+  resolvedDataForField = (field) => {
+    return this.delegate.resolvedDataForField(field);
   }
 
-  buildDrawingData = () => {
-    return this.delegate.buildDrawingData();
+  rendererData = () => {
+    return this.delegate.rendererData();
   }
 
   getTemplateParam = (key) => {

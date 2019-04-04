@@ -1,19 +1,14 @@
 class CardsController < ApplicationController
   def index
-    @hero_image_partial = 'cards/cards_hero'
+    @hero_image_partial = "shared/hero_slim"
 
-    @all_decks = Deck.all
+    @food_chains_rummy = LessonPlan.find_by_human_name!("food_chains_rummy_9_12")
+    @go_adapt = LessonPlan.find_by_human_name!("go_adapt_2_5")
+    @thats_classified = LessonPlan.find_by_human_name!("thats_classified_2_5")
+    @create_a_creature = LessonPlan.find_by_human_name!("create_a_creature_2_5")
+  end
 
-    grade_level_2_5 = LessonPlanGradeLevel.find_by_human_name :'2_5'
-    grade_level_9_12 = LessonPlanGradeLevel.find_by_human_name :'9_12'
-
-    @food_chains_rummy = LessonPlan.find_by(:grade_level => grade_level_9_12,
-      :human_name => :food_chains_rummy)
-    @go_adapt = LessonPlan.find_by(:grade_level => grade_level_2_5,
-      :human_name => :go_adapt)
-    @thats_classified = LessonPlan.find_by(:grade_level => grade_level_2_5,
-      :human_name => :thats_classified)
-    @create_a_creature = LessonPlan.find_by(:grade_level => grade_level_2_5,
-      :human_name => :create_a_creature)
+  def observer_cards
+    @banner_image = "cards/bee_banner.png"
   end
 end

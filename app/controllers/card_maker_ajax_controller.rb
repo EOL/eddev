@@ -18,6 +18,7 @@ class CardMakerAjaxController < ApplicationController
   before_action :ensure_admin, :only => [ 
     :make_deck_public, 
     :make_deck_private, 
+    :refresh_card_images
   ]
 
   wrap_parameters :post_json, :format => :json
@@ -81,6 +82,10 @@ class CardMakerAjaxController < ApplicationController
         send_data data, :type => "image/png", :disposition => "attachment"
       end
     end
+  end
+
+  def refresh_card_images
+    json_response(CardServiceCaller.refresh_card_images(logged_in_user.id, params[:card_id]))
   end
 
   # POST /card_maker_ajax/images

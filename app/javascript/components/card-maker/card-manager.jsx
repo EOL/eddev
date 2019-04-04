@@ -14,12 +14,14 @@ import CopyDeckLightbox from './copy-deck-lightbox'
 import DeckUrlLightbox from './deck-url-lightbox'
 import Search from './search'
 import {cardMakerUrl, deckUrl} from 'lib/card-maker/url-helper'
+import Poller from 'lib/card-maker/poller'
 import LeftRail from './manager-left-rail'
 import Menu from 'components/shared/menu'
 import DeckUpgradeNotice from './deck-upgrade-notice'
 import DialogBox from 'components/shared/dialog-box'
 import DeckDesc from './deck-desc'
 import PrintLightbox from './print-lightbox'
+import ManagerToolbar from './manager-toolbar'
 
 import ladybugIcon from 'images/card_maker/icons/ladybug.png'
 import eolHdrIcon from 'images/card_maker/icons/eol_logo_sub_hdr.png'
@@ -28,7 +30,6 @@ import managerLogo from 'images/card_maker/icons/card_manager_logo.png'
 import newDeckIcon from 'images/card_maker/icons/new_deck.png'
 import iguanaBanner from 'images/card_maker/iguana_banner.png' /* TODO: convert to jpg */
 
-import layoutStyles from 'stylesheets/shared/react_layout'
 import menuStyles from 'stylesheets/shared/menu'
 import styles from 'stylesheets/card_maker/card_manager'
 
@@ -55,12 +56,14 @@ const pollIntervalMillis = 1000
         deck: 0,
         sort: 1
       }
+    , newDeckId = -100
     ;
 
 class CardManager extends React.Component {
   constructor(props) {
     super(props);
 
+    this.poller = new Poller();
     this.state = {
       speciesSearchDeckId: this.props.allCardsDeck.id,
       openModal: null,
@@ -92,7 +95,7 @@ class CardManager extends React.Component {
       , url = cardMakerUrl('cards/' + cardId + '/deck_id')  
       ;
 
-    that.props.showLoadingOverlay(null, (closeFn) => {
+    that.props.showLoadingOverlay(null, null, (closeFn) => {
       const successFn = () => {
         that.props.reloadCurLibResources(closeFn);
       }
@@ -122,7 +125,7 @@ class CardManager extends React.Component {
 
     if (!shouldDestroy) return;
 
-    that.props.showLoadingOverlay(null, (closeFn) => {
+    that.props.showLoadingOverlay(null, null, (closeFn) => {
       $.ajax({
         url: cardMakerUrl(resourceType + '/' + id),
         method: 'DELETE',
@@ -151,7 +154,7 @@ class CardManager extends React.Component {
 
   handleSpeciesSearchOpen = () => {
     this.openModal(modals.speciesSearch, {
-      speciesSearchDeckId: this.props.selectedDeck.id
+      speciesSearchDeckId: this.props.selectedDeck === this.props.unassignedCardsDeck ? this.props.allCardsDeck.id : this.props.selectedDeck.id
     });
   }
 
@@ -164,7 +167,7 @@ class CardManager extends React.Component {
   createOrCopyCard = (data, deckId) => {
     let that = this;
 
-    that.props.showLoadingOverlay(null, (closeFn) => {
+    that.props.showLoadingOverlay(null, null, (closeFn) => {
       $.ajax({
         url: this.createCardUrl(deckId),
         data: JSON.stringify(data),
@@ -197,11 +200,25 @@ class CardManager extends React.Component {
     this.createOrCopyCard(data, this.state.speciesSearchDeckId);
   }
 
-  handleCopyCard = (deckId) => {
-    this.closeModal();
-    this.createOrCopyCard({ 
-      copyFrom: this.state.copyCardId 
-    }, deckId);
+  handleCopyCard = (deckId, deckName) => {
+    const that = this;
+
+    that.closeModal();
+
+    if (deckId === newDeckId) {
+      if (!deckName) {
+        throw new TypeError('deck name required');
+      }
+      that.createDeckHelper(deckName, null, null, false, (deckId, close) => {
+        that.createOrCopyCard({ 
+          copyFrom: that.state.copyCardId 
+        }, deckId);
+      });
+    } else {
+      that.createOrCopyCard({ 
+        copyFrom: that.state.copyCardId 
+      }, deckId);
+    }
   }
 
   deckFilterItemsHelper = (noSelectionText, includeCount) => {
@@ -354,7 +371,7 @@ class CardManager extends React.Component {
   handleRenameDeck = (name) => {
     const that = this;
 
-    that.props.showLoadingOverlay(null, (closeFn) => {
+    that.props.showLoadingOverlay(null, null, (closeFn) => {
       $.ajax({
         url: cardMakerUrl(`decks/${this.props.selectedDeck.id}/name`),
         method: 'POST',
@@ -374,7 +391,7 @@ class CardManager extends React.Component {
     this.createDeckHelper(deckName, colId, null, false);
   }
 
-  createDeckHelper = (deckName, colId, copyFrom, upgrade) => {
+  createDeckHelper = (deckName, colId, copyFrom, upgrade, afterCreate) => {
     const that = this
         , showUpgradedNotice = upgrade
         , data = {
@@ -384,7 +401,7 @@ class CardManager extends React.Component {
           }
         ;
 
-    that.props.showLoadingOverlay(null, (closeFn) => {
+    that.props.showLoadingOverlay(null, null, (closeFn) => {
       $.ajax({
         url: cardMakerUrl('decks'),
         method: 'POST',
@@ -394,13 +411,18 @@ class CardManager extends React.Component {
             if (err) {
               closeFn();
               alert(I18n.t('react.card_maker.unexpected_error_msg'));
+            } else if (afterCreate) {
+              afterCreate(deck.id, closeFn);
             } else {
               that.props.setLibrary('user', () => {
-                that.showDeck(deck.id, closeFn);
+                that.showDeck(deck.id, () => {
+                  closeFn();
 
-                if (showUpgradedNotice) {
-                  that.openModal(modals.deckUpgradedNotice);
-                }
+                  if (showUpgradedNotice) {
+                    that.openModal(modals.deckUpgradedNotice);
+                  }
+                });
+
               });
             }
           }
@@ -447,11 +469,12 @@ class CardManager extends React.Component {
 
   makeDeckPdf = (cardBackId) => {
     const that = this;
-
     that.closeModal();
-
     that.props.showLoadingOverlay(
       I18n.t('react.card_maker.print_loading_msg'), 
+      () => {
+        this.cancelPolling();
+      },
       (closeFn) => {
         $.ajax({
           url: cardMakerUrl('deck_pdfs'),
@@ -471,20 +494,17 @@ class CardManager extends React.Component {
   pollJob = (baseUrl, jobId, overlayCloseFn) => {
     const that = this;
 
-    $.getJSON(cardMakerUrl(baseUrl + '/' + jobId + '/status'), (result) => {
-      if (result.status === 'done') {
+    that.poller.start(
+      cardMakerUrl(baseUrl + '/' + jobId + '/status'),
+      (result) => {
         overlayCloseFn();
         window.open(cardMakerUrl(baseUrl + '/downloads/' + result.resultFileName));
-      } else if (result.status === 'running') {
-        setTimeout(() => {
-          that.pollJob(baseUrl, jobId, overlayCloseFn)
-        }, pollIntervalMillis)
-      } else {
+      },
+      () => {
         overlayCloseFn();
         alert(I18n.t('react.card_maker.unexpected_error_msg'));
       }
-    });
-
+    );
   }
 
   pollPdfJob = (id, overlayCloseFn) => {
@@ -510,8 +530,7 @@ class CardManager extends React.Component {
   }
 
 
-  handleDescBtnClick = () => {
-    this.closeMenu('deck');
+  openDescInput = () => {
     this.setState({
       showDescInput: true
     });
@@ -531,7 +550,7 @@ class CardManager extends React.Component {
       data: that.state.deckDescVal,
       url: url,
       success: () => {
-        that.props.showLoadingOverlay(null, (closeFn) => {
+        that.props.showLoadingOverlay(null, null, (closeFn) => {
           that.closeAndClearDescInput(); 
           that.props.reloadCurLibResources(closeFn);
         });
@@ -577,7 +596,7 @@ class CardManager extends React.Component {
       ;
 
     if (proceed) {
-      that.props.showLoadingOverlay(null, (closeFn) => {
+      that.props.showLoadingOverlay(null, null, (closeFn) => {
         $.ajax({
           url: cardMakerUrl('decks/' + that.props.selectedDeck.id + '/' + action),
           method: 'POST',
@@ -636,7 +655,7 @@ class CardManager extends React.Component {
       newLib = 'user';
     }
 
-    this.props.showLoadingOverlay(null, (closeFn) => {
+    this.props.showLoadingOverlay(null, null, (closeFn) => {
       this.props.setLibrary(newLib, closeFn);
     });
   }
@@ -669,11 +688,19 @@ class CardManager extends React.Component {
     }, extraProps))
   }
 
+  cancelPolling = () => {
+    this.poller.cancel();
+    this.props.hideLoadingOverlay();
+  }
+
   createDeckPngs = () => {
     const that = this;
-
     that.props.showLoadingOverlay(
       I18n.t('react.card_maker.it_may_take_a_few_mins'),
+      () => {
+        // TODO: send cancel request
+        this.cancelPolling();
+      },
       (closeFn) => {
         $.ajax({
           url: cardMakerUrl('deck_pngs'),
@@ -687,7 +714,7 @@ class CardManager extends React.Component {
           error: closeFn
         })
       }
-    )
+    );
   }
 
   deckMenuItems = (resourceCount) => {
@@ -697,12 +724,7 @@ class CardManager extends React.Component {
       this.props.selectedDeck !== this.props.allCardsDeck && 
       this.props.selectedDeck !== this.props.unassignedCardsDeck
     ) {
-      if (resourceCount > 0 &&
-        (
-          this.isUserLib() ||
-          !this.props.selectedDeck.needsUpgrade
-        )
-      ) {
+      if (resourceCount > 0 && !this.props.selectedDeck.needsUpgrade) {
         items.push({
           handleClick: this.openPrintOptions,
           label: I18n.t('react.card_maker.print')
@@ -730,7 +752,7 @@ class CardManager extends React.Component {
         }
 
         items.push({
-          handleClick: this.handleDescBtnClick,
+          handleClick: this.openDescInput,
           label: this.props.selectedDeck.desc ? 
             I18n.t('react.card_maker.edit_desc') :
             I18n.t('react.card_maker.add_desc')
@@ -770,6 +792,92 @@ class CardManager extends React.Component {
     }
 
     return items;
+  }
+
+	toolbarItems = (resourceCount) => {
+    let actions = []
+      , moreItems = []
+      ;
+
+    if (
+      this.props.selectedDeck !== this.props.allCardsDeck && 
+      this.props.selectedDeck !== this.props.unassignedCardsDeck
+    ) {
+      if (resourceCount > 0 && !this.props.selectedDeck.needsUpgrade) {
+        actions.push({
+          onClick: this.openPrintOptions,
+          text: I18n.t('react.card_maker.print'),
+          icon: 'print'
+        });
+
+        actions.push({
+          onClick: this.createDeckPngs,
+          text: I18n.t('react.card_maker.download_pngs'),
+          icon: 'download'
+        });
+      }
+
+      if (this.props.userRole) {
+        actions.push({
+          onClick: () => this.openCopyDeck(false),
+          text: I18n.t('react.card_maker.copy_deck'),
+          icon: 'copy'
+        });
+      }
+
+      if (this.isUserLib()) {
+        if (this.props.selectedDeck.needsUpgrade) {
+          moreItems.push({
+            text: I18n.t('react.card_maker.update_card_layouts'),
+            onClick: () => this.openCopyDeck(true)
+          });
+        }
+
+        moreItems.push({
+          onClick: this.openDescInput,
+          text: this.props.selectedDeck.desc ? 
+            I18n.t('react.card_maker.edit_desc') :
+            I18n.t('react.card_maker.add_desc')
+        });
+
+        moreItems.push({
+          onClick: () => this.openModal(modals.renameDeck),
+          text: I18n.t('react.card_maker.rename_deck')
+        });
+
+        if (this.props.selectedDeck.isOwner) {
+          moreItems.push({
+            onClick: () => this.handleDestroyDeck(this.props.selectedDeck.id),
+            text: I18n.t('react.card_maker.delete_deck')
+          });
+        }
+
+        moreItems.push({
+          onClick: () => this.openModal(modals.deckUsers),
+          text: I18n.t('react.card_maker.manage_deck_users')
+        });
+
+        if (this.props.userRole == 'admin') {
+          moreItems.push({
+            onClick: this.toggleDeckPublic,
+            text: this.props.selectedDeck.public ? 
+              I18n.t('react.card_maker.make_deck_private') :
+              I18n.t('react.card_maker.make_deck_public')
+          });
+        }
+      } else {
+        actions.push({
+          onClick: () => this.openModal(modals.deckUrl),
+          text: I18n.t('react.card_maker.show_url'),
+          icon: 'link'
+        });
+      }
+    }
+
+    return {
+      actions: actions,
+      moreItems: moreItems
+    };
   }
 
   sortItems = () => {
@@ -826,10 +934,11 @@ class CardManager extends React.Component {
     var resourceResult = this.selectedResources()
       , searchFilteredResources = this.searchFilterResources(resourceResult.resources)
       , userDeckNames = this.userDeckNames()
+      , toolbarItems = this.toolbarItems(resourceResult.resources.length)
       ;
 
     return (
-      <div className={styles.lManager}>
+      <div className={styles.cardManager}>
         <DeckUsersLightbox
           isOpen={this.state.openModal === modals.deckUsers}
           handleRequestClose={this.closeModal}
@@ -865,6 +974,8 @@ class CardManager extends React.Component {
           handleRequestClose={this.closeModal}
           handleCopy={this.handleCopyCard}
           decks={this.props.userDecks} 
+          deckNames={userDeckNames}
+          newDeckId={newDeckId}
         />
         <CopyDeckLightbox
           isOpen={this.state.openModal === modals.copyDeck}
@@ -896,8 +1007,9 @@ class CardManager extends React.Component {
           onRequestClose={this.closeModal}
           handleSubmit={this.makeDeckPdf}
         />
-        <img src={iguanaBanner} className={layoutStyles.banner} />
+        <img src={iguanaBanner} className={styles.banner} />
         <LeftRail
+          backPath={this.props.backPath}
           library={this.props.library}
           handleToggleLibrary={this.toggleLibrary}
           handleDeckSelect={this.handleDeckSelect}
@@ -911,7 +1023,7 @@ class CardManager extends React.Component {
           <div className={styles.lDeckMenu}>
             <div className={styles.lDeckMenuFlex}>
               <Menu
-                items={this.deckMenuItems(resourceResult.resources.length)}
+                items={[]}
                 open={this.state.openMenu === menus.deck}
                 anchorText={this.deckMenuAnchorText()}
                 handleRequestClose={() => this.closeMenu()}
@@ -927,7 +1039,7 @@ class CardManager extends React.Component {
                   handleRequestClose={this.closeAndClearDescInput}
                   showInput={this.state.showDescInput}
                   library={this.props.library}
-                  handleRequestInput={this.handleDescBtnClick}
+                  handleRequestInput={this.openDescInput}
                 />
               }
             </div>
@@ -951,20 +1063,27 @@ class CardManager extends React.Component {
               />
             </div>
           </div>
-          <UserResources
-            resources={searchFilteredResources}
-            resourceType={resourceResult.resourceType}
-            handleCardDeckSelect={this.assignCardDeck}
-            handleEditCard={this.props.handleEditCard}
-            handleDeckSelect={this.handleDeckSelect}
-            handleDestroyCard={this.handleDestroyCard}
-            handleDestroyDeck={this.handleDestroyDeck}
-            handleNewCard={this.handleSpeciesSearchOpen}
-            handleCopyCard={this.openCopyCard}
-            showCopyCard={this.isUserLib() || this.props.userRole}
-            handleNewDeck={() => this.openModal(modals.newDeck)}
-            editable={this.isUserLib()}
-          />
+          <div className={styles.resourceArea}>
+            <ManagerToolbar 
+              actions={toolbarItems.actions}
+              moreItems={toolbarItems.moreItems}
+            />
+            <UserResources
+              resources={searchFilteredResources}
+              resourceType={resourceResult.resourceType}
+              handleCardDeckSelect={this.assignCardDeck}
+              handleEditCard={this.props.handleEditCard}
+              handleDeckSelect={this.handleDeckSelect}
+              handleDestroyCard={this.handleDestroyCard}
+              handleDestroyDeck={this.handleDestroyDeck}
+              handleNewCard={this.handleSpeciesSearchOpen}
+              handleCopyCard={this.openCopyCard}
+              showCopyCard={this.isUserLib() || this.props.userRole}
+              handleNewDeck={() => this.openModal(modals.newDeck)}
+              editable={this.isUserLib()}
+              extraClass={(toolbarItems.actions.length || toolbarItems.moreItems.length) ? styles.userResourcesToolbar : null}
+            />
+          </div>
         </div>
       </div>
     );

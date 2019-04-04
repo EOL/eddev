@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.1.4'
+gem 'rails', '5.1.6.2'
 # Use mysql for database
 gem 'mysql2', '~> 0.4.0'
 # Use SCSS for stylesheets
@@ -54,9 +54,12 @@ gem "webpacker"
 gem "i18n-js"
 
 # Error reporting
-gem "bugsnag"
+gem "bugsnag", "~> 6.10.0"
 
 gem "js-routes"
+
+# app server
+gem "puma"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -86,7 +89,7 @@ group :development do
   gem 'capistrano', '~> 3.1'
   gem 'capistrano-rails', '~> 1.1'
   gem 'capistrano-rails-collection'
-  gem 'capistrano-passenger', '~> 0.2.0'
+  #gem 'capistrano-passenger', '~> 0.2.0'
   gem 'capistrano-git-with-submodules', '~> 2.0'
 
   gem 'better_errors'

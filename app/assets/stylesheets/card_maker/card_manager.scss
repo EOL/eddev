@@ -5,7 +5,7 @@
 $manager-height: 762px;
 $left-rail-width: 226px;
 $ctrls-height: 106px;
-$cards-hdr-height: 44px;
+$cards-hdr-height: 48px;
 $btn-height: 36px;
 $lib-height: 32px;
 $menu-bar-height: 40px;
@@ -30,6 +30,9 @@ $species-search-pad-horiz: 30px;
 $species-search-card-width: 170px;
 $species-search-card-height: 232px;
 $species-search-input-height: 45px;
+$deck-menu-height: 192px;
+$libs-height: 91px;
+$toolbar-height: 44px;
 
 $card-aspect-ratio: .75;
 
@@ -37,23 +40,25 @@ $card-aspect-ratio: .75;
 
 /* LAYOUTS */
 .lLeftRail {
+  border-left: 1px solid $background-gray;
   display: inline-block;
-  height: 100%;
+  height: calc(100vh - #{$topbar-row-height});
   position: relative;
   vertical-align: top;
   width: $left-rail-width;
 }
 
 .lResources {
-  display: inline-flex;
-  flex-direction: column;
+  display: inline-block;
+  height: calc(100vh - #{$topbar-row-height});
+  overflow: hidden;
   position: relative;
   vertical-align: top;
-  width: $main-col-width-px - $left-rail-width;
+  width: calc(100% - #{$left-rail-width});
 } 
 
 .lDeckMenu {
-  height: 192px;
+  height: $deck-menu-height;
   padding: 10px 0;
   position: relative;
   width: 100%;
@@ -144,10 +149,25 @@ $card-aspect-ratio: .75;
   height: 120px;
 }
 
+.backBtn {
+  background: $white;
+  color: $nav-link-blue;
+  height: $cards-hdr-height;
+  line-height: $cards-hdr-height;
+  text-align: center;
+
+  & > a {
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+  }
+}
+
+/*
 .cardsHdr {
   background: $white;
   color: $eol-green;
-  height: 48px;
+  height: $cards-hdr-height;
   line-height: 49px;
   padding-left: 23px;
 }
@@ -167,9 +187,10 @@ $card-aspect-ratio: .75;
   text-align: left;
   vertical-align: middle;
 }
+*/
 
 .libs {
-  height: 91px;
+  height: $libs-height;
   padding: 13px 18px;
 }
 
@@ -207,7 +228,7 @@ $card-aspect-ratio: .75;
 .decks {
   background: $white;
   font-size: 12px;
-  height: $resources-height + $search-height;
+  height: calc(100% - #{$cards-hdr-height} - #{$libs-height} - #{$search-height});
   list-style: none;
   overflow: auto;
   padding: 17px 23px;
@@ -339,14 +360,21 @@ $card-aspect-ratio: .75;
   padding-left: 10px;
 }
 
-.resources {
-  align-content: flex-start;
-  display: flex;
-  flex-flow: row wrap;
-  height: $resources-height;
+.resourceArea {
+  height: calc(100% - #{$deck-menu-height} - #{$search-height});
+}
+
+.userResources {
+  height: 100%;
+}
+  .userResourcesToolbar {
+    height: calc(100% - #{$toolbar-height});
+  }
+
+.resourceList {
+  display: block;
+  height: 100%;
   overflow: auto;
-  padding: 0 11px 11px 11px;
-  text-align: center;
   width: 100%;
 }
 
@@ -1016,4 +1044,61 @@ $card-aspect-ratio: .75;
     margin: 0 auto;
     width: 400px;
   }
+
+.banner {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  object-fit: cover;
+  height: 245px;
+  position: absolute;
+  width: 100%;
+}
+
+.cardManager {
+  height: calc(100vh - #{$topbar-row-height});
+  min-width: 875px;
+}
+
+.toolbar {
+  text-align: center; 
+  z-index: 2;
+}
+
+.toolbarItems {
+  font-size: 14px;
+  display: inline-block;
+  height: 100%;
+  text-align: center;
+
+  & > li { 
+    background: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+    display: inline-block;
+    height: $toolbar-height;
+    margin: 0 10px;
+    padding: 11px 25px;
+    position: relative;
+  }
+}
+
+.toolbarMenu {
+  background: rgba(255, 255, 255, 0.9);
+  right: 0;
+  top: 44px;
+  position: absolute;
+  text-align: center;
+  white-space: nowrap;
+
+  & > li {
+    padding: 10px 40px; 
+
+    &:hover {
+      background: rgba(200, 200, 200, 0.9);
+    }
+  }
+
+  z-index: 2;
+}
 

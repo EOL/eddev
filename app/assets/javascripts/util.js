@@ -21,6 +21,11 @@ window.EolUtil = {};
   }
   exports.parseHashParams = parseHashParams;
 
+  function clearHash() {
+    window.location.hash = '_';
+  }
+  exports.clearHash = clearHash;
+
   var fontsLoadedCallbackArr = [];
   function onFontsLoaded(fn) {
     fontsLoadedCallbackArr.push(fn);

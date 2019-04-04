@@ -1,411 +1,584 @@
 @import "layout_vars.scss";
 
-$featured-card-width: 225;
-$featured-card-height: 307;
-$featured-card-h-margin: 13;
-$featured-card-t-margin: 9;
+// CARD RESOURCES
+$cards-text-green: #5d9832;
+$activities-text-yellow: #a39420;
+$standards-text-red: #ca3636;
+$tutorials-text-blue: #2989b1;
+$cards-green: #8dbd69;
+$activities-yellow: #bdb261;
+$tutorials-blue: #69a4bd;
+$standards-red: #d57070;
+$bee-cards-green: #b7c24d;
+$frog-cards-purple: #bba0cf;
+$border-gray: #ddd;
+$hover-gray: #eee;
 
-$deck-title-color: #262626;
+$mobile-col-width: 270px;
 
-//---------CARDS----------
-.featured-decks {
+$item-shadow: -3px 3px 2px 0px rgba(156,156,156,0.47);
+
+$observer-card-image-width: 240px;
+
+h4 {
+  font-size: 20px;
+  margin: 10px 0;
+  text-align: center;
 }
 
-.featured-deck {
-  cursor: pointer;
-  display: inline-block;
-  margin: percentage($featured-card-t-margin / $main-col-width) percentage($featured-card-h-margin / $main-col-width) 0 0;
-  position: relative;
-  width: percentage($featured-card-width / $main-col-width);
-
-  .download-button {
-    &.blue {
-      background: rgb(0, 138, 177);
-    }
-
-    &.orange {
-      background: rgb(207, 104, 26);
-    }
-
-    &.pink {
-      background: rgb(188, 58, 81);
-    }
-
-    &.gray {
-      background: rgb(234, 234, 234);
-      color: #333;
-    }
-
-    bottom: percentage(10 / $featured-card-height);
-    color: #fff;
-    display: none;
-    font-size: 32px;
-    line-height: 32px;
-    height: percentage(48 / $featured-card-height);
-    left: percentage(10 / $featured-card-width);
-    padding-top: percentage(9 / $featured-card-width);
-    position: absolute;
-    text-align: center;
-    width: percentage(205 / $featured-card-width);
-    z-index: 2;
-  }
-
-  &.fourth {
-    margin-right: 0;
-  }
-
-  &:hover, &.hover {
-    .overlay {
-      align-items: center;
-      display: flex;
-      background-color: rgba(34, 34, 34, 0.78);
-      color: #fff;
-      height: percentage(204 / $featured-card-height);
-      justify-content: center;
-      left: 0;
-      padding: 0 21px;
-      position: absolute;
-      text-align: center;
-      top: 13.4%;
-      width: 100%;
-    }
-
-    &.trait-card {
-      &:hover, &.hover {
-        .overlay {
-          height: percentage(196 / $featured-card-height);
-          top: 16.2%;
-        }
-      }
-    }
-
-    .download-button {
-      display: block;
-    }
-  }
+.anchor-links {
+  justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  width: $mobile-col-width;
 }
 
-.featured-deck-img {
-  height: 100%;
-  vertical-align: top;
+.anchor-link { 
+  border-radius: 8px;
+  border-style: solid;
+  border-width: 2px;
+  height: 43px;
+  font-size: 13px;
+  margin-top: 15px;
   width: 100%;
-}
-
-.all-decks {
-  @include clearfix;
-}
-
-$deck-width: 403;
-$deck-img-width: 150;
-$deck-img-height: 205;
-$deck-info-width: 238;
-$deck-img-margin: 15;
-.deck {
-  display: block;
-  margin-top: 9px;
-  width: $deck-width * 1px;
-
-  &.odd {
-    float: left;
-  }
-
-  &.even {
-    float: right;
-  }
-}
-
-.deck-img, .deck-info {
-  display: inline-block;
-}
-
-.deck-img {
-  flex-shrink: 0;
-  height: $deck-img-height * 1px;
-  margin-right: $deck-img-margin * 1px;
-  width: $deck-img-width * 1px;
-  vertical-align: top;
-}
-
-.deck-info {
-  height: 202px;
-  margin-top: 3px;
-  position: relative;
-  vertical-align: top;
-  width: 238 * 1px;
-
-  .pdf-button {
-    border: solid 1px #979797;
-    bottom: 13px;
-    color: $deck-title-color;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 14px;
-    font-weight: $semibold;
-    padding: 4px 0;
-    position: absolute;
-    text-align: center;
-    width: 46px;
-  }
-}
-
-.deck-title, .deck-sub {
-  color: $deck-title-color;
-  font-weight: $semibold;
-  line-height: 20px;
-}
-
-.deck-title {
-  font-size: 18px;
-}
-
-.deck-sub {
-  font-size: 14px;
-}
-
-.deck-sub-placeholder {
-  display: block;
-  height: 20px;
-  width: 100%;
-}
-
-.deck-desc {
-  color: #161616;
-  font-size: 14px;
-  line-height: 1.4;
-  margin-top: 10px;
-  overflow: hidden;
-}
-
-.featured-deck-wrap {
-  position: relative;
-
-  .overlay {
-    display: none;
-    font-size: 14px;
-    font-weight: $semibold;
-  }
-}
-
-.how-to-use {
-  .how-to-section {
-    color: $section-intro-gray;
-    display: inline-block;
-    margin-top: 38px;
-    margin-right: percentage(15 / $main-col-width);
-    vertical-align: top;
-    width: percentage(223.5 / $main-col-width);
-
-    &.fourth {
-      margin-right: 0;
-    }
-
-    .how-to-hdr {
-      font-size: 18px;
-      margin-bottom: 20px;
-    }
-
-    .how-to-txt {
-      font-size: 14px;
-    }
-
-    .lp-link {
-      margin-top: 15px;
-    }
-  }
-
-  .example-cards {
-    $card-width: 295px;
-    $inner-spacing: 32px;
-    $card-margin: $inner-spacing / 2;
-
-    display: block;
-    margin: 30px auto 0 auto;
-    width: $card-width * 2 + $inner-spacing;
-
-    .example-card-wrap {
-      display: inline-block;
-      width: $card-width;
-
-      &.first {
-        margin-right: $card-margin;
-      }
-
-      &.second {
-        margin-left: $card-margin;
-      }
-
-      .example-card {
-        width: 100%;
-      }
-
-      .caption {
-        font-size: 10px;
-        text-align: right;
-      }
-    }
-  }
-
-  .cards-idea-contact {
-    border: solid 0.5px #797979;
-    border-radius: 8px;
-    font-size: 12px;
-    margin: 32px auto 0 auto;
-    padding: 18px 40px;
-    text-align: center;
-    width: 622px;
-
-    a {
-      @include standard-link;
-    }
-  }
-}
-
-
-$one-col-deck-width: 850;
-@media screen and (max-width: $one-col-deck-width * 1px) {
-  .deck {
-    float: none;
-  }
-
-  .deck {
+  
+  & > a {
+    align-items: center;
     display: flex;
+    height: 100%;
+    justify-content: center;
+    text-decoration: none;
     width: 100%;
   }
 
-  .deck-img {
-    float: left;
-  }
-
-  .deck-info {
-    width: auto;
+  &:hover {
+    background-color: $hover-gray;
   }
 }
 
-@media screen and (max-width: 900px) {
-  .featured-deck-wrap .overlay {
-    font-size: 12px;
+  @mixin anchor-link($border-color, $text-color) {
+    border-color: $border-color;
+
+    & > a {
+      color: $text-color;
+    }
+  }
+
+  .anchor-link-types {
+    @include anchor-link($cards-green, $cards-text-green);
+  }
+
+  .anchor-link-activities {
+    @include anchor-link($activities-yellow, $activities-text-yellow);
+  }
+
+  .anchor-link-tutorials {
+    @include anchor-link($tutorials-blue, $tutorials-text-blue);
+  }
+
+  .anchor-link-standards {
+    @include anchor-link($standards-red, $standards-text-red);
+  }
+
+.section {
+  margin-top: 50px;
+}
+
+.section-head-cards {
+  box-shadow: inset 0 1px 2px 0 rgba(91, 91, 91, 0.5);
+  color: $white;
+  font-size: 14px;
+  padding: 13px 0 15px 0;
+  text-align: center;
+  width: 100%;
+}
+  .section-head-cards-types {
+    background-color: $cards-green;
+  }
+
+  .section-head-cards-tutorials {
+    background-color: $tutorials-blue;
+  }
+
+  .section-head-cards-activities {
+    background-color: $activities-yellow;
+  }
+
+  .section-head-cards-standards {
+    background-color: $standards-red;
+  }
+
+  .section-head-cards-bee {
+    background-color: $bee-cards-green;
+  }
+
+  .section-head-cards-frog {
+    background-color: $frog-cards-purple;
+  }
+
+.text-p-cards {
+  margin: 20px auto 15px auto;
+}
+
+.cards {
+  margin: 0 auto;
+}
+
+  .cards-activity {
+    margin-bottom: 70px;
+  }
+
+.card {
+  font-size: 13px;
+  margin-top: 21px;
+  overflow: visible;
+  position: relative;
+  text-align: center;
+
+  & > a {
+    color: $black;
+    text-decoration: none;
+
+    & > .card-name {
+      color: $eol-blue;
+    }
+
+    &:hover > .card-name{
+      text-decoration: underline;
+    }
   }
 }
 
-@media screen and (max-width: 780px) {
-  .how-to-use {
-    .how-to-content {
-      .how-to-section {
-        margin-right: percentage(20 / 780);
-        width: percentage(((780 - 20) / 2) / 780);
+.card-desc {
+  margin: 0 auto;   
+}
 
-        &.second, &.fourth {
-          margin-right: 0;
-        }
+.card-img {
+  border-radius: 7px;
+  box-shadow: $item-shadow;
+}
+
+.card-img, .card-desc {
+  width: 182px;
+}
+
+.card-name {
+  font-size: 18px;
+  font-weight: $semibold;
+  margin: 5px 0;
+}
+
+.section-anchor {
+  display: block;
+  position: relative;
+  top: -1 * $topbar-height;
+  visibility: hidden;
+}
+
+.tutorial {
+  border-top: 1px solid $border-gray;
+  height: 295px;
+  text-align: center;
+  vertical-align: top;
+  width: 100%;
+
+  & > a {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    text-decoration: none;
+    width: 100%;
+  }
+
+  &:hover {
+    background-color: $hover-gray;
+  }
+}
+
+  .tutorial-icon {
+    display: block;
+    margin: 0 auto 12px auto;
+    width: 128px;
+  }
+
+  .tutorial-name {
+    color: $eol-blue;
+    font-size: 17px;
+    font-weight: $semibold;
+  }
+
+  .tutorial-desc {
+    color: $black;
+    margin: 8px auto 0 auto;;
+    width: 80%;
+  }
+
+.lesson-plan {
+  border-top: 1px solid $border-gray;
+  font-size: 14px;
+  height: 132px;
+  text-align: center;
+
+  & > a {
+    align-items: center;
+    color: $black;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    text-decoration: none;
+  }
+
+  &:hover {
+    background-color: $hover-gray;
+  }
+}
+  .lesson-plan-text {
+    width: 254px;
+
+    & > em {
+      color: $eol-blue;
+      font-style: normal;
+    }
+  }
+
+.main-organizer {
+  margin: 40px auto;
+}
+
+.main-organizer-img {
+  box-shadow: $item-shadow;
+  display: block;
+  margin: 0 auto;
+  width: 138px;
+}
+
+.main-organizer-title {
+  font-size: 14px;
+  margin: 10px auto 0 auto;
+  text-align: center;
+  width: 200px;
+}
+
+.main-organizer-link {
+  display: block;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.organizers {
+  margin-top: 20px;
+
+  & > li {
+    $height: 50px;
+    border-radius: 1px;
+    box-shadow: 0px 1px 1px 1px rgba(199,199,199,1);
+    font-size: 14px;
+    height: $height;
+    line-height: $height;
+    margin: 0 auto 5px auto;
+    text-align: center;
+    width: 300px;
+
+    &:hover {
+      background: $hover-gray;
+    }
+
+    & > a {
+      display: block;
+      height: 100%;
+      text-decoration: none;
+      width: 100%;
+    }
+  }
+}
+
+.trait-steps-hdr {
+  font-size: 14px;
+}
+
+.trait-steps {
+  margin: 0 auto;
+
+  & > li {
+    margin: 25px auto 0 auto;
+    overflow: visible;
+    width: 155px;
+    white-space: nowrap;
+
+    & > img {
+      box-shadow: $item-shadow;
+      display: block;
+      margin: 0 auto 10px auto;
+      width: 100%;
+    }
+
+    & > div {
+      margin: 0 -50%;
+      text-align: center;
+    }
+  }
+}
+
+@media only screen and (min-width: $tablet-width) {
+  .anchor-links {
+    overflow: hidden;
+    width: 400px;
+  }
+
+    .anchor-link {
+      font-size: 18px;
+      height: 60px;
+      margin-top: 16px;
+      width: 187px;
+    }
+
+  .cards {
+    align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 400px;
+  }
+
+  .card {
+    flex: 0 0 auto;
+  }
+
+  .card-img, .card-desc {
+    width: 150px;
+  }
+
+  .card-name {
+    margin: 10px 0 5px 0;
+
+    &:before {
+      content: "";
+      margin-left: -100%;
+    }
+
+    &:after {
+      content: "";
+      margin-right: -100%;
+    }
+  }
+
+  .tutorial {
+    display: inline-block;
+    width: 50%;
+  }
+
+    li:nth-of-type(odd).tutorial {
+      border-right: 1px solid $border-gray;
+    }
+
+    .tutorial-icon {
+      margin: 0 auto 10px auto;
+      width: 97px;
+    }
+
+    .tutorial-name {
+      font-size: 13px;
+    }
+
+  .lesson-plan {
+    display: inline-block;
+    font-size: 13px;
+    vertical-align: top;
+    width: 50%;
+  }
+
+    li:nth-of-type(odd).lesson-plan {
+      border-right: 1px solid $border-gray;
+    }
+
+  .tutorial {
+    display: inline-block;
+    width: 50%;
+  }
+
+    .tutorial-icon {
+      margin: 0 auto 10px auto;
+      width: 120px;
+    }
+
+    .tutorial-name {
+      font-size: 16px;
+    }
+
+  .section-head-cards {
+    font-size: 16px;
+  }
+
+  .trait-steps {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 460px;
+  }
+
+  .trait-steps-hdr {
+    font-size: 16px;
+  }
+
+  .card {
+    width: 150px;
+  }
+
+  .observer-card-images {
+    $space-between: 16px;
+    margin: 0 auto;
+    width: $observer-card-image-width * 2 + $space-between;
+
+    & > li {
+      display: inline-block; 
+
+      &:nth-of-type(2) {
+        margin-right: $space-between;
+      }
+
+      &:first-of-type {
+        display: block;
+      }
+    }
+  } 
+
+  .observer-card-links {
+    margin-right: -50px;
+    text-align: center;
+  }
+
+  .observer-card-link {
+    display: inline-block;
+    margin-right: 50px;
+  }
+}
+
+.sub-head {
+  $height: 45px;
+  background: #f4f8fc;
+  height: $height;
+  font-size: 14px;
+  line-height: $height;
+  margin: 50px 0 40px 0;
+}
+
+.observer-card-images {
+  & > li {
+    margin: 20px auto 0 auto;
+    width: $observer-card-image-width;
+
+    & > img {
+      width: 100%;
+    }
+  }
+}
+
+.observer-card-link {
+  font-size: 18px;
+  margin-top: 29px;
+  text-align: center;
+
+  & > a {
+    & > i {
+      color: $black;
+    }
+  }
+}
+
+@media only screen and (min-width: 670px) {
+  .section-organizers {
+    display: flex;
+    align-items: center;
+  }
+
+  .organizers, .main-organizer {
+    width: 50%;
+  }
+
+  .main-organizer {
+    margin: 0 auto; 
+  }
+}
+
+@media only screen and (min-width: $full-width) {
+  .anchor-links {
+    width: 790px;
+  }
+
+  .cards {
+    width: 100%;
+  }
+
+    .cards-activity {
+      width: 750px;
+    }
+
+  .section-head-cards {
+    font-size: 18px;
+    padding: 16px 0 18px;
+  }
+
+  .sub-head {
+    $height: 50px;
+    font-size: 16px;
+    height: $height;
+    line-height: $height;
+  }
+
+  .observer-card-images {
+    margin-bottom: 60px;
+    position: relative;
+    width: $observer-card-image-width;
+
+    & > li {
+      $spacing: 5px;
+      $rotate: 12deg;
+      position: absolute;
+      top: 7px;
+      z-index: 1;
+
+      &:first-of-type {
+        position: relative;
+        top: 0;
+        z-index: 2;
+      }
+
+      &:nth-of-type(2) {
+        left: -1 * ($observer-card-image-width + $spacing);
+        transform: rotate(-1 * $rotate);
+      }
+
+      &:nth-of-type(3) {
+        right: -1 * ($observer-card-image-width + $spacing);
+        transform: rotate($rotate);
       }
     }
   }
 }
 
-@media screen and (max-width: 775px) {
-  .featured-deck-wrap .overlay {
-    font-size: 10px;
-  }
-}
+@media only screen and (min-width: 900px) {
+  .trait-steps {
+    justify-content: space-between;
+    width: 100%;
 
-@media screen and (max-width: 740px) {
-  .featured-deck {
-    .download-button {
-      font-size: 26px;
-      line-height: 26px;
-    }
-  }
-}
-
-$featured-trans-width: 642;
-@media screen and (max-width: $featured-trans-width * 1px) {
-  .featured-decks {
-    margin: 0 auto;
-    width: 307px;
-  }
-
-  .featured-deck {
-    height: $deck-img-height * 1px;
-    margin: 7px 7px 0 0;
-    width: $deck-img-width * 1px;
-
-    &.second {
+    & > li {
+      margin-left: 0;
       margin-right: 0;
     }
-
-    .overlay {
-      font-size: 9px;
-    }
-  }
-
-  .how-to-use {
-    .example-cards {
-      $card-width: 218px;
-      $inner-spacing: 16px;
-      $card-margin: $inner-spacing / 2;
-
-      width: $card-width * 2 + $inner-spacing;
-
-      .example-card-wrap {
-        width: $card-width;
-
-        &.first {
-          margin-right: $card-margin;
-        }
-
-        &.second {
-          margin-left: $card-margin;
-        }
-      }
-    }
-
-    .cards-idea-contact {
-      width: 100%;
-    }
   }
 }
 
-@media screen and (max-width: $head-trans-width * 1px) {
-  .deck-title, .deck-sub {
-    line-height: 17px;
-  }
-
-  .deck-title {
-    font-size: 14px;
-  }
-
-  .deck-sub {
-    font-size: 11px;
-  }
-
-  .deck-desc {
-    font-size: 12px;
-  }
-}
-
-@media screen and (max-width: 465px) {
-  .how-to-use {
-    .how-to-content {
-      .how-to-section {
-        padding: 0;
-        width: 100%;
-      }
-    }
-
-    .example-cards {
-      width: 100%;
-
-      .example-card-wrap {
-        display: block;
-
-        &.first {
-          margin: 0 auto;
-        }
-
-        &.second {
-          margin: 23px auto 0 auto;
-        }
-      }
-    }
+@media screen and (max-width: $nav-mobile-width) {
+  .section-anchor {
+    display: block;
+    position: relative;
+    top: -1 * $topbar-row-height;
+    visibility: hidden;
   }
 }

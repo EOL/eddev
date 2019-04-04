@@ -131,7 +131,7 @@ class CardEditor extends React.Component {
 
   saveWithCb = (cb) => {
     if (this.props.card) {
-      this.props.showLoadingOverlay(null, (closeFn) => {
+      this.props.showLoadingOverlay(null, null, (closeFn) => {
         this.props.card.save((err, newCard) => {
           cb(err, newCard, closeFn)
         });
@@ -272,6 +272,8 @@ class CardEditor extends React.Component {
                       forceCardDirty={this.forceDirty}
                       disableCol={this.disableRightCol}
                       enableCol={this.enableRightCol}
+                      userRole={this.props.userRole}
+                      requestReloadCard={this.props.requestReloadCard}
                     />
                   }
                 </div>

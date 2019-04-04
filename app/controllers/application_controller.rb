@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :set_request_id
   before_action :set_locale
   before_action :store_user_sessions_referrer
+  before_action :store_card_maker_referrer
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -22,10 +23,10 @@ class ApplicationController < ActionController::Base
   end
 
   def logged_in_user
-    nil
-
     if session[:user_id]
       @logged_in_user ||= User.find_by(:id => session[:user_id])
+    else
+      nil
     end
   end
   helper_method :logged_in_user
@@ -43,8 +44,11 @@ class ApplicationController < ActionController::Base
     def log_in(user_name, password)
       @logged_in_user = User.find_by(user_name: user_name).try(:authenticate, password)
 
-      if @logged_in_user && @logged_in_user.confirmed?
-        session[:user_id] = @logged_in_user.id
+      if @logged_in_user
+        if @logged_in_user.confirmed?
+          session[:user_id] = @logged_in_user.id
+        end
+
         @logged_in_user
       else
         nil
@@ -86,6 +90,18 @@ class ApplicationController < ActionController::Base
     end
     helper_method :main_nopad_bot?
 
+    def nohero
+      @nohero = true
+    end
+
+    def nofooter
+      @nofooter = true
+    end
+
+    def header_slim
+      @header_slim = true
+    end
+
   private
     def set_locale
       I18n.locale = params[:locale] || I18n.default_locale
@@ -111,15 +127,29 @@ class ApplicationController < ActionController::Base
       render(:file => File.join(Rails.root, 'public/404'), :status => 404, :layout => false)
     end
 
+    def reg_req?
+      request.get? && 
+      request.format.html? &&
+      !request.xhr?
+    end
+
     def store_user_sessions_referrer
       if (
-        request.get? && 
-        request.format.html? &&
+        reg_req? && 
         request.controller_class != UserSessionsController &&
-        request.controller_class != UsersController &&
-        !request.xhr?
+        request.controller_class != UsersController
       )
         session[:user_sessions_referrer] = request.fullpath
+      end
+    end
+
+    def store_card_maker_referrer
+      if (
+        reg_req? &&
+        request.controller_class != UserSessionsController &&
+        request.controller_class != CardMakerController
+      )
+        session[:card_maker_referrer] = request.fullpath
       end
     end
 end

@@ -589,3 +589,11 @@ $subject-key-block-width: 600px;
     }
   }
 }
+
+
+@media screen and (max-width: $nav-mobile-width) {
+  .grade-level-fixed-bar > .grade-level-bar-outer {
+    top: $topbar-row-height;
+  }
+}
+

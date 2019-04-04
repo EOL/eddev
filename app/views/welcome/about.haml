@@ -1,10 +1,5 @@
-= render "shared/intro_section", :header => "welcome.about.about_group_hdr",
-  :paragraphs => ["welcome.about.eol_is_an_open_science_html", 
-  {:key => "welcome.about.thats_where_l_and_e_comes_in_html", 
-  :vars => { :places_path => "/ecosystems", :cards_path => cards_path}},
-  {:key => "welcome.about.if_you_are_interested_in_collaborating_html", 
-  :vars => { :contact_url => contact_url }}],
-  :hideable => false
+= render "shared/intro_section", :header => "welcome.about.about_group_hdr", :class => "intro-about",
+  :paragraphs => ["welcome.about.eol_is_an_open_science_html"]
 .team-head
   %h2.team-head-title= t ".meet_the_team"
   %p.team-head-content= t ".le_is_located_html", 
@@ -18,10 +13,6 @@
   :bio_name => "zoe_name",
   :bio_title => "intern",
   :bio_txt => "zoe_bio"
-= render "bio", :bio_img_path => "welcome/bio/amy.jpg",
-  :bio_name => "amy_name",
-  :bio_title => "curriculum_coordinator",
-  :bio_txt => "amy_bio"
 = render "bio", :bio_img_path => "welcome/bio/carly.jpg",
   :bio_name => "carly_name",
   :bio_title => "ux_designer",

@@ -1,361 +1,348 @@
 @import "shared/layout_vars.scss";
 
-$single-width-px: 305;
-$double-width-px: 622;
-$nav-img-height: 305;
+$cards-red: #ca6262;
+$lessons-green: #60b26a;
+$podcasts-blue: #548fd1;
+$partner-blue: #6f9fd2;
 
-@function nav-img-url($img-name) {
-  @return image-url("welcome/nav/" + $img-name + ".jpg")
-}
-
-@mixin nav-item-dimensions($item-width, $over-txt-width, $col-width) {
-  $bar-padding-left: 30; 
-  $padding-left: percentage($bar-padding-left / $item-width);
-
-  width: percentage($item-width / $col-width);
-
-  .bar {
-    padding-left: $padding-left;
-    width: 100%;
-  }
-
-  .img {
-    padding-top: percentage($nav-img-height / $item-width);
-  }
-
-  .nav-overlay-txt {
-    width: percentage($over-txt-width / $item-width);
-  } 
-}
+$min-mobile-width: 320; // The width of the 'mobile' designs in Zeplin, used to calculate percentage values.
+$desc-width: 385px;
+$desc-trans-width: 540px;
+$section-head-height-mob: 49px;
 
 // ------------ HOME ----------------
-// SLIDESHOW
-.slide-overlay {
-  @include main-col-horiz;
+.home-sections {
+  margin-top: 20px;
 }
 
-.slide {
+.home-section {
+  overflow: hidden; 
+}
+
+.home-section-head {
+  color: white;
+  font-size: 20px;
+  font-weight: $bold;
+  height: $section-head-height-mob;
+  line-height: $section-head-height-mob;
+  padding-right: 16px;
+  text-align: right;
+  width: 100%;
+}
+
+  .home-section-head-cards {
+    background-color: $cards-red;
+  }
+
+  .home-section-head-lessons {
+    background-color: $lessons-green;
+  }
+
+  .home-section-head-tourspods {
+    background-color: $podcasts-blue;
+    font-size: 14px;
+    line-height: normal;
+    padding-top: 5px;
+
+    & > div {
+      display: inline-block;
+      width: 140px;
+    }
+  }
+
+.home-section-content {
+  background-size: cover;
+  display: block;
   position: relative;
+  text-align: right;
 }
 
-.slide-overlay-wrap {
-  background-color: rgba(20, 20, 20, 0.7);
-  bottom: 0;
+  .home-section-content-cards {
+    background-image: image_url("welcome/bg_cards.png");
+  }
+
+  .home-section-content-lessons {
+    background-image: image_url("welcome/bg_lessons.png");
+  }
+
+  .home-section-content-tourspods {
+    background-image: image_url("welcome/bg_podcasts.png");
+  }
+
+
+.home-section-img {
+  left: 0;
   position: absolute;
-  margin: 0 auto;
-  width: 100%;
-  z-index: 3;
+  top: -10px;
+  transform: rotate(6deg);
+  width: 145px;
 }
 
-.slide-overlay {
-  max-width: $main-col-width / $em * 1em;
-}
-
-.slide-overlay-inner {
-  color: $white;
-  font-family: $open-sans;
-  font-weight: $semibold;
-  height: 100%;
-  padding: percentage(12 / $main-col-width) 0 percentage(47 / $main-col-width) 0;
-}
-
-.slide-head-grp {
-  $font-size: 20;
-  font-size: $font-size / $em * 1em;
-
-  .slide-title, .slide-subtitle {
-    display: inline-block;
-  }
-
-  .slide-title {
-    margin-right: 13 / $font-size * 1em;
-  }
-}
-
-.slide-desc {
-  margin-top: 3 / $em * 1em;
-}
-
-.slide-subtitle {
-  font-style: italic;
-}
-
-.slick-dotted.slick-slider {
-  margin-bottom: 0;
-}
-
-.slick-dots {
-  bottom: 0;
-  padding-bottom: 10px;
-
-  li {
-    margin: 0 12px;
-
-    button:before {
-      color: rgba(215, 215, 215, 0.19);
-      font-size: 15px; // Ususally, we'd use em, but this is a hack to work around slick.
-      opacity: 1;
-      -webkit-text-stroke-width: 1px;
-      -webkit-text-stroke-color: #979797;
-    }
-
-    &.slick-active {
-      button:before {
-          opacity: 1;
-          color: $white;
-          -webkit-text-stroke-color: $white;
-      }
-    }
-  }
-}
-
-// NAV SECTIONS
-.nav-items {
-  $bar-padding-left: 30;
-
+.home-section-desc {
+  background: rgba(255, 255, 255, 0.79);
+  font-size: 11px;
+  line-height: 1.68;
+  min-height: 120px;
+  padding: 10px 14px 10px 167px;
   position: relative;
+  text-align: left;
   width: 100%;
+}
 
-  a, a:visited {
-    text-decoration: none;
-  }
+.home-section-taxon {
+  display: none;
+}
 
-  .img-wrap {
-    position: relative;
-  }
+.home-section-btns {
+  background-color: rgba(233, 240, 239, 0.69); 
+  backdrop-filter: blur(1.1px);
+  display: flex; 
+  justify-content: space-around;
+  padding: 8px 0;
 
-  .nav-img {
-    max-width: 100%;
-    vertical-align: bottom;
-  }
-
-  .nav-overlay {
-    color: $white;
-    display: none;
-    position: absolute;
-    height: 100%;
-    width: 100%;
+  & > li {
+    $height: 35px;
+    background-color: $white;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px 0 rgba(177, 177, 177, 0.5);
+    font-size: 11px;
+    height: $height;
+    line-height: $height;
     text-align: center;
-    top: 0;
-    left: 0;
-    background-color: rgba(20, 20, 20, 0.74);
-    font-size: 1.125em;
-    justify-content: center;
-    align-items: center;
+    width: 100px;
+    z-index: 2;
+
+    & > a {
+      color: $eol-blue; 
+      display: block;
+      height: 100%;
+      text-decoration: none;
+      width: 100%;
+
+      &:hover {
+        text-decoration: underline; 
+      }
+    }
+  }
+}
+
+.home-section-btns-desc {
+  display: none;
+  padding: 0;
+}
+
+.partner-head {
+  $height: 65px;
+  background-color: $partner-blue;
+  color: $white;
+  font-size: 20px;
+  font-weight: $semibold;
+  height: $height;
+  line-height: $height;
+  margin: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.partner-section-head {
+  color: $black;
+  font-size: 20px;
+  font-weight: $semibold;
+  height: 83px;
+  padding: 14px 20px;
+  position: relative;
+}
+
+.partner-section-head-text {
+  align-items: center;
+  display: flex;
+  height: 54px;
+}
+
+.partner-section-head-icon {
+  height: 85%;
+  position: absolute;
+  right: 20px;
+  top: 5px;
+}
+
+.partner-section-content {
+  align-items: center;
+  background-size: cover;
+  color: $black;
+  display: flex;
+  height: 187px;
+  justify-content: center;
+}
+
+  .partner-section-content-cnc {
+    background-image: image_url("welcome/bg_cnc.png");
   }
 
-  .nav-item {
-    $margin: percentage(12 / $main-col-width);
-    cursor: pointer;
+  .partner-section-content-bhl {
+    background-image: image_url("welcome/bg_bhl.png");
+  }
+
+  .partner-section-content-inat {
+    background-image: image_url("welcome/bg_inat.png");
+  }
+
+.partner-section-desc {
+  background-color: rgba(255, 255, 255, 0.79);
+  font-size: 11px;
+  line-height: 1.68;
+  margin: 0 auto;
+  padding: 11px 25px;
+  max-width: 67%;
+}
+
+
+@media only screen and (min-width: 500px) {
+  .home-section-head-tourspods {
+    font-size: 20px;
+    line-height: $section-head-height-mob;
+    padding-top: 0;
+
+    & > div {
+      width: 100%;
+    }
+  }
+}
+
+
+@media only screen and (min-width: $tablet-width) {
+  $desc-width: 385px;
+
+  .home-section-content {
+    height: 175px;
+  }
+
+  .home-section-desc {
+    border-radius: 0 0 4px 4px;
     display: inline-block;
-    margin: $margin $margin 0 0; 
-    position: relative;
-    vertical-align: top;
-
-    &:hover, &.hover {
-      .nav-overlay {
-        display: flex;
-      }
-
-      .bar {
-        display: none;
-      }
-    } 
-
-    &.border {
-      border: 1px solid $section-border-gray;
-    }
-
-    .img {
-      background-size: cover;
-      background-position: center;
-    }
+    min-height: 0;
+    padding: 12px 22px;
+    width: $desc-width;
   }
 
-
-  .double-width {
-    $over-txt-width: 422;
-    @include nav-item-dimensions($double-width-px, $over-txt-width, $main-col-width);
+  .home-section-btns-desc {
+    background: none;
+    display: flex;
+    margin-top: 12px;
   }
 
-  .single-width {
-    $over-txt-width: 203;
-    @include nav-item-dimensions($single-width-px, $over-txt-width, $main-col-width);
-  }
-
-  .bar {
-    $padding-t-b: 8 / $em * 1em;;
-    background: rgba($black, .8);
-    color: $white;
-    font-size: 1em;
-    font-weight: $bold;
-    line-height: 1.5;
-    padding-bottom: $padding-t-b;
-    padding-top: $padding-t-b;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-  }
-
-  .memory-games .img {
-    background-image: nav-img-url("memory_game");
-  }
-
-  .card-maker .img {
-    background-image: nav-img-url("card_maker_single");
-  }
-
-  .lesson-plans .img {
-    background-image: nav-img-url("lesson_plans_single");
-  }
-
-  .species-cards .img {
-    background-image: nav-img-url("species_cards");
-  }
-
-  .biodiv-articles .img {
-    background-image: nav-img-url("biodiversity_articles");
-  }
-
-  .podcasts .img {
-    background-image: nav-img-url("podcasts");
-  }
-
-  .google-tours .img {
-    background-image: nav-img-url("google_tours_single");
-  }
-
-  .collections .img {
-    background-image: nav-img-url("collections");
-  }
-
-  .hi-res-images .img {
-    background-image: nav-img-url("hi_res_images");
-  }
-
-  .inaturalist .img {
-    background-image: nav-img-url("inaturalist_single");
-  }
-
-  .coloring-books .img {
-    background-image: nav-img-url("bhl_coloring");
-  }
-
-  .cnc .img {
-    background-image: nav-img-url("cnc");
-  }
-
-  .collections,
-  .hi-res-images,
-  .lesson-plans,
-  .biodiv-articles,
-  .cnc {
-    margin-right: 0;
-  }
-}
-
-// RESPONSIVE TRANSITIONS
-@media screen and (max-width: $main-col-with-padding-width * 1px) {
-  .nav-items {
-    .nav-overlay {
-      font-size: 14 / $em * 1em;
-    }
-  }
-}
-
-@media screen and (max-width: 740px) {
-  .nav-items {
-    .nav-overlay {
-      font-size: 12 / $em * 1em;
-    }
-  }
-}
-
-@media screen and (max-width: 646px) {
-  $new-main-col-width: 622;
-
-  .main-col, .slide-overlay {
-    padding: 0 percentage($main-col-padding / ($new-main-col-width + 2 * $main-col-padding));
-  }
-
-  .nav-items {
-    $margin-px: 12;
-    $width-px: ($new-main-col-width - $margin-px) / 2;
-
-    .single-width, .double-width {
-      @include nav-item-dimensions($width-px, 203, $new-main-col-width);
-
-      $margin: percentage($margin-px / $new-main-col-width);
-      margin: $margin $margin 0 0;
-    }
-
-    .nav-overlay {
-      font-size: 14 / $em * 1em;
-    }
-
-    .inaturalist .img {
-      background-image: nav-img-url("inaturalist_single");
-    }
-
-    .species-cards,
-    .podcasts,
-    .biodiv-articles,
-    .coloring-books {
-      margin-right: 0;
-    }
-  }
-
-  .slide-head-grp {
-    font-size: 1em;
-  }
-
-  .slide-desc {
+  .home-section-btns-bottom {
     display: none;
   }
 
-  .slick-dots {
-    padding-bottom: 2px;
+  .home-section-head {
+    & > div {
+      display: inline-block;
+      text-align: left;
+      padding-left: 5px;
+      width:  $desc-width;
+    }
+  }
 
-    li {
-      margin: 0 6px;
+  .home-section-head, .home-section-content {
+    padding-right: 3%;
+  }
 
-      button:before {
-        font-size: 12px; // Ususally, we'd use em, but this is a hack to work around slick.
-      }
+  .home-section-img {
+    left: 4%;
+    max-width: 190px;
+    position: absolute;
+    top: -10px;
+    transform: rotate(-8deg);
+    width: 25%;
+  }
+
+  .home-section-taxon {
+    background-color: rgba(#242424, 0.68);
+    bottom: 0;
+    color: $white;
+    display: block;
+    font-size: 11px;
+    padding: 7px 14px;
+    position: absolute;
+    text-align: right;
+    width: 100%;
+
+    & > a {
+      color:  #b8d7ff;
     }
   }
 }
 
-@media screen and (max-width: $head-trans-width * 1px) {
+@media only screen and (min-width: 675px) {
+  .home-section-img {
+    left: 8%;
+  }
 
-  .nav-items {
-    .nav-overlay {
-      font-size: 12 / $em * 1em;
-    }
+  .home-section-head, .home-section-content {
+    padding-right: 7%;
   }
 }
 
-@media screen and (max-width: 450px) {
-  .nav-items {
-    .nav-overlay {
-      font-size: 10 / $em * 1em;
-    }
+@media only screen and (min-width: 870px) {
+  .partner-section {
+    display: inline-block;
+    vertical-align: top;
+    width: 33.33%;
+  }
 
-    .bar {
-      font-size: .75em;
-    }
+  .partner-section-head {
+    border-right: 1px solid #ddd;
+  }
+
+  .partner-section-content {
+    height: 180px;
   }
 }
 
-@media screen and (max-width: 440px) {
-  $new-main-col-width: 440;
+@media only screen and (min-width: $full-width) {
+  .home-section-head {
+    $height: 60px;
+    height: $height;
+    line-height: $height;
+    font-size: 22px;
+  }
 
-  .slide-overlay-inner {
-    padding-bottom: percentage(30 / $new-main-col-width);
+  .home-section-content {
+    height: 202px;
+  }
+
+  .home-section-desc {
+    font-size: 14px;
+    padding: 20px 30px;
+    width: 430px;
+  }
+
+  .home-section-btns > li {
+    font-size: 14px;
+    width: 110px;
+  }
+
+  .home-section-taxon {
+    font-size: 14px;
+    padding: 8px 20px;
+  }
+
+  .partner-head {
+    $height: 80px;
+    font-size: 24px;
+    height: $height;
+    line-height: $height;
+  }
+
+  .partner-section-content {
+    height: 270px;
+  }
+
+  .partner-section-desc {
+    font-size: 14px;
   }
 }
-
 
 // ---------  ABOUT  ------------
 .about-box {
@@ -444,6 +431,7 @@ $bio-img-outer-width-px: $bio-img-width-px + $bio-img-rmargin-px;
   margin-top: 4 / $em * 1em;
 }
 
+
 @media screen and (max-width: 525px) {
   .team-head-title {
     font-size: 16px;
@@ -462,5 +450,11 @@ $bio-img-outer-width-px: $bio-img-width-px + $bio-img-rmargin-px;
   .bio-img {
     height: 85px;
     width: 85px;
+  }
+}
+
+@media screen and (min-width: $full-width) {
+  .intro-about .text-p {
+    max-width: 620px;
   }
 }

@@ -486,7 +486,10 @@ class CardMaker extends React.Component {
             >{I18n.t('react.card_maker.cancel')}</button>
           }
         </ReactModal>
+        {this.screenComponent()}
+        {/*
         <Page noMainCol={true}>{this.screenComponent()}</Page>
+        */}
       </div>
     )
   }

@@ -5,6 +5,7 @@ import LoadingSpinnerImage from './loading-spinner-image'
 import {cardMakerUrl, loResCardImageUrl, createCardUrl} from 'lib/card-maker/url-helper'
 import HeaderBar from './header-bar'
 import Toolbar from './toolbar'
+import Poller from 'lib/card-maker/poller'
 import styles from 'stylesheets/card_maker/simple_manager'
 
 const pollIntervalMillis = 1000
@@ -56,6 +57,7 @@ class SimpleManager extends React.Component {
   constructor(props) {
     super(props);
 
+    this.poller = new Poller();
     this.state = {
       openModal: null,
       zoomCardIndex: null,
@@ -273,7 +275,7 @@ class SimpleManager extends React.Component {
         ;
 
     that.closeModal();
-    that.props.showLoadingOverlay(null, (close) => {
+    that.props.showLoadingOverlay(null, null, (close) => {
       $.ajax({
         method: 'POST',
         data: desc,
@@ -304,7 +306,7 @@ class SimpleManager extends React.Component {
           }
         ;
 
-    that.props.showLoadingOverlay(null, (closeFn) => {
+    that.props.showLoadingOverlay(null, null, (closeFn) => {
       $.ajax({
         url: cardMakerUrl('decks'),
         method: 'POST',
@@ -366,7 +368,7 @@ class SimpleManager extends React.Component {
   createOrCopyCard = (data, deck) => {
     let that = this;
 
-    that.props.showLoadingOverlay(null, (closeFn) => {
+    that.props.showLoadingOverlay(null, null, (closeFn) => {
       $.ajax({
         url: createCardUrl(deck),
         data: JSON.stringify(data),
@@ -409,7 +411,7 @@ class SimpleManager extends React.Component {
   handleRenameDeck = (name) => {
     const that = this;
 
-    that.props.showLoadingOverlay(null, (closeFn) => {
+    that.props.showLoadingOverlay(null, null, (closeFn) => {
       $.ajax({
         url: cardMakerUrl(`decks/${this.props.selectedDeck.id}/name`),
         method: 'POST',
@@ -421,6 +423,11 @@ class SimpleManager extends React.Component {
     })
   }
 
+  cancelPolling = () => {
+    this.poller.cancel();
+    this.props.hideLoadingOverlay();
+  }
+
   handleMakePdf = (cardBackId) => {
     const that = this;
 
@@ -428,6 +435,7 @@ class SimpleManager extends React.Component {
 
     that.props.showLoadingOverlay(
       I18n.t('react.card_maker.print_loading_msg'), 
+      this.cancelPolling,
       (closeFn) => {
         $.ajax({
           url: cardMakerUrl('deck_pdfs'),
@@ -447,19 +455,17 @@ class SimpleManager extends React.Component {
   pollJob = (baseUrl, jobId, overlayCloseFn) => {
     const that = this;
 
-    $.getJSON(cardMakerUrl(baseUrl + '/' + jobId + '/status'), (result) => {
-      if (result.status === 'done') {
+    that.poller.start(
+      cardMakerUrl(baseUrl + '/' + jobId + '/status'),
+      (result) => {
         overlayCloseFn();
         window.open(cardMakerUrl(baseUrl + '/downloads/' + result.resultFileName));
-      } else if (result.status === 'running') {
-        setTimeout(() => {
-          that.pollJob(baseUrl, jobId, overlayCloseFn)
-        }, pollIntervalMillis)
-      } else {
+      },
+      () => {
         overlayCloseFn();
         alert(I18n.t('react.card_maker.unexpected_error_msg'));
       }
-    });
+    );
   }
 
   pollPdfJob = (id, overlayCloseFn) => {
@@ -471,6 +477,7 @@ class SimpleManager extends React.Component {
 
     that.props.showLoadingOverlay(
       I18n.t('react.card_maker.it_may_take_a_few_mins'),
+      this.cancelPolling,
       (closeFn) => {
         $.ajax({
           url: cardMakerUrl('deck_pngs'),

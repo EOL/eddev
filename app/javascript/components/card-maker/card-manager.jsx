@@ -472,9 +472,7 @@ class CardManager extends React.Component {
     that.closeModal();
     that.props.showLoadingOverlay(
       I18n.t('react.card_maker.print_loading_msg'), 
-      () => {
-        this.cancelPolling();
-      },
+      this.cancelPolling,
       (closeFn) => {
         $.ajax({
           url: cardMakerUrl('deck_pdfs'),
@@ -697,10 +695,7 @@ class CardManager extends React.Component {
     const that = this;
     that.props.showLoadingOverlay(
       I18n.t('react.card_maker.it_may_take_a_few_mins'),
-      () => {
-        // TODO: send cancel request
-        this.cancelPolling();
-      },
+      this.cancelPolling,
       (closeFn) => {
         $.ajax({
           url: cardMakerUrl('deck_pngs'),

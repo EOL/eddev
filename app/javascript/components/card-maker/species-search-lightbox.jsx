@@ -78,11 +78,6 @@ class SpeciesSearchLightbox extends React.Component {
     this.reqCount = 0;
   }
 
-  handleRequestClose = () => {
-    this.props.handleClose();
-    this.setState(cleanState);
-  }
-
   resetState = () => {
     this.setState(cleanState);
   }
@@ -191,6 +186,7 @@ class SpeciesSearchLightbox extends React.Component {
     );
   }
 
+    /*
   loadPublicCards = () => {
     $.getJSON(cardMakerUrl(`taxa/${this.state.selectedResultId}/cards/public`), (result) => {
       this.setState({
@@ -199,6 +195,7 @@ class SpeciesSearchLightbox extends React.Component {
       });
     });
   }
+  */
 
   render() {
     var curType = cardTypes[this.state.cardType];
@@ -218,6 +215,7 @@ class SpeciesSearchLightbox extends React.Component {
             onRequestBack={() => this.setState({ screen: 'start', cardType: 'trait' })}
             img={curType.img}
             nameKey={curType.nameKey}
+            screen={this.state.screen}
           />
           <div className={styles.speciesSearchForm}>
             {
@@ -269,11 +267,18 @@ class SpeciesSearchLightbox extends React.Component {
             {
               this.state.screen === 'create' && (this.state.cardType !== 'trait' || this.state.selectedResultId !== null) && (
               <div className={styles.createCardRow}>
+                {/*
                 <button 
                   className={[styles.btn, styles.btnCreateCard].join(' ')} 
                   onClick={this.state.cardType == 'trait' ? this.loadPublicCards : this.handleCreate}
                   type='button'
                 >{this.state.cardType == 'trait' ? 'next' : I18n.t('react.card_maker.create')}</button>
+                */}
+                <button 
+                  className={[styles.btn, styles.btnCreateCard].join(' ')} 
+                  onClick={this.handleCreate}
+                  type='button'
+                >{I18n.t('react.card_maker.create')}</button>
               </div>
             )}
             {

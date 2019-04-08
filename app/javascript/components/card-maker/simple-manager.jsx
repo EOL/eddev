@@ -58,7 +58,8 @@ class SimpleManager extends React.Component {
 
     this.state = {
       openModal: null,
-      zoomCardIndex: null
+      zoomCardIndex: null,
+      deckDrawerOpen: false
     }
   }
 
@@ -70,7 +71,7 @@ class SimpleManager extends React.Component {
         return card.id === deck.titleCardId;
       });
 
-      inner = <LoadingSpinnerImage src={loResCardImageUrl(card)} />
+      inner = <LoadingSpinnerImage src={loResCardImageUrl(card)} load={true}/>
     } else {
       inner = <div className={styles.deckText}>{deck.name}</div>
     }
@@ -80,7 +81,14 @@ class SimpleManager extends React.Component {
         className={styles.deck}
         key={deck.id}
         onClick={() => this.props.setSelectedDeck(deck)}
-      >{inner}</li>
+      >
+        <div className={[styles.cardImg, styles.cardImgBehind, styles.cardImgBehind2].join(' ')} />
+        <div className={[styles.cardImg, styles.cardImgBehind, styles.cardImgBehind1].join(' ')} />
+        <div className={[styles.cardImg, styles.cardImgBehind, styles.cardImgBehind0].join(' ')} />
+        <div className={styles.cardImg}>
+          {inner}
+        </div>
+      </li>
     );
   }
 
@@ -131,7 +139,9 @@ class SimpleManager extends React.Component {
         className={styles.card}
         key={card.id}
       >
-        <LoadingSpinnerImage src={loResCardImageUrl(card)} load={true}/>
+        <div className={styles.cardImg}>
+          <LoadingSpinnerImage src={loResCardImageUrl(card)} load={true}/>
+        </div>
         <div className={styles.resourceOverlay}>
           {
             this.props.library === 'user' &&
@@ -163,7 +173,7 @@ class SimpleManager extends React.Component {
         onClick={onClick}
         key='new'
       >
-        <div>
+        <div className={styles.cardImg}>
           <i className='fa fa-plus fa-3x' />
           <div>{text}</div>
         </div>

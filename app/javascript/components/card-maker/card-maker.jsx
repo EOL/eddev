@@ -402,7 +402,7 @@ class CardMaker extends React.Component {
           userDecks={this.state.userDecks}
           unassignedCardsDeck={unassignedCardsDeck}
           userRole={this.state.userRole}
-          handleEditCard={this.handleEditCard}
+          onRequestEditCard={this.handleEditCard}
           library={this.state.library}
           reloadCurLibResources={this.reloadCurLibResources}
           setLibrary={this.setLibrary}

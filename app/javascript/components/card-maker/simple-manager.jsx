@@ -4,7 +4,7 @@ import ManagerModals from './manager-modals'
 import LoadingSpinnerImage from './loading-spinner-image'
 import {cardMakerUrl, loResCardImageUrl, createCardUrl} from 'lib/card-maker/url-helper'
 import HeaderBar from './header-bar'
-import Toolbar from './toolbar'
+import CardToolbar from './card-toolbar'
 import Poller from 'lib/card-maker/poller'
 import styles from 'stylesheets/card_maker/simple_manager'
 
@@ -20,11 +20,15 @@ const pollIntervalMillis = 1000
 function DescPart(props) {
   let inner;
 
-  if (props.library == 'public') {
+  if (props.library == 'public' || props.searchVal) {
     let text; 
 
     if (props.selectedDeck) {
-      text = props.selectedDeck.desc;
+      if (props.searchVal) {
+        text = 'Showing cards matching "' + props.searchVal + '"';
+      } else {
+        text = props.selectedDeck.desc;
+      }
     } else {
       text = 'Welcome to the public biodiversity card library! You can browse and print our pre-made decks here, or create your own by switching to your library.';
     }
@@ -61,7 +65,8 @@ class SimpleManager extends React.Component {
     this.state = {
       openModal: null,
       zoomCardIndex: null,
-      deckDrawerOpen: false
+      deckDrawerOpen: false,
+      cardSearchVal: ''
     }
   }
 
@@ -233,7 +238,17 @@ class SimpleManager extends React.Component {
     let resources;
 
     if (this.props.selectedDeck) {
-      resources = cards.map((card, i) => {
+      let filteredCards = cards
+        ; 
+
+      if (this.state.cardSearchVal) {
+        filteredCards = cards.filter((card) => {
+          return card.commonName.toLowerCase().includes(this.state.cardSearchVal) ||
+            card.sciName.toLowerCase().includes(this.state.cardSearchVal);
+        });
+      }
+
+      resources = filteredCards.map((card, i) => {
         return this.cardItem(card, i);
       });
     } else {
@@ -250,7 +265,9 @@ class SimpleManager extends React.Component {
 
     if (this.props.library === 'user') {
       if (this.props.selectedDeck) {
-        resources = [this.newCardElmt()].concat(resources);
+        if (!this.state.cardSearchVal) {
+          resources = [this.newCardElmt()].concat(resources);
+        }
       } else {
         resources = [this.newDeckElmt()].concat(resources);
       }
@@ -544,8 +561,6 @@ class SimpleManager extends React.Component {
       managerClasses.push(styles.simpleManagerWToolbar);
     }
 
-    console.log(this.state);
-
     return (
       <div className={managerClasses.join(' ')}>
         <ManagerModals 
@@ -588,7 +603,7 @@ class SimpleManager extends React.Component {
         />
         {
           hasToolbar && 
-          <Toolbar 
+          <CardToolbar 
             onRequestPrint={() => this.setState({ openModal: 'print' })} 
             onRequestPngDownload={this.createDeckPngs}
             userRole={this.props.userRole}
@@ -600,6 +615,10 @@ class SimpleManager extends React.Component {
             onRequestToggleDeckPublic={this.toggleDeckPublic}
             onRequestOpenDeckUsers={() => this.setState({ openModal: 'deckUsers' })}
             onRequestDestroyDeck={() => this.handleDestroyDeck(this.props.selectedDeck)}
+            onRequestUpdateSearchValue={(newVal) => {
+              this.setState({ cardSearchVal: newVal.toLowerCase() })
+            }}
+            searchValue={this.state.cardSearchVal}
           />
         }
         <div className={styles.managerMain}>
@@ -607,6 +626,7 @@ class SimpleManager extends React.Component {
             library={this.props.library}
             selectedDeck={this.props.selectedDeck}
             onRequestEditDesc={() => this.setState({ openModal: 'deckDesc' })}
+            searchVal={this.state.cardSearchVal}
           />
           <ul className={styles.decks}>
             {resources}

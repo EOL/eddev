@@ -93,6 +93,10 @@ $toolbar-height: 38px;
   padding-left: 8px;
 }
 
+.toolbarBtnBack {
+  padding-right: 15px;
+  padding-left: 15px;
+}
 
 .toolbarMenu {
   background: #fff;
@@ -111,6 +115,29 @@ $toolbar-height: 38px;
     }
 
     width: 100%; 
+  }
+}
+
+.toolbarSearch {
+  height: 100%;
+  position: relative;
+  width: 400px;
+
+  & > input {
+    border-bottom: none;
+    border-left: none;
+    border-right: 1px solid $black;
+    border-top: none;
+    font-size: 18px;
+    height: 100%;
+    padding: 0 15px;
+    width: 100%;
+  }
+
+  & > i {
+    right: 15px;
+    position: absolute;
+    top: 10px;
   }
 }
 

@@ -7,6 +7,10 @@ import styles from 'stylesheets/card_maker/simple_manager';
 function CardToolbar(props) {
   function buildButtonItems() {
     const items = [];
+    
+    if (props.isAllCards) {
+      return items;
+    }
 
     if (
       props.library == 'user' ||
@@ -33,6 +37,10 @@ function CardToolbar(props) {
 
   function buildMenuItems() {
     const items = [];
+    
+    if (props.isAllCards) {
+      return items;
+    }
 
     if (props.library == 'user') {
       items.push({

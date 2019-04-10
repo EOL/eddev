@@ -262,6 +262,12 @@ $deck-margin: 15px;
   }
 }
 
+.resourceOverlayTwoCol {
+  & > i {
+    width: 50%;
+  }
+}
+
 .deckText {
   padding: 0 10px;
 }
@@ -291,6 +297,10 @@ $deck-margin: 15px;
 .btnSaveDesc {
   margin: 0 auto;
   width: 200px;
+}
+
+.showAllIcon {
+  height: 46px !important;
 }
 
 @media screen and (max-width: (decks-width(5) - 1px)) {

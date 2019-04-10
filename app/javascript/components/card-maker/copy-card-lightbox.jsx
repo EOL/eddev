@@ -73,6 +73,10 @@ class CopyCardLightbox extends React.Component {
   }
 
   render() {
+    let deckNames = new Set(this.props.decks.map((deck) => {
+      return deck.name;
+    }));
+
     return (
       <DeckNameLightbox
         isOpen={this.props.isOpen}
@@ -82,7 +86,7 @@ class CopyCardLightbox extends React.Component {
         handleSubmit={this.handleSubmit}
         hideDeckNameInput={this.state.deckId !== this.props.newDeckId}
         fields={this.fields()}
-        deckNames={this.props.deckNames}
+        deckNames={deckNames}
       />
     )
   }

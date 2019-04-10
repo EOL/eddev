@@ -9,6 +9,8 @@ import DeckToolbar from './deck-toolbar'
 import Poller from 'lib/card-maker/poller'
 import styles from 'stylesheets/card_maker/simple_manager'
 
+import deckSvg from 'images/card_maker/deck.svg'
+
 const pollIntervalMillis = 1000
     , specialCardOrder = {
         'title': 0,
@@ -16,6 +18,7 @@ const pollIntervalMillis = 1000
         'vocab': 2,
         'key': 3,
       }
+    , newDeckId = -100
     ;
 
 function DescPart(props) {
@@ -25,25 +28,27 @@ function DescPart(props) {
     elmts.push("Showing cards matching '" + props.cardSearchVal + "'");
   } else if (!props.selectedDeck && props.deckSearchVal) {
     elmts.push("Showing decks matching '" + props.deckSearchVal + "'");
-  } else if (props.selectedDeck) {
-    if (props.library === 'user' && !props.selectedDeck.desc) {
-      return (
-        <div 
-          className={[styles.btn, styles.btnDesc].join(' ')}
-          onClick={props.onRequestEditDesc}
-        >add a description</div>
-      );
-    } else if (props.selectedDeck.desc){
-      elmts.push(props.selectedDeck.desc);
+  } else if (!props.isAllCards) {
+    if (props.selectedDeck) {
+      if (props.library === 'user' && !props.selectedDeck.desc) {
+        return (
+          <div 
+            className={[styles.btn, styles.btnDesc].join(' ')}
+            onClick={props.onRequestEditDesc}
+          >add a description</div>
+        );
+      } else if (props.selectedDeck.desc){
+        elmts.push(props.selectedDeck.desc);
 
-      if (props.library === 'user') {
-        elmts.push(<i onClick={props.onRequestEditDesc} className={'fa fa-edit'} />)
+        if (props.library === 'user') {
+          elmts.push(<i onClick={props.onRequestEditDesc} className={'fa fa-edit'} />)
+        }
       }
+    } else if (props.library === 'public') {
+      elmts.push('Welcome to the public biodiversity card library! You can browse and print our pre-made decks here, or create your own by switching to your library.')
     }
-  } else if (props.library === 'public') {
-    elmts.push('Welcome to the public biodiversity card library! You can browse and print our pre-made decks here, or create your own by switching to your library.')
   }
-
+  
   if (elmts.length) {
     return (
       <p className={styles.desc}>
@@ -65,7 +70,8 @@ class SimpleManager extends React.Component {
       zoomCardIndex: null,
       deckDrawerOpen: false,
       cardSearchVal: '',
-      deckSearchVal: ''
+      deckSearchVal: '',
+      copyCardId: null
     }
   }
 
@@ -140,6 +146,12 @@ class SimpleManager extends React.Component {
   }
 
   cardItem = (card, i) => {
+    let overlayClasses = [styles.resourceOverlay];
+
+    if (this.props.library === 'user') {
+      overlayClasses.push(styles.resourceOverlayTwoCol);
+    }
+
     return (
       <li
         className={styles.card}
@@ -148,7 +160,7 @@ class SimpleManager extends React.Component {
         <div className={styles.cardImg}>
           <LoadingSpinnerImage src={loResCardImageUrl(card)} load={true}/>
         </div>
-        <div className={styles.resourceOverlay}>
+        <div className={overlayClasses.join(' ')}>
           {
             this.props.library === 'user' &&
             <i
@@ -160,6 +172,13 @@ class SimpleManager extends React.Component {
             className='fa fa-expand fa-3x'
             onClick={() => this.handleCardZoomClick(i)}
           />
+          <i
+            className='fa fa-copy fa-3x'
+            onClick={() => this.setState({ 
+              openModal: 'copyCard',
+              copyCardId: card.id
+            })}
+          />
           {
             this.props.library === 'user' && 
             <i
@@ -167,6 +186,21 @@ class SimpleManager extends React.Component {
               onClick={() => this.handleDestroyCard(card)}
             />
           }
+        </div>
+      </li>
+    );
+  }
+
+  allCardsElmt = () => {
+    return (
+      <li
+        className={[styles.card].join(' ')}
+        onClick={() => this.setSelectedDeck(this.props.allCardsDeck)}
+        key='showall'
+      >
+        <div className={styles.cardImg}>
+          <img src={deckSvg} className={styles.showAllIcon} />
+          <div>show all cards</div>
         </div>
       </li>
     );
@@ -202,11 +236,21 @@ class SimpleManager extends React.Component {
   }
 
   deckCards = () => {
-    return this.props.selectedDeck ? 
-      this.props.cards.filter((card) => {
-        return card.deck === this.props.selectedDeck.id;
-      }).sort(this.deckCardSort) :
-      [];
+    if (this.props.selectedDeck) {
+      let cards;
+
+      if (this.isAllCards()) {
+        cards = this.props.cards;
+      } else {
+        cards = this.props.cards.filter((card) => {
+          return card.deck === this.props.selectedDeck.id;
+        });
+      }
+
+      return cards.sort(this.deckCardSort);
+    }
+
+    return [];
   }
 
   deckCardSort = (a, b) => {
@@ -282,7 +326,7 @@ class SimpleManager extends React.Component {
         return this.cardItem(card, i);
       });
 
-      if (this.props.library === 'user' && !this.state.cardSearchVal) {
+      if (this.props.library === 'user' && !this.state.cardSearchVal && !this.isAllCards()) {
         elmts = [this.newCardElmt()].concat(elmts);
       }
     } else {
@@ -290,12 +334,20 @@ class SimpleManager extends React.Component {
         return this.deckItem(deck);
       });
 
-      if (this.props.library === 'user' && !this.state.deckSearchVal) {
-        elmts = [this.newDeckElmt()].concat(elmts);
+      if (!this.state.deckSearchVal) {
+        if (this.props.library === 'user') {
+          elmts = [this.newDeckElmt(), this.allCardsElmt()].concat(elmts);
+        } else {
+          elmts = [this.allCardsElmt()].concat(elmts);
+        }
       }
     }
 
     return elmts;
+  }
+
+  isAllCards = () => {
+    return this.props.selectedDeck === this.props.allCardsDeck;
   }
 
   closeModal = () => {
@@ -335,7 +387,7 @@ class SimpleManager extends React.Component {
     this.createDeckHelper(deckName, null, this.props.selectedDeck.id, true);
   }
 
-  createDeckHelper = (deckName, colId, copyFrom, upgrade) => {
+  createDeckHelper = (deckName, colId, copyFrom, upgrade, afterCreate) => {
     const that = this
         , showUpgradedNotice = upgrade
         , data = {
@@ -355,6 +407,8 @@ class SimpleManager extends React.Component {
             if (err) {
               closeFn();
               alert(I18n.t('react.card_maker.unexpected_error_msg'));
+            } else if (afterCreate) {
+              afterCreate(deck.id, closeFn);
             } else {
               that.props.setLibrary('user', () => {
                 that.showDeck(deck.id, closeFn);
@@ -404,12 +458,18 @@ class SimpleManager extends React.Component {
     }
   }
 
-  createOrCopyCard = (data, deck) => {
+  createCardUrl = (deckId) => {
+    return (deckId !== this.props.allCardsDeck.id && deckId != null) ?
+      cardMakerUrl('decks/' + deckId + '/cards') :
+      cardMakerUrl('cards');
+  }
+
+  createOrCopyCard = (data, deckId) => {
     let that = this;
 
     that.props.showLoadingOverlay(null, null, (closeFn) => {
       $.ajax({
-        url: createCardUrl(deck),
+        url: this.createCardUrl(deckId),
         data: JSON.stringify(data),
         contentType: 'application/json',
         method: 'POST',
@@ -429,11 +489,25 @@ class SimpleManager extends React.Component {
     });
   }
 
-  handleCopyCard = (deckId) => {
-    this.closeModal();
-    this.createOrCopyCard({ 
-      copyFrom: this.state.copyCardId 
-    }, deckId);
+  handleCopyCard = (deckId, deckName) => {
+    const that = this;
+
+    that.closeModal();
+
+    if (deckId === newDeckId) {
+      if (!deckName) {
+        throw new TypeError('deck name required');
+      }
+      that.createDeckHelper(deckName, null, null, false, (deckId, close) => {
+        that.createOrCopyCard({ 
+          copyFrom: that.state.copyCardId 
+        }, deckId);
+      });
+    } else {
+      that.createOrCopyCard({ 
+        copyFrom: that.state.copyCardId 
+      }, deckId);
+    }
   }
 
   handleCreateCard = (template, params) => {
@@ -626,10 +700,14 @@ class SimpleManager extends React.Component {
           hasNextZoomCard={this.state.zoomCardIndex != null && this.state.zoomCardIndex < deckCards.length - 1}
           hasPrevZoomCard={this.state.zoomCardIndex != null && this.state.zoomCardIndex > 0}
           onRequestPublicCardsForTaxon={this.props.onRequestPublicCardsForTaxon}
+          handleCopyCard={this.handleCopyCard}
+          userDecks={this.props.userDecks}
+          newDeckId={newDeckId}
         />
         <HeaderBar
           selectedDeck={this.props.selectedDeck}
           setSelectedDeck={this.setSelectedDeck}
+          isAllCards={this.isAllCards()}
           library={this.props.library}
           setLibrary={this.props.setLibrary}
           onRequestEditDeckName={() => this.setState({ openModal: 'renameDeck' })}
@@ -652,6 +730,7 @@ class SimpleManager extends React.Component {
               this.setState({ cardSearchVal: newVal })
             }}
             searchValue={this.state.cardSearchVal}
+            isAllCards={this.isAllCards()}
           /> : 
           <DeckToolbar 
             autocompleteItems={this.state.deckSearchVal ? resources.items : []}
@@ -669,6 +748,7 @@ class SimpleManager extends React.Component {
             onRequestEditDesc={() => this.setState({ openModal: 'deckDesc' })}
             cardSearchVal={this.state.cardSearchVal}
             deckSearchVal={this.state.deckSearchVal}
+            isAllCards={this.isAllCards()}
           />
           <ul className={styles.decks}>
             {resourceElmts}

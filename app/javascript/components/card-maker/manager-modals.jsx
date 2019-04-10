@@ -9,6 +9,7 @@ import CopyDeckLightbox from './copy-deck-lightbox'
 import DeckUrlLightbox from './deck-url-lightbox'
 import DeckUsersLightbox from './deck-users-lightbox'
 import CardZoomLightbox from './card-zoom-lightbox'
+import CopyCardLightbox from './copy-card-lightbox'
 import {deckUrl} from 'lib/card-maker/url-helper'
 
 function ManagerModals(props) {
@@ -96,6 +97,13 @@ function ManagerModals(props) {
         handleRequestClose={props.closeModal}
         hasNext={props.hasNextZoomCard}
         hasPrev={props.hasPrevZoomCard}
+      />
+      <CopyCardLightbox
+        isOpen={props.openModal === 'copyCard'}
+        handleRequestClose={props.closeModal}
+        handleCopy={props.handleCopyCard}
+        decks={props.userDecks} 
+        newDeckId={props.newDeckId}
       />
     </div>
   );

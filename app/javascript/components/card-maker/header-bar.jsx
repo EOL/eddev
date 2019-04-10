@@ -25,7 +25,13 @@ function HeaderBar(props) {
   let headerText
     ;
 
-  if (props.selectedDeck) {
+  if (props.isAllCards) {
+    if (props.library === 'user') {
+      headerText = 'All your cards';
+    } else {
+      headerText = 'All public cards';
+    }
+  } else if (props.selectedDeck) {
     headerText = props.selectedDeck.name;
   } else {
     if (props.library === 'user') {
@@ -44,7 +50,7 @@ function HeaderBar(props) {
       <h1 className={styles.headerText}>
         {headerText}
         {
-          props.selectedDeck != null && props.library == 'user' &&
+          props.selectedDeck != null && props.library == 'user' && !props.isAllCards &&
             <i className="fa fa-edit" onClick={props.onRequestEditDeckName}/>
         }
       </h1>

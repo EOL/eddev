@@ -15,17 +15,23 @@ class Toolbar extends React.Component {
   }
 
   render() {
+    const anyItems = this.props.menuItems.length > 0 || this.props.buttonItems.length > 0;
     return (
       <div className={[styles.bar, styles.toolbar].join(' ')}>
         {
-          this.state.searchOpen ?
+          (this.state.searchOpen || !anyItems) ?
           <Search 
+            autoFocus={anyItems}
+            showBack={anyItems}
             onRequestClose={() => { 
               this.props.onRequestUpdateSearchValue(''); 
               this.setState({ searchOpen: false })
             }} 
             onRequestUpdateValue={this.props.onRequestUpdateSearchValue}
             value={this.props.searchValue}
+            placeholder={this.props.searchPlaceholder}
+            autocompleteItems={this.props.autocompleteItems}
+            onAutocompleteSelect={this.props.onAutocompleteSelect}
           /> :
           <Buttons
             onRequestOpenSearch={() => this.setState({ searchOpen: true })}

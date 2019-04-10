@@ -34,14 +34,14 @@ class Buttons extends React.Component {
     return (
       <ul className={styles.toolbarBtns}>
         <li
-          className={styles.toolbarBtn}
+          className={[styles.toolbarItem, styles.toolbarBtn].join(' ')}
           onClick={this.props.onRequestOpenSearch}
         ><i className='fa fa-lg fa-search' /></li>
         {
           this.props.buttonItems.map((item) => {
             return (
               <li
-                className={styles.toolbarBtn}
+                className={[styles.toolbarItem, styles.toolbarBtn].join(' ')}
                 onClick={item.handleClick}
                 key={item.icon}
               ><i className={`fa fa-lg fa-${item.icon}`} /></li>
@@ -50,7 +50,7 @@ class Buttons extends React.Component {
         }
         {
           this.props.menuItems.length > 0 && (
-            <li className={[styles.toolbarBtn, styles.toolbarBtnMenu].join(' ')} onClick={this.openMenu}>
+            <li className={[styles.toolbarItem, styles.toolbarBtn, styles.toolbarBtnMenu].join(' ')} onClick={this.openMenu}>
               <span>more&nbsp;</span>
               <i className="fa fa-angle-down" />
               {

@@ -76,6 +76,7 @@ function CardToolbar(props) {
       menuItems={buildMenuItems()}
       onRequestUpdateSearchValue={props.onRequestUpdateSearchValue}
       searchValue={props.searchValue}
+      searchPlaceholder={'start typing to search cards'}
     />
   );
 }

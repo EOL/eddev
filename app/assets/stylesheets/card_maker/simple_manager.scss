@@ -63,6 +63,13 @@ $toolbar-height: 38px;
   z-index: 2;
 }
 
+.toolbarItem { 
+  border-right: 1px solid #000; 
+  &:first-of-type {
+    border-left: 1px solid #000;
+  }
+}
+
 .toolbarBtns {
   align-items: center;
   justify-content: center;
@@ -72,16 +79,11 @@ $toolbar-height: 38px;
 }
 
 .toolbarBtn {
-  border-right: 1px solid #000; 
   cursor: pointer;
   display: inline-block;
   height: 100%;
   padding: 8px 40px;
   position: relative;
-
-  &:first-of-type {
-    border-left: 1px solid #000;
-  }
 
   &:hover {
     background-color: $btn-hover-gray;
@@ -123,14 +125,8 @@ $toolbar-height: 38px;
   position: relative;
   width: 400px;
 
-  & > input {
-    border-bottom: none;
-    border-left: none;
-    border-right: 1px solid $black;
-    border-top: none;
-    font-size: 18px;
+  & > div {
     height: 100%;
-    padding: 0 15px;
     width: 100%;
   }
 
@@ -140,6 +136,15 @@ $toolbar-height: 38px;
     top: 10px;
   }
 }
+
+.toolbarSearchInput {
+  border: none;
+  font-size: 18px;
+  height: 100%;
+  padding: 0 15px;
+  width: 100%;
+}
+
 
 // Deck area
 .btnDesc {

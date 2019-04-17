@@ -661,6 +661,15 @@ class SimpleManager extends React.Component {
     this.clearSearchValues(() => this.props.setLibrary(lib, cb))
   }
 
+  sortItems = () => {
+    return this.props.sorts.map((sort) => {
+      return {
+        handleClick: () => { this.props.setSort(sort.key) },
+        label: sort.label
+      }
+    });
+  }
+
   render() {
     const managerClasses = [styles.simpleManager, styles.simpleManagerWToolbar]
       , deckCards = this.deckCards()
@@ -731,6 +740,8 @@ class SimpleManager extends React.Component {
             }}
             searchValue={this.state.cardSearchVal}
             isAllCards={this.isAllCards()}
+            sortLabel={this.props.sort.label}
+            sortItems={this.sortItems()}
           /> : 
           <DeckToolbar 
             autocompleteItems={this.state.deckSearchVal ? resources.items : []}
@@ -750,7 +761,7 @@ class SimpleManager extends React.Component {
             deckSearchVal={this.state.deckSearchVal}
             isAllCards={this.isAllCards()}
           />
-          <ul className={styles.decks}>
+          <ul className={[styles.decks, styles.lDecksCol].join(' ')}>
             {resourceElmts}
           </ul>
         </div>

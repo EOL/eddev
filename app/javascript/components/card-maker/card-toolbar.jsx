@@ -85,6 +85,8 @@ function CardToolbar(props) {
       onRequestUpdateSearchValue={props.onRequestUpdateSearchValue}
       searchValue={props.searchValue}
       searchPlaceholder={'start typing to search cards'}
+      sortLabel={props.sortLabel}
+      sortItems={props.sortItems}
     />
   );
 }

@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Menu from './menu'
+
 import styles from 'stylesheets/card_maker/simple_manager'
 
 class Buttons extends React.Component {
@@ -11,23 +13,10 @@ class Buttons extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    document.removeEventListener('click', this.closeMenu);
-  }
-
-  openMenu = () => {
+  handleRequestOpenMenu = (cb) => {
     this.setState({
       menuOpen: true
-    });
-
-    document.addEventListener('click', this.closeMenu);
-  }
-
-  closeMenu = () => {
-    document.removeEventListener('click', this.closeMenu);
-    this.setState({
-      menuOpen: false
-    });
+    }, cb);
   }
 
   render() {
@@ -50,20 +39,13 @@ class Buttons extends React.Component {
         }
         {
           this.props.menuItems.length > 0 && (
-            <li className={[styles.toolbarItem, styles.toolbarBtn, styles.toolbarBtnMenu].join(' ')} onClick={this.openMenu}>
-              <span>more&nbsp;</span>
-              <i className="fa fa-angle-down" />
-              {
-                this.state.menuOpen && 
-                (<ul className={styles.toolbarMenu}>
-                  {this.props.menuItems.map((item) => {
-                    return (
-                      <li key={item.label} onClick={item.handleClick}>{item.label}</li>
-                    )
-                  })}
-                </ul>)
-              }
-            </li>
+            <Menu
+              onRequestOpen={this.handleRequestOpenMenu}
+              onRequestClose={() => this.setState({ menuOpen: false })}
+              open={this.state.menuOpen}
+              label='more'
+              items={this.props.menuItems}
+            />
           )
         }
       </ul>

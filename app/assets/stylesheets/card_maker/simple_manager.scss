@@ -3,6 +3,8 @@
 
 $header-height: 44px;
 $toolbar-height: 38px;
+$deck-width: 200px;
+$deck-margin: 15px;
 
 .simpleManager {
   padding-top: $header-height;  
@@ -55,16 +57,25 @@ $toolbar-height: 38px;
 .toolbar {
   background: $white;
   height: $toolbar-height;
+  /*
   padding-left: 10px;
   padding-right: 10px;
+  */
   position: fixed;
   top: $navbar-height + $header-height;
   width: 100%;
   z-index: 2;
 }
 
+.toolbarInner {
+  height: 100%;
+  padding: 0 ($deck-margin * 2);
+}
+
 .toolbarItem { 
   border-right: 1px solid #000; 
+  height: 100%;
+  line-height: normal;
   &:first-of-type {
     border-left: 1px solid #000;
   }
@@ -74,8 +85,9 @@ $toolbar-height: 38px;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  display: flex;
+  display: inline-flex;
   height: 100%;
+  vertical-align: top;
 }
 
 .toolbarBtn {
@@ -95,6 +107,12 @@ $toolbar-height: 38px;
   padding-left: 8px;
 }
 
+.toolbarBtnMenuSort {
+  float: right;
+  text-align: center;
+  min-width: 180px;
+}
+
 .toolbarBtnBack {
   padding-right: 15px;
   padding-left: 15px;
@@ -106,7 +124,7 @@ $toolbar-height: 38px;
   border-top: none;
   min-width: 200px;
   position: absolute;
-  left: -1px;
+  right: -1px;
   top: $toolbar-height;
   padding: 8px;
 
@@ -166,18 +184,18 @@ $toolbar-height: 38px;
   }
 }
 
-$deck-width: 200px;
-$deck-margin: 15px;
-
 @function decks-width($per-row) {
   @return $per-row * $deck-width + 
     (2 * $per-row + 2) * $deck-margin;
 }
 
-.decks {
-  padding: $deck-margin;
+.lDecksCol {
   margin: 0 auto;
   width: decks-width(5);
+}
+
+.decks {
+  padding: $deck-margin;
 }
 
 .deck, .card { // I expect these styles to diverge, so separate classes
@@ -304,25 +322,25 @@ $deck-margin: 15px;
 }
 
 @media screen and (max-width: (decks-width(5) - 1px)) {
-  .decks {
+  .lDecksCol {
     width: decks-width(4);
   }
 }
 
 @media screen and (max-width: (decks-width(4) - 1px)) {
-  .decks {
+  .lDecksCol {
     width: decks-width(3);
   }
 }
 
 @media screen and (max-width: (decks-width(3) - 1px)) {
-  .decks {
+  .lDecksCol {
     width: decks-width(2);
   }
 }
 
 @media screen and (max-width: (decks-width(2) - 1px)) {
-  .decks {
+  .lDecksCol {
     width: decks-width(1);
   }
 }

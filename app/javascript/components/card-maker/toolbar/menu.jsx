@@ -32,13 +32,15 @@ class Menu extends React.Component {
         <i className="fa fa-angle-down" />
         {
           this.props.open && 
-          (<ul className={styles.toolbarMenu}>
-            {this.props.items.map((item) => {
-              return (
-                <li key={item.label} onClick={item.handleClick}>{item.label}</li>
-              )
-            })}
-          </ul>)
+          (
+            <ul className={styles.toolbarMenu}>
+              {this.props.items.map((item) => {
+                return (
+                  <li key={item.label} onClick={item.handleClick}>{item.label}</li>
+                )
+              })}
+            </ul>
+          )
         }
       </li>
     );
@@ -46,3 +48,4 @@ class Menu extends React.Component {
 }
 
 export default Menu;
+

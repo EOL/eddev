@@ -83,7 +83,12 @@ class SimpleManager extends React.Component {
         return card.id === deck.titleCardId;
       });
 
-      inner = <LoadingSpinnerImage src={loResCardImageUrl(card)} load={true}/>
+      inner = [
+        <div className={styles.deckImage} key='deckImg'>
+          <LoadingSpinnerImage src={loResCardImageUrl(card)} load={true} />
+        </div>,
+        <div className={styles.deckText} key='deckTxt'>{deck.name}</div>
+      ]
     } else {
       inner = <div className={styles.deckText}>{deck.name}</div>
     }
@@ -321,7 +326,6 @@ class SimpleManager extends React.Component {
     let elmts;
 
     if (resources.type === 'cards') {
-      
       elmts = resources.items.map((card, i) => {
         return this.cardItem(card, i);
       });
@@ -518,7 +522,7 @@ class SimpleManager extends React.Component {
         ;
 
     this.closeModal();
-    this.createOrCopyCard(data, this.props.selectedDeck);
+    this.createOrCopyCard(data, this.props.selectedDeck ? this.props.selectedDeck.id : null);
   }
 
   handleRenameDeck = (name) => {

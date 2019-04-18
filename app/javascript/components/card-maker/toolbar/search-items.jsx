@@ -26,7 +26,7 @@ class SearchItems extends React.Component {
         {
           this.props.open ? 
           <Search 
-            autoFocus={false}
+            autoFocus={true}
             showBack={true}
             onRequestClose={() => { 
               this.props.onRequestUpdateSearchValue(''); 

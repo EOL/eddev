@@ -51,9 +51,11 @@ function DescPart(props) {
   
   if (elmts.length) {
     return (
-      <p className={styles.desc}>
-        {elmts}
-      </p>
+      <div className={styles.descOuter}>
+        <p className={styles.desc}>
+          {elmts}
+        </p>
+      </div>
     );
   } else {
     return null;
@@ -123,7 +125,7 @@ class SimpleManager extends React.Component {
 
     if (!shouldDestroy) return;
 
-    that.props.showLoadingOverlay(null, (closeFn) => {
+    that.props.showLoadingOverlay(null, null, (closeFn) => {
       $.ajax({
         url: cardMakerUrl(resourceType + '/' + id),
         method: 'DELETE',
@@ -717,45 +719,47 @@ class SimpleManager extends React.Component {
           userDecks={this.props.userDecks}
           newDeckId={newDeckId}
         />
-        <HeaderBar
-          selectedDeck={this.props.selectedDeck}
-          setSelectedDeck={this.setSelectedDeck}
-          isAllCards={this.isAllCards()}
-          library={this.props.library}
-          setLibrary={this.props.setLibrary}
-          onRequestEditDeckName={() => this.setState({ openModal: 'renameDeck' })}
-        />
-        {
-          this.props.selectedDeck != null ?
-          <CardToolbar 
-            onRequestPrint={() => this.setState({ openModal: 'print' })} 
-            onRequestPngDownload={this.createDeckPngs}
-            userRole={this.props.userRole}
-            library={this.props.library}
+        <div className={styles.managerHead}>
+          <HeaderBar
             selectedDeck={this.props.selectedDeck}
-            onRequestCopy={() => this.setState({ openModal: 'copyDeck'})}
-            onRequestUpgrade={() => this.setState({ openModal: 'upgradeDeck' })}
-            onRequestShowUrl={() => this.setState({ openModal: 'deckUrl' })}
-            onRequestToggleDeckPublic={this.toggleDeckPublic}
-            onRequestOpenDeckUsers={() => this.setState({ openModal: 'deckUsers' })}
-            onRequestDestroyDeck={() => this.handleDestroyDeck(this.props.selectedDeck)}
-            onRequestUpdateSearchValue={(newVal) => {
-              this.setState({ cardSearchVal: newVal })
-            }}
-            searchValue={this.state.cardSearchVal}
+            setSelectedDeck={this.setSelectedDeck}
             isAllCards={this.isAllCards()}
-            sortLabel={this.props.sort.label}
-            sortItems={this.sortItems()}
-          /> : 
-          <DeckToolbar 
-            autocompleteItems={this.state.deckSearchVal ? resources.items : []}
-            onAutocompleteSelect={(value, deck) => this.setSelectedDeck(deck)}
-            searchValue={this.state.deckSearchVal} 
-            onRequestUpdateSearchValue={(newVal) => {
-              this.setState({ deckSearchVal: newVal })
-            }}
+            library={this.props.library}
+            setLibrary={this.props.setLibrary}
+            onRequestEditDeckName={() => this.setState({ openModal: 'renameDeck' })}
           />
-        }
+          {
+            this.props.selectedDeck != null ?
+            <CardToolbar 
+              onRequestPrint={() => this.setState({ openModal: 'print' })} 
+              onRequestPngDownload={this.createDeckPngs}
+              userRole={this.props.userRole}
+              library={this.props.library}
+              selectedDeck={this.props.selectedDeck}
+              onRequestCopy={() => this.setState({ openModal: 'copyDeck'})}
+              onRequestUpgrade={() => this.setState({ openModal: 'upgradeDeck' })}
+              onRequestShowUrl={() => this.setState({ openModal: 'deckUrl' })}
+              onRequestToggleDeckPublic={this.toggleDeckPublic}
+              onRequestOpenDeckUsers={() => this.setState({ openModal: 'deckUsers' })}
+              onRequestDestroyDeck={() => this.handleDestroyDeck(this.props.selectedDeck)}
+              onRequestUpdateSearchValue={(newVal) => {
+                this.setState({ cardSearchVal: newVal })
+              }}
+              searchValue={this.state.cardSearchVal}
+              isAllCards={this.isAllCards()}
+              sortLabel={this.props.sort.label}
+              sortItems={this.sortItems()}
+            /> : 
+            <DeckToolbar 
+              autocompleteItems={this.state.deckSearchVal ? resources.items : []}
+              onAutocompleteSelect={(value, deck) => this.setSelectedDeck(deck)}
+              searchValue={this.state.deckSearchVal} 
+              onRequestUpdateSearchValue={(newVal) => {
+                this.setState({ deckSearchVal: newVal })
+              }}
+            />
+          }
+        </div>
         <div className={styles.managerMain}>
           <DescPart
             library={this.props.library}

@@ -43,18 +43,20 @@ function HeaderBar(props) {
 
   return (
     <div className={[styles.bar, styles.headerBar].join(' ')}>
-      {
-        props.selectedDeck != null &&
-        <i className='fa fa-angle-left fa-2x' onClick={() => props.setSelectedDeck(null)} />
-      }
-      <h1 className={styles.headerText}>
-        {headerText}
+      <div className={[styles.barInner, styles.lDecksCol].join(' ')}>
         {
-          props.selectedDeck != null && props.library == 'user' && !props.isAllCards &&
-            <i className="fa fa-edit" onClick={props.onRequestEditDeckName}/>
+          props.selectedDeck != null &&
+          <i className={`fa fa-angle-left fa-2x ${styles.headerBack}`} onClick={() => props.setSelectedDeck(null)} />
         }
-      </h1>
-      <LibButton {...props} />
+        <h1 className={styles.headerText}>
+          {headerText}
+          {
+            props.selectedDeck != null && props.library == 'user' && !props.isAllCards &&
+              <i className="fa fa-edit" onClick={props.onRequestEditDeckName}/>
+          }
+        </h1>
+        <LibButton {...props} />
+      </div>
     </div>
   );
 }

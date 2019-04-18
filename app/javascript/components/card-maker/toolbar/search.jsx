@@ -10,7 +10,7 @@ function Search(props) {
           <li 
             className={[styles.toolbarItem, styles.toolbarBtn, styles.toolbarBtnBack].join(' ')}
             onClick={props.onRequestClose}
-          ><i className='fa fa-lg fa-arrow-left' /></li>
+          ><i className='fa fa-lg fa-close' /></li>
         )
       }
       <li className={[styles.toolbarItem, styles.toolbarSearch].join(' ')}>
@@ -46,14 +46,7 @@ function Search(props) {
           wrapperStyle={{}}
           onSelect={props.onAutocompleteSelect}
         />
-        {
-          (props.value == null || props.value == '') ?
-            <i className='fa fa-lg fa-search' /> :
-            <i 
-              className='fa fa-lg fa-close' 
-              onClick={() => { props.onRequestUpdateValue('') }}
-            /> 
-        }
+        <i className='fa fa-lg fa-search' />
       </li>
     </ul>
   );

@@ -1,11 +1,10 @@
 import React from 'react';
 
 import Buttons from './toolbar/buttons'
-import Search from './toolbar/search'
 import Menu from './toolbar/menu'
+import SearchItems from './toolbar/search-items'
 
 import styles from 'stylesheets/card_maker/simple_manager'
-import menuStyles from 'stylesheets/shared/menu'
 
 class Toolbar extends React.Component {
   constructor(props) {
@@ -16,44 +15,36 @@ class Toolbar extends React.Component {
     };
   }
 
+  openSearch = () => {
+    this.setState({
+      searchOpen: true
+    });
+    console.log('did it~');
+  }
+
   render() {
-    const anyItems = this.props.menuItems.length > 0 || this.props.buttonItems.length > 0;
+    const innerClasses = [styles.barInner, styles.lDecksCol];
+    let searchExtraClass = null;
+
+    if (this.state.searchOpen) {
+      innerClasses.push(styles.barInnerCenter);
+      searchExtraClass = styles.searchItemsOpen;
+    }
+
     return (
       <div className={[styles.bar, styles.toolbar].join(' ')}>
-        <div className={[styles.toolbarInner, styles.lDecksCol].join(' ')}>
+        <div className={innerClasses.join(' ')}>
           {
-            (this.state.searchOpen || !anyItems) ?
-            <Search 
-              autoFocus={anyItems}
-              showBack={anyItems}
-              onRequestClose={() => { 
-                this.props.onRequestUpdateSearchValue(''); 
-                this.setState({ searchOpen: false })
-              }} 
-              onRequestUpdateValue={this.props.onRequestUpdateSearchValue}
-              value={this.props.searchValue}
-              placeholder={this.props.searchPlaceholder}
-              autocompleteItems={this.props.autocompleteItems}
-              onAutocompleteSelect={this.props.onAutocompleteSelect}
-            /> :
-            <Buttons
-              onRequestOpenSearch={() => this.setState({ searchOpen: true })}
-              buttonItems={this.props.buttonItems}
-              menuItems={this.props.menuItems}
-            />
+            !this.state.searchOpen &&
+            <Buttons {...this.props} />
           }
-          {
-            this.props.sortItems != null && 
-            this.props.sortItems.length > 0 &&
-            <Menu
-              items={this.props.sortItems}
-              label={this.props.sortLabel}
-              open={this.state.sortOpen}
-              onRequestClose={() => this.setState({ sortOpen: false })}
-              onRequestOpen={(cb) => this.setState({ sortOpen: true }, cb)}
-              extraClasses={styles.toolbarBtnMenuSort}
-            />
-          }
+          <SearchItems 
+            {...this.props} 
+            open={this.state.searchOpen}
+            onRequestOpen={this.openSearch}
+            onRequestClose={() => this.setState({ searchOpen: false })}
+            extraClass={searchExtraClass}
+          />
         </div>
       </div>
     );

@@ -5,6 +5,7 @@ $header-height: 44px;
 $toolbar-height: 38px;
 $deck-width: 200px;
 $deck-margin: 15px;
+$trans-bg: rgba($white, .9);
 
 .simpleManager {
   padding-top: $header-height;  
@@ -12,6 +13,14 @@ $deck-margin: 15px;
 
 .simpleManagerWToolbar {
   padding-top: $toolbar-height + $header-height;
+}
+
+.managerHead {
+  background: $trans-bg;
+  position: fixed;
+  top: $navbar-height;
+  width: 100%;
+  z-index: 2;
 }
 
 // common styles
@@ -22,31 +31,36 @@ $deck-margin: 15px;
 }
 
 .headerBar {
-  background: $white;
   font-weight: bold;
   height: $header-height;
-  padding: 10px 0;
-  position: fixed;
   text-align: center;
-  top: $navbar-height;
   z-index: 2;
   width: 100%;
+}
 
-  & > i {
-    cursor: pointer;
-    left: 10px;
-    position: absolute;
-    top: 5px;
-  }
+.headerBack {
+  cursor: pointer;
+  left: 10px;
+  position: absolute;
+  top: 5px;
 }
 
 .btnLib {
   position: absolute;
-  right: 10px;
+  right: 0;
   top: 5px;
 }
 
+.btnCreateTempl {
+  font-size: 14px;
+  line-height: 18px;
+  margin-top: 5px;
+  width: 100%;
+}
+
 .headerText {
+  line-height: $header-height;
+
   & > i {
     color: $eol-blue;
     cursor: pointer;
@@ -55,22 +69,23 @@ $deck-margin: 15px;
 }
 
 .toolbar {
-  background: $white;
   height: $toolbar-height;
   /*
   padding-left: 10px;
   padding-right: 10px;
   */
-  position: fixed;
-  top: $navbar-height + $header-height;
   width: 100%;
-  z-index: 2;
 }
 
-.toolbarInner {
+.barInner {
   height: 100%;
-  padding: 0 ($deck-margin * 2);
+  padding: 0;
 }
+
+.barInnerCenter {
+  text-align: center;
+}
+
 
 .toolbarItem { 
   border-right: 1px solid #000; 
@@ -88,6 +103,10 @@ $deck-margin: 15px;
   display: inline-flex;
   height: 100%;
   vertical-align: top;
+}
+
+.toolbarBtnsSearch {
+  float: right;
 }
 
 .toolbarBtn {
@@ -170,11 +189,17 @@ $deck-margin: 15px;
   width: 162px;
 }
 
+.descOuter {
+  margin: 20px 0;
+  text-align: center;
+}
+
 .desc {
+  background: $trans-bg;
+  display: inline-block;
   font-size: 14px;
-  margin: 20px auto;
   max-width: 600px;
-  padding: 0 20px;
+  padding: 10px 20px;
   text-align: center;
 
   & > i {
@@ -191,6 +216,7 @@ $deck-margin: 15px;
 
 .lDecksCol {
   margin: 0 auto;
+  position: relative;
   width: decks-width(5);
 }
 
@@ -327,6 +353,10 @@ $deck-margin: 15px;
 
 .showAllIcon {
   height: 46px !important;
+}
+
+.searchItemsOpen {
+  float: none;
 }
 
 @media screen and (max-width: (decks-width(5) - 1px)) {

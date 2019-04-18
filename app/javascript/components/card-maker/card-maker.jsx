@@ -456,9 +456,7 @@ class CardMaker extends React.Component {
   }
 
   handleRequestPublicCardsForTaxon = (id) => {
-    console.log('all public cards', this.state.publicCards);
     return this.state.publicCards.filter((card) => {
-      console.log(card, id);
       return card.templateName === 'trait' && card.speciesId === id;
     });
   }

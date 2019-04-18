@@ -9,7 +9,9 @@ class Buttons extends React.Component {
     super(props);
 
     this.state = {
-      menuOpen: false  
+      menuOpen: false,
+      sortOpen: false,
+      searchOpen: false
     }
   }
 
@@ -22,11 +24,7 @@ class Buttons extends React.Component {
   render() {
     return (
       <ul className={styles.toolbarBtns}>
-        <li
-          className={[styles.toolbarItem, styles.toolbarBtn].join(' ')}
-          onClick={this.props.onRequestOpenSearch}
-        ><i className='fa fa-lg fa-search' /></li>
-        {
+        {!this.state.searchOpen &&
           this.props.buttonItems.map((item) => {
             return (
               <li

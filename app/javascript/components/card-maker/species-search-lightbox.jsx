@@ -13,9 +13,9 @@ import vocabCardImg from 'images/card_maker/sample_cards/vocab.png'
 import descCardImg  from 'images/card_maker/sample_cards/desc.png'
 
 import styles from 'stylesheets/card_maker/card_manager'
+import simpleStyles from 'stylesheets/card_maker/simple_manager'
 
 var cleanState = {
-  cardType: 'trait',
   searchResults: null,
   selectedResultId: null,
   screen: 'start'
@@ -95,13 +95,13 @@ class SpeciesSearchLightbox extends React.Component {
     this.props.handleClose();
   }
 
-  handleCreate = () => {
-    var params = this.state.cardType === 'trait' ? 
+  handleCreate = (cardType) => {
+    var params = cardType === 'trait' ? 
           { speciesId: this.state.selectedResultId } :
           null
       ;
 
-    this.props.handleCreate(this.state.cardType, params);
+    this.props.handleCreate(cardType, params);
     this.resetState();
   }
 
@@ -155,7 +155,6 @@ class SpeciesSearchLightbox extends React.Component {
       );
     } else if (
       this.state.screen === 'create' &&
-      this.state.cardType === 'trait' &&
       !this.state.searchResults.length
     ) {
       result = (
@@ -178,10 +177,10 @@ class SpeciesSearchLightbox extends React.Component {
         <img src={type.img} />
         <div>{I18n.t('react.card_maker.' + type.nameKey)}</div>
         <button
-          className={[styles.createBtn, styles.createBtnTempl].join(' ')}
+          className={[styles.btn, simpleStyles.btnCreateTempl].join(' ')}
           type='button'
-          onClick={() => this.setState({ screen: 'create', cardType: type.template })}
-        >{I18n.t('react.card_maker.select')}</button>
+          onClick={() => this.handleCreate(type.template)}
+        >{I18n.t('react.card_maker.create')}</button>
       </li>
     );
   }
@@ -198,7 +197,7 @@ class SpeciesSearchLightbox extends React.Component {
   */
 
   render() {
-    var curType = cardTypes[this.state.cardType];
+    var curType = cardTypes.trait;
 
     return (
       <CloseButtonModal
@@ -265,7 +264,7 @@ class SpeciesSearchLightbox extends React.Component {
               </form>
             }
             {
-              this.state.screen === 'create' && (this.state.cardType !== 'trait' || this.state.selectedResultId !== null) && (
+              this.state.screen === 'create' && this.state.selectedResultId !== null && (
               <div className={styles.createCardRow}>
                 {/*
                 <button 
@@ -276,7 +275,7 @@ class SpeciesSearchLightbox extends React.Component {
                 */}
                 <button 
                   className={[styles.btn, styles.btnCreateCard].join(' ')} 
-                  onClick={this.handleCreate}
+                  onClick={() => this.handleCreate('trait')}
                   type='button'
                 >{I18n.t('react.card_maker.create')}</button>
               </div>

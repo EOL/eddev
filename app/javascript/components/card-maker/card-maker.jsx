@@ -10,6 +10,7 @@ import newImmutableCardInstance from 'lib/card-maker/immutable-card'
 
 import styles from 'stylesheets/card_maker/card_maker';
 
+import backgroundImage from 'images/card_maker/editor_bg_tree.jpg'
 import eolLogoHdr from 'images/card_maker/icons/eol_logo_hdr.png'
 
 function ascSort(field) {

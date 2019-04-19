@@ -152,6 +152,15 @@ class SimpleManager extends React.Component {
     );
   }
 
+  openCopyModal = (cardId) => {
+    if (this.props.ensureUser()) {
+      this.setState({ 
+        openModal: 'copyCard',
+        copyCardId: card.id
+      });
+    }
+  }
+
   cardItem = (card, i) => {
     let overlayClasses = [styles.resourceOverlay];
 
@@ -181,10 +190,7 @@ class SimpleManager extends React.Component {
           />
           <i
             className='fa fa-copy fa-3x'
-            onClick={() => this.setState({ 
-              openModal: 'copyCard',
-              copyCardId: card.id
-            })}
+            onClick={() => this.openCopyModal(card.id)}
           />
           {
             this.props.library === 'user' && 

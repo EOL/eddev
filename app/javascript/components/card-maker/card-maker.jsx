@@ -335,6 +335,15 @@ class CardMaker extends React.Component {
     }, cb);
   }
 
+  ensureUser = () => {
+    if (!this.state.userRole) {
+      window.location = './login';
+      return false;
+    }
+
+    return true;
+  }
+
   // always reloads resources
   setLibrary = (newLib, cb) => {
     const that = this
@@ -343,10 +352,8 @@ class CardMaker extends React.Component {
         }
       ;
 
-    if (!this.state.userRole && newLib === 'user') {
-      // then we're toggling to user library, and they need to log in
-      window.location = './login';
-      return;
+    if (!newLib === 'user' && !this.ensureUser()) {
+      return; 
     }
 
     if (that.state.library !== newLib) {
@@ -414,6 +421,7 @@ class CardMaker extends React.Component {
           sorts={this.sortsForLib(this.state.library)}
           onRequestPublicCardsForTaxon={this.handleRequestPublicCardsForTaxon}
           {...commonProps}
+          ensureUser={this.ensureUser}
         />
       )
     } else if (this.state.screen === 'editor') {

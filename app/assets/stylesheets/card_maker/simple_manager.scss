@@ -8,6 +8,8 @@ $deck-margin: 15px;
 $trans-bg: rgba($white, .9);
 
 .simpleManager {
+  height: calc(100vh - #{$navbar-height});
+  overflow: auto;
   padding-top: $header-height;  
 }
 
@@ -314,8 +316,9 @@ $trans-bg: rgba($white, .9);
 
 .deckText {
   background: rgba($white, .8);
-  padding: 5px 10px;
+  padding: 10px;
   position: relative;
+  width: 100%;
 }
 
 .deckImage {

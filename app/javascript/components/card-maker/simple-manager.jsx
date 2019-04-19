@@ -267,27 +267,33 @@ class SimpleManager extends React.Component {
   }
 
   deckCardSort = (a, b) => {
-    if (a.locale === I18n.locale && b.locale !== I18n.locale) {
-      return -1;
-    }
+    if (!this.props.sort.pure) {
+      if (a.locale === I18n.locale && b.locale !== I18n.locale) {
+        return -1;
+      }
 
-    if (a.locale !== I18n.locale && b.locale === I18n.locale) {
-      return 1;
-    }
+      if (a.locale !== I18n.locale && b.locale === I18n.locale) {
+        return 1;
+      }
 
-    if (a.templateName === 'trait' && b.templateName !== 'trait') {
-      return 1;
-    }
+      if (a.templateName === 'trait' && b.templateName !== 'trait') {
+        return (this.regDeckSelected() ? 1 : -1);
+      }
 
-    if (a.templateName !== 'trait' && b.templateName === 'trait') {
-      return -1
-    }
+      if (a.templateName !== 'trait' && b.templateName === 'trait') {
+        return (this.regDeckSelected() ? -1 : 1);
+      }
 
-    if (a.templateName !== 'trait' && b.templateName !== 'trait') {
-      return (specialCardOrder[a.templateName] || -1) - (specialCardOrder[b.templateName] || -1);
+      if (a.templateName !== 'trait' && b.templateName !== 'trait') {
+        return (specialCardOrder[a.templateName] || -1) - (specialCardOrder[b.templateName] || -1);
+      }
     }
 
     return this.props.sort.fn(a, b)
+  }
+
+  regDeckSelected = () => {
+    return this.props.selectedDeck !== this.props.allCardsDeck;
   }
 
   resources = (deckCards) => {

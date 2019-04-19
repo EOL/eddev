@@ -156,7 +156,7 @@ class SimpleManager extends React.Component {
     if (this.props.ensureUser()) {
       this.setState({ 
         openModal: 'copyCard',
-        copyCardId: card.id
+        copyCardId: cardId
       });
     }
   }

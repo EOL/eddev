@@ -8,6 +8,7 @@ $deck-margin: 15px;
 $trans-bg: rgba($white, .9);
 
 .simpleManager {
+  background: linear-gradient(0deg, rgba(205,219,231,1) 0%, rgba(242,242,242,1) 100%);
   height: calc(100vh - #{$navbar-height});
   overflow: auto;
   padding-top: $header-height;  

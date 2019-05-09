@@ -1,0 +1,35 @@
+@import "layout_vars";
+
+.articles {
+  font-size: 18px;
+  font-weight: $semibold;
+  margin: 40px auto;
+  text-align: center;
+
+  & > li {
+    margin: 10px 0;    
+  }
+}
+
+@media screen and (min-width: $tablet-width) {
+  .articles {
+    align-content: space-between;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 500px;
+    padding: 0 80px;
+    text-align: left;
+  }
+}
+
+@media screen and (min-width: $full-width) {
+  .articles {
+    height: 400px;
+
+    & > li {
+      margin: 10px 0;    
+    }
+  }
+}
+

@@ -1,0 +1,5 @@
+= render "shared/intro_section", header: "articles.bio_articles", paragraphs: %w(articles.intro_text)
+%ul.articles
+  - @article_names.each do |name|
+    = render "article", name: name
+

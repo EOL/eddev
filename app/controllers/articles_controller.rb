@@ -1,0 +1,39 @@
+class ArticlesController < ApplicationController
+  def index
+    @article_names = [
+      "algae",
+      "amphibians",
+      "animals",
+      "archaea",
+      "bacteria",
+      "biodiversity",
+      "birds",
+      "citizenscience",
+      "classification",
+      "crustaceans",
+      "discovery",
+      "evolution",
+      "fishes",
+      "floweringplants",
+      "fungi",
+      "indicator_species",
+      "insects",
+      "invasive_species",
+      "invertebrates",
+      "mammals",
+      "model_organisms",
+      "molds",
+      "mollusks",
+      "mushrooms",
+      "names",
+      "plants",
+      "protists",
+      "reptiles",
+      "species",
+      "spiders",
+      "trees",
+      "viruses",
+      "worms"
+    ]
+  end
+end

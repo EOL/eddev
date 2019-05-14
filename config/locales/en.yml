@@ -713,6 +713,10 @@ en:
       zoe_name: "Zoe Foster"
     edit_mode_off: "Edit mode off"
     edit_mode_on: "Edit mode on"
+    about_eol:
+      header: "About the Encyclopedia of Life"
+      p1_html: "The Encyclopedia of Life (EOL) is an international effort, led by the Smithsonian Institution’s National Museum of Natural History, to raise awareness and understanding of living nature by providing free, open, multilingual, digital access to trusted information on all known species.  EOL can be found on the web <a href='https://eol.org'>here</a>."
+      p2_html: "Founded in 2008 through grants from the John D. and Catherine T. MacArthur Foundation and the Alfred P. Sloan Foundation, EOL has grown to become one of the world’s largest free digital biodiversity information resources, with curated information on nearly 2 million species. <a href='https://naturalhistory.si.edu/research/eol'>Read more</a>"
     index:
       intro_header: Welcome to EOL Learning + Education
       intro_text_html: "<a href='/about'>The Encyclopedia of Life Learning + Education team</a> (EOL L+E) is part of the larger EOL collaborative. EOL L+E works with educators, citizen scientists and partners to make this information accessible through free tools, services and resources found here."

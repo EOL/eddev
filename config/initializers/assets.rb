@@ -17,6 +17,6 @@ Rails.application.config.assets.precompile += %w(reset.css polyfill/border-box.h
 
 Rails.application.config.assets.precompile += %w(card_templates/*.js generator.js)
 
-%w(cards lesson_plans welcome card_maker users user_sessions earth_tours podcasts).each do |controller|
+%w(cards lesson_plans welcome card_maker users user_sessions earth_tours podcasts articles).each do |controller|
   Rails.application.config.assets.precompile += ["#{controller}.js", "#{controller}.css"]
 end

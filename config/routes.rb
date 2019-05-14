@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     get  'lesson_plans/2-5_ScienceSkills_SkillBuilders4_ModelingClassification.pdf', to: redirect('/lesson_plans/2-5_ScienceSkills_BioblitzSkillbuilder4.pdf')
     get  'lesson_plans/:name' => 'lesson_plans#show', :as => :lesson_plan
     get  'earth_tours' => 'earth_tours#index', :as => :earth_tours
+    get 'articles' => 'articles#index'
 
     resources :users, :only => [:new, :create]
 
@@ -50,7 +51,7 @@ Rails.application.routes.draw do
     delete "card_maker_ajax/cards/:card_id"           => "card_maker_ajax#delete_card"
     get    "card_maker_ajax/decks/:deck_id"           => "card_maker_ajax#get_deck"
     delete "card_maker_ajax/decks/:deck_id"           => "card_maker_ajax#delete_deck"
-    get    "card_maker_ajax/taxon_search/:query"      => "card_maker_ajax#taxon_search"
+    get    "card_maker_ajax/taxon_search/:query"      => "card_maker_ajax#taxon_search", constraints: { query: /[^\/]*/ }
     post   "card_maker_ajax/decks/:id/populateFromCollection" => "card_maker_ajax#populate_deck_from_collection"
     get    "card_maker_ajax/collectionJob/:id/status" => "card_maker_ajax#collection_job_status"
     post   "card_maker_ajax/deck_pdfs"                => "card_maker_ajax#create_deck_pdf"

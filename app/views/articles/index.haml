@@ -1,4 +1,4 @@
-= render "shared/intro_section", header: "articles.bio_articles", paragraphs: %w(articles.intro_text)
+= render "shared/intro_section", header: "articles.bio_articles", paragraphs: %w(articles.intro_text_html)
 %ul.articles
   - @article_names.each do |name|
     = render "article", name: name

@@ -87,7 +87,7 @@ en:
         viruses: "Viruses"
         worms: "Worms"
     bio_articles: "Biodiversity Articles"
-    intro_text: "Learn about biodiversity and explore EOL with these biodiversity articles"
+    intro_text_html: "EOL Biodiversity Articles are short introductions to several taxonomic groups and topics related to the study of life on Earth. Start learning about biodiversity with these articles and then search <a href='https://eol.org'>EOL</a> to access more information, data and media about the nearly 2 million named and known organisms."
   cards:
     deck_descriptions:
     featured_descriptions:

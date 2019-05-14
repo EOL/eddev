@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   scope '(:locale)', locale: /#{I18n.available_locales.reject { |l| l == I18n.default_locale}.join('|')}/ do
     get  ''            => 'welcome#index', :as => :home
     get  'about'        => 'welcome#about',      :as => :about
+    get  'about_eol'    => 'welcome#about_eol', :as => :about_eol
     get  'card_resources'       => 'cards#index',    :as => :cards
     get  'species_cards', to: redirect('/card_resources')
     get  'observer_cards' => "cards#observer_cards", :as => :observer_cards

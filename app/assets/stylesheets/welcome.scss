@@ -4,6 +4,7 @@ $cards-red: #ca6262;
 $lessons-green: #60b26a;
 $podcasts-blue: #548fd1;
 $partner-blue: #6f9fd2;
+$articles-purple: #a366be;
 
 $min-mobile-width: 320; // The width of the 'mobile' designs in Zeplin, used to calculate percentage values.
 $desc-width: 385px;
@@ -50,6 +51,10 @@ $section-head-height-mob: 49px;
     }
   }
 
+  .home-section-head-articles {
+    background-color: $articles-purple;
+  }
+
 .home-section-content {
   background-size: cover;
   display: block;
@@ -67,6 +72,10 @@ $section-head-height-mob: 49px;
 
   .home-section-content-tourspods {
     background-image: image_url("welcome/bg_podcasts.png");
+  }
+
+  .home-section-content-articles {
+    background-image: image_url("welcome/bg_articles.png");
   }
 
 

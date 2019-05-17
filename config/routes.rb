@@ -14,8 +14,8 @@ Rails.application.routes.draw do
     get  'lesson_plans/2-5_ScienceSkills_SkillBuilders4_ModelingClassification.pdf', to: redirect('/lesson_plans/2-5_ScienceSkills_BioblitzSkillbuilder4.pdf')
     get  'lesson_plans/:name' => 'lesson_plans#show', :as => :lesson_plan
     get  'earth_tours' => 'earth_tours#index', :as => :earth_tours
-    get 'articles' => 'articles#index'
 
+    resources :articles, :only => [:index]
     resources :users, :only => [:new, :create]
 
     get  "users/confirm/:token"         => "users#confirm", :as => :users_confirm

@@ -7,6 +7,7 @@ import HeaderBar from './header-bar'
 import CardToolbar from './card-toolbar'
 import DeckToolbar from './deck-toolbar'
 import DeckSidebar from './deck-sidebar'
+import SimpleCard from './simple-card'
 import Poller from 'lib/card-maker/poller'
 import styles from 'stylesheets/card_maker/simple_manager'
 
@@ -164,45 +165,15 @@ class SimpleManager extends React.Component {
   }
 
   cardItem = (card, i) => {
-    let overlayClasses = [styles.resourceOverlay];
-
-    if (this.props.library === 'user') {
-      overlayClasses.push(styles.resourceOverlayTwoCol);
-    }
-
     return (
-      <li
-        className={styles.card}
-        key={card.id}
-      >
-        <div className={styles.cardImg}>
-          <LoadingSpinnerImage src={loResCardImageUrl(card)} load={true}/>
-        </div>
-        <div className={overlayClasses.join(' ')}>
-          {
-            this.props.library === 'user' &&
-            <i
-              className='fa fa-edit fa-3x edit-btn'
-              onClick={() => this.props.onRequestEditCard(card)}
-            />
-          }
-          <i
-            className='fa fa-expand fa-3x'
-            onClick={() => this.handleCardZoomClick(i)}
-          />
-          <i
-            className='fa fa-copy fa-3x'
-            onClick={() => this.openCopyModal(card.id)}
-          />
-          {
-            this.props.library === 'user' && 
-            <i
-              className='fa fa-trash-o fa-3x'
-              onClick={() => this.handleDestroyCard(card)}
-            />
-          }
-        </div>
-      </li>
+      <SimpleCard
+        card={card}
+        library={this.props.library}
+        onRequestEditCard={() => this.props.onRequestEditCard(card)}
+        onRequestZoom={() => this.handleCardZoomClick(i)}
+        onRequestCopy={() => this.openCopyModal(card.id)}
+        onRequestDestroy={() => this.handleDestroyCard(card)}
+      />
     );
   }
 

@@ -616,17 +616,18 @@ en:
       eol_promotes_html: "EOL promotes content sharing via Creative Commons and other open licenses. Learn more about <a href='http://eol.org/info/eol_licensing_policy'>EOL's Licensing Policy</a>."
       header: "Image Credits"
     nav_items:
+      articles: "Biodiversity Articles" 
       biodiversity_cards: "Biodiversity Cards"
       card_maker: "Card Maker"
       card_resources: "Card Resources"
-      lesson_plans: "Lesson Plans"
       grades_2_5: "Grades 2–5"
       grades_6_8: "Grades 6–8"
       grades_9_12: "Grades 9–12"
+      lesson_plans: "Lesson Plans"
+      more: "More"
       podcasts: "Podcasts"
       google_earth_tours: "Google Earth Tours"
       biodiversity_articles: "Biodiversity Articles"
-      partner_resources: "Partner Resources"
       inaturalist_html: "iNaturalist Observation Platform <i class='fa fa-external-link'></i>"
       bhl_coloring_html: "Biodiversity Heritage Library Coloring Books <i class='fa fa-external-link'></i>"
       cnc_html: "City Nature Challenge <i class='fa fa-external-link'></i>"
@@ -719,7 +720,7 @@ en:
       p2_html: "Founded in 2008 through grants from the John D. and Catherine T. MacArthur Foundation and the Alfred P. Sloan Foundation, EOL has grown to become one of the world’s largest free digital biodiversity information resources, with curated information on nearly 2 million species. <a href='https://naturalhistory.si.edu/research/eol'>Read more</a>"
     index:
       intro_header: Welcome to EOL Learning + Education
-      intro_text_html: "<a href='/about'>The Encyclopedia of Life Learning + Education team</a> (EOL L+E) is part of the larger EOL collaborative. EOL L+E works with educators, citizen scientists and partners to make this information accessible through free tools, services and resources found here."
+      intro_text_html: "The Encyclopedia of Life Learning + Education website (EOL L+E) is part of the larger <a href='/about'>EOL collaborative</a>. EOL L+E works with educators, citizen scientists and partners to make this information accessible through free tools, services and resources found here."
       partner_resources: Partner Resources
     partner_section:
       headers:

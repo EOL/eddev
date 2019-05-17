@@ -6,6 +6,7 @@ import {cardMakerUrl, loResCardImageUrl, createCardUrl} from 'lib/card-maker/url
 import HeaderBar from './header-bar'
 import CardToolbar from './card-toolbar'
 import DeckToolbar from './deck-toolbar'
+import DeckSidebar from './deck-sidebar'
 import Poller from 'lib/card-maker/poller'
 import styles from 'stylesheets/card_maker/simple_manager'
 
@@ -73,7 +74,8 @@ class SimpleManager extends React.Component {
       deckDrawerOpen: false,
       cardSearchVal: '',
       deckSearchVal: '',
-      copyCardId: null
+      copyCardId: null,
+      sidebarOpen: false
     }
   }
 
@@ -667,7 +669,8 @@ class SimpleManager extends React.Component {
   clearSearchValues = (cb) => {
     this.setState({
       deckSearchVal: '',
-      cardSearchVal: ''
+      cardSearchVal: '',
+      sidebarOpen: false
     }, cb);
   }
 
@@ -693,6 +696,7 @@ class SimpleManager extends React.Component {
       , deckCards = this.deckCards()
       , resources = this.resources(deckCards)
       , resourceElmts = this.resourceElmts(resources)
+      , sidebarDecks = [this.props.allCardsDeck].concat(this.props.decks)
       ;
 
     return (
@@ -731,6 +735,22 @@ class SimpleManager extends React.Component {
           userDecks={this.props.userDecks}
           newDeckId={newDeckId}
         />
+        {
+          this.state.sidebarOpen && 
+          <div className={styles.sidebarOpenOverlay} />
+        }
+        {
+          sidebarDecks.length > 1 &&
+          <DeckSidebar 
+            decks={sidebarDecks}
+            selectedDeck={this.props.selectedDeck}
+            allCardsDeck={this.props.allCardsDeck}
+            onRequestOpen={() => this.setState({ sidebarOpen: true })}
+            onRequestClose={() => this.setState({ sidebarOpen: false })}
+            onDeckSelect={this.setSelectedDeck}
+            open={this.state.sidebarOpen}
+          />
+        }
         <div className={styles.managerHead}>
           <HeaderBar
             selectedDeck={this.props.selectedDeck}

@@ -100,6 +100,12 @@ const allDecksDeck = { // unused for now
         'taxonGroupAsc',
         'taxonGroupDesc',
       ])
+    , specialCardOrder = {
+        'title': 0,
+        'desc': 1,
+        'vocab': 2,
+        'key': 3,
+      }
     ;
 
 function buildSorts(keys) {
@@ -432,6 +438,10 @@ class CardMaker extends React.Component {
     }
 
     return this.state.sort.fn(a, b);
+  }
+
+  regDeckSelected = () => {
+    return this.props.selectedDeck !== this.props.allCardsDeck;
   }
 
   screenComponent = () => {

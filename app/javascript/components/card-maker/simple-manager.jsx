@@ -8,18 +8,13 @@ import CardToolbar from './card-toolbar'
 import DeckToolbar from './deck-toolbar'
 import DeckSidebar from './deck-sidebar'
 import SimpleCard from './simple-card'
+import SimpleDeck from './simple-deck'
 import Poller from 'lib/card-maker/poller'
 import styles from 'stylesheets/card_maker/simple_manager'
 
 import deckSvg from 'images/card_maker/deck.svg'
 
 const pollIntervalMillis = 1000
-    , specialCardOrder = {
-        'title': 0,
-        'desc': 1,
-        'vocab': 2,
-        'key': 3,
-      }
     , newDeckId = -100
     ;
 
@@ -145,36 +140,21 @@ class SimpleManager extends React.Component {
   }
 
   deckItem = (deck) => {
-    var inner;
+    let titleCard
 
     if (deck.titleCardId) {
-      let card = this.props.cards.find((card) => {
+      titleCard = this.props.cards.find((card) => {
         return card.id === deck.titleCardId;
       });
-
-      inner = [
-        <div className={styles.deckImage} key='deckImg'>
-          <LoadingSpinnerImage src={loResCardImageUrl(card)} load={true} />
-        </div>,
-        <div className={styles.deckText} key='deckTxt'>{deck.name}</div>
-      ]
-    } else {
-      inner = <div className={styles.deckText}>{deck.name}</div>
     }
 
     return (
-      <li 
-        className={styles.deck}
+      <SimpleDeck
         key={deck.id}
-        onClick={() => this.setSelectedDeck(deck)}
-      >
-        <div className={[styles.cardImg, styles.cardImgBehind, styles.cardImgBehind2].join(' ')} />
-        <div className={[styles.cardImg, styles.cardImgBehind, styles.cardImgBehind1].join(' ')} />
-        <div className={[styles.cardImg, styles.cardImgBehind, styles.cardImgBehind0].join(' ')} />
-        <div className={styles.cardImg}>
-          {inner}
-        </div>
-      </li>
+        name={deck.name}
+        titleCard={titleCard}
+        onRequestOpen={() => this.setSelectedDeck(deck)}
+      />
     );
   }
 
@@ -306,10 +286,6 @@ class SimpleManager extends React.Component {
       'new deck', 
       () => this.setState({ openModal: 'newDeck' })
     );
-  }
-
-  regDeckSelected = () => {
-    return this.props.selectedDeck !== this.props.allCardsDeck;
   }
 
   resources = (deckCards) => {

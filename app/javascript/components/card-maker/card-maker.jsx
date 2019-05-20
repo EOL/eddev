@@ -390,6 +390,50 @@ class CardMaker extends React.Component {
     })
   }
 
+  deckCards = () => {
+    let cards = [];
+
+    if (this.state.selectedDeck) {
+      const libCards = this.state.library === 'user' ? this.state.userCards : this.state.publicCards;
+
+      if (this.state.selectedDeck === allCardsDeck) {
+        cards = libCards;
+      } else {
+        cards = libCards.filter((card) => {
+          return card.deck === this.state.selectedDeck.id;
+        });
+      }
+    }
+
+    return cards.sort(this.cardSort);
+  }
+
+  cardSort = (a, b) => {
+    if (!this.state.sort.pure) {
+      if (a.locale === I18n.locale && b.locale !== I18n.locale) {
+        return -1;
+      }
+
+      if (a.locale !== I18n.locale && b.locale === I18n.locale) {
+        return 1;
+      }
+
+      if (a.templateName === 'trait' && b.templateName !== 'trait') {
+        return (this.regDeckSelected() ? 1 : -1);
+      }
+
+      if (a.templateName !== 'trait' && b.templateName === 'trait') {
+        return (this.regDeckSelected() ? -1 : 1);
+      }
+
+      if (a.templateName !== 'trait' && b.templateName !== 'trait') {
+        return (specialCardOrder[a.templateName] || -1) - (specialCardOrder[b.templateName] || -1);
+      }
+    }
+
+    return this.state.sort.fn(a, b);
+  }
+
   screenComponent = () => {
     const commonProps = {
       showLoadingOverlay: this.showLoadingOverlay,
@@ -405,6 +449,7 @@ class CardMaker extends React.Component {
           allCardsDeck={allCardsDeck}
           backPath={this.props.backPath}
           cards={this.state.library === 'user' ? this.state.userCards : this.state.publicCards}
+          deckCards={this.deckCards()}
           decks={this.state.library === 'user' ? this.state.userDecks : this.state.publicDecks}
           userDecks={this.state.userDecks}
           unassignedCardsDeck={unassignedCardsDeck}

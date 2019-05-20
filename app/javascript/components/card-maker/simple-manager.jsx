@@ -43,7 +43,7 @@ function DescPart(props) {
         elmts.push(props.selectedDeck.desc);
 
         if (props.library === 'user') {
-          elmts.push(<i onClick={props.onRequestEditDesc} className={'fa fa-edit'} />)
+          elmts.push(<i key='edit' onClick={props.onRequestEditDesc} className={'fa fa-edit'} />)
         }
       }
     } else if (props.library === 'public') {
@@ -64,19 +64,83 @@ function DescPart(props) {
   }
 }
 
+const NUM_IMAGES_LOADING = 3
+    , CLEAN_STATE = {
+        openModal: null,
+        zoomCardIndex: null,
+        deckDrawerOpen: false,
+        cardSearchVal: '',
+        deckSearchVal: '',
+        copyCardId: null,
+        sidebarOpen: false,
+        imageLoadIndex: NUM_IMAGES_LOADING - 1,
+        maxImageLoadIndex: NUM_IMAGES_LOADING - 1,
+      }
+    ;
+
+
 class SimpleManager extends React.Component {
   constructor(props) {
     super(props);
 
     this.poller = new Poller();
-    this.state = {
-      openModal: null,
-      zoomCardIndex: null,
-      deckDrawerOpen: false,
-      cardSearchVal: '',
-      deckSearchVal: '',
-      copyCardId: null,
-      sidebarOpen: false
+    this.state = CLEAN_STATE;
+  }
+
+  componentDidMount() {
+    this.updateMaxImageLoadIndex();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    let changed = this.props.selectedDeck !== nextProps.selectedDeck ||
+        (this.props.selectedDeck && this.props.deckCards.length !== nextProps.deckCards.length)
+      ;
+    
+    if (changed) {
+      if (this.managerNode) {
+        $(this.managerNode).scrollTop(0);
+      }
+
+      this.setState(CLEAN_STATE, this.updateMaxImageLoadIndex);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.managerNode) {
+      this.managerNode.removeEventListener('scroll', this.handleScroll);
+    }
+  }
+
+  managerRef = (node) => {
+    this.managerNode = node; 
+
+    if (this.managerNode) {
+      this.managerNode.addEventListener('scroll', this.updateMaxImageLoadIndex);
+    }
+  }
+
+  updateMaxImageLoadIndex = () => {
+    // height excludes padding
+    // innerHeight excludes border
+    // outerHeight(false) excludes margin
+    // outerHeight(true) includes margin
+    if (this.managerNode && this.resourcesNode && this.resourceNode) {
+      const managerOffsetTop = $(this.managerNode).offset().top
+          , managerHeight = $(this.managerNode).innerHeight()
+          , resourceHeight = $(this.resourceNode).outerHeight(true) // include margin
+          , resourcesOffsetTop = $(this.resourcesNode).offset().top
+          , resourcesPaddingTop = $(this.resourcesNode).innerHeight() - $(this.resourcesNode).height()
+          , resourcesPerRow = Math.floor($(this.resourcesNode).width() / $(this.resourceNode).outerWidth())
+          , visibleResourcesHeight = managerHeight - (resourcesOffsetTop + resourcesPaddingTop - managerOffsetTop) 
+          , rowsVisible = Math.ceil(visibleResourcesHeight / resourceHeight)
+          , resourcesVisible = rowsVisible * resourcesPerRow - (this.props.library === 'user' ? 1 : 0) // accommodate 'new' button, which doesn't have an image to load
+          ;
+
+      if (resourcesVisible - 1 > this.state.maxImageLoadIndex) {
+        this.setState({
+          maxImageLoadIndex: resourcesVisible - 1
+        }, this.updateImageLoadIndex);
+      }
     }
   }
 
@@ -164,15 +228,38 @@ class SimpleManager extends React.Component {
     }
   }
 
+  resourceRef = (node) => {
+    if (node && !this.resourceNode) {
+      this.resourceNode = node;
+    }
+  }
+
+  updateImageLoadIndex = () => {
+    if (this.state.imageLoadIndex < this.state.maxImageLoadIndex) {
+      this.setState((state) => {
+        // check again since updates are async
+        const incr = state.imageLoadIndex < this.state.maxImageLoadIndex ? 1 : 0;
+
+        return {
+          imageLoadIndex: state.imageLoadIndex + incr
+        };
+      });
+    }
+  }
+
   cardItem = (card, i) => {
     return (
       <SimpleCard
+        key={card.id}
         card={card}
+        domRef={this.resourceRef}
         library={this.props.library}
         onRequestEditCard={() => this.props.onRequestEditCard(card)}
         onRequestZoom={() => this.handleCardZoomClick(i)}
         onRequestCopy={() => this.openCopyModal(card.id)}
         onRequestDestroy={() => this.handleDestroyCard(card)}
+        loadImage={i <= this.state.imageLoadIndex}
+        onImageLoad={this.updateImageLoadIndex}
       />
     );
   }
@@ -219,50 +306,6 @@ class SimpleManager extends React.Component {
       'new deck', 
       () => this.setState({ openModal: 'newDeck' })
     );
-  }
-
-  deckCards = () => {
-    if (this.props.selectedDeck) {
-      let cards;
-
-      if (this.isAllCards()) {
-        cards = this.props.cards;
-      } else {
-        cards = this.props.cards.filter((card) => {
-          return card.deck === this.props.selectedDeck.id;
-        });
-      }
-
-      return cards.sort(this.deckCardSort);
-    }
-
-    return [];
-  }
-
-  deckCardSort = (a, b) => {
-    if (!this.props.sort.pure) {
-      if (a.locale === I18n.locale && b.locale !== I18n.locale) {
-        return -1;
-      }
-
-      if (a.locale !== I18n.locale && b.locale === I18n.locale) {
-        return 1;
-      }
-
-      if (a.templateName === 'trait' && b.templateName !== 'trait') {
-        return (this.regDeckSelected() ? 1 : -1);
-      }
-
-      if (a.templateName !== 'trait' && b.templateName === 'trait') {
-        return (this.regDeckSelected() ? -1 : 1);
-      }
-
-      if (a.templateName !== 'trait' && b.templateName !== 'trait') {
-        return (specialCardOrder[a.templateName] || -1) - (specialCardOrder[b.templateName] || -1);
-      }
-    }
-
-    return this.props.sort.fn(a, b)
   }
 
   regDeckSelected = () => {
@@ -664,14 +707,17 @@ class SimpleManager extends React.Component {
 
   render() {
     const managerClasses = [styles.simpleManager, styles.simpleManagerWToolbar]
-      , deckCards = this.deckCards()
+      , deckCards = this.props.deckCards
       , resources = this.resources(deckCards)
       , resourceElmts = this.resourceElmts(resources)
       , sidebarDecks = [this.props.allCardsDeck].concat(this.props.decks)
       ;
 
     return (
-      <div className={managerClasses.join(' ')}>
+      <div 
+        className={managerClasses.join(' ')}
+        ref={this.managerRef}
+      >
         <ManagerModals 
           openModal={this.state.openModal} 
           selectedDeck={this.props.selectedDeck}
@@ -772,7 +818,10 @@ class SimpleManager extends React.Component {
             deckSearchVal={this.state.deckSearchVal}
             isAllCards={this.isAllCards()}
           />
-          <ul className={[styles.decks, styles.lDecksCol].join(' ')}>
+          <ul 
+            className={[styles.decks, styles.lDecksCol].join(' ')}
+            ref={(node) => { this.resourcesNode = node }}
+          >
             {resourceElmts}
           </ul>
         </div>

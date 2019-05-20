@@ -17,9 +17,14 @@ function SimpleCard(props) {
     <li
       className={styles.card}
       key={card.id}
+      ref={props.domRef}
     >
       <div className={styles.cardImg}>
-        <LoadingSpinnerImage src={loResCardImageUrl(card)} load={true}/>
+        <LoadingSpinnerImage 
+          src={loResCardImageUrl(card)} 
+          load={props.loadImage}
+          onLoad={props.onImageLoad}
+        />
       </div>
       <div className={overlayClasses.join(' ')}>
         {

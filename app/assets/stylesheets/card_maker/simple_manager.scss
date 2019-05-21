@@ -371,7 +371,10 @@ $trans-bg: rgba($white, .9);
   background: $white;
   height: calc(100vh - #{$topbar-row-height});
   left: -1 * $width;
-  padding: 30px 20px;
+  /*
+  overflow-x: visible;
+  overflow-y: auto;
+  */
   position: absolute;
   top: 0;
   transition-duration: 0.3s;
@@ -387,8 +390,15 @@ $trans-bg: rgba($white, .9);
   }
 }
 
-.isDeckSidebarVisible {
-  left: 0; 
+  .isDeckSidebarVisible {
+    left: 0; 
+  }
+
+.deckSidebarInner {
+  overflow-y: auto;
+  padding: 30px 20px;
+  height: 100%;
+  width: 100%;
 }
 
 .deckSidebarHandle {
@@ -424,11 +434,11 @@ $trans-bg: rgba($white, .9);
 
 .sidebarDecks {
   font-size: 14px;
-  line-height: 24px;
 }
 
 .sidebarDeck {
   cursor: pointer;
+  margin: 10px 0;
 }
 
   .isSidebarDeckSelected {

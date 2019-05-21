@@ -13,28 +13,30 @@ function DeckSidebar(props) {
 
   return (
     <div className={classNames.join(' ')}>
-      <h3>Jump to deck:</h3>
-      <ul className={styles.sidebarDecks}>
-        {props.decks.map((deck) => {
-          const classNames = [styles.sidebarDeck];
-          let handleClick = () => props.onDeckSelect(deck);
+      <div className={styles.deckSidebarInner}>
+        <h3>Jump to deck:</h3>
+        <ul className={styles.sidebarDecks}>
+          {props.decks.map((deck) => {
+            const classNames = [styles.sidebarDeck];
+            let handleClick = () => props.onDeckSelect(deck);
 
-          if (deck === props.selectedDeck) {
-            classNames.push(styles.isSidebarDeckSelected);
-            handleClick = null;
-          }
+            if (deck === props.selectedDeck) {
+              classNames.push(styles.isSidebarDeckSelected);
+              handleClick = null;
+            }
 
-          return (
-            <li 
-              onClick={handleClick}
-              key={deck.id}
-              className={classNames.join(' ')}
-            >{deck.name}</li>  
-          )
-        })}
-      </ul>
-      <div className={styles.deckSidebarHandle} onClick={handleFn}>
-        <i className={`fa fa-angle-${angleDir} fa-2x`} />
+            return (
+              <li 
+                onClick={handleClick}
+                key={deck.id}
+                className={classNames.join(' ')}
+              >{deck.name}</li>  
+            )
+          })}
+        </ul>
+        <div className={styles.deckSidebarHandle} onClick={handleFn}>
+          <i className={`fa fa-angle-${angleDir} fa-2x`} />
+        </div>
       </div>
     </div>
   );

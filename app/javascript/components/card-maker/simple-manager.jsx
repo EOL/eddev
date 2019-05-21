@@ -102,8 +102,10 @@ class SimpleManager extends React.Component {
 
   componentWillUnmount() {
     if (this.managerNode) {
-      this.managerNode.removeEventListener('scroll', this.handleScroll);
+      this.managerNode.removeEventListener('scroll', this.updateMaxImageLoadIndex);
     }
+
+    window.removeEventListener('resize', this.updateMaxImageLoadIndex);
   }
 
   managerRef = (node) => {
@@ -112,6 +114,8 @@ class SimpleManager extends React.Component {
     if (this.managerNode) {
       this.managerNode.addEventListener('scroll', this.updateMaxImageLoadIndex);
     }
+
+    window.addEventListener('resize', this.updateMaxImageLoadIndex);
   }
 
   updateMaxImageLoadIndex = () => {
@@ -128,19 +132,21 @@ class SimpleManager extends React.Component {
           , resourcesPerRow = Math.floor($(this.resourcesNode).width() / $(this.resourceNode).outerWidth())
           , visibleResourcesHeight = managerHeight - (resourcesOffsetTop + resourcesPaddingTop - managerOffsetTop) 
           , rowsVisible = Math.ceil(visibleResourcesHeight / resourceHeight)
-          , resourcesVisible = rowsVisible * resourcesPerRow - (this.props.library === 'user' ? 1 : 0) // accommodate 'new' button, which doesn't have an image to load
+          , resourcesVisible = rowsVisible * resourcesPerRow - 
+            (this.props.library === 'user' ? 1 : 0) - // accommodate 'new' button, which doesn't have an image to load
+            (this.props.selectedDeck ? 0 : 1) // for 'all cards' button in deck view
           ;
 
       if (resourcesVisible - 1 > this.state.maxImageLoadIndex) {
         this.setState({
           maxImageLoadIndex: resourcesVisible - 1
-        }, this.updateImageLoadIndex);
+        });
       }
     }
   }
 
-  deckItem = (deck) => {
-    let titleCard
+  deckItem = (deck, i) => {
+    let titleCard;
 
     if (deck.titleCardId) {
       titleCard = this.props.cards.find((card) => {
@@ -154,6 +160,9 @@ class SimpleManager extends React.Component {
         name={deck.name}
         titleCard={titleCard}
         onRequestOpen={() => this.setSelectedDeck(deck)}
+        loadImage={i <= this.state.imageLoadIndex && i <= this.state.maxImageLoadIndex}
+        onImageLoad={this.updateImageLoadIndex}
+        domRef={this.resourceRef}
       />
     );
   }
@@ -215,16 +224,11 @@ class SimpleManager extends React.Component {
   }
 
   updateImageLoadIndex = () => {
-    if (this.state.imageLoadIndex < this.state.maxImageLoadIndex) {
-      this.setState((state) => {
-        // check again since updates are async
-        const incr = state.imageLoadIndex < this.state.maxImageLoadIndex ? 1 : 0;
-
-        return {
-          imageLoadIndex: state.imageLoadIndex + incr
-        };
-      });
-    }
+    this.setState((state) => {
+      return {
+        imageLoadIndex: state.imageLoadIndex + 1
+      };
+    });
   }
 
   cardItem = (card, i) => {
@@ -238,7 +242,7 @@ class SimpleManager extends React.Component {
         onRequestZoom={() => this.handleCardZoomClick(i)}
         onRequestCopy={() => this.openCopyModal(card.id)}
         onRequestDestroy={() => this.handleDestroyCard(card)}
-        loadImage={i <= this.state.imageLoadIndex}
+        loadImage={i <= this.state.imageLoadIndex && i <= this.state.maxImageLoadIndex}
         onImageLoad={this.updateImageLoadIndex}
       />
     );
@@ -340,8 +344,8 @@ class SimpleManager extends React.Component {
         elmts = [this.newCardElmt()].concat(elmts);
       }
     } else {
-      elmts = resources.items.map((deck) => {
-        return this.deckItem(deck);
+      elmts = resources.items.map((deck, i) => {
+        return this.deckItem(deck, i);
       });
 
       if (!this.state.deckSearchVal) {

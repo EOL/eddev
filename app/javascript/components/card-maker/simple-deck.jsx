@@ -5,33 +5,68 @@ import { loResCardImageUrl } from 'lib/card-maker/url-helper'
 
 import styles from 'stylesheets/card_maker/simple_manager'
 
-function SimpleDeck(props) {
-  var inner;
+class SimpleDeck extends React.Component {
+  constructor(props) {
+    super(props);
 
-  if (props.titleCard) {
-    inner = [
-      <div className={styles.deckImage} key='deckImg'>
-        <LoadingSpinnerImage src={loResCardImageUrl(props.titleCard)} load={true} />
-      </div>,
-      <div className={styles.deckText} key='deckTxt'>{props.name}</div>
-    ]
-  } else {
-    inner = <div className={styles.deckText}>{props.name}</div>
+    this.state = {
+      onImageLoadCalled: false // This is only for tracking the case where there isn't a real image to load (i.e., when a titleCard isn't passed in)
+    }
   }
 
-  return (
-    <li 
-      className={styles.deck}
-      onClick={props.onRequestOpen}
-    >
-      <div className={[styles.cardImg, styles.cardImgBehind, styles.cardImgBehind2].join(' ')} />
-      <div className={[styles.cardImg, styles.cardImgBehind, styles.cardImgBehind1].join(' ')} />
-      <div className={[styles.cardImg, styles.cardImgBehind, styles.cardImgBehind0].join(' ')} />
-      <div className={styles.cardImg}>
-        {inner}
-      </div>
-    </li>
-  )
+  componentDidMount() {
+    this.fireOnImageLoadIfNeeded();
+  }
+
+  componentDidUpdate()  {
+    this.fireOnImageLoadIfNeeded();
+  }
+
+  fireOnImageLoadIfNeeded = () => {
+    if (
+      !this.state.onImageLoadCalled && 
+      this.props.loadImage &&
+      !this.props.titleCard
+    ) {
+      this.setState({
+        onImageLoadCalled: true
+      }, this.props.onImageLoad);
+    }
+  }
+
+  render() {
+    var inner;
+
+    if (this.props.titleCard) {
+      inner = [
+        <div className={styles.deckImage} key='deckImg'>
+          <LoadingSpinnerImage 
+            src={loResCardImageUrl(this.props.titleCard)} 
+            load={this.props.loadImage} 
+            onLoad={this.props.onImageLoad}
+          />
+        </div>,
+        <div className={styles.deckText} key='deckTxt'>{this.props.name}</div>
+      ]
+    } else {
+      inner = <div className={styles.deckText}>{this.props.name}</div>
+    }
+
+    return (
+      <li 
+        className={styles.deck}
+        onClick={this.props.onRequestOpen}
+        ref={this.props.domRef}
+      >
+        <div className={[styles.cardImg, styles.cardImgBehind, styles.cardImgBehind2].join(' ')} />
+        <div className={[styles.cardImg, styles.cardImgBehind, styles.cardImgBehind1].join(' ')} />
+        <div className={[styles.cardImg, styles.cardImgBehind, styles.cardImgBehind0].join(' ')} />
+        <div className={styles.cardImg}>
+          {inner}
+        </div>
+      </li>
+    );
+  }
 }
 
 export default SimpleDeck;

@@ -1,6 +1,7 @@
 import React from 'react'
 
 import LoadingSpinnerImage from './loading-spinner-image'
+import SimpleResourceWrapper from './simple-resource-wrapper'
 import { loResCardImageUrl } from 'lib/card-maker/url-helper'
 
 import styles from 'stylesheets/card_maker/simple_manager'
@@ -10,7 +11,7 @@ class SimpleDeck extends React.Component {
     super(props);
 
     this.state = {
-      onImageLoadCalled: false // This is only for tracking the case where there isn't a real image to load (i.e., when a titleCard isn't passed in)
+      onImageLoadCalled: false 
     }
   }
 
@@ -53,10 +54,11 @@ class SimpleDeck extends React.Component {
     }
 
     return (
-      <li 
-        className={styles.deck}
+      <SimpleResourceWrapper
+        loadImage={this.props.loadImage}
         onClick={this.props.onRequestOpen}
-        ref={this.props.domRef}
+        domRef={this.props.domRef}
+        hasImage={this.props.titleCard != null}
       >
         <div className={[styles.cardImg, styles.cardImgBehind, styles.cardImgBehind2].join(' ')} />
         <div className={[styles.cardImg, styles.cardImgBehind, styles.cardImgBehind1].join(' ')} />
@@ -64,7 +66,7 @@ class SimpleDeck extends React.Component {
         <div className={styles.cardImg}>
           {inner}
         </div>
-      </li>
+      </SimpleResourceWrapper>
     );
   }
 }

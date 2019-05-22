@@ -1,4 +1,7 @@
 import React from 'react'
+
+import LibButton from './lib-button'
+
 import styles from 'stylesheets/card_maker/simple_manager'
 
 function DeckSidebar(props) {
@@ -14,6 +17,11 @@ function DeckSidebar(props) {
   return (
     <div className={classNames.join(' ')}>
       <div className={styles.deckSidebarInner}>
+        <LibButton
+          library={props.library}
+          setLibrary={props.onRequestSetLibrary}
+          extraClass={styles.btnLibSidebar}
+        />
         <h3>Jump to deck:</h3>
         <ul className={styles.sidebarDecks}>
           {props.decks.map((deck) => {

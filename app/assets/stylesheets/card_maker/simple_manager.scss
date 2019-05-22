@@ -49,10 +49,18 @@ $trans-bg: rgba($white, .9);
 }
 
 .btnLib {
-  position: absolute;
-  right: 0;
-  top: 5px;
 }
+
+  .btnLibHeader {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 5px;
+  }
+
+  .btnLibSidebar {
+    margin-bottom: 20px;
+  }
 
 .btnCreateTempl {
   font-size: 14px;
@@ -63,6 +71,11 @@ $trans-bg: rgba($white, .9);
 
 .headerText {
   line-height: $header-height;
+  max-width: 85%;
+  margin: 0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   & > i {
     color: $eol-blue;
@@ -72,11 +85,8 @@ $trans-bg: rgba($white, .9);
 }
 
 .toolbar {
+  display: none;
   height: $toolbar-height;
-  /*
-  padding-left: 10px;
-  padding-right: 10px;
-  */
   width: 100%;
 }
 
@@ -89,6 +99,9 @@ $trans-bg: rgba($white, .9);
   text-align: center;
 }
 
+.barInnerHeader {
+  padding: 0 2%;
+}
 
 .toolbarItem { 
   border-right: 1px solid #000; 
@@ -116,7 +129,7 @@ $trans-bg: rgba($white, .9);
   cursor: pointer;
   display: inline-block;
   height: 100%;
-  padding: 8px 40px;
+  padding: 8px 20px;
   position: relative;
 
   &:hover {
@@ -188,6 +201,7 @@ $trans-bg: rgba($white, .9);
 
 // Deck area
 .btnDesc {
+  display: none;
   margin: 20px auto 10px auto;
   width: 162px;
 }
@@ -227,7 +241,7 @@ $trans-bg: rgba($white, .9);
   padding: $deck-margin;
 }
 
-.deck, .card { // I expect these styles to diverge, so separate classes
+.resource {
   background-color: #fff;
   border-radius: 7px;
   cursor: pointer;
@@ -239,16 +253,11 @@ $trans-bg: rgba($white, .9);
   vertical-align: top;
   width: $deck-width;
 
-  &:hover {
-    background-color: $btn-hover-gray;
-
-    & .resourceOverlay {
-      border-radius: 7px;
-      display: flex;
-    }
-  }
-
 }
+
+  .resourceNew {
+    display: none;
+  }
 
 .cardImg {
   align-items: center;
@@ -292,6 +301,7 @@ $trans-bg: rgba($white, .9);
   align-items: center;
   background: rgba(.5, .5, .5, .5);
   bottom: 0; 
+  border-radius: 7px;
   color: $white;
   display: none;
   //flex-direction: column;
@@ -446,6 +456,45 @@ $trans-bg: rgba($white, .9);
     cursor: default;
     font-weight: $bold;
   }
+
+.editBtn {
+  display: none;
+}
+
+
+@media screen and (min-width: 500px) {
+  .toolbar {
+    display: block;
+  }
+
+  .btnLibHeader {
+    display: block;
+  }
+
+  .btnLibSidebar {
+    display: none;
+  }
+
+  .btnDesc {
+    display: block;
+  }
+  
+  .editBtn {
+    display: inline;
+  }
+
+  .resourceNew {
+    display: inline-block;
+  }
+
+  .resource:hover {
+    background-color: $btn-hover-gray;
+
+    & .resourceOverlay {
+      display: flex;
+    }
+  }
+}
 
 @media screen and (max-width: (decks-width(5) - 1px)) {
   .lDecksCol {

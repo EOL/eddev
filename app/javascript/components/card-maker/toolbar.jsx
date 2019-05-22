@@ -19,11 +19,10 @@ class Toolbar extends React.Component {
     this.setState({
       searchOpen: true
     });
-    console.log('did it~');
   }
 
   render() {
-    const innerClasses = [styles.barInner, styles.lDecksCol];
+    const innerClasses = [styles.barInner];
     let searchExtraClass = null;
 
     if (this.state.searchOpen) {

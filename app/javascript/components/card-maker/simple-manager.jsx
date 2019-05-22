@@ -9,6 +9,7 @@ import DeckToolbar from './deck-toolbar'
 import DeckSidebar from './deck-sidebar'
 import SimpleCard from './simple-card'
 import SimpleDeck from './simple-deck'
+import SimpleResourceWrapper from './simple-resource-wrapper'
 import Poller from 'lib/card-maker/poller'
 import styles from 'stylesheets/card_maker/simple_manager'
 
@@ -38,7 +39,7 @@ function DescPart(props) {
         elmts.push(props.selectedDeck.desc);
 
         if (props.library === 'user') {
-          elmts.push(<i key='edit' onClick={props.onRequestEditDesc} className={'fa fa-edit'} />)
+          elmts.push(<i key='edit' onClick={props.onRequestEditDesc} className={`fa fa-edit ${styles.editBtn}`} />)
         }
       }
     } else if (props.library === 'public') {
@@ -132,9 +133,7 @@ class SimpleManager extends React.Component {
           , resourcesPerRow = Math.floor($(this.resourcesNode).width() / $(this.resourceNode).outerWidth())
           , visibleResourcesHeight = managerHeight - (resourcesOffsetTop + resourcesPaddingTop - managerOffsetTop) 
           , rowsVisible = Math.ceil(visibleResourcesHeight / resourceHeight)
-          , resourcesVisible = rowsVisible * resourcesPerRow - 
-            (this.props.library === 'user' ? 1 : 0) - // accommodate 'new' button, which doesn't have an image to load
-            (this.props.selectedDeck ? 0 : 1) // for 'all cards' button in deck view
+          , resourcesVisible = rowsVisible * resourcesPerRow
           ;
 
       if (resourcesVisible - 1 > this.state.maxImageLoadIndex) {
@@ -160,7 +159,6 @@ class SimpleManager extends React.Component {
         name={deck.name}
         titleCard={titleCard}
         onRequestOpen={() => this.setSelectedDeck(deck)}
-        loadImage={i <= this.state.imageLoadIndex && i <= this.state.maxImageLoadIndex}
         onImageLoad={this.updateImageLoadIndex}
         domRef={this.resourceRef}
       />
@@ -242,7 +240,6 @@ class SimpleManager extends React.Component {
         onRequestZoom={() => this.handleCardZoomClick(i)}
         onRequestCopy={() => this.openCopyModal(card.id)}
         onRequestDestroy={() => this.handleDestroyCard(card)}
-        loadImage={i <= this.state.imageLoadIndex && i <= this.state.maxImageLoadIndex}
         onImageLoad={this.updateImageLoadIndex}
       />
     );
@@ -250,31 +247,32 @@ class SimpleManager extends React.Component {
 
   allCardsElmt = () => {
     return (
-      <li
-        className={[styles.card].join(' ')}
+      <SimpleResourceWrapper
         onClick={() => this.setSelectedDeck(this.props.allCardsDeck)}
         key='showall'
+        hasImage={false}
       >
         <div className={styles.cardImg}>
           <img src={deckSvg} className={styles.showAllIcon} />
           <div>show all cards</div>
         </div>
-      </li>
+      </SimpleResourceWrapper>
     );
   }
 
   newElmt = (text, onClick) => {
     return (
-      <li
-        className={[styles.card, styles.cardNew].join(' ')}
+      <SimpleResourceWrapper
         onClick={onClick}
         key='new'
+        extraClass={styles.resourceNew}
+        hasImage={false}
       >
         <div className={styles.cardImg}>
           <i className='fa fa-plus fa-3x' />
           <div>{text}</div>
         </div>
-      </li>
+      </SimpleResourceWrapper>
     );
   }
 
@@ -357,7 +355,11 @@ class SimpleManager extends React.Component {
       }
     }
 
-    return elmts;
+    return elmts.map((elmt, i) => {
+      return React.cloneElement(elmt, {
+        loadImage: i <= this.state.imageLoadIndex && i <= this.state.maxImageLoadIndex
+      });
+    });
   }
 
   isAllCards = () => {
@@ -745,6 +747,8 @@ class SimpleManager extends React.Component {
             onRequestOpen={() => this.setState({ sidebarOpen: true })}
             onRequestClose={() => this.setState({ sidebarOpen: false })}
             onDeckSelect={this.setSelectedDeck}
+            library={this.props.library}
+            onRequestSetLibrary={this.props.setLibrary}
             open={this.state.sidebarOpen}
           />
         }

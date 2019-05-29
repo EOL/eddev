@@ -31,14 +31,17 @@ function HeaderBar(props) {
           props.selectedDeck != null &&
           <i className={`fa fa-angle-left fa-2x ${styles.headerBack}`} onClick={() => props.setSelectedDeck(null)} />
         }
-        <h1 className={styles.headerText}>
-          {headerText}
+        <h1 className={styles.headerTitle}>
+          <span className={styles.headerTitleText}>{headerText}</span>
           {
             props.selectedDeck != null && props.library == 'user' && !props.isAllCards &&
               <i className={`fa fa-edit ${styles.editBtn}`} onClick={props.onRequestEditDeckName}/>
           }
         </h1>
-        <LibButton {...props} extraClass={styles.btnLibHeader} />
+        {
+          props.selectedDeck == null && 
+          <LibButton {...props} extraClass={styles.btnLibHeader} />
+        }
       </div>
     </div>
   );

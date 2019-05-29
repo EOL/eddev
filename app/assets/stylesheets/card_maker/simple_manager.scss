@@ -69,19 +69,30 @@ $trans-bg: rgba($white, .9);
   width: 100%;
 }
 
-.headerText {
+.headerTitle {
+  height: $header-height;
   line-height: $header-height;
+  overflow: hidden;
   max-width: 85%;
   margin: 0 auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  text-align: center;
   white-space: nowrap;
 
   & > i {
+    display: inline-block;
+    line-height: $header-height;
     color: $eol-blue;
     cursor: pointer;
     margin-left: 10px;
+    vertical-align: top;
   }
+}
+
+.headerTitleText {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90%;
 }
 
 .toolbar {
@@ -461,18 +472,9 @@ $trans-bg: rgba($white, .9);
   display: none;
 }
 
-
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 550px) {
   .toolbar {
     display: block;
-  }
-
-  .btnLibHeader {
-    display: block;
-  }
-
-  .btnLibSidebar {
-    display: none;
   }
 
   .btnDesc {
@@ -493,6 +495,10 @@ $trans-bg: rgba($white, .9);
     & .resourceOverlay {
       display: flex;
     }
+  }
+
+  .btnLibHeader {
+    display: block;
   }
 }
 

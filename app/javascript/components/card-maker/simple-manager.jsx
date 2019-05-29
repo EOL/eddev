@@ -88,10 +88,12 @@ class SimpleManager extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let changed = this.props.selectedDeck !== nextProps.selectedDeck ||
+    let changed = 
+        this.props.library !== nextProps.library ||
+        this.props.selectedDeck !== nextProps.selectedDeck ||
         (this.props.selectedDeck && this.props.deckCards.length !== nextProps.deckCards.length)
       ;
-    
+
     if (changed) {
       if (this.managerNode) {
         $(this.managerNode).scrollTop(0);
@@ -125,9 +127,14 @@ class SimpleManager extends React.Component {
     // outerHeight(false) excludes margin
     // outerHeight(true) includes margin
     if (this.managerNode && this.resourcesNode && this.resourceNode) {
+      const resourceHeight = $(this.resourceNode).outerHeight(true) // include margin
+
+      if (!resourceHeight) {
+        return
+      }
+
       const managerOffsetTop = $(this.managerNode).offset().top
           , managerHeight = $(this.managerNode).innerHeight()
-          , resourceHeight = $(this.resourceNode).outerHeight(true) // include margin
           , resourcesOffsetTop = $(this.resourcesNode).offset().top
           , resourcesPaddingTop = $(this.resourcesNode).innerHeight() - $(this.resourcesNode).height()
           , resourcesPerRow = Math.floor($(this.resourcesNode).width() / $(this.resourceNode).outerWidth())
@@ -135,6 +142,20 @@ class SimpleManager extends React.Component {
           , rowsVisible = Math.ceil(visibleResourcesHeight / resourceHeight)
           , resourcesVisible = rowsVisible * resourcesPerRow
           ;
+
+      
+
+      console.log('resourceNode', this.resourceNode);
+      console.log('managerOffsetTop', managerOffsetTop);
+      console.log('managerHeight', managerHeight);
+      console.log('resourceHeight', resourceHeight);
+      console.log('resourcesOffsetTop', resourcesOffsetTop);
+      console.log('resourcesPaddingTop', resourcesPaddingTop);
+      console.log('resourcesPerRow', resourcesPerRow);
+      console.log('visibleResourcesHeight', visibleResourcesHeight);
+      console.log('rowsVisible', rowsVisible);
+      console.log('resourcesVisible', resourcesVisible);
+      console.log('resources visible:', resourcesVisible);
 
       if (resourcesVisible - 1 > this.state.maxImageLoadIndex) {
         this.setState({
@@ -218,6 +239,9 @@ class SimpleManager extends React.Component {
   resourceRef = (node) => {
     if (node && !this.resourceNode) {
       this.resourceNode = node;
+      this.updateMaxImageLoadIndex();
+    } else if (!node) {
+      this.resourceNode = null;
     }
   }
 
@@ -694,6 +718,9 @@ class SimpleManager extends React.Component {
       , resourceElmts = this.resourceElmts(resources)
       , sidebarDecks = [this.props.allCardsDeck].concat(this.props.decks)
       ;
+
+    console.log('imageLoadIndex: ', this.state.imageLoadIndex);
+    console.log('maxImageLoadIndex: ', this.state.maxImageLoadIndex);
 
     return (
       <div 

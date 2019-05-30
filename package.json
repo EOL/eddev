@@ -1,13 +1,15 @@
 {
   "dependencies": {
+    "@babel/preset-react": "^7.0.0",
     "@rails/webpacker": "^3.0.1",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "babel-preset-react": "^6.24.1",
     "immutability-helper": "^2.4.0",
     "immutable": "^4.0.0-rc.12",
-    "prop-types": "^15.5.10",
-    "react": "^15.6.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
     "react-autocomplete": "^1.8.1",
-    "react-dom": "^15.6.1",
+    "react-dom": "^16.8.6",
     "react-modal": "^2.3.2",
     "react_ujs": "^2.4.4",
     "slate": "^0.44.2",

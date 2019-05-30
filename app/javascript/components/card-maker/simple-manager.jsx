@@ -9,7 +9,6 @@ import DeckToolbar from './deck-toolbar'
 import DeckSidebar from './deck-sidebar'
 import SimpleCard from './simple-card'
 import SimpleDeck from './simple-deck'
-import SimpleResourceWrapper from './simple-resource-wrapper'
 import Poller from 'lib/card-maker/poller'
 import styles from 'stylesheets/card_maker/simple_manager'
 
@@ -69,8 +68,6 @@ const NUM_IMAGES_LOADING = 3
         deckSearchVal: '',
         copyCardId: null,
         sidebarOpen: false,
-        imageLoadIndex: NUM_IMAGES_LOADING - 1,
-        maxImageLoadIndex: NUM_IMAGES_LOADING - 1,
       }
     ;
 
@@ -83,10 +80,6 @@ class SimpleManager extends React.Component {
     this.state = CLEAN_STATE;
   }
 
-  componentDidMount() {
-    this.updateMaxImageLoadIndex();
-  }
-
   componentWillReceiveProps(nextProps) {
     let changed = 
         this.props.library !== nextProps.library ||
@@ -97,70 +90,6 @@ class SimpleManager extends React.Component {
     if (changed) {
       if (this.managerNode) {
         $(this.managerNode).scrollTop(0);
-      }
-
-      this.setState(CLEAN_STATE, this.updateMaxImageLoadIndex);
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.managerNode) {
-      this.managerNode.removeEventListener('scroll', this.updateMaxImageLoadIndex);
-    }
-
-    window.removeEventListener('resize', this.updateMaxImageLoadIndex);
-  }
-
-  managerRef = (node) => {
-    this.managerNode = node; 
-
-    if (this.managerNode) {
-      this.managerNode.addEventListener('scroll', this.updateMaxImageLoadIndex);
-    }
-
-    window.addEventListener('resize', this.updateMaxImageLoadIndex);
-  }
-
-  updateMaxImageLoadIndex = () => {
-    // height excludes padding
-    // innerHeight excludes border
-    // outerHeight(false) excludes margin
-    // outerHeight(true) includes margin
-    if (this.managerNode && this.resourcesNode && this.resourceNode) {
-      const resourceHeight = $(this.resourceNode).outerHeight(true) // include margin
-
-      if (!resourceHeight) {
-        return
-      }
-
-      const managerOffsetTop = $(this.managerNode).offset().top
-          , managerHeight = $(this.managerNode).innerHeight()
-          , resourcesOffsetTop = $(this.resourcesNode).offset().top
-          , resourcesPaddingTop = $(this.resourcesNode).innerHeight() - $(this.resourcesNode).height()
-          , resourcesPerRow = Math.floor($(this.resourcesNode).width() / $(this.resourceNode).outerWidth())
-          , visibleResourcesHeight = managerHeight - (resourcesOffsetTop + resourcesPaddingTop - managerOffsetTop) 
-          , rowsVisible = Math.ceil(visibleResourcesHeight / resourceHeight)
-          , resourcesVisible = rowsVisible * resourcesPerRow
-          ;
-
-      
-
-      console.log('resourceNode', this.resourceNode);
-      console.log('managerOffsetTop', managerOffsetTop);
-      console.log('managerHeight', managerHeight);
-      console.log('resourceHeight', resourceHeight);
-      console.log('resourcesOffsetTop', resourcesOffsetTop);
-      console.log('resourcesPaddingTop', resourcesPaddingTop);
-      console.log('resourcesPerRow', resourcesPerRow);
-      console.log('visibleResourcesHeight', visibleResourcesHeight);
-      console.log('rowsVisible', rowsVisible);
-      console.log('resourcesVisible', resourcesVisible);
-      console.log('resources visible:', resourcesVisible);
-
-      if (resourcesVisible - 1 > this.state.maxImageLoadIndex) {
-        this.setState({
-          maxImageLoadIndex: resourcesVisible - 1
-        });
       }
     }
   }
@@ -180,8 +109,6 @@ class SimpleManager extends React.Component {
         name={deck.name}
         titleCard={titleCard}
         onRequestOpen={() => this.setSelectedDeck(deck)}
-        onImageLoad={this.updateImageLoadIndex}
-        domRef={this.resourceRef}
       />
     );
   }
@@ -236,67 +163,47 @@ class SimpleManager extends React.Component {
     }
   }
 
-  resourceRef = (node) => {
-    if (node && !this.resourceNode) {
-      this.resourceNode = node;
-      this.updateMaxImageLoadIndex();
-    } else if (!node) {
-      this.resourceNode = null;
-    }
-  }
-
-  updateImageLoadIndex = () => {
-    this.setState((state) => {
-      return {
-        imageLoadIndex: state.imageLoadIndex + 1
-      };
-    });
-  }
-
   cardItem = (card, i) => {
     return (
       <SimpleCard
         key={card.id}
         card={card}
-        domRef={this.resourceRef}
         library={this.props.library}
         onRequestEditCard={() => this.props.onRequestEditCard(card)}
         onRequestZoom={() => this.handleCardZoomClick(i)}
         onRequestCopy={() => this.openCopyModal(card.id)}
         onRequestDestroy={() => this.handleDestroyCard(card)}
-        onImageLoad={this.updateImageLoadIndex}
       />
     );
   }
 
   allCardsElmt = () => {
     return (
-      <SimpleResourceWrapper
+      <li
+        className={styles.resource}
         onClick={() => this.setSelectedDeck(this.props.allCardsDeck)}
         key='showall'
-        hasImage={false}
       >
         <div className={styles.cardImg}>
           <img src={deckSvg} className={styles.showAllIcon} />
           <div>show all cards</div>
         </div>
-      </SimpleResourceWrapper>
+      </li>
     );
   }
 
   newElmt = (text, onClick) => {
     return (
-      <SimpleResourceWrapper
+      <li
         onClick={onClick}
         key='new'
-        extraClass={styles.resourceNew}
-        hasImage={false}
+        className={[styles.resource, styles.resourceNew].join(' ')}
       >
         <div className={styles.cardImg}>
           <i className='fa fa-plus fa-3x' />
           <div>{text}</div>
         </div>
-      </SimpleResourceWrapper>
+      </li>
     );
   }
 
@@ -379,11 +286,7 @@ class SimpleManager extends React.Component {
       }
     }
 
-    return elmts.map((elmt, i) => {
-      return React.cloneElement(elmt, {
-        loadImage: i <= this.state.imageLoadIndex && i <= this.state.maxImageLoadIndex
-      });
-    });
+    return elmts;
   }
 
   isAllCards = () => {
@@ -719,13 +622,9 @@ class SimpleManager extends React.Component {
       , sidebarDecks = [this.props.allCardsDeck].concat(this.props.decks)
       ;
 
-    console.log('imageLoadIndex: ', this.state.imageLoadIndex);
-    console.log('maxImageLoadIndex: ', this.state.maxImageLoadIndex);
-
     return (
       <div 
         className={managerClasses.join(' ')}
-        ref={this.managerRef}
       >
         <ManagerModals 
           openModal={this.state.openModal} 
@@ -831,7 +730,6 @@ class SimpleManager extends React.Component {
           />
           <ul 
             className={[styles.decks, styles.lDecksCol].join(' ')}
-            ref={(node) => { this.resourcesNode = node }}
           >
             {resourceElmts}
           </ul>

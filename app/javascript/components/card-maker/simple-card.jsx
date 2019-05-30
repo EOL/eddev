@@ -1,7 +1,8 @@
 import React from 'react'
 import LoadingSpinnerImage from './loading-spinner-image'
-import SimpleResourceWrapper from './simple-resource-wrapper'
 import {loResCardImageUrl} from 'lib/card-maker/url-helper'
+
+import { InView } from 'react-intersection-observer'
 
 import styles from 'stylesheets/card_maker/simple_manager'
 
@@ -15,43 +16,43 @@ function SimpleCard(props) {
   }
 
   return (
-    <SimpleResourceWrapper
-      loadImage={props.loadImage}
-      hasImage={true}
-      domRef={props.domRef}
-    >
-      <div className={styles.cardImg}>
-        <LoadingSpinnerImage 
-          src={loResCardImageUrl(card)} 
-          load={props.loadImage}
-          onLoad={props.onImageLoad}
-        />
-      </div>
-      <div className={overlayClasses.join(' ')}>
-        {
-          props.library === 'user' &&
-          <i
-            className='fa fa-edit fa-3x edit-btn'
-            onClick={props.onRequestEditCard}
-          />
-        }
-        <i
-          className='fa fa-expand fa-3x'
-          onClick={props.onRequestZoom}
-        />
-        <i
-          className='fa fa-copy fa-3x'
-          onClick={props.onRequestCopy}
-        />
-        {
-          props.library === 'user' && 
-          <i
-            className='fa fa-trash-o fa-3x'
-            onClick={props.onRequestDestroy}
-          />
-        }
-      </div>
-    </SimpleResourceWrapper>
+    <InView>
+      {({inView, ref, entry}) => (
+        <li className={styles.resource} ref={ref}>
+          <div className={styles.cardImg}>
+            <LoadingSpinnerImage 
+              src={loResCardImageUrl(card)} 
+              load={inView}
+              onLoad={props.onImageLoad}
+            />
+          </div>
+          <div className={overlayClasses.join(' ')}>
+            {
+              props.library === 'user' &&
+              <i
+                className='fa fa-edit fa-3x edit-btn'
+                onClick={props.onRequestEditCard}
+              />
+            }
+            <i
+              className='fa fa-expand fa-3x'
+              onClick={props.onRequestZoom}
+            />
+            <i
+              className='fa fa-copy fa-3x'
+              onClick={props.onRequestCopy}
+            />
+            {
+              props.library === 'user' && 
+              <i
+                className='fa fa-trash-o fa-3x'
+                onClick={props.onRequestDestroy}
+              />
+            }
+          </div>
+        </li>
+      )}
+    </InView>
   );
 }
 

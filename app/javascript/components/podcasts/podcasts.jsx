@@ -7,7 +7,7 @@ import Podcast from './podcast'
 import PodcastImageLightbox from './podcast-image-lightbox'
 import {alphaSortAsc} from 'lib/util/sorts'
 
-import frogBanner from 'images/podcasts/frog_banner.jpg'
+//import frogBanner from 'images/podcasts/frog_banner.jpg'
 import logo from 'images/podcasts/logo.png'
 import layoutStyles from 'stylesheets/shared/react_layout'
 

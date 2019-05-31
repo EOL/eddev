@@ -6,6 +6,7 @@ class CopyCardLightbox extends React.Component {
     super(props);
     this.state = {
       deckId: null,
+      deckError: false
     }
   }
 
@@ -13,14 +14,18 @@ class CopyCardLightbox extends React.Component {
     if (this.props.isOpen && !newProps.isOpen) {
       this.setState({
         deckId: null,
+        deckError: false
       });
     }
   }
 
   handleDeckSelect = (id) => {
-    this.setState({
-      deckId: id
-    });
+    if (this.state.deckId != id) {
+      this.setState({
+        deckId: id,
+        deckError: false
+      });
+    }
   }
 
   deckOptions = () => {
@@ -62,12 +67,22 @@ class CopyCardLightbox extends React.Component {
       type: 'select',
       options: this.deckOptions(),
       handleSelect: this.handleDeckSelect,
-      selectedId: this.state.deckId
+      selectedId: this.state.deckId,
+      errMsg: this.state.deckError ? I18n.t('react.card_maker.you_must_select_deck') : null
     }];
   }
 
   handleSubmit = (deckName) => {
-    this.props.handleCopy(this.state.deckId, deckName);
+    if (this.state.deckId) {
+      this.props.handleCopy(this.state.deckId, deckName);
+      return true
+    } else if (!this.state.deckError) {
+      this.setState({
+        deckError: true
+      });
+
+      return false;
+    }
   }
 
   render() {

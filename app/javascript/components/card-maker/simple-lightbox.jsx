@@ -55,7 +55,7 @@ function SimpleLightbox(props) {
         ];
 
         if (field.errMsg != null) {
-          classNames.push(styles.isModalInputTextErr);
+          classNames.push(styles.isInputErr);
         }
         
         jsx = (
@@ -75,12 +75,19 @@ function SimpleLightbox(props) {
         );
       } else if (field.type === "select") {
         jsx = (
-          <UserResourceFilter
-            filterItems={field.options}
-            handleSelect={field.handleSelect}
-            selectedId={field.selectedId}
-            key={i}
-          />
+          <div className={styles.modalInputWrap} key={i}>
+            <UserResourceFilter
+              filterItems={field.options}
+              handleSelect={field.handleSelect}
+              selectedId={field.selectedId}
+              key={i}
+              anchorClass={field.errMsg != null ? styles.isInputErr : null}
+            />
+            {
+              field.errMsg != null &&
+              <div className={styles.modalInputErr}>{field.errMsg}</div>
+            }
+          </div>
         );
       } else {
         throw new TypeError('unknown field type ' + field.type);

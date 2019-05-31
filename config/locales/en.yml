@@ -566,7 +566,7 @@ en:
       search_species_taxon: search for a species or taxon
       select: select
       select_card_back: "Select a card back option:"
-      select_deck: deck (optional)
+      select_deck: select deck
       select_a_deck_for_card: select a deck for your card (optional)
       show_url: "show URL"
       sort_label: "Sort:"
@@ -593,6 +593,7 @@ en:
       upload_an_image: Upload an image
       users: Users
       vocab_card: Vocabulary
+      you_must_select_deck: you must select a deck
   shared:
     footer:
       address_and_contact_html: "<a href='//www.harvard.edu'>Harvard University</a> 26 Oxford Street, Cambridge, MA 02138 USA | 617-496-6764 | education [at] eol.org"

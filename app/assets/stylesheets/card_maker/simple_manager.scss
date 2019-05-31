@@ -54,7 +54,7 @@ $trans-bg: rgba($white, .9);
   .btnLibHeader {
     display: none;
     position: absolute;
-    right: 0;
+    right: 5px;
     top: 5px;
   }
 
@@ -104,6 +104,7 @@ $trans-bg: rgba($white, .9);
 
 .barInnerHeader {
   padding: 0 2%;
+  position: relative;
 }
 
 .toolbarItem { 
@@ -375,10 +376,6 @@ $trans-bg: rgba($white, .9);
   text-align: center;
 }
 
-  .isModalInputTextErr {
-    border-color: #f00;
-  }
-
 .modalInputErr {
   color: #f00;
   font-size: 12px;
@@ -490,6 +487,10 @@ $trans-bg: rgba($white, .9);
   cursor: pointer;
   margin-left: 10px;
   vertical-align: top;
+}
+
+.isInputErr {
+  border-color: #f00;
 }
 
 

@@ -8,7 +8,7 @@ function RenameDeckLightbox(props) {
     <DeckNameLightbox
       contentLabel={I18n.t('react.card_maker.rename_deck')}
       submitLabel={I18n.t('react.card_maker.rename_deck')}
-      handleSubmit={props.handleRename}
+      handleSubmit={(name) => { props.handleRename(name); return true }}
       {...props}
     />
   );

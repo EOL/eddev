@@ -28,6 +28,7 @@ class NewDeckLightbox extends React.Component {
 
   handleSubmit = (name) => {
     this.props.handleCreate(name, this.state.colId)
+    return true;
   }
 
   render() {

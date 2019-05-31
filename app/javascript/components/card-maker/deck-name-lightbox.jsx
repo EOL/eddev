@@ -41,9 +41,10 @@ class DeckNameLightbox extends React.Component {
       ;
 
     if (this.props.hideDeckNameInput || (name.length && !this.state.nameErr)) {
-      this.props.handleSubmit(name);
-      this.props.handleRequestClose();
-      success = true;
+      if (this.props.handleSubmit(name)) {
+        this.props.handleRequestClose();
+        success = true;
+      }
     } else if (!name.length) {
       this.setState({
         nameErr: I18n.t('react.card_maker.name_cant_be_blank')

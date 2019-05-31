@@ -57,7 +57,7 @@ class CopyDeckLightbox extends React.Component {
         isOpen={this.props.isOpen}
         contentLabel={this.props.submitLabel}
         submitLabel={this.props.submitLabel}
-        handleSubmit={this.props.handleCopy}
+        handleSubmit={(name) => { this.props.handleCopy(name); return true }}
         handleRequestClose={this.props.handleRequestClose}
         deckNames={this.props.deckNames}
         name={this.state.copyName}

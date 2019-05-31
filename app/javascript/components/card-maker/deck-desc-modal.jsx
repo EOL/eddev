@@ -1,5 +1,5 @@
 import React from 'react'
-import CloseButtonModal from 'components/shared/close-button-modal'
+import SimpleLightbox from './simple-lightbox'
 import styles from 'stylesheets/card_maker/simple_manager'
 
 class DeckDescModal extends React.Component {
@@ -20,25 +20,18 @@ class DeckDescModal extends React.Component {
 
   render() { 
     return (
-      <CloseButtonModal
+      <SimpleLightbox
         isOpen={this.props.isOpen}
         contentLabel={'set deck description'}
-        parentSelector={() => document.getElementById('Page')}
-        overlayClassName='fixed-center-wrap disable-overlay'
-        bodyOpenClassName='noscroll'
         onRequestClose={this.props.onRequestClose}
-        key={this.props.desc}
-        className={[styles.modal, styles.modalDeckDesc].join(' ')}
-      >
-        <textarea 
-          value={this.state.value} 
-          onChange={(e) => this.setState({ value: e.target.value })}
-        />
-        <div 
-          className={[styles.btn, styles.btnDesc].join(' ')}
-          onClick={() => this.props.onRequestSave(this.state.value)}
-        >save description</div>
-      </CloseButtonModal>
+        fields={[{
+          type: 'textarea',
+          onChange: (val) => this.setState({ value: val }),
+          value: this.state.value
+        }]}
+        submitLabel={I18n.t('react.card_maker.save_desc')}
+        onSubmit={() => this.props.onRequestSave(this.state.value)}
+      />
     );
   }
 }

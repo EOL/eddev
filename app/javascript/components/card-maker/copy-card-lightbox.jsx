@@ -1,6 +1,4 @@
 import React from 'react'
-
-import ResourceLightbox from './resource-lightbox'
 import DeckNameLightbox from './deck-name-lightbox'
 
 class CopyCardLightbox extends React.Component {
@@ -90,17 +88,6 @@ class CopyCardLightbox extends React.Component {
       />
     )
   }
-
-  /*
-  <ResourceLightbox
-    isOpen={this.props.isOpen}
-    contentLabel={I18n.t('react.card_maker.copy_card')}
-    submitLabel={I18n.t('react.card_maker.copy_card')}
-    fields={this.fields()}
-    
-    handleRequestClose={this.props.handleRequestClose}
-  />
-  */
 }
 
 export default CopyCardLightbox;

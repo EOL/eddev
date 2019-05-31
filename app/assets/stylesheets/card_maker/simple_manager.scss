@@ -78,14 +78,6 @@ $trans-bg: rgba($white, .9);
   text-align: center;
   white-space: nowrap;
 
-  & > i {
-    display: inline-block;
-    line-height: $header-height;
-    color: $eol-blue;
-    cursor: pointer;
-    margin-left: 10px;
-    vertical-align: top;
-  }
 }
 
 .headerTitleText {
@@ -361,16 +353,36 @@ $trans-bg: rgba($white, .9);
   margin: 20px auto 0 auto; 
 }
 
-.modalDeckDesc {
-  & > textarea {
-    display: block;
-    max-width: 500px;
-    height: 200px;
-    font-size: 12px;
-    margin: 10px auto;
-    padding: 10px;
-    width: 100%;
+.modalInput {
+  border: 1px solid $black;
+  border-radius: 8px;
+  display: block;
+  font-size: 12px;
+  max-width: 500px;
+  margin: 10px auto;
+  width: 100%;
+}
+
+.modalInputTextarea {
+  height: 200px;
+  padding: 10px;
+}
+
+.modalInputText {
+  $height: 40px;
+  height: $height;
+  line-height: $height;
+  text-align: center;
+}
+
+  .isModalInputTextErr {
+    border-color: #f00;
   }
+
+.modalInputErr {
+  color: #f00;
+  font-size: 12px;
+  text-align: center;
 }
 
 .btnSaveDesc {
@@ -472,6 +484,15 @@ $trans-bg: rgba($white, .9);
   display: none;
 }
 
+.editBtnHdr {
+  line-height: $header-height;
+  color: $eol-blue;
+  cursor: pointer;
+  margin-left: 10px;
+  vertical-align: top;
+}
+
+
 @media screen and (min-width: 550px) {
   .toolbar {
     display: block;
@@ -483,6 +504,10 @@ $trans-bg: rgba($white, .9);
   
   .editBtn {
     display: inline;
+  }
+
+  .editBtnHdr {
+    display: inline-block;
   }
 
   .resourceNew {

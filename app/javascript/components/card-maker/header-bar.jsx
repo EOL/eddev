@@ -35,7 +35,7 @@ function HeaderBar(props) {
           <span className={styles.headerTitleText}>{headerText}</span>
           {
             props.selectedDeck != null && props.library == 'user' && !props.isAllCards &&
-              <i className={`fa fa-edit ${styles.editBtn}`} onClick={props.onRequestEditDeckName}/>
+              <i className={`fa fa-edit ${styles.editBtn} ${styles.editBtnHdr}`} onClick={props.onRequestEditDeckName}/>
           }
         </h1>
         {

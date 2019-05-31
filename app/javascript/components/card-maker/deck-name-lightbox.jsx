@@ -1,5 +1,5 @@
 import React from 'react'
-import ResourceLightbox from './resource-lightbox'
+import SimpleLightbox from './simple-lightbox'
 
 import styles from 'stylesheets/card_maker/card_manager'
 
@@ -62,7 +62,7 @@ class DeckNameLightbox extends React.Component {
         type: 'text',
         value: this.state.name,
         errMsg: this.state.nameErr,
-        handleChange: this.handleNameChange,
+        onChange: this.handleNameChange,
         placeholder: I18n.t('react.card_maker.enter_deck_name')
       });
     }
@@ -76,12 +76,12 @@ class DeckNameLightbox extends React.Component {
 
   render() {
     return (
-      <ResourceLightbox
+      <SimpleLightbox
         isOpen={this.props.isOpen}
         contentLabel={this.props.contentLabel}
-        handleRequestClose={this.props.handleRequestClose}
+        onRequestClose={this.props.handleRequestClose}
         fields={this.fields()}
-        handleSubmit={this.handleSubmit}
+        onSubmit={this.handleSubmit}
         submitLabel={this.props.submitLabel}
         message={this.props.message}
       />

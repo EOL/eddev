@@ -63,7 +63,7 @@ function SimpleLightbox(props) {
             <input 
               type="text"
               value={field.value}
-              onChange={field.onChange}
+              onChange={(e) => { field.onChange(e.target.value) }}
               placeholder={field.placeholder}
               className={classNames.join(' ')}
             />

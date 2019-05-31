@@ -21,9 +21,8 @@ class DeckNameLightbox extends React.Component {
     }
   }
   
-  handleNameChange = (e) => {
-    var name = e.target.value
-      , err = null
+  handleNameChange = (name) => {
+    let err = null
       ;
 
     if (this.props.deckNames.has(name)) {
@@ -31,7 +30,7 @@ class DeckNameLightbox extends React.Component {
     }
 
     this.setState({
-      name: e.target.value,
+      name: name,
       nameErr: err
     });
   }

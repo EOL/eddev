@@ -330,6 +330,35 @@ class SimpleManager extends React.Component {
     this.createDeckHelper(deckName, null, this.props.selectedDeck.id, true);
   }
 
+  pollCollectionJob = (jobId, onSuccess, onErr) => {
+    const that = this;
+
+    that.poller.start(
+      cardMakerUrl('collectionJob/' + jobId + '/status'),
+      onSuccess,
+      onErr
+    );
+  }
+
+  populateDeckFromCollection = (deckId, colId, onSuccess, onErr) => {
+    const that = this;
+
+    $.ajax({
+      method: 'POST',
+      contentType: 'application/json',
+      url: cardMakerUrl('decks/' + deckId + '/populateFromCollection'),
+      data: JSON.stringify({
+        colId: colId
+      }),
+      success: function(data) {
+        that.pollCollectionJob(data.jobId, onSuccess, onErr);
+      },
+      error: function() {
+        cb(new Error('failed to populate deck'));
+      }
+    });
+  }
+
   createDeckHelper = (deckName, colId, copyFrom, upgrade, afterCreate) => {
     const that = this
         , showUpgradedNotice = upgrade
@@ -346,11 +375,8 @@ class SimpleManager extends React.Component {
         method: 'POST',
         data: JSON.stringify(data),
         success: (deck) => {
-          const cb = (err) => { 
-            if (err) {
-              closeFn();
-              alert(I18n.t('react.card_maker.unexpected_error_msg'));
-            } else if (afterCreate) {
+          const onSuccess = () => { 
+            if (afterCreate) {
               afterCreate(deck.id, closeFn);
             } else {
               that.props.setLibrary('user', () => {
@@ -364,9 +390,17 @@ class SimpleManager extends React.Component {
           }
 
           if (colId != null && colId.length) {
-            that.populateDeckFromCollection(deck.id, colId, cb);
+            that.populateDeckFromCollection(
+              deck.id, 
+              colId, 
+              onSuccess, 
+              () => {
+                closeFn();
+                alert(I18n.t('react.card_maker.unexpected_error_msg'));
+              }
+            );
           } else {
-            cb();
+            onSuccess();
           }
         },
         error: function(err) {

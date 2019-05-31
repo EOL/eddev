@@ -21,7 +21,7 @@ class NewDeckLightbox extends React.Component {
     return [{
       type: 'text',
       value: this.state.colId,
-      handleChange: (e) => this.setState({ colId: e.target.value }),
+      onChange: (val) => this.setState({ colId: val }),
       placeholder: I18n.t('react.card_maker.collection_id_optional')
     }];
   }

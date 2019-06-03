@@ -1,5 +1,6 @@
 @import "layout_vars";
 @import "buttons";
+@import "card_maker_dimensions";
 
 $header-height: 44px;
 $toolbar-height: 38px;
@@ -22,6 +23,7 @@ $trans-bg: rgba($white, .9);
   background: $trans-bg;
   position: fixed;
   top: $navbar-height;
+  min-width: $card-maker-width;
   width: 100%;
   z-index: 2;
 }
@@ -539,6 +541,7 @@ $trans-bg: rgba($white, .9);
     width: decks-width(3);
   }
 }
+/*
 
 @media screen and (max-width: (decks-width(3) - 1px)) {
   .lDecksCol {
@@ -551,3 +554,4 @@ $trans-bg: rgba($white, .9);
     width: decks-width(1);
   }
 }
+*/

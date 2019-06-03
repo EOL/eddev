@@ -3,9 +3,9 @@
  *= require_self
  */
 
-@import "layout_vars.scss";
+@import "shared/layout_vars";
+@import "card_maker/card_maker_dimensions";
 
-$editor-width: 940;
 $active-select-text-color: #a09d9d;
 $thumb-size: 80px;
 
@@ -66,7 +66,7 @@ $thumb-size: 80px;
 .screen-inner {
   box-sizing: content-box;
   margin: 0 auto;
-  width: $editor-width * 1px;
+  width: $card-maker-width;
 }
 
 .manager-inner {
@@ -82,7 +82,7 @@ $thumb-size: 80px;
   position: relative;
   text-align: center;
   white-space: nowrap;
-  width: $editor-width * 1px;
+  width: $card-maker-width;
   z-index: 2;
 
   .ladybug {
@@ -174,7 +174,7 @@ $thumb-size: 80px;
   /*
   .welcome-txt {
     padding-left: $tips-width;
-    width: $editor-width - $tips-width;
+    width: $card-maker-width - $tips-width;
   }
   */
 
@@ -445,7 +445,7 @@ $thumb-size: 80px;
   }
 }
 
-$col-width: ($editor-width / 2) * 1px;
+$col-width: ($card-maker-width / 2);
 $head-box-height: 109px;
 $col-border-width: 5px;
 

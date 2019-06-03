@@ -12,6 +12,8 @@ import styles from 'stylesheets/card_maker/card_maker';
 
 import eolLogoHdr from 'images/card_maker/icons/eol_logo_hdr.png'
 
+ReactModal.setAppElement('#Page');
+
 function ascSort(field) {
   return function(a, b) {
     if (a.templateName !== 'trait' && b.templateName === 'trait') {

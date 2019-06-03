@@ -12,7 +12,7 @@ import CardZoomLightbox from './card-zoom-lightbox'
 import CopyCardLightbox from './copy-card-lightbox'
 import {deckUrl} from 'lib/card-maker/url-helper'
 
-function ManagerModals(props) {
+function Modals(props) {
   const deckNamesMinusCur = new Set([...props.userDeckNames]);
 
   if (props.selectedDeck) {
@@ -109,5 +109,5 @@ function ManagerModals(props) {
   );
 }
 
-export default ManagerModals;
+export default Modals;
 

@@ -2,8 +2,7 @@ import React from 'react'
 import ReactModal from 'react-modal'
 
 import Page from 'components/shared/page'
-import SimpleManager from './simple-manager'
-import CardManager from './card-manager'
+import Manager from './manager'
 import CardEditor from './card-editor'
 import {cardMakerUrl} from 'lib/card-maker/url-helper'
 import newImmutableCardInstance from 'lib/card-maker/immutable-card'
@@ -457,7 +456,7 @@ class CardMaker extends React.Component {
 
     if (this.state.screen === 'manager') {
       component = (
-        <SimpleManager
+        <Manager
           allCardsDeck={allCardsDeck}
           backPath={this.props.backPath}
           cards={this.state.library === 'user' ? this.state.userCards : this.state.publicCards}

@@ -1,12 +1,12 @@
 import React from 'react'
 
-import LoadingSpinnerImage from './loading-spinner-image'
+import LoadingSpinnerImage from 'components/card-maker/loading-spinner-image'
 import { loResCardImageUrl } from 'lib/card-maker/url-helper'
 import { InView } from 'react-intersection-observer'
 
 import styles from 'stylesheets/card_maker/simple_manager'
 
-function SimpleDeck(props) {
+function Deck(props) {
   return (
     <InView>
       {({inView, ref, entry}) => (
@@ -41,5 +41,5 @@ function SimpleDeck(props) {
   );
 }
 
-export default SimpleDeck;
+export default Deck;
 

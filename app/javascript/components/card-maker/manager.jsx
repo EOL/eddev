@@ -1,14 +1,14 @@
 import React from 'react';
 
-import ManagerModals from './manager-modals'
 import LoadingSpinnerImage from './loading-spinner-image'
 import {cardMakerUrl, loResCardImageUrl, createCardUrl} from 'lib/card-maker/url-helper'
-import HeaderBar from './header-bar'
-import CardToolbar from './card-toolbar'
-import DeckToolbar from './deck-toolbar'
-import DeckSidebar from './deck-sidebar'
-import SimpleCard from './simple-card'
-import SimpleDeck from './simple-deck'
+import Modals from './manager/modals'
+import HeaderBar from './manager/header-bar'
+import CardToolbar from './manager/card-toolbar'
+import DeckToolbar from './manager/deck-toolbar'
+import DeckSidebar from './manager/deck-sidebar'
+import Card from './manager/card'
+import Deck from './manager/deck'
 import Poller from 'lib/card-maker/poller'
 import styles from 'stylesheets/card_maker/simple_manager'
 
@@ -74,7 +74,7 @@ const NUM_IMAGES_LOADING = 3
     ;
 
 
-class SimpleManager extends React.Component {
+class Manager extends React.Component {
   constructor(props) {
     super(props);
 
@@ -114,7 +114,7 @@ class SimpleManager extends React.Component {
     }
 
     return (
-      <SimpleDeck
+      <Deck
         key={deck.id}
         name={deck.name}
         titleCard={titleCard}
@@ -195,7 +195,7 @@ class SimpleManager extends React.Component {
 
   cardItem = (card, i) => {
     return (
-      <SimpleCard
+      <Card
         key={card.id}
         card={card}
         library={this.props.library}
@@ -692,7 +692,7 @@ class SimpleManager extends React.Component {
       <div 
         className={managerClasses.join(' ')}
       >
-        <ManagerModals 
+        <Modals 
           openModal={this.state.openModal} 
           selectedDeck={this.props.selectedDeck}
           closeModal={this.closeModal}
@@ -806,5 +806,5 @@ class SimpleManager extends React.Component {
   }
 }
 
-export default SimpleManager;
+export default Manager;
 

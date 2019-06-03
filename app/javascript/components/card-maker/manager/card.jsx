@@ -1,12 +1,12 @@
 import React from 'react'
-import LoadingSpinnerImage from './loading-spinner-image'
+import LoadingSpinnerImage from 'components/card-maker/loading-spinner-image'
 import {loResCardImageUrl} from 'lib/card-maker/url-helper'
 
 import { InView } from 'react-intersection-observer'
 
 import styles from 'stylesheets/card_maker/simple_manager'
 
-function SimpleCard(props) {
+function Card(props) {
   const card = props.card;
 
   let overlayClasses = [styles.resourceOverlay];
@@ -59,5 +59,5 @@ function SimpleCard(props) {
   );
 }
 
-export default SimpleCard;
+export default Card;
 

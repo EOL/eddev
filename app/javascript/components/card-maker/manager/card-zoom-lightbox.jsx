@@ -1,5 +1,5 @@
 import React from 'react'
-import LoadingSpinnerImage from './loading-spinner-image'
+import LoadingSpinnerImage from 'components/card-maker/loading-spinner-image'
 import LightboxOverlay from 'components/shared/lightbox-overlay'
 import {cardMakerUrl, hiResCardImageUrl} from 'lib/card-maker/url-helper'
 import styles from 'stylesheets/card_maker/card_manager'

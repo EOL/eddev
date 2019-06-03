@@ -476,6 +476,8 @@ en:
       are_you_sure_remove_user: "Are you sure you want to remove access for user %{userName}?"
       are_you_sure_unsaved: Are you sure you want to leave this page? All unsaved work will be lost.
       assign_to_deck: Assign to deck
+      back_to_decks: back to decks
+      back_to_site: back to site
       cancel: cancel
       card: card
       card_form: Card Form

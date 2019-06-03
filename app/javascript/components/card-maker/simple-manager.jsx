@@ -720,6 +720,7 @@ class SimpleManager extends React.Component {
             library={this.props.library}
             setLibrary={this.props.setLibrary}
             onRequestEditDeckName={() => this.setState({ openModal: 'renameDeck' })}
+            backToSitePath={this.props.backPath}
           />
           {
             this.props.selectedDeck != null ?

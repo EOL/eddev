@@ -6,6 +6,8 @@ import styles from 'stylesheets/card_maker/simple_manager'
 
 function HeaderBar(props) {
   let headerText
+    , backText
+    , backHandler
     ;
 
   if (props.isAllCards) {
@@ -24,15 +26,30 @@ function HeaderBar(props) {
     }
   }
 
+  if (props.selectedDeck == null) {
+    backText = I18n.t('react.card_maker.back_to_site');
+    backHandler = () => {
+      window.location = props.backToSitePath;
+    }
+  } else {
+    backText = I18n.t('react.card_maker.back_to_decks'); 
+    backHandler = () => {
+      props.setSelectedDeck(null)
+    }
+  }
+
   return (
     <div className={[styles.bar, styles.headerBar].join(' ')}>
       <div className={[styles.barInner, styles.barInnerHeader].join(' ')}>
-        {
-          props.selectedDeck != null &&
-          <i className={`fa fa-angle-left fa-2x ${styles.headerBack}`} onClick={() => props.setSelectedDeck(null)} />
-        }
+        <div 
+          className={[styles.headerText, styles.headerBack].join(' ')}
+          onClick={backHandler}
+        >
+          <i className={`fa fa-angle-left fa-2x`} />
+          <span>{backText}</span>
+        </div>
         <h1 className={styles.headerTitle}>
-          <span className={styles.headerTitleText}>{headerText}</span>
+          <span className={[styles.headerText, styles.headerTitleText].join(' ')}>{headerText}</span>
           {
             props.selectedDeck != null && props.library == 'user' && !props.isAllCards &&
               <i className={`fa fa-edit ${styles.editBtn} ${styles.editBtnHdr}`} onClick={props.onRequestEditDeckName}/>

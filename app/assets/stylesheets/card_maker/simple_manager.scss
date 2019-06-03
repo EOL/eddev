@@ -47,7 +47,13 @@ $trans-bg: rgba($white, .9);
   cursor: pointer;
   left: 10px;
   position: absolute;
-  top: 5px;
+  top: 0;
+
+  & > i {
+    margin-right: 5px;
+    position: relative;
+    top: 5px;
+  }
 }
 
 .btnLib {
@@ -71,15 +77,19 @@ $trans-bg: rgba($white, .9);
   width: 100%;
 }
 
-.headerTitle {
+.headerText {
   height: $header-height;
   line-height: $header-height;
   overflow: hidden;
+  white-space: nowrap;
+}
+
+.headerTitle {
+  height: $header-height;
+  line-height: $header-height;
   max-width: 85%;
   margin: 0 auto;
   text-align: center;
-  white-space: nowrap;
-
 }
 
 .headerTitleText {

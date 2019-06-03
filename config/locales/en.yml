@@ -619,6 +619,7 @@ en:
       eol_promotes_html: "EOL promotes content sharing via Creative Commons and other open licenses. Learn more about <a href='http://eol.org/info/eol_licensing_policy'>EOL's Licensing Policy</a>."
       header: "Image Credits"
     nav_items:
+      about_eol: "About EOL"
       articles: "Biodiversity Articles" 
       biodiversity_cards: "Biodiversity Cards"
       card_maker: "Card Maker"

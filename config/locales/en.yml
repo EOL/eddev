@@ -619,17 +619,18 @@ en:
       eol_promotes_html: "EOL promotes content sharing via Creative Commons and other open licenses. Learn more about <a href='http://eol.org/info/eol_licensing_policy'>EOL's Licensing Policy</a>."
       header: "Image Credits"
     nav_items:
+      articles: "Biodiversity Articles" 
       biodiversity_cards: "Biodiversity Cards"
       card_maker: "Card Maker"
       card_resources: "Card Resources"
-      lesson_plans: "Lesson Plans"
       grades_2_5: "Grades 2–5"
       grades_6_8: "Grades 6–8"
       grades_9_12: "Grades 9–12"
+      lesson_plans: "Lesson Plans"
+      more: "More"
       podcasts: "Podcasts"
       google_earth_tours: "Google Earth Tours"
       biodiversity_articles: "Biodiversity Articles"
-      partner_resources: "Partner Resources"
       inaturalist_html: "iNaturalist Observation Platform <i class='fa fa-external-link'></i>"
       bhl_coloring_html: "Biodiversity Heritage Library Coloring Books <i class='fa fa-external-link'></i>"
       cnc_html: "City Nature Challenge <i class='fa fa-external-link'></i>"
@@ -722,7 +723,7 @@ en:
       p2_html: "Founded in 2008 through grants from the John D. and Catherine T. MacArthur Foundation and the Alfred P. Sloan Foundation, EOL has grown to become one of the world’s largest free digital biodiversity information resources, with curated information on nearly 2 million species. <a href='https://naturalhistory.si.edu/research/eol'>Read more</a>"
     index:
       intro_header: Welcome to EOL Learning + Education
-      intro_text_html: "<a href='/about'>The Encyclopedia of Life Learning + Education team</a> (EOL L+E) is part of the larger EOL collaborative. EOL L+E works with educators, citizen scientists and partners to make this information accessible through free tools, services and resources found here."
+      intro_text_html: "The Encyclopedia of Life Learning + Education website (EOL L+E) is part of the larger <a href='/about'>EOL collaborative</a>. EOL L+E works with educators, citizen scientists and partners to make this information accessible through free tools, services and resources found here."
       partner_resources: Partner Resources
     partner_section:
       headers:
@@ -737,15 +738,18 @@ en:
       headers:
         cards_html: Biodiversity Cards
         lessons_html: Lesson Plans
-        tourspods_html: "Podcasts and Google Earth Tours"
+        tourspods_html: Podcasts and Google Earth Tours
+        articles_html: Biodiversity Articles
       descs:
         cards_html: "View our <a href='%{cards_path}'>Card Resources</a> to learn how to use and make <a href='%{card_maker_path}'>EOL Biodiversity Cards</a> as a classroom project or to download and print pre-made cards. Biodiversity Cards are great for teaching about ecosystems and food webs. See the <a href='%{observer_cards_path}'>Bee and Frog Observer Cards</a> for in-depth species information."
         lessons_html: "Bring EOL into your classroom with our <a href='%{lesson_plans_path}'>lesson plans</a>. Aligned to NGSS standards, they also pull in content and resources from EOL."
         tourspods_html: "Our five-minute <a href='%{podcasts_path}'>podcasts</a> are great for the classroom. They include Lesson Plans, transcripts, and scientist interviews.<br /><a href='%{earth_tours_path}'>Google Earth Tours</a> add a significant geographic context to these biodiversity stories."
+        articles_html: "Explore these <a href='%{articles_path}'>articles</a> to start learning about biodiversity, scientific names and other topics about life on Earth."
       taxa:
         prevosts_squirrel_html: "Prevost's squirrel <em>Callosciurus prevostii</em>"
         nasturtium_html: "Nasturtium <em>Tropaeolum majus</em>"
         violet_woodnymph_html: "Violet-crowned woodnymph <em>Thalurania colombica</em>"
+        blue_crab_html: "Blue crab <em>Callinectes sapidus</em>"
       eol_taxon_page: EOL Taxon Page
       buttons:
         lesson1: Grades 2-5

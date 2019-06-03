@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   scope '(:locale)', locale: /#{I18n.available_locales.reject { |l| l == I18n.default_locale}.join('|')}/ do
     get  ''            => 'welcome#index', :as => :home
     get  'about'        => 'welcome#about',      :as => :about
-    get  'about_eol'    => 'welcome#about_eol', :as => :about_eol
     get  'card_resources'       => 'cards#index',    :as => :cards
     get  'species_cards', to: redirect('/card_resources')
     get  'observer_cards' => "cards#observer_cards", :as => :observer_cards
@@ -14,8 +13,8 @@ Rails.application.routes.draw do
     get  'lesson_plans/2-5_ScienceSkills_SkillBuilders4_ModelingClassification.pdf', to: redirect('/lesson_plans/2-5_ScienceSkills_BioblitzSkillbuilder4.pdf')
     get  'lesson_plans/:name' => 'lesson_plans#show', :as => :lesson_plan
     get  'earth_tours' => 'earth_tours#index', :as => :earth_tours
-    get 'articles' => 'articles#index'
 
+    resources :articles, :only => [:index]
     resources :users, :only => [:new, :create]
 
     get  "users/confirm/:token"         => "users#confirm", :as => :users_confirm

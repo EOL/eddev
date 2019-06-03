@@ -323,7 +323,7 @@ $trans-bg: rgba($white, .9);
   bottom: 0; 
   border-radius: 7px;
   color: $white;
-  display: none;
+  display: flex;
   //flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-evenly;
@@ -533,10 +533,6 @@ $trans-bg: rgba($white, .9);
 
   .resource:hover {
     background-color: $btn-hover-gray;
-
-    & .resourceOverlay {
-      display: flex;
-    }
   }
 
   .btnLibHeader {

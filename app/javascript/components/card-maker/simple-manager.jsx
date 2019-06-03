@@ -68,6 +68,8 @@ const NUM_IMAGES_LOADING = 3
         deckSearchVal: '',
         copyCardId: null,
         sidebarOpen: false,
+        overlayCardIndex: null,
+        cardJustClicked: false
       }
     ;
 
@@ -78,6 +80,14 @@ class SimpleManager extends React.Component {
 
     this.poller = new Poller();
     this.state = CLEAN_STATE;
+  }
+
+  componentDidMount() {
+    document.addEventListener('click', this.hideCardOverlay);  
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.hideCardOverlay);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -163,12 +173,34 @@ class SimpleManager extends React.Component {
     }
   }
 
+  handleCardClick = (i) => {
+    const newIndex = i === this.state.overlayCardIndex ? null : i 
+        ;
+
+    this.cardJustClicked = true;
+    this.setState({
+      overlayCardIndex: newIndex
+    });
+  }
+
+  hideCardOverlay = () => {
+    if (this.cardJustClicked) {
+      this.cardJustClicked = false;
+    } else if (this.state.overlayCardIndex !== null) {
+      this.setState({
+        overlayCardIndex: null
+      });
+    }
+  }
+
   cardItem = (card, i) => {
     return (
       <SimpleCard
         key={card.id}
         card={card}
         library={this.props.library}
+        onClick={() => this.handleCardClick(i)}
+        overlayOpen={i === this.state.overlayCardIndex}
         onRequestEditCard={() => this.props.onRequestEditCard(card)}
         onRequestZoom={() => this.handleCardZoomClick(i)}
         onRequestCopy={() => this.openCopyModal(card.id)}

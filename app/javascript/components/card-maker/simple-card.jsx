@@ -18,7 +18,7 @@ function SimpleCard(props) {
   return (
     <InView>
       {({inView, ref, entry}) => (
-        <li className={styles.resource} ref={ref}>
+        <li className={styles.resource} ref={ref} onClick={props.onClick}>
           <div className={styles.cardImg}>
             <LoadingSpinnerImage 
               src={loResCardImageUrl(card)} 
@@ -26,30 +26,33 @@ function SimpleCard(props) {
               onLoad={props.onImageLoad}
             />
           </div>
-          <div className={overlayClasses.join(' ')}>
-            {
-              props.library === 'user' &&
+          {
+            props.overlayOpen &&
+            <div className={overlayClasses.join(' ')}>
+              {
+                props.library === 'user' &&
+                <i
+                  className='fa fa-edit fa-3x edit-btn'
+                  onClick={props.onRequestEditCard}
+                />
+              }
               <i
-                className='fa fa-edit fa-3x edit-btn'
-                onClick={props.onRequestEditCard}
+                className='fa fa-expand fa-3x'
+                onClick={props.onRequestZoom}
               />
-            }
-            <i
-              className='fa fa-expand fa-3x'
-              onClick={props.onRequestZoom}
-            />
-            <i
-              className='fa fa-copy fa-3x'
-              onClick={props.onRequestCopy}
-            />
-            {
-              props.library === 'user' && 
               <i
-                className='fa fa-trash-o fa-3x'
-                onClick={props.onRequestDestroy}
+                className='fa fa-copy fa-3x'
+                onClick={props.onRequestCopy}
               />
-            }
-          </div>
+              {
+                props.library === 'user' && 
+                <i
+                  className='fa fa-trash-o fa-3x'
+                  onClick={props.onRequestDestroy}
+                />
+              }
+            </div>
+          }
         </li>
       )}
     </InView>

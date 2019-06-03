@@ -151,6 +151,10 @@ $trans-bg: rgba($white, .9);
   &:hover {
     background-color: $btn-hover-gray;
   }
+
+  & > i {
+    margin-right: 5px;
+  }
 }
 
 .toolbarBtnMenu {

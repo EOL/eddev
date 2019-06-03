@@ -31,7 +31,13 @@ class Buttons extends React.Component {
                 className={[styles.toolbarItem, styles.toolbarBtn].join(' ')}
                 onClick={item.handleClick}
                 key={item.icon}
-              ><i className={`fa fa-lg fa-${item.icon}`} /></li>
+              >
+                <i className={`fa fa-lg fa-${item.icon}`} />
+                {
+                  item.label != null &&
+                  <span>{item.label}</span>
+                }
+              </li>
             );
           })
         }

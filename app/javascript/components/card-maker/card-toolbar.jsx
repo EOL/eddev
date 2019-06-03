@@ -18,18 +18,21 @@ function CardToolbar(props) {
     ) {
       items.push({
         icon: 'print',
-        handleClick: props.onRequestPrint
+        handleClick: props.onRequestPrint,
+        label: I18n.t('react.card_maker.print')
       });
     }
 
     items.push({
       icon: 'download',
-      handleClick: props.onRequestPngDownload
+      handleClick: props.onRequestPngDownload,
+      label: I18n.t('react.card_maker.download_pngs')
     });
 
     items.push({
       icon: 'copy',
-      handleClick: props.onRequestCopy
+      handleClick: props.onRequestCopy,
+      label: I18n.t('react.card_maker.copy_deck')
     });
 
     return items;

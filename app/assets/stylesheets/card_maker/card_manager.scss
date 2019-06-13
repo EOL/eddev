@@ -952,52 +952,6 @@ $card-aspect-ratio: .75;
 }
 
 // Card zoom lightbox
-
-.arrow {
-  color: $white;
-  cursor: pointer;
-  position: absolute;
-  top: 230px; 
-}
-
-.arrowLeft {
-  left: -50px; 
-}
-
-.arrowRight {
-  right: -50px;
-}
-
-.isArrowDisabled {
-  color: $txt-gray;
-  cursor: normal;
-}
-
-.cardLightbox {
-  $width: 402px;
-
-  margin: 20px auto 0 auto;
-  padding: 0;
-  position: relative;
-  width: $width;
-  height: $width / $card-aspect-ratio;
-
-  & > button {
-    display: block;
-    margin: 0 auto 10px auto;
-  }
-
-  &:focus {
-    outline: 0;
-  }
-}
-
-.cardLightboxCard {
-  margin: 0 auto 12px auto;
-  height: 100%;
-  width: 100%;
-}
-
 .cardBackLightbox {
   position: relative;
 }

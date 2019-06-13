@@ -2,7 +2,7 @@ import React from 'react'
 import LoadingSpinnerImage from 'components/card-maker/loading-spinner-image'
 import LightboxOverlay from 'components/shared/lightbox-overlay'
 import {cardMakerUrl, hiResCardImageUrl} from 'lib/card-maker/url-helper'
-import styles from 'stylesheets/card_maker/card_manager'
+import styles from 'stylesheets/card_maker/simple_manager'
 
 class CardZoomLightbox extends React.Component {
   constructor(props) {

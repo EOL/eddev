@@ -515,6 +515,58 @@ $trans-bg: rgba($white, .9);
   border-color: #f00;
 }
 
+// card zoom lightbox
+.arrow {
+  display: none;
+  color: $white;
+  cursor: pointer;
+  position: absolute;
+  top: 230px; 
+}
+
+.arrowLeft {
+  left: -50px; 
+}
+
+.arrowRight {
+  right: -50px;
+}
+
+.isArrowDisabled {
+  color: $txt-gray;
+  cursor: normal;
+}
+
+.cardLightbox {
+  $width: 402px;
+
+  margin: 20px auto 0 auto;
+  max-width: 100%;
+  padding: 0;
+  position: relative;
+  width: $width;
+
+  & > button {
+    display: block;
+    margin: 0 auto 10px auto;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.cardLightboxCard {
+  margin: 0 auto 12px auto;
+  height: 100%;
+  width: 100%;
+}
+
+@media screen and (min-width: 505px) {
+  .arrow {
+    display: block;
+  }
+}
 
 @media screen and (min-width: 796px) {
   .toolbar {

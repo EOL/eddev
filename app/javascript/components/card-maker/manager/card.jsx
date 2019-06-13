@@ -37,7 +37,7 @@ function Card(props) {
                 />
               }
               <i
-                className='fa fa-expand fa-3x'
+                className={`${styles.expandCardBtn} fa fa-expand fa-3x`}
                 onClick={props.onRequestZoom}
               />
               <i

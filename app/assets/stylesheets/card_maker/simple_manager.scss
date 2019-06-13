@@ -23,7 +23,7 @@ $trans-bg: rgba($white, .9);
   background: $trans-bg;
   position: fixed;
   top: $navbar-height;
-  min-width: $card-maker-width;
+  //min-width: $card-maker-width;
   width: 100%;
   z-index: 2;
 }
@@ -44,6 +44,7 @@ $trans-bg: rgba($white, .9);
 }
 
 .headerBack {
+  display: none;
   cursor: pointer;
   left: 10px;
   position: absolute;
@@ -334,8 +335,13 @@ $trans-bg: rgba($white, .9);
   vertical-align: top;
 
   & > i {
+    display: none;
     text-align: center;
     width: 100%;
+  }
+
+  & > .expandCardBtn {
+    display: block;
   }
 }
 
@@ -510,7 +516,7 @@ $trans-bg: rgba($white, .9);
 }
 
 
-@media screen and (min-width: 550px) {
+@media screen and (min-width: 796px) {
   .toolbar {
     display: block;
   }
@@ -538,6 +544,16 @@ $trans-bg: rgba($white, .9);
   .btnLibHeader {
     display: block;
   }
+
+  .headerBack {
+    display: block;
+  }
+
+  .resourceOverlay {
+    & > i {
+      display: block;
+    }
+  }
 }
 
 @media screen and (max-width: (decks-width(5) - 1px)) {
@@ -551,7 +567,6 @@ $trans-bg: rgba($white, .9);
     width: decks-width(3);
   }
 }
-/*
 
 @media screen and (max-width: (decks-width(3) - 1px)) {
   .lDecksCol {
@@ -564,4 +579,4 @@ $trans-bg: rgba($white, .9);
     width: decks-width(1);
   }
 }
-*/
+

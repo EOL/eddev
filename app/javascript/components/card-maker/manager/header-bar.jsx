@@ -8,6 +8,7 @@ function HeaderBar(props) {
   let headerText
     , backText
     , backHandler
+    , backIcon
     ;
 
   if (props.isAllCards) {
@@ -31,11 +32,13 @@ function HeaderBar(props) {
     backHandler = () => {
       window.location = props.backToSitePath;
     }
+    backIcon = 'close'
   } else {
     backText = I18n.t('react.card_maker.back_to_decks'); 
     backHandler = () => {
       props.setSelectedDeck(null)
     }
+    backIcon = 'angle-left';
   }
 
   return (
@@ -45,7 +48,7 @@ function HeaderBar(props) {
           className={[styles.headerText, styles.headerBack].join(' ')}
           onClick={backHandler}
         >
-          <i className={`fa fa-angle-left fa-2x`} />
+          <i className={`fa fa-${backIcon} fa-2x`} />
           <span>{backText}</span>
         </div>
         <h1 className={styles.headerTitle}>

@@ -69,8 +69,10 @@ const NUM_IMAGES_LOADING = 3
         copyCardId: null,
         sidebarOpen: false,
         overlayCardIndex: null,
-        cardJustClicked: false
+        cardJustClicked: false,
+        showNotice: false,
       }
+    , MIN_SCREEN_WIDTH = 940
     ;
 
 
@@ -84,6 +86,9 @@ class Manager extends React.Component {
 
   componentDidMount() {
     document.addEventListener('click', this.hideCardOverlay);  
+    if (!this.showNoticeIfNecessary()) {
+      window.addEventListener('resize', this.showNoticeIfNecessary);
+    }
   }
 
   componentWillUnmount() {
@@ -102,6 +107,16 @@ class Manager extends React.Component {
         $(this.managerNode).scrollTop(0);
       }
     }
+  }
+
+  showNoticeIfNecessary = () => {
+    if (screen.width < MIN_SCREEN_WIDTH) {
+      this.setState({ showNotice: true });
+      window.removeEventListener('resize', this.showNoticeIfNecessary);
+      return true;
+    }
+
+    return false;
   }
 
   deckItem = (deck, i) => {
@@ -692,6 +707,16 @@ class Manager extends React.Component {
       <div 
         className={managerClasses.join(' ')}
       >
+        {
+          this.state.showNotice && 
+          <div className={styles.smallDeviceNotice} ref={(node) => { this.noticeNode = node }}>
+            <span>The card maker requires a screen width of at least 940px for editing and creating cards. You'll still be able to browse cards that have already been created, but other functionality won't be available until you switch to a larger device.</span>
+            <i 
+              className='fa fa-close' 
+              onClick={() => { this.setState({ showNotice: false }) }}
+            />
+          </div>
+        }
         <Modals 
           openModal={this.state.openModal} 
           selectedDeck={this.props.selectedDeck}

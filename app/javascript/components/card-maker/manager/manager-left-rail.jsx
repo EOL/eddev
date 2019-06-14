@@ -1,5 +1,5 @@
 import React from 'react'
-import Search from './search'
+//import Search from './search'
 import styles from 'stylesheets/card_maker/card_manager'
 import eolLogo from 'images/welcome/eol_logo.png'
 import { deckNameCardCount } from 'lib/card-maker/deck-helpers'
@@ -157,6 +157,7 @@ class ManagerLeftRail extends React.Component {
           {this.lib(I18n.t('react.card_maker.public_cards'), 'users', 'public')}
         </ul>
         {
+          /*
           this.props.decks.length > 0 && 
           <div className={styles.searchContain}>
             <Search 
@@ -165,6 +166,7 @@ class ManagerLeftRail extends React.Component {
               value={this.state.deckSearchVal}
             />
           </div>
+          */
         }
         <ul className={styles.decks}>
           {this.deckItems()}

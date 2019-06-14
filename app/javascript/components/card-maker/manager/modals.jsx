@@ -40,13 +40,6 @@ function Modals(props) {
         onRequestPublicCardsForTaxon={props.onRequestPublicCardsForTaxon}
         selectedDeckId={props.selectedDeck ? props.selectedDeck.id : null}
       />
-      {/*
-      <SimpleNewCardLightbox
-        isOpen={props.openModal === 'newCard'}
-        onRequestClose={props.closeModal}
-        onRequestCreateCard={props.onRequestCreateCard}
-      />
-      */}
       <RenameDeckLightbox
         isOpen={props.openModal === 'renameDeck'}
         handleRequestClose={props.closeModal}

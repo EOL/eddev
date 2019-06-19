@@ -93,6 +93,7 @@ class Manager extends React.Component {
 
   componentWillUnmount() {
     document.removeEventListener('click', this.hideCardOverlay);
+    window.removeEventListener('resize', this.showNoticeIfNecessary);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -110,13 +111,29 @@ class Manager extends React.Component {
   }
 
   showNoticeIfNecessary = () => {
-    if (screen.width < MIN_SCREEN_WIDTH) {
+    console.log('check');
+    console.log('screen width: ', screen.width);
+    if (window.innerWidth < MIN_SCREEN_WIDTH) {
+      console.log('show');
       this.setState({ showNotice: true });
       window.removeEventListener('resize', this.showNoticeIfNecessary);
       return true;
     }
+    console.log("don't show");
 
     return false;
+  }
+
+  noticeRef = (node) => {
+    if (node) {
+      setTimeout(() => {
+        $(node).fadeOut({
+          done: () => {
+            this.setState({ showNotice: false })
+          }
+        });
+      }, 8000);
+    }
   }
 
   deckItem = (deck, i) => {
@@ -709,8 +726,8 @@ class Manager extends React.Component {
       >
         {
           this.state.showNotice && 
-          <div className={styles.smallDeviceNotice} ref={(node) => { this.noticeNode = node }}>
-            <span>The card maker requires a screen width of at least 940px for editing and creating cards. You'll still be able to browse cards that have already been created, but other functionality won't be available until you switch to a larger device.</span>
+          <div className={styles.smallDeviceNotice} ref={this.noticeRef}>
+            <span>The card maker requires a screen width of at least 940px for editing and creating cards. You'll still be able to browse existing cards, but other functionality won't be available until you switch to a larger device.</span>
             <i 
               className='fa fa-close' 
               onClick={() => { this.setState({ showNotice: false }) }}

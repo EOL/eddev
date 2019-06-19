@@ -18,7 +18,13 @@ function Card(props) {
   return (
     <InView>
       {({inView, ref, entry}) => (
-        <li className={styles.resource} ref={ref} onClick={props.onClick}>
+        <li 
+          className={styles.resource} 
+          ref={ref} 
+          onTouchStart={props.onTouchStart}
+          onMouseEnter={props.onMouseEnter}
+          onMouseLeave={props.onMouseLeave}
+        >
           <div className={styles.cardImg}>
             <LoadingSpinnerImage 
               src={loResCardImageUrl(card)} 

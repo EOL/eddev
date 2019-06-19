@@ -85,14 +85,14 @@ class Manager extends React.Component {
   }
 
   componentDidMount() {
-    document.addEventListener('click', this.hideCardOverlay);  
+    document.addEventListener('touchstart', this.hideCardOverlay);  
     if (!this.showNoticeIfNecessary()) {
       window.addEventListener('resize', this.showNoticeIfNecessary);
     }
   }
 
   componentWillUnmount() {
-    document.removeEventListener('click', this.hideCardOverlay);
+    document.removeEventListener('touchstart', this.hideCardOverlay);
     window.removeEventListener('resize', this.showNoticeIfNecessary);
   }
 
@@ -156,10 +156,13 @@ class Manager extends React.Component {
   }
 
   handleCardZoomClick = (i) => {
-    this.setState({
-      openModal: 'cardZoom',
-      zoomCardIndex: i
-    });
+    if (!this.updateIsInitialTouch()) {
+      console.log('zoom');
+      this.setState({
+        openModal: 'cardZoom',
+        zoomCardIndex: i
+      });
+    }
   }
 
   handleDestroyResource = (confirmMsg, resourceType, id) => {
@@ -181,11 +184,13 @@ class Manager extends React.Component {
   }
 
   handleDestroyCard = (card) => {
-    this.handleDestroyResource(
-      I18n.t('react.card_maker.are_you_sure_delete_card'),
-      'cards',
-      card.id
-    );
+    if (!this.updateIsInitialTouch()) {
+      this.handleDestroyResource(
+        I18n.t('react.card_maker.are_you_sure_delete_card'),
+        'cards',
+        card.id
+      );
+    }
   }
 
   handleDestroyDeck = (deck) => {
@@ -197,7 +202,7 @@ class Manager extends React.Component {
   }
 
   openCopyModal = (cardId) => {
-    if (this.props.ensureUser()) {
+    if (!this.updateIsInitialTouch() && this.props.ensureUser()) {
       this.setState({ 
         openModal: 'copyCard',
         copyCardId: cardId
@@ -205,23 +210,34 @@ class Manager extends React.Component {
     }
   }
 
-  handleCardClick = (i) => {
-    const newIndex = i === this.state.overlayCardIndex ? null : i 
+  handleCardTouch = (i) => {
+    const isInitialTouch = this.state.overlayCardIndex != i
         ;
 
-    this.cardJustClicked = true;
+    this.cardTouchPropagating = true; // stopPropagation doesn't wor
+
     this.setState({
-      overlayCardIndex: newIndex
+      overlayCardIndex: i,
+      isInitialTouch: isInitialTouch // to prevent button click handlers from firing immediately -- different than propagation
     });
   }
 
   hideCardOverlay = () => {
-    if (this.cardJustClicked) {
-      this.cardJustClicked = false;
+    if (this.cardTouchPropagating) {
+      this.cardTouchPropagating = false;
     } else if (this.state.overlayCardIndex !== null) {
       this.setState({
         overlayCardIndex: null
       });
+    }
+  }
+
+  updateIsInitialTouch = () => {
+    if (this.state.isInitialTouch) {
+      this.setState({ isInitialTouch: false })
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -231,14 +247,22 @@ class Manager extends React.Component {
         key={card.id}
         card={card}
         library={this.props.library}
-        onClick={() => this.handleCardClick(i)}
+        onTouchStart={() => this.handleCardTouch(i)}
+        onMouseEnter={() => this.setState({ overlayCardIndex: i })}
+        onMouseLeave={() => this.setState({ overlayCardIndex: null })}
         overlayOpen={i === this.state.overlayCardIndex}
-        onRequestEditCard={() => this.props.onRequestEditCard(card)}
+        onRequestEditCard={() => { this.handleEditCard(card)}}
         onRequestZoom={() => this.handleCardZoomClick(i)}
         onRequestCopy={() => this.openCopyModal(card.id)}
         onRequestDestroy={() => this.handleDestroyCard(card)}
       />
     );
+  }
+
+  handleEditCard = (card) => {
+    if (!this.updateIsInitialTouch()) {
+      this.props.onRequestEditCard(card);
+    }
   }
 
   allCardsElmt = () => {

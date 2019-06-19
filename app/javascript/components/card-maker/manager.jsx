@@ -111,15 +111,11 @@ class Manager extends React.Component {
   }
 
   showNoticeIfNecessary = () => {
-    console.log('check');
-    console.log('screen width: ', screen.width);
     if (window.innerWidth < MIN_SCREEN_WIDTH) {
-      console.log('show');
       this.setState({ showNotice: true });
       window.removeEventListener('resize', this.showNoticeIfNecessary);
       return true;
     }
-    console.log("don't show");
 
     return false;
   }
@@ -157,7 +153,6 @@ class Manager extends React.Component {
 
   handleCardZoomClick = (i) => {
     if (!this.updateIsInitialTouch()) {
-      console.log('zoom');
       this.setState({
         openModal: 'cardZoom',
         zoomCardIndex: i

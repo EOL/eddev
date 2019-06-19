@@ -747,6 +747,7 @@ class Manager extends React.Component {
     return (
       <div 
         className={managerClasses.join(' ')}
+        ref={(node) => { this.managerNode = node }}
       >
         {
           this.state.showNotice && 

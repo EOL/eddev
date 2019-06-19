@@ -80,8 +80,9 @@ class CardZoomLightbox extends React.Component {
         isOpen={this.props.isOpen}
         contentLabel={I18n.t('react.card_maker.card_preview_lightbox')}
         onRequestClose={this.props.handleRequestClose}
+        extraClass={styles.cardLightbox}
       >
-        <div className={styles.cardLightbox}>
+        <div className={styles.cardLightboxInner}>
           {
             this.props.hasPrev &&
             <i 

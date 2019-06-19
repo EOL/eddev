@@ -541,13 +541,20 @@ $trans-bg: rgba($white, .9);
 }
 
 .cardLightbox {
-  $width: 402px;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
 
+.cardLightboxInner {
+  $width: 400;
+  $height: 533;
+  height: $height * 1px;
   margin: 20px auto 0 auto;
   max-width: 100%;
+  max-height: ($height / $width) * 100vw;
   padding: 0;
   position: relative;
-  width: $width;
+  width: $width * 1px;
 
   & > button {
     display: block;

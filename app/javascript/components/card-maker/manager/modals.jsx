@@ -10,6 +10,7 @@ import DeckUrlLightbox from './deck-url-lightbox'
 import DeckUsersLightbox from './deck-users-lightbox'
 import CardZoomLightbox from './card-zoom-lightbox'
 import CopyCardLightbox from './copy-card-lightbox'
+import DeckUpgradeNotice from './deck-upgrade-notice'
 import {deckUrl} from 'lib/card-maker/url-helper'
 
 function Modals(props) {
@@ -97,6 +98,10 @@ function Modals(props) {
         handleCopy={props.handleCopyCard}
         decks={props.userDecks} 
         newDeckId={props.newDeckId}
+      />
+      <DeckUpgradeNotice
+        isOpen={props.openModal === 'deckUpgradeNotice'}
+        onRequestClose={props.closeModal}
       />
     </div>
   );

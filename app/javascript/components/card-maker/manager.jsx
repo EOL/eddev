@@ -466,7 +466,7 @@ class Manager extends React.Component {
                 that.showDeck(deck.id, closeFn);
 
                 if (showUpgradedNotice) {
-                  that.openModal(modals.deckUpgradedNotice);
+                  that.setState({ openModal: 'deckUpgradeNotice' });
                 }
               });
             }

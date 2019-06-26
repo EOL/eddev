@@ -101,13 +101,13 @@ function Modals(props) {
       />
       <DialogBox
         isOpen={props.openModal === 'needToUpgradeNotice'}
-        onRequestClose={props.onRequestClose}
+        onRequestClose={props.closeModal}
         contentLabel={'deck upgrade notice'}
         message={I18n.t('react.card_maker.need_to_upgrade')}
       />
       <DialogBox
         isOpen={props.openModal === 'deckUpgradeNotice'}
-        onRequestClose={props.onRequestClose}
+        onRequestClose={props.closeModal}
         contentLabel={'deck upgrade notice'}
         message={I18n.t('react.card_maker.remember_to_review_updated')}
       />

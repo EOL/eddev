@@ -731,6 +731,14 @@ class Manager extends React.Component {
     });
   }
 
+  handleRequestPrint = () => {
+    if (this.props.selectedDeck.needsUpgrade) {
+      this.setState({ openModal: 'needToUpgradeNotice' });
+    } else {
+      this.setState({ openModal: 'print' });
+    }
+  }
+
   render() {
     const managerClasses = [styles.simpleManager, styles.simpleManagerWToolbar]
       , deckCards = this.props.deckCards
@@ -819,7 +827,7 @@ class Manager extends React.Component {
           {
             this.props.selectedDeck != null ?
             <CardToolbar 
-              onRequestPrint={() => this.setState({ openModal: 'print' })} 
+              onRequestPrint={this.handleRequestPrint} 
               onRequestPngDownload={this.createDeckPngs}
               userRole={this.props.userRole}
               library={this.props.library}

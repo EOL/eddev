@@ -10,7 +10,7 @@ import DeckUrlLightbox from './deck-url-lightbox'
 import DeckUsersLightbox from './deck-users-lightbox'
 import CardZoomLightbox from './card-zoom-lightbox'
 import CopyCardLightbox from './copy-card-lightbox'
-import DeckUpgradeNotice from './deck-upgrade-notice'
+import DialogBox from 'components/shared/dialog-box'
 import {deckUrl} from 'lib/card-maker/url-helper'
 
 function Modals(props) {
@@ -99,9 +99,17 @@ function Modals(props) {
         decks={props.userDecks} 
         newDeckId={props.newDeckId}
       />
-      <DeckUpgradeNotice
+      <DialogBox
+        isOpen={props.openModal === 'needToUpgradeNotice'}
+        onRequestClose={props.onRequestClose}
+        contentLabel={'deck upgrade notice'}
+        message={I18n.t('react.card_maker.need_to_upgrade')}
+      />
+      <DialogBox
         isOpen={props.openModal === 'deckUpgradeNotice'}
-        onRequestClose={props.closeModal}
+        onRequestClose={props.onRequestClose}
+        contentLabel={'deck upgrade notice'}
+        message={I18n.t('react.card_maker.remember_to_review_updated')}
       />
     </div>
   );

@@ -15,9 +15,9 @@
     "react-modal": "^3.8.1",
     "react_ujs": "^2.5.0",
     "resolve-url-loader": "^3.1.0",
-    "slate": "^0.47.3",
-    "slate-html-serializer": "^0.8.5",
-    "slate-react": "^0.22.3",
+    "slate": "~0.45.0",
+    "slate-html-serializer": "~0.7.0",
+    "slate-react": "~0.21.0",
     "webpack-merge": "^4.2.1"
   },
   "devDependencies": {

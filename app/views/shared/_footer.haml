@@ -1,6 +1,5 @@
 .footer
-  %h2.footer-head= t ".mcz_credit_header"
-  = image_tag "welcome/mcz_logo.png", :alt => t(".mcz_logo_alt"), :class => "mcz-logo"
-  .addr-line.top= t ".l_and_e_at_mcz_html"
-  .addr-line= t ".address_and_contact_html"
+  = link_to "https://naturalhistory.si.edu" do
+    = image_tag "welcome/nmnh_logo_bw.png", :alt => t(".nmnh_logo_alt"), :class => "mcz-logo"
+  .addr-line.top= t ".nmnh_contact_html"
 

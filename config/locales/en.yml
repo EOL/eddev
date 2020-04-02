@@ -602,6 +602,8 @@ en:
       l_and_e_at_mcz_html: "<a href='/'>Encyclopedia of Life Learning + Education Group</a> | <a href='//www.mcz.harvard.edu/'>Museum of Comparative Zoology</a>"
       mcz_credit_header: "EOL Learning + Education is generously supported by:"
       mcz_logo_alt: "Museum of Comparative Zoology, Harvard University"
+      nmnh_logo_alt: "National Museum of Natural History, Smithsonian"
+      nmnh_contact_html: "<a href='https://naturalhistory.si.edu'>National Museum of Natural History</a> | secretariat [at] eol.org"
     header:
       about: "About"
       about_us: "ABOUT US"

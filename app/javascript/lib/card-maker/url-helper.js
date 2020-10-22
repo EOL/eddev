@@ -32,6 +32,6 @@ export function createCardUrl(deck) {
 }
 
 export function userImagePassThruUrl(origUrl) {
-  cardMakerUrl(`cached_images/${encodeURIComponent(origUrl)}`);
+  return cardMakerUrl(`cached_images/${encodeURIComponent(origUrl)}`);
 }
 

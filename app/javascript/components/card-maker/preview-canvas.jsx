@@ -1,7 +1,5 @@
 import React from 'react'
 
-import { userImagePassThruUrl } from 'lib/card-maker/url-helper'
-
 // http://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas/15666143#15666143
 const pixelRatio = (function () {
   var ctx = document.createElement('canvas').getContext('2d'),
@@ -30,7 +28,7 @@ const imageFetcher = {
       cb(new Error("Failed to load image for url " + url));
     });
     $img.attr({
-      src: userImagePassThruUrl(url)
+      src: `/card_maker_ajax/cached_images/${encodeURIComponent(url)}`
     });
   }
 }

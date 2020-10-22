@@ -2,6 +2,8 @@ import React from 'react'
 import fieldWrapper from './field-wrapper'
 import styles from 'stylesheets/card_maker/card_editor'
 
+import { userImagePassThruUrl } from 'lib/card-maker/url-helper'
+
 class IconField extends React.Component {
   constructor(props) {
     super(props);
@@ -153,7 +155,7 @@ class IconField extends React.Component {
               }
               {
                 choice.url != null &&
-                <img src={choice.url} />
+                <img src={userImagePassThruUrl(choice.url)} />
               }
             </li>
           )
@@ -176,7 +178,7 @@ class IconField extends React.Component {
             onClick={this.handleMenuClick}>
             {
               this.props.value.url != null &&
-              <img src={this.props.value.url} />
+              <img src={userImagePassThruUrl(this.props.value.url)} />
             }
 
             <i className='cm-icon-sug-arrow-down' /> 

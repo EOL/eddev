@@ -1,7 +1,7 @@
 import React from 'react'
 
 import fieldWrapper from './field-wrapper'
-import {cardMakerUrl} from 'lib/card-maker/url-helper'
+import { cardMakerUrl, userImagePassThruUrl } from 'lib/card-maker/url-helper'
 
 const maxImgLibPreviewThumbs = 3;
 
@@ -287,7 +287,7 @@ class ImageField extends React.Component {
                >
                 {this.state.uploadInFlight ?
                   (<i className='fa fa-spinner fa-lg fa-spin spinner' />) :
-                  (<img className='img' src={uploadThumbUrl} />)
+                  (<img className='img' src={userImagePassThruUrl(uploadThumbUrl)} />)
                 }
               </div>)
             }

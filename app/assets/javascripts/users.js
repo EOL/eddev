@@ -1,7 +1,4 @@
-window.EOLUsers = (function(exports) {
-  exports.onSubmit = function(token) {
-    $('#user-form').submit();
-  }
-
-  return exports;
-})({});
+// needs to be in global namespace for some reason
+function onNewUserSubmit(token) {
+  $('#user-form').submit();
+}

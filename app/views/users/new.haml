@@ -3,7 +3,7 @@
 
   = render "errors"
 
-  = form_for(@user, :html => { :class => "form" }) do |f|
+  = form_for(@user, :html => { :id => "user-form", :class => "form" }) do |f|
     = f.email_field :email, :required => true, :class => "input block", :placeholder => true
     = f.text_field :user_name,
         :pattern  => User::USER_NAME_PATTERN,
@@ -14,4 +14,4 @@
 
     = f.text_field :full_name, :required => true, :class => "input block", :placeholder => true
     = render :partial => "password_fields", :locals => { :f => f}
-    = f.submit t(".sign_up"), :class => "submit block"
+    = f.submit t(".sign_up"), :class => "submit block g-recaptcha", :data => { :sitekey => '6LdeYEAaAAAAAJxY8nbvin1Lr2-8am6BJP2LLdFp', :callback => 'EOLUsers.onSubmit', :action => 'submit' }

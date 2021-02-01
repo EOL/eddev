@@ -16,6 +16,19 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
+    recaptcha_token = params[:'g-recaptcha-response']
+
+
+    if recaptcha_token.blank?
+      logger.error('encountered user signup without recaptcha token -- failing request')
+      return render file: 'public/400.html', layout: false, status: :bad_request
+    end
+
+    if !RecaptchaVerifier.new(recaptcha_token).success?
+      logger.error('got a failed recaptcha response')
+      return render file: 'public/400.html', layout: false, status: :bad_request
+    end
+
     respond_to do |format|
       if @user.save
         SignupConfirmationMailer.confirmation_email(@user).deliver_now

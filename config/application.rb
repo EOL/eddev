@@ -58,6 +58,9 @@ module Eddev
       true :
       false
 
+    # recaptcha service
+    config.x.recaptcha_secret_key = ENV['recaptcha_secret_key']
+
     # build i18n-js translation files (configured in i18n-js.yml)
     config.middleware.use I18n::JS::Middleware
 

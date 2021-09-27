@@ -1,5 +1,5 @@
 = render "shared/intro_section", :header => "earth_tours.index.intro_hdr",
-  :paragraphs => ["earth_tours.index.intro_p", {:key => "earth_tours.index.download_link_html", :vars => { :url => "https://drive.google.com/open?id=0BwhfjK8RzkUZQ2FzOG1wQ0VuRjA"}}],
+  :paragraphs => ["earth_tours.index.intro_p", {:key => "earth_tours.index.download_link_html", :vars => { :url => "https://drive.google.com/open?id=0BwhfjK8RzkUZQ2FzOG1wQ0VuRjA"}}, {:key => "earth_tours.index.mp4_download_link_html", :vars => { :url => "https://drive.google.com/drive/folders/0BwhfjK8RzkUZeUxWZ1I3b0dmVHc?resourcekey=0-oBBNdW-YjkI8p8E9n_BXbw" }}],
   :hideable => false
 .tours
   - @tours.each do |tour|

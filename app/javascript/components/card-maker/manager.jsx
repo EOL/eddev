@@ -684,7 +684,7 @@ class Manager extends React.Component {
       ;
 
     if (proceed) {
-      that.props.showLoadingOverlay(null, (closeFn) => {
+      that.props.showLoadingOverlay(null, null, (closeFn) => {
         $.ajax({
           url: cardMakerUrl('decks/' + that.props.selectedDeck.id + '/' + action),
           method: 'POST',

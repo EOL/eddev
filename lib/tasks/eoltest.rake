@@ -8,5 +8,7 @@ unless Rails.env.production? # rspec is not defined in production, so this would
     end
   end
 
-  task :eoltest => ["eoltest:db_consistency", "eoltest:spec"] {}
+  task :eoltest => ["eoltest:db_consistency", "eoltest:spec"] do
+    # Just setting up the env, nothing to do.
+  end
 end

@@ -42,7 +42,8 @@ function DescPart(props) {
         }
       }
     } else if (props.library === 'public') {
-      elmts.push('Welcome to the public biodiversity card library! You can browse and print our pre-made decks here, or create your own by switching to your library.')
+      /* elmts.push('Welcome to the public biodiversity card library! You can browse and print our pre-made decks here, or create your own by switching to your library.') */
+      elmts.push('Sorry, this application is NOT currently supported!')
     }
   }
   
